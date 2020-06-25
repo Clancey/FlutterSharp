@@ -56,7 +56,7 @@
       <Kind>Framework</Kind>
       <SmartLink>False</SmartLink>
     </NativeReference>
-    <NativeReference Include="..\..\FlutterBridge_iOS\derived_data\Build\Products\Release-iphonesimulator\FlutterPluginRegistrant\FlutterPluginRegistrant.framework">
+    <NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.framework">
       <Kind>Framework</Kind>
       <SmartLink>False</SmartLink>
     </NativeReference>
