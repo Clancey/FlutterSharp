@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterTest.Droid", "Flutte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterTest", "FlutterTest\FlutterTest.csproj", "{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{7562C17F-435F-4241-8A0E-5A43203E2DEE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,5 +97,10 @@ Global
 		{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46}.Release|iPhone.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46} = {7562C17F-435F-4241-8A0E-5A43203E2DEE}
+		{DDDD9A63-1DEC-4B73-8D0F-E3D536794036} = {7562C17F-435F-4241-8A0E-5A43203E2DEE}
+		{CED6F861-0371-4530-99FE-1FD6C5A30FA2} = {7562C17F-435F-4241-8A0E-5A43203E2DEE}
 	EndGlobalSection
 EndGlobal
