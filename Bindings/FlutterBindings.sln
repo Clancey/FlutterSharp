@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterBindingAndroid", "Fl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterTest.Droid", "FlutterTest.Droid\FlutterTest.Droid.csproj", "{DDDD9A63-1DEC-4B73-8D0F-E3D536794036}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterCoreBindingAndroid", "FlutterCoreBindingAndroid\FlutterCoreBindingAndroid.csproj", "{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterTest", "FlutterTest\FlutterTest.csproj", "{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{7562C17F-435F-4241-8A0E-5A43203E2DEE}"
@@ -85,6 +87,18 @@ Global
 		{DDDD9A63-1DEC-4B73-8D0F-E3D536794036}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{DDDD9A63-1DEC-4B73-8D0F-E3D536794036}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{DDDD9A63-1DEC-4B73-8D0F-E3D536794036}.Release|iPhone.Build.0 = Release|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}.Release|iPhone.Build.0 = Release|Any CPU
 		{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46}.Release|Any CPU.ActiveCfg = Release|Any CPU

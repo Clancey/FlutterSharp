@@ -5,13 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9022D625-2EB9-497A-A65F-E0C4634026EC}</ProjectGuid>
+    <ProjectGuid>{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}</ProjectGuid>
     <ProjectTypeGuids>{10368E6C-D01B-4462-8E8B-01FC667A7035};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{77efb91c-a7e9-4b0e-a7c5-31eeec3c6d46}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FlutterBindingAndroid</RootNamespace>
-    <AssemblyName>FlutterBindingAndroid</AssemblyName>
+    <RootNamespace>FlutterCoreBindingAndroid</RootNamespace>
+    <AssemblyName>FlutterCoreBindingAndroid</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Deterministic>True</Deterministic>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Additions\FlutterActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Jars\AboutJars.txt" />
@@ -55,15 +54,26 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="..\..\flutter_module\build\host\outputs\repo\com\example\flutter_module\flutter_debug\1.0\flutter_debug-1.0.aar">
-      <Link>Jars\flutter_debug-1.0.aar</Link>
-    </LibraryProjectZip>
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common">
+      <Version>2.2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Fragment">
+      <Version>1.2.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Annotation">
+      <Version>1.1.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FlutterCoreBindingAndroid\FlutterCoreBindingAndroid.csproj">
-      <Project>{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}</Project>
-      <Name>FlutterCoreBindingAndroid</Name>
-    </ProjectReference>
+    <EmbeddedNativeLibrary Include="lib\x86\libflutter.so" />
+    <EmbeddedNativeLibrary Include="lib\arm64-v8a\libflutter.so" />
+    <EmbeddedNativeLibrary Include="lib\armeabi-v7a\libflutter.so" />
+    <EmbeddedNativeLibrary Include="lib\x86_64\libflutter.so" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedJar Include="Jars\flutter_embedding_debug-1.0.0-e8c13aa012c915c6a290d2a85950af67303e75f9.jar" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Flutter\Flutter.csproj">
       <Project>{1EE09805-24DB-4831-8754-EF87F5152380}</Project>
       <Name>Flutter</Name>
