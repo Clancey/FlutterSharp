@@ -55,19 +55,27 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Flutter\Flutter.csproj">
+      <Project>{1EE09805-24DB-4831-8754-EF87F5152380}</Project>
+      <Name>Flutter</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <LibraryProjectZip Include="..\..\flutter_module\build\host\outputs\repo\com\example\flutter_module\flutter_debug\1.0\flutter_debug-1.0.aar">
       <Link>Jars\flutter_debug-1.0.aar</Link>
     </LibraryProjectZip>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FlutterCoreBindingAndroid\FlutterCoreBindingAndroid.csproj">
-      <Project>{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}</Project>
-      <Name>FlutterCoreBindingAndroid</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Flutter\Flutter.csproj">
-      <Project>{1EE09805-24DB-4831-8754-EF87F5152380}</Project>
-      <Name>Flutter</Name>
-    </ProjectReference>
+    <EmbeddedJar Include="Jars\flutter_embedding_debug-1.0.0-e8c13aa012c915c6a290d2a85950af67303e75f9.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedNativeLibrary Include="lib\arm64-v8a\libflutter.so" />
+    <EmbeddedNativeLibrary Include="lib\armeabi-v7a\libflutter.so" />
+    <EmbeddedNativeLibrary Include="lib\x86\libflutter.so" />
+    <EmbeddedNativeLibrary Include="lib\x86_64\libflutter.so" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lib\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

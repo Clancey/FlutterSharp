@@ -124,10 +124,6 @@
       <Project>{9022D625-2EB9-497A-A65F-E0C4634026EC}</Project>
       <Name>FlutterBindingAndroid</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FlutterCoreBindingAndroid\FlutterCoreBindingAndroid.csproj">
-      <Project>{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}</Project>
-      <Name>FlutterCoreBindingAndroid</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Flutter\Flutter.csproj">
       <Project>{1EE09805-24DB-4831-8754-EF87F5152380}</Project>
       <Name>Flutter</Name>
