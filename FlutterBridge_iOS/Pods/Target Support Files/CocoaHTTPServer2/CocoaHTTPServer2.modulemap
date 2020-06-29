@@ -1,0 +1,6 @@
+framework module CocoaHTTPServer2 {
+  umbrella header "CocoaHTTPServer2-umbrella.h"
+
+  export *
+  module * { export * }
+}
