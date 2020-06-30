@@ -52,13 +52,6 @@ namespace FlutterTest {
 	}
 	public class ClickedPage : StatefulWidget {
 		int clicked = 0;
-		IntPtr handle;
-		public ClickedPage()
-		{
-			var gchandle = GCHandle.Alloc (new BarStruct(), GCHandleType.Pinned);
-			handle = gchandle.AddrOfPinnedObject ();
-		}
-
 		public override Widget Build () =>
 			new Center {
 				new Column(MainAxisAlignment.SpaceAround) {
@@ -66,12 +59,13 @@ namespace FlutterTest {
 					new FloatingActionButton {
 						OnPressed = () => {
 							SetState (() => {
-								Communicator.SendCommand(("intptr",handle.ToString()));
+								//Communicator.SendCommand(("intptr",handle.ToString()));
 								clicked++;
 							});
 						},
 						Child = new Icon{ CodePoint="57669",FontFamily="MaterialIcons"},}}};
 	}
+
 	public class FlutterSample : StatelessWidget {
 		public override Widget Build () => new DefaultTabController (2) {
 				new Scaffold {
