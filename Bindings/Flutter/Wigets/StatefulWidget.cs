@@ -3,14 +3,12 @@ using Flutter.Internal;
 using Newtonsoft.Json;
 
 namespace Flutter {
-	public abstract class StatefulWidget : Widget {
-		public Widget Child {
-			get => GetProperty<Widget> ();
-			private set => SetProperty (value);
-		}
+	public abstract class StatefulWidget : SingleChildRenderObjectWidget {
+		
 		public abstract Widget Build ();
-		internal override void BeforeJSon ()
+		public override void PrepareForSending()
 		{
+			base.PrepareForSending();
 			if (Child == null)
 				Child = Build ();
 		}
@@ -21,6 +19,6 @@ namespace Flutter {
 			Child = Build ();
 			FlutterManager.SendState (this.Child,this.Id);
 		}
-		protected override string type => "StatefulWidget";
+		protected override string FlutterType => "StatefulWidget";
 	}
 }

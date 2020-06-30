@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Flutter.Structs;
+using System;
 namespace Flutter {
 	public class Icon : Widget {
-		public string CodePoint {
-			get => GetProperty<string> ();
-			set => SetProperty (value);
+		public Icon(string codePoint = null, string fontFamily = null)
+		{
+			var s = GetBackingStruct<IconStruct>();
+			s.CodePoint = codePoint;
+			s.FontFamily = fontFamily;
 		}
-
-		public string FontFamily {
-			get => GetProperty<string> ();
-			set => SetProperty (value);
-		}
+		protected override FlutterObjectStruct CreateBackingStruct() => new IconStruct();
 	}
 }

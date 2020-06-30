@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Flutter.Structs;
+using System;
 namespace Flutter {
 	public class Row : MultiChildRenderObjectWidget{
-		public Row (MainAxisAlignment? mainAxisAlignment) => MainAxisAlignment = mainAxisAlignment;
-		public MainAxisAlignment? MainAxisAlignment {
-			get => GetProperty<MainAxisAlignment?> ();
-			set => SetProperty (value);
-		}
+		public Row (MainAxisAlignment? mainAxisAlignment) => GetBackingStruct<RowStruct>().MainAxisAlignment = mainAxisAlignment;
+		protected override FlutterObjectStruct CreateBackingStruct() => new RowStruct();
 	}
 }

@@ -1,21 +1,16 @@
 ﻿using System;
+using Flutter.Structs;
 using Newtonsoft.Json;
 
 namespace Flutter {
+
 	public class AppBar : Widget {
+		protected override FlutterObjectStruct CreateBackingStruct() => new AppBarStruct();
 		public AppBar(Widget title = null, Widget bottom = null)
 		{
-			Title = title;
-			bottom = bottom;
-		}
-		public Widget Title {
-			get => GetProperty<Widget>();
-			set => SetProperty (value);
-		}
-
-		public Widget Bottom {
-			get => GetProperty<Widget> ();
-			set => SetProperty (value);
+			var backingStruct = GetBackingStruct<AppBarStruct>();
+			backingStruct.Title = title;
+			backingStruct.Bottom = bottom;
 		}
 	}
 }

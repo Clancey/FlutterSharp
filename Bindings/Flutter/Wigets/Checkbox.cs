@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Flutter.Structs;
+using System;
 namespace Flutter {
 	public class Checkbox : Widget {
-		public bool Value {
-			get => GetProperty<bool> ();
-			set => SetProperty (value);
-		}
-
+		public Checkbox(bool? value) => GetBackingStruct<CheckboxStruct>().Value = value ?? false;
+		protected override FlutterObjectStruct CreateBackingStruct() => new CheckboxStruct();
+	
 		public Action<bool> OnChange {
-			get => GetProperty<Action<bool>> ();
-			set => SetProperty (value);
+			get;set;
+			//get => GetProperty<Action<bool>> ();
+			//set => SetProperty (value);
 		}
 	}
 }

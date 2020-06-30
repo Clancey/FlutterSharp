@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Flutter.Structs;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 namespace Flutter {
 	public class TabBar : Widget, IEnumerable {
 
-		public IList<Tab> Tabs {
-			get => GetProperty<IList<Tab>> () ?? (Tabs = new List<Tab> ());
-			set => SetProperty (value);
-		}
-
+		private PinnedObject<NativeArray<IntPtr>> pinnedArray;
+		IList<Tab> Tabs = new List<Tab>();
+		protected override FlutterObjectStruct CreateBackingStruct() => new MultiChildRenderObjectWidgetStruct();
 		public void Add (Tab child)
 		{
 			if (child == null)
@@ -18,5 +17,21 @@ namespace Flutter {
 		}
 
 		IEnumerator IEnumerable.GetEnumerator () => Tabs.GetEnumerator ();
+
+		public override unsafe void PrepareForSending()
+		{
+			base.PrepareForSending();
+			pinnedArray?.Dispose();
+
+			var array = new NativeArray<IntPtr>(Tabs.Count);
+			for (int i = 0; i < Tabs.Count; i++)
+			{
+				var c = Tabs[i];
+				c.PrepareForSending();
+				array[i] = c;
+			}
+			pinnedArray = array;
+			GetBackingStruct<MultiChildRenderObjectWidgetStruct>().Children = pinnedArray;
+		}
 	}
 }

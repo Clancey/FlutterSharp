@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Flutter.Structs;
 using Newtonsoft.Json;
 
 namespace Flutter {
-	[JsonConverter (typeof (FlutterObjectConverter))]
 	public abstract class FlutterObject: IDisposable {
 
 		public FlutterObject()
@@ -12,47 +12,17 @@ namespace Flutter {
 			init ();
 		}
 
-
+		protected FlutterObjectStruct FlutterObjectStruct { get; private set; }
+		protected T GetBackingStruct<T>() where T : FlutterObjectStruct => (T)FlutterObjectStruct;
 		void init ()
 		{
+			FlutterObjectStruct = CreateBackingStruct();
+			FlutterObjectStruct.WidgetType = FlutterType;
 		}
-		protected virtual string type => this.GetType ().Name;
+		protected virtual FlutterObjectStruct CreateBackingStruct() => new FlutterObjectStruct();
+		protected virtual string FlutterType => this.GetType ().Name;
 
 		internal Dictionary<string, Delegate> actions = new Dictionary<string, Delegate> ();
-		internal Dictionary<string, object> properties = new Dictionary<string, object> ();
-		private bool disposedValue;
-
-		protected T GetProperty<T> (T defaultValue = default, [CallerMemberName] string propertyName = "", bool shouldCamelCase = true)
-		{
-			//propertyName = camelCase (propertyName, shouldCamelCase);
-			//if (properties.TryGetValue (propertyName, out var val))
-			//	return (T)val;
-			return defaultValue;
-		}
-		protected bool SetProperty<T> (T value, [CallerMemberName] string propertyName = "", bool shouldCamelCase = true)
-		{
-			//propertyName = camelCase (propertyName, shouldCamelCase);
-			//if (properties.TryGetValue (propertyName, out object val)) {
-			//	if (EqualityComparer<T>.Default.Equals ((T)val, value))
-			//		return false;
-			//}
-			//if(value is Delegate d) {
-			//	actions [propertyName] = d;
-			//	properties [propertyName] = true;
-			//}else if (value == null)
-			//	properties.Remove (propertyName);
-			//else {
-			//	properties [propertyName] = value;
-			//}
-			////CallPropertyChanged (propertyName, value);
-			return true;
-		}
-
-		internal virtual void BeforeJSon()
-		{
-
-		}
-
 		
 		internal void SendEvent(string key, object value, Action<string> returnAction)
 		{
@@ -72,6 +42,7 @@ namespace Flutter {
 			}
 		}
 
+		private bool disposedValue;
 		protected virtual void Dispose (bool disposing)
 		{
 			if (!disposedValue) {
@@ -79,8 +50,8 @@ namespace Flutter {
 					// TODO: dispose managed state (managed objects)
 				}
 
-				// TODO: free unmanaged resources (unmanaged objects) and override finalizer
-				// TODO: set large fields to null
+				FlutterObjectStruct.Dispose();
+				FlutterObjectStruct = null;
 				disposedValue = true;
 			}
 		}
@@ -98,5 +69,8 @@ namespace Flutter {
 			Dispose (disposing: true);
 			GC.SuppressFinalize (this);
 		}
+		
+		public static implicit operator FlutterObjectStruct (FlutterObject obj) => obj.FlutterObjectStruct;
+		public static implicit operator IntPtr(FlutterObject obj) => obj.FlutterObjectStruct.Handle;
 	}
 }

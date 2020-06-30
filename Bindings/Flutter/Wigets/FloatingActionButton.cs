@@ -4,8 +4,9 @@ namespace Flutter {
 		public FloatingActionButton (Action onPressed = null)
 			=> OnPressed = onPressed;
 		public Action OnPressed {
-			get => GetProperty<Action> ();
-			set => SetProperty (value);
+			get;set;
+			//get => GetProperty<Action> ();
+			//set => SetProperty (value);
 		}
 	}
 }
