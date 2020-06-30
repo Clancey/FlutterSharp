@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Flutter;
+using Flutter.Internal;
+using Flutter.Structs;
 
 namespace FlutterTest {
 	public class ListPage : StatefulWidget {
@@ -49,6 +52,13 @@ namespace FlutterTest {
 	}
 	public class ClickedPage : StatefulWidget {
 		int clicked = 0;
+		IntPtr handle;
+		public ClickedPage()
+		{
+			var gchandle = GCHandle.Alloc (new BarStruct(), GCHandleType.Pinned);
+			handle = gchandle.AddrOfPinnedObject ();
+		}
+
 		public override Widget Build () =>
 			new Center {
 				new Column(MainAxisAlignment.SpaceAround) {
@@ -56,6 +66,7 @@ namespace FlutterTest {
 					new FloatingActionButton {
 						OnPressed = () => {
 							SetState (() => {
+								Communicator.SendCommand(("intptr",handle.ToString()));
 								clicked++;
 							});
 						},

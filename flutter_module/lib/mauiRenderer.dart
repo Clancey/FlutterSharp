@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:typed_data';
+import 'dart:ffi';
+import 'package:ffi/ffi.dart';
 
 import 'package:flutter/foundation.dart'
     show debugDefaultTargetPlatformOverride;
@@ -64,10 +66,26 @@ class MauiRootRenderer extends StatefulWidget {
   _MauiRootRendererState createState() =>  _MauiRootRendererState(key);
 }
 
+class FooBar extends Struct{
+  @Int32()
+  int first;
+  @Int32()
+  int second;
+}
+
 class _MauiRootRendererState extends State<MauiRootRenderer> {
   _MauiRootRendererState(Key key) {
     methodChannel.setMethodCallHandler((call) async {
-      _onEvent(call.arguments);
+      if(call.method =="intptr")
+      {
+          var i = int.parse(call.arguments);
+          final pointer = Pointer<FooBar>.fromAddress(i);
+          FooBar fooBar = pointer.ref;
+          print(fooBar.second);
+          
+      }
+      else
+        _onEvent(call.arguments);
       // print(call.arguments);
     });
     dotNetMessageChannel.setMessageHandler((bytes) async {
