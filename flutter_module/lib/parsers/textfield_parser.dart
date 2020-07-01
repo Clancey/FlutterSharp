@@ -1,15 +1,20 @@
+import 'dart:ffi';
+
+import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../maui_flutter.dart';
 
 class TextFieldParser extends WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext) {
-    final id = map["id"];
+  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+    var map = Pointer<TextFieldStruct>.fromAddress(fos.handle.address).ref;
+    final id = Utf8.fromUtf8(map.id);
     return SimpleTextField(id,
-      text: map['text'],
+      text: Utf8.fromUtf8(map.value),
       decoration:
-          InputDecoration(border: OutlineInputBorder(), hintText: map["hint"]),
+          InputDecoration(border: OutlineInputBorder(), hintText:Utf8.fromUtf8(map.hint)),
     );
   }
 

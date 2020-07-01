@@ -13,15 +13,24 @@ import 'maui_flutter.dart';
 
 import 'dart:convert';
 
-
-class FlutterObjectStruct extends Struct{
+class IFlutterObjectStruct{  
   Pointer handle;  
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
 }
 
+class FlutterObjectStruct extends Struct implements IFlutterObjectStruct {
+  Pointer handle;  
+  Pointer managedHandle;
+  Pointer<Utf8> widgetType;
+}
+
+class IWidgetStruct extends IFlutterObjectStruct{  
+  Pointer<Utf8> id;
+}
+
 //WidgetStruct : FlutterOBjectStruct
-class WidgetStruct extends Struct{
+class WidgetStruct extends Struct implements IWidgetStruct{
   //FlutterObject Struct
   Pointer handle;  
   Pointer managedHandle;
@@ -29,9 +38,12 @@ class WidgetStruct extends Struct{
   //WidgetStruct
   Pointer<Utf8> id;
 }
+class ISingleChildRenderObjectWidgetStruct extends IWidgetStruct{  
+  Pointer<WidgetStruct> child;
+}
 
 //SingleChildRenderObjectWidgetStruct : WidgetStruct
-class SingleChildRenderObjectWidgetStruct extends Struct{
+class SingleChildRenderObjectWidgetStruct extends Struct implements ISingleChildRenderObjectWidgetStruct{
   //FlutterObject Struct
   Pointer handle;  
   Pointer managedHandle;
@@ -41,9 +53,13 @@ class SingleChildRenderObjectWidgetStruct extends Struct{
   //SingleChildRenderObjectWidgetStruct
   Pointer<WidgetStruct> child;
 }
+class IMultiChildRenderObjectWidgetStruct extends IWidgetStruct{  
+  Pointer children;
+  int childrenLength;
+}
 
 //MultiChildRenderObjectWidgetStruct : WidgetStruct
-class MultiChildRenderObjectWidgetStruct extends Struct{
+class MultiChildRenderObjectWidgetStruct extends Struct implements IWidgetStruct{
   //FlutterObject Struct
   Pointer handle;  
   Pointer managedHandle;
@@ -56,7 +72,13 @@ class MultiChildRenderObjectWidgetStruct extends Struct{
   int childrenLength;
 }
 
-
+class AlignmentStruct extends Struct{
+  @Double()
+  double x;
+  
+  @Double()
+  double y;
+}
 //AlignStruct : SingleChildRenderObjectWidgetStruct 
 class AlignStruct extends Struct{
   //FlutterObject Struct
@@ -72,8 +94,7 @@ class AlignStruct extends Struct{
   @Int8()
   int hasAlignment;
   
-  @Int32()
-  int alignment;
+  Pointer<AlignmentStruct> alignment;
 
   @Int8()
   int hasWidthFactor;
@@ -92,7 +113,7 @@ class AlignStruct extends Struct{
 
 
 //AppBarStruct : WidgetStruct
-class AppBarStruct extends Struct{
+class AppBarStruct extends Struct implements IWidgetStruct{
   //FlutterObject Struct
   Pointer handle;  
   Pointer managedHandle;
@@ -165,7 +186,14 @@ class ColumnStruct extends Struct{
 }
 
 class EdgeInsetGemoetryStruct extends Struct{
-
+  @Double()
+  double left;
+  @Double()
+  double top;
+  @Double()
+  double right;
+  @Double()
+  double bottom;
 }
 
 class ColorStruct extends Struct{
@@ -193,9 +221,7 @@ class ContainerStruct extends Struct{
   //ContainerStruct  
   @Int8()
   int hasAlignment;
-  
-  @Int32()
-  int alignment;
+  Pointer<AlignmentStruct> alignment;
   
   @Int8()
   int hasPadding;
@@ -274,7 +300,7 @@ class ListViewBuilderStruct extends Struct{
 
   //ListViewBuilderStruct
   @Int64()
-  int tabCount;
+  int itemCount;
 
 }
 

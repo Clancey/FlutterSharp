@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart'
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'maui_flutter.dart';
 
 import 'dart:convert';
@@ -23,7 +24,7 @@ final mauiComponentStates = Map<String, _MauiComponentState>();
 const dotNetMessageChannel =
     const BasicMessageChannel('my/super/test', BinaryCodec());
 
-final mauiComponentStatesMaps = Map<String, Map<String, dynamic>>();
+final mauiComponentStatesMaps = Map<String, FlutterObjectStruct>();
 
 _MauiComponentState getMauiComponentState(String componentId) {
   if (!mauiComponentStates.containsKey(componentId)) {
@@ -32,12 +33,12 @@ _MauiComponentState getMauiComponentState(String componentId) {
   return mauiComponentStates[componentId];
 }
 
-void setMauiState(String componentId, Map<String, dynamic> map) {
-  mauiComponentStatesMaps[componentId] = map;
-  getMauiComponentState(componentId)?.updateMauiState(map);
+void setMauiState(String componentId, IFlutterObjectStruct address) {
+  mauiComponentStatesMaps[componentId] = address;
+  getMauiComponentState(componentId)?.updateMauiState(address);
 }
 
-Map<String, dynamic> getMauiState(String componentId) {
+FlutterObjectStruct getMauiState(String componentId) {
   if (!mauiComponentStatesMaps.containsKey(componentId)) {
     return null;
   }
@@ -66,25 +67,10 @@ class MauiRootRenderer extends StatefulWidget {
   _MauiRootRendererState createState() =>  _MauiRootRendererState(key);
 }
 
-class FooBar extends Struct{
-  @Int32()
-  int first;
-  @Int32()
-  int second;
-}
 
 class _MauiRootRendererState extends State<MauiRootRenderer> {
   _MauiRootRendererState(Key key) {
     methodChannel.setMethodCallHandler((call) async {
-      if(call.method =="intptr")
-      {
-          var i = int.parse(call.arguments);
-          final pointer = Pointer<FooBar>.fromAddress(i);
-          FooBar fooBar = pointer.ref;
-          print(fooBar.second);
-          
-      }
-      else
         _onEvent(call.arguments);
       // print(call.arguments);
     });
@@ -102,8 +88,9 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
     switch (message['messageType']) {
       case 'UpdateComponent':
         final componentId = message['componentId'];
-        final componentState = message['state'];
-        setMauiState(componentId, componentState);
+        int address = message['address'];
+         final pointer = Pointer<FlutterObjectStruct>.fromAddress(address);
+        setMauiState(componentId, pointer.ref);
         break;
       // case 'CreateDartObject':
       //   createAndStoreTrackedDartObject(message);
@@ -135,26 +122,26 @@ class MauiComponent extends StatefulWidget {
 }
 
 class _MauiComponentState extends State<MauiComponent> {
-  Map _mauiState;
+  FlutterObjectStruct _address;
   String componentId;
 
   _MauiComponentState({this.componentId}) {
-    _mauiState = getMauiState(componentId);
+    _address = getMauiState(componentId);
   }
-  updateMauiState(Map mauiState) {
+  updateMauiState(FlutterObjectStruct address) {
     if (mounted) {
       setState(() {
-        _mauiState = mauiState;
+        _address = address;
       });
     } else {
-      _mauiState = mauiState;
+      _address = address;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_mauiState != null) {
-      return DynamicWidgetBuilder.buildFromMap(_mauiState, context);
+    if (_address != null) {
+      return DynamicWidgetBuilder.buildFromMap(_address, context);
     } else {
       return SizedBox.shrink();
     }
