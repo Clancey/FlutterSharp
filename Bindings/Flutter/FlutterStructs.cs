@@ -77,6 +77,7 @@ namespace Flutter.Structs {
 		public IntPtr Child { get; set; }
 	}
 
+	[StructLayout(LayoutKind.Sequential)]
 	public unsafe class MultiChildRenderObjectWidgetStruct : WidgetStruct
 	{
 		public IntPtr Children;

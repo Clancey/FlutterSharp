@@ -70,7 +70,7 @@ namespace Flutter {
 			GC.SuppressFinalize (this);
 		}
 		
-		public static implicit operator FlutterObjectStruct (FlutterObject obj) => obj.FlutterObjectStruct;
-		public static implicit operator IntPtr(FlutterObject obj) => obj.FlutterObjectStruct.Handle;
+		public static implicit operator FlutterObjectStruct (FlutterObject obj) => obj?.FlutterObjectStruct;
+		public static implicit operator IntPtr(FlutterObject obj) => obj?.FlutterObjectStruct?.Handle ?? IntPtr.Zero;
 	}
 }

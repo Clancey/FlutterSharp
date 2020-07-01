@@ -13,39 +13,41 @@ import 'maui_flutter.dart';
 
 import 'dart:convert';
 
-class IFlutterObjectStruct{  
-  Pointer handle;  
+class IFlutterObjectStruct {
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
 }
 
 class FlutterObjectStruct extends Struct implements IFlutterObjectStruct {
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
 }
 
-class IWidgetStruct extends IFlutterObjectStruct{  
+class IWidgetStruct extends IFlutterObjectStruct {
   Pointer<Utf8> id;
 }
 
 //WidgetStruct : FlutterOBjectStruct
-class WidgetStruct extends Struct implements IWidgetStruct{
+class WidgetStruct extends Struct implements IWidgetStruct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
   Pointer<Utf8> id;
 }
-class ISingleChildRenderObjectWidgetStruct extends IWidgetStruct{  
+
+class ISingleChildRenderObjectWidgetStruct extends IWidgetStruct {
   Pointer<WidgetStruct> child;
 }
 
 //SingleChildRenderObjectWidgetStruct : WidgetStruct
-class SingleChildRenderObjectWidgetStruct extends Struct implements ISingleChildRenderObjectWidgetStruct{
+class SingleChildRenderObjectWidgetStruct extends Struct
+    implements ISingleChildRenderObjectWidgetStruct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -53,36 +55,39 @@ class SingleChildRenderObjectWidgetStruct extends Struct implements ISingleChild
   //SingleChildRenderObjectWidgetStruct
   Pointer<WidgetStruct> child;
 }
-class IMultiChildRenderObjectWidgetStruct extends IWidgetStruct{  
-  Pointer children;
+
+class IMultiChildRenderObjectWidgetStruct extends IWidgetStruct {
+  Pointer<Uint8> children;
   int childrenLength;
 }
 
 //MultiChildRenderObjectWidgetStruct : WidgetStruct
-class MultiChildRenderObjectWidgetStruct extends Struct implements IWidgetStruct{
+class MultiChildRenderObjectWidgetStruct extends Struct
+    implements IWidgetStruct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
   Pointer<Utf8> id;
   //MultiChildRenderObjectWidgetStruct
-  Pointer children;
+  Pointer<Uint64> children;
   @Int32()
   int childrenLength;
 }
 
-class AlignmentStruct extends Struct{
+class AlignmentStruct extends Struct {
   @Double()
   double x;
-  
+
   @Double()
   double y;
 }
-//AlignStruct : SingleChildRenderObjectWidgetStruct 
-class AlignStruct extends Struct{
+
+//AlignStruct : SingleChildRenderObjectWidgetStruct
+class AlignStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -93,29 +98,26 @@ class AlignStruct extends Struct{
 // AlignStruct
   @Int8()
   int hasAlignment;
-  
+
   Pointer<AlignmentStruct> alignment;
 
   @Int8()
   int hasWidthFactor;
-  
+
   @Double()
   double widthFactor;
 
   @Int8()
   int hasHeightFactor;
-  
+
   @Double()
   double heightFactor;
-
 }
 
-
-
 //AppBarStruct : WidgetStruct
-class AppBarStruct extends Struct implements IWidgetStruct{
+class AppBarStruct extends Struct implements IWidgetStruct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -125,11 +127,10 @@ class AppBarStruct extends Struct implements IWidgetStruct{
   Pointer<WidgetStruct> bottom;
 }
 
-
-//AspectRatioStruct : SingleChildRenderObjectWidgetStruct 
-class AspectRatioStruct extends Struct{
+//AspectRatioStruct : SingleChildRenderObjectWidgetStruct
+class AspectRatioStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -140,17 +141,15 @@ class AspectRatioStruct extends Struct{
 // AspectRatioStruct
   @Int8()
   int hasValue;
-  
+
   @Double()
   double value;
-
 }
 
-
-//CheckboxStruct : WidgetStruct 
-class CheckboxStruct extends Struct{
+//CheckboxStruct : WidgetStruct
+class CheckboxStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -159,33 +158,30 @@ class CheckboxStruct extends Struct{
   //AspectRatioStruct
   @Int8()
   int value;
-
 }
 
-
-
 //ColumnStruct : MultiChildRenderObjectWidgetStruct
-class ColumnStruct extends Struct{
+class ColumnStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
   Pointer<Utf8> id;
   //MultiChildRenderObjectWidgetStruct
-  Pointer children;
+  Pointer<Uint8> children;
   @Int32()
   int childrenLength;
 
-  //ColumnStruct  
+  //ColumnStruct
   @Int8()
   int hasAlignment;
-  
+
   @Int32()
   int alignment;
 }
 
-class EdgeInsetGemoetryStruct extends Struct{
+class EdgeInsetGemoetryStruct extends Struct {
   @Double()
   double left;
   @Double()
@@ -196,7 +192,7 @@ class EdgeInsetGemoetryStruct extends Struct{
   double bottom;
 }
 
-class ColorStruct extends Struct{
+class ColorStruct extends Struct {
   @Int8()
   int red;
   @Int8()
@@ -207,10 +203,10 @@ class ColorStruct extends Struct{
   int alpha;
 }
 
-//ContainerStruct : SingleChildRenderObjectWidgetStruct 
-class ContainerStruct extends Struct{
+//ContainerStruct : SingleChildRenderObjectWidgetStruct
+class ContainerStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -218,45 +214,43 @@ class ContainerStruct extends Struct{
   //SingleChildRenderObjectWidgetStruct
   Pointer<WidgetStruct> child;
 
-  //ContainerStruct  
+  //ContainerStruct
   @Int8()
   int hasAlignment;
   Pointer<AlignmentStruct> alignment;
-  
+
   @Int8()
   int hasPadding;
-  
+
   Pointer<EdgeInsetGemoetryStruct> padding;
 
   @Int8()
   int hasMargin;
-  
+
   Pointer<EdgeInsetGemoetryStruct> margin;
 
   @Int8()
   int hasColor;
-  
+
   Pointer<ColorStruct> color;
 
   @Int8()
   int hasWidth;
-  
+
   @Double()
   double width;
 
   @Int8()
   int hasHeight;
-  
+
   @Double()
   double height;
-
 }
 
-
-//DefaultTabControllerStruct : SingleChildRenderObjectWidgetStruct 
-class DefaultTabControllerStruct extends Struct{
+//DefaultTabControllerStruct : SingleChildRenderObjectWidgetStruct
+class DefaultTabControllerStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -267,15 +261,12 @@ class DefaultTabControllerStruct extends Struct{
 // DefaultTabControllerStruct
   @Int32()
   int tabCount;
-
 }
 
-
-
-//IconStruct : WidgetStruct 
-class IconStruct extends Struct{
+//IconStruct : WidgetStruct
+class IconStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -283,16 +274,14 @@ class IconStruct extends Struct{
 
   //IconStruct
   Pointer<Utf8> codePoint;
-  
-  Pointer<Utf8> fontFamily;
 
+  Pointer<Utf8> fontFamily;
 }
 
-
-//ListViewBuilderStruct : Widget 
-class ListViewBuilderStruct extends Struct{
+//ListViewBuilderStruct : Widget
+class ListViewBuilderStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -301,35 +290,33 @@ class ListViewBuilderStruct extends Struct{
   //ListViewBuilderStruct
   @Int64()
   int itemCount;
-
 }
 
 //RowStruct : MultiChildRenderObjectWidgetStruct
-class RowStruct extends Struct{
+class RowStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
   Pointer<Utf8> id;
   //MultiChildRenderObjectWidgetStruct
-  Pointer children;
+  Pointer<Uint64> children;
   @Int32()
   int childrenLength;
 
-  //RowStruct  
+  //RowStruct
   @Int8()
   int hasAlignment;
-  
+
   @Int32()
   int alignment;
 }
 
-
-//ScaffoldStruct : Widget 
-class ScaffoldStruct extends Struct{
+//ScaffoldStruct : Widget
+class ScaffoldStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -340,13 +327,12 @@ class ScaffoldStruct extends Struct{
   Pointer<WidgetStruct> floatingActionButton;
   Pointer<WidgetStruct> drawer;
   Pointer<WidgetStruct> body;
-
 }
 
-//TextStruct : Widget 
-class TextStruct extends Struct{
+//TextStruct : Widget
+class TextStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct
@@ -356,15 +342,15 @@ class TextStruct extends Struct{
   Pointer<Utf8> value;
   @Int8()
   int hasScaleFactor;
-  
+
   @Double()
   double scaleFactor;
 }
 
-//TextFieldStruct : Widget 
-class TextFieldStruct extends Struct{
+//TextFieldStruct : Widget
+class TextFieldStruct extends Struct {
   //FlutterObject Struct
-  Pointer handle;  
+  Pointer handle;
   Pointer managedHandle;
   Pointer<Utf8> widgetType;
   //WidgetStruct

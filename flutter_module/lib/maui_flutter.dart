@@ -1,6 +1,8 @@
 library maui_flutter;
+
 import 'dart:io' show Platform;
 import 'dart:ffi';
+import 'dart:typed_data';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -124,9 +126,8 @@ class DynamicWidgetBuilder {
   }
 
   static Widget buildFromAddress(int pointer, BuildContext buildContext) {
-    if(pointer == 0)
-      return null;
-      var map = Pointer<FlutterObjectStruct>.fromAddress(pointer);
+    if (pointer == 0) return null;
+    var map = Pointer<FlutterObjectStruct>.fromAddress(pointer);
     var widget = buildFromMap(map.ref, buildContext);
     return widget;
   }
@@ -135,31 +136,27 @@ class DynamicWidgetBuilder {
 
   static Widget buildFromMap(
       IFlutterObjectStruct fos, BuildContext buildContext) {
-    if (fos == null)
-      return null;
+    if (fos == null) return null;
     String widgetName = Utf8.fromUtf8(fos.widgetType);
     initDefaultParsersIfNess();
     //TODO: Bring back ID
     var parser = _widgetNameParserMap[widgetName];
     if (parser != null) {
       //if(!wrapInComponent)
-        return parser.parse(fos, buildContext);
-
+      return parser.parse(fos, buildContext);
     }
     log.warning("Not support type: $widgetName");
     return Text("Unknown widget type $widgetName");
   }
 
-
-    static Widget buildMauiComponenet(IWidgetStruct map, BuildContext buildContext)
-    {
-      if (map == null)
-        return null;
-      String id = Utf8.fromUtf8(map.id);
-      var mc = new MauiComponent(componentId: id);
-      setMauiState(id,map);
-      return mc;
-    }
+  static Widget buildMauiComponenet(
+      IWidgetStruct map, BuildContext buildContext) {
+    if (map == null) return null;
+    String id = Utf8.fromUtf8(map.id);
+    var mc = new MauiComponent(componentId: id);
+    setMauiState(id, map);
+    return mc;
+  }
 
   void releaseTrackedDartObject(String id) {
     if (_trackedDartObjects.containsKey(id)) {
@@ -168,8 +165,14 @@ class DynamicWidgetBuilder {
   }
 
   static List<Widget> buildWidgets(
-      Pointer values,int length, BuildContext buildContext) {
+      Pointer<Uint64> valuesPtr, int length, BuildContext buildContext) {
     List<Widget> rt = [];
+    final values = valuesPtr.asTypedList(length);
+    for (var v in values) {
+      var map = Pointer<FlutterObjectStruct>.fromAddress(v);
+      rt.add(buildFromMap(map.ref, buildContext));
+    }
+
     //TODO: Fix
     // if(values != null)
     // for (var value in values) {
@@ -178,21 +181,25 @@ class DynamicWidgetBuilder {
     return rt;
   }
 }
-Future raiseMauiEvent(String componentId, String eventName, dynamic args) async {
-  return methodChannel.invokeMethod("Event",json.encode({
-    'eventName': eventName,
-    'componentId': componentId,
-    'data': args
-  }));
+
+Future raiseMauiEvent(
+    String componentId, String eventName, dynamic args) async {
+  return methodChannel.invokeMethod(
+      "Event",
+      json.encode(
+          {'eventName': eventName, 'componentId': componentId, 'data': args}));
 }
 
-Future<dynamic> requestMauiData(String componentId, String eventName, dynamic args) {
-  return methodChannel.invokeMethod("Event",json.encode({
-    'eventName': eventName,
-    'componentId': componentId,
-    'needsReturn': true,
-    'data': args
-  }));
+Future<dynamic> requestMauiData(
+    String componentId, String eventName, dynamic args) {
+  return methodChannel.invokeMethod(
+      "Event",
+      json.encode({
+        'eventName': eventName,
+        'componentId': componentId,
+        'needsReturn': true,
+        'data': args
+      }));
 }
 
 /// extends this class to make a Flutter widget parser.
