@@ -13,7 +13,7 @@ class FloatingActionButtonParser extends WidgetParser {
     var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
             fos.handle.address)
         .ref;
-    final id = Utf8.fromUtf8(map.id);
+    final id = parseString(map.id);
     return FloatingActionButton(
         //TODO: Implement
         // tooltip: map["tooltip"],

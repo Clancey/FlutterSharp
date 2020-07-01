@@ -13,8 +13,10 @@ import '../utils.dart';
 class ListTileWidgetParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
-    final id = Utf8.fromUtf8(map.id);
+    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
+            fos.handle.address)
+        .ref;
+    final id = parseString(map.id);
     return null;
     // bool isThreeLine =
     //     map.containsKey("isThreeLine") ? map["isThreeLine"] : false;

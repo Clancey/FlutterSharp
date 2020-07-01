@@ -1,5 +1,6 @@
 import 'dart:ffi';
 import 'dart:ui';
+import 'package:ffi/ffi.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 
 import 'maui_flutter.dart';
@@ -123,10 +124,11 @@ FontWeight parseFontWeight(String textFontWeight) {
   }
   return fontWeight;
 }
-Color parseColor(ColorStruct color)
-{
-  return Color.fromARGB(color.alpha,color.red,color.green,color.blue);
+
+Color parseColor(ColorStruct color) {
+  return Color.fromARGB(color.alpha, color.red, color.green, color.blue);
 }
+
 Color parseHexColor(String hexColorString) {
   if (hexColorString == null) {
     return null;
@@ -173,8 +175,7 @@ BoxConstraints parseBoxConstraints(Map<String, dynamic> map) {
   double minHeight = 0.0;
   double maxHeight = double.infinity;
 
-  if(map == null)
-    return null;
+  if (map == null) return null;
   if (map != null) {
     if (map.containsKey('minWidth')) {
       var minWidthValue = map['minWidth'];
@@ -233,17 +234,16 @@ BoxConstraints parseBoxConstraints(Map<String, dynamic> map) {
   );
 }
 
-EdgeInsetsGeometry parseEdgeInsetsGeometry(int hasMargin, EdgeInsetGemoetryStruct struct) {
-  if(hasMargin == 0)
-    return null;
-  return  EdgeInsets.fromLTRB(struct.left,struct.top,struct.right,struct.bottom);
+EdgeInsetsGeometry parseEdgeInsetsGeometry(
+    int hasMargin, EdgeInsetGemoetryStruct struct) {
+  if (hasMargin == 0) return null;
+  return EdgeInsets.fromLTRB(
+      struct.left, struct.top, struct.right, struct.bottom);
 }
 
 CrossAxisAlignment parseCrossAxisAlignment(String crossAxisAlignmentString) {
-  
   var intValue = int.tryParse(crossAxisAlignmentString);
-  if(intValue != null)
-  {
+  if (intValue != null) {
     return CrossAxisAlignment.values[intValue];
   }
   switch (crossAxisAlignmentString) {
@@ -262,9 +262,8 @@ CrossAxisAlignment parseCrossAxisAlignment(String crossAxisAlignmentString) {
 }
 
 MainAxisAlignment parseMainAxisAlignment(int hasMainAxos, int mainAxisValue) {
-  if(hasMainAxos == 0)
-  return MainAxisAlignment.start;
-  return MainAxisAlignment.values[mainAxisValue];  
+  if (hasMainAxos == 0) return MainAxisAlignment.start;
+  return MainAxisAlignment.values[mainAxisValue];
 }
 
 MainAxisSize parseMainAxisSize(String mainAxisSizeString) =>
@@ -583,19 +582,21 @@ DropCap parseDropCap(Map<String, dynamic> map, BuildContext buildContext) {
   );
 }
 
-BoxDecoration parseBoxDecoration(
-    Map<String, dynamic> map) {
+BoxDecoration parseBoxDecoration(Map<String, dynamic> map) {
   if (map == null) return null;
   return BoxDecoration(
     color: parseColor(map['color']),
     border: parseBorder(map['border']),
   );
 }
-Border parseBorder(dynamic jsonValue) {
-    if (jsonValue == null)
-      return null;
-    return Border.all(
-      color: parseColor(jsonValue['color']),
-      width: jsonValue['width']);
-  }
 
+Border parseBorder(dynamic jsonValue) {
+  if (jsonValue == null) return null;
+  return Border.all(
+      color: parseColor(jsonValue['color']), width: jsonValue['width']);
+}
+
+String parseString(Pointer<Utf8> input) {
+  if (input.address == 0) return null;
+  return Utf8.fromUtf8(input);
+}

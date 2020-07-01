@@ -7,6 +7,7 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
+import 'package:flutter_module/utils.dart';
 import 'mauiRenderer.dart';
 import 'dart:convert';
 
@@ -144,7 +145,7 @@ class DynamicWidgetBuilder {
       IFlutterObjectStruct fos, BuildContext buildContext) {
     if (fos == null) return null;
     initDefaultParsersIfNess();
-    String widgetName = Utf8.fromUtf8(fos.widgetType);
+    String widgetName = parseString(fos.widgetType);
     print("Parsing: $widgetName");
     var parser = _widgetNameParserMap[widgetName];
     if (parser != null) {
@@ -159,7 +160,7 @@ class DynamicWidgetBuilder {
   static Widget buildMauiComponenet(
       ISingleChildRenderObjectWidgetStruct map, BuildContext buildContext) {
     if (map == null) return null;
-    String id = Utf8.fromUtf8(map.id);
+    String id = parseString(map.id);
     print("Creating MauiComponent :$id");
     var mc = new MauiComponent(componentId: id);
     print("Setting State MauiComponent :$id");

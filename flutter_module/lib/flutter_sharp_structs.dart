@@ -88,7 +88,8 @@ class AlignmentStruct extends Struct {
 }
 
 //AlignStruct : SingleChildRenderObjectWidgetStruct
-class AlignStruct extends Struct {
+class AlignStruct extends Struct
+    implements ISingleChildRenderObjectWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -131,7 +132,8 @@ class AppBarStruct extends Struct implements IWidgetStruct {
 }
 
 //AspectRatioStruct : SingleChildRenderObjectWidgetStruct
-class AspectRatioStruct extends Struct {
+class AspectRatioStruct extends Struct
+    implements ISingleChildRenderObjectWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -150,7 +152,7 @@ class AspectRatioStruct extends Struct {
 }
 
 //CheckboxStruct : WidgetStruct
-class CheckboxStruct extends Struct {
+class CheckboxStruct extends Struct implements IWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -164,7 +166,8 @@ class CheckboxStruct extends Struct {
 }
 
 //ColumnStruct : MultiChildRenderObjectWidgetStruct
-class ColumnStruct extends Struct {
+class ColumnStruct extends Struct
+    implements IMultiChildRenderObjectWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -205,7 +208,8 @@ class ColorStruct extends Struct {
 }
 
 //ContainerStruct : SingleChildRenderObjectWidgetStruct
-class ContainerStruct extends Struct {
+class ContainerStruct extends Struct
+    implements ISingleChildRenderObjectWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -249,7 +253,8 @@ class ContainerStruct extends Struct {
 }
 
 //DefaultTabControllerStruct : SingleChildRenderObjectWidgetStruct
-class DefaultTabControllerStruct extends Struct {
+class DefaultTabControllerStruct extends Struct
+    implements ISingleChildRenderObjectWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -265,7 +270,7 @@ class DefaultTabControllerStruct extends Struct {
 }
 
 //IconStruct : WidgetStruct
-class IconStruct extends Struct {
+class IconStruct extends Struct implements IWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -280,7 +285,7 @@ class IconStruct extends Struct {
 }
 
 //ListViewBuilderStruct : Widget
-class ListViewBuilderStruct extends Struct {
+class ListViewBuilderStruct extends Struct implements IWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -312,7 +317,7 @@ class RowStruct extends Struct {
 }
 
 //ScaffoldStruct : Widget
-class ScaffoldStruct extends Struct {
+class ScaffoldStruct extends Struct implements IWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -328,7 +333,7 @@ class ScaffoldStruct extends Struct {
 }
 
 //TextStruct : Widget
-class TextStruct extends Struct {
+class TextStruct extends Struct implements IWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -346,7 +351,7 @@ class TextStruct extends Struct {
 }
 
 //TextFieldStruct : Widget
-class TextFieldStruct extends Struct {
+class TextFieldStruct extends Struct implements IWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;

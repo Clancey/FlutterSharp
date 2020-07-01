@@ -12,14 +12,14 @@ class TextWidgetParser implements WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<TextStruct>.fromAddress(fos.handle.address).ref;
-    String data = Utf8.fromUtf8(map.value);
-    String textAlignString = null;//map['textAlign'];
-    String overflow = null;//map['overflow'];
-    int maxLines = null;//map['maxLines'];
-    String semanticsLabel = null;// map['semanticsLabel'];
-    bool softWrap = null;//map['softWrap'];
-    String textDirectionString = null;//map['textDirection'];
-    double textScaleFactor = null;// map['textScaleFactor'];
+    String data = parseString(map.value);
+    String textAlignString = null; //map['textAlign'];
+    String overflow = null; //map['overflow'];
+    int maxLines = null; //map['maxLines'];
+    String semanticsLabel = null; // map['semanticsLabel'];
+    bool softWrap = null; //map['softWrap'];
+    String textDirectionString = null; //map['textDirection'];
+    double textScaleFactor = null; // map['textScaleFactor'];
     var textSpan;
     var textSpanParser = TextSpanParser();
     // if (map.containsKey("textSpan")) {
@@ -64,7 +64,7 @@ class TextSpanParser {
         text: map['value'],
         style: parseTextStyle(map['style']),
         recognizer: TapGestureRecognizer()
-          ..onTap = () {            
+          ..onTap = () {
             //TODO: On Tap
           },
         children: []);
@@ -76,8 +76,7 @@ class TextSpanParser {
     return textSpan;
   }
 
-  void parseChildren(
-      TextSpan textSpan, List<dynamic> childrenSpan) {
+  void parseChildren(TextSpan textSpan, List<dynamic> childrenSpan) {
     for (var childmap in childrenSpan) {
       textSpan.children.add(parse(childmap));
     }

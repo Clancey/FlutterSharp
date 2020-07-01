@@ -4,17 +4,19 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
+import 'package:flutter_module/utils.dart';
 import '../maui_flutter.dart';
 
 class TextFieldParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<TextFieldStruct>.fromAddress(fos.handle.address).ref;
-    final id = Utf8.fromUtf8(map.id);
-    return SimpleTextField(id,
-      text: Utf8.fromUtf8(map.value),
-      decoration:
-          InputDecoration(border: OutlineInputBorder(), hintText:Utf8.fromUtf8(map.hint)),
+    final id = parseString(map.id);
+    return SimpleTextField(
+      id,
+      text: parseString(map.value),
+      decoration: InputDecoration(
+          border: OutlineInputBorder(), hintText: parseString(map.hint)),
     );
   }
 
@@ -67,7 +69,7 @@ class _SimpleTextFieldState extends State<SimpleTextField> {
         raiseMauiEvent(id, "onChange", value);
       },
       onSubmitted: (value) {
-          raiseMauiEvent(id,"onInput",value);
+        raiseMauiEvent(id, "onInput", value);
       },
       decoration: widget.decoration,
     );
