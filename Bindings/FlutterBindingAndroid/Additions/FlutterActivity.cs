@@ -17,10 +17,11 @@ namespace Flutter {
 					//Cleanup, send dispose
 				}
 				widget = value;
-				FlutterManager.SendState (widget);
+				if(isReady)
+					FlutterManager.SendState (widget);
 			}
 		}
-
+		bool isReady;
 		MethodChannel channel;
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
@@ -33,6 +34,7 @@ namespace Flutter {
 		public void OnMethodCall (MethodCall call, MethodChannel.IResult result)
 		{
 			if (call.Method == "ready") {
+				isReady = true;
 				FlutterManager.SendState (Widget);
 			}
 
