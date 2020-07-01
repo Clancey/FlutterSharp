@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 
 class ContainerWidgetParser extends WidgetParser {
   @override
-   Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<ContainerStruct>.fromAddress(fos.handle.address).ref;
     Alignment alignment = map.hasAlignment == 1 ? parseAlignment(map.alignment.ref) : Alignment.center;
     Color color = map.hasColor == 1 ?  parseColor(map.color.ref) : null;

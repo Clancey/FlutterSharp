@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class IconWidgetParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<IconStruct>.fromAddress(fos.handle.address).ref;
     //TODO: Implement!
     return Icon(

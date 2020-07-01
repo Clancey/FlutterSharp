@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 
 class RowWidgetParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<RowStruct>.fromAddress(fos.handle.address).ref;
     //TODO: Fill out more!
     return Row(
@@ -28,7 +28,7 @@ class RowWidgetParser extends WidgetParser {
       //     ? parseVerticalDirection(map['verticalDirection'])
       //     : VerticalDirection.down,
       children: DynamicWidgetBuilder.buildWidgets(
-          map.children, map.childrenLength, buildContext),
+          map.children.ref, buildContext),
     );
   }
 
@@ -38,7 +38,7 @@ class RowWidgetParser extends WidgetParser {
 
 class ColumnWidgetParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<RowStruct>.fromAddress(fos.handle.address).ref;
     
     return Column(
@@ -59,7 +59,7 @@ class ColumnWidgetParser extends WidgetParser {
       //     ? parseVerticalDirection(map['verticalDirection'])
       //     : VerticalDirection.down,
       children: DynamicWidgetBuilder.buildWidgets(
-          map.children, map.childrenLength, buildContext),
+          map.children.ref, buildContext),
     );
   }
 

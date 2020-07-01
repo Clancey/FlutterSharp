@@ -17,7 +17,7 @@ namespace Flutter {
 		{
 			init ();
 		}
-
+		bool isReady = false;
 		bool isInitalized;
 		void init ()
 		{
@@ -31,7 +31,7 @@ namespace Flutter {
 			MethodChannel.SetMethodCaller ((call, result) => {
 
 				if (call.Method == "ready" && Widget != null) {
-
+					isReady = true;
 					FlutterManager.SendState (Widget);
 				}
 				Flutter.Internal.Communicator.OnCommandReceived?.Invoke ((call.Method, call.Arguments.ToString (), (x) => {
@@ -51,7 +51,8 @@ namespace Flutter {
 					//Cleanup, send dispose
 				}
 				widget = value;
-				FlutterManager.SendState (widget);
+				if(isReady)
+					FlutterManager.SendState (widget);
 			}
 		}
 	}

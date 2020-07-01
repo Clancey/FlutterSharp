@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Flutter {
 	public class TabBar : Widget, IEnumerable {
 
-		private PinnedObject<NativeArray<IntPtr>> pinnedArray;
+		private PinnedObject<NativeArray<long>> pinnedArray;
 		IList<Tab> Tabs = new List<Tab>();
 		protected override FlutterObjectStruct CreateBackingStruct() => new MultiChildRenderObjectWidgetStruct();
 		public void Add (Tab child)
@@ -23,7 +23,7 @@ namespace Flutter {
 			base.PrepareForSending();
 			pinnedArray?.Dispose();
 
-			var array = new NativeArray<IntPtr>(Tabs.Count);
+			var array = new NativeArray<long>(Tabs.Count);
 			for (int i = 0; i < Tabs.Count; i++)
 			{
 				var c = Tabs[i];

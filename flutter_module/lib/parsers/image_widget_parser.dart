@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 
 class AssetImageWidgetParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
     return null;
     //TODO:
@@ -81,7 +81,7 @@ class AssetImageWidgetParser extends WidgetParser {
 
 class NetworkImageWidgetParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
     return null;
     //TODO: Implement

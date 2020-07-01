@@ -24,7 +24,7 @@ final mauiComponentStates = Map<String, _MauiComponentState>();
 const dotNetMessageChannel =
     const BasicMessageChannel('my/super/test', BinaryCodec());
 
-final mauiComponentStatesMaps = Map<String, FlutterObjectStruct>();
+final mauiComponentStatesMaps = Map<String, IFlutterObjectStruct>();
 
 _MauiComponentState getMauiComponentState(String componentId) {
   if (!mauiComponentStates.containsKey(componentId)) {
@@ -38,7 +38,7 @@ void setMauiState(String componentId, IFlutterObjectStruct address) {
   getMauiComponentState(componentId)?.updateMauiState(address);
 }
 
-FlutterObjectStruct getMauiState(String componentId) {
+IFlutterObjectStruct getMauiState(String componentId) {
   if (!mauiComponentStatesMaps.containsKey(componentId)) {
     return null;
   }
@@ -87,8 +87,8 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
     switch (message['messageType']) {
       case 'UpdateComponent':
         final componentId = message['componentId'];
-        String address = message['address'];
-        final ptr = int.parse(address);
+        int ptr = message['address'];
+       // final ptr = int.parse(address);
         final pointer = Pointer<FlutterObjectStruct>.fromAddress(ptr);
         setMauiState(componentId, pointer.ref);
         break;
@@ -123,13 +123,13 @@ class MauiComponent extends StatefulWidget {
 }
 
 class _MauiComponentState extends State<MauiComponent> {
-  FlutterObjectStruct _address;
+  IFlutterObjectStruct _address;
   String componentId;
 
   _MauiComponentState({this.componentId}) {
     _address = getMauiState(componentId);
   }
-  updateMauiState(FlutterObjectStruct address) {
+  updateMauiState(IFlutterObjectStruct address) {
     if (mounted) {
       setState(() {
         _address = address;

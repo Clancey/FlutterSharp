@@ -165,12 +165,12 @@ class DynamicWidgetBuilder {
   }
 
   static List<Widget> buildWidgets(
-      Pointer<Uint64> valuesPtr, int length, BuildContext buildContext) {
+      ChildrenStruct childrenStruct, BuildContext buildContext) {
     List<Widget> rt = [];
-    final values = valuesPtr.asTypedList(length);
+    final values =
+        childrenStruct.children.asTypedList(childrenStruct.childrenLength);
     for (var v in values) {
-      var map = Pointer<FlutterObjectStruct>.fromAddress(v);
-      rt.add(buildFromMap(map.ref, buildContext));
+      rt.add(buildFromAddress(v, buildContext));
     }
 
     //TODO: Fix
@@ -205,7 +205,7 @@ Future<dynamic> requestMauiData(
 /// extends this class to make a Flutter widget parser.
 abstract class WidgetParser {
   /// parse the json map into a flutter widget.
-  Widget parse(FlutterObjectStruct map, BuildContext buildContext);
+  Widget parse(IFlutterObjectStruct map, BuildContext buildContext);
 
   /// the widget type name for example:
   /// {"type" : "Text", "data" : "Denny"}

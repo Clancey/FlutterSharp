@@ -6,7 +6,7 @@ import 'drop_cap_text.dart';
 
 class DropCapTextParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     return null;
     //TODO: Implement
     // var map = Pointer<ContainerStruct>.fromAddress(fos.handle.address).ref;

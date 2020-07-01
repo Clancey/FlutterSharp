@@ -8,7 +8,7 @@ import '../maui_flutter.dart';
 
 class TextFieldParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<TextFieldStruct>.fromAddress(fos.handle.address).ref;
     final id = Utf8.fromUtf8(map.id);
     return SimpleTextField(id,

@@ -8,9 +8,9 @@ import '../maui_flutter.dart';
 
 class TabBarViewParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<MultiChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
-    return TabBarView(children: DynamicWidgetBuilder.buildWidgets(map.children,map.childrenLength, buildContext),);
+    return TabBarView(children: DynamicWidgetBuilder.buildWidgets(map.children.ref, buildContext),);
   }
 
   @override

@@ -8,7 +8,7 @@ import '../maui_flutter.dart';
 
 class ScaffoldParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<ScaffoldStruct>.fromAddress(fos.handle.address).ref;
     return Scaffold( appBar: DynamicWidgetBuilder.buildFromMap(map.appBar.ref, buildContext),
           body: DynamicWidgetBuilder.buildFromMap(map.body.ref, buildContext),

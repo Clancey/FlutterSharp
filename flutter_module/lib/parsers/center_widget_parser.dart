@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 class CenterWidgetParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     return null;
     //TODO:Implement
 

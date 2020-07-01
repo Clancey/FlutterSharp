@@ -70,7 +70,7 @@ namespace Flutter {
 		protected override FlutterObjectStruct CreateBackingStruct() => new MultiChildRenderObjectWidgetStruct();
 
 
-		private PinnedObject<NativeArray<IntPtr>> pinnedArray;
+		private PinnedObject<NativeArray<long>> pinnedArray;
 		protected IList<Widget> Children { get; set; } = new List<Widget>();
 
 		public void Add (Widget child)
@@ -86,7 +86,7 @@ namespace Flutter {
 		{
 			pinnedArray?.Dispose();
 
-			var array = new NativeArray<IntPtr>(Children.Count);
+			var array = new NativeArray<long> (Children.Count);
 			for (int i = 0; i < Children.Count; i++)
 			{
 				var c = Children[i];

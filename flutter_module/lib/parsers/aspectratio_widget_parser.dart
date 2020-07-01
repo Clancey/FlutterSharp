@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 
 class AspectRatioWidgetParser extends WidgetParser {
   @override
- Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+ Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<AspectRatioStruct>.fromAddress(fos.handle.address).ref;
     return AspectRatio(
       aspectRatio: map.value,

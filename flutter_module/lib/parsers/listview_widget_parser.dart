@@ -10,7 +10,7 @@ import 'package:flutter/widgets.dart';
 
 class ListViewWidgetParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<MultiChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
     return null;
     //TODO: Implement;

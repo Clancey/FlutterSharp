@@ -12,7 +12,7 @@ import '../utils.dart';
 
 class ListTileWidgetParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
     final id = Utf8.fromUtf8(map.id);
     return null;

@@ -45,7 +45,11 @@ namespace Flutter.Structs {
 
 		protected string GetString (IntPtr ptr) => Marshal.PtrToStringUTF8 (ptr);
 		protected void SetString (ref IntPtr ptr,string value) => ptr = Marshal.StringToCoTaskMemUTF8 (value);
-
+		protected void SetIntPtr(ref IntPtr ptr, Widget flutterObject)
+		{
+			flutterObject?.PrepareForSending ();
+			ptr = flutterObject;
+		}
 		const byte Yes = 1;
 		const byte No = 0;
 		protected bool GetValue(byte value) => value == Yes;
@@ -94,8 +98,10 @@ namespace Flutter.Structs {
 	[StructLayout(LayoutKind.Sequential)]
 	class AppBarStruct : WidgetStruct
 	{
-		public IntPtr Title { get; set; }
-		public IntPtr Bottom { get; set; }
+		IntPtr title;
+		IntPtr bottom;
+		public Widget Title { set => SetIntPtr (ref title, value); }
+		public Widget Bottom { set => SetIntPtr (ref bottom, value); }
 	}
 
 
@@ -178,16 +184,16 @@ namespace Flutter.Structs {
 	class ScaffoldStruct : WidgetStruct
 	{
 		IntPtr appBar;
-		public AppBar AppBar { set => appBar = value; }
+		public AppBar AppBar { set => SetIntPtr (ref appBar, value); }
 
 		IntPtr floatingActionButton;
-		public FloatingActionButton FloatingActionButton { set => floatingActionButton = value; }
+		public FloatingActionButton FloatingActionButton { set => SetIntPtr (ref floatingActionButton, value); }
 
 		IntPtr drawer;
-		public Drawer Drawer { set => drawer = value; }
+		public Drawer Drawer { set => SetIntPtr (ref drawer, value); }
 
 		IntPtr body;
-		public Widget Body { set => body = value; }
+		public Widget Body { set => SetIntPtr (ref body, value); }
 	}
 
 

@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 class ClipRRectWidgetParser extends WidgetParser {
   @override
-   Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
      return null;
      //TODO: implement
     // var map = Pointer<AspectRatioStruct>.fromAddress(fos.handle.address).ref;

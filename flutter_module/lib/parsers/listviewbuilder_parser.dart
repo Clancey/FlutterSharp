@@ -10,7 +10,7 @@ import '../maui_flutter.dart';
 
 class ListViewBuilderParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<ListViewBuilderStruct>.fromAddress(fos.handle.address).ref;
     final id = Utf8.fromUtf8(map.id);
     return ListView.builder(

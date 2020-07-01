@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class RaisedButtonParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
    // final id = map["id"];
    return null;

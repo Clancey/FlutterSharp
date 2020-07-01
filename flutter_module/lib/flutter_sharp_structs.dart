@@ -56,14 +56,19 @@ class SingleChildRenderObjectWidgetStruct extends Struct
   Pointer<WidgetStruct> child;
 }
 
-class IMultiChildRenderObjectWidgetStruct extends IWidgetStruct {
-  Pointer<Uint8> children;
+class ChildrenStruct extends Struct {
+  Pointer<Uint64> children;
+  @Int32()
   int childrenLength;
+}
+
+class IMultiChildRenderObjectWidgetStruct extends IWidgetStruct {
+  Pointer<ChildrenStruct> children;
 }
 
 //MultiChildRenderObjectWidgetStruct : WidgetStruct
 class MultiChildRenderObjectWidgetStruct extends Struct
-    implements IWidgetStruct {
+    implements IMultiChildRenderObjectWidgetStruct {
   //FlutterObject Struct
   Pointer handle;
   Pointer managedHandle;
@@ -71,9 +76,7 @@ class MultiChildRenderObjectWidgetStruct extends Struct
   //WidgetStruct
   Pointer<Utf8> id;
   //MultiChildRenderObjectWidgetStruct
-  Pointer<Uint64> children;
-  @Int32()
-  int childrenLength;
+  Pointer<ChildrenStruct> children;
 }
 
 class AlignmentStruct extends Struct {
@@ -169,9 +172,7 @@ class ColumnStruct extends Struct {
   //WidgetStruct
   Pointer<Utf8> id;
   //MultiChildRenderObjectWidgetStruct
-  Pointer<Uint8> children;
-  @Int32()
-  int childrenLength;
+  Pointer<ChildrenStruct> children;
 
   //ColumnStruct
   @Int8()
@@ -301,10 +302,7 @@ class RowStruct extends Struct {
   //WidgetStruct
   Pointer<Utf8> id;
   //MultiChildRenderObjectWidgetStruct
-  Pointer<Uint64> children;
-  @Int32()
-  int childrenLength;
-
+  Pointer<ChildrenStruct> children;
   //RowStruct
   @Int8()
   int hasAlignment;

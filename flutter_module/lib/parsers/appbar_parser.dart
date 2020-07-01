@@ -8,7 +8,7 @@ import '../maui_flutter.dart';
 
 class AppBarParser extends WidgetParser {
   @override
- Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+ Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<AppBarStruct>.fromAddress(fos.handle.address).ref;
     return AppBar(
         title: DynamicWidgetBuilder.buildFromMap(map.title.ref, buildContext),

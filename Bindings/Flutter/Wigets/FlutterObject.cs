@@ -72,5 +72,6 @@ namespace Flutter {
 		
 		public static implicit operator FlutterObjectStruct (FlutterObject obj) => obj?.FlutterObjectStruct;
 		public static implicit operator IntPtr(FlutterObject obj) => obj?.FlutterObjectStruct?.Handle ?? IntPtr.Zero;
+		public static implicit operator long (FlutterObject obj) => ((IntPtr)obj).ToInt64();
 	}
 }

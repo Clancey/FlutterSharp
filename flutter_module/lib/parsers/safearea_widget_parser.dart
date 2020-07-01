@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 
 class SafeAreaWidgetParser extends WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<RowStruct>.fromAddress(fos.handle.address).ref;
     return null;
     //TODO: implement

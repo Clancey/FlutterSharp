@@ -10,7 +10,7 @@ import 'package:flutter/widgets.dart';
 
 class TextWidgetParser implements WidgetParser {
   @override
-  Widget parse(FlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<TextStruct>.fromAddress(fos.handle.address).ref;
     String data = Utf8.fromUtf8(map.value);
     String textAlignString = null;//map['textAlign'];
