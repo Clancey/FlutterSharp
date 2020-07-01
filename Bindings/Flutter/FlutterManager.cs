@@ -33,7 +33,8 @@ namespace Flutter.Internal {
 		}
 		public static void SendState (Widget widget, string componentID = "0")
 		{
-			var message = new UpdateMessage { ComponentId = componentID, State = widget };
+			widget.PrepareForSending();
+			var message = new UpdateMessage { ComponentId = componentID, Address = ((IntPtr)widget).ToString() };
 			var json = JsonConvert.SerializeObject (message);
 			Communicator.SendCommand?.Invoke ((message.MessageType, json));
 		}

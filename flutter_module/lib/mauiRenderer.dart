@@ -64,14 +64,13 @@ const MethodChannel methodChannel =
     MethodChannel('com.Microsoft.FlutterSharp/Messages');
 
 class MauiRootRenderer extends StatefulWidget {
-  _MauiRootRendererState createState() =>  _MauiRootRendererState(key);
+  _MauiRootRendererState createState() => _MauiRootRendererState(key);
 }
-
 
 class _MauiRootRendererState extends State<MauiRootRenderer> {
   _MauiRootRendererState(Key key) {
     methodChannel.setMethodCallHandler((call) async {
-        _onEvent(call.arguments);
+      _onEvent(call.arguments);
       // print(call.arguments);
     });
     dotNetMessageChannel.setMessageHandler((bytes) async {
@@ -88,8 +87,9 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
     switch (message['messageType']) {
       case 'UpdateComponent':
         final componentId = message['componentId'];
-        int address = message['address'];
-         final pointer = Pointer<FlutterObjectStruct>.fromAddress(address);
+        String address = message['address'];
+        final ptr = int.parse(address);
+        final pointer = Pointer<FlutterObjectStruct>.fromAddress(ptr);
         setMauiState(componentId, pointer.ref);
         break;
       // case 'CreateDartObject':
@@ -118,7 +118,8 @@ class MauiComponent extends StatefulWidget {
 
   MauiComponent({this.componentId});
 
-  _MauiComponentState createState() => mauiComponentStates[componentId] = new _MauiComponentState(componentId:componentId);
+  _MauiComponentState createState() => mauiComponentStates[componentId] =
+      new _MauiComponentState(componentId: componentId);
 }
 
 class _MauiComponentState extends State<MauiComponent> {

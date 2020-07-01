@@ -79,7 +79,7 @@ namespace Flutter.Structs {
 
 	public unsafe class MultiChildRenderObjectWidgetStruct : WidgetStruct
 	{
-		public NativeArray<IntPtr> Children;
+		public IntPtr Children;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]

@@ -16,8 +16,8 @@ namespace Flutter {
 					FlutterManager.UntrackWidget (Widget);
 					//Cleanup, send dispose
 				}
-				FlutterManager.SendState (Widget);
 				widget = value;
+				FlutterManager.SendState (widget);
 			}
 		}
 

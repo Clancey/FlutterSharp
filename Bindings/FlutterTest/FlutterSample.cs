@@ -14,8 +14,7 @@ namespace FlutterTest {
 				new Row (MainAxisAlignment.Start) {
 					new Flexible {
 						new Container(padding: new EdgeInsetsGeometry(8)) {
-							new TextField {
-								Hint = "What's to be done?",
+							new TextField(hint:"What's to be done?") {
 								OnInput = (s) => {
 									SetState (() => {
 										items.Add(s);
@@ -35,51 +34,54 @@ namespace FlutterTest {
 									itemText = null;
 								});
 						}){
-							new Icon {
-								CodePoint = "58824",
-								FontFamily = "MaterialIcons"
-							},
+							new Icon (
+								codePoint: "58824",
+								fontFamily : "MaterialIcons"),
 						}
 					}
 				},
 				new Flexible {
-					new ListViewBuilder {
-						ItemCount = items.Count,
-						ItemBuilder = (row) =>  new Text(items[(int)row]),
-					}
+					new ListViewBuilder(
+						count: items.Count,
+						itemBuilder: (row) =>  new Text(items[(int)row])
+					),
 				}
 			};
 	}
 	public class ClickedPage : StatefulWidget {
 		int clicked = 0;
-		public override Widget Build () =>
+		public override Widget Build() =>
 			new Center {
 				new Column(MainAxisAlignment.SpaceAround) {
 					new Text($"You have pressed {clicked} times"),
-					new FloatingActionButton {
-						OnPressed = () => {
+					new FloatingActionButton (onPressed:() => {
 							SetState (() => {
 								//Communicator.SendCommand(("intptr",handle.ToString()));
 								clicked++;
 							});
-						},
-						Child = new Icon{ CodePoint="57669",FontFamily="MaterialIcons"},}}};
+						}){
+						new Icon(codePoint: "57669",fontFamily:"MaterialIcons")
+					}
+				}
+			};
 	}
 
 	public class FlutterSample : StatelessWidget {
 		public override Widget Build () => new DefaultTabController (2) {
-				new Scaffold {
-					AppBar = new AppBar {
-						Title = new Text("Hello from Maui!"),
-						Bottom = new TabBar {
+				new Scaffold (appbar:new AppBar (
+						title:new Text("Hello from Maui!"),
+						bottom: new TabBar {
 							new Tab{new Text("Counter")},
-							new Tab{new Text("Todo List")},}},
-					Drawer = new Drawer {
+							new Tab{new Text("Todo List")}
+						}),
+					drawer: new Drawer {
 						new Text("Add Navigation items!")
 					},
-					Body = new TabBarView {
+					body: new TabBarView {
 						new ClickedPage(),
 						new ListPage(),
-						}}};
+					}
+			)
+		};
 	}
 }
