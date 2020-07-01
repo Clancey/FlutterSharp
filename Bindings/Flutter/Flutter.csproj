@@ -1,8 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-  </PropertyGroup>
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras">
+    <PropertyGroup>
+        <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);netstandard2.1;Xamarin.iOS10;MonoAndroid10.0;Xamarin.Mac20;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">$(TargetFrameworks);netstandard2.1;Xamarin.iOS10;MonoAndroid10.0;Xamarin.Mac20</TargetFrameworks>
+        <RootNamespace>Flutter</RootNamespace>
+    </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
@@ -15,7 +17,7 @@
         <Folder Include="Messages\" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
     <ItemGroup>
       <Compile Update="FlutterStructs.cs">
