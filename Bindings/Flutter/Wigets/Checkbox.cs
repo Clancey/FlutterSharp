@@ -6,9 +6,8 @@ namespace Flutter {
 		protected override FlutterObjectStruct CreateBackingStruct() => new CheckboxStruct();
 	
 		public Action<bool> OnChange {
-			get;set;
-			//get => GetProperty<Action<bool>> ();
-			//set => SetProperty (value);
+			get => GetAction<Action<bool>> ();
+			set => SetAction (value);
 		}
 	}
 }

@@ -72,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedJar Include="Jars\flutter_embedding_debug-1.0.0-e8c13aa012c915c6a290d2a85950af67303e75f9.jar" />
+    <LibraryProjectZip Include="..\..\flutter_module\build\host\outputs\repo\com\FlutterSharp\flutter_sharp\flutter_sharp_debug\1.0\flutter_sharp_debug-1.0.aar">
+      <Link>Jars\flutter_debug-1.0.aar</Link>
+    </LibraryProjectZip>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Flutter\Flutter.csproj">

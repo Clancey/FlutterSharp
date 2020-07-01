@@ -18,12 +18,13 @@ class ListViewBuilderParser extends WidgetParser {
       itemCount: map.itemCount,
       itemBuilder: (c, index) {
         return FutureBuilder(
-            future: requestMauiData(id, "itemBuilder", index),
+            future: requestMauiData(id, "ItemBuilder", index),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData)
-                return DynamicWidgetBuilder.buildFromAddress(
-                    snapshot.data, context);
-              return Text("...");
+              if (snapshot.hasData) {
+                var pointer = int.parse(snapshot.data);
+                return DynamicWidgetBuilder.buildFromAddress(pointer, context);
+              }
+              return SizedBox.shrink();
             });
       },
     );

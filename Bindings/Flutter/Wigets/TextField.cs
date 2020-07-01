@@ -10,16 +10,14 @@ namespace Flutter {
 		}
 		protected override FlutterObjectStruct CreateBackingStruct() => new TextFieldStruct();
 
-		public Action<string> OnInput {
-			get;set;
-			//get => GetProperty<Action<string>> ();
-			//set => SetProperty (value);
+		public Action<string> OnSubmitted {
+			get => GetAction<Action<string>> ();
+			set => SetAction (value);
 		}
 
 		public Action<string> OnChange {
-			get;set;
-			//get => GetProperty<Action<string>> ();
-			//set => SetProperty (value);
+			get => GetAction<Action<string>> ();
+			set => SetAction (value);
 		}
 	}
 }

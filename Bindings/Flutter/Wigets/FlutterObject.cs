@@ -23,7 +23,22 @@ namespace Flutter {
 		protected virtual string FlutterType => this.GetType ().Name;
 
 		internal Dictionary<string, Delegate> actions = new Dictionary<string, Delegate> ();
-		
+		protected T GetAction<T> (T defaultValue = default, [CallerMemberName] string propertyName = "", bool shouldCamelCase = true) where T : Delegate
+		{
+			if (actions.TryGetValue (propertyName, out var val))
+				return (T)val;
+			return defaultValue;
+		}
+		protected bool SetAction<T> (T value, [CallerMemberName] string propertyName = "", bool shouldCamelCase = true) where T : Delegate
+		{
+			if (actions.TryGetValue (propertyName, out var val)) {
+				if (EqualityComparer<T>.Default.Equals ((T)val, value))
+					return false;
+			}
+			actions [propertyName] = value;
+			return true;
+		}
+
 		internal void SendEvent(string key, object value, Action<string> returnAction)
 		{
 			if (!actions.TryGetValue (key, out var action))
@@ -37,17 +52,25 @@ namespace Flutter {
 			else
 				result = action.DynamicInvoke ();
 			if (returnAction != null) {
-				var json = result == null ? "" : JsonConvert.SerializeObject (result);
-				returnAction?.Invoke (json);
+				string resultString = "";
+				if(result != null) {
+					if (result is FlutterObject fo)
+						resultString = ((long)fo).ToString ();
+					else
+						resultString = JsonConvert.SerializeObject (result);
+				}
+				returnAction?.Invoke (resultString);
 			}
 		}
+
+
 
 		private bool disposedValue;
 		protected virtual void Dispose (bool disposing)
 		{
 			if (!disposedValue) {
 				if (disposing) {
-					// TODO: dispose managed state (managed objects)
+					actions.Clear ();
 				}
 
 				FlutterObjectStruct.Dispose();

@@ -66,10 +66,10 @@ class _SimpleTextFieldState extends State<SimpleTextField> {
     return TextField(
       controller: controller,
       onChanged: (value) {
-        raiseMauiEvent(id, "onChange", value);
+        raiseMauiEvent(id, "OnChange", value);
       },
       onSubmitted: (value) {
-        raiseMauiEvent(id, "onInput", value);
+        raiseMauiEvent(id, "OnSubmitted", value);
       },
       decoration: widget.decoration,
     );

@@ -23,6 +23,12 @@
       <Compile Update="FlutterStructs.cs">
         <SubType></SubType>
       </Compile>
+      <Compile Update="Helpers\FixedSizeDictionary.cs">
+        <SubType></SubType>
+      </Compile>
+      <Compile Update="Helpers\FixedSizedQueue.cs">
+        <SubType></SubType>
+      </Compile>
     </ItemGroup>
     <ProjectExtensions>
       <MonoDevelop>

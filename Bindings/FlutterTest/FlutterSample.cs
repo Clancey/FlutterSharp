@@ -15,7 +15,7 @@ namespace FlutterTest {
 					new Flexible {
 						new Container(padding: new EdgeInsetsGeometry(8)) {
 							new TextField(hint:"What's to be done?") {
-								OnInput = (s) => {
+								OnSubmitted = (s) => {
 									SetState (() => {
 										items.Add(s);
 									});

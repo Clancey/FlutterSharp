@@ -18,7 +18,7 @@ class FloatingActionButtonParser extends WidgetParser {
         //TODO: Implement
         // tooltip: map["tooltip"],
         onPressed: () {
-          raiseMauiEvent(id, "onPressed", null);
+          raiseMauiEvent(id, "OnPressed", null);
         },
         child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext));
   }
