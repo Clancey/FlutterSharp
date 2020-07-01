@@ -321,7 +321,7 @@ class ScaffoldStruct extends Struct {
   Pointer<Utf8> id;
 
   //ScaffoldStruct
-  Pointer<AppBarStruct> appBar;
+  Pointer<WidgetStruct> appBar;
   Pointer<WidgetStruct> floatingActionButton;
   Pointer<WidgetStruct> drawer;
   Pointer<WidgetStruct> body;

@@ -14,10 +14,8 @@ class AlignWidgetParser extends WidgetParser {
           ? parseAlignment(map.alignment.ref)
           : Alignment.center,
       widthFactor: map.hasWidthFactor == 1 ? map.widthFactor : null,
-      heightFactor:
-          map.hasHeightFactor == 1 ? map.heightFactor : null,
-      child: DynamicWidgetBuilder.buildFromMap(
-          map.child.ref, buildContext),
+      heightFactor: map.hasHeightFactor == 1 ? map.heightFactor : null,
+      child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext),
     );
   }
 

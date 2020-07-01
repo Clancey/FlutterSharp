@@ -88,7 +88,7 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
       case 'UpdateComponent':
         final componentId = message['componentId'];
         int ptr = message['address'];
-       // final ptr = int.parse(address);
+        // final ptr = int.parse(address);
         final pointer = Pointer<FlutterObjectStruct>.fromAddress(ptr);
         setMauiState(componentId, pointer.ref);
         break;
@@ -142,7 +142,8 @@ class _MauiComponentState extends State<MauiComponent> {
   @override
   Widget build(BuildContext context) {
     if (_address != null) {
-      return DynamicWidgetBuilder.buildFromMap(_address, context);
+      var w = DynamicWidgetBuilder.buildFromMap(_address, context);
+      return w;
     } else {
       return SizedBox.shrink();
     }

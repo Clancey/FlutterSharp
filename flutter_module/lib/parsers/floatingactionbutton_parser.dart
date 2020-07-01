@@ -10,15 +10,17 @@ import '../maui_flutter.dart';
 class FloatingActionButtonParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
+    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
+            fos.handle.address)
+        .ref;
     final id = Utf8.fromUtf8(map.id);
     return FloatingActionButton(
-      //TODO: Implement
+        //TODO: Implement
         // tooltip: map["tooltip"],
-        onPressed: () { 
-            raiseMauiEvent(id,"onPressed",null);
-         },
-        child: DynamicWidgetBuilder.buildFromMap(map.child.ref, buildContext));
+        onPressed: () {
+          raiseMauiEvent(id, "onPressed", null);
+        },
+        child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext));
   }
 
   @override

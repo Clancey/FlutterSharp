@@ -127,34 +127,44 @@ class DynamicWidgetBuilder {
 
   static Widget buildFromAddress(int pointer, BuildContext buildContext) {
     if (pointer == 0) return null;
-    var map = Pointer<FlutterObjectStruct>.fromAddress(pointer);
-    var widget = buildFromMap(map.ref, buildContext);
+    var map = Pointer<WidgetStruct>.fromAddress(pointer);
+    var widget = buildFromPointer(map, buildContext);
     return widget;
   }
 
   static final _trackedDartObjects = <String, dynamic>{};
 
+  static Widget buildFromPointer(
+      Pointer<WidgetStruct> p, BuildContext buildContext) {
+    if (p.address == 0) return null;
+    return buildFromMap(p.ref, buildContext);
+  }
+
   static Widget buildFromMap(
       IFlutterObjectStruct fos, BuildContext buildContext) {
     if (fos == null) return null;
-    String widgetName = Utf8.fromUtf8(fos.widgetType);
     initDefaultParsersIfNess();
-    //TODO: Bring back ID
+    String widgetName = Utf8.fromUtf8(fos.widgetType);
+    print("Parsing: $widgetName");
     var parser = _widgetNameParserMap[widgetName];
     if (parser != null) {
-      //if(!wrapInComponent)
-      return parser.parse(fos, buildContext);
+      var w = parser.parse(fos, buildContext);
+      print("Parsing complete: $widgetName");
+      return w;
     }
     log.warning("Not support type: $widgetName");
     return Text("Unknown widget type $widgetName");
   }
 
   static Widget buildMauiComponenet(
-      IWidgetStruct map, BuildContext buildContext) {
+      ISingleChildRenderObjectWidgetStruct map, BuildContext buildContext) {
     if (map == null) return null;
     String id = Utf8.fromUtf8(map.id);
+    print("Creating MauiComponent :$id");
     var mc = new MauiComponent(componentId: id);
-    setMauiState(id, map);
+    print("Setting State MauiComponent :$id");
+    if (map.child.address != 0) setMauiState(id, map.child.ref);
+    print("Setting State Set :$id");
     return mc;
   }
 
@@ -165,19 +175,18 @@ class DynamicWidgetBuilder {
   }
 
   static List<Widget> buildWidgets(
-      ChildrenStruct childrenStruct, BuildContext buildContext) {
+      Pointer<ChildrenStruct> chldPtr, BuildContext buildContext) {
     List<Widget> rt = [];
-    final values =
-        childrenStruct.children.asTypedList(childrenStruct.childrenLength);
-    for (var v in values) {
-      rt.add(buildFromAddress(v, buildContext));
+    if (chldPtr.address != 0) {
+      var childrenStruct = chldPtr.ref;
+      if (childrenStruct.childrenLength > 0) {
+        final values =
+            childrenStruct.children.asTypedList(childrenStruct.childrenLength);
+        for (var v in values) {
+          rt.add(buildFromAddress(v, buildContext));
+        }
+      }
     }
-
-    //TODO: Fix
-    // if(values != null)
-    // for (var value in values) {
-    //   rt.add(buildFromMap(value, buildContext));
-    // }
     return rt;
   }
 }

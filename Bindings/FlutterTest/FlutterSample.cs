@@ -50,7 +50,7 @@ namespace FlutterTest {
 	}
 	public class ClickedPage : StatefulWidget {
 		int clicked = 0;
-		public override Widget Build() =>
+		public override Widget Build () =>
 			new Center {
 				new Column(MainAxisAlignment.SpaceAround) {
 					new Text($"You have pressed {clicked} times"),

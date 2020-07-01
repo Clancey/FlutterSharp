@@ -8,8 +8,12 @@ import '../maui_flutter.dart';
 class TabParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
-    return Tab(child: DynamicWidgetBuilder.buildFromMap(map.child.ref, buildContext),);
+    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
+            fos.handle.address)
+        .ref;
+    return Tab(
+      child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext),
+    );
   }
 
   @override

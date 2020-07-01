@@ -10,10 +10,11 @@ import 'package:flutter/widgets.dart';
 class ExpandedSizedBoxWidgetParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
+    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
+            fos.handle.address)
+        .ref;
     return SizedBox.expand(
-      child: DynamicWidgetBuilder.buildFromMap(
-          map.child.ref, buildContext),
+      child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext),
     );
   }
 
@@ -24,7 +25,9 @@ class ExpandedSizedBoxWidgetParser extends WidgetParser {
 class SizedBoxWidgetParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
+    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
+            fos.handle.address)
+        .ref;
     return null;
     // return SizedBox(
     //   width: map["width"],

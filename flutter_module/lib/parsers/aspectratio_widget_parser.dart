@@ -1,4 +1,3 @@
-
 import 'dart:ffi';
 
 import '../flutter_sharp_structs.dart';
@@ -8,12 +7,11 @@ import 'package:flutter/widgets.dart';
 
 class AspectRatioWidgetParser extends WidgetParser {
   @override
- Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<AspectRatioStruct>.fromAddress(fos.handle.address).ref;
     return AspectRatio(
       aspectRatio: map.value,
-      child: DynamicWidgetBuilder.buildFromMap(
-          map.child.ref, buildContext),
+      child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext),
     );
   }
 

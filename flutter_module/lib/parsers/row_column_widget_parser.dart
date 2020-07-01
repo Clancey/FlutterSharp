@@ -14,7 +14,8 @@ class RowWidgetParser extends WidgetParser {
       // crossAxisAlignment: map.containsKey('crossAxisAlignment')
       //     ? parseCrossAxisAlignment(map['crossAxisAlignment'])
       //     : CrossAxisAlignment.center,
-      mainAxisAlignment: parseMainAxisAlignment(map.hasAlignment,map.alignment),
+      mainAxisAlignment:
+          parseMainAxisAlignment(map.hasAlignment, map.alignment),
       // mainAxisSize: map.containsKey('mainAxisSize')
       //     ? parseMainAxisSize(map['mainAxisSize'])
       //     : MainAxisSize.max,
@@ -27,8 +28,7 @@ class RowWidgetParser extends WidgetParser {
       // verticalDirection: map.containsKey('verticalDirection')
       //     ? parseVerticalDirection(map['verticalDirection'])
       //     : VerticalDirection.down,
-      children: DynamicWidgetBuilder.buildWidgets(
-          map.children.ref, buildContext),
+      children: DynamicWidgetBuilder.buildWidgets(map.children, buildContext),
     );
   }
 
@@ -39,13 +39,14 @@ class RowWidgetParser extends WidgetParser {
 class ColumnWidgetParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<RowStruct>.fromAddress(fos.handle.address).ref;
-    
+    var map = Pointer<ColumnStruct>.fromAddress(fos.handle.address).ref;
+
     return Column(
       // crossAxisAlignment: map.containsKey('crossAxisAlignment')
       //     ? parseCrossAxisAlignment(map['crossAxisAlignment'])
       //     : CrossAxisAlignment.center,
-      mainAxisAlignment: parseMainAxisAlignment(map.hasAlignment,map.alignment),
+      mainAxisAlignment:
+          parseMainAxisAlignment(map.hasAlignment, map.alignment),
       // mainAxisSize: map.containsKey('mainAxisSize')
       //     ? parseMainAxisSize(map['mainAxisSize'])
       //     : MainAxisSize.max,
@@ -58,8 +59,7 @@ class ColumnWidgetParser extends WidgetParser {
       // verticalDirection: map.containsKey('verticalDirection')
       //     ? parseVerticalDirection(map['verticalDirection'])
       //     : VerticalDirection.down,
-      children: DynamicWidgetBuilder.buildWidgets(
-          map.children.ref, buildContext),
+      children: DynamicWidgetBuilder.buildWidgets(map.children, buildContext),
     );
   }
 

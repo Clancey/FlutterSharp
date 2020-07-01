@@ -10,11 +10,13 @@ class ScaffoldParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<ScaffoldStruct>.fromAddress(fos.handle.address).ref;
-    return Scaffold( appBar: DynamicWidgetBuilder.buildFromMap(map.appBar.ref, buildContext),
-          body: DynamicWidgetBuilder.buildFromMap(map.body.ref, buildContext),
-          floatingActionButton: DynamicWidgetBuilder.buildFromMap(map.floatingActionButton.ref, buildContext),
-          drawer: DynamicWidgetBuilder.buildFromMap(map.drawer.ref, buildContext),
-        );
+    return Scaffold(
+      appBar: DynamicWidgetBuilder.buildFromPointer(map.appBar, buildContext),
+      body: DynamicWidgetBuilder.buildFromPointer(map.body, buildContext),
+      floatingActionButton: DynamicWidgetBuilder.buildFromPointer(
+          map.floatingActionButton, buildContext),
+      drawer: DynamicWidgetBuilder.buildFromPointer(map.drawer, buildContext),
+    );
   }
 
   @override

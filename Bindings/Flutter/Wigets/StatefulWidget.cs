@@ -11,6 +11,7 @@ namespace Flutter {
 			base.PrepareForSending();
 			if (Child == null)
 				Child = Build ();
+			Child?.PrepareForSending ();
 		}
 
 		public void SetState(Action setState)
