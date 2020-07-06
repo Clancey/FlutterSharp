@@ -1,15 +1,22 @@
+import 'dart:ffi';
+
+import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_module/flutter_sharp_structs.dart';
+import 'package:flutter_module/utils.dart';
 import '../maui_flutter.dart';
 
 class TextFieldParser extends WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext) {
-    final id = map["id"];
-    return SimpleTextField(id,
-      text: map['text'],
-      decoration:
-          InputDecoration(border: OutlineInputBorder(), hintText: map["hint"]),
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+    var map = Pointer<TextFieldStruct>.fromAddress(fos.handle.address).ref;
+    final id = parseString(map.id);
+    return SimpleTextField(
+      id,
+      text: parseString(map.value),
+      decoration: InputDecoration(
+          border: OutlineInputBorder(), hintText: parseString(map.hint)),
     );
   }
 
@@ -59,10 +66,10 @@ class _SimpleTextFieldState extends State<SimpleTextField> {
     return TextField(
       controller: controller,
       onChanged: (value) {
-        raiseMauiEvent(id, "onChange", value);
+        raiseMauiEvent(id, "OnChange", value);
       },
       onSubmitted: (value) {
-          raiseMauiEvent(id,"onInput",value);
+        raiseMauiEvent(id, "OnSubmitted", value);
       },
       decoration: widget.decoration,
     );

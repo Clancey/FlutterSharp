@@ -1,20 +1,15 @@
-﻿using System;
+﻿using Flutter.Structs;
+using System;
 namespace Flutter {
+	
 	public class Align : SingleChildRenderObjectWidget {
-		public Alignment? Alignment {
-			get => GetProperty<Alignment?> ();
-			set => SetProperty (value);
+		public Align(Alignment? alignment = null, double? widthFactor = null, double? heightFactor = null)
+		{
+			var backingStruct = GetBackingStruct<AlignStruct>();
+			backingStruct.Alignment = alignment;
+			backingStruct.WidthFactor = widthFactor;
+			backingStruct.HeightFactor = heightFactor;
 		}
-
-		public double? WidthFactor {
-			get => GetProperty<double?> ();
-			set => SetProperty (value);
-		}
-
-		public double? HeightFactor {
-			get => GetProperty<double?> ();
-			set => SetProperty (value);
-		}
-
+		protected override FlutterObjectStruct CreateBackingStruct() => new AlignStruct();
 	}
 }

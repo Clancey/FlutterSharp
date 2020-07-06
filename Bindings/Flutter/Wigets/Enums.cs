@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 
 namespace Flutter {
-	[JsonConverter (typeof (EdgeInsetsGeometryConverter))]
 	public struct EdgeInsetsGeometry {
 		public EdgeInsetsGeometry (double all)
 		{

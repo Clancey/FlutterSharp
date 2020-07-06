@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
+import '../flutter_sharp_structs.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/material.dart';
@@ -8,40 +10,43 @@ import 'package:flutter/widgets.dart';
 
 class ListViewWidgetParser extends WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext) {
-    var scrollDirection = Axis.vertical;
-    if (map.containsKey("scrollDirection") &&
-        "horizontal" == map["scrollDirection"]) {
-      scrollDirection = Axis.horizontal;
-    }
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+    var map = Pointer<MultiChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
+    return null;
+    //TODO: Implement;
+    // var scrollDirection = Axis.vertical;
+    // if (map.containsKey("scrollDirection") &&
+    //     "horizontal" == map["scrollDirection"]) {
+    //   scrollDirection = Axis.horizontal;
+    // }
 
-    var reverse = map.containsKey("reverse") ? map['reverse'] : false;
-    var shrinkWrap = map.containsKey("shrinkWrap") ? map["shrinkWrap"] : false;
-    var cacheExtent = map.containsKey("cacheExtent") ? map["cacheExtent"] : 0.0;
-    var padding = map.containsKey('padding')
-        ? parseEdgeInsetsGeometry(map['padding'])
-        : null;
-    var itemExtent = map.containsKey("itemExtent") ? map["itemExtent"] : null;
-    var children = DynamicWidgetBuilder.buildWidgets(
-        map['children'], buildContext);
-    var pageSize = map.containsKey("pageSize") ? map["pageSize"] : 10;
-    var loadMoreUrl =
-        map.containsKey("loadMoreUrl") ? map["loadMoreUrl"] : null;
-    var isDemo = map.containsKey("isDemo") ? map["isDemo"] : false;
+    // var reverse = map.containsKey("reverse") ? map['reverse'] : false;
+    // var shrinkWrap = map.containsKey("shrinkWrap") ? map["shrinkWrap"] : false;
+    // var cacheExtent = map.containsKey("cacheExtent") ? map["cacheExtent"] : 0.0;
+    // var padding = map.containsKey('padding')
+    //     ? parseEdgeInsetsGeometry(map['padding'])
+    //     : null;
+    // var itemExtent = map.containsKey("itemExtent") ? map["itemExtent"] : null;
+    // var children = DynamicWidgetBuilder.buildWidgets(
+    //     map['children'], buildContext);
+    // var pageSize = map.containsKey("pageSize") ? map["pageSize"] : 10;
+    // var loadMoreUrl =
+    //     map.containsKey("loadMoreUrl") ? map["loadMoreUrl"] : null;
+    // var isDemo = map.containsKey("isDemo") ? map["isDemo"] : false;
 
-    var params = new ListViewParams(
-        scrollDirection,
-        reverse,
-        shrinkWrap,
-        cacheExtent,
-        padding,
-        itemExtent,
-        children,
-        pageSize,
-        loadMoreUrl,
-        isDemo);
+    // var params = new ListViewParams(
+    //     scrollDirection,
+    //     reverse,
+    //     shrinkWrap,
+    //     cacheExtent,
+    //     padding,
+    //     itemExtent,
+    //     children,
+    //     pageSize,
+    //     loadMoreUrl,
+    //     isDemo);
 
-    return new ListViewWidget(params, buildContext);
+    // return new ListViewWidget(params, buildContext);
   }
 
   @override
@@ -93,18 +98,18 @@ class _ListViewWidgetState extends State<ListViewWidget> {
 
   _getMoreData() async {
     if (!isPerformingRequest) {
-      setState(() => isPerformingRequest = true);
-      //TODO: Make a request to the app
-      var jsonString = "";//_params.isDemo ? await fakeRequest() : await doRequest();
-      var buildWidgets = DynamicWidgetBuilder.buildWidgets(
-          jsonDecode(jsonString), widget._buildContext);
-      setState(() {
-        if (buildWidgets.isEmpty) {
-          loadCompleted = true;
-        }
-        _items.addAll(buildWidgets);
-        isPerformingRequest = false;
-      });
+      // setState(() => isPerformingRequest = true);
+      // //TODO: Make a request to the app
+      // var jsonString = "";//_params.isDemo ? await fakeRequest() : await doRequest();
+      // var buildWidgets = DynamicWidgetBuilder.buildWidgets(
+      //     jsonDecode(jsonString), widget._buildContext);
+      // setState(() {
+      //   if (buildWidgets.isEmpty) {
+      //     loadCompleted = true;
+      //   }
+      //   _items.addAll(buildWidgets);
+      //   isPerformingRequest = false;
+      // });
     }
   }
 

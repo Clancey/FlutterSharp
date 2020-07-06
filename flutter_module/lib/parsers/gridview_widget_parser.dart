@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 
+import '../flutter_sharp_structs.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/material.dart';
@@ -9,49 +11,53 @@ import 'package:flutter/widgets.dart';
 
 class GridViewWidgetParser extends WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext) {
-    var scrollDirection = Axis.vertical;
-    if (map.containsKey("scrollDirection") &&
-        "horizontal" == map["scrollDirection"]) {
-      scrollDirection = Axis.horizontal;
-    }
-    int crossAxisCount = map['crossAxisCount'];
-    bool reverse = map.containsKey("reverse") ? map['reverse'] : false;
-    bool shrinkWrap = map.containsKey("shrinkWrap") ? map["shrinkWrap"] : false;
-    double cacheExtent =
-        map.containsKey("cacheExtent") ? map["cacheExtent"] : 0.0;
-    EdgeInsetsGeometry padding = map.containsKey('padding')
-        ? parseEdgeInsetsGeometry(map['padding'])
-        : null;
-    double mainAxisSpacing =
-        map.containsKey('mainAxisSpacing') ? map['mainAxisSpacing'] : 0.0;
-    double crossAxisSpacing =
-        map.containsKey('crossAxisSpacing') ? map['crossAxisSpacing'] : 0.0;
-    double childAspectRatio =
-        map.containsKey('childAspectRatio') ? map['childAspectRatio'] : 1.0;
-    var children = DynamicWidgetBuilder.buildWidgets(
-        map['children'], buildContext);
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
 
-    var pageSize = map.containsKey("pageSize") ? map["pageSize"] : 10;
-    var loadMoreUrl =
-        map.containsKey("loadMoreUrl") ? map["loadMoreUrl"] : null;
-    var isDemo = map.containsKey("isDemo") ? map["isDemo"] : false;
+    return null;
+    //TODO: Implement
+    // var scrollDirection = Axis.vertical;
+    // if (map.containsKey("scrollDirection") &&
+    //     "horizontal" == map["scrollDirection"]) {
+    //   scrollDirection = Axis.horizontal;
+    // }
+    // int crossAxisCount = map['crossAxisCount'];
+    // bool reverse = map.containsKey("reverse") ? map['reverse'] : false;
+    // bool shrinkWrap = map.containsKey("shrinkWrap") ? map["shrinkWrap"] : false;
+    // double cacheExtent =
+    //     map.containsKey("cacheExtent") ? map["cacheExtent"] : 0.0;
+    // EdgeInsetsGeometry padding = map.containsKey('padding')
+    //     ? parseEdgeInsetsGeometry(map['padding'])
+    //     : null;
+    // double mainAxisSpacing =
+    //     map.containsKey('mainAxisSpacing') ? map['mainAxisSpacing'] : 0.0;
+    // double crossAxisSpacing =
+    //     map.containsKey('crossAxisSpacing') ? map['crossAxisSpacing'] : 0.0;
+    // double childAspectRatio =
+    //     map.containsKey('childAspectRatio') ? map['childAspectRatio'] : 1.0;
+    // var children = DynamicWidgetBuilder.buildWidgets(
+    //     map['children'], buildContext);
 
-    GridViewParams params = GridViewParams(
-        crossAxisCount,
-        scrollDirection,
-        reverse,
-        shrinkWrap,
-        cacheExtent,
-        padding,
-        mainAxisSpacing,
-        crossAxisSpacing,
-        childAspectRatio,
-        children,
-        pageSize,
-        loadMoreUrl,
-        isDemo);
-    return GridViewWidget(params, buildContext);
+    // var pageSize = map.containsKey("pageSize") ? map["pageSize"] : 10;
+    // var loadMoreUrl =
+    //     map.containsKey("loadMoreUrl") ? map["loadMoreUrl"] : null;
+    // var isDemo = map.containsKey("isDemo") ? map["isDemo"] : false;
+
+    // GridViewParams params = GridViewParams(
+    //     crossAxisCount,
+    //     scrollDirection,
+    //     reverse,
+    //     shrinkWrap,
+    //     cacheExtent,
+    //     padding,
+    //     mainAxisSpacing,
+    //     crossAxisSpacing,
+    //     childAspectRatio,
+    //     children,
+    //     pageSize,
+    //     loadMoreUrl,
+    //     isDemo);
+    // return GridViewWidget(params, buildContext);
   }
 
   @override
@@ -104,17 +110,17 @@ class _GridViewWidgetState extends State<GridViewWidget> {
 
   _getMoreData() async {
     if (!isPerformingRequest) {
-      setState(() => isPerformingRequest = true);
-      var jsonString = _params.isDemo ? await fakeRequest() : await doRequest();
-      var buildWidgets = DynamicWidgetBuilder.buildWidgets(
-          jsonDecode(jsonString), widget._buildContext);
-      setState(() {
-        if (buildWidgets.isEmpty) {
-          loadCompleted = true;
-        }
-        _items.addAll(buildWidgets);
-        isPerformingRequest = false;
-      });
+      // setState(() => isPerformingRequest = true);
+      // var jsonString = _params.isDemo ? await fakeRequest() : await doRequest();
+      // var buildWidgets = DynamicWidgetBuilder.buildWidgets(
+      //     jsonDecode(jsonString), widget._buildContext);
+      // setState(() {
+      //   if (buildWidgets.isEmpty) {
+      //     loadCompleted = true;
+      //   }
+      //   _items.addAll(buildWidgets);
+      //   isPerformingRequest = false;
+      // });
     }
   }
 

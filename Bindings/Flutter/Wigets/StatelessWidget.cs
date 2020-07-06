@@ -1,17 +1,16 @@
 ﻿using System;
 namespace Flutter {
-	public abstract class StatelessWidget : Widget {
-		Widget Child {
-			get => GetProperty<Widget> ();
-			set => SetProperty (value);
-		}
+	public abstract class StatelessWidget : SingleChildRenderObjectWidget {
 		public abstract Widget Build ();
-		internal override void BeforeJSon ()
+
+		public override void PrepareForSending()
 		{
+			base.PrepareForSending();
 			if (Child == null)
 				Child = Build ();
+			Child?.PrepareForSending ();
 		}
 
-		protected override string type => "StatefulWidget";
+		protected override string FlutterType => "StatefulWidget";
 	}
 }

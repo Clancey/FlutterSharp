@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Flutter.Internal {
@@ -31,11 +32,18 @@ namespace Flutter.Internal {
 			AliveWidgets.Remove (id);
 			Communicator.SendDisposed (id);
 		}
-		public static void SendState (Widget widget, string componentID = "0")
+		public static async void SendState (Widget widget, string componentID = "0")
 		{
-			var message = new UpdateMessage { ComponentId = componentID, State = widget };
-			var json = JsonConvert.SerializeObject (message);
-			Communicator.SendCommand?.Invoke ((message.MessageType, json));
+			//await Task.Delay (20000);
+			try {
+				widget.PrepareForSending ();
+				var message = new UpdateMessage { ComponentId = componentID, Address = widget };
+				var json = JsonConvert.SerializeObject (message);
+				Communicator.SendCommand?.Invoke ((message.MessageType, json));
+			}
+			catch(Exception ex) {
+				Console.WriteLine (ex);
+			}
 		}
 	}
 }

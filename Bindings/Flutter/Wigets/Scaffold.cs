@@ -1,22 +1,21 @@
-﻿using System;
+﻿using Flutter.Structs;
+using System;
 namespace Flutter {
 	public class Scaffold : Widget {
 
-		public AppBar AppBar {
-			get => GetProperty<AppBar> ();
-			set => SetProperty (value);
+		AppBar appbar;
+		FloatingActionButton floatingActionButton;
+		Drawer drawer;
+		Widget body;
+		public Scaffold(AppBar appbar = null, FloatingActionButton floatingActionButton = null, Drawer drawer = null, Widget body = null)
+		{
+			var s = GetBackingStruct<ScaffoldStruct>();
+			s.AppBar = this.appbar =appbar;
+			s.FloatingActionButton = this.floatingActionButton = floatingActionButton;
+			s.Drawer = this.drawer = drawer;
+			s.Body = this.body = body;
 		}
-		public FloatingActionButton FloatingActionButton {
-			get => GetProperty<FloatingActionButton> ();
-			set => SetProperty (value);
-		}
-		public Drawer Drawer {
-			get => GetProperty<Drawer> ();
-			set => SetProperty (value);
-		}
-		public Widget Body {
-			get => GetProperty<Widget> ();
-			set => SetProperty (value);
-		}
+
+		protected override FlutterObjectStruct CreateBackingStruct() => new ScaffoldStruct();
 	}
 }

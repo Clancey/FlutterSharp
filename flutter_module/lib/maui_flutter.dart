@@ -1,7 +1,13 @@
 library maui_flutter;
 
+import 'dart:io' show Platform;
+import 'dart:ffi';
+import 'dart:typed_data';
+import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_module/flutter_sharp_structs.dart';
+import 'package:flutter_module/utils.dart';
 import 'mauiRenderer.dart';
 import 'dart:convert';
 
@@ -120,43 +126,48 @@ class DynamicWidgetBuilder {
     }
   }
 
-  static Widget buildFromJson(String json, BuildContext buildContext) {
-    if(json == null)
-      return null;
-    var map = jsonDecode(json);
-    var widget = buildFromMap(map, buildContext);
+  static Widget buildFromAddress(int pointer, BuildContext buildContext) {
+    if (pointer == 0) return null;
+    var map = Pointer<WidgetStruct>.fromAddress(pointer);
+    var widget = buildFromPointer(map, buildContext);
     return widget;
   }
 
   static final _trackedDartObjects = <String, dynamic>{};
 
+  static Widget buildFromPointer(
+      Pointer<WidgetStruct> p, BuildContext buildContext) {
+    if (p.address == 0) return null;
+    return buildFromMap(p.ref, buildContext);
+  }
+
   static Widget buildFromMap(
-      Map<String, dynamic> map, BuildContext buildContext) {
-    if (map == null)
-      return null;
-    String widgetName = map['type'];
+      IFlutterObjectStruct fos, BuildContext buildContext) {
+    if (fos == null) return null;
     initDefaultParsersIfNess();
-    //TODO: Bring back ID
+    String widgetName = parseString(fos.widgetType);
+    print("Parsing: $widgetName");
     var parser = _widgetNameParserMap[widgetName];
     if (parser != null) {
-      //if(!wrapInComponent)
-        return parser.parse(map, buildContext);
-
+      var w = parser.parse(fos, buildContext);
+      print("Parsing complete: $widgetName");
+      return w;
     }
     log.warning("Not support type: $widgetName");
     return Text("Unknown widget type $widgetName");
   }
 
-
-    static Widget buildMauiComponenet(Map<String, dynamic> map, BuildContext buildContext)
-    {
-      if (map == null)
-        return null;
-      String id = map['id'];
-      var mc = new MauiComponent(componentId: id);
-      setMauiState(id,map['child']);
-      return mc;
-    }
+  static Widget buildMauiComponenet(
+      ISingleChildRenderObjectWidgetStruct map, BuildContext buildContext) {
+    if (map == null) return null;
+    String id = parseString(map.id);
+    print("Creating MauiComponent :$id");
+    var mc = new MauiComponent(componentId: id);
+    print("Setting State MauiComponent :$id");
+    if (map.child.address != 0) setMauiState(id, map.child.ref);
+    print("Setting State Set :$id");
+    return mc;
+  }
 
   void releaseTrackedDartObject(String id) {
     if (_trackedDartObjects.containsKey(id)) {
@@ -165,36 +176,46 @@ class DynamicWidgetBuilder {
   }
 
   static List<Widget> buildWidgets(
-      List<dynamic> values, BuildContext buildContext) {
+      Pointer<ChildrenStruct> chldPtr, BuildContext buildContext) {
     List<Widget> rt = [];
-    if(values != null)
-    for (var value in values) {
-      rt.add(buildFromMap(value, buildContext));
+    if (chldPtr.address != 0) {
+      var childrenStruct = chldPtr.ref;
+      if (childrenStruct.childrenLength > 0) {
+        final values =
+            childrenStruct.children.asTypedList(childrenStruct.childrenLength);
+        for (var v in values) {
+          rt.add(buildFromAddress(v, buildContext));
+        }
+      }
     }
     return rt;
   }
 }
-Future raiseMauiEvent(String componentId, String eventName, dynamic args) async {
-  return methodChannel.invokeMethod("Event",json.encode({
-    'eventName': eventName,
-    'componentId': componentId,
-    'data': args
-  }));
+
+Future raiseMauiEvent(
+    String componentId, String eventName, dynamic args) async {
+  return methodChannel.invokeMethod(
+      "Event",
+      json.encode(
+          {'eventName': eventName, 'componentId': componentId, 'data': args}));
 }
 
-Future<dynamic> requestMauiData(String componentId, String eventName, dynamic args) {
-  return methodChannel.invokeMethod("Event",json.encode({
-    'eventName': eventName,
-    'componentId': componentId,
-    'needsReturn': true,
-    'data': args
-  }));
+Future<dynamic> requestMauiData(
+    String componentId, String eventName, dynamic args) {
+  return methodChannel.invokeMethod(
+      "Event",
+      json.encode({
+        'eventName': eventName,
+        'componentId': componentId,
+        'needsReturn': true,
+        'data': args
+      }));
 }
 
 /// extends this class to make a Flutter widget parser.
 abstract class WidgetParser {
   /// parse the json map into a flutter widget.
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext);
+  Widget parse(IFlutterObjectStruct map, BuildContext buildContext);
 
   /// the widget type name for example:
   /// {"type" : "Text", "data" : "Denny"}

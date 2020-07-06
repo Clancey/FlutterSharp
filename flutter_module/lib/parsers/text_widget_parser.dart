@@ -1,3 +1,8 @@
+import 'dart:ffi';
+
+import 'package:ffi/ffi.dart';
+import 'package:flutter_module/flutter_sharp_structs.dart';
+
 import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/gestures.dart';
@@ -5,20 +10,21 @@ import 'package:flutter/widgets.dart';
 
 class TextWidgetParser implements WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext) {
-    String data = map['value'];
-    String textAlignString = map['textAlign'];
-    String overflow = map['overflow'];
-    int maxLines = map['maxLines'];
-    String semanticsLabel = map['semanticsLabel'];
-    bool softWrap = map['softWrap'];
-    String textDirectionString = map['textDirection'];
-    double textScaleFactor = map['textScaleFactor'];
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+    var map = Pointer<TextStruct>.fromAddress(fos.handle.address).ref;
+    String data = parseString(map.value);
+    String textAlignString = null; //map['textAlign'];
+    String overflow = null; //map['overflow'];
+    int maxLines = null; //map['maxLines'];
+    String semanticsLabel = null; // map['semanticsLabel'];
+    bool softWrap = null; //map['softWrap'];
+    String textDirectionString = null; //map['textDirection'];
+    double textScaleFactor = null; // map['textScaleFactor'];
     var textSpan;
     var textSpanParser = TextSpanParser();
-    if (map.containsKey("textSpan")) {
-      textSpan = textSpanParser.parse(map['textSpan']);
-    }
+    // if (map.containsKey("textSpan")) {
+    //   textSpan = textSpanParser.parse(map['textSpan']);
+    // }
 
     if (textSpan == null) {
       return Text(
@@ -29,7 +35,7 @@ class TextWidgetParser implements WidgetParser {
         semanticsLabel: semanticsLabel,
         softWrap: softWrap,
         textDirection: parseTextDirection(textDirectionString),
-        style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
+        // style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
         textScaleFactor: textScaleFactor,
       );
     } else {
@@ -41,7 +47,7 @@ class TextWidgetParser implements WidgetParser {
         semanticsLabel: semanticsLabel,
         softWrap: softWrap,
         textDirection: parseTextDirection(textDirectionString),
-        style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
+        // style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
         textScaleFactor: textScaleFactor,
       );
     }
@@ -58,7 +64,7 @@ class TextSpanParser {
         text: map['value'],
         style: parseTextStyle(map['style']),
         recognizer: TapGestureRecognizer()
-          ..onTap = () {            
+          ..onTap = () {
             //TODO: On Tap
           },
         children: []);
@@ -70,8 +76,7 @@ class TextSpanParser {
     return textSpan;
   }
 
-  void parseChildren(
-      TextSpan textSpan, List<dynamic> childrenSpan) {
+  void parseChildren(TextSpan textSpan, List<dynamic> childrenSpan) {
     for (var childmap in childrenSpan) {
       textSpan.children.add(parse(childmap));
     }

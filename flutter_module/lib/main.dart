@@ -32,7 +32,8 @@ void main() {
 }
 
 String getStringFromBytes(ByteData data) {
-  final list = data.buffer.asUint16List(data.offsetInBytes, data.lengthInBytes >> 1);
+  final list =
+      data.buffer.asUint16List(data.offsetInBytes, data.lengthInBytes >> 1);
   return String.fromCharCodes(list);
 }
 
@@ -53,7 +54,6 @@ class MyApp extends StatelessWidget {
 
 // final blazorComponentStates = Map<int, _BlazorComponentState>();
 // const dotNetMessageChannel = const BasicMessageChannel('my/super/test', BinaryCodec());
-
 
 // _BlazorComponentState getOrCreateBlazorComponentState(int componentId) {
 //   if (!blazorComponentStates.containsKey(componentId)) {
@@ -392,5 +392,5 @@ class MyApp extends StatelessWidget {
 //       },
 //       decoration: widget.decoration,
 //     );
-//   }  
+//   }
 // }

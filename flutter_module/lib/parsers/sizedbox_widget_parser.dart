@@ -1,3 +1,7 @@
+import 'dart:ffi';
+
+import 'package:flutter_module/flutter_sharp_structs.dart';
+
 import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/widgets.dart';
@@ -5,10 +9,12 @@ import 'package:flutter/widgets.dart';
 //Creates a box that will become as large as its parent allows.
 class ExpandedSizedBoxWidgetParser extends WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext) {
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
+            fos.handle.address)
+        .ref;
     return SizedBox.expand(
-      child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext),
+      child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext),
     );
   }
 
@@ -18,13 +24,17 @@ class ExpandedSizedBoxWidgetParser extends WidgetParser {
 
 class SizedBoxWidgetParser extends WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext) {
-    return SizedBox(
-      width: map["width"],
-      height: map["height"],
-      child: DynamicWidgetBuilder.buildFromMap(
-          map["child"], buildContext),
-    );
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
+            fos.handle.address)
+        .ref;
+    return null;
+    // return SizedBox(
+    //   width: map["width"],
+    //   height: map["height"],
+    //   child: DynamicWidgetBuilder.buildFromMap(
+    //       map.child.ref, buildContext),
+    // );
   }
 
   @override

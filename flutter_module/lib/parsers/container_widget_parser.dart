@@ -1,24 +1,31 @@
+import 'dart:ffi';
+
+import '../flutter_sharp_structs.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/widgets.dart';
 
 class ContainerWidgetParser extends WidgetParser {
   @override
-  Widget parse(Map<String, dynamic> map, BuildContext buildContext) {
-    Alignment alignment = parseAlignment(map['alignment']);
-    Color color = parseHexColor(map['color']);
-    BoxConstraints constraints = parseBoxConstraints(map['constraints']);
+  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+    var map = Pointer<ContainerStruct>.fromAddress(fos.handle.address).ref;
+    Alignment alignment = map.hasAlignment == 1
+        ? parseAlignment(map.alignment.ref)
+        : Alignment.center;
+    Color color = map.hasColor == 1 ? parseColor(map.color.ref) : null;
+    //TODO: Bring back
+    BoxConstraints constraints =
+        null; //parseBoxConstraints(map['constraints']);
     //TODO: decoration, foregroundDecoration and transform properties to be implemented.
-    Decoration decoration = parseBoxDecoration(map['decoration']);
-    EdgeInsetsGeometry margin = parseEdgeInsetsGeometry(map['margin']);
-    EdgeInsetsGeometry padding = parseEdgeInsetsGeometry(map['padding']);
-    Map<String, dynamic> childMap = map['child'];
+    Decoration decoration = null; //parseBoxDecoration(map['decoration']);
+    EdgeInsetsGeometry margin =
+        parseEdgeInsetsGeometry(map.hasMargin, map.margin.ref);
+    EdgeInsetsGeometry padding =
+        parseEdgeInsetsGeometry(map.hasPadding, map.padding.ref);
+    var childMap = map.child;
     Widget child = childMap == null
         ? null
-        : DynamicWidgetBuilder.buildFromMap(childMap, buildContext);
-
-    String clickEvent =
-        map.containsKey("click_event") ? map['click_event'] : "";
+        : DynamicWidgetBuilder.buildFromPointer(childMap, buildContext);
 
     var containerWidget = Container(
       alignment: alignment,
@@ -26,22 +33,22 @@ class ContainerWidgetParser extends WidgetParser {
       color: color,
       decoration: decoration,
       margin: margin,
-      width: map['width'],
-      height: map['height'],
+      width: map.hasWidth == 1 ? map.width : null,
+      height: map.hasHeight == 1 ? map.height : null,
       constraints: constraints,
       child: child,
     );
 
-    if (clickEvent != null) {
-      return GestureDetector(
-        onTap: () {
-            //TODO: On Tap
-        },
-        child: containerWidget,
-      );
-    } else {
-      return containerWidget;
-    }
+    // if (clickEvent != null) {
+    //   return GestureDetector(
+    //     onTap: () {
+    //         //TODO: On Tap
+    //     },
+    //     child: containerWidget,
+    //   );
+    // } else {
+    return containerWidget;
+    // }
   }
 
   @override

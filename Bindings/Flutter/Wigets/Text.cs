@@ -1,18 +1,13 @@
-﻿using System;
+﻿using Flutter.Structs;
+using System;
 namespace Flutter {
 	public class Text : Widget{
-		public Text(string text = "")
+		public Text(string text = "", double? scaleFactor = null)
 		{
-			Value = text;
+			var s = GetBackingStruct<TextStruct>();
+			s.Value = text;
+			s.ScaleFactor = scaleFactor;
 		}
-		public string Value {
-			get => GetProperty<string> ();
-			set => SetProperty (value);
-		}
-
-		public double? ScaleFactor {
-			get => GetProperty<double?> ();
-			set => SetProperty (value);
-		}
+		protected override FlutterObjectStruct CreateBackingStruct() => new TextStruct();
 	}
 }

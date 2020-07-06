@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flutter.Structs;
+using System;
 namespace Flutter {
 	public class Container : SingleChildRenderObjectWidget {
 		public Container(Alignment? alignment = null,
@@ -8,45 +9,15 @@ namespace Flutter {
 			double? width = null,
 			double? height = null)
 		{
-			Alignment = alignment;
-			Padding = padding;
-			Margin = margin;
-			Color = color;
-			Width = width;
-			Height = height;
+
+			var backingStruct = GetBackingStruct<ContainerStruct>();
+			backingStruct.Alignment = alignment;
+			backingStruct.Padding = padding;
+			backingStruct.Margin = margin;
+			backingStruct.Color = color;
+			backingStruct.Width = width;
+			backingStruct.Height = height;
 		}
-
-
-		public Alignment? Alignment {
-			get => GetProperty<Alignment?> ();
-			set => SetProperty (value);
-		}
-
-		public EdgeInsetsGeometry? Padding {
-			get => GetProperty<EdgeInsetsGeometry?> ();
-			set => SetProperty (value);
-		}
-
-		public EdgeInsetsGeometry? Margin {
-			get => GetProperty<EdgeInsetsGeometry?> ();
-			set => SetProperty (value);
-		}
-
-		public Color? Color {
-			get => GetProperty<Color?> ();
-			set => SetProperty (value);
-		}
-
-
-		public double? Width {
-			get => GetProperty<double?> ();
-			set => SetProperty (value);
-		}
-
-		public double? Height {
-			get => GetProperty<double?> ();
-			set => SetProperty (value);
-		}
-
+		protected override FlutterObjectStruct CreateBackingStruct() => new ContainerStruct();
 	}
 }

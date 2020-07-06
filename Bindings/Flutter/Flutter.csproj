@@ -5,6 +5,12 @@
         <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">$(TargetFrameworks);netstandard2.1;Xamarin.iOS10;MonoAndroid10.0;Xamarin.Mac20</TargetFrameworks>
         <RootNamespace>Flutter</RootNamespace>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
     <ItemGroup>
         <Folder Include="Wigets\" />
         <Folder Include="Helpers\" />
@@ -12,6 +18,17 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="FlutterStructs.cs">
+        <SubType></SubType>
+      </Compile>
+      <Compile Update="Helpers\FixedSizeDictionary.cs">
+        <SubType></SubType>
+      </Compile>
+      <Compile Update="Helpers\FixedSizedQueue.cs">
+        <SubType></SubType>
+      </Compile>
     </ItemGroup>
     <ProjectExtensions>
       <MonoDevelop>
