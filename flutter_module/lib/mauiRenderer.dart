@@ -79,7 +79,8 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
       return null;
     });
 
-    _invokeCallbackToDotNet({'ready': key.toString()}); // Arbitrary message
+    _invokeCallbackToDotNet(
+        json.encode({'readyPlayer1': key.toString()})); // Arbitrary message
   }
 
   void _onEvent(String json) {
