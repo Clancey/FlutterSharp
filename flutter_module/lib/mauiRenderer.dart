@@ -70,6 +70,8 @@ class MauiRootRenderer extends StatefulWidget {
 class _MauiRootRendererState extends State<MauiRootRenderer> {
   _MauiRootRendererState(Key key) {
     methodChannel.setMethodCallHandler((call) async {
+      var method = call.method;
+      print("On Message: $method");
       _onEvent(call.arguments);
       // print(call.arguments);
     });
@@ -131,6 +133,7 @@ class _MauiComponentState extends State<MauiComponent> {
     _address = getMauiState(componentId);
   }
   updateMauiState(IFlutterObjectStruct address) {
+    print("updating state: $address");
     if (mounted) {
       setState(() {
         _address = address;
@@ -142,6 +145,7 @@ class _MauiComponentState extends State<MauiComponent> {
 
   @override
   Widget build(BuildContext context) {
+    print("building MauiComponentUI: $_address");
     if (_address != null) {
       var w = DynamicWidgetBuilder.buildFromMap(_address, context);
       return w;

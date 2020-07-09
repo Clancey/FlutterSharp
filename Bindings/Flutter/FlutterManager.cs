@@ -32,7 +32,7 @@ namespace Flutter.Internal {
 			AliveWidgets.Remove (id);
 			Communicator.SendDisposed (id);
 		}
-		public static async void SendState (Widget widget, string componentID = "0")
+		public static void SendState (Widget widget, string componentID = "0")
 		{
 			//await Task.Delay (20000);
 			try {

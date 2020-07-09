@@ -40,6 +40,7 @@ String getStringFromBytes(ByteData data) {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print("Creating App!");
     return MaterialApp(
       title: 'Flutter Demo1',
       theme: ThemeData(
