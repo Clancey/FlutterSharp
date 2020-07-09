@@ -29,7 +29,6 @@
 
             "label": "publish-pi",
             "type": "shell",
-            "dependsOn": "build",
             "presentation": {
                 "reveal": "always",
                 "panel": "new"

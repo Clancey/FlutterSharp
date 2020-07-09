@@ -14,10 +14,7 @@
     <ProjectReference Include="..\Flutter\Flutter.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="libFlutter.so" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="libFlutter.so">
+    <None Include="libFlutter.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

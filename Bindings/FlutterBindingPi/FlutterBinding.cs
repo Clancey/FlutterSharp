@@ -133,9 +133,9 @@ namespace Flutter {
 	}
 
 	internal unsafe static class FlutterBridge {
-		[DllImport (dllImport, EntryPoint = "runMono")]
+		[DllImport (dllImport, EntryPoint = "initializeEngine")]
 		public static extern int runMono ();
-		[DllImport (dllImport, EntryPoint = "runMonoLoop")]
+		[DllImport (dllImport, EntryPoint = "runMainLoop")]
 		public static extern int runMonoLoop ();
 
 		const string dllImport = "Flutter";
