@@ -10,6 +10,10 @@ namespace Flutter {
 		public static Task<int> RunApp () => Task.Run (FlutterBridge.runMonoLoop);
 	}
 	public unsafe class FlutterMethodChannel : IDisposable {
+		static FlutterMethodChannel()
+		{
+			globalStaticCallback = GlobalOnNativeCallback;
+		}
 		static Dictionary<string, FlutterMethodChannel> Channels = new Dictionary<string, FlutterMethodChannel> ();
 		static FlutterMethodChannel Register (FlutterMethodChannel channel)
 		{
@@ -34,18 +38,25 @@ namespace Flutter {
 				value = Register (new FlutterMethodChannel (channel));
 			return value;
 		}
+		static FlutterBridge.MethodChannelCallback globalStaticCallback;
 		protected FlutterMethodChannel (string channel)
 		{
 			this.channel = channel;
 			Channels [channel] = this;
 			Console.WriteLine ($"Creating Chanel: {channel}");
-			FlutterBridge.SetReceiver (channel, OnNativeCallback);
+			FlutterBridge.SetReceiver (channel, globalStaticCallback);
 		}
-		unsafe void OnNativeCallback (string channel, ref PlatchObj obj, IntPtr callbackHandle)
+		unsafe static void GlobalOnNativeCallback (string channel, ref PlatchObj obj, IntPtr callbackHandle)
 		{
 			var completion = new FlutterResult (channel, callbackHandle);
-			callback?.Invoke (channel, obj.Method, obj.Args.Value, completion);
+			if(Channels.TryGetValue(channel, out var instance)){
+				instance.OnNativeCallback(obj.Method, obj.Args.Value, completion);
+			}
 			completion?.RunIfNotComplete ();
+		}
+		void OnNativeCallback(string method, string args, FlutterResult completion){
+
+			callback?.Invoke (channel, method, args, completion);
 		}
 
 		public void Dispose ()
