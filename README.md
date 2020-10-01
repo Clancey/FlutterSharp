@@ -8,7 +8,7 @@ Flutter messaging built into the engine to talk to native frameworks.  We use th
 
 On the .net side we create objects and pin them to memory. This allows us to load them as structs directly on the dart/flutter side. This allows both runtimes to read/write from shared memory!
 
-#Building
+# Building
 
 * Make sure you have Flutter installed.
 * Run the `build.sh`
