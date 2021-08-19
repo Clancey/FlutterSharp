@@ -598,5 +598,5 @@ Border parseBorder(dynamic jsonValue) {
 
 String parseString(Pointer<Utf8> input) {
   if (input.address == 0) return null;
-  return Utf8.fromUtf8(input);
+  return input.toDartString();
 }
