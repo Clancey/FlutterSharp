@@ -55,11 +55,6 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="..\..\flutter_module\build\host\outputs\repo\com\example\flutter_module\flutter_debug\1.0\flutter_debug-1.0.aar">
-      <Link>Jars\flutter_debug-1.0.aar</Link>
-    </LibraryProjectZip>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\FlutterCoreBindingAndroid\FlutterCoreBindingAndroid.csproj">
       <Project>{14C51EEA-271B-4B90-92FC-CD0C37ECF6CC}</Project>
       <Name>FlutterCoreBindingAndroid</Name>

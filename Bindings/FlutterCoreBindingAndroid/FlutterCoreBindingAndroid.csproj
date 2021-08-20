@@ -55,24 +55,34 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.AndroidX.Lifecycle.Common">
-      <Version>2.2.0.1</Version>
+      <Version>2.3.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Fragment">
-      <Version>1.2.4.1</Version>
+      <Version>1.3.6.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Annotation">
-      <Version>1.1.0.1</Version>
+      <Version>1.2.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedNativeLibrary Include="lib\x86\libflutter.so" />
-    <EmbeddedNativeLibrary Include="lib\arm64-v8a\libflutter.so" />
-    <EmbeddedNativeLibrary Include="lib\armeabi-v7a\libflutter.so" />
-    <EmbeddedNativeLibrary Include="lib\x86_64\libflutter.so" />
+    <EmbeddedNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\x86\libflutter.so">
+        <Link>lib\x86\libflutter.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\arm64-v8a\libflutter.so">
+        <Link>lib\arm64-v8a\libflutter.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\armeabi-v7a\libflutter.so">
+        <Link>lib\armeabi-v7a\libflutter.so</Link>
+    </EmbeddedNativeLibrary>
+    <EmbeddedNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\x86_64\libflutter.so">
+        <Link>lib\x86_64\libflutter.so</Link>
+    </EmbeddedNativeLibrary>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedJar Include="Jars\flutter_embedding_debug-1.0.0-e8c13aa012c915c6a290d2a85950af67303e75f9.jar" />
     <LibraryProjectZip Include="..\..\flutter_module\build\host\outputs\repo\com\FlutterSharp\flutter_sharp\flutter_sharp_debug\1.0\flutter_sharp_debug-1.0.aar">
+      <Link>Jars\flutter_sharp_debug-1.0.aar</Link>
+    </LibraryProjectZip>
+    <LibraryProjectZip Include="..\..\flutter_module\build\host\outputs\repo\com\example\flutter_module\flutter_debug\1.0\flutter_debug-1.0.aar">
       <Link>Jars\flutter_debug-1.0.aar</Link>
     </LibraryProjectZip>
   </ItemGroup>
@@ -81,6 +91,11 @@
       <Project>{1EE09805-24DB-4831-8754-EF87F5152380}</Project>
       <Name>Flutter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedJar Include="..\..\flutter_module\build\flutter_embedding_debug.jar">
+         <Link>Jars\flutter_embedding_debug.jar</Link>
+    </EmbeddedJar>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

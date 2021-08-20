@@ -26,7 +26,7 @@ namespace Flutter {
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
-			GeneratedPluginRegistrant.RegisterWith (FlutterEngine);
+			//GeneratedPluginRegistrant.RegisterWith (FlutterEngine);
 			channel = new MethodChannel (FlutterEngine.DartExecutor, "com.Microsoft.FlutterSharp/Messages");
 			Flutter.Internal.Communicator.SendCommand = (x) => channel.InvokeMethod (x.Method, x.Arguments);
 			channel.SetMethodCallHandler (this);

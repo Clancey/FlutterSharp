@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   # maui_flutter: ^0.0.1
   logging: ^1.0.1
+  flutter_sharp:
+    path: ../flutter_sharp
 
 
   # The following adds the Cupertino Icons font to your application.
