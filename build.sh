@@ -1,9 +1,15 @@
 #!/bin/bash
-version="1.0.0-241c87ad800beeab545ab867354d4683d5bfb6ce"
+
+flutterCommand=`which flutter`
+flutterBin=${flutterCommand%/flutter}
+engineVersion="$flutterBin/internal/engine.version"
+version=`cat $engineVersion`
+
+echo "Using Flutter $version"
 flutter_embedding_debug="https://storage.googleapis.com/download.flutter.io/io/flutter/flutter_embedding_debug/$version/flutter_embedding_debug-$version.jar"
 
-
 cd flutter_module
+
 echo "Cleaning Flutter"
 flutter clean
 echo "Building Flutter iOS"
