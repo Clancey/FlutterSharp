@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="MSBuild.Sdk.Extras">
-    <PropertyGroup>
-        <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);netstandard2.1;Xamarin.iOS10;MonoAndroid10.0;Xamarin.Mac20;netcoreapp3.1</TargetFrameworks>
-        <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">$(TargetFrameworks);netstandard2.1;Xamarin.iOS10;MonoAndroid10.0;Xamarin.Mac20</TargetFrameworks>
-        <RootNamespace>Flutter</RootNamespace>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-      <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    </PropertyGroup>
-    <ItemGroup>
-        <Folder Include="Wigets\" />
-        <Folder Include="Helpers\" />
-        <Folder Include="Messages\" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    </ItemGroup>
-    <ItemGroup>
-      <Compile Update="FlutterStructs.cs">
-        <SubType></SubType>
-      </Compile>
-      <Compile Update="Helpers\FixedSizeDictionary.cs">
-        <SubType></SubType>
-      </Compile>
-      <Compile Update="Helpers\FixedSizedQueue.cs">
-        <SubType></SubType>
-      </Compile>
-    </ItemGroup>
-    <ProjectExtensions>
-      <MonoDevelop>
-        <Properties>
-          <Policies>
-            <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
-          </Policies>
-        </Properties>
-      </MonoDevelop>
-    </ProjectExtensions>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net6.0-ios;net6.0-android;</TargetFrameworks>
+		<RootNamespace>Flutter</RootNamespace>
+		<AssemblyName>Flutter</AssemblyName>
+		<IsPackable>false</IsPackable>
+		<UseMauiAssets>true</UseMauiAssets>
+		<UseMauiCore>true</UseMauiCore>
+		<UseMauiEssentials>true</UseMauiEssentials>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<PropertyGroup>
+		<PackageId>FlutterSharp</PackageId>
+	</PropertyGroup>
+	<PropertyGroup>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<Folder Include="Wigets\" />
+		<Folder Include="Helpers\" />
+		<Folder Include="Messages\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	</ItemGroup>
+	<ItemGroup Condition="$(IsiOS) == true">
+		<NativeReference Include="..\..\flutter_module\build\Debug\App.xcframework" Kind="Framework" />
+		<NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework" Kind="Framework" />
+		<NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework" Kind="Framework" />
+		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="FlutterStructs.cs">
+			<SubType>
+			</SubType>
+		</Compile>
+		<Compile Update="Helpers\FixedSizeDictionary.cs">
+			<SubType>
+			</SubType>
+		</Compile>
+		<Compile Update="Helpers\FixedSizedQueue.cs">
+			<SubType>
+			</SubType>
+		</Compile>
+	</ItemGroup>
+	<ProjectExtensions>
+		<MonoDevelop>
+			<Properties>
+				<Policies>
+					<DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
+				</Policies>
+			</Properties>
+		</MonoDevelop>
+	</ProjectExtensions>
 </Project>
