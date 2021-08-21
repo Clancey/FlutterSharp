@@ -80,6 +80,9 @@ namespace Flutter.Internal {
 		[Export ("initWithName:project:")]
 		IntPtr Constructor ([NullAllowed] string name, [NullAllowed] NSObject project);
 
+		[Export("initWithName:")]
+		IntPtr Constructor([NullAllowed] string name);
+
 		[Export ("runWithEntrypoint:")]
 		bool Run ([NullAllowed] string entrypoint);
 
@@ -100,7 +103,6 @@ namespace Flutter.Internal {
 
 	[BaseType (typeof (NSObject))]
 	[Model]
-	[Protocol]
 	interface FlutterBinaryMessenger {
 
 	}
