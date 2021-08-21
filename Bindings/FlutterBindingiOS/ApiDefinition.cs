@@ -6,7 +6,6 @@ using UIKit;
 
 namespace Flutter.Internal.iOS {
 	[DisableDefaultCtor]
-	[Protocol]
 	[BaseType (typeof (UIViewController))]
 	interface FlutterViewController {
 
@@ -76,11 +75,13 @@ namespace Flutter.Internal {
 	// For more information, see https://aka.ms/ios-binding
 	//
 	[BaseType (typeof (NSObject))]
-	[Protocol]
 	interface FlutterEngine {
 
 		[Export ("initWithName:project:")]
 		IntPtr Constructor ([NullAllowed] string name, [NullAllowed] NSObject project);
+
+		[Export("initWithName:")]
+		IntPtr Constructor([NullAllowed] string name);
 
 		[Export ("runWithEntrypoint:")]
 		bool Run ([NullAllowed] string entrypoint);
@@ -90,7 +91,6 @@ namespace Flutter.Internal {
 	}
 
 	[BaseType(typeof(NSObject))]
-	[Protocol]
 	interface GeneratedPluginRegistrant {
 		[Static]
 		[Export ("registerWithRegistry:")]
@@ -103,12 +103,10 @@ namespace Flutter.Internal {
 
 	[BaseType (typeof (NSObject))]
 	[Model]
-	[Protocol]
 	interface FlutterBinaryMessenger {
 
 	}
 	[BaseType(typeof(NSObject))]
-	[Protocol]
 	interface FlutterMethodCall {
 		[Export("method")]
 		string Method { get; }
@@ -119,7 +117,6 @@ namespace Flutter.Internal {
 	delegate void FlutterResult ([NullAllowed] NSObject result);
 	delegate void FlutterMethodCallHandler (FlutterMethodCall call, [BlockCallback] FlutterResult result);
 	[BaseType(typeof(NSObject))]
-	[Protocol]
 	interface FlutterMethodChannel {
 
 		[Export ("methodChannelWithName:binaryMessenger:")]

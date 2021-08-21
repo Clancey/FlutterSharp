@@ -127,12 +127,26 @@
     <ItemGroup>
         <Compile Include="Main.cs" />
         <Compile Include="AppDelegate.cs" />
-    </ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="..\..\flutter_module\build\Debug\App.xcframework">
+      <Kind>Framework</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
+    <NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework">
+      <Kind>Framework</Kind>
+      <ForceLoad>True</ForceLoad>
+    </NativeReference>
+    <NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework">
+      <Kind>Framework</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
+    <NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework">
+      <Kind>Framework</Kind>
+      <SmartLink>False</SmartLink>
+    </NativeReference>
+  </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\FlutterBindingiOS\FlutterBindingiOS.csproj">
-        <Project>{CCE1476B-4AFC-4B00-B3E7-B5F44D6C3DBC}</Project>
-        <Name>FlutterBindingiOS</Name>
-      </ProjectReference>
       <ProjectReference Include="..\Flutter\Flutter.csproj">
         <Project>{1EE09805-24DB-4831-8754-EF87F5152380}</Project>
         <Name>Flutter</Name>
@@ -140,6 +154,10 @@
       <ProjectReference Include="..\FlutterTest\FlutterTest.csproj">
         <Project>{BA45E29A-F32C-4E9C-BE61-88B4F40A8D46}</Project>
         <Name>FlutterTest</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\FlutterBindingiOS\FlutterBindingiOS.csproj">
+        <Project>{CCE1476B-4AFC-4B00-B3E7-B5F44D6C3DBC}</Project>
+        <Name>FlutterBindingiOS</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

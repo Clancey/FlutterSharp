@@ -9,7 +9,7 @@ namespace Flutter {
 		FlutterMethodChannel MethodChannel;
 		static FlutterEngine CreateDefaultEngine ()
 		{
-			var engine = new FlutterEngine ("io.flutter", null);
+			var engine = new FlutterEngine ("io.flutter");
 			engine.Run (null);
 			return engine;
 		}
