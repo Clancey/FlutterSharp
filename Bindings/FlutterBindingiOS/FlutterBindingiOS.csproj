@@ -48,19 +48,19 @@
     <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\flutter_module\build\Debug\App.framework">
+    <NativeReference Include="..\..\flutter_module\build\Debug\App.xcframework">
       <Kind>Framework</Kind>
       <SmartLink>False</SmartLink>
     </NativeReference>
-    <NativeReference Include="..\..\flutter_module\build\Debug\Flutter.framework">
+    <NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework">
       <Kind>Framework</Kind>
       <SmartLink>False</SmartLink>
     </NativeReference>
-    <NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.framework">
+    <NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework">
       <Kind>Framework</Kind>
       <SmartLink>False</SmartLink>
     </NativeReference>
-    <NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.framework">
+    <NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework">
       <Kind>Framework</Kind>
       <SmartLink>False</SmartLink>
     </NativeReference>
