@@ -1,46 +1,48 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFrameworks>net6.0;net6.0-ios;net6.0-android;</TargetFrameworks>
-		<RootNamespace>Flutter</RootNamespace>
-		<AssemblyName>Flutter</AssemblyName>
-		<IsPackable>false</IsPackable>
-		<UseMauiAssets>true</UseMauiAssets>
-		<UseMauiCore>true</UseMauiCore>
-		<UseMauiEssentials>true</UseMauiEssentials>
+  <PropertyGroup>
+		<TargetFrameworks>net6.0-ios;net6.0-android;</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <SingleProject>true</SingleProject>
+    <ApplicationTitle>FlutterSharp</ApplicationTitle>
+    <ApplicationId>com.microsoft.flutterSharp</ApplicationId>
+    <ApplicationVersion>1.0</ApplicationVersion>
+    <AndroidVersionCode>1</AndroidVersionCode>
+    <UseMauiAssets>true</UseMauiAssets>
+    <UseMaui>true</UseMaui>
+    <UseMauiCore>true</UseMauiCore>
+    <UseMauiEssentials>true</UseMauiEssentials>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    	<IsBindingProject>true</IsBindingProject>
-		<NoBindingEmbedding>true</NoBindingEmbedding>
-	</PropertyGroup>
-	<PropertyGroup>
-		<PackageId>FlutterSharp</PackageId>
-	</PropertyGroup>
-	<PropertyGroup>
-		<LangVersion>preview</LangVersion>
-	</PropertyGroup>
-	<ItemGroup>
-		<Folder Include="Wigets\" />
-		<Folder Include="Helpers\" />
-		<Folder Include="Messages\" />
-		<Folder Include="Platforms\Android\Transforms\" />
-		<Folder Include="Platforms\iOS\Binding\" />
+  </PropertyGroup>  
+  <ItemGroup>
+		<!-- App Icon -->
+		<MauiImage
+			Include="Resources\appicon.svg"
+			ForegroundFile="Resources\appiconfg.svg"
+			IsAppIcon="true"
+			Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
 	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-	</ItemGroup>
-	<ItemGroup Condition="$(IsiOS) == true">
-		<ObjcBindingApiDefinition Include="Platforms\iOS\Binding\ApiDefinition.cs">
-      		<Link>ApiDefinition.cs</Link>
-   		 </ObjcBindingApiDefinition>
-		<ObjcBindingCoreSource Include="Platforms\iOS\Binding\Structs.cs" />
+	<PropertyGroup>
+		<InvariantGlobalization Condition="$(TargetFramework.Contains('-maccatalyst'))">true</InvariantGlobalization>
+		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
+		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
+		<UseInterpreter Condition="$(TargetFramework.Contains('-android'))">True</UseInterpreter>
+    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+	</PropertyGroup>
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-ios')) == true">
 		<NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework" Kind="Framework" />
 		<NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework" Kind="Framework" />
 		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
 	</ItemGroup>
-	<ItemGroup Condition="$(IsAndroid)  == true">
-		<TransformFile Include="Platforms\Android\Transforms\Metadata.xml" />
-		<TransformFile Include="Platforms\Android\Transforms\EnumFields.xml" />
-		<TransformFile Include="Platforms\Android\Transforms\EnumMethods.xml" />
+  <ItemGroup Condition="$(IsAndroid) == true">
 		<AndroidNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\x86\libflutter.so">
 			<Link>lib\x86\libflutter.so</Link>
 		</AndroidNativeLibrary>
@@ -63,17 +65,8 @@
 			<Link>Jars\flutter_embedding_debug.jar</Link>
 		</AndroidLibrary>
 	</ItemGroup>
-	<ItemGroup>
-		<Compile Remove="Platforms\Android\Transforms\*" />
-		<Compile Remove="Platforms\iOS\Binding\*" />
-	</ItemGroup>
-	<ProjectExtensions>
-	  <MonoDevelop>
-	    <Properties>
-	      <Policies>
-	        <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
-	      </Policies>
-	    </Properties>
-	  </MonoDevelop>
-	</ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Bindings\Flutter\Flutter.csproj" />
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionCometSingleProjectSampleHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>
