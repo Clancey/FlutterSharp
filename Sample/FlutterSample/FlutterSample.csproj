@@ -1,32 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
+	<PropertyGroup>
 		<TargetFrameworks>net6.0-ios;net6.0-android;</TargetFrameworks>
-    <OutputType>Exe</OutputType>
-    <SingleProject>true</SingleProject>
-    <ApplicationTitle>FlutterSharp</ApplicationTitle>
-    <ApplicationId>com.microsoft.flutterSharp</ApplicationId>
-    <ApplicationVersion>1.0</ApplicationVersion>
-    <AndroidVersionCode>1</AndroidVersionCode>
-    <UseMauiAssets>true</UseMauiAssets>
-    <UseMaui>true</UseMaui>
-    <UseMauiCore>true</UseMauiCore>
-    <UseMauiEssentials>true</UseMauiEssentials>
+		<OutputType>Exe</OutputType>
+		<SingleProject>true</SingleProject>
+		<ApplicationTitle>FlutterSharp</ApplicationTitle>
+		<ApplicationId>com.microsoft.flutterSharp</ApplicationId>
+		<ApplicationVersion>1.0</ApplicationVersion>
+		<AndroidVersionCode>1</AndroidVersionCode>
+		<UseMaui>true</UseMaui>
+		<UseMauiEssentials>true</UseMauiEssentials>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>  
-  <ItemGroup>
+	</PropertyGroup>
+	<ItemGroup>
 		<!-- App Icon -->
-		<MauiImage
-			Include="Resources\appicon.svg"
-			ForegroundFile="Resources\appiconfg.svg"
-			IsAppIcon="true"
-			Color="#512BD4" />
-
+		<MauiImage Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" IsAppIcon="true" Color="#512BD4" />
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
-
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 	</ItemGroup>
@@ -35,14 +27,15 @@
 		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
 		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-maccatalyst'))">maccatalyst-x64</RuntimeIdentifier>
 		<UseInterpreter Condition="$(TargetFramework.Contains('-android'))">True</UseInterpreter>
-    <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
+		<GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
 	</PropertyGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-ios')) == true">
+	<ItemGroup Condition="$(IsiOS) == true">
 		<NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework" Kind="Framework" />
 		<NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework" Kind="Framework" />
 		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
+		<NativeReference Include="..\..\flutter_module\build\Debug\App.xcframework" Kind="Framework" />
 	</ItemGroup>
-  <ItemGroup Condition="$(IsAndroid) == true">
+	<ItemGroup Condition="$(IsAndroid) == true">
 		<AndroidNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\x86\libflutter.so">
 			<Link>lib\x86\libflutter.so</Link>
 		</AndroidNativeLibrary>
@@ -65,8 +58,12 @@
 			<Link>Jars\flutter_embedding_debug.jar</Link>
 		</AndroidLibrary>
 	</ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Bindings\Flutter\Flutter.csproj" />
-  </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionCometSingleProjectSampleHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Bindings\Flutter\Flutter.csproj" />
+	</ItemGroup>
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionCometSingleProjectSampleHideInfoBar="True" />
+		</VisualStudio>
+	</ProjectExtensions>
 </Project>

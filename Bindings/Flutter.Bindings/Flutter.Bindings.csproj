@@ -1,39 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-		<TargetFrameworks>net6.0;net6.0-ios;net6.0-android;</TargetFrameworks>
+	<PropertyGroup>
+		<TargetFrameworks>net6.0-ios;</TargetFrameworks>
 		<IsPackable>false</IsPackable>
 		<RootNamespace>Flutter</RootNamespace>
-    	<IsBindingProject>true</IsBindingProject>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<IsBindingProject>true</IsBindingProject>
 		<NoBindingEmbedding>true</NoBindingEmbedding>
-  </PropertyGroup>
-
-	<ItemGroup>
-		<Compile Remove="Platforms\Android\Transforms\*" />
-		<Compile Remove="Platforms\iOS\Binding\*" />
-	</ItemGroup>
-  	<ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-ios')) == true">
-		<ObjcBindingApiDefinition Include="Platforms\iOS\Binding\ApiDefinition.cs">
-      		<Link>ApiDefinition.cs</Link>
-   		 </ObjcBindingApiDefinition>
-		<ObjcBindingCoreSource Include="Platforms\iOS\Binding\Structs.cs" />
+	</PropertyGroup>
+	<ItemGroup Condition="$(IsiOS) == true">
+		<ObjcBindingApiDefinition Include="..\Flutter\Platforms\iOS\Binding\ApiDefinition.cs">
+			<Link>ApiDefinition.cs</Link>
+		</ObjcBindingApiDefinition>
+		<ObjcBindingCoreSource Include="..\Flutter\Platforms\iOS\Binding\Structs.cs">
+			<Link>Structs.cs</Link>
+		</ObjcBindingCoreSource>
 		<NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework" Kind="Framework" />
 		<NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework" Kind="Framework" />
 		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
 	</ItemGroup>
-	<ItemGroup Condition="$(TargetFramework.StartsWith('net6.0-android')) == true">
-		<EmbeddedJar Include="..\..\flutter_module\build\flutter_embedding_debug.jar">
-			<Link>Jars\flutter_embedding_debug.jar</Link>
-		</EmbeddedJar>
-	</ItemGroup>
-
 	<ItemGroup>
-	  <None Remove="Platforms\Android\" />
-	  <None Remove="Platforms\iOS\" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Platforms\Android\" />
-	  <Folder Include="Platforms\iOS\" />
+		<ProjectReference Include="..\Flutter\Flutter.csproj" />
 	</ItemGroup>
 </Project>

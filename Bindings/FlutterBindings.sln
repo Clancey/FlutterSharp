@@ -10,8 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterSharp.Tests", "Flutt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterSample", "..\Sample\FlutterSample\FlutterSample.csproj", "{F84B08BF-A7B4-4357-B9CD-01F53DC4787C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flutter.Bindings", "Flutter.Bindings\Flutter.Bindings.csproj", "{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,18 +56,6 @@ Global
 		{F84B08BF-A7B4-4357-B9CD-01F53DC4787C}.Release|iPhone.Build.0 = Release|Any CPU
 		{F84B08BF-A7B4-4357-B9CD-01F53DC4787C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{F84B08BF-A7B4-4357-B9CD-01F53DC4787C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Release|iPhone.Build.0 = Release|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{B2B1A838-0BBC-4B7C-9307-C8C0399E944E}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

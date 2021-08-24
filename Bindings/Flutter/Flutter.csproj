@@ -9,7 +9,6 @@
 		<UseMauiCore>true</UseMauiCore>
 		<UseMauiEssentials>true</UseMauiEssentials>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    	<IsBindingProject>true</IsBindingProject>
 		<NoBindingEmbedding>true</NoBindingEmbedding>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -27,15 +26,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-	</ItemGroup>
-	<ItemGroup Condition="$(IsiOS) == true">
-		<ObjcBindingApiDefinition Include="Platforms\iOS\Binding\ApiDefinition.cs">
-      		<Link>ApiDefinition.cs</Link>
-   		 </ObjcBindingApiDefinition>
-		<ObjcBindingCoreSource Include="Platforms\iOS\Binding\Structs.cs" />
-		<NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework" Kind="Framework" />
-		<NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework" Kind="Framework" />
-		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
 	</ItemGroup>
 	<ItemGroup Condition="$(IsAndroid)  == true">
 		<TransformFile Include="Platforms\Android\Transforms\Metadata.xml" />
