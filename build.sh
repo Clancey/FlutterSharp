@@ -10,8 +10,8 @@ flutter_embedding_debug="https://storage.googleapis.com/download.flutter.io/io/f
 
 cd flutter_module
 
-echo "Cleaning Flutter"
-flutter clean
+# echo "Cleaning Flutter"
+# flutter clean
 echo "Building Flutter iOS"
 flutter build ios-framework --output=build --debug
 echo "Building Flutter Android AAR"
