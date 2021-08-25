@@ -29,12 +29,6 @@
 		<UseInterpreter Condition="$(TargetFramework.Contains('-android'))">True</UseInterpreter>
 		<GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
 	</PropertyGroup>
-	<ItemGroup Condition="$(IsiOS) == true">
-		<NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework" Kind="Framework" />
-		<NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework" Kind="Framework" />
-		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
-		<NativeReference Include="..\..\flutter_module\build\Debug\App.xcframework" Kind="Framework" />
-	</ItemGroup>
 	<ItemGroup Condition="$(IsAndroid) == true">
 		<AndroidNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\x86\libflutter.so">
 			<Link>lib\x86\libflutter.so</Link>

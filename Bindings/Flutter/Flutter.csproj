@@ -57,13 +57,16 @@
 		<Compile Remove="Platforms\Android\Transforms\*" />
 		<Compile Remove="Platforms\iOS\Binding\*" />
 	</ItemGroup>
+	<ItemGroup Condition="$(IsiOS) == true">
+		<ProjectReference Include="..\Flutter.Bindings\Flutter.Bindings.csproj" />
+	</ItemGroup>
 	<ProjectExtensions>
-	  <MonoDevelop>
-	    <Properties>
-	      <Policies>
-	        <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
-	      </Policies>
-	    </Properties>
-	  </MonoDevelop>
+		<MonoDevelop>
+			<Properties>
+				<Policies>
+					<DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
+				</Policies>
+			</Properties>
+		</MonoDevelop>
 	</ProjectExtensions>
 </Project>

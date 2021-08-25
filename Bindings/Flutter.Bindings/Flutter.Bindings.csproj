@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-ios;</TargetFrameworks>
@@ -17,8 +17,6 @@
 		<NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework" Kind="Framework" />
 		<NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework" Kind="Framework" />
 		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\Flutter\Flutter.csproj" />
+		<NativeReference Include="..\..\flutter_module\build\Debug\App.xcframework" Kind="Framework" />
 	</ItemGroup>
 </Project>
