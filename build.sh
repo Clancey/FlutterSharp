@@ -21,3 +21,5 @@ flutter build apk --debug
 
 echo "Downloading Flutter embedding debug"
 curl -o  build/flutter_embedding_debug.jar $flutter_embedding_debug
+
+dotnet build ../src/Flutter.Bindings/Flutter.Bindings.csproj

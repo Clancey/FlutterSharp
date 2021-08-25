@@ -2,15 +2,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flutter", "Flutter\Flutter.csproj", "{1EE09805-24DB-4831-8754-EF87F5152380}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flutter", "src\Flutter\Flutter.csproj", "{1EE09805-24DB-4831-8754-EF87F5152380}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{7562C17F-435F-4241-8A0E-5A43203E2DEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterSharp.Tests", "FlutterSharp.Tests\FlutterSharp.Tests.csproj", "{CE94CE7F-ED6D-4D09-98E9-A9C5463D6F9A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterSharp.Tests", "src\FlutterSharp.Tests\FlutterSharp.Tests.csproj", "{CE94CE7F-ED6D-4D09-98E9-A9C5463D6F9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterSample", "..\Sample\FlutterSample\FlutterSample.csproj", "{F84B08BF-A7B4-4357-B9CD-01F53DC4787C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterSample", "Sample\FlutterSample\FlutterSample.csproj", "{F84B08BF-A7B4-4357-B9CD-01F53DC4787C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flutter.Bindings", "Flutter.Bindings\Flutter.Bindings.csproj", "{3413C901-C9C7-4F4C-8D0E-2A01D5DFCB58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flutter.Bindings", "src\Flutter.Bindings\Flutter.Bindings.csproj", "{3413C901-C9C7-4F4C-8D0E-2A01D5DFCB58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
