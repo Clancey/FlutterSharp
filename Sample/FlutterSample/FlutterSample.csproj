@@ -9,17 +9,14 @@
 		<ApplicationVersion>1.0</ApplicationVersion>
 		<AndroidVersionCode>1</AndroidVersionCode>
 		<UseMaui>true</UseMaui>
+		<UseMauiAssets>true</UseMauiAssets>
 		<UseMauiEssentials>true</UseMauiEssentials>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
-		<!-- App Icon -->
 		<MauiImage Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" IsAppIcon="true" Color="#512BD4" />
-		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
-		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 	</ItemGroup>
 	<PropertyGroup>
@@ -29,6 +26,12 @@
 		<UseInterpreter Condition="$(TargetFramework.Contains('-android'))">True</UseInterpreter>
 		<GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
 	</PropertyGroup>
+	<ItemGroup Condition="$(IsiOS) == true">
+		<NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework" Kind="Framework" />
+		<NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework" Kind="Framework" />
+		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
+		<NativeReference Include="..\..\flutter_module\build\Debug\App.xcframework" Kind="Framework" />
+	</ItemGroup>
 	<ItemGroup Condition="$(IsAndroid) == true">
 		<AndroidNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\x86\libflutter.so">
 			<Link>lib\x86\libflutter.so</Link>

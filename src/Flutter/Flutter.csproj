@@ -57,9 +57,6 @@
 		<Compile Remove="Platforms\Android\Transforms\*" />
 		<Compile Remove="Platforms\iOS\Binding\*" />
 	</ItemGroup>
-	<ItemGroup Condition="$(IsiOS) == true">
-		<ProjectReference Include="..\Flutter.Bindings\Flutter.Bindings.csproj" />
-	</ItemGroup>
 	<ProjectExtensions>
 		<MonoDevelop>
 			<Properties>
