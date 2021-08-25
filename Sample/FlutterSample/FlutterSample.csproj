@@ -53,7 +53,7 @@
 		</AndroidLibrary>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Bindings\Flutter\Flutter.csproj" />
+		<ProjectReference Include="..\..\src\Flutter\Flutter.csproj" />
 	</ItemGroup>
 	<ProjectExtensions>
 		<VisualStudio>
