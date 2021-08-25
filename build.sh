@@ -13,11 +13,11 @@ cd flutter_module
 # echo "Cleaning Flutter"
 # flutter clean
 echo "Building Flutter iOS"
-flutter build ios-framework --output=build --debug
+flutter build ios-framework --output=build --no-profile
 echo "Building Flutter Android AAR"
-flutter build aar --debug
+flutter build aar --no-profile
 echo "Building Flutter Android APK"
-flutter build apk --debug
+flutter build apk
 
 echo "Downloading Flutter embedding debug"
 curl -o  build/flutter_embedding_debug.jar $flutter_embedding_debug
