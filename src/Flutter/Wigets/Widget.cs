@@ -7,6 +7,7 @@ using Flutter.Internal;
 using Flutter.Structs;
 using System.Xml.Linq;
 using System.Linq;
+using Flutter.HotReload;
 
 namespace Flutter {
 
@@ -58,8 +59,36 @@ namespace Flutter {
 		}
 		public override void PrepareForSending()
 		{
-			base.PrepareForSending();
+			SetupChild();
 			Child?.PrepareForSending();
+			base.PrepareForSending();
+		}
+
+		protected void SetupChild()
+		{
+			var oldChild = Child;
+			try
+			{
+				if (FlutterHotReloadHelper.IsEnabled)
+				{
+					var replaced = FlutterHotReloadHelper.GetReplacedView(this);
+					if (replaced != this)
+					{
+						Child = replaced;
+						return;
+					}
+				}
+				if(this is IBuildableWidget ibw && Child == null)
+					Child = ibw.Build();
+
+			}
+			finally
+			{
+				if (oldChild != null && oldChild != Child)
+				{
+					oldChild.Dispose();
+				}
+			}
 		}
 
 		IEnumerator IEnumerable.GetEnumerator () => new Widget [] { Child }.GetEnumerator ();

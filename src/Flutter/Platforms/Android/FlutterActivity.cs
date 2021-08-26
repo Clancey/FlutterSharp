@@ -1,18 +1,19 @@
 ﻿using System;
 using Android.OS;
+using Flutter.HotReload;
 using Flutter.Internal;
 using IO.Flutter.Embedding.Engine;
 using IO.Flutter.Plugin.Common;
 using IO.Flutter.Plugins;
 
 namespace Flutter {
-	public class FlutterActivity : IO.Flutter.Embedding.Android.FlutterActivity, MethodChannel.IMethodCallHandler {
+	public class FlutterActivity : IO.Flutter.Embedding.Android.FlutterActivity, MethodChannel.IMethodCallHandler, IHotReloadHandler {
 
 		private Widget widget;
 		public Widget Widget {
 			get => widget;
 			set {
-				if (widget != null) {
+				if (widget != null && widget != value) {
 					FlutterManager.UntrackWidget (Widget);
 					//Cleanup, send dispose
 				}
@@ -26,6 +27,7 @@ namespace Flutter {
 		protected override void OnCreate (Bundle savedInstanceState)
 		{
 			base.OnCreate (savedInstanceState);
+			FlutterHotReloadHelper.HotReloadHandler = this;
 			//GeneratedPluginRegistrant.RegisterWith (FlutterEngine);
 			channel = new MethodChannel (FlutterEngine.DartExecutor, "com.Microsoft.FlutterSharp/Messages");
 			Flutter.Internal.Communicator.SendCommand = (x) => channel.InvokeMethod (x.Method, x.Arguments);
@@ -42,6 +44,15 @@ namespace Flutter {
 				result.Success (x);
 			}
 			));
+		}
+
+		public void Reload()
+		{
+			if (Widget == null)
+				return;
+			Widget.PrepareForSending();
+			if (isReady)
+				FlutterManager.SendState(Widget);
 		}
 	}
 }
