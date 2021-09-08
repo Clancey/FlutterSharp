@@ -1,7 +1,6 @@
 ﻿using System;
 using Flutter.HotReload;
 using Flutter.Internal;
-using Newtonsoft.Json;
 
 namespace Flutter {
 	public abstract class StatefulWidget : SingleChildRenderObjectWidget, IBuildableWidget

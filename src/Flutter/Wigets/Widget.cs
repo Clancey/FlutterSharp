@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
 using System.Collections;
 using Flutter.Internal;
 using Flutter.Structs;

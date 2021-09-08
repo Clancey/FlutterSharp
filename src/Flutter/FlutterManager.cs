@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Flutter.Internal {
 	public static class FlutterManager {
@@ -17,7 +17,7 @@ namespace Flutter.Internal {
 			case "Ready":
 				return;
 			case "Event":
-				var msg = JsonConvert.DeserializeObject<EventMessage> (message.Data);
+				var msg = JsonSerializer.Deserialize<EventMessage> (message.Data);
 				if(AliveWidgets.TryGetValue (msg.ComponentId, out var widget))
 					widget?.SendEvent (msg.EventName,msg.Data,message.Callback);
 				return;
@@ -38,7 +38,7 @@ namespace Flutter.Internal {
 			try {
 				widget.PrepareForSending ();
 				var message = new UpdateMessage { ComponentId = componentID, Address = widget };
-				var json = JsonConvert.SerializeObject (message);
+				var json = JsonSerializer.Serialize (message);
 				Communicator.SendCommand?.Invoke ((message.MessageType, json));
 			}
 			catch(Exception ex) {
