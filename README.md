@@ -12,7 +12,7 @@ On the .net side we create objects and pin them to memory. This allows us to loa
 
 * Make sure you have Flutter installed.
 * Run the `build.sh`
-* Open  `Bindings\FlutterBindings.sln`
+* Open  `Flutter.sln`
 * And build from VS
 
 # Disclaimer
