@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 
 namespace Flutter.Internal {
 	public class EventMessage : Message {

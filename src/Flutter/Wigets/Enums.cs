@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 
 namespace Flutter {
 	public struct EdgeInsetsGeometry {

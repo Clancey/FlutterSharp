@@ -1,6 +1,5 @@
 ﻿using System;
 using Flutter.Structs;
-using Newtonsoft.Json;
 
 namespace Flutter {
 
