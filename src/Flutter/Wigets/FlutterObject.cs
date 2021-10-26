@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Flutter.Structs;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Flutter {
 	public abstract class FlutterObject: IDisposable {
@@ -55,9 +55,9 @@ namespace Flutter {
 				string resultString = "";
 				if(result != null) {
 					if (result is FlutterObject fo)
-						resultString = ((long)fo).ToString ();
+						resultString = ((long)fo).ToString();
 					else
-						resultString = JsonConvert.SerializeObject (result);
+						resultString = JsonSerializer.Serialize(result);
 				}
 				returnAction?.Invoke (resultString);
 			}

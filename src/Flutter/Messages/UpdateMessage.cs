@@ -1,9 +1,9 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Flutter {
 	public class UpdateMessage : Message {
-		[JsonProperty ("address")]
+		[JsonPropertyName("address")]
 		public long Address { get; set; }
 		public override string MessageType => "UpdateComponent";
 	}
