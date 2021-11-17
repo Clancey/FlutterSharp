@@ -1,7 +1,9 @@
 ﻿using Flutter.Structs;
 using System;
-namespace Flutter {
-	public class TextField : Widget {
+namespace Flutter
+{
+	public class TextField : Widget
+	{
 		public TextField(string text = null, string hint = null)
 		{
 			var s = GetBackingStruct<TextFieldStruct>();
@@ -10,14 +12,16 @@ namespace Flutter {
 		}
 		protected override FlutterObjectStruct CreateBackingStruct() => new TextFieldStruct();
 
-		public Action<string> OnSubmitted {
-			get => GetAction<Action<string>> ();
-			set => SetAction (value);
+		public Action<string> OnSubmitted
+		{
+			get => GetAction<Action<string>>();
+			set => SetAction(value);
 		}
 
-		public Action<string> OnChange {
-			get => GetAction<Action<string>> ();
-			set => SetAction (value);
+		public Action<string> OnChange
+		{
+			get => GetAction<Action<string>>();
+			set => SetAction(value);
 		}
 	}
 }

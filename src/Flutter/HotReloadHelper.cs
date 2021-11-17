@@ -54,7 +54,7 @@ namespace Flutter.HotReload
 		{
 			IsEnabled = true;
 		}
-	
+
 		public static void Reset()
 		{
 			replacedViews.Clear();
@@ -73,7 +73,7 @@ namespace Flutter.HotReload
 			try
 			{
 				//TODO: Add in a way to use IoC and DI
-				var newView =  (Widget)Activator.CreateInstance(newViewType);
+				var newView = (Widget)Activator.CreateInstance(newViewType);
 				TransferState(view, newView);
 				return newView;
 			}
@@ -105,8 +105,7 @@ namespace Flutter.HotReload
 			if (!IsEnabled)
 				return;
 
-			Action<MethodInfo> executeStaticMethod = (method) =>
-			{
+			Action<MethodInfo> executeStaticMethod = (method) => {
 				try
 				{
 					method?.Invoke(null, null);

@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Flutter.Structs {
+namespace Flutter.Structs
+{
 
-	[StructLayout (LayoutKind.Sequential)]
-	public unsafe class BaseStruct : IDisposable {
+	[StructLayout(LayoutKind.Sequential)]
+	public unsafe class BaseStruct : IDisposable
+	{
 		private IntPtr handle;
 		private IntPtr manahedHandle;
 		public IntPtr Handle => handle;
 
-		public BaseStruct ()
+		public BaseStruct()
 		{
 			var gchandle = GCHandle.Alloc(this, GCHandleType.Pinned);
 			manahedHandle = (IntPtr)gchandle;
 			handle = gchandle.AddrOfPinnedObject();
 		}
-		
-		protected virtual void Dispose (bool disposing)
+
+		protected virtual void Dispose(bool disposing)
 		{
 			if (handle == IntPtr.Zero)
 				return;
@@ -29,25 +31,25 @@ namespace Flutter.Structs {
 			gchandle.Free();
 			handle = IntPtr.Zero;
 		}
-		~BaseStruct ()
+		~BaseStruct()
 		{
 			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-			Dispose (disposing: false);
+			Dispose(disposing: false);
 		}
 
-		public void Dispose ()
+		public void Dispose()
 		{
 			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-			Dispose (disposing: true);
-			GC.SuppressFinalize (this);
+			Dispose(disposing: true);
+			GC.SuppressFinalize(this);
 		}
 
 
-		protected string GetString (IntPtr ptr) => Marshal.PtrToStringUTF8 (ptr);
-		protected void SetString (ref IntPtr ptr,string value) => ptr = Marshal.StringToCoTaskMemUTF8 (value);
+		protected string GetString(IntPtr ptr) => Marshal.PtrToStringUTF8(ptr);
+		protected void SetString(ref IntPtr ptr, string value) => ptr = Marshal.StringToCoTaskMemUTF8(value);
 		protected void SetIntPtr(ref IntPtr ptr, Widget flutterObject)
 		{
-			flutterObject?.PrepareForSending ();
+			flutterObject?.PrepareForSending();
 			ptr = flutterObject;
 		}
 		const byte Yes = 1;
@@ -57,27 +59,32 @@ namespace Flutter.Structs {
 	}
 
 
-	[StructLayout (LayoutKind.Sequential)]
-	public class FlutterObjectStruct  : BaseStruct{
+	[StructLayout(LayoutKind.Sequential)]
+	public class FlutterObjectStruct : BaseStruct
+	{
 		private IntPtr widgetType;
-		public string WidgetType {
-			get => GetString (widgetType);
-			set => SetString (ref widgetType, value);
+		public string WidgetType
+		{
+			get => GetString(widgetType);
+			set => SetString(ref widgetType, value);
 		}
 	}
 
-	[StructLayout (LayoutKind.Sequential)]
-	public class WidgetStruct : FlutterObjectStruct {
+	[StructLayout(LayoutKind.Sequential)]
+	public class WidgetStruct : FlutterObjectStruct
+	{
 		private IntPtr id;
-		public string Id {
-			get => GetString (id);
-			set => SetString (ref id, value);
+		public string Id
+		{
+			get => GetString(id);
+			set => SetString(ref id, value);
 		}
 	}
 
 
-	[StructLayout (LayoutKind.Sequential)]
-	public class SingleChildRenderObjectWidgetStruct : WidgetStruct {
+	[StructLayout(LayoutKind.Sequential)]
+	public class SingleChildRenderObjectWidgetStruct : WidgetStruct
+	{
 		public IntPtr Child { get; set; }
 	}
 
@@ -100,8 +107,8 @@ namespace Flutter.Structs {
 	{
 		IntPtr title;
 		IntPtr bottom;
-		public Widget Title { set => SetIntPtr (ref title, value); }
-		public Widget Bottom { set => SetIntPtr (ref bottom, value); }
+		public Widget Title { set => SetIntPtr(ref title, value); }
+		public Widget Bottom { set => SetIntPtr(ref bottom, value); }
 	}
 
 
@@ -184,25 +191,27 @@ namespace Flutter.Structs {
 	class ScaffoldStruct : WidgetStruct
 	{
 		IntPtr appBar;
-		public AppBar AppBar { set => SetIntPtr (ref appBar, value); }
+		public AppBar AppBar { set => SetIntPtr(ref appBar, value); }
 
 		IntPtr floatingActionButton;
-		public FloatingActionButton FloatingActionButton { set => SetIntPtr (ref floatingActionButton, value); }
+		public FloatingActionButton FloatingActionButton { set => SetIntPtr(ref floatingActionButton, value); }
 
 		IntPtr drawer;
-		public Drawer Drawer { set => SetIntPtr (ref drawer, value); }
+		public Drawer Drawer { set => SetIntPtr(ref drawer, value); }
 
 		IntPtr body;
-		public Widget Body { set => SetIntPtr (ref body, value); }
+		public Widget Body { set => SetIntPtr(ref body, value); }
 	}
 
 
-	[StructLayout (LayoutKind.Sequential)]
-	public unsafe class TextStruct : WidgetStruct {
+	[StructLayout(LayoutKind.Sequential)]
+	public unsafe class TextStruct : WidgetStruct
+	{
 		IntPtr _value;
-		public string Value {
-			get => GetString (_value);
-			set => SetString (ref _value, value);
+		public string Value
+		{
+			get => GetString(_value);
+			set => SetString(ref _value, value);
 		}
 		public NativeNullable<double> ScaleFactor { get; set; }
 	}

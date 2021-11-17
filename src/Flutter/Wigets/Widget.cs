@@ -8,23 +8,22 @@ using System.Xml.Linq;
 using System.Linq;
 using Flutter.HotReload;
 
-namespace Flutter {
-
-	
-
-	public abstract class Widget : FlutterObject {
+namespace Flutter
+{
+	public abstract class Widget : FlutterObject
+	{
 		public string Id => BackingStruct.Id;
-		public Widget ()
+		public Widget()
 		{
 			BackingStruct.Id = IDGenerator.Instance.Next;
-			FlutterManager.TrackWidget (this);
+			FlutterManager.TrackWidget(this);
 		}
 
 		WidgetStruct BackingStruct => (WidgetStruct)FlutterObjectStruct;
 		protected override FlutterObjectStruct CreateBackingStruct() => new WidgetStruct();
-		~Widget ()
+		~Widget()
 		{
-			FlutterManager.UntrackWidget (this);
+			FlutterManager.UntrackWidget(this);
 		}
 
 		public virtual void PrepareForSending()
@@ -34,10 +33,12 @@ namespace Flutter {
 	}
 
 
-	public abstract class SingleChildRenderObjectWidget : Widget, IEnumerable {
+	public abstract class SingleChildRenderObjectWidget : Widget, IEnumerable
+	{
 
 		Widget child;
-		protected Widget Child {
+		protected Widget Child
+		{
 			get => child;
 			set
 			{
@@ -48,12 +49,12 @@ namespace Flutter {
 		SingleChildRenderObjectWidgetStruct BackingStruct => (SingleChildRenderObjectWidgetStruct)FlutterObjectStruct;
 		protected override FlutterObjectStruct CreateBackingStruct() => new SingleChildRenderObjectWidgetStruct();
 
-		public void Add (Widget child)
+		public void Add(Widget child)
 		{
 			if (child == null)
 				return;
 			if (Child != null)
-				throw new Exception ("Cannot have more than one child");
+				throw new Exception("Cannot have more than one child");
 			Child = child;
 		}
 		public override void PrepareForSending()
@@ -77,7 +78,7 @@ namespace Flutter {
 						return;
 					}
 				}
-				if(this is IBuildableWidget ibw && Child == null)
+				if (this is IBuildableWidget ibw && Child == null)
 					Child = ibw.Build();
 
 			}
@@ -90,10 +91,11 @@ namespace Flutter {
 			}
 		}
 
-		IEnumerator IEnumerable.GetEnumerator () => new Widget [] { Child }.GetEnumerator ();
+		IEnumerator IEnumerable.GetEnumerator() => new Widget[] { Child }.GetEnumerator();
 	}
 
-	public abstract class MultiChildRenderObjectWidget : Widget, IEnumerable {
+	public abstract class MultiChildRenderObjectWidget : Widget, IEnumerable
+	{
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new MultiChildRenderObjectWidgetStruct();
 
@@ -101,20 +103,20 @@ namespace Flutter {
 		private PinnedObject<NativeArray<long>> pinnedArray;
 		protected IList<Widget> Children { get; set; } = new List<Widget>();
 
-		public void Add (Widget child)
+		public void Add(Widget child)
 		{
 			if (child == null)
 				return;
-			Children.Add (child);
+			Children.Add(child);
 		}
 
-		IEnumerator IEnumerable.GetEnumerator () => Children.GetEnumerator ();
+		IEnumerator IEnumerable.GetEnumerator() => Children.GetEnumerator();
 
 		public override unsafe void PrepareForSending()
 		{
 			pinnedArray?.Dispose();
 
-			var array = new NativeArray<long> (Children.Count);
+			var array = new NativeArray<long>(Children.Count);
 			for (int i = 0; i < Children.Count; i++)
 			{
 				var c = Children[i];

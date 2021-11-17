@@ -1,6 +1,8 @@
 ﻿using System;
-namespace Flutter {
-	public abstract class Decoration {
-		
+namespace Flutter
+{
+	public abstract class Decoration
+	{
+
 	}
 }

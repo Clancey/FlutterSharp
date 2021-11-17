@@ -1,6 +1,8 @@
 ﻿using System;
-namespace Flutter {
-	public class Center : Align {
-		
+namespace Flutter
+{
+	public class Center : Align
+	{
+
 	}
 }

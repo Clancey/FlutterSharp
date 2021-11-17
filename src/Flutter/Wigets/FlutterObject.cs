@@ -6,46 +6,49 @@ using System.Text.Json;
 using System.Linq;
 using Flutter.Internal;
 
-namespace Flutter {
-	public abstract class FlutterObject: IDisposable {
+namespace Flutter
+{
+	public abstract class FlutterObject : IDisposable
+	{
 
 		public FlutterObject()
 		{
-			init ();
+			init();
 		}
 
 		protected FlutterObjectStruct FlutterObjectStruct { get; private set; }
 		protected T GetBackingStruct<T>() where T : FlutterObjectStruct => (T)FlutterObjectStruct;
-		void init ()
+		void init()
 		{
 			FlutterObjectStruct = CreateBackingStruct();
 			FlutterObjectStruct.WidgetType = FlutterType;
 		}
 		protected virtual FlutterObjectStruct CreateBackingStruct() => new FlutterObjectStruct();
-		protected virtual string FlutterType => this.GetType ().Name;
+		protected virtual string FlutterType => this.GetType().Name;
 
-		internal Dictionary<string, Delegate> actions = new Dictionary<string, Delegate> ();
-		protected T GetAction<T> (T defaultValue = default, [CallerMemberName] string propertyName = "", bool shouldCamelCase = true) where T : Delegate
+		internal Dictionary<string, Delegate> actions = new Dictionary<string, Delegate>();
+		protected T GetAction<T>(T defaultValue = default, [CallerMemberName] string propertyName = "", bool shouldCamelCase = true) where T : Delegate
 		{
-			if (actions.TryGetValue (propertyName, out var val))
+			if (actions.TryGetValue(propertyName, out var val))
 				return (T)val;
 			return defaultValue;
 		}
-		protected bool SetAction<T> (T value, [CallerMemberName] string propertyName = "", bool shouldCamelCase = true) where T : Delegate
+		protected bool SetAction<T>(T value, [CallerMemberName] string propertyName = "", bool shouldCamelCase = true) where T : Delegate
 		{
-			if (actions.TryGetValue (propertyName, out var val)) {
-				if (EqualityComparer<T>.Default.Equals ((T)val, value))
+			if (actions.TryGetValue(propertyName, out var val))
+			{
+				if (EqualityComparer<T>.Default.Equals((T)val, value))
 					return false;
 			}
-			actions [propertyName] = value;
+			actions[propertyName] = value;
 			return true;
 		}
 
 		internal void SendEvent(string key, object value, Action<string> returnAction)
 		{
-			if (!actions.TryGetValue (key, out var action))
+			if (!actions.TryGetValue(key, out var action))
 				return;
-			Delegate foo = new Func<bool, object> ((o) => {
+			Delegate foo = new Func<bool, object>((o) => {
 				return true;
 			});
 			var args = action.GetType().GenericTypeArguments?.FirstOrDefault();
@@ -58,26 +61,30 @@ namespace Flutter {
 			}
 			else
 				result = action.DynamicInvoke();
-			if (returnAction != null) {
+			if (returnAction != null)
+			{
 				string resultString = "";
-				if(result != null) {
+				if (result != null)
+				{
 					if (result is FlutterObject fo)
 						resultString = ((long)fo).ToString();
 					else
 						resultString = JsonSerializer.Serialize(result);
 				}
-				returnAction?.Invoke (resultString);
+				returnAction?.Invoke(resultString);
 			}
 		}
 
 
 
 		private bool disposedValue;
-		protected virtual void Dispose (bool disposing)
+		protected virtual void Dispose(bool disposing)
 		{
-			if (!disposedValue) {
-				if (disposing) {
-					actions.Clear ();
+			if (!disposedValue)
+			{
+				if (disposing)
+				{
+					actions.Clear();
 				}
 
 				FlutterObjectStruct.Dispose();
@@ -87,21 +94,21 @@ namespace Flutter {
 		}
 
 		// TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-		~FlutterObject ()
+		~FlutterObject()
 		{
 			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-			Dispose (disposing: false);
+			Dispose(disposing: false);
 		}
 
-		public void Dispose ()
+		public void Dispose()
 		{
 			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-			Dispose (disposing: true);
-			GC.SuppressFinalize (this);
+			Dispose(disposing: true);
+			GC.SuppressFinalize(this);
 		}
-		
-		public static implicit operator FlutterObjectStruct (FlutterObject obj) => obj?.FlutterObjectStruct;
+
+		public static implicit operator FlutterObjectStruct(FlutterObject obj) => obj?.FlutterObjectStruct;
 		public static implicit operator IntPtr(FlutterObject obj) => obj?.FlutterObjectStruct?.Handle ?? IntPtr.Zero;
-		public static implicit operator long (FlutterObject obj) => ((IntPtr)obj).ToInt64();
+		public static implicit operator long(FlutterObject obj) => ((IntPtr)obj).ToInt64();
 	}
 }

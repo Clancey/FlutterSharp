@@ -1,8 +1,9 @@
 ﻿using System;
-namespace Flutter {
+namespace Flutter
+{
 	public abstract class StatelessWidget : SingleChildRenderObjectWidget, IBuildableWidget
 	{
-		public abstract Widget Build ();
+		public abstract Widget Build();
 
 		public override void PrepareForSending()
 		{

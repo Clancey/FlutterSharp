@@ -2,19 +2,20 @@
 using Flutter.HotReload;
 using Flutter.Internal;
 
-namespace Flutter {
+namespace Flutter
+{
 	public abstract class StatefulWidget : SingleChildRenderObjectWidget, IBuildableWidget
 	{
-		
-		public abstract Widget Build ();
-		
+
+		public abstract Widget Build();
+
 		public void SetState(Action setState)
 		{
-			setState ();
-			Child?.Dispose ();
+			setState();
+			Child?.Dispose();
 			Child = null;
 			PrepareForSending();
-			FlutterManager.SendState (this.Child,this.Id);
+			FlutterManager.SendState(this.Child, this.Id);
 		}
 
 		protected override string FlutterType => "StatefulWidget";
