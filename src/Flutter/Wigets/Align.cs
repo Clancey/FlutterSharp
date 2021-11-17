@@ -1,8 +1,10 @@
 ﻿using Flutter.Structs;
 using System;
-namespace Flutter {
-	
-	public class Align : SingleChildRenderObjectWidget {
+namespace Flutter
+{
+
+	public class Align : SingleChildRenderObjectWidget
+	{
 		public Align(Alignment? alignment = null, double? widthFactor = null, double? heightFactor = null)
 		{
 			var backingStruct = GetBackingStruct<AlignStruct>();

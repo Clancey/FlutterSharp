@@ -1,7 +1,9 @@
 ﻿using Flutter.Structs;
 using System;
-namespace Flutter {
-	public class Text : Widget{
+namespace Flutter
+{
+	public class Text : Widget
+	{
 		public Text(string text = "", double? scaleFactor = null)
 		{
 			var s = GetBackingStruct<TextStruct>();

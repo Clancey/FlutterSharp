@@ -1,6 +1,8 @@
 ﻿using System;
-namespace Flutter {
-	public class Flexible : SingleChildRenderObjectWidget {
-		
+namespace Flutter
+{
+	public class Flexible : SingleChildRenderObjectWidget
+	{
+
 	}
 }

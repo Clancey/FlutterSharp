@@ -2,10 +2,11 @@
 using Foundation;
 using Flutter.Internal;
 using UIKit;
+using Flutter.HotReload;
 
 namespace Flutter
 {
-	public partial class FlutterViewController : Flutter.Internal.iOS.FlutterViewController
+	public partial class FlutterViewController : Flutter.Internal.iOS.FlutterViewController, IHotReloadHandler
 	{
 		static FlutterEngine SharedEngine;
 		FlutterMethodChannel MethodChannel;
@@ -26,6 +27,7 @@ namespace Flutter
 
 			if (isInitalized)
 				return;
+			FlutterHotReloadHelper.HotReloadHandler = this;
 			isInitalized = true;
 			GeneratedPluginRegistrant.Register(Engine);
 			MethodChannel = FlutterMethodChannel.FromNameAndMessenger("com.Microsoft.FlutterSharp/Messages", Engine.BinaryMessenger);
@@ -47,15 +49,25 @@ namespace Flutter
 
 		}
 
+		public void Reload()
+		{
+			if (Widget == null)
+				return;
+			Widget.PrepareForSending(); 
+			if (isReady)
+				FlutterManager.SendState(Widget);
+
+		}
+
 		private Widget widget;
 		public Widget Widget
 		{
 			get => widget;
 			set
 			{
-				if (widget != null)
+				if (widget != null && widget != value)
 				{
-					FlutterManager.UntrackWidget(Widget);
+					FlutterManager.UntrackWidget(widget);
 					//Cleanup, send dispose
 				}
 				widget = value;

@@ -1,7 +1,9 @@
 ﻿using Flutter.Structs;
 using System;
-namespace Flutter {
-	public class Icon : Widget {
+namespace Flutter
+{
+	public class Icon : Widget
+	{
 		public Icon(string codePoint = null, string fontFamily = null)
 		{
 			var s = GetBackingStruct<IconStruct>();

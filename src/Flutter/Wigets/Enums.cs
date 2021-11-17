@@ -1,14 +1,15 @@
 ﻿using System;
-using Newtonsoft.Json;
 
-namespace Flutter {
-	public struct EdgeInsetsGeometry {
-		public EdgeInsetsGeometry (double all)
+namespace Flutter
+{
+	public struct EdgeInsetsGeometry
+	{
+		public EdgeInsetsGeometry(double all)
 		{
 			Left = Top = Right = Bottom = all;
 		}
 
-		public EdgeInsetsGeometry (double left = 0, double top = 0, double right = 0, double bottom = 0)
+		public EdgeInsetsGeometry(double left = 0, double top = 0, double right = 0, double bottom = 0)
 		{
 			Left = left;
 			Top = top;
@@ -20,16 +21,17 @@ namespace Flutter {
 		public double Top { get; set; }
 		public double Right { get; set; }
 		public double Bottom { get; set; }
-		public override string ToString () => $"{Left},{Top},{Right},{Bottom}";
+		public override string ToString() => $"{Left},{Top},{Right},{Bottom}";
 
-		public static EdgeInsetsGeometry Parse (string input)
+		public static EdgeInsetsGeometry Parse(string input)
 		{
-			var values = input.Split (',');
-			return new EdgeInsetsGeometry (double.Parse (values [0]), double.Parse (values [1]), double.Parse (values [2]), double.Parse (values [3]));
+			var values = input.Split(',');
+			return new EdgeInsetsGeometry(double.Parse(values[0]), double.Parse(values[1]), double.Parse(values[2]), double.Parse(values[3]));
 		}
 	}
-	public struct Alignment {
-		public Alignment (double x, double y)
+	public struct Alignment
+	{
+		public Alignment(double x, double y)
 		{
 			X = x;
 			Y = y;
@@ -38,31 +40,31 @@ namespace Flutter {
 		public double Y { get; }
 
 		/// The top left corner.
-		public static readonly Alignment TopLeft = new Alignment (-1.0, -1.0);
+		public static readonly Alignment TopLeft = new Alignment(-1.0, -1.0);
 
 		/// The center point along the top edge.
-		public static readonly Alignment TopCenter = new Alignment (0.0, -1.0);
+		public static readonly Alignment TopCenter = new Alignment(0.0, -1.0);
 
 		/// The top right corner.
-		public static readonly Alignment TopRight = new Alignment (1.0, -1.0);
+		public static readonly Alignment TopRight = new Alignment(1.0, -1.0);
 
 		/// The center point along the left edge.
-		public static readonly Alignment CenterLeft = new Alignment (-1.0, 0.0);
+		public static readonly Alignment CenterLeft = new Alignment(-1.0, 0.0);
 
 		/// The center point, both horizontally and vertically.
-		public static readonly Alignment Center = new Alignment (0.0, 0.0);
+		public static readonly Alignment Center = new Alignment(0.0, 0.0);
 
 		/// The center point along the right edge.
-		public static readonly Alignment CenterRight = new Alignment (1.0, 0.0);
+		public static readonly Alignment CenterRight = new Alignment(1.0, 0.0);
 
 		/// The bottom left corner.
-		public static readonly Alignment BottomLeft = new Alignment (-1.0, 1.0);
+		public static readonly Alignment BottomLeft = new Alignment(-1.0, 1.0);
 
 		/// The center point along the bottom edge.
-		public static readonly Alignment BottomCenter = new Alignment (0.0, 1.0);
+		public static readonly Alignment BottomCenter = new Alignment(0.0, 1.0);
 
 		/// The bottom right corner.
-		public static readonly Alignment BottomRight = new Alignment (1.0, 1.0);
+		public static readonly Alignment BottomRight = new Alignment(1.0, 1.0);
 
 	}
 
@@ -72,7 +74,8 @@ namespace Flutter {
 	///
 	///  * [Column], [Row], and [Flex], the flex widgets.
 	///  * [RenderFlex], the flex render object.
-	public enum MainAxisAlignment {
+	public enum MainAxisAlignment
+	{
 		/// Place the children as close to the start of the main axis as possible.
 		///
 		/// If this value is used in a horizontal direction, a [TextDirection] must be
@@ -113,7 +116,8 @@ namespace Flutter {
 	///
 	///  * [Column], [Row], and [Flex], the flex widgets.
 	///  * [RenderFlex], the flex render object.
-	public enum CrossAxisAlignment {
+	public enum CrossAxisAlignment
+	{
 		/// Place the children with their start edge aligned with the start side of
 		/// the cross axis.
 		///
@@ -160,13 +164,14 @@ namespace Flutter {
 		Baseline,
 	}
 
-	public readonly struct Color {
+	public readonly struct Color
+	{
 		public readonly byte Red;
 		public readonly byte Green;
 		public readonly byte Blue;
 		public readonly byte Alpha;
 
-		public Color (byte red, byte green, byte blue, byte alpha)
+		public Color(byte red, byte green, byte blue, byte alpha)
 		{
 			Red = red;
 			Green = green;
@@ -174,13 +179,13 @@ namespace Flutter {
 			Alpha = alpha;
 		}
 
-		public static Color RGB (byte red, byte green, byte blue)
-			=> new Color (red, green, blue, 255);
+		public static Color RGB(byte red, byte green, byte blue)
+			=> new Color(red, green, blue, 255);
 
-		public static Color RGBA (byte red, byte green, byte blue, byte alpha)
-			=> new Color (red, green, blue, alpha);
+		public static Color RGBA(byte red, byte green, byte blue, byte alpha)
+			=> new Color(red, green, blue, alpha);
 
-		public uint ToARGB ()
+		public uint ToARGB()
 		{
 			return ((uint)Alpha << 24)
 				| ((uint)Red << 16)

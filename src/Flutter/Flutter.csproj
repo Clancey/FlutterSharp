@@ -25,7 +25,6 @@
 		<Folder Include="Platforms\iOS\Binding\" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 	<ItemGroup Condition="$(IsAndroid)  == true">
 		<TransformFile Include="Platforms\Android\Transforms\Metadata.xml" />
@@ -49,7 +48,7 @@
 		<AndroidLibrary Include="..\..\flutter_module\build\host\outputs\repo\com\example\flutter_module\flutter_debug\1.0\flutter_debug-1.0.aar">
 			<Link>Jars\flutter_debug-1.0.aar</Link>
 		</AndroidLibrary>
-		<AndroidLibrary Include="..\..\flutter_module\build\flutter_embedding_debug.jar">
+		<AndroidLibrary Bind="true" Include="..\..\flutter_module\build\flutter_embedding_debug.jar">
 			<Link>Jars\flutter_embedding_debug.jar</Link>
 		</AndroidLibrary>
 	</ItemGroup>

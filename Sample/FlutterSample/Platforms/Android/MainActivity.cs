@@ -6,7 +6,7 @@ using Flutter;
 
 namespace FlutterSample
 {
-	[Activity( Theme = "@style/AppTheme", MainLauncher = true)]
+	[Activity(Theme = "@style/AppTheme", MainLauncher = true)]
 	public class MainActivity : FlutterActivity
 	{
 		protected override void OnCreate(Bundle savedInstanceState)

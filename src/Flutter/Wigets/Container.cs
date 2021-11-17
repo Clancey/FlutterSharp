@@ -1,7 +1,9 @@
 ﻿using Flutter.Structs;
 using System;
-namespace Flutter {
-	public class Container : SingleChildRenderObjectWidget {
+namespace Flutter
+{
+	public class Container : SingleChildRenderObjectWidget
+	{
 		public Container(Alignment? alignment = null,
 			EdgeInsetsGeometry? padding = null,
 			EdgeInsetsGeometry? margin = null,

@@ -1,11 +1,11 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Flutter {
 	public abstract class Message {
-		[JsonProperty ("componentId")]
+		[JsonPropertyName ("componentId")]
 		public string ComponentId { get; set; }
-		[JsonProperty("messageType")]
+		[JsonPropertyName("messageType")]
 		public abstract string MessageType { get; }
 	}
 }

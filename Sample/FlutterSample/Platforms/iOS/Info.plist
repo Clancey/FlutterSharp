@@ -4,8 +4,6 @@
 <dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>MinimumOSVersion</key>
-	<string>10.3.4</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -15,7 +13,7 @@
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>arm64</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
