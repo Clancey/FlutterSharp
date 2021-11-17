@@ -10,14 +10,19 @@ namespace Flutter.Internal {
 		{
 			Communicator.OnCommandReceived = OnCommandRecieved;
 		}
-
-		static void OnCommandRecieved ((string Method, string Data, Action<string> Callback) message)
+		static readonly JsonSerializerOptions serializeOptions = new JsonSerializerOptions
+		{
+			PropertyNameCaseInsensitive = true
+		};
+	static void OnCommandRecieved ((string Method, string Data, Action<string> Callback) message)
 		{
 			switch (message.Method) {
 			case "Ready":
 				return;
 			case "Event":
-				var msg = JsonSerializer.Deserialize<EventMessage> (message.Data);
+					var foo = message.Data;
+					Console.WriteLine(foo);
+				var msg = JsonSerializer.Deserialize<EventMessage> (message.Data, serializeOptions);
 				if(AliveWidgets.TryGetValue (msg.ComponentId, out var widget))
 					widget?.SendEvent (msg.EventName,msg.Data,message.Callback);
 				return;
