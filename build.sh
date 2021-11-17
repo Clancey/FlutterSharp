@@ -15,9 +15,9 @@ cd flutter_module
 echo "Building Flutter iOS"
 flutter build ios-framework --output=build --no-profile
 echo "Building Flutter Android AAR"
-flutter build aar --no-profile
+flutter build aar --no-profile --debug
 echo "Building Flutter Android APK"
-flutter build apk
+flutter build apk --debug
 
 echo "Downloading Flutter embedding debug"
 curl -o  build/flutter_embedding_debug.jar $flutter_embedding_debug

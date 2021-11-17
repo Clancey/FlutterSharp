@@ -32,29 +32,7 @@
 		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
 		<NativeReference Include="..\..\flutter_module\build\Debug\App.xcframework" Kind="Framework" />
 	</ItemGroup>
-	<ItemGroup Condition="$(IsAndroid) == true">
-		<AndroidNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\x86\libflutter.so">
-			<Link>lib\x86\libflutter.so</Link>
-		</AndroidNativeLibrary>
-		<AndroidNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\arm64-v8a\libflutter.so">
-			<Link>lib\arm64-v8a\libflutter.so</Link>
-		</AndroidNativeLibrary>
-		<AndroidNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\armeabi-v7a\libflutter.so">
-			<Link>lib\armeabi-v7a\libflutter.so</Link>
-		</AndroidNativeLibrary>
-		<AndroidNativeLibrary Include="..\..\flutter_module\build\host\intermediates\merged_native_libs\debug\out\lib\x86_64\libflutter.so">
-			<Link>lib\x86_64\libflutter.so</Link>
-		</AndroidNativeLibrary>
-		<AndroidLibrary Include="..\..\flutter_module\build\host\outputs\repo\com\FlutterSharp\flutter_sharp\flutter_sharp_debug\1.0\flutter_sharp_debug-1.0.aar">
-			<Link>Jars\flutter_sharp_debug-1.0.aar</Link>
-		</AndroidLibrary>
-		<AndroidLibrary Include="..\..\flutter_module\build\host\outputs\repo\com\example\flutter_module\flutter_debug\1.0\flutter_debug-1.0.aar">
-			<Link>Jars\flutter_debug-1.0.aar</Link>
-		</AndroidLibrary>
-		<AndroidLibrary Include="..\..\flutter_module\build\flutter_embedding_debug.jar">
-			<Link>Jars\flutter_embedding_debug.jar</Link>
-		</AndroidLibrary>
-	</ItemGroup>
+	
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Flutter\Flutter.csproj" />
 	</ItemGroup>
