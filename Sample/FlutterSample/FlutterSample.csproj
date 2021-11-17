@@ -6,7 +6,7 @@
 		<SingleProject>true</SingleProject>
 		<ApplicationTitle>FlutterSharp</ApplicationTitle>
 		<ApplicationId>com.microsoft.flutterSharp</ApplicationId>
-		<ApplicationVersion>1.0</ApplicationVersion>
+		<ApplicationVersion>1</ApplicationVersion>
 		<AndroidVersionCode>1</AndroidVersionCode>
 		<UseMaui>true</UseMaui>
 		<UseMauiAssets>true</UseMauiAssets>
