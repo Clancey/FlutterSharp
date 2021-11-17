@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Flutter.Structs;
 using System.Text.Json;
+using System.Linq;
+using Flutter.Internal;
 
 namespace Flutter {
 	public abstract class FlutterObject: IDisposable {
@@ -46,11 +48,16 @@ namespace Flutter {
 			Delegate foo = new Func<bool, object> ((o) => {
 				return true;
 			});
+			var args = action.GetType().GenericTypeArguments?.FirstOrDefault();
 			object result = null;
-			if (value != null)
-				result = action.DynamicInvoke (value);
+			if (args != null)
+			{
+				var parameter = value == null ? value : JsonSerializer.Deserialize((JsonElement)value, args, FlutterManager.serializeOptions);
+				result = action.DynamicInvoke(parameter);
+
+			}
 			else
-				result = action.DynamicInvoke ();
+				result = action.DynamicInvoke();
 			if (returnAction != null) {
 				string resultString = "";
 				if(result != null) {

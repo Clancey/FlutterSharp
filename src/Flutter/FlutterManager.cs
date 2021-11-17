@@ -10,7 +10,7 @@ namespace Flutter.Internal {
 		{
 			Communicator.OnCommandReceived = OnCommandRecieved;
 		}
-		static readonly JsonSerializerOptions serializeOptions = new JsonSerializerOptions
+		internal static  readonly JsonSerializerOptions serializeOptions = new JsonSerializerOptions
 		{
 			PropertyNameCaseInsensitive = true
 		};
