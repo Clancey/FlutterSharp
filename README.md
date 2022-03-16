@@ -15,6 +15,9 @@ On the .net side we create objects and pin them to memory. This allows us to loa
 * Open  `Flutter.sln`
 * And build from VS
 
+#What's Next?
+* Add a dart source analyzer to automatically generate the bindings
+
 # Disclaimer
 
 FlutterSharp is a **proof of concept**. There is **no** official support. Use at your own Risk.
