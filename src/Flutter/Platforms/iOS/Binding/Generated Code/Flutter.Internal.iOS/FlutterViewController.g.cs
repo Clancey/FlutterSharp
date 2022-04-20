@@ -48,8 +48,8 @@ namespace Flutter.Internal.iOS {
 	[Register("FlutterViewController", true)]
 	public unsafe partial class FlutterViewController : global::UIKit.UIViewController {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		static readonly IntPtr class_ptr = Class.GetHandle ("FlutterViewController");
-		public override IntPtr ClassHandle { get { return class_ptr; } }
+		static readonly NativeHandle class_ptr = Class.GetHandle ("FlutterViewController");
+		public override NativeHandle ClassHandle { get { return class_ptr; } }
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[DesignatedInitializer]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]

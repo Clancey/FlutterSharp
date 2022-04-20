@@ -48,8 +48,8 @@ namespace Flutter.Internal {
 	[Register("GeneratedPluginRegistrant", true)]
 	public unsafe partial class GeneratedPluginRegistrant : NSObject {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		static readonly IntPtr class_ptr = Class.GetHandle ("GeneratedPluginRegistrant");
-		public override IntPtr ClassHandle { get { return class_ptr; } }
+		static readonly NativeHandle class_ptr = Class.GetHandle ("GeneratedPluginRegistrant");
+		public override NativeHandle ClassHandle { get { return class_ptr; } }
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
 		[Export ("init")]
