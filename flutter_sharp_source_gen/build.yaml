@@ -1,0 +1,9 @@
+# Read about `build.yaml` at https://pub.dartlang.org/packages/build_config
+builders:
+  flutter_sharp_source_gen:
+    target: ":flutter_sharp_source_gen"
+    import: "package:flutter_sharp_source_gen/flutter_sharp_source_gen.dart"
+    builder_factories: ["flutter_sharpGeneratorFactory"]
+    build_extensions: {".dart": [".g.dart"]}
+    auto_apply: root_package
+    build_to: source

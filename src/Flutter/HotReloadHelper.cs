@@ -59,7 +59,7 @@ namespace Flutter.HotReload
 		{
 			replacedViews.Clear();
 		}
-		public static bool IsEnabled { get; set; }
+		public static bool IsEnabled { get; set; } = true;
 
 		public static Widget GetReplacedView(Widget view)
 		{

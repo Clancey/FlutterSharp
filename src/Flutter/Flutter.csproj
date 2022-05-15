@@ -24,8 +24,6 @@
 		<Folder Include="Platforms\Android\Transforms\" />
 		<Folder Include="Platforms\iOS\Binding\" />
 	</ItemGroup>
-	<ItemGroup>
-	</ItemGroup>
 	<ItemGroup Condition="$(IsAndroid)  == true">
 		<TransformFile Include="Platforms\Android\Transforms\Metadata.xml" />
 		<TransformFile Include="Platforms\Android\Transforms\EnumFields.xml" />
@@ -55,6 +53,9 @@
 	<ItemGroup>
 		<Compile Remove="Platforms\Android\Transforms\*" />
 		<Compile Remove="Platforms\iOS\Binding\*" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Reloadify3000" Version="1.0.8" />
 	</ItemGroup>
 	<ProjectExtensions>
 		<MonoDevelop>

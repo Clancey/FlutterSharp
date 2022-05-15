@@ -34,13 +34,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner:
+  flutter_sharp_source_gen:
 
 dependency_overrides:
   flutter_sharp:
     path: ../flutter_sharp
-dev_dependencies_overrides:
-  flutter_sharp:
-    path: ../flutter_sharp
+  flutter_sharp_source_gen:
+    path: ../flutter_sharp_source_gen
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

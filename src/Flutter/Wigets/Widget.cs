@@ -75,6 +75,7 @@ namespace Flutter
 					if (replaced != this)
 					{
 						Child = replaced;
+						Child?.PrepareForSending();
 						return;
 					}
 				}

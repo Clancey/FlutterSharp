@@ -16,7 +16,7 @@ namespace FlutterSample
 				new Row (MainAxisAlignment.Start) {
 					new Flexible {
 						new Container(padding: new EdgeInsetsGeometry(8)) {
-							new TextField(hint:"What's to be done?") {
+							new TextField(hint:"What's to be done!") {  
 								OnSubmitted = (s) => {
 									SetState (() => {
 										items.Add(s);
@@ -56,7 +56,7 @@ namespace FlutterSample
 		public override Widget Build() =>
 			new Center {
 				new Column(MainAxisAlignment.SpaceAround) {
-					new Text($"You have pressed {clicked} times"),
+					new Text($"You have pressed {clicked} times!!"),   
 					new FloatingActionButton (onPressed:() => {
 							SetState (() => {
 								//Communicator.SendCommand(("intptr",handle.ToString()));
@@ -73,7 +73,7 @@ namespace FlutterSample
 	{
 		public override Widget Build() => new DefaultTabController(2) {
 				new Scaffold (appbar:new AppBar (
-						title:new Text("Hello from Maui!"),
+						title:new Text("Hello from Maui!!"),
 						bottom: new TabBar {
 							new Tab{new Text("Counter")},
 							new Tab{new Text("Todo List")}

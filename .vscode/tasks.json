@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "flutter",
+			"command": "flutter",
+			"args": [
+				"pub",
+				"run",
+				"build_runner",
+				"build"
+			],
+			"group": "build",
+			"problemMatcher": "$dart-build_runner",
+			"label": "source_gen",
+			"detail": "flutter_module",
+			"options": {
+				"cwd": "${workspaceFolder}\\flutter_module",
+			}
+			
+		}
+	]
+}

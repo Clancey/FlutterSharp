@@ -64,6 +64,7 @@ const MethodChannel methodChannel =
     MethodChannel('com.Microsoft.FlutterSharp/Messages');
 
 class MauiRootRenderer extends StatefulWidget {
+  MauiRootRenderer() : super(key: GlobalKey());
   _MauiRootRendererState createState() => _MauiRootRendererState(key);
 }
 
@@ -117,7 +118,7 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
 class MauiComponent extends StatefulWidget {
   String componentId;
 
-  MauiComponent({this.componentId});
+  MauiComponent({this.componentId}) : super(key: UniqueKey());
 
   _MauiComponentState createState() => mauiComponentStates[componentId] =
       new _MauiComponentState(componentId: componentId);
