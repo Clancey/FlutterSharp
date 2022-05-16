@@ -15,7 +15,7 @@
 			"label": "source_gen",
 			"detail": "flutter_module",
 			"options": {
-				"cwd": "${workspaceFolder}\\flutter_module",
+				"cwd": "${workspaceFolder}/flutter_module",
 			}
 			
 		}
