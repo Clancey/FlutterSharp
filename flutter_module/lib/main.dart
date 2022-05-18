@@ -31,7 +31,6 @@ void main() {
   runApp(new MyApp());
 }
 
-@deprecated
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

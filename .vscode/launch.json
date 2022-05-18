@@ -76,7 +76,7 @@
             "request": "launch",
             "program": ".dart_tool/build/entrypoint/build.dart",
             "type": "dart",
-            "args": ["build"],
+            "args": ["build","--delete-conflicting-outputs"],
             "preLaunchTask": "source_gen"
         }  
     ]

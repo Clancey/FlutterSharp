@@ -16,12 +16,17 @@ dependencies:
   logging: ^1.0.1
   code_builder: ^4.0.0
   dart_style: ^2.0.1
+  flutter_sharp:
 
 dev_dependencies:
   lints: ^1.0.0
-  source_gen:
   test:
   build_runner: ^2.0.3
   build_runner_core: ^7.0.0
   build_test: ^2.1.0
   build_verify: ^2.0.0
+
+  
+dependency_overrides:
+  flutter_sharp:
+    path: ../flutter_sharp
