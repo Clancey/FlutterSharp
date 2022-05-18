@@ -1,5 +1,7 @@
 import 'dart:collection';
+import 'dart:ffi';
 
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:flutter_sharp/flutter_sharp.dart';
@@ -43,6 +45,8 @@ class CommentGenerator extends GeneratorForAnnotation<GenerateAttribute> {
   // }
 
   static HashSet<ClassElement> completedClasses = HashSet<ClassElement>();
+  static Map<ClassElement, LibraryElement> classToLibrary =
+      <ClassElement, LibraryElement>{};
 
   @override
   generateForAnnotatedElement(
@@ -62,11 +66,11 @@ class CommentGenerator extends GeneratorForAnnotation<GenerateAttribute> {
             annotation.objectValue.getField('classType')?.toTypeValue();
         if (typeToGenerate != null) {
           var classElement = typeToGenerate.element as ClassElement;
-          var lib = classElement.library;
-          var allLibs = element.library?.importedLibraries;
-          var foundLib = allLibs?.firstWhere((element) =>
-              element.exports.any((e) => matches(e, classElement)));
+          var lib = getLibraryElement(classElement, element);
           getAllSuperClasses(classElement, classesToGenerate);
+          for (var c in classesToGenerate) {
+            generateForClass(output, c, lib, buildStep);
+          }
           print('Found GenerateAttribute annotation');
           if (generateForEntireLib) {}
         }
@@ -84,12 +88,69 @@ class CommentGenerator extends GeneratorForAnnotation<GenerateAttribute> {
     return output.join('\n');
   }
 
-  bool matches(ExportElement exportElement, ClassElement classElement) {
+  static LibraryElement getLibraryElement(
+      ClassElement classElement, Element element) {
+    if (classToLibrary.containsKey(classElement)) {
+      return classToLibrary[classElement]!;
+    }
+    var lib = classElement.library;
+    try {
+      var allLibs = element.library?.importedLibraries;
+      var foundLib = allLibs?.firstWhere(
+          (element) => element.exports.any((e) => matches(e, classElement)));
+      if (foundLib != null) {
+        classToLibrary[classElement] = foundLib;
+        return foundLib;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return lib;
+  }
+
+  static bool matches(ExportElement exportElement, ClassElement classElement) {
     var exportPath = exportElement.library.identifier.split('/')[0] +
         '/' +
         exportElement.uri.toString();
     return exportPath == classElement.library.identifier;
   }
+
+  void generateForClass(List<String> output, ClassElement classElement,
+      LibraryElement libraryElement, BuildStep buildStep) {
+    var name = classElement.name;
+    if (name.isEmpty) {
+      name = classElement.source.uri.pathSegments.last;
+    }
+    output.add('// Struct for "$name"');
+    generateStructForClass(output, classElement, libraryElement, buildStep);
+    output.join('\n');
+    generateParserForClass(output, classElement, libraryElement, buildStep);
+    completedClasses.add(classElement);
+  }
+
+  void generateStructForClass(List<String> output, ClassElement classElement,
+      LibraryElement libraryElement, BuildStep buildStep) {
+    print(classElement.name);
+    var constructorCount = classElement.constructors.length;
+    HashSet<MapEntry<MapEntry<String, Type>, String>> properties = HashSet();
+    if (constructorCount > 0) {
+      properties.add(MapEntry(MapEntry("String", String), "constructor"));
+    }
+    for (var c in classElement.constructors) {
+      for (var p in c.parameters) {
+        var element = p.type.element;
+        if (element is ClassElement) {
+          properties.add(MapEntry(MapEntry(element.name, Pointer), p.name));
+        } else {
+          properties.add(MapEntry(
+              MapEntry(element?.name ?? "", element.runtimeType), p.name));
+        }
+      }
+    }
+  }
+
+  void generateParserForClass(List<String> output, ClassElement classElement,
+      LibraryElement libraryElement, BuildStep buildStep) {}
 
   void generateLib() {}
 
