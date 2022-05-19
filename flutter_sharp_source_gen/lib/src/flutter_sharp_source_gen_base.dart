@@ -1,10 +1,12 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:flutter_sharp/flutter_sharp.dart';
+import 'package:flutter_sharp_source_gen/src/flutter_sharp_models.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:build/build.dart';
 import 'dart:mirrors';
@@ -52,7 +54,7 @@ class CommentGenerator extends GeneratorForAnnotation<GenerateAttribute> {
   generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
     final output = <String>[];
-
+    ModuleParsedData moduleData = ModuleParsedData();
     List<ClassElement> classesToGenerate = [];
     try {
       var name =
@@ -69,7 +71,7 @@ class CommentGenerator extends GeneratorForAnnotation<GenerateAttribute> {
           var lib = getLibraryElement(classElement, element);
           getAllSuperClasses(classElement, classesToGenerate);
           for (var c in classesToGenerate) {
-            generateForClass(output, c, lib, buildStep);
+            generateForClass(output, c, lib, buildStep, moduleData);
           }
           print('Found GenerateAttribute annotation');
           if (generateForEntireLib) {}
@@ -115,42 +117,92 @@ class CommentGenerator extends GeneratorForAnnotation<GenerateAttribute> {
     return exportPath == classElement.library.identifier;
   }
 
-  void generateForClass(List<String> output, ClassElement classElement,
-      LibraryElement libraryElement, BuildStep buildStep) {
+  void generateForClass(
+      List<String> output,
+      ClassElement classElement,
+      LibraryElement libraryElement,
+      BuildStep buildStep,
+      ModuleParsedData moduleData) {
     var name = classElement.name;
     if (name.isEmpty) {
       name = classElement.source.uri.pathSegments.last;
     }
     output.add('// Struct for "$name"');
-    generateStructForClass(output, classElement, libraryElement, buildStep);
+    generateStructForClass(
+        output, classElement, libraryElement, buildStep, moduleData);
     output.join('\n');
-    generateParserForClass(output, classElement, libraryElement, buildStep);
+    generateParserForClass(
+        output, classElement, libraryElement, buildStep, moduleData);
     completedClasses.add(classElement);
   }
 
-  void generateStructForClass(List<String> output, ClassElement classElement,
-      LibraryElement libraryElement, BuildStep buildStep) {
+  void generateStructForClass(
+      List<String> output,
+      ClassElement classElement,
+      LibraryElement libraryElement,
+      BuildStep buildStep,
+      ModuleParsedData moduleData) {
     print(classElement.name);
-    var constructorCount = classElement.constructors.length;
-    HashSet<MapEntry<MapEntry<String, Type>, String>> properties = HashSet();
-    if (constructorCount > 0) {
-      properties.add(MapEntry(MapEntry("String", String), "constructor"));
-    }
-    for (var c in classElement.constructors) {
-      for (var p in c.parameters) {
-        var element = p.type.element;
-        if (element is ClassElement) {
-          properties.add(MapEntry(MapEntry(element.name, Pointer), p.name));
-        } else {
-          properties.add(MapEntry(
-              MapEntry(element?.name ?? "", element.runtimeType), p.name));
-        }
-      }
-    }
+    var c = getClassInfo(classElement, moduleData);
+    var j = jsonEncode(moduleData.toJson());
+    print(j);
   }
 
-  void generateParserForClass(List<String> output, ClassElement classElement,
-      LibraryElement libraryElement, BuildStep buildStep) {}
+  static Map<ClassElement, ClassInfo> classToInfo = <ClassElement, ClassInfo>{};
+  static Map<DartType, TypeInfo> typeToInfo = <DartType, TypeInfo>{};
+
+  ClassInfo getClassInfo(
+      ClassElement classElement, ModuleParsedData moduleData) {
+    if (classToInfo.containsKey(classElement)) {
+      var c = classToInfo[classElement];
+      if (c != null) return c;
+    }
+    var classInfo = classToInfo[classElement] = ClassInfo(classElement);
+    moduleData.classes.add(classInfo);
+    for (var c in classElement.constructors) {
+      var constructorInfo = ConstructorInfo(c.name);
+      for (var p in c.parameters) {
+        constructorInfo.parameters.add(getParameterInfo(p, moduleData));
+      }
+      classInfo.consturctors.add(constructorInfo);
+    }
+    return classInfo;
+  }
+
+  ParameterInfo getParameterInfo(
+      ParameterElement p, ModuleParsedData moduleData) {
+    var element = p.type.element;
+    var parameter = ParameterInfo(p.name, p.hasRequired);
+    parameter.type = getTypeInfo(p.type, moduleData);
+    return parameter;
+  }
+
+  TypeInfo getTypeInfo(DartType type, ModuleParsedData moduleData) {
+    if (typeToInfo.containsKey(type)) {
+      var t = typeToInfo[type];
+      if (t != null) return t;
+    }
+    var element = type.element;
+    TypeInfo? typeInfo;
+    if (element != null && element is ClassElement) {
+      typeInfo = typeToInfo[type] = getClassInfo(element, moduleData);
+    }
+    if (type is FunctionType) {
+      typeInfo = typeToInfo[type] =
+          FunctionInfo(type.getDisplayString(withNullability: false), "");
+    }
+    typeInfo ??= typeToInfo[type] =
+        TypeInfo(type.getDisplayString(withNullability: false), "");
+    moduleData.types[typeInfo.id] = typeInfo;
+    return typeInfo;
+  }
+
+  void generateParserForClass(
+      List<String> output,
+      ClassElement classElement,
+      LibraryElement libraryElement,
+      BuildStep buildStep,
+      ModuleParsedData moduleData) {}
 
   void generateLib() {}
 
