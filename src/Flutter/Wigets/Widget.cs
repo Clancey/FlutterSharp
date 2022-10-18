@@ -26,9 +26,24 @@ namespace Flutter
 			FlutterManager.UntrackWidget(this);
 		}
 
+		Widget replaced;
+		internal Widget GetForSending() => replaced ?? this;
+
 		public virtual void PrepareForSending()
 		{
-
+			if (FlutterHotReloadHelper.IsEnabled)
+			{
+				var r = FlutterHotReloadHelper.GetReplacedView(this);
+				if (r != this)
+				{
+					replaced = r;
+				}
+				else
+				{
+					replaced = null;
+				}
+				replaced?.PrepareForSending();
+			}
 		}
 	}
 
@@ -59,9 +74,10 @@ namespace Flutter
 		}
 		public override void PrepareForSending()
 		{
+			base.PrepareForSending();
 			SetupChild();
 			Child?.PrepareForSending();
-			base.PrepareForSending();
+			BackingStruct.Child = Child.GetForSending();
 		}
 
 		protected void SetupChild()
@@ -114,6 +130,7 @@ namespace Flutter
 
 		public override unsafe void PrepareForSending()
 		{
+			base.PrepareForSending();
 			pinnedArray?.Dispose();
 
 			var array = new NativeArray<long>(Children.Count);
@@ -121,7 +138,7 @@ namespace Flutter
 			{
 				var c = Children[i];
 				c.PrepareForSending();
-				array[i] = c;
+				array[i] = c.GetForSending();
 			}
 			pinnedArray = array;
 			GetBackingStruct<MultiChildRenderObjectWidgetStruct>().Children = pinnedArray;

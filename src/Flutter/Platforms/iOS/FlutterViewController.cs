@@ -53,7 +53,6 @@ namespace Flutter
 		{
 			if (Widget == null)
 				return;
-			Widget.PrepareForSending(); 
 			if (isReady)
 				FlutterManager.SendState(Widget);
 

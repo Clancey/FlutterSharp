@@ -23,6 +23,10 @@ namespace FlutterSample
 				}
 			};
 			window.MakeKeyAndVisible();
+			Reloadify.Reload.Instance.ReplaceType = (arg) => Flutter.HotReload.FlutterHotReloadHelper.RegisterReplacedView(arg.ClassName, arg.Type);
+			Reloadify.Reload.Instance.FinishedReload = () => Flutter.HotReload.FlutterHotReloadHelper.TriggerReload();
+			Reloadify.Reload.Init();
+			Flutter.HotReload.FlutterHotReloadHelper.Init();
 			// Override point for customization after application launch.
 			// If not required for your application you can safely delete this method
 			return true;

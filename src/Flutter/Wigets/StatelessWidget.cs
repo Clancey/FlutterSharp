@@ -11,8 +11,8 @@ namespace Flutter
 			if (Child == null)
 			{
 				Child = Build();
-				Child?.PrepareForSending();
 			}
+			Child?.PrepareForSending();
 		}
 
 		protected override string FlutterType => "StatefulWidget";

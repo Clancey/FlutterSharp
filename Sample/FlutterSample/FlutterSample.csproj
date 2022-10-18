@@ -36,6 +36,12 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Flutter\Flutter.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Reloadify3000" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="Reloadify3000" Version="1.0.8" />
+	</ItemGroup>
 	<ProjectExtensions>
 		<VisualStudio>
 			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionCometSingleProjectSampleHideInfoBar="True" />

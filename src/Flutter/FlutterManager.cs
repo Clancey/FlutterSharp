@@ -46,7 +46,7 @@ namespace Flutter.Internal
 			try
 			{
 				widget.PrepareForSending();
-				var message = new UpdateMessage { ComponentId = componentID, Address = widget };
+				var message = new UpdateMessage { ComponentId = componentID, Address = widget.GetForSending() };
 				var json = JsonSerializer.Serialize(message);
 				Communicator.SendCommand?.Invoke((message.MessageType, json));
 			}
