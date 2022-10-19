@@ -7,6 +7,7 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
+import 'package:flutter_module/parsers/platform_view_parser.dart';
 import 'package:flutter_module/utils.dart';
 import 'mauiRenderer.dart';
 import 'dart:convert';
@@ -88,6 +89,7 @@ class DynamicWidgetBuilder {
     PaddingWidgetParser(),
     PageViewWidgetParser(),
     PlaceholderWidgetParser(),
+    PlatformViewParser(),
     PositionedWidgetParser(),
     RaisedButtonParser(),
     RowWidgetParser(),

@@ -7,7 +7,7 @@ namespace Flutter.Internal
 {
 	public static class FlutterManager
 	{
-		static WeakDictionary<string, Widget> AliveWidgets = new WeakDictionary<string, Widget>();
+		internal static WeakDictionary<string, Widget> AliveWidgets = new WeakDictionary<string, Widget>();
 		static FlutterManager()
 		{
 			Communicator.OnCommandReceived = OnCommandRecieved;

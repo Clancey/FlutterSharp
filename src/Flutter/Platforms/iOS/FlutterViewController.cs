@@ -7,7 +7,7 @@ using CoreGraphics;
 
 namespace Flutter
 {
-	class MyFlutterPlatformView : FlutterPlatformView
+	class MyFlutterPlatformView : Internal.FlutterPlatformView
 	{
 		private readonly UIView view;
 
@@ -19,7 +19,16 @@ namespace Flutter
 	}
 	class MyFlutterNativeViewFactory : NSObject, IFlutterPlatformViewFactory
 	{
-		public FlutterPlatformView ViewIdentifier(CGRect frame, long viewId, NSObject args) => new MyFlutterPlatformView (new UIView(frame));
+		public Internal.FlutterPlatformView ViewIdentifier(CGRect frame, long viewId, NSObject args)
+		{
+			var dictionary = args as NSDictionary<NSString, NSString>;
+			var id = dictionary[(NSString)"id"].ToString();
+			FlutterManager.AliveWidgets.TryGetValue(id, out var widget);
+			var fv = widget as FlutterPlatformView;
+			var view = fv.CreateView(frame);
+			return new MyFlutterPlatformView(view);
+		}
+
 		[Export("createArgsCodec")]
 		FlutterMessageCodec CreateArgsCodec => FlutterMessageCodec.SharedInstance();
 	}
