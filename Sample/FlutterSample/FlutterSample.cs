@@ -70,10 +70,12 @@ namespace FlutterSample
 						new Icon(codePoint: "57669",fontFamily:"MaterialIcons")
 					},
 #if IOS
-					new PlatformView((rect) => new UITextField(rect)
-					{
+					new Container(color: Color.RGB(100,100,100), width:300,height:200){
+						new PlatformView((rect) =>new UITextField(new CGRect(0,0,200,44))
+						{
 
-					}),
+						})
+					},
 #endif
 				}
 			};
