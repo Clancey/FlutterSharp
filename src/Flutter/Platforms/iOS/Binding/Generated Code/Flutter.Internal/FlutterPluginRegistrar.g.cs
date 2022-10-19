@@ -50,74 +50,44 @@ using NativeHandle = System.IntPtr;
 #endif
 namespace Flutter.Internal {
 	[Protocol (Name = "FlutterPluginRegistrar", WrapperType = typeof (FlutterPluginRegistrarWrapper))]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = false, Name = "RegisterViewFactory", Selector = "registerViewFactory:withId:", ParameterType = new Type [] { typeof (NSObject), typeof (string) }, ParameterByRef = new bool [] { false, false })]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = false, Name = "Publish", Selector = "publish:", ParameterType = new Type [] { typeof (NSObject) }, ParameterByRef = new bool [] { false })]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = false, Name = "LookupKeyForAsset", Selector = "lookupKeyForAsset:", ReturnType = typeof (string), ParameterType = new Type [] { typeof (string) }, ParameterByRef = new bool [] { false })]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = false, Name = "LookupKeyForAsset", Selector = "lookupKeyForAsset:fromPackage:", ReturnType = typeof (string), ParameterType = new Type [] { typeof (string), typeof (string) }, ParameterByRef = new bool [] { false, false })]
-	[ProtocolMember (IsRequired = true, IsProperty = true, IsStatic = false, Name = "Messenger", Selector = "messenger", PropertyType = typeof (Flutter.Internal.FlutterBinaryMessenger), GetterSelector = "messenger", ArgumentSemantic = ArgumentSemantic.None)]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = false, Name = "RegisterViewFactory", Selector = "registerViewFactory:withId:", ParameterType = new Type [] { typeof (NSObject), typeof (string) }, ParameterByRef = new bool [] { false, false })]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = false, Name = "Publish", Selector = "publish:", ParameterType = new Type [] { typeof (NSObject) }, ParameterByRef = new bool [] { false })]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = false, Name = "LookupKeyForAsset", Selector = "lookupKeyForAsset:", ReturnType = typeof (string), ParameterType = new Type [] { typeof (string) }, ParameterByRef = new bool [] { false })]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = false, Name = "LookupKeyForAsset", Selector = "lookupKeyForAsset:fromPackage:", ReturnType = typeof (string), ParameterType = new Type [] { typeof (string), typeof (string) }, ParameterByRef = new bool [] { false, false })]
+	[ProtocolMember (IsRequired = false, IsProperty = true, IsStatic = false, Name = "Messenger", Selector = "messenger", PropertyType = typeof (Flutter.Internal.FlutterBinaryMessenger), GetterSelector = "messenger", ArgumentSemantic = ArgumentSemantic.None)]
 	public partial interface IFlutterPluginRegistrar : INativeObject, IDisposable
 	{
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		[Export ("registerViewFactory:withId:")]
-		[Preserve (Conditional = true)]
-		void RegisterViewFactory (NSObject factory, string factoryId);
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		[Export ("publish:")]
-		[Preserve (Conditional = true)]
-		void Publish (NSObject value);
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		[Export ("lookupKeyForAsset:")]
-		[Preserve (Conditional = true)]
-		string LookupKeyForAsset (string asset);
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		[Export ("lookupKeyForAsset:fromPackage:")]
-		[Preserve (Conditional = true)]
-		string LookupKeyForAsset (string asset, string package);
-		[Preserve (Conditional = true)]
-		FlutterBinaryMessenger Messenger {
-			[Export ("messenger")]
-			get;
-		}
 	}
-	internal sealed class FlutterPluginRegistrarWrapper : BaseWrapper, IFlutterPluginRegistrar {
-		[Preserve (Conditional = true)]
-		public FlutterPluginRegistrarWrapper (NativeHandle handle, bool owns)
-			: base (handle, owns)
-		{
-		}
-		[Export ("registerViewFactory:withId:")]
+	public static partial class FlutterPluginRegistrar_Extensions {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public void RegisterViewFactory (NSObject factory, string factoryId)
+		public static void RegisterViewFactory (this IFlutterPluginRegistrar This, NSObject factory, string factoryId)
 		{
 			var factory__handle__ = factory!.GetNonNullHandle (nameof (factory));
 			if (factoryId is null)
 				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (factoryId));
 			var nsfactoryId = CFString.CreateNative (factoryId);
-			global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle_NativeHandle (this.Handle, Selector.GetHandle ("registerViewFactory:withId:"), factory__handle__, nsfactoryId);
+			global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle_NativeHandle (This.Handle, Selector.GetHandle ("registerViewFactory:withId:"), factory__handle__, nsfactoryId);
 			CFString.ReleaseNative (nsfactoryId);
 		}
-		[Export ("publish:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public void Publish (NSObject value)
+		public static void Publish (this IFlutterPluginRegistrar This, NSObject value)
 		{
 			var value__handle__ = value!.GetNonNullHandle (nameof (value));
-			global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("publish:"), value__handle__);
+			global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle (This.Handle, Selector.GetHandle ("publish:"), value__handle__);
 		}
-		[Export ("lookupKeyForAsset:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public string LookupKeyForAsset (string asset)
+		public static string LookupKeyForAsset (this IFlutterPluginRegistrar This, string asset)
 		{
 			if (asset is null)
 				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (asset));
 			var nsasset = CFString.CreateNative (asset);
 			string? ret;
-			ret = CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("lookupKeyForAsset:"), nsasset))!;
+			ret = CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (This.Handle, Selector.GetHandle ("lookupKeyForAsset:"), nsasset))!;
 			CFString.ReleaseNative (nsasset);
 			return ret!;
 		}
-		[Export ("lookupKeyForAsset:fromPackage:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public string LookupKeyForAsset (string asset, string package)
+		public static string LookupKeyForAsset (this IFlutterPluginRegistrar This, string asset, string package)
 		{
 			if (asset is null)
 				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (asset));
@@ -126,17 +96,22 @@ namespace Flutter.Internal {
 			var nsasset = CFString.CreateNative (asset);
 			var nspackage = CFString.CreateNative (package);
 			string? ret;
-			ret = CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle_NativeHandle (this.Handle, Selector.GetHandle ("lookupKeyForAsset:fromPackage:"), nsasset, nspackage))!;
+			ret = CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle_NativeHandle (This.Handle, Selector.GetHandle ("lookupKeyForAsset:fromPackage:"), nsasset, nspackage))!;
 			CFString.ReleaseNative (nsasset);
 			CFString.ReleaseNative (nspackage);
 			return ret!;
 		}
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public FlutterBinaryMessenger Messenger {
-			[Export ("messenger")]
-			get {
-				return  Runtime.GetNSObject<FlutterBinaryMessenger> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (this.Handle, Selector.GetHandle ("messenger")))!;
-			}
+		public static FlutterBinaryMessenger GetMessenger (this IFlutterPluginRegistrar This)
+		{
+			return  Runtime.GetNSObject<FlutterBinaryMessenger> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (This.Handle, Selector.GetHandle ("messenger")))!;
+		}
+	}
+	internal sealed class FlutterPluginRegistrarWrapper : BaseWrapper, IFlutterPluginRegistrar {
+		[Preserve (Conditional = true)]
+		public FlutterPluginRegistrarWrapper (NativeHandle handle, bool owns)
+			: base (handle, owns)
+		{
 		}
 	}
 }
@@ -178,31 +153,75 @@ namespace Flutter.Internal {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual string LookupKeyForAsset (string asset)
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			if (asset is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (asset));
+			var nsasset = CFString.CreateNative (asset);
+			string? ret;
+			if (IsDirectBinding) {
+				ret = CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("lookupKeyForAsset:"), nsasset))!;
+			} else {
+				ret = CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("lookupKeyForAsset:"), nsasset))!;
+			}
+			CFString.ReleaseNative (nsasset);
+			return ret!;
 		}
 		[Export ("lookupKeyForAsset:fromPackage:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual string LookupKeyForAsset (string asset, string package)
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			if (asset is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (asset));
+			if (package is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (package));
+			var nsasset = CFString.CreateNative (asset);
+			var nspackage = CFString.CreateNative (package);
+			string? ret;
+			if (IsDirectBinding) {
+				ret = CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle_NativeHandle (this.Handle, Selector.GetHandle ("lookupKeyForAsset:fromPackage:"), nsasset, nspackage))!;
+			} else {
+				ret = CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper_NativeHandle_NativeHandle (this.SuperHandle, Selector.GetHandle ("lookupKeyForAsset:fromPackage:"), nsasset, nspackage))!;
+			}
+			CFString.ReleaseNative (nsasset);
+			CFString.ReleaseNative (nspackage);
+			return ret!;
 		}
 		[Export ("publish:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual void Publish (NSObject value)
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			var value__handle__ = value!.GetNonNullHandle (nameof (value));
+			if (IsDirectBinding) {
+				global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("publish:"), value__handle__);
+			} else {
+				global::ApiDefinition.Messaging.void_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("publish:"), value__handle__);
+			}
 		}
 		[Export ("registerViewFactory:withId:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual void RegisterViewFactory (NSObject factory, string factoryId)
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			var factory__handle__ = factory!.GetNonNullHandle (nameof (factory));
+			if (factoryId is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (factoryId));
+			var nsfactoryId = CFString.CreateNative (factoryId);
+			if (IsDirectBinding) {
+				global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle_NativeHandle (this.Handle, Selector.GetHandle ("registerViewFactory:withId:"), factory__handle__, nsfactoryId);
+			} else {
+				global::ApiDefinition.Messaging.void_objc_msgSendSuper_NativeHandle_NativeHandle (this.SuperHandle, Selector.GetHandle ("registerViewFactory:withId:"), factory__handle__, nsfactoryId);
+			}
+			CFString.ReleaseNative (nsfactoryId);
 		}
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual FlutterBinaryMessenger Messenger {
 			[Export ("messenger")]
 			get {
-			throw new You_Should_Not_Call_base_In_This_Method ();
+				FlutterBinaryMessenger? ret;
+				if (IsDirectBinding) {
+					ret =  Runtime.GetNSObject<FlutterBinaryMessenger> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (this.Handle, Selector.GetHandle ("messenger")))!;
+				} else {
+					ret =  Runtime.GetNSObject<FlutterBinaryMessenger> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("messenger")))!;
+				}
+				return ret!;
 			}
 		}
 	} /* class FlutterPluginRegistrar */

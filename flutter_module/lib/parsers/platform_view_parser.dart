@@ -20,7 +20,7 @@ class PlatformViewParser extends WidgetParser {
     if (Platform.isAndroid) {
       return AndroidView(
         viewType: viewType,
-        creationParams: creationParams,
+        creationParams: id,
         creationParamsCodec: const StandardMessageCodec(),
         layoutDirection: TextDirection.ltr,
       );
@@ -28,7 +28,7 @@ class PlatformViewParser extends WidgetParser {
     if (Platform.isIOS) {
       return UiKitView(
         viewType: viewType,
-        creationParams: creationParams,
+        creationParams: id,
         creationParamsCodec: const StandardMessageCodec(),
         layoutDirection: TextDirection.ltr,
       );

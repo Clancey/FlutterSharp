@@ -21,16 +21,21 @@ namespace Flutter
 	{
 		public Internal.FlutterPlatformView ViewIdentifier(CGRect frame, long viewId, NSObject args)
 		{
-			var dictionary = args as NSDictionary<NSString, NSString>;
-			var id = dictionary[(NSString)"id"].ToString();
+			var id = args?.ToString();
+			if (String.IsNullOrWhiteSpace(id)) {
+				var t = new UILabel { Text = "Error" };
+				t.SizeToFit();
+				return new MyFlutterPlatformView(t);
+			}
+			//var id = dictionary[(NSString)"id"].ToString();
 			FlutterManager.AliveWidgets.TryGetValue(id, out var widget);
-			var fv = widget as FlutterPlatformView;
+			var fv = widget as PlatformView;
 			var view = fv.CreateView(frame);
 			return new MyFlutterPlatformView(view);
 		}
 
 		[Export("createArgsCodec")]
-		FlutterMessageCodec CreateArgsCodec => FlutterMessageCodec.SharedInstance();
+		FlutterMessageCodec CreateArgsCodec => FlutterStandardMessageCodec.StandardSharedInstance;
 	}
 	public partial class FlutterViewController : Flutter.Internal.FlutterViewController, IHotReloadHandler
 	{
@@ -58,7 +63,8 @@ namespace Flutter
 			GeneratedPluginRegistrant.Register(Engine);
 			MethodChannel = FlutterMethodChannel.FromNameAndMessenger("com.Microsoft.FlutterSharp/Messages", Engine.BinaryMessenger);
 			Flutter.Internal.Communicator.SendCommand = (x) => MethodChannel.InvokeMethod(x.Method, (NSString)x.Arguments);
-			this.PluginRegistry.RegistrarForPlugin("FlutterSharp").RegisterViewFactory(new MyFlutterNativeViewFactory(), "FlutterSharpNativeView");
+			
+			this.PluginRegistry.RegistrarForPlugin("flutter_sharp").RegisterViewFactory(new MyFlutterNativeViewFactory(), "FlutterSharpNativeView");
 			MethodChannel.SetMethodCaller((call, result) =>
 			{
 

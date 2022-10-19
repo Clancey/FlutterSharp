@@ -13,21 +13,32 @@ namespace Flutter.Internal;
 interface FlutterMessageCodec
 {
 	// @required +(instancetype _Nonnull)sharedInstance;
-	[Static, Abstract]
+	[Static]
 	[Export("sharedInstance")]
 	FlutterMessageCodec SharedInstance();
 
 	// @required -(NSData * _Nullable)encode:(id _Nullable)message;
-	[Abstract]
+	//[Abstract]
 	[Export("encode:")]
 	[return: NullAllowed]
 	NSData Encode([NullAllowed] NSObject message);
 
 	// @required -(id _Nullable)decode:(NSData * _Nullable)message;
-	[Abstract]
+	//[Abstract]
 	[Export("decode:")]
 	[return: NullAllowed]
 	NSObject Decode([NullAllowed] NSData message);
+}
+[BaseType(typeof(FlutterMessageCodec))]
+interface FlutterStandardMessageCodec
+{
+	[Static]
+	[Export("sharedInstance")]
+	FlutterMessageCodec StandardSharedInstance { get; }
+	// +(instancetype _Nonnull)codecWithReaderWriter:(FlutterStandardReaderWriter * _Nonnull)readerWriter;
+	//[Static]
+	//[Export("codecWithReaderWriter:")]
+	//FlutterStandardMessageCodec CodecWithReaderWriter(FlutterStandardReaderWriter readerWriter);
 }
 
 
@@ -65,7 +76,7 @@ interface FlutterPlatformView
 interface FlutterPluginRegistrar
 {
 	// @required -(NSObject<FlutterBinaryMessenger> * _Nonnull)messenger;
-	[Abstract]
+	//[Abstract]
 	[Export("messenger")]
 	FlutterBinaryMessenger Messenger { get; }
 
@@ -75,7 +86,7 @@ interface FlutterPluginRegistrar
 	//FlutterTextureRegistry Textures { get; }
 
 	// @required -(void)registerViewFactory:(NSObject<FlutterPlatformViewFactory> * _Nonnull)factory withId:(NSString * _Nonnull)factoryId;
-	[Abstract]
+	//[Abstract]
 	[Export("registerViewFactory:withId:")]
 	void RegisterViewFactory(NSObject factory, string factoryId);
 
@@ -85,7 +96,7 @@ interface FlutterPluginRegistrar
 	//void RegisterViewFactory(FlutterPlatformViewFactory factory, string factoryId, FlutterPlatformViewGestureRecognizersBlockingPolicy gestureRecognizersBlockingPolicy);
 
 	// @required -(void)publish:(NSObject * _Nonnull)value;
-	[Abstract]
+	//[Abstract]
 	[Export("publish:")]
 	void Publish(NSObject value);
 
@@ -100,12 +111,12 @@ interface FlutterPluginRegistrar
 	//void AddApplicationDelegate(FlutterPlugin @delegate);
 
 	// @required -(NSString * _Nonnull)lookupKeyForAsset:(NSString * _Nonnull)asset;
-	[Abstract]
+	//[Abstract]
 	[Export("lookupKeyForAsset:")]
 	string LookupKeyForAsset(string asset);
 
 	// @required -(NSString * _Nonnull)lookupKeyForAsset:(NSString * _Nonnull)asset fromPackage:(NSString * _Nonnull)package;
-	[Abstract]
+	//[Abstract]
 	[Export("lookupKeyForAsset:fromPackage:")]
 	string LookupKeyForAsset(string asset, string package);
 }
@@ -115,18 +126,18 @@ interface FlutterPluginRegistrar
 interface FlutterPluginRegistry
 {
 	// @required -(NSObject<FlutterPluginRegistrar> * _Nullable)registrarForPlugin:(NSString * _Nonnull)pluginKey;
-	[Abstract]
+	//[Abstract]
 	[Export("registrarForPlugin:")]
 	[return: NullAllowed]
 	FlutterPluginRegistrar RegistrarForPlugin(string pluginKey);
 
 	// @required -(BOOL)hasPlugin:(NSString * _Nonnull)pluginKey;
-	[Abstract]
+	//[Abstract]
 	[Export("hasPlugin:")]
 	bool HasPlugin(string pluginKey);
 
 	// @required -(NSObject * _Nullable)valuePublishedByPlugin:(NSString * _Nonnull)pluginKey;
-	[Abstract]
+	//[Abstract]
 	[Export("valuePublishedByPlugin:")]
 	[return: NullAllowed]
 	NSObject ValuePublishedByPlugin(string pluginKey);
@@ -134,7 +145,7 @@ interface FlutterPluginRegistry
 
 [DisableDefaultCtor]
 [BaseType(typeof(UIViewController))]
-interface FlutterViewController //: IFlutterPluginRegistry
+interface FlutterViewController
 {
 
 	[Export("initWithEngine:nibName:bundle:")]
@@ -204,7 +215,7 @@ interface FlutterViewController //: IFlutterPluginRegistry
 //
 // For more information, see https://aka.ms/ios-binding
 //
-[BaseType(typeof(NSObject))]
+[BaseType(typeof(FlutterPluginRegistry))]
 interface FlutterEngine
 {
 

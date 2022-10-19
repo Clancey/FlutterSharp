@@ -50,7 +50,7 @@ using NativeHandle = System.IntPtr;
 #endif
 namespace Flutter.Internal {
 	[Register("FlutterEngine", true)]
-	public unsafe partial class FlutterEngine : NSObject {
+	public unsafe partial class FlutterEngine : FlutterPluginRegistry {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		static readonly NativeHandle class_ptr = Class.GetHandle ("FlutterEngine");
 		public override NativeHandle ClassHandle { get { return class_ptr; } }

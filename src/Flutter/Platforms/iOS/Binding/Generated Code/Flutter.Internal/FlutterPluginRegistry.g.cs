@@ -50,65 +50,52 @@ using NativeHandle = System.IntPtr;
 #endif
 namespace Flutter.Internal {
 	[Protocol (Name = "FlutterPluginRegistry", WrapperType = typeof (FlutterPluginRegistryWrapper))]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = false, Name = "RegistrarForPlugin", Selector = "registrarForPlugin:", ReturnType = typeof (Flutter.Internal.FlutterPluginRegistrar), ParameterType = new Type [] { typeof (string) }, ParameterByRef = new bool [] { false })]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = false, Name = "HasPlugin", Selector = "hasPlugin:", ReturnType = typeof (bool), ParameterType = new Type [] { typeof (string) }, ParameterByRef = new bool [] { false })]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = false, Name = "ValuePublishedByPlugin", Selector = "valuePublishedByPlugin:", ReturnType = typeof (NSObject), ParameterType = new Type [] { typeof (string) }, ParameterByRef = new bool [] { false })]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = false, Name = "RegistrarForPlugin", Selector = "registrarForPlugin:", ReturnType = typeof (Flutter.Internal.FlutterPluginRegistrar), ParameterType = new Type [] { typeof (string) }, ParameterByRef = new bool [] { false })]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = false, Name = "HasPlugin", Selector = "hasPlugin:", ReturnType = typeof (bool), ParameterType = new Type [] { typeof (string) }, ParameterByRef = new bool [] { false })]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = false, Name = "ValuePublishedByPlugin", Selector = "valuePublishedByPlugin:", ReturnType = typeof (NSObject), ParameterType = new Type [] { typeof (string) }, ParameterByRef = new bool [] { false })]
 	public partial interface IFlutterPluginRegistry : INativeObject, IDisposable
 	{
+	}
+	public static partial class FlutterPluginRegistry_Extensions {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		[Export ("registrarForPlugin:")]
-		[Preserve (Conditional = true)]
-		FlutterPluginRegistrar? RegistrarForPlugin (string pluginKey);
+		public static FlutterPluginRegistrar? RegistrarForPlugin (this IFlutterPluginRegistry This, string pluginKey)
+		{
+			if (pluginKey is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (pluginKey));
+			var nspluginKey = CFString.CreateNative (pluginKey);
+			FlutterPluginRegistrar? ret;
+			ret =  Runtime.GetNSObject<FlutterPluginRegistrar> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (This.Handle, Selector.GetHandle ("registrarForPlugin:"), nspluginKey))!;
+			CFString.ReleaseNative (nspluginKey);
+			return ret!;
+		}
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		[Export ("hasPlugin:")]
-		[Preserve (Conditional = true)]
-		bool HasPlugin (string pluginKey);
+		public static bool HasPlugin (this IFlutterPluginRegistry This, string pluginKey)
+		{
+			if (pluginKey is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (pluginKey));
+			var nspluginKey = CFString.CreateNative (pluginKey);
+			bool ret;
+			ret = global::ApiDefinition.Messaging.bool_objc_msgSend_NativeHandle (This.Handle, Selector.GetHandle ("hasPlugin:"), nspluginKey);
+			CFString.ReleaseNative (nspluginKey);
+			return ret!;
+		}
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		[Export ("valuePublishedByPlugin:")]
-		[Preserve (Conditional = true)]
-		NSObject? ValuePublishedByPlugin (string pluginKey);
+		public static NSObject? ValuePublishedByPlugin (this IFlutterPluginRegistry This, string pluginKey)
+		{
+			if (pluginKey is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (pluginKey));
+			var nspluginKey = CFString.CreateNative (pluginKey);
+			NSObject? ret;
+			ret = Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (This.Handle, Selector.GetHandle ("valuePublishedByPlugin:"), nspluginKey))!;
+			CFString.ReleaseNative (nspluginKey);
+			return ret!;
+		}
 	}
 	internal sealed class FlutterPluginRegistryWrapper : BaseWrapper, IFlutterPluginRegistry {
 		[Preserve (Conditional = true)]
 		public FlutterPluginRegistryWrapper (NativeHandle handle, bool owns)
 			: base (handle, owns)
 		{
-		}
-		[Export ("registrarForPlugin:")]
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public FlutterPluginRegistrar? RegistrarForPlugin (string pluginKey)
-		{
-			if (pluginKey is null)
-				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (pluginKey));
-			var nspluginKey = CFString.CreateNative (pluginKey);
-			FlutterPluginRegistrar? ret;
-			ret =  Runtime.GetNSObject<FlutterPluginRegistrar> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("registrarForPlugin:"), nspluginKey))!;
-			CFString.ReleaseNative (nspluginKey);
-			return ret!;
-		}
-		[Export ("hasPlugin:")]
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public bool HasPlugin (string pluginKey)
-		{
-			if (pluginKey is null)
-				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (pluginKey));
-			var nspluginKey = CFString.CreateNative (pluginKey);
-			bool ret;
-			ret = global::ApiDefinition.Messaging.bool_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("hasPlugin:"), nspluginKey);
-			CFString.ReleaseNative (nspluginKey);
-			return ret!;
-		}
-		[Export ("valuePublishedByPlugin:")]
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public NSObject? ValuePublishedByPlugin (string pluginKey)
-		{
-			if (pluginKey is null)
-				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (pluginKey));
-			var nspluginKey = CFString.CreateNative (pluginKey);
-			NSObject? ret;
-			ret = Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("valuePublishedByPlugin:"), nspluginKey))!;
-			CFString.ReleaseNative (nspluginKey);
-			return ret!;
 		}
 	}
 }
@@ -150,19 +137,49 @@ namespace Flutter.Internal {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual bool HasPlugin (string pluginKey)
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			if (pluginKey is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (pluginKey));
+			var nspluginKey = CFString.CreateNative (pluginKey);
+			bool ret;
+			if (IsDirectBinding) {
+				ret = global::ApiDefinition.Messaging.bool_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("hasPlugin:"), nspluginKey);
+			} else {
+				ret = global::ApiDefinition.Messaging.bool_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("hasPlugin:"), nspluginKey);
+			}
+			CFString.ReleaseNative (nspluginKey);
+			return ret!;
 		}
 		[Export ("registrarForPlugin:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual FlutterPluginRegistrar? RegistrarForPlugin (string pluginKey)
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			if (pluginKey is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (pluginKey));
+			var nspluginKey = CFString.CreateNative (pluginKey);
+			FlutterPluginRegistrar? ret;
+			if (IsDirectBinding) {
+				ret =  Runtime.GetNSObject<FlutterPluginRegistrar> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("registrarForPlugin:"), nspluginKey))!;
+			} else {
+				ret =  Runtime.GetNSObject<FlutterPluginRegistrar> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("registrarForPlugin:"), nspluginKey))!;
+			}
+			CFString.ReleaseNative (nspluginKey);
+			return ret!;
 		}
 		[Export ("valuePublishedByPlugin:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual NSObject? ValuePublishedByPlugin (string pluginKey)
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			if (pluginKey is null)
+				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (pluginKey));
+			var nspluginKey = CFString.CreateNative (pluginKey);
+			NSObject? ret;
+			if (IsDirectBinding) {
+				ret = Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("valuePublishedByPlugin:"), nspluginKey))!;
+			} else {
+				ret = Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("valuePublishedByPlugin:"), nspluginKey))!;
+			}
+			CFString.ReleaseNative (nspluginKey);
+			return ret!;
 		}
 	} /* class FlutterPluginRegistry */
 }

@@ -1,10 +1,14 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Flutter;
 using Flutter.Internal;
 using Flutter.Structs;
+#if IOS
+using UIKit;
+using CoreGraphics;
+
+#endif
 namespace FlutterSample
 {
 	public class ListPage : StatefulWidget
@@ -64,7 +68,13 @@ namespace FlutterSample
 							});
 						}){
 						new Icon(codePoint: "57669",fontFamily:"MaterialIcons")
-					}
+					},
+#if IOS
+					new PlatformView((rect) => new UITextField(rect)
+					{
+
+					}),
+#endif
 				}
 			};
 	}

@@ -50,39 +50,31 @@ using NativeHandle = System.IntPtr;
 #endif
 namespace Flutter.Internal {
 	[Protocol (Name = "FlutterMessageCodec", WrapperType = typeof (FlutterMessageCodecWrapper))]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = true, Name = "SharedInstance", Selector = "sharedInstance", ReturnType = typeof (Flutter.Internal.FlutterMessageCodec))]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = false, Name = "Encode", Selector = "encode:", ReturnType = typeof (NSData), ParameterType = new Type [] { typeof (NSObject) }, ParameterByRef = new bool [] { false })]
-	[ProtocolMember (IsRequired = true, IsProperty = false, IsStatic = false, Name = "Decode", Selector = "decode:", ReturnType = typeof (NSObject), ParameterType = new Type [] { typeof (NSData) }, ParameterByRef = new bool [] { false })]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = true, Name = "SharedInstance", Selector = "sharedInstance", ReturnType = typeof (Flutter.Internal.FlutterMessageCodec))]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = false, Name = "Encode", Selector = "encode:", ReturnType = typeof (NSData), ParameterType = new Type [] { typeof (NSObject) }, ParameterByRef = new bool [] { false })]
+	[ProtocolMember (IsRequired = false, IsProperty = false, IsStatic = false, Name = "Decode", Selector = "decode:", ReturnType = typeof (NSObject), ParameterType = new Type [] { typeof (NSData) }, ParameterByRef = new bool [] { false })]
 	public partial interface IFlutterMessageCodec : INativeObject, IDisposable
 	{
+	}
+	public static partial class FlutterMessageCodec_Extensions {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		[Export ("encode:")]
-		[Preserve (Conditional = true)]
-		NSData? Encode (NSObject? message);
+		public static NSData? Encode (this IFlutterMessageCodec This, NSObject? message)
+		{
+			var message__handle__ = message.GetHandle ();
+			return  Runtime.GetNSObject<NSData> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (This.Handle, Selector.GetHandle ("encode:"), message__handle__))!;
+		}
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		[Export ("decode:")]
-		[Preserve (Conditional = true)]
-		NSObject? Decode (NSData? message);
+		public static NSObject? Decode (this IFlutterMessageCodec This, NSData? message)
+		{
+			var message__handle__ = message.GetHandle ();
+			return Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (This.Handle, Selector.GetHandle ("decode:"), message__handle__))!;
+		}
 	}
 	internal sealed class FlutterMessageCodecWrapper : BaseWrapper, IFlutterMessageCodec {
 		[Preserve (Conditional = true)]
 		public FlutterMessageCodecWrapper (NativeHandle handle, bool owns)
 			: base (handle, owns)
 		{
-		}
-		[Export ("encode:")]
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public NSData? Encode (NSObject? message)
-		{
-			var message__handle__ = message.GetHandle ();
-			return  Runtime.GetNSObject<NSData> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("encode:"), message__handle__))!;
-		}
-		[Export ("decode:")]
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public NSObject? Decode (NSData? message)
-		{
-			var message__handle__ = message.GetHandle ();
-			return Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("decode:"), message__handle__))!;
 		}
 	}
 }
@@ -124,19 +116,29 @@ namespace Flutter.Internal {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual NSObject? Decode (NSData? message)
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			var message__handle__ = message.GetHandle ();
+			if (IsDirectBinding) {
+				return Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("decode:"), message__handle__))!;
+			} else {
+				return Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("decode:"), message__handle__))!;
+			}
 		}
 		[Export ("encode:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public virtual NSData? Encode (NSObject? message)
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			var message__handle__ = message.GetHandle ();
+			if (IsDirectBinding) {
+				return  Runtime.GetNSObject<NSData> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("encode:"), message__handle__))!;
+			} else {
+				return  Runtime.GetNSObject<NSData> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("encode:"), message__handle__))!;
+			}
 		}
 		[Export ("sharedInstance")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		public static FlutterMessageCodec SharedInstance ()
 		{
-			throw new You_Should_Not_Call_base_In_This_Method ();
+			return  Runtime.GetNSObject<FlutterMessageCodec> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (class_ptr, Selector.GetHandle ("sharedInstance")))!;
 		}
 	} /* class FlutterMessageCodec */
 }

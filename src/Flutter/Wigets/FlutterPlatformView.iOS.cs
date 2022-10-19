@@ -7,7 +7,7 @@ public partial class PlatformView
 {
 	public PlatformView(Func<CGRect,UIView> createView)
 	{
-		CreateView = createView;
+		this.CreateView = createView;
 	}
 	public Func<CGRect,UIView> CreateView { get; private set; }
 }
