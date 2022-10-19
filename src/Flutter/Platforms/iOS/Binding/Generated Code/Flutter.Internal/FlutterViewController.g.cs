@@ -43,8 +43,12 @@ using FileProvider;
 using CoreAnimation;
 using CoreFoundation;
 using NetworkExtension;
+using MetalPerformanceShadersGraph;
 #nullable enable
-namespace Flutter.Internal.iOS {
+#if !NET
+using NativeHandle = System.IntPtr;
+#endif
+namespace Flutter.Internal {
 	[Register("FlutterViewController", true)]
 	public unsafe partial class FlutterViewController : global::UIKit.UIViewController {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
@@ -73,36 +77,49 @@ namespace Flutter.Internal.iOS {
 
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
-		protected internal FlutterViewController (IntPtr handle) : base (handle)
+		protected internal FlutterViewController (NativeHandle handle) : base (handle)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 		}
 
 		[Export ("initWithEngine:nibName:bundle:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public FlutterViewController (global::Flutter.Internal.FlutterEngine engine, string? nibName, NSBundle? bundle)
+		public FlutterViewController (FlutterEngine engine, string? nibName, NSBundle? bundle)
 			: base (NSObjectFlag.Empty)
 		{
-			var engine__handle__ = engine.GetNonNullHandle (nameof (engine));
+			var engine__handle__ = engine!.GetNonNullHandle (nameof (engine));
 			var bundle__handle__ = bundle.GetHandle ();
 			var nsnibName = CFString.CreateNative (nibName);
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 			if (IsDirectBinding) {
-				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSend_IntPtr_IntPtr_IntPtr (this.Handle, Selector.GetHandle ("initWithEngine:nibName:bundle:"), engine__handle__, nsnibName, bundle__handle__), "initWithEngine:nibName:bundle:");
+				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSend_NativeHandle_NativeHandle_NativeHandle (this.Handle, Selector.GetHandle ("initWithEngine:nibName:bundle:"), engine__handle__, nsnibName, bundle__handle__), "initWithEngine:nibName:bundle:");
 			} else {
-				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper_IntPtr_IntPtr_IntPtr (this.SuperHandle, Selector.GetHandle ("initWithEngine:nibName:bundle:"), engine__handle__, nsnibName, bundle__handle__), "initWithEngine:nibName:bundle:");
+				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper_NativeHandle_NativeHandle_NativeHandle (this.SuperHandle, Selector.GetHandle ("initWithEngine:nibName:bundle:"), engine__handle__, nsnibName, bundle__handle__), "initWithEngine:nibName:bundle:");
 			}
 			CFString.ReleaseNative (nsnibName);
 		}
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public virtual global::Flutter.Internal.FlutterEngine Engine {
+		public virtual FlutterEngine Engine {
 			[Export ("engine")]
 			get {
-				global::Flutter.Internal.FlutterEngine ret;
+				FlutterEngine? ret;
 				if (IsDirectBinding) {
-					ret =  Runtime.GetNSObject<global::Flutter.Internal.FlutterEngine> (global::ApiDefinition.Messaging.IntPtr_objc_msgSend (this.Handle, Selector.GetHandle ("engine")));
+					ret =  Runtime.GetNSObject<FlutterEngine> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (this.Handle, Selector.GetHandle ("engine")))!;
 				} else {
-					ret =  Runtime.GetNSObject<global::Flutter.Internal.FlutterEngine> (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("engine")));
+					ret =  Runtime.GetNSObject<FlutterEngine> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("engine")))!;
+				}
+				return ret!;
+			}
+		}
+		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
+		public virtual FlutterPluginRegistry PluginRegistry {
+			[Export ("pluginRegistry")]
+			get {
+				FlutterPluginRegistry? ret;
+				if (IsDirectBinding) {
+					ret =  Runtime.GetNSObject<FlutterPluginRegistry> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (this.Handle, Selector.GetHandle ("pluginRegistry")))!;
+				} else {
+					ret =  Runtime.GetNSObject<FlutterPluginRegistry> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("pluginRegistry")))!;
 				}
 				return ret!;
 			}

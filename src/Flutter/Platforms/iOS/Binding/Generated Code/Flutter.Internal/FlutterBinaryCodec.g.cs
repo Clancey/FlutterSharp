@@ -49,15 +49,15 @@ using MetalPerformanceShadersGraph;
 using NativeHandle = System.IntPtr;
 #endif
 namespace Flutter.Internal {
-	[Register("GeneratedPluginRegistrant", true)]
-	public unsafe partial class GeneratedPluginRegistrant : NSObject {
+	[Register("FlutterBinaryCodec", true)]
+	public unsafe partial class FlutterBinaryCodec : FlutterMessageCodec {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		static readonly NativeHandle class_ptr = Class.GetHandle ("GeneratedPluginRegistrant");
+		static readonly NativeHandle class_ptr = Class.GetHandle ("FlutterBinaryCodec");
 		public override NativeHandle ClassHandle { get { return class_ptr; } }
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
 		[Export ("init")]
-		public GeneratedPluginRegistrant () : base (NSObjectFlag.Empty)
+		public FlutterBinaryCodec () : base (NSObjectFlag.Empty)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 			if (IsDirectBinding) {
@@ -69,24 +69,17 @@ namespace Flutter.Internal {
 
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
-		protected GeneratedPluginRegistrant (NSObjectFlag t) : base (t)
+		protected FlutterBinaryCodec (NSObjectFlag t) : base (t)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 		}
 
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
-		protected internal GeneratedPluginRegistrant (NativeHandle handle) : base (handle)
+		protected internal FlutterBinaryCodec (NativeHandle handle) : base (handle)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 		}
 
-		[Export ("registerWithRegistry:")]
-		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public static void Register (FlutterEngine engine)
-		{
-			var engine__handle__ = engine!.GetNonNullHandle (nameof (engine));
-			global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle (class_ptr, Selector.GetHandle ("registerWithRegistry:"), engine__handle__);
-		}
-	} /* class GeneratedPluginRegistrant */
+	} /* class FlutterBinaryCodec */
 }

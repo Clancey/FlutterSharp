@@ -43,7 +43,11 @@ using FileProvider;
 using CoreAnimation;
 using CoreFoundation;
 using NetworkExtension;
+using MetalPerformanceShadersGraph;
 #nullable enable
+#if !NET
+using NativeHandle = System.IntPtr;
+#endif
 namespace Flutter.Internal {
 	[Register("FlutterMethodChannel", true)]
 	public unsafe partial class FlutterMethodChannel : NSObject {
@@ -72,7 +76,7 @@ namespace Flutter.Internal {
 
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
-		protected internal FlutterMethodChannel (IntPtr handle) : base (handle)
+		protected internal FlutterMethodChannel (NativeHandle handle) : base (handle)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 		}
@@ -83,10 +87,10 @@ namespace Flutter.Internal {
 		{
 			if (channelName is null)
 				ObjCRuntime.ThrowHelper.ThrowArgumentNullException (nameof (channelName));
-			var binaryMessenger__handle__ = binaryMessenger.GetNonNullHandle (nameof (binaryMessenger));
+			var binaryMessenger__handle__ = binaryMessenger!.GetNonNullHandle (nameof (binaryMessenger));
 			var nschannelName = CFString.CreateNative (channelName);
-			FlutterMethodChannel ret;
-			ret =  Runtime.GetNSObject<FlutterMethodChannel> (global::ApiDefinition.Messaging.IntPtr_objc_msgSend_IntPtr_IntPtr (class_ptr, Selector.GetHandle ("methodChannelWithName:binaryMessenger:"), nschannelName, binaryMessenger__handle__));
+			FlutterMethodChannel? ret;
+			ret =  Runtime.GetNSObject<FlutterMethodChannel> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend_NativeHandle_NativeHandle (class_ptr, Selector.GetHandle ("methodChannelWithName:binaryMessenger:"), nschannelName, binaryMessenger__handle__))!;
 			CFString.ReleaseNative (nschannelName);
 			return ret!;
 		}
@@ -99,9 +103,9 @@ namespace Flutter.Internal {
 			var arguments__handle__ = arguments.GetHandle ();
 			var nsmethod = CFString.CreateNative (method);
 			if (IsDirectBinding) {
-				global::ApiDefinition.Messaging.void_objc_msgSend_IntPtr_IntPtr (this.Handle, Selector.GetHandle ("invokeMethod:arguments:"), nsmethod, arguments__handle__);
+				global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle_NativeHandle (this.Handle, Selector.GetHandle ("invokeMethod:arguments:"), nsmethod, arguments__handle__);
 			} else {
-				global::ApiDefinition.Messaging.void_objc_msgSendSuper_IntPtr_IntPtr (this.SuperHandle, Selector.GetHandle ("invokeMethod:arguments:"), nsmethod, arguments__handle__);
+				global::ApiDefinition.Messaging.void_objc_msgSendSuper_NativeHandle_NativeHandle (this.SuperHandle, Selector.GetHandle ("invokeMethod:arguments:"), nsmethod, arguments__handle__);
 			}
 			CFString.ReleaseNative (nsmethod);
 		}
@@ -119,9 +123,9 @@ namespace Flutter.Internal {
 				block_handler.SetupBlockUnsafe (Trampolines.SDFlutterMethodCallHandler.Handler, handler);
 			}
 			if (IsDirectBinding) {
-				global::ApiDefinition.Messaging.void_objc_msgSend_IntPtr (this.Handle, Selector.GetHandle ("setMethodCallHandler:"), (IntPtr) block_ptr_handler);
+				global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("setMethodCallHandler:"), (IntPtr) block_ptr_handler);
 			} else {
-				global::ApiDefinition.Messaging.void_objc_msgSendSuper_IntPtr (this.SuperHandle, Selector.GetHandle ("setMethodCallHandler:"), (IntPtr) block_ptr_handler);
+				global::ApiDefinition.Messaging.void_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("setMethodCallHandler:"), (IntPtr) block_ptr_handler);
 			}
 			if (block_ptr_handler != null)
 				block_ptr_handler->CleanupBlock ();

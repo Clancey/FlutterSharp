@@ -43,7 +43,11 @@ using FileProvider;
 using CoreAnimation;
 using CoreFoundation;
 using NetworkExtension;
+using MetalPerformanceShadersGraph;
 #nullable enable
+#if !NET
+using NativeHandle = System.IntPtr;
+#endif
 namespace Flutter.Internal {
 	#nullable enable
 	public delegate void FlutterMethodCallHandler (Flutter.Internal.FlutterMethodCall call, Flutter.Internal.FlutterResult result);

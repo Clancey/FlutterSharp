@@ -57,12 +57,12 @@
 		<Compile Remove="Platforms\iOS\Binding\*" />
 	</ItemGroup>
 	<ProjectExtensions>
-		<MonoDevelop>
-			<Properties>
-				<Policies>
-					<DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
-				</Policies>
-			</Properties>
-		</MonoDevelop>
+	  <MonoDevelop>
+	    <Properties>
+	      <Policies>
+	        <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
+	      </Policies>
+	    </Properties>
+	  </MonoDevelop>
 	</ProjectExtensions>
 </Project>

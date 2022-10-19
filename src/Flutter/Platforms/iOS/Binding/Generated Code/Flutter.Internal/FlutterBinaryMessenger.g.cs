@@ -43,9 +43,13 @@ using FileProvider;
 using CoreAnimation;
 using CoreFoundation;
 using NetworkExtension;
+using MetalPerformanceShadersGraph;
 #nullable enable
+#if !NET
+using NativeHandle = System.IntPtr;
+#endif
 namespace Flutter.Internal {
-	[Register("FlutterBinaryMessenger", false)]
+	[Register("ApiDefinition__Flutter_Internal_FlutterBinaryMessenger", false)]
 	[Model]
 	public unsafe partial class FlutterBinaryMessenger : NSObject {
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
@@ -66,7 +70,7 @@ namespace Flutter.Internal {
 
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
-		protected internal FlutterBinaryMessenger (IntPtr handle) : base (handle)
+		protected internal FlutterBinaryMessenger (NativeHandle handle) : base (handle)
 		{
 			IsDirectBinding = false;
 		}

@@ -43,7 +43,11 @@ using FileProvider;
 using CoreAnimation;
 using CoreFoundation;
 using NetworkExtension;
+using MetalPerformanceShadersGraph;
 #nullable enable
+#if !NET
+using NativeHandle = System.IntPtr;
+#endif
 namespace Flutter.Internal {
 	[Register("FlutterMethodCall", true)]
 	public unsafe partial class FlutterMethodCall : NSObject {
@@ -72,7 +76,7 @@ namespace Flutter.Internal {
 
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
-		protected internal FlutterMethodCall (IntPtr handle) : base (handle)
+		protected internal FlutterMethodCall (NativeHandle handle) : base (handle)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 		}
@@ -81,11 +85,11 @@ namespace Flutter.Internal {
 		public virtual NSObject Arguments {
 			[Export ("arguments")]
 			get {
-				NSObject ret;
+				NSObject? ret;
 				if (IsDirectBinding) {
-					ret = Runtime.GetNSObject (global::ApiDefinition.Messaging.IntPtr_objc_msgSend (this.Handle, Selector.GetHandle ("arguments")));
+					ret = Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (this.Handle, Selector.GetHandle ("arguments")))!;
 				} else {
-					ret = Runtime.GetNSObject (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("arguments")));
+					ret = Runtime.GetNSObject (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("arguments")))!;
 				}
 				return ret!;
 			}
@@ -95,9 +99,9 @@ namespace Flutter.Internal {
 			[Export ("method")]
 			get {
 				if (IsDirectBinding) {
-					return CFString.FromHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSend (this.Handle, Selector.GetHandle ("method")))!;
+					return CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (this.Handle, Selector.GetHandle ("method")))!;
 				} else {
-					return CFString.FromHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("method")))!;
+					return CFString.FromHandle (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("method")))!;
 				}
 			}
 		}

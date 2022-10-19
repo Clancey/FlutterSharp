@@ -3,12 +3,29 @@ using Foundation;
 using Flutter.Internal;
 using UIKit;
 using Flutter.HotReload;
+using CoreGraphics;
 
 namespace Flutter
 {
-	public partial class FlutterViewController : Flutter.Internal.iOS.FlutterViewController, IHotReloadHandler
+	class MyFlutterPlatformView : FlutterPlatformView
 	{
-		static FlutterEngine SharedEngine;
+		private readonly UIView view;
+
+		public MyFlutterPlatformView(UIView view)
+		{
+			this.view = view;
+		}
+		public override UIView View => view;
+	}
+	class MyFlutterNativeViewFactory : NSObject, IFlutterPlatformViewFactory
+	{
+		public FlutterPlatformView ViewIdentifier(CGRect frame, long viewId, NSObject args) => new MyFlutterPlatformView (new UIView(frame));
+		[Export("createArgsCodec")]
+		FlutterMessageCodec CreateArgsCodec => FlutterMessageCodec.SharedInstance();
+	}
+	public partial class FlutterViewController : Flutter.Internal.FlutterViewController, IHotReloadHandler
+	{
+		internal static FlutterEngine SharedEngine;
 		FlutterMethodChannel MethodChannel;
 		static FlutterEngine CreateDefaultEngine()
 		{
@@ -32,6 +49,7 @@ namespace Flutter
 			GeneratedPluginRegistrant.Register(Engine);
 			MethodChannel = FlutterMethodChannel.FromNameAndMessenger("com.Microsoft.FlutterSharp/Messages", Engine.BinaryMessenger);
 			Flutter.Internal.Communicator.SendCommand = (x) => MethodChannel.InvokeMethod(x.Method, (NSString)x.Arguments);
+			this.PluginRegistry.RegistrarForPlugin("FlutterSharp").RegisterViewFactory(new MyFlutterNativeViewFactory(), "FlutterSharpNativeView");
 			MethodChannel.SetMethodCaller((call, result) =>
 			{
 

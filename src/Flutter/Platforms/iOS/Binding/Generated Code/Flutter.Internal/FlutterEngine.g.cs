@@ -43,7 +43,11 @@ using FileProvider;
 using CoreAnimation;
 using CoreFoundation;
 using NetworkExtension;
+using MetalPerformanceShadersGraph;
 #nullable enable
+#if !NET
+using NativeHandle = System.IntPtr;
+#endif
 namespace Flutter.Internal {
 	[Register("FlutterEngine", true)]
 	public unsafe partial class FlutterEngine : NSObject {
@@ -72,7 +76,7 @@ namespace Flutter.Internal {
 
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
-		protected internal FlutterEngine (IntPtr handle) : base (handle)
+		protected internal FlutterEngine (NativeHandle handle) : base (handle)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 		}
@@ -86,9 +90,9 @@ namespace Flutter.Internal {
 			var nsname = CFString.CreateNative (name);
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 			if (IsDirectBinding) {
-				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSend_IntPtr_IntPtr (this.Handle, Selector.GetHandle ("initWithName:project:"), nsname, project__handle__), "initWithName:project:");
+				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSend_NativeHandle_NativeHandle (this.Handle, Selector.GetHandle ("initWithName:project:"), nsname, project__handle__), "initWithName:project:");
 			} else {
-				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper_IntPtr_IntPtr (this.SuperHandle, Selector.GetHandle ("initWithName:project:"), nsname, project__handle__), "initWithName:project:");
+				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper_NativeHandle_NativeHandle (this.SuperHandle, Selector.GetHandle ("initWithName:project:"), nsname, project__handle__), "initWithName:project:");
 			}
 			CFString.ReleaseNative (nsname);
 		}
@@ -100,9 +104,9 @@ namespace Flutter.Internal {
 			var nsname = CFString.CreateNative (name);
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 			if (IsDirectBinding) {
-				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSend_IntPtr (this.Handle, Selector.GetHandle ("initWithName:"), nsname), "initWithName:");
+				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("initWithName:"), nsname), "initWithName:");
 			} else {
-				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper_IntPtr (this.SuperHandle, Selector.GetHandle ("initWithName:"), nsname), "initWithName:");
+				InitializeHandle (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("initWithName:"), nsname), "initWithName:");
 			}
 			CFString.ReleaseNative (nsname);
 		}
@@ -113,9 +117,9 @@ namespace Flutter.Internal {
 			var nsentrypoint = CFString.CreateNative (entrypoint);
 			bool ret;
 			if (IsDirectBinding) {
-				ret = global::ApiDefinition.Messaging.bool_objc_msgSend_IntPtr (this.Handle, Selector.GetHandle ("runWithEntrypoint:"), nsentrypoint);
+				ret = global::ApiDefinition.Messaging.bool_objc_msgSend_NativeHandle (this.Handle, Selector.GetHandle ("runWithEntrypoint:"), nsentrypoint);
 			} else {
-				ret = global::ApiDefinition.Messaging.bool_objc_msgSendSuper_IntPtr (this.SuperHandle, Selector.GetHandle ("runWithEntrypoint:"), nsentrypoint);
+				ret = global::ApiDefinition.Messaging.bool_objc_msgSendSuper_NativeHandle (this.SuperHandle, Selector.GetHandle ("runWithEntrypoint:"), nsentrypoint);
 			}
 			CFString.ReleaseNative (nsentrypoint);
 			return ret!;
@@ -124,11 +128,11 @@ namespace Flutter.Internal {
 		public virtual FlutterBinaryMessenger BinaryMessenger {
 			[Export ("binaryMessenger")]
 			get {
-				FlutterBinaryMessenger ret;
+				FlutterBinaryMessenger? ret;
 				if (IsDirectBinding) {
-					ret =  Runtime.GetNSObject<FlutterBinaryMessenger> (global::ApiDefinition.Messaging.IntPtr_objc_msgSend (this.Handle, Selector.GetHandle ("binaryMessenger")));
+					ret =  Runtime.GetNSObject<FlutterBinaryMessenger> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (this.Handle, Selector.GetHandle ("binaryMessenger")))!;
 				} else {
-					ret =  Runtime.GetNSObject<FlutterBinaryMessenger> (global::ApiDefinition.Messaging.IntPtr_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("binaryMessenger")));
+					ret =  Runtime.GetNSObject<FlutterBinaryMessenger> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSendSuper (this.SuperHandle, Selector.GetHandle ("binaryMessenger")))!;
 				}
 				return ret!;
 			}

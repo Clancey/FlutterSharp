@@ -43,13 +43,17 @@ using FileProvider;
 using CoreAnimation;
 using CoreFoundation;
 using NetworkExtension;
+using MetalPerformanceShadersGraph;
 #nullable enable
+#if !NET
+using NativeHandle = System.IntPtr;
+#endif
 namespace ObjCRuntime {
 	[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 	static partial class Trampolines {
 		[UnmanagedFunctionPointerAttribute (CallingConvention.Cdecl)]
 		[UserDelegateType (typeof (global::Flutter.Internal.FlutterMethodCallHandler))]
-		internal delegate void DFlutterMethodCallHandler (IntPtr block, IntPtr call, IntPtr result);
+		internal delegate void DFlutterMethodCallHandler (IntPtr block, NativeHandle call, NativeHandle result);
 		//
 		// This class bridges native block invocations that call into C#
 		//
@@ -58,11 +62,11 @@ namespace ObjCRuntime {
 			[Preserve (Conditional = true)]
 			[global::System.Diagnostics.CodeAnalysis.DynamicDependency ("Handler")]
 			[MonoPInvokeCallback (typeof (DFlutterMethodCallHandler))]
-			static unsafe void Invoke (IntPtr block, IntPtr call, IntPtr result) {
+			static unsafe void Invoke (IntPtr block, NativeHandle call, NativeHandle result) {
 				var descriptor = (BlockLiteral *) block;
 				var del = (global::Flutter.Internal.FlutterMethodCallHandler) (descriptor->Target);
 				if (del != null)
-					del ( Runtime.GetNSObject<Flutter.Internal.FlutterMethodCall> (call), NIDFlutterResult.Create (result)!);
+					del ( Runtime.GetNSObject<Flutter.Internal.FlutterMethodCall> (call)!, NIDFlutterResult.Create (result)!);
 			}
 		} /* class SDFlutterMethodCallHandler */
 		internal sealed class NIDFlutterMethodCallHandler : TrampolineBlockBase {
@@ -98,7 +102,7 @@ namespace ObjCRuntime {
 		} /* class NIDFlutterMethodCallHandler */
 		[UnmanagedFunctionPointerAttribute (CallingConvention.Cdecl)]
 		[UserDelegateType (typeof (global::Flutter.Internal.FlutterResult))]
-		internal delegate void DFlutterResult (IntPtr block, IntPtr result);
+		internal delegate void DFlutterResult (IntPtr block, NativeHandle result);
 		//
 		// This class bridges native block invocations that call into C#
 		//
@@ -107,11 +111,11 @@ namespace ObjCRuntime {
 			[Preserve (Conditional = true)]
 			[global::System.Diagnostics.CodeAnalysis.DynamicDependency ("Handler")]
 			[MonoPInvokeCallback (typeof (DFlutterResult))]
-			static unsafe void Invoke (IntPtr block, IntPtr result) {
+			static unsafe void Invoke (IntPtr block, NativeHandle result) {
 				var descriptor = (BlockLiteral *) block;
 				var del = (global::Flutter.Internal.FlutterResult) (descriptor->Target);
 				if (del != null)
-					del ( Runtime.GetNSObject<NSObject> (result));
+					del ( Runtime.GetNSObject<NSObject> (result)!);
 			}
 		} /* class SDFlutterResult */
 		internal sealed class NIDFlutterResult : TrampolineBlockBase {

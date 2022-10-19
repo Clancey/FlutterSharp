@@ -49,15 +49,42 @@ using MetalPerformanceShadersGraph;
 using NativeHandle = System.IntPtr;
 #endif
 namespace Flutter.Internal {
-	[Register("GeneratedPluginRegistrant", true)]
-	public unsafe partial class GeneratedPluginRegistrant : NSObject {
+	[Protocol (Name = "FlutterPlatformView", WrapperType = typeof (FlutterPlatformViewWrapper))]
+	[ProtocolMember (IsRequired = true, IsProperty = true, IsStatic = false, Name = "View", Selector = "view", PropertyType = typeof (UIView), GetterSelector = "view", ArgumentSemantic = ArgumentSemantic.None)]
+	public partial interface IFlutterPlatformView : INativeObject, IDisposable
+	{
+		[Preserve (Conditional = true)]
+		global::UIKit.UIView View {
+			[Export ("view")]
+			get;
+		}
+	}
+	internal sealed class FlutterPlatformViewWrapper : BaseWrapper, IFlutterPlatformView {
+		[Preserve (Conditional = true)]
+		public FlutterPlatformViewWrapper (NativeHandle handle, bool owns)
+			: base (handle, owns)
+		{
+		}
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		static readonly NativeHandle class_ptr = Class.GetHandle ("GeneratedPluginRegistrant");
+		public global::UIKit.UIView View {
+			[Export ("view")]
+			get {
+				return  Runtime.GetNSObject<global::UIKit.UIView> (global::ApiDefinition.Messaging.NativeHandle_objc_msgSend (this.Handle, Selector.GetHandle ("view")))!;
+			}
+		}
+	}
+}
+namespace Flutter.Internal {
+	[Protocol()]
+	[Register("FlutterPlatformView", true)]
+	public unsafe partial class FlutterPlatformView : NSObject, IFlutterPlatformView {
+		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
+		static readonly NativeHandle class_ptr = Class.GetHandle ("FlutterPlatformView");
 		public override NativeHandle ClassHandle { get { return class_ptr; } }
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
 		[Export ("init")]
-		public GeneratedPluginRegistrant () : base (NSObjectFlag.Empty)
+		public FlutterPlatformView () : base (NSObjectFlag.Empty)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 			if (IsDirectBinding) {
@@ -69,24 +96,24 @@ namespace Flutter.Internal {
 
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
-		protected GeneratedPluginRegistrant (NSObjectFlag t) : base (t)
+		protected FlutterPlatformView (NSObjectFlag t) : base (t)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 		}
 
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
 		[EditorBrowsable (EditorBrowsableState.Advanced)]
-		protected internal GeneratedPluginRegistrant (NativeHandle handle) : base (handle)
+		protected internal FlutterPlatformView (NativeHandle handle) : base (handle)
 		{
 			IsDirectBinding = GetType ().Assembly == global::ApiDefinition.Messaging.this_assembly;
 		}
 
-		[Export ("registerWithRegistry:")]
 		[BindingImpl (BindingImplOptions.GeneratedCode | BindingImplOptions.Optimizable)]
-		public static void Register (FlutterEngine engine)
-		{
-			var engine__handle__ = engine!.GetNonNullHandle (nameof (engine));
-			global::ApiDefinition.Messaging.void_objc_msgSend_NativeHandle (class_ptr, Selector.GetHandle ("registerWithRegistry:"), engine__handle__);
+		public virtual global::UIKit.UIView View {
+			[Export ("view")]
+			get {
+			throw new You_Should_Not_Call_base_In_This_Method ();
+			}
 		}
-	} /* class GeneratedPluginRegistrant */
+	} /* class FlutterPlatformView */
 }
