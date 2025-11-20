@@ -1,0 +1,220 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using FlutterSharp.CodeGen.Models;
+using FlutterSharp.CodeGen.TypeMapping;
+using Scriban;
+
+namespace FlutterSharp.CodeGen.Generators.Dart
+{
+	/// <summary>
+	/// Generates Dart widget parser classes that convert FFI structs to Flutter widgets.
+	/// </summary>
+	public class DartParserGenerator
+	{
+		private readonly CSharpToDartFfiMapper _typeMapper;
+		private readonly Template _template;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DartParserGenerator"/> class.
+		/// </summary>
+		/// <param name="typeMapper">The type mapper to use for converting types.</param>
+		public DartParserGenerator(CSharpToDartFfiMapper typeMapper)
+		{
+			_typeMapper = typeMapper ?? throw new ArgumentNullException(nameof(typeMapper));
+
+			// Load the Scriban template
+			var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "DartParser.scriban");
+			if (File.Exists(templatePath))
+			{
+				var templateContent = File.ReadAllText(templatePath);
+				_template = Template.Parse(templateContent);
+			}
+			else
+			{
+				// Use inline template as fallback
+				_template = Template.Parse(GetDefaultTemplate());
+			}
+		}
+
+		/// <summary>
+		/// Generates a Dart widget parser class from a widget definition.
+		/// </summary>
+		/// <param name="widget">The widget definition to generate the parser from.</param>
+		/// <returns>The generated Dart parser code.</returns>
+		public string Generate(WidgetDefinition widget)
+		{
+			if (widget == null)
+			{
+				throw new ArgumentNullException(nameof(widget));
+			}
+
+			// Prepare the model for the template
+			var model = new
+			{
+				widget.Name,
+				ParserName = $"{widget.Name}Parser",
+				StructName = $"{widget.Name}Struct",
+				WidgetName = widget.Name,
+				Properties = widget.Properties.Select(p => new
+				{
+					p.Name,
+					PropertyName = ToCamelCase(p.Name),
+					DartType = p.DartType,
+					CSharpType = p.CSharpType ?? "object",
+					ParserFunction = GetParserFunction(p),
+					p.IsNullable,
+					p.IsRequired,
+					p.Documentation
+				}).ToList(),
+				HasChildren = widget.HasSingleChild || widget.HasMultipleChildren,
+				ChildPropertyName = widget.ChildPropertyName,
+				ChildrenPropertyName = widget.ChildrenPropertyName,
+				Documentation = widget.Documentation,
+				GeneratedDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC"),
+				Imports = GetRequiredImports(widget)
+			};
+
+			// Render the template
+			var result = _template.Render(model);
+			return result;
+		}
+
+		/// <summary>
+		/// Gets the parser function for a property.
+		/// </summary>
+		private string GetParserFunction(PropertyDefinition property)
+		{
+			var csharpType = property.CSharpType ?? property.DartType;
+			var parserFunction = _typeMapper.GetParserFunction(csharpType);
+
+			if (!string.IsNullOrEmpty(parserFunction))
+			{
+				return parserFunction;
+			}
+
+			// Default parser functions based on Dart type
+			return property.DartType switch
+			{
+				"String" => "parseString",
+				"int" => "parseInt",
+				"double" => "parseDouble",
+				"bool" => "parseBool",
+				"num" => "parseNum",
+				_ when property.DartType.StartsWith("List<") => "parseList",
+				_ when property.DartType.StartsWith("Map<") => "parseMap",
+				_ when property.IsCallback => "parseCallback",
+				_ => "parseObject"
+			};
+		}
+
+		/// <summary>
+		/// Gets the required imports for the generated Dart parser.
+		/// </summary>
+		private List<string> GetRequiredImports(WidgetDefinition widget)
+		{
+			var imports = new HashSet<string>
+			{
+				"dart:ffi",
+				"package:ffi/ffi.dart",
+				"package:flutter/widgets.dart"
+			};
+
+			// Add Flutter material import if needed
+			if (widget.SourceLibrary != null && widget.SourceLibrary.Contains("material"))
+			{
+				imports.Add("package:flutter/material.dart");
+			}
+
+			// Add package import based on source library
+			if (!string.IsNullOrEmpty(widget.SourceLibrary))
+			{
+				var package = widget.SourceLibrary;
+				if (package.StartsWith("flutter/"))
+				{
+					imports.Add($"package:{package}.dart");
+				}
+			}
+
+			// Add imports for specific property types
+			foreach (var property in widget.Properties)
+			{
+				if (property.DartType.Contains("Color"))
+				{
+					imports.Add("package:flutter/material.dart");
+				}
+				else if (property.DartType.Contains("TextStyle") || property.DartType.Contains("EdgeInsets"))
+				{
+					imports.Add("package:flutter/painting.dart");
+				}
+			}
+
+			return imports.OrderBy(i => i).ToList();
+		}
+
+		/// <summary>
+		/// Converts a PascalCase string to camelCase.
+		/// </summary>
+		private string ToCamelCase(string value)
+		{
+			if (string.IsNullOrEmpty(value) || char.IsLower(value[0]))
+			{
+				return value;
+			}
+
+			return char.ToLowerInvariant(value[0]) + value.Substring(1);
+		}
+
+		/// <summary>
+		/// Gets the default template if the template file is not found.
+		/// </summary>
+		private string GetDefaultTemplate()
+		{
+			return @"// <auto-generated>
+// This file was automatically generated on {{ generated_date }}
+// DO NOT EDIT - Changes will be overwritten
+// </auto-generated>
+
+{{~ if imports
+for import in imports ~}}
+import '{{ import }}';
+{{~ end
+end ~}}
+
+{{~ if documentation ~}}
+/// {{ documentation }}
+{{~ end ~}}
+class {{ parser_name }} implements WidgetParser {
+  @override
+  Widget parse(Pointer<Void> structPtr) {
+    final struct = structPtr.cast<{{ struct_name }}>().ref;
+
+    return {{ widget_name }}(
+{{~ for prop in properties ~}}
+{{~ if prop.is_required ~}}
+      {{ prop.property_name }}: {{ prop.parser_function }}(struct.{{ prop.property_name }}){{~ if !for.last || has_children ~}},{{~ end ~}}
+{{~ else ~}}
+{{~ if prop.is_nullable ~}}
+      {{ prop.property_name }}: struct.{{ prop.property_name }}.address != 0
+        ? {{ prop.parser_function }}(struct.{{ prop.property_name }})
+        : null{{~ if !for.last || has_children ~}},{{~ end ~}}
+{{~ else ~}}
+      {{ prop.property_name }}: {{ prop.parser_function }}(struct.{{ prop.property_name }}){{~ if !for.last || has_children ~}},{{~ end ~}}
+{{~ end ~}}
+{{~ end ~}}
+{{~ end ~}}
+{{~ if has_children ~}}
+{{~ if child_property_name ~}}
+      {{ child_property_name }}: parseChild(struct.{{ child_property_name }})
+{{~ else if children_property_name ~}}
+      {{ children_property_name }}: parseChildren(struct.{{ children_property_name }})
+{{~ end ~}}
+{{~ end ~}}
+    );
+  }
+}
+";
+		}
+	}
+}

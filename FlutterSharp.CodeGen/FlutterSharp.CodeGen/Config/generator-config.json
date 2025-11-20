@@ -1,0 +1,280 @@
+{
+  // FlutterSharp Code Generator Configuration
+  // This file configures all aspects of the code generation process.
+
+  // Flutter SDK Configuration
+  "flutterSdk": {
+    // Mode: "auto" (detect from PATH), "local" (use specific path), "clone" (clone from Git)
+    "mode": "auto",
+
+    // Path to local Flutter SDK (required when mode is "local")
+    // "path": "/path/to/flutter/sdk",
+
+    // Flutter version to use or clone (e.g., "3.16.0", "stable", "master")
+    // "version": "stable",
+
+    // Directory where Flutter SDK should be cloned (when mode is "clone")
+    // "cloneDirectory": "./.cache/flutter-sdk",
+
+    // Git repository URL for cloning Flutter SDK
+    "gitRepository": "https://github.com/flutter/flutter.git",
+
+    // Use Flutter from PATH environment variable
+    "useSystemFlutter": true
+  },
+
+  // Output Paths Configuration
+  "outputPaths": {
+    // Base output directory for all generated files
+    "baseDirectory": "./Generated",
+
+    // Output directory for C# bindings
+    "csharpOutput": "./Generated/CSharp",
+
+    // Output directory for Dart interop code
+    "dartOutput": "./Generated/Dart",
+
+    // Output directory for documentation files (optional)
+    // "documentationOutput": "./Generated/Docs",
+
+    // Output directory for analysis artifacts (optional)
+    // "analysisOutput": "./Generated/Analysis",
+
+    // Organize output files by package name
+    "organizeByPackage": true,
+
+    // Clean output directories before generation
+    "cleanBeforeGenerate": false
+  },
+
+  // Filters Configuration
+  "filters": {
+    // Include only these packages (empty means all packages)
+    "includePackages": [],
+
+    // Exclude these packages
+    "excludePackages": [
+      "flutter_test",
+      "flutter_driver"
+    ],
+
+    // Include only widgets matching these patterns (supports wildcards)
+    "includeWidgets": [],
+
+    // Exclude widgets matching these patterns
+    "excludeWidgets": [
+      "*Internal*",
+      "*Private*"
+    ],
+
+    // Include only types matching these patterns
+    "includeTypes": [],
+
+    // Exclude types matching these patterns
+    "excludeTypes": [
+      "*Internal*",
+      "*Private*"
+    ],
+
+    // Include only these namespaces
+    "includeNamespaces": [],
+
+    // Exclude these namespaces
+    "excludeNamespaces": [
+      "dart:_*"
+    ],
+
+    // Include internal/private APIs
+    "includeInternalApis": false,
+
+    // Include deprecated APIs
+    "includeDeprecated": true,
+
+    // Include experimental/preview APIs
+    "includeExperimental": false,
+
+    // Minimum stability level: "alpha", "beta", "rc", "stable"
+    "minimumStability": "stable"
+  },
+
+  // Third-Party Packages Configuration
+  "thirdPartyPackages": {
+    // Enable third-party package discovery
+    "enabled": false,
+
+    // Packages from pub.dev
+    "pubDevPackages": [
+      // {
+      //   "name": "provider",
+      //   "version": "^6.0.0",
+      //   "enabled": true
+      // },
+      // {
+      //   "name": "riverpod",
+      //   "version": "^2.0.0",
+      //   "enabled": true
+      // }
+    ],
+
+    // Packages from Git repositories
+    "gitPackages": [
+      // {
+      //   "url": "https://github.com/example/flutter-package.git",
+      //   "ref": "main",
+      //   "path": "packages/my_package",
+      //   "name": "my_package",
+      //   "enabled": true
+      // }
+    ],
+
+    // Packages from local file system
+    "localPackages": [
+      // {
+      //   "path": "/path/to/local/package",
+      //   "name": "local_package",
+      //   "enabled": true
+      // }
+    ],
+
+    // Cache directory for downloaded packages
+    "cacheDirectory": "./.cache/packages",
+
+    // Enable package caching
+    "enableCaching": true,
+
+    // Cache expiration time in hours
+    "cacheExpirationHours": 24
+  },
+
+  // Code Generation Options
+  "generationOptions": {
+    // Namespace prefix for generated C# code
+    "namespacePrefix": "FlutterSharp",
+
+    // Generate XML documentation comments
+    "generateDocumentation": true,
+
+    // Generate nullable reference type annotations
+    "generateNullableAnnotations": true,
+
+    // Generate async/await patterns
+    "generateAsyncPatterns": true,
+
+    // Generate extension methods
+    "generateExtensionMethods": true,
+
+    // Generate builder patterns for complex objects
+    "generateBuilderPatterns": false,
+
+    // Generate immutable types (records)
+    "generateImmutableTypes": true,
+
+    // Generate ToString() overrides
+    "generateToString": true,
+
+    // Generate Equals/GetHashCode overrides
+    "generateEquality": false,
+
+    // Generate debugger attributes
+    "generateDebuggerAttributes": true,
+
+    // C# language version to target
+    "csharpVersion": "12",
+
+    // Use file-scoped namespaces
+    "useFileScopedNamespaces": true,
+
+    // Use global usings
+    "useGlobalUsings": false,
+
+    // Line ending style: "lf", "crlf", "auto"
+    "lineEnding": "auto",
+
+    // Indentation style: "tabs" or "spaces"
+    "indentationStyle": "tabs",
+
+    // Number of spaces per indentation level (when using spaces)
+    "indentationSize": 4
+  },
+
+  // Type Mapping Configuration
+  "typeMapping": {
+    // Custom Dart to C# type mappings
+    "customMappings": {
+      // "CustomDartType": "CustomCSharpType",
+      // "MyWidget": "MyNamespace.MyWidget"
+    },
+
+    // Use concrete collection types (List, Dictionary) instead of interfaces
+    "useConcreteCollections": true,
+
+    // Map Dart 'dynamic' to C# 'object'
+    "mapDynamicToObject": true,
+
+    // Use C# tuples for Dart tuples
+    "useTuples": true,
+
+    // Use C# records for Dart data classes
+    "useRecords": true,
+
+    // Default numeric type for untyped numbers: "int", "long", "double"
+    "defaultNumericType": "double",
+
+    // Use System.Text.Json attributes
+    "useSystemTextJson": true,
+
+    // Generate JSON converters
+    "generateJsonConverters": false
+  },
+
+  // Advanced Options
+  "advancedOptions": {
+    // Enable parallel generation for better performance
+    "parallelGeneration": true,
+
+    // Maximum degree of parallelism (-1 for default/auto)
+    "maxDegreeOfParallelism": -1,
+
+    // Enable incremental generation (skip unchanged files)
+    "incrementalGeneration": false,
+
+    // Enable caching of analysis results
+    "enableCaching": true,
+
+    // Cache directory for analysis results
+    "cacheDirectory": "./.cache/analysis",
+
+    // Validate generated code
+    "validateGeneratedCode": false,
+
+    // Format generated code
+    "formatGeneratedCode": true,
+
+    // Path to dotnet format tool (null for default)
+    // "dotNetFormatPath": null,
+
+    // Path to dart format tool (null for default)
+    // "dartFormatPath": null,
+
+    // Generate source maps for debugging
+    "generateSourceMaps": false,
+
+    // Log level: "Trace", "Debug", "Information", "Warning", "Error", "Critical"
+    "logLevel": "Information",
+
+    // Log output path (null for console only)
+    // "logOutputPath": "./logs/generator.log",
+
+    // Emit performance diagnostics
+    "emitPerformanceDiagnostics": false,
+
+    // Timeout for external tool execution in seconds
+    "toolExecutionTimeout": 300,
+
+    // Continue on errors instead of aborting
+    "continueOnError": false,
+
+    // Maximum number of errors before aborting
+    "maxErrors": 100
+  }
+}

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class SelectableTextWidgetParser implements WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<ScaffoldStruct>.fromAddress(fos.handle.address).ref;
     return null;
     //TODO: implement;
@@ -70,7 +70,7 @@ class SelectableTextSpanParser {
   void parseChildren(
       TextSpan textSpan, List<dynamic> childrenSpan) {
     for (var childmap in childrenSpan) {
-      textSpan.children.add(parse(childmap));
+      textSpan.children?.add(parse(childmap));
     }
   }
 }

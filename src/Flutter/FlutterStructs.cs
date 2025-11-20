@@ -234,6 +234,32 @@ namespace Flutter.Structs
 		}
 	}
 
+	[StructLayout(LayoutKind.Sequential)]
+	class FloatingActionButtonStruct : WidgetStruct
+	{
+		IntPtr child;
+		public Widget Child { set => SetIntPtr(ref child, value); }
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	class TabBarStruct : MultiChildRenderObjectWidgetStruct
+	{
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	class TabStruct : SingleChildRenderObjectWidgetStruct
+	{
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	class DrawerStruct : SingleChildRenderObjectWidgetStruct
+	{
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	class TabBarViewStruct : MultiChildRenderObjectWidgetStruct
+	{
+	}
 
 
 	public class PinnedObject<T> : IDisposable

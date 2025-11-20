@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
 	<PropertyGroup>
-		<IsiOS Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) == true or $(TargetFramework.StartsWith('net6.0-ios')) == true or $(TargetFramework.StartsWith('net6.0-maccatalyst')) == true ">true</IsiOS>
-		<IsAndroid Condition="$(TargetFramework.StartsWith('MonoAndroid')) == true or $(TargetFramework.StartsWith('net6.0-android')) == true ">true</IsAndroid>
-		<IsMac Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) == true ">true</IsMac>
-		<IsMaciOS Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) == true or $(TargetFramework.StartsWith('Xamarin.iOS')) == true or $(TargetFramework.StartsWith('net6.0-ios')) == true or $(TargetFramework.StartsWith('net6.0-maccatalyst')) == true">true</IsMaciOS>
-    <IsStandard Condition="'$(TargetFramework)' == 'net6.0'">true</IsStandard>
+		<IsiOS Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) == true or $(TargetFramework.Contains('-ios')) == true or $(TargetFramework.Contains('-maccatalyst')) == true">true</IsiOS>
+		<IsAndroid Condition="$(TargetFramework.StartsWith('MonoAndroid')) == true or $(TargetFramework.Contains('-android')) == true">true</IsAndroid>
+		<IsMac Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) == true or $(TargetFramework.Contains('-maccatalyst')) == true">true</IsMac>
+		<IsMaciOS Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) == true or $(TargetFramework.StartsWith('Xamarin.iOS')) == true or $(TargetFramework.Contains('-ios')) == true or $(TargetFramework.Contains('-maccatalyst')) == true">true</IsMaciOS>
+    <IsStandard Condition="'$(TargetFramework)' == 'net10.0'">true</IsStandard>
 		<!-- Required - Enable Launch Profiles for .NET 6 iOS/Android -->
 		<_KeepLaunchProfiles>true</_KeepLaunchProfiles>
 	</PropertyGroup>

@@ -7,9 +7,10 @@ import 'maui_flutter.dart';
 import 'parsers/drop_cap_text.dart';
 import 'package:flutter/widgets.dart';
 
-TextAlign parseTextAlign(String textAlignString) {
+TextAlign parseTextAlign(String? textAlignString) {
   //left the system decide
   TextAlign textAlign = TextAlign.start;
+  if (textAlignString == null) return textAlign;
   switch (textAlignString) {
     case "left":
       textAlign = TextAlign.left;
@@ -35,8 +36,9 @@ TextAlign parseTextAlign(String textAlignString) {
   return textAlign;
 }
 
-TextOverflow parseTextOverflow(String textOverflowString) {
+TextOverflow parseTextOverflow(String? textOverflowString) {
   TextOverflow textOverflow = TextOverflow.ellipsis;
+  if (textOverflowString == null) return textOverflow;
   switch (textOverflowString) {
     case "ellipsis":
       textOverflow = TextOverflow.ellipsis;
@@ -72,8 +74,9 @@ TextDecoration parseTextDecoration(String textDecorationString) {
   return textDecoration;
 }
 
-TextDirection parseTextDirection(String textDirectionString) {
+TextDirection parseTextDirection(String? textDirectionString) {
   TextDirection textDirection = TextDirection.ltr;
+  if (textDirectionString == null) return textDirection;
   switch (textDirectionString) {
     case 'ltr':
       textDirection = TextDirection.ltr;
@@ -125,11 +128,11 @@ FontWeight parseFontWeight(String textFontWeight) {
   return fontWeight;
 }
 
-Color parseColor(ColorStruct color) {
+Color? parseColor(ColorStruct color) {
   return Color.fromARGB(color.alpha, color.red, color.green, color.blue);
 }
 
-Color parseHexColor(String hexColorString) {
+Color? parseHexColor(String? hexColorString) {
   if (hexColorString == null) {
     return null;
   }
@@ -169,7 +172,7 @@ Alignment parseAlignment(AlignmentStruct alignStruct) {
 
 const double infinity = 9999999999;
 
-BoxConstraints parseBoxConstraints(Map<String, dynamic> map) {
+BoxConstraints? parseBoxConstraints(Map<String, dynamic> map) {
   double minWidth = 0.0;
   double maxWidth = double.infinity;
   double minHeight = 0.0;
@@ -234,7 +237,7 @@ BoxConstraints parseBoxConstraints(Map<String, dynamic> map) {
   );
 }
 
-EdgeInsetsGeometry parseEdgeInsetsGeometry(
+EdgeInsetsGeometry? parseEdgeInsetsGeometry(
     int hasMargin, EdgeInsetGemoetryStruct struct) {
   if (hasMargin == 0) return null;
   return EdgeInsets.fromLTRB(
@@ -279,7 +282,7 @@ VerticalDirection parseVerticalDirection(String verticalDirectionString) =>
         ? VerticalDirection.up
         : VerticalDirection.down;
 
-BlendMode parseBlendMode(String blendModeString) {
+BlendMode? parseBlendMode(String blendModeString) {
   if (blendModeString == null || blendModeString.trim().length == 0) {
     return null;
   }
@@ -349,7 +352,7 @@ BlendMode parseBlendMode(String blendModeString) {
   }
 }
 
-BoxFit parseBoxFit(String boxFitString) {
+BoxFit? parseBoxFit(String boxFitString) {
   if (boxFitString == null) {
     return null;
   }
@@ -374,7 +377,7 @@ BoxFit parseBoxFit(String boxFitString) {
   return null;
 }
 
-ImageRepeat parseImageRepeat(String imageRepeatString) {
+ImageRepeat? parseImageRepeat(String imageRepeatString) {
   if (imageRepeatString == null) {
     return null;
   }
@@ -400,7 +403,7 @@ Rect parseRect(String fromLTRBString) {
       double.parse(strings[2]), double.parse(strings[3]));
 }
 
-FilterQuality parseFilterQuality(String filterQualityString) {
+FilterQuality? parseFilterQuality(String filterQualityString) {
   if (filterQualityString == null) {
     return null;
   }
@@ -418,7 +421,7 @@ FilterQuality parseFilterQuality(String filterQualityString) {
   }
 }
 
-String getLoadMoreUrl(String url, int currentNo, int pageSize) {
+String? getLoadMoreUrl(String? url, int currentNo, int pageSize) {
   if (url == null) {
     return null;
   }
@@ -440,7 +443,7 @@ String getLoadMoreUrl(String url, int currentNo, int pageSize) {
   return url;
 }
 
-StackFit parseStackFit(String value) {
+StackFit? parseStackFit(String value) {
   if (value == null) return null;
 
   switch (value) {
@@ -455,7 +458,7 @@ StackFit parseStackFit(String value) {
   }
 }
 
-Clip parseClip(String value) {
+Clip? parseClip(String value) {
   if (value == null) {
     return null;
   }
@@ -529,7 +532,7 @@ WrapCrossAlignment parseWrapCrossAlignment(String wrapCrossAlignmentString) {
   return WrapCrossAlignment.start;
 }
 
-Clip parseClipBehavior(String clipBehaviorString) {
+Clip? parseClipBehavior(String clipBehaviorString) {
   if (clipBehaviorString == null) {
     return Clip.antiAlias;
   }
@@ -546,7 +549,7 @@ Clip parseClipBehavior(String clipBehaviorString) {
   return Clip.antiAlias;
 }
 
-DropCapMode parseDropCapMode(String value) {
+DropCapMode? parseDropCapMode(String value) {
   if (value == null) {
     return null;
   }
@@ -563,7 +566,7 @@ DropCapMode parseDropCapMode(String value) {
   }
 }
 
-DropCapPosition parseDropCapPosition(String value) {
+DropCapPosition? parseDropCapPosition(String value) {
   if (value == null) {
     return null;
   }
@@ -586,7 +589,7 @@ DropCap parseDropCap(Map<String, dynamic> map, BuildContext buildContext) {
   );
 }
 
-BoxDecoration parseBoxDecoration(Map<String, dynamic> map) {
+BoxDecoration? parseBoxDecoration(Map<String, dynamic> map) {
   if (map == null) return null;
   return BoxDecoration(
     color: parseColor(map['color']),
@@ -594,13 +597,15 @@ BoxDecoration parseBoxDecoration(Map<String, dynamic> map) {
   );
 }
 
-Border parseBorder(dynamic jsonValue) {
+Border? parseBorder(dynamic jsonValue) {
   if (jsonValue == null) return null;
+  final color = parseColor(jsonValue['color']);
+  if (color == null) return null;
   return Border.all(
-      color: parseColor(jsonValue['color']), width: jsonValue['width']);
+      color: color, width: jsonValue['width']);
 }
 
-String parseString(Pointer<Utf8> input) {
+String? parseString(Pointer<Utf8> input) {
   if (input.address == 0) return null;
   return input.toDartString();
 }

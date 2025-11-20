@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 //Creates a box that will become as large as its parent allows.
 class ExpandedSizedBoxWidgetParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
             fos.handle.address)
         .ref;
@@ -24,7 +24,7 @@ class ExpandedSizedBoxWidgetParser extends WidgetParser {
 
 class SizedBoxWidgetParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
             fos.handle.address)
         .ref;

@@ -10,10 +10,11 @@ import '../maui_flutter.dart';
 
 class ListViewBuilderParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map =
         Pointer<ListViewBuilderStruct>.fromAddress(fos.handle.address).ref;
     final id = parseString(map.id);
+    if (id == null) return null;
     return ListView.builder(
       itemCount: map.itemCount,
       itemBuilder: (c, index) {
@@ -22,7 +23,7 @@ class ListViewBuilderParser extends WidgetParser {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 var pointer = int.parse(snapshot.data);
-                return DynamicWidgetBuilder.buildFromAddress(pointer, context);
+                return DynamicWidgetBuilder.buildFromAddress(pointer, context) ?? SizedBox.shrink();
               }
               return SizedBox.shrink();
             });

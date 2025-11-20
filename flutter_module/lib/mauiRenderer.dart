@@ -26,7 +26,7 @@ const dotNetMessageChannel =
 
 final mauiComponentStatesMaps = Map<String, IFlutterObjectStruct>();
 
-_MauiComponentState getMauiComponentState(String componentId) {
+_MauiComponentState? getMauiComponentState(String componentId) {
   if (!mauiComponentStates.containsKey(componentId)) {
     return null;
   }
@@ -38,7 +38,7 @@ void setMauiState(String componentId, IFlutterObjectStruct address) {
   getMauiComponentState(componentId)?.updateMauiState(address);
 }
 
-IFlutterObjectStruct getMauiState(String componentId) {
+IFlutterObjectStruct? getMauiState(String componentId) {
   if (!mauiComponentStatesMaps.containsKey(componentId)) {
     return null;
   }
@@ -64,35 +64,44 @@ const MethodChannel methodChannel =
     MethodChannel('com.Microsoft.FlutterSharp/Messages');
 
 class MauiRootRenderer extends StatefulWidget {
-  _MauiRootRendererState createState() => _MauiRootRendererState(key);
+  const MauiRootRenderer({Key? key}) : super(key: key);
+
+  @override
+  _MauiRootRendererState createState() => _MauiRootRendererState();
 }
 
 class _MauiRootRendererState extends State<MauiRootRenderer> {
-  _MauiRootRendererState(Key key) {
+  @override
+  void initState() {
+    super.initState();
+
     methodChannel.setMethodCallHandler((call) async {
       _onEvent(call.arguments);
-      // print(call.arguments);
     });
+
     dotNetMessageChannel.setMessageHandler((bytes) async {
+      if (bytes == null) {
+        return ByteData(0);
+      }
       final messageString = getStringFromBytes(bytes);
       _onEvent(messageString);
-      return null;
+      return ByteData(0);
     });
 
     _invokeCallbackToDotNet(
-        json.encode({'readyPlayer1': key.toString()})); // Arbitrary message
+        json.encode({'readyPlayer1': widget.key?.toString() ?? '0'}));
   }
 
   void _onEvent(String json) {
-    final message = jsonDecode(json);
-    switch (message['messageType']) {
-      case 'UpdateComponent':
-        final componentId = message['componentId'];
-        int ptr = message['address'];
-        // final ptr = int.parse(address);
-        final pointer = Pointer<FlutterObjectStruct>.fromAddress(ptr);
-        setMauiState(componentId, pointer.ref);
-        break;
+    try {
+      final message = jsonDecode(json);
+      switch (message['messageType']) {
+        case 'UpdateComponent':
+          final componentId = message['componentId'];
+          int ptr = message['address'];
+          final pointer = Pointer<FlutterObjectStruct>.fromAddress(ptr);
+          setMauiState(componentId, pointer.ref);
+          break;
       // case 'CreateDartObject':
       //   createAndStoreTrackedDartObject(message);
       //   break;
@@ -106,6 +115,11 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
       default:
         throw new Exception("Unknown message type: ${message['messageType']}");
     }
+    } catch (e, stackTrace) {
+      print('ERROR in _onEvent: $e');
+      print('Stack trace: $stackTrace');
+      rethrow;
+    }
   }
 
   @override
@@ -117,17 +131,17 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
 class MauiComponent extends StatefulWidget {
   String componentId;
 
-  MauiComponent({this.componentId});
+  MauiComponent({required this.componentId});
 
   _MauiComponentState createState() => mauiComponentStates[componentId] =
       new _MauiComponentState(componentId: componentId);
 }
 
 class _MauiComponentState extends State<MauiComponent> {
-  IFlutterObjectStruct _address;
+  IFlutterObjectStruct? _address;
   String componentId;
 
-  _MauiComponentState({this.componentId}) {
+  _MauiComponentState({required this.componentId}) {
     _address = getMauiState(componentId);
   }
   updateMauiState(IFlutterObjectStruct address) {
@@ -143,8 +157,14 @@ class _MauiComponentState extends State<MauiComponent> {
   @override
   Widget build(BuildContext context) {
     if (_address != null) {
-      var w = DynamicWidgetBuilder.buildFromMap(_address, context);
-      return w;
+      try {
+        var w = DynamicWidgetBuilder.buildFromMap(_address, context);
+        return w ?? SizedBox.shrink();
+      } catch (e, stackTrace) {
+        print('ERROR in _MauiComponentState.build: $e');
+        print('Stack trace: $stackTrace');
+        return Text('Error: $e');
+      }
     } else {
       return SizedBox.shrink();
     }

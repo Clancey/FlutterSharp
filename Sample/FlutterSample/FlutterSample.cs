@@ -1,16 +1,16 @@
-﻿using System;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Flutter;
 using Flutter.Internal;
 using Flutter.Structs;
+
 namespace FlutterSample
 {
 	public class ListPage : StatefulWidget
 	{
 		List<string> items = new List<string>();
-		string itemText;
+		string? itemText;
 		public override Widget Build() =>
 			new Column(MainAxisAlignment.Start) {
 				new Row (MainAxisAlignment.Start) {
@@ -74,14 +74,14 @@ namespace FlutterSample
 		public override Widget Build() => new DefaultTabController(2) {
 				new Scaffold (appbar:new AppBar (
 						title:new Text("Hello from Maui!"),
-						bottom: new TabBar {
-							new Tab{new Text("Counter")},
-							new Tab{new Text("Todo List")}
+						bottom: new Flutter.TabBar {
+							new Flutter.Tab{new Text("Counter")},
+							new Flutter.Tab{new Text("Todo List")}
 						}),
 					drawer: new Drawer {
 						new Text("Add Navigation items!")
 					},
-					body: new TabBarView {
+					body: new Flutter.TabBarView {
 						new ClickedPage(),
 						new ListPage(),
 					}

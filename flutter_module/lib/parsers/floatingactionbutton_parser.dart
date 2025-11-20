@@ -9,11 +9,12 @@ import '../maui_flutter.dart';
 
 class FloatingActionButtonParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
             fos.handle.address)
         .ref;
     final id = parseString(map.id);
+    if (id == null) return null;
     return FloatingActionButton(
         //TODO: Implement
         // tooltip: map["tooltip"],

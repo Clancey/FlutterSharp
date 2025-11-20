@@ -28,7 +28,5 @@ namespace FlutterSample
 			return true;
 		}
 		// UISceneSession Lifecycle
-
 	}
 }
-

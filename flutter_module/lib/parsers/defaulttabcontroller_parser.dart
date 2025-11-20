@@ -8,12 +8,14 @@ import '../maui_flutter.dart';
 
 class DefaultTabControllerParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map =
         Pointer<DefaultTabControllerStruct>.fromAddress(fos.handle.address).ref;
+    final child = DynamicWidgetBuilder.buildFromPointer(map.child, buildContext);
+    if (child == null) return null;
     return DefaultTabController(
         length: map.tabCount,
-        child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext));
+        child: child);
   }
 
   @override

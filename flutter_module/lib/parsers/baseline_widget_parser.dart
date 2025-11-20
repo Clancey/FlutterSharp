@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 
 class BaselineWidgetParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     return null;
     //TODO: Implement
     // var map = Pointer<baseline>.fromAddress(fos.handle.address).ref;

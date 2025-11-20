@@ -7,13 +7,15 @@ import 'package:flutter/widgets.dart';
 
 class ExpandedWidgetParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(
             fos.handle.address)
         .ref;
     //TODO: Implement
+    final child = DynamicWidgetBuilder.buildFromPointer(map.child, buildContext);
+    if (child == null) return null;
     return Expanded(
-      child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext),
+      child: child,
       flex: 1, // map.containsKey("flex") ? map["flex"] : 1,
     );
   }

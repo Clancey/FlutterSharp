@@ -126,7 +126,7 @@ class DynamicWidgetBuilder {
     }
   }
 
-  static Widget buildFromAddress(int pointer, BuildContext buildContext) {
+  static Widget? buildFromAddress(int pointer, BuildContext buildContext) {
     if (pointer == 0) return null;
     var map = Pointer<WidgetStruct>.fromAddress(pointer);
     var widget = buildFromPointer(map, buildContext);
@@ -135,32 +135,32 @@ class DynamicWidgetBuilder {
 
   static final _trackedDartObjects = <String, dynamic>{};
 
-  static Widget buildFromPointer(
+  static Widget? buildFromPointer(
       Pointer<WidgetStruct> p, BuildContext buildContext) {
     if (p.address == 0) return null;
     return buildFromMap(p.ref, buildContext);
   }
 
-  static Widget buildFromMap(
-      IFlutterObjectStruct fos, BuildContext buildContext) {
+  static Widget? buildFromMap(
+      IFlutterObjectStruct? fos, BuildContext buildContext) {
     if (fos == null) return null;
     initDefaultParsersIfNess();
-    String widgetName = parseString(fos.widgetType);
-    print("Parsing: $widgetName");
+    String? widgetName = parseString(fos.widgetType);
+    if (widgetName == null) return null;
     var parser = _widgetNameParserMap[widgetName];
     if (parser != null) {
       var w = parser.parse(fos, buildContext);
-      print("Parsing complete: $widgetName");
       return w;
     }
     log.warning("Not support type: $widgetName");
     return Text("Unknown widget type $widgetName");
   }
 
-  static Widget buildMauiComponenet(
-      ISingleChildRenderObjectWidgetStruct map, BuildContext buildContext) {
+  static Widget? buildMauiComponenet(
+      ISingleChildRenderObjectWidgetStruct? map, BuildContext buildContext) {
     if (map == null) return null;
-    String id = parseString(map.id);
+    String? id = parseString(map.id);
+    if (id == null) return null;
     print("Creating MauiComponent :$id");
     var mc = new MauiComponent(componentId: id);
     print("Setting State MauiComponent :$id");
@@ -184,7 +184,8 @@ class DynamicWidgetBuilder {
         final values =
             childrenStruct.children.asTypedList(childrenStruct.childrenLength);
         for (var v in values) {
-          rt.add(buildFromAddress(v, buildContext));
+          var widget = buildFromAddress(v, buildContext);
+          if (widget != null) rt.add(widget);
         }
       }
     }
@@ -215,7 +216,7 @@ Future<dynamic> requestMauiData(
 /// extends this class to make a Flutter widget parser.
 abstract class WidgetParser {
   /// parse the json map into a flutter widget.
-  Widget parse(IFlutterObjectStruct map, BuildContext buildContext);
+  Widget? parse(IFlutterObjectStruct map, BuildContext buildContext);
 
   /// the widget type name for example:
   /// {"type" : "Text", "data" : "Denny"}

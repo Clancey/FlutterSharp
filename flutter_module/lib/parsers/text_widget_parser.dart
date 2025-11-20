@@ -10,16 +10,16 @@ import 'package:flutter/widgets.dart';
 
 class TextWidgetParser implements WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<TextStruct>.fromAddress(fos.handle.address).ref;
-    String data = parseString(map.value);
-    String textAlignString = null; //map['textAlign'];
-    String overflow = null; //map['overflow'];
-    int maxLines = null; //map['maxLines'];
-    String semanticsLabel = null; // map['semanticsLabel'];
-    bool softWrap = null; //map['softWrap'];
-    String textDirectionString = null; //map['textDirection'];
-    double textScaleFactor = null; // map['textScaleFactor'];
+    String? data = parseString(map.value);
+    String? textAlignString = null; //map['textAlign'];
+    String? overflow = null; //map['overflow'];
+    int? maxLines = null; //map['maxLines'];
+    String? semanticsLabel = null; // map['semanticsLabel'];
+    bool? softWrap = null; //map['softWrap'];
+    String? textDirectionString = null; //map['textDirection'];
+    double? textScaleFactor = null; // map['textScaleFactor'];
     var textSpan;
     var textSpanParser = TextSpanParser();
     // if (map.containsKey("textSpan")) {
@@ -28,7 +28,7 @@ class TextWidgetParser implements WidgetParser {
 
     if (textSpan == null) {
       return Text(
-        data,
+        data ?? "",
         textAlign: parseTextAlign(textAlignString),
         overflow: parseTextOverflow(overflow),
         maxLines: maxLines,
@@ -78,7 +78,7 @@ class TextSpanParser {
 
   void parseChildren(TextSpan textSpan, List<dynamic> childrenSpan) {
     for (var childmap in childrenSpan) {
-      textSpan.children.add(parse(childmap));
+      textSpan.children?.add(parse(childmap));
     }
   }
 }

@@ -9,12 +9,13 @@ import '../maui_flutter.dart';
 
 class TextFieldParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<TextFieldStruct>.fromAddress(fos.handle.address).ref;
     final id = parseString(map.id);
+    if (id == null) return null;
     return SimpleTextField(
       id,
-      text: parseString(map.value),
+      text: parseString(map.value) ?? "",
       decoration: InputDecoration(
           border: OutlineInputBorder(), hintText: parseString(map.hint)),
     );
@@ -26,10 +27,10 @@ class TextFieldParser extends WidgetParser {
 
 class SimpleTextField extends StatefulWidget {
   SimpleTextField(this.id,
-      {this.text,
-      this.onInputEventHandlerId,
-      this.onSubmitEventHandlerId,
-      this.decoration}) {}
+      {this.text = "",
+      this.onInputEventHandlerId = 0,
+      this.onSubmitEventHandlerId = 0,
+      required this.decoration}) {}
   String id;
   String text;
   int onInputEventHandlerId;
@@ -41,7 +42,7 @@ class SimpleTextField extends StatefulWidget {
 }
 
 class _SimpleTextFieldState extends State<SimpleTextField> {
-  TextEditingController controller;
+  late TextEditingController controller;
 
   _SimpleTextFieldState(this.id);
   String id;
