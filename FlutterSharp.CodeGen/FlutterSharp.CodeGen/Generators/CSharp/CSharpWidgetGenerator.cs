@@ -113,9 +113,18 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				csharpType += "?";
 			}
 
+			// Escape C# keywords in property names
+			var propertyName = EscapeCSharpKeyword(property.Name);
+			var backingFieldName = $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}";
+			backingFieldName = EscapeCSharpKeyword(backingFieldName);
+
+			// Check if this is a generic type parameter (T, T?, etc.)
+			var isGenericTypeParam = csharpType == "T" || csharpType == "T?" ||
+			                         csharpType == "S" || csharpType == "S?";
+
 			return new Dictionary<string, object?>
 			{
-				["name"] = property.Name,
+				["name"] = propertyName,
 				["type"] = csharpType,
 				["dart_type"] = property.DartType,
 				["is_required"] = property.IsRequired,
@@ -124,8 +133,30 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["documentation"] = FormatDocumentation(property.Documentation),
 				["is_list"] = property.IsList,
 				["is_callback"] = property.IsCallback,
-				["backing_field_name"] = $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}"
+				["backing_field_name"] = backingFieldName,
+				["is_generic_type_param"] = isGenericTypeParam
 			};
+		}
+
+		/// <summary>
+		/// Escapes C# keywords by prefixing with @.
+		/// </summary>
+		private string EscapeCSharpKeyword(string name)
+		{
+			var keywords = new HashSet<string>
+			{
+				"abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked",
+				"class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else",
+				"enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach",
+				"goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long",
+				"namespace", "new", "null", "object", "operator", "out", "override", "params", "private",
+				"protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof",
+				"stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try",
+				"typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void",
+				"volatile", "while"
+			};
+
+			return keywords.Contains(name.ToLowerInvariant()) ? $"@{name}" : name;
 		}
 
 		/// <summary>
@@ -242,7 +273,11 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 
 using System;
 using System.Collections.Generic;
+using Flutter;
 using Flutter.Structs;
+using Flutter.Widgets;
+using Flutter.Material;
+using Flutter.Cupertino;
 
 namespace {{ namespace }}
 {
@@ -254,50 +289,22 @@ namespace {{ namespace }}
 {{~ end ~}}
 	public {{ if is_abstract }}abstract {{ end }}class {{ name }}{{~ if is_generic }}<{{ type_parameters | array.join "", "" }}>{{ end }} : {{ base_class }}
 	{
-		private {{ struct_name }} _struct = new();
-
-{{~ for prop in properties ~}}
-{{~ if prop.documentation ~}}
-{{ prop.documentation }}
-{{~ end ~}}
-		public {{ prop.type }} {{ prop.name }}
-		{
-			get => _struct.{{ prop.name }};
-			set => _struct.{{ prop.name }} = value;
-		}
-
-{{~ end ~}}
 		/// <summary>
 		/// Initializes a new instance of the <see cref=""{{ name }}""/> class.
 		/// </summary>
 		public {{ name }}(
-{{~ for prop in required_properties ~}}
-			{{ prop.type }} {{ prop.backing_field_name }}{{ if !for.last }},{{ end }}
-{{~ end ~}}
-{{~ if required_properties.size > 0 && optional_properties.size > 0 }},{{ end }}
 {{~ for prop in optional_properties ~}}
-			{{ prop.type }}{{ if prop.is_nullable }}{{ else }}?{{ end }} {{ prop.backing_field_name }} = {{ prop.default_value ?? ""null"" }}{{ if !for.last }},{{ end }}
+			{{ prop.type }} {{ prop.backing_field_name }} = {{ prop.default_value ?? ""null"" }}{{ if !for.last }},{{ end }}
 {{~ end ~}}
 		)
 		{
+			var backingStruct = GetBackingStruct<{{ struct_name }}>();
 {{~ for prop in properties ~}}
-			{{ prop.name }} = {{ prop.backing_field_name }};
+			backingStruct.{{ prop.name }} = {{ prop.backing_field_name }};
 {{~ end ~}}
 		}
 
-		/// <summary>
-		/// Prepares the widget for sending to the Flutter engine.
-		/// </summary>
-		protected override void PrepareForSending()
-		{
-			_struct.WidgetType = ""{{ name }}"";
-			base.PrepareForSending();
-		}
-
-		/// <summary>
-		/// Gets the underlying struct for FFI interop.
-		/// </summary>
-		public override IntPtr GetStructPointer() => _struct.Handle;
+		protected override FlutterObjectStruct CreateBackingStruct() => new {{ struct_name }}();
 	}
 }";
 		}

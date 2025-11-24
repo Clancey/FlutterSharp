@@ -52,14 +52,15 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 				EnumName = enumDef.Name,
 				Values = enumDef.Values.Select((v, index) => new
 				{
-					Name = ToCamelCase(v.Name),
+					// Use original name as-is for Dart (enum values are already in Dart format)
+					Name = v.Name,
 					OriginalName = v.Name,
 					Value = v.Value ?? index,
-					v.Documentation,
+					Documentation = FormatDartDocumentation(v.Documentation),
 					v.IsDeprecated,
 					IsLast = index == enumDef.Values.Count - 1
 				}).ToList(),
-				Documentation = enumDef.Documentation,
+				Documentation = FormatDartDocumentation(enumDef.Documentation),
 				enumDef.IsDeprecated,
 				GeneratedDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC"),
 				Namespace = enumDef.Namespace
@@ -71,11 +72,54 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		}
 
 		/// <summary>
+		/// Formats multiline documentation for Dart by ensuring each line has a /// prefix.
+		/// </summary>
+		private string? FormatDartDocumentation(string? documentation)
+		{
+			if (string.IsNullOrWhiteSpace(documentation))
+			{
+				return documentation;
+			}
+
+			// Split by newlines and prefix each line with ///
+			var lines = documentation.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+			var formatted = new StringBuilder();
+
+			for (int i = 0; i < lines.Length; i++)
+			{
+				var line = lines[i].TrimStart();
+				// Remove existing /// prefix if present
+				if (line.StartsWith("///"))
+				{
+					line = line.Substring(3).TrimStart();
+				}
+
+				formatted.Append(line);
+
+				// Add newline with /// prefix for all but the last line
+				if (i < lines.Length - 1)
+				{
+					formatted.AppendLine();
+					formatted.Append("  /// ");
+				}
+			}
+
+			return formatted.ToString();
+		}
+
+		/// <summary>
 		/// Converts a PascalCase string to camelCase.
+		/// Special handling: Preserve format codes and short identifiers (2 chars or less with all letters)
 		/// </summary>
 		private string ToCamelCase(string value)
 		{
 			if (string.IsNullOrEmpty(value) || char.IsLower(value[0]))
+			{
+				return value;
+			}
+
+			// Preserve format codes like "HH", "H", "h"
+			if (value.Length <= 2 && value.All(char.IsLetter))
 			{
 				return value;
 			}

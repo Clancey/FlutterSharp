@@ -73,10 +73,17 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		{
 			var baseStruct = MapBaseStruct(widget.Type, widget.HasSingleChild, widget.HasMultipleChildren);
 			var properties = widget.Properties.Select(p => MapStructProperty(p)).ToList();
+			var structName = $"{widget.Name}Struct";
+
+			// Prevent circular inheritance: if the struct would inherit from itself, use WidgetStruct instead
+			if (baseStruct == structName)
+			{
+				baseStruct = "WidgetStruct";
+			}
 
 			return new Dictionary<string, object?>
 			{
-				["name"] = $"{widget.Name}Struct",
+				["name"] = structName,
 				["widget_name"] = widget.Name,
 				["base_struct"] = baseStruct,
 				["properties"] = properties,
@@ -95,21 +102,50 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			var structType = MapToStructType(property);
 			var isString = property.DartType == "String" || property.DartType == "String?";
 			var isWidget = _typeMapper.IsWidget(property.DartType);
-			var isPrimitive = IsPrimitiveType(structType);
+
+			// Remove ONE trailing ? from the type if present - the template will add it based on is_nullable
+			var cleanStructType = structType.EndsWith("?") ? structType.Substring(0, structType.Length - 1) : structType;
+			var isPrimitive = IsPrimitiveType(cleanStructType);
+
+			// Escape C# keywords in property names
+			var propertyName = EscapeCSharpKeyword(property.Name);
+			var backingFieldName = $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}";
+			backingFieldName = EscapeCSharpKeyword(backingFieldName);
 
 			return new Dictionary<string, object?>
 			{
-				["name"] = property.Name,
-				["type"] = structType,
+				["name"] = propertyName,
+				["type"] = cleanStructType,
 				["original_type"] = property.DartType,
 				["is_nullable"] = property.IsNullable,
 				["is_string"] = isString,
 				["is_widget"] = isWidget,
 				["is_primitive"] = isPrimitive,
-				["requires_native_nullable"] = property.IsNullable && (isPrimitive || structType.Contains("Struct")),
+				["requires_native_nullable"] = property.IsNullable && (isPrimitive || cleanStructType.Contains("Struct")),
 				["documentation"] = FormatDocumentation(property.Documentation),
-				["backing_field_name"] = $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}"
+				["backing_field_name"] = backingFieldName
 			};
+		}
+
+		/// <summary>
+		/// Escapes C# keywords by prefixing with @.
+		/// </summary>
+		private string EscapeCSharpKeyword(string name)
+		{
+			var keywords = new HashSet<string>
+			{
+				"abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked",
+				"class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else",
+				"enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach",
+				"goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long",
+				"namespace", "new", "null", "object", "operator", "out", "override", "params", "private",
+				"protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof",
+				"stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try",
+				"typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void",
+				"volatile", "while"
+			};
+
+			return keywords.Contains(name.ToLowerInvariant()) ? $"@{name}" : name;
 		}
 
 		/// <summary>
@@ -248,6 +284,10 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 
 using System;
 using System.Runtime.InteropServices;
+using Flutter;
+using Flutter.Widgets;
+using Flutter.Material;
+using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -255,13 +295,11 @@ namespace Flutter.Structs
 {{ documentation }}
 {{~ end ~}}
 	[StructLayout(LayoutKind.Sequential)]
-	{{ if is_internal }}internal{{ else }}public{{ end }} class {{ name }} : {{ base_struct }}
+	internal {{ if is_partial }}partial {{ end }}class {{ name }} : {{ base_struct }}
 	{
 {{~ for prop in properties ~}}
 {{~ if prop.is_string ~}}
-		// String field: {{ prop.name }}
-		private IntPtr {{ prop.backing_field_name }};
-
+		IntPtr {{ prop.backing_field_name }};
 {{~ if prop.documentation ~}}
 {{ prop.documentation }}
 {{~ end ~}}
@@ -272,27 +310,22 @@ namespace Flutter.Structs
 		}
 
 {{~ else if prop.is_widget ~}}
-		// Widget field: {{ prop.name }}
-		private IntPtr {{ prop.backing_field_name }};
-
+		IntPtr {{ prop.backing_field_name }};
 {{~ if prop.documentation ~}}
 {{ prop.documentation }}
 {{~ end ~}}
-		public {{ prop.type }}{{ if prop.is_nullable }}?{{ end }} {{ prop.name }}
+		public Widget{{ if prop.is_nullable }}?{{ end }} {{ prop.name }}
 		{
-			get => {{ prop.backing_field_name }} != IntPtr.Zero ? ({{ prop.type }}){{ prop.backing_field_name }} : null;
 			set => SetIntPtr(ref {{ prop.backing_field_name }}, value);
 		}
 
 {{~ else if prop.requires_native_nullable ~}}
-		// Nullable value type: {{ prop.name }}
 {{~ if prop.documentation ~}}
 {{ prop.documentation }}
 {{~ end ~}}
 		public NativeNullable<{{ prop.type }}> {{ prop.name }} { get; set; }
 
 {{~ else ~}}
-		// Simple field: {{ prop.name }}
 {{~ if prop.documentation ~}}
 {{ prop.documentation }}
 {{~ end ~}}

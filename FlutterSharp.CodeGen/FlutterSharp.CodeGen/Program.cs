@@ -367,6 +367,8 @@ internal class Program
 		var csharpEnumGenerator = new CSharpEnumGenerator(dartToCSharpMapper);
 		var dartStructGenerator = new DartStructGenerator(csharpToDartMapper);
 		var dartParserGenerator = new DartParserGenerator(csharpToDartMapper);
+		var dartParserImportsGenerator = new DartParserImportsGenerator();
+		var dartUtilityParserGenerator = new DartUtilityParserGenerator(csharpToDartMapper);
 		var dartEnumGenerator = new DartEnumGenerator();
 
 		// Create output directories
@@ -412,21 +414,256 @@ internal class Program
 				cancellationToken);
 			_generatedFileCount++;
 
-			// Dart Struct
-			var dartStructCode = dartStructGenerator.Generate(widget);
+			// Skip private widgets for Dart code (starting with _)
+			if (!widget.Name.StartsWith("_") && !widget.IsAbstract)
+			{
+				// Dart Struct
+				var dartStructCode = dartStructGenerator.Generate(widget);
+				await File.WriteAllTextAsync(
+					Path.Combine(dartStructsDir, $"{widget.Name.ToLowerInvariant()}_struct.dart"),
+					dartStructCode,
+					cancellationToken);
+				_generatedFileCount++;
+
+				// Dart Parser
+				var dartParserCode = dartParserGenerator.Generate(widget);
+				await File.WriteAllTextAsync(
+					Path.Combine(dartParsersDir, $"{widget.Name.ToLowerInvariant()}_parser.dart"),
+					dartParserCode,
+					cancellationToken);
+				_generatedFileCount++;
+			}
+		}
+
+		// Generate important non-widget type structs
+		LogInfo("");
+		LogInfo("Generating type struct code...");
+
+		// Whitelist of important Flutter types that need struct generation
+		var importantTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+		{
+			// Alignment types
+			"Alignment", "AlignmentGeometry", "AlignmentDirectional",
+
+			// Padding/Insets types
+			"EdgeInsets", "EdgeInsetsGeometry", "EdgeInsetsDirectional",
+
+			// Color types
+			"Color", "MaterialColor", "ColorSwatch",
+
+			// Decoration types
+			"BoxDecoration", "Decoration", "ShapeDecoration",
+
+			// Constraints
+			"BoxConstraints", "Constraints",
+
+			// Text styling
+			"TextStyle", "TextAlign", "TextDirection", "FontWeight", "FontStyle",
+
+			// Geometry types
+			"Size", "Offset", "Rect", "Radius",
+
+			// Border types
+			"BorderRadius", "BorderRadiusGeometry", "BorderRadiusDirectional",
+			"Border", "BorderSide",
+
+			// Shadow types
+			"BoxShadow", "Shadow",
+
+			// Gradient types
+			"Gradient", "LinearGradient", "RadialGradient", "SweepGradient",
+
+			// Matrix types
+			"Matrix4", "Matrix3",
+
+			// Time/Animation types
+			"Duration", "DateTime",
+			"Animation", "AnimationController", "Curve", "Curves",
+
+			// Image types
+			"ImageProvider",
+
+			// Keys and State
+			"Key", "GlobalKey", "State",
+
+			// Theme and Material
+			"ThemeData", "IconData", "MaterialStateProperty",
+
+			// Controllers and Focus
+			"FocusNode", "ScrollController", "ScrollPhysics",
+			"TextEditingController",
+
+			// BuildContext (special case - may not generate correctly but included for completeness)
+			"BuildContext"
+		};
+
+		var typesToGenerate = packageDefinition.Types
+			.Where(t => importantTypes.Contains(t.Name))
+			.ToList();
+
+		LogInfo($"Found {typesToGenerate.Count} important types to generate structs for");
+
+		foreach (var type in typesToGenerate)
+		{
+			LogVerbose($"  Generating {type.Name}...");
+
+			// Convert TypeDefinition to WidgetDefinition for struct generation
+			var widgetDef = ConvertTypeToWidget(type);
+
+			// C# Struct
+			var csharpStructCode = csharpStructGenerator.Generate(widgetDef);
 			await File.WriteAllTextAsync(
-				Path.Combine(dartStructsDir, $"{widget.Name.ToLowerInvariant()}_struct.dart"),
-				dartStructCode,
+				Path.Combine(csharpStructsDir, $"{type.Name}Struct.cs"),
+				csharpStructCode,
 				cancellationToken);
 			_generatedFileCount++;
 
-			// Dart Parser
-			var dartParserCode = dartParserGenerator.Generate(widget);
-			await File.WriteAllTextAsync(
-				Path.Combine(dartParsersDir, $"{widget.Name.ToLowerInvariant()}_parser.dart"),
-				dartParserCode,
-				cancellationToken);
-			_generatedFileCount++;
+			// Define truly abstract types that are handled separately in AbstractInterfaceTypes.json
+			var abstractInterfaceTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+			{
+				"AlignmentGeometry", "EdgeInsetsGeometry", "BorderRadiusGeometry",
+				"Gradient", "Animation", "Decoration", "Constraints", "BoxBorder", "ParametricCurve"
+			};
+
+			// Skip private types and truly abstract types for Dart code
+			// Important: We generate Dart structs for all important types EXCEPT the ones in abstractInterfaceTypes
+			if (!type.Name.StartsWith("_") && !abstractInterfaceTypes.Contains(type.Name))
+			{
+				// Dart Struct
+				var dartStructCode = dartStructGenerator.Generate(widgetDef);
+				await File.WriteAllTextAsync(
+					Path.Combine(dartStructsDir, $"{type.Name.ToLowerInvariant()}_struct.dart"),
+					dartStructCode,
+					cancellationToken);
+				_generatedFileCount++;
+			}
+		}
+
+		// Generate Dart core type structs (Duration, DateTime, etc.)
+		LogInfo("");
+		LogInfo("Generating Dart core type structs...");
+
+		var dartCoreTypesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ManualTypes", "DartCoreTypes.json");
+		if (File.Exists(dartCoreTypesPath))
+		{
+			var dartCoreTypesJson = await File.ReadAllTextAsync(dartCoreTypesPath, cancellationToken);
+			var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+			var dartCoreTypesData = System.Text.Json.JsonSerializer.Deserialize<DartCoreTypesDefinition>(dartCoreTypesJson, options);
+
+			if (dartCoreTypesData?.Types != null)
+			{
+				LogInfo($"Found {dartCoreTypesData.Types.Count} Dart core types to generate");
+
+				foreach (var coreType in dartCoreTypesData.Types)
+				{
+					LogVerbose($"  Generating {coreType.Name}...");
+
+					// Convert to WidgetDefinition for struct generation
+					var widgetDef = ConvertCoreTypeToWidget(coreType);
+
+					// C# Struct
+					var csharpStructCode = csharpStructGenerator.Generate(widgetDef);
+					await File.WriteAllTextAsync(
+						Path.Combine(csharpStructsDir, $"{coreType.Name}Struct.cs"),
+						csharpStructCode,
+						cancellationToken);
+					_generatedFileCount++;
+
+					// Dart Struct
+					var dartStructCode = dartStructGenerator.Generate(widgetDef);
+					await File.WriteAllTextAsync(
+						Path.Combine(dartStructsDir, $"{coreType.Name.ToLowerInvariant()}_struct.dart"),
+						dartStructCode,
+						cancellationToken);
+					_generatedFileCount++;
+				}
+			}
+		}
+		else
+		{
+			LogVerbose($"No Dart core types file found at {dartCoreTypesPath}");
+		}
+
+		// Generate Dart UI types (Size, Offset, Rect, Radius, etc.)
+		LogInfo("");
+		LogInfo("Generating Dart UI types...");
+
+		var dartUITypesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ManualTypes", "DartUITypes.json");
+		if (File.Exists(dartUITypesPath))
+		{
+			var dartUITypesJson = await File.ReadAllTextAsync(dartUITypesPath, cancellationToken);
+			var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+			var dartUITypesData = System.Text.Json.JsonSerializer.Deserialize<DartCoreTypesDefinition>(dartUITypesJson, options);
+
+			if (dartUITypesData?.Types != null)
+			{
+				LogInfo($"Found {dartUITypesData.Types.Count} Dart UI types to generate");
+
+				foreach (var uiType in dartUITypesData.Types)
+				{
+					LogVerbose($"  Generating {uiType.Name}...");
+
+					// Convert to WidgetDefinition for struct generation
+					var widgetDef = ConvertCoreTypeToWidget(uiType);
+
+					// C# Struct
+					var csharpStructCode = csharpStructGenerator.Generate(widgetDef);
+					await File.WriteAllTextAsync(
+						Path.Combine(csharpStructsDir, $"{uiType.Name}Struct.cs"),
+						csharpStructCode,
+						cancellationToken);
+					_generatedFileCount++;
+
+					// Dart Struct
+					var dartStructCode = dartStructGenerator.Generate(widgetDef);
+					await File.WriteAllTextAsync(
+						Path.Combine(dartStructsDir, $"{uiType.Name.ToLowerInvariant()}_struct.dart"),
+						dartStructCode,
+						cancellationToken);
+					_generatedFileCount++;
+				}
+			}
+		}
+		else
+		{
+			LogVerbose($"No Dart UI types file found at {dartUITypesPath}");
+		}
+
+		// Generate abstract interface type structs (empty structs for abstract base classes)
+		LogInfo("");
+		LogInfo("Generating abstract interface type structs...");
+
+		var abstractInterfaceTypesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ManualTypes", "AbstractInterfaceTypes.json");
+		if (File.Exists(abstractInterfaceTypesPath))
+		{
+			var abstractInterfaceTypesJson = await File.ReadAllTextAsync(abstractInterfaceTypesPath, cancellationToken);
+			var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+			var abstractInterfaceTypesData = System.Text.Json.JsonSerializer.Deserialize<DartCoreTypesDefinition>(abstractInterfaceTypesJson, options);
+
+			if (abstractInterfaceTypesData?.Types != null)
+			{
+				LogInfo($"Found {abstractInterfaceTypesData.Types.Count} abstract interface types to generate");
+
+				foreach (var interfaceType in abstractInterfaceTypesData.Types)
+				{
+					LogVerbose($"  Generating {interfaceType.Name}...");
+
+					// Convert to WidgetDefinition for struct generation
+					var widgetDef = ConvertCoreTypeToWidget(interfaceType);
+
+					// Dart Struct only (no C# struct needed for abstract interfaces)
+					var dartStructCode = dartStructGenerator.Generate(widgetDef);
+					await File.WriteAllTextAsync(
+						Path.Combine(dartStructsDir, $"{interfaceType.Name.ToLowerInvariant()}_struct.dart"),
+						dartStructCode,
+						cancellationToken);
+					_generatedFileCount++;
+				}
+			}
+		}
+		else
+		{
+			LogVerbose($"No abstract interface types file found at {abstractInterfaceTypesPath}");
 		}
 
 		// Generate enums
@@ -444,14 +681,66 @@ internal class Program
 				cancellationToken);
 			_generatedFileCount++;
 
-			// Dart Enum
-			var dartEnumCode = dartEnumGenerator.Generate(enumDef);
-			await File.WriteAllTextAsync(
-				Path.Combine(dartEnumsDir, $"{enumDef.Name.ToLowerInvariant()}.dart"),
-				dartEnumCode,
-				cancellationToken);
-			_generatedFileCount++;
+			// Skip private enums for Dart code (starting with _)
+			if (!enumDef.Name.StartsWith("_"))
+			{
+				// Dart Enum
+				var dartEnumCode = dartEnumGenerator.Generate(enumDef);
+				await File.WriteAllTextAsync(
+					Path.Combine(dartEnumsDir, $"{enumDef.Name.ToLowerInvariant()}.dart"),
+					dartEnumCode,
+					cancellationToken);
+				_generatedFileCount++;
+			}
 		}
+
+		// Generate parser registration file (imports + list)
+		LogInfo("");
+		LogInfo("Generating parser registration file...");
+		var parserRegistrationCode = dartParserImportsGenerator.Generate(packageDefinition.Widgets);
+		await File.WriteAllTextAsync(
+			Path.Combine(outputDart, "generated_parsers.dart"),
+			parserRegistrationCode,
+			cancellationToken);
+		_generatedFileCount++;
+		LogVerbose($"  Generated generated_parsers.dart");
+
+		// Generate utility parser functions
+		LogInfo("");
+		LogInfo("Generating utility parser functions...");
+
+		// Read existing parsers from utils.dart
+		var utilsDartPath = "/Users/clancey/Projects/FlutterSharp/flutter_module/lib/utils.dart";
+		var existingParsers = new HashSet<string>();
+
+		if (File.Exists(utilsDartPath))
+		{
+			var utilsContent = await File.ReadAllTextAsync(utilsDartPath, cancellationToken);
+			var lines = utilsContent.Split('\n');
+			foreach (var line in lines)
+			{
+				// Match parse function definitions: parseFoo(
+				var match = System.Text.RegularExpressions.Regex.Match(line, @"^\s*\w+\s+(\w+)\s*\(");
+				if (match.Success && match.Groups[1].Value.StartsWith("parse"))
+				{
+					existingParsers.Add(match.Groups[1].Value);
+				}
+			}
+			LogInfo($"Found {existingParsers.Count} existing parser functions in utils.dart");
+		}
+		else
+		{
+			LogVerbose($"utils.dart not found at {utilsDartPath}, generating all parsers");
+		}
+
+		// Generate missing parsers
+		var utilityParserCode = dartUtilityParserGenerator.GenerateAll(packageDefinition.Enums, packageDefinition.Types, existingParsers);
+		await File.WriteAllTextAsync(
+			Path.Combine(outputDart, "generated_utility_parsers.dart"),
+			utilityParserCode,
+			cancellationToken);
+		_generatedFileCount++;
+		LogInfo($"Generated utility parsers (generated_utility_parsers.dart)");
 
 		// Generate summary
 		LogInfo("");
@@ -792,4 +1081,72 @@ internal class Program
 			Console.ForegroundColor = oldColor;
 		}
 	}
+
+
+	/// <summary>
+	/// Converts a TypeDefinition to a WidgetDefinition for struct generation purposes.
+	/// </summary>
+	private static WidgetDefinition ConvertTypeToWidget(TypeDefinition type)
+	{
+		return new WidgetDefinition
+		{
+			Name = type.Name,
+			Namespace = type.Namespace,
+			BaseClass = type.BaseClass,
+			Type = WidgetType.Stateless, // Default type for non-widget types
+			Properties = type.Properties,
+			Constructors = type.Constructors,
+			Documentation = type.Documentation,
+			SourceLibrary = type.SourceLibrary,
+			HasSingleChild = false,
+			HasMultipleChildren = false,
+			IsAbstract = type.IsAbstract,
+			IsDeprecated = type.IsDeprecated,
+			DeprecationMessage = type.DeprecationMessage
+		};
+	}
+
+	/// <summary>
+	/// Converts a DartCoreType to a WidgetDefinition for struct generation purposes.
+	/// </summary>
+	private static WidgetDefinition ConvertCoreTypeToWidget(DartCoreType coreType)
+	{
+		return new WidgetDefinition
+		{
+			Name = coreType.Name,
+			Namespace = coreType.Namespace,
+			BaseClass = null, // Core types don't have base classes in our model
+			Type = WidgetType.Stateless,
+			Properties = coreType.Properties,
+			Constructors = new List<ConstructorDefinition>(),
+			Documentation = coreType.Documentation,
+			SourceLibrary = coreType.SourceLibrary,
+			HasSingleChild = false,
+			HasMultipleChildren = false,
+			IsAbstract = coreType.IsAbstract,
+			IsDeprecated = false,
+			DeprecationMessage = null
+		};
+	}
+}
+
+/// <summary>
+/// Definition for manually defined Dart core types that need struct generation.
+/// </summary>
+internal class DartCoreTypesDefinition
+{
+	public List<DartCoreType> Types { get; set; } = new();
+}
+
+/// <summary>
+/// Represents a Dart core type (like Duration, DateTime) that needs struct generation.
+/// </summary>
+internal class DartCoreType
+{
+	public string Name { get; set; } = string.Empty;
+	public string Namespace { get; set; } = string.Empty;
+	public string? Documentation { get; set; }
+	public List<PropertyDefinition> Properties { get; set; } = new();
+	public bool IsAbstract { get; set; }
+	public string? SourceLibrary { get; set; }
 }

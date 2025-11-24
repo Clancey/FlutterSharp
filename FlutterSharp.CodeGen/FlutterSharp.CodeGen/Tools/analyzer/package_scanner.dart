@@ -5,9 +5,6 @@ import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
-import 'package:analyzer/dart/element/type.dart';
 import 'package:path/path.dart' as path;
 import 'package:yaml/yaml.dart';
 
@@ -197,7 +194,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Determines if a class element is a widget
-  bool _isWidget(ClassElement element) {
+  bool _isWidget(element) {
     return _extendsType(element, 'Widget') ||
         _extendsType(element, 'StatelessWidget') ||
         _extendsType(element, 'StatefulWidget') ||
@@ -210,26 +207,49 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Checks if a class extends a specific type
-  bool _extendsType(ClassElement element, String typeName) {
+  bool _extendsType(element, String typeName) {
     var current = element;
     while (current.supertype != null) {
       if (current.supertype!.element.name == typeName) {
         return true;
       }
       final superElement = current.supertype!.element;
-      if (superElement is! ClassElement) break;
-      current = superElement;
+      if (superElement.runtimeType.toString().contains('ClassElement')) {
+        current = superElement;
+      } else {
+        break;
+      }
     }
     return false;
   }
 
-  /// Gets the immediate base class name
-  String? _getBaseClassName(ClassElement element) {
-    return element.supertype?.element.name;
+  /// Gets the first public (non-private) base class name by traversing up the inheritance chain
+  /// Private classes in Dart start with an underscore (_)
+  String? _getBaseClassName(element) {
+    var current = element.supertype;
+
+    // Traverse up the inheritance chain until we find a public class
+    while (current != null) {
+      final className = current.element.name;
+
+      // If the class name doesn't start with underscore, it's public
+      if (!className.startsWith('_')) {
+        return className;
+      }
+
+      // Move up to the next supertype
+      if (current.element.runtimeType.toString().contains('ClassElement')) {
+        current = current.element.supertype;
+      } else {
+        break;
+      }
+    }
+
+    return null;
   }
 
   /// Determines the widget type category
-  String _getWidgetType(ClassElement element) {
+  String _getWidgetType(element) {
     if (_extendsType(element, 'StatelessWidget')) return 'Stateless';
     if (_extendsType(element, 'StatefulWidget')) return 'Stateful';
     if (_extendsType(element, 'SingleChildRenderObjectWidget')) return 'SingleChildRenderObject';
@@ -241,8 +261,8 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
 
   /// Extracts widget definition from a class declaration
   Map<String, dynamic> _extractWidgetDefinition(
-    ClassDeclaration node,
-    ClassElement element,
+    node,
+    element,
   ) {
     final constructors = _extractConstructors(element);
     final properties = _extractProperties(element);
@@ -283,8 +303,8 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
 
   /// Extracts type definition from a class declaration
   Map<String, dynamic> _extractTypeDefinition(
-    ClassDeclaration node,
-    ClassElement element,
+    node,
+    element,
   ) {
     return {
       'name': element.name,
@@ -305,8 +325,8 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
 
   /// Extracts enum definition from an enum declaration
   Map<String, dynamic> _extractEnumDefinition(
-    EnumDeclaration node,
-    EnumElement element,
+    node,
+    element,
   ) {
     final values = element.fields
         .where((f) => f.isEnumConstant)
@@ -328,7 +348,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Extracts constructor definitions from a class element
-  List<Map<String, dynamic>> _extractConstructors(ClassElement element) {
+  List<Map<String, dynamic>> _extractConstructors(element) {
     return element.constructors.map((constructor) {
       // Skip private constructors
       if (constructor.name.startsWith('_')) {
@@ -355,20 +375,50 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Extracts property definitions from a class element
-  List<Map<String, dynamic>> _extractProperties(ClassElement element) {
+  List<Map<String, dynamic>> _extractProperties(element) {
     final properties = <Map<String, dynamic>>[];
+
+    // Build a map of default values from the unnamed constructor
+    final defaultValues = <String, String?>{};
+    dynamic unnamedConstructor;
+    try {
+      unnamedConstructor = element.constructors.firstWhere(
+        (c) => c.name.isEmpty,
+      );
+    } catch (_) {
+      // No unnamed constructor, try to use the first constructor if any
+      if (element.constructors.isNotEmpty) {
+        unnamedConstructor = element.constructors.first;
+      }
+    }
+
+    if (unnamedConstructor != null) {
+      for (final param in unnamedConstructor.parameters) {
+        if (param.defaultValueCode != null) {
+          defaultValues[param.name] = param.defaultValueCode;
+        }
+      }
+    }
 
     // Extract fields
     for (final field in element.fields) {
       // Skip private fields and static fields
       if (field.name.startsWith('_') || field.isStatic) continue;
 
+      var dartType = _getTypeString(field.type);
+
+      // If we got InvalidType, try to infer from field name
+      if (dartType == 'InvalidType' || dartType.contains('InvalidType')) {
+        dartType = _inferTypeFromParameterName(field.name, dartType);
+      }
+
       properties.add({
         'name': field.name,
-        'dartType': _getTypeString(field.type),
+        'dartType': dartType,
         'isRequired': !_isNullable(field.type),
         'isNullable': _isNullable(field.type),
         'isNamed': true,
+        'defaultValue': defaultValues[field.name],
         'documentation': _getDocumentation(field),
         'isList': _isList(field.type),
         'isCallback': _isCallback(field.type),
@@ -380,10 +430,17 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Extracts a parameter definition
-  Map<String, dynamic> _extractParameterDefinition(ParameterElement param) {
+  Map<String, dynamic> _extractParameterDefinition(param) {
+    var dartType = _getTypeString(param.type);
+
+    // If we got InvalidType, try to infer from parameter name
+    if (dartType == 'InvalidType' || dartType.contains('InvalidType')) {
+      dartType = _inferTypeFromParameterName(param.name, dartType);
+    }
+
     return {
       'name': param.name,
-      'dartType': _getTypeString(param.type),
+      'dartType': dartType,
       'isRequired': param.isRequired,
       'isNullable': _isNullable(param.type),
       'isNamed': param.isNamed,
@@ -395,8 +452,53 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
     };
   }
 
+  /// Infers a Dart type from a parameter name when type resolution fails
+  String _inferTypeFromParameterName(String paramName, String fallback) {
+    // Don't override if we already have valid List type information
+    if (fallback.startsWith('List<') && !fallback.contains('InvalidType')) {
+      return fallback;  // Keep List<Widget>, List<BoxShadow>, etc.
+    }
+
+    // Common parameter name patterns to type mappings
+    final nameToType = {
+      'alignment': 'AlignmentGeometry?',
+      'padding': 'EdgeInsetsGeometry?',
+      'margin': 'EdgeInsetsGeometry?',
+      'decoration': 'Decoration?',
+      'foregroundDecoration': 'Decoration?',
+      'constraints': 'BoxConstraints?',
+      'transform': 'Matrix4?',
+      'transformAlignment': 'AlignmentGeometry?',
+      'clipBehavior': 'Clip',
+      'color': 'Color?',
+      'backgroundColor': 'Color?',
+      'foregroundColor': 'Color?',
+      'shadowColor': 'Color?',
+      'surfaceTintColor': 'Color?',
+      'borderRadius': 'BorderRadiusGeometry?',
+      'border': 'BoxBorder?',
+      'shape': 'BoxShape',
+      'gradient': 'Gradient?',
+      'boxShadow': 'List<BoxShadow>?',
+      'curve': 'Curve',
+      'duration': 'Duration',
+      'width': 'double?',
+      'height': 'double?',
+      'style': 'TextStyle?',
+      'textStyle': 'TextStyle?',
+      'icon': 'IconData?',
+      'iconSize': 'double?',
+      // Common list properties
+      'children': 'List<Widget>',
+      'actions': 'List<Widget>?',
+      'tabs': 'List<Widget>',
+    };
+
+    return nameToType[paramName] ?? fallback;
+  }
+
   /// Gets the namespace/library path for an element
-  String _getNamespace(Element element) {
+  String _getNamespace(element) {
     final library = element.library;
     if (library == null) return '';
 
@@ -409,7 +511,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Gets documentation comment for an element
-  String? _getDocumentation(Element element) {
+  String? _getDocumentation(element) {
     final docComment = element.documentationComment;
     if (docComment == null || docComment.isEmpty) return null;
 
@@ -422,7 +524,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Gets deprecation message for an element
-  String? _getDeprecationMessage(Element element) {
+  String? _getDeprecationMessage(element) {
     final metadata = element.metadata;
     for (final annotation in metadata) {
       if (annotation.isDeprecated) {
@@ -447,36 +549,61 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Checks if a class is immutable
-  bool _isImmutable(ClassElement element) {
+  bool _isImmutable(element) {
     return element.metadata.any((m) => m.element?.name == 'immutable');
   }
 
   /// Gets the type string representation
-  String _getTypeString(DartType type) {
-    return type.getDisplayString(withNullability: true);
+  String _getTypeString(type) {
+    final typeString = type.getDisplayString(withNullability: true);
+
+    // Check if this is a List<Widget> or similar collection type
+    // We want to preserve these even if they can't be fully resolved
+    if (typeString.startsWith('List<') && typeString.contains('Widget')) {
+      return typeString; // Keep List<Widget>, List<Widget>?, etc.
+    }
+
+    // If we got InvalidType, it means the type couldn't be resolved
+    // This can happen with types from external packages or SDK
+    // The type itself may still have useful information in its element
+    if (typeString == 'InvalidType' || typeString.contains('InvalidType')) {
+      // Try to get the type name from the element if available
+      if (type.element != null && type.element.name != 'InvalidType') {
+        final nullability = typeString.endsWith('?') ? '?' : '';
+        return '${type.element.name}$nullability';
+      }
+    }
+
+    return typeString;
   }
 
   /// Checks if a type is nullable
-  bool _isNullable(DartType type) {
-    return type.nullabilitySuffix == NullabilitySuffix.question;
+  bool _isNullable(type) {
+    return _getTypeString(type).endsWith('?');
   }
 
   /// Checks if a type is a list/collection
-  bool _isList(DartType type) {
-    if (type is! InterfaceType) return false;
-    final name = type.element.name;
-    return name == 'List' || name == 'Iterable' || name == 'Set';
+  bool _isList(type) {
+    try {
+      final name = type.element?.name;
+      return name == 'List' || name == 'Iterable' || name == 'Set';
+    } catch (_) {
+      return false;
+    }
   }
 
   /// Checks if a type is a callback/function
-  bool _isCallback(DartType type) {
-    return type is FunctionType;
+  bool _isCallback(type) {
+    return type.runtimeType.toString().contains('FunctionType');
   }
 
   /// Gets type arguments for generic types
-  List<String>? _getTypeArguments(DartType type) {
-    if (type is! InterfaceType) return null;
-    if (type.typeArguments.isEmpty) return null;
-    return type.typeArguments.map((t) => _getTypeString(t)).toList();
+  List<String>? _getTypeArguments(type) {
+    try {
+      if (type.typeArguments == null || type.typeArguments.isEmpty) return null;
+      return type.typeArguments.map((t) => _getTypeString(t)).toList();
+    } catch (_) {
+      return null;
+    }
   }
 }

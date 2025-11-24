@@ -98,16 +98,41 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			// Use explicit value if provided, otherwise use index
 			var numericValue = value.Value ?? index;
 
+			// Convert to PascalCase for C# enum values, then escape C# keywords if needed
+			var pascalCaseName = ToPascalCase(value.Name);
+			var name = EscapeCSharpKeyword(pascalCaseName);
+
 			return new Dictionary<string, object?>
 			{
-				["name"] = value.Name,
+				["name"] = name,
 				["value"] = numericValue,
 				["has_explicit_value"] = value.Value.HasValue,
 				["documentation"] = FormatDocumentation(value.Documentation),
 				["is_deprecated"] = value.IsDeprecated,
-				// Convert to camelCase for Dart string value
-				["dart_string_value"] = ToCamelCase(value.Name)
+				// Keep original name in camelCase for Dart string value
+				["dart_string_value"] = value.Name
 			};
+		}
+
+		/// <summary>
+		/// Escapes C# keywords by prefixing with @.
+		/// </summary>
+		private string EscapeCSharpKeyword(string name)
+		{
+			var keywords = new HashSet<string>
+			{
+				"abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked",
+				"class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else",
+				"enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach",
+				"goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long",
+				"namespace", "new", "null", "object", "operator", "out", "override", "params", "private",
+				"protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof",
+				"stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try",
+				"typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void",
+				"volatile", "while"
+			};
+
+			return keywords.Contains(name.ToLowerInvariant()) ? $"@{name}" : name;
 		}
 
 		/// <summary>
@@ -120,20 +145,85 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				return "Flutter.Enums";
 			}
 
-			// Convert flutter/material -> Flutter.Material
-			// Convert flutter/widgets -> Flutter.Widgets
-			// Convert dart:ui -> Flutter.UI
-			var result = dartNamespace
-				.Replace("flutter/", "Flutter.")
-				.Replace("dart:", "Flutter.")
-				.Replace("/", ".");
+			// Normalize the namespace - remove common prefixes
+			var normalized = dartNamespace
+				.Replace("package:flutter/", "")
+				.Replace("dart:", "")
+				.Replace("src/", "")
+				.Replace("lib/", "");
 
-			// Capitalize each segment
-			var segments = result.Split('.');
-			result = string.Join(".", segments.Select(s =>
-				s.Length > 0 ? char.ToUpperInvariant(s[0]) + s.Substring(1) : s));
+			// Handle material, cupertino, widgets, etc.
+			if (normalized.Contains("material"))
+			{
+				return "Flutter.Material";
+			}
+			if (normalized.Contains("cupertino"))
+			{
+				return "Flutter.Cupertino";
+			}
+			if (normalized.Contains("widgets"))
+			{
+				return "Flutter.Widgets";
+			}
+			if (normalized.Contains("ui") || normalized.Contains("painting") || normalized.Contains("rendering"))
+			{
+				return "Flutter.UI";
+			}
+			if (normalized.Contains("services"))
+			{
+				return "Flutter.Services";
+			}
+			if (normalized.Contains("gestures"))
+			{
+				return "Flutter.Gestures";
+			}
+			if (normalized.Contains("animation"))
+			{
+				return "Flutter.Animation";
+			}
+			if (normalized.Contains("foundation"))
+			{
+				return "Flutter.Foundation";
+			}
+			if (normalized.Contains("semantics"))
+			{
+				return "Flutter.Semantics";
+			}
 
-			return result;
+			// Default to Flutter.Enums
+			return "Flutter.Enums";
+		}
+
+		/// <summary>
+		/// Converts a camel case name to Pascal case for C# enum values.
+		/// Special handling: If the name starts with uppercase or is all uppercase/lowercase single letters,
+		/// preserve it as-is to avoid collisions (e.g., "HH", "H", "h" should stay distinct).
+		/// </summary>
+		private string ToPascalCase(string camelCase)
+		{
+			if (string.IsNullOrEmpty(camelCase))
+			{
+				return camelCase;
+			}
+
+			// If already starts with uppercase, preserve as-is
+			// This handles cases like "HH", "H", and avoids collision with "h"
+			if (char.IsUpper(camelCase[0]))
+			{
+				return camelCase;
+			}
+
+			// For single-letter lowercase like "h", convert to "H_" to avoid collision
+			// Or we can use a different approach - let's just preserve it if it's a format code pattern
+			// Check if this looks like a format pattern (all letters, short length)
+			if (camelCase.Length <= 2 && camelCase.All(char.IsLetter))
+			{
+				// This is likely a format code, preserve as-is
+				return camelCase;
+			}
+
+			// Normal case: convert first character to uppercase
+			return char.ToUpperInvariant(camelCase[0]) + camelCase.Substring(1);
 		}
 
 		/// <summary>

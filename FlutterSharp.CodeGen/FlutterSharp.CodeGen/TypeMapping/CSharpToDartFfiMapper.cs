@@ -258,5 +258,63 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				_ => false
 			};
 		}
+
+		/// <summary>
+		/// Checks if a Dart type is an enum type.
+		/// </summary>
+		/// <param name="dartType">The Dart type to check.</param>
+		/// <returns>True if the type is an enum, false otherwise.</returns>
+	/// <summary>
+	/// Maps a Dart type to its corresponding Dart FFI struct type.
+	/// </summary>
+	/// <param name="dartType">The Dart type string (e.g., "String", "int?", "List&lt;String&gt;", "AlignmentGeometry").</param>
+	/// <returns>The Dart FFI struct type string.</returns>
+	public string MapDartTypeToFfiType(string dartType)
+	{
+		if (string.IsNullOrWhiteSpace(dartType))
+		{
+			throw new ArgumentException("Dart type cannot be null or empty.", nameof(dartType));
+		}
+
+		// Handle nullable types
+		var isNullable = dartType.EndsWith("?");
+		var cleanType = isNullable ? dartType.TrimEnd('?') : dartType;
+
+		// Try to find the mapping by Dart type
+		var mapping = _registry.GetMapping(cleanType);
+		if (mapping != null)
+		{
+			return mapping.DartStructType;
+		}
+
+		// Handle generic types
+		var genericMatch = GenericTypeRegex.Match(cleanType);
+		if (genericMatch.Success)
+		{
+			var baseType = genericMatch.Groups[1].Value;
+			var baseMapping = _registry.GetMapping(baseType);
+
+			if (baseMapping != null)
+			{
+				// For collections, we typically use Pointer<Void> and handle marshalling separately
+				return baseMapping.DartStructType;
+			}
+		}
+
+		// Fallback for unknown types - use Pointer<Void>
+		return "Pointer<Void>";
+	}
+
+		public bool IsEnum(string dartType)
+		{
+			if (string.IsNullOrWhiteSpace(dartType))
+			{
+				return false;
+			}
+
+			var cleanType = dartType.TrimEnd('?');
+			var mapping = _registry.GetMapping(cleanType);
+			return mapping?.IsEnum == true;
+		}
 	}
 }

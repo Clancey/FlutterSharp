@@ -11,6 +11,7 @@ import 'package:flutter_module/utils.dart';
 import 'mauiRenderer.dart';
 import 'dart:convert';
 
+// Manual parser imports (legacy - kept for backwards compatibility)
 import 'parsers/align_widget_parser.dart';
 import 'parsers/appbar_parser.dart';
 import 'parsers/aspectratio_widget_parser.dart';
@@ -53,6 +54,9 @@ import 'parsers/wrap_widget_parser.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
+
+// Auto-generated parser imports and list (418 parsers from Flutter SDK)
+import 'generated/generated_parsers.dart';
 
 // import 'dynamic_widget/basic/cliprrect_widget_parser.dart';
 
@@ -103,6 +107,9 @@ class DynamicWidgetBuilder {
     TextFieldParser(),
     TextWidgetParser(),
     WrapWidgetParser(),
+
+    // Add all generated parsers (418 parsers from Flutter SDK)
+    ...generatedParsers,
   ];
 
   static final _widgetNameParserMap = <String, WidgetParser>{};
@@ -139,6 +146,12 @@ class DynamicWidgetBuilder {
       Pointer<WidgetStruct> p, BuildContext buildContext) {
     if (p.address == 0) return null;
     return buildFromMap(p.ref, buildContext);
+  }
+
+  static Widget buildFromPointerNotNull(
+      Pointer<WidgetStruct> p, BuildContext buildContext) {
+    if (p.address == 0) return new Text("Null");
+    return buildFromMap(p.ref, buildContext) ?? new Text("Null");
   }
 
   static Widget? buildFromMap(

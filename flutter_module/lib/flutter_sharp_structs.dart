@@ -39,22 +39,8 @@ final class WidgetStruct extends Struct implements IWidgetStruct {
   external Pointer<Utf8> id;
 }
 
-class ISingleChildRenderObjectWidgetStruct extends IWidgetStruct {
-  external Pointer<WidgetStruct> child;
-}
-
-//SingleChildRenderObjectWidgetStruct : WidgetStruct
-final class SingleChildRenderObjectWidgetStruct extends Struct
-    implements ISingleChildRenderObjectWidgetStruct {
-  //FlutterObject Struct
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
-  //WidgetStruct
-  external Pointer<Utf8> id;
-  //SingleChildRenderObjectWidgetStruct
-  external Pointer<WidgetStruct> child;
-}
+// NOTE: SingleChildRenderObjectWidgetStruct is now generated
+// See: lib/generated/structs/singlechildrenderobjectwidget_struct.dart
 
 final class ChildrenStruct extends Struct {
   external Pointer<Uint64> children;
@@ -62,22 +48,8 @@ final class ChildrenStruct extends Struct {
   external int childrenLength;
 }
 
-class IMultiChildRenderObjectWidgetStruct extends IWidgetStruct {
-  external Pointer<ChildrenStruct> children;
-}
-
-//MultiChildRenderObjectWidgetStruct : WidgetStruct
-final class MultiChildRenderObjectWidgetStruct extends Struct
-    implements IMultiChildRenderObjectWidgetStruct {
-  //FlutterObject Struct
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
-  //WidgetStruct
-  external Pointer<Utf8> id;
-  //MultiChildRenderObjectWidgetStruct
-  external Pointer<ChildrenStruct> children;
-}
+// NOTE: MultiChildRenderObjectWidgetStruct is now generated
+// See: lib/generated/structs/multichildrenderobjectwidget_struct.dart
 
 final class AlignmentStruct extends Struct {
   @Double()
@@ -87,39 +59,11 @@ final class AlignmentStruct extends Struct {
   external double y;
 }
 
-//AlignStruct : SingleChildRenderObjectWidgetStruct
-final class AlignStruct extends Struct
-    implements ISingleChildRenderObjectWidgetStruct {
-  //FlutterObject Struct
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
-  //WidgetStruct
-  external Pointer<Utf8> id;
-  //SingleChildRenderObjectWidgetStruct
-  external Pointer<WidgetStruct> child;
-
-// AlignStruct
-  @Int8()
-  external int hasAlignment;
-
-  external Pointer<AlignmentStruct> alignment;
-
-  @Int8()
-  external int hasWidthFactor;
-
-  @Double()
-  external double widthFactor;
-
-  @Int8()
-  external int hasHeightFactor;
-
-  @Double()
-  external double heightFactor;
-}
+// NOTE: AlignStruct is now generated
+// See: lib/generated/structs/align_struct.dart
 
 //AppBarStruct : WidgetStruct
-final class AppBarStruct extends Struct implements IWidgetStruct {
+final class AppBarStruct extends Struct {
   //FlutterObject Struct
   external Pointer handle;
   external Pointer managedHandle;
@@ -131,28 +75,11 @@ final class AppBarStruct extends Struct implements IWidgetStruct {
   external Pointer<WidgetStruct> bottom;
 }
 
-//AspectRatioStruct : SingleChildRenderObjectWidgetStruct
-final class AspectRatioStruct extends Struct
-    implements ISingleChildRenderObjectWidgetStruct {
-  //FlutterObject Struct
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
-  //WidgetStruct
-  external Pointer<Utf8> id;
-  //SingleChildRenderObjectWidgetStruct
-  external Pointer<WidgetStruct> child;
-
-// AspectRatioStruct
-  @Int8()
-  external int hasValue;
-
-  @Double()
-  external double value;
-}
+// NOTE: AspectRatioStruct is now generated
+// See: lib/generated/structs/aspectratio_struct.dart
 
 //CheckboxStruct : WidgetStruct
-final class CheckboxStruct extends Struct implements IWidgetStruct {
+final class CheckboxStruct extends Struct {
   //FlutterObject Struct
   external Pointer handle;
   external Pointer managedHandle;
@@ -160,30 +87,13 @@ final class CheckboxStruct extends Struct implements IWidgetStruct {
   //WidgetStruct
   external Pointer<Utf8> id;
 
-  //AspectRatioStruct
+  //CheckboxStruct
   @Int8()
   external int value;
 }
 
-//ColumnStruct : MultiChildRenderObjectWidgetStruct
-final class ColumnStruct extends Struct
-    implements IMultiChildRenderObjectWidgetStruct {
-  //FlutterObject Struct
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
-  //WidgetStruct
-  external Pointer<Utf8> id;
-  //MultiChildRenderObjectWidgetStruct
-  external Pointer<ChildrenStruct> children;
-
-  //ColumnStruct
-  @Int8()
-  external int hasAlignment;
-
-  @Int32()
-  external int alignment;
-}
+// NOTE: ColumnStruct is now generated
+// See: lib/generated/structs/column_struct.dart
 
 final class EdgeInsetGemoetryStruct extends Struct {
   @Double()
@@ -207,54 +117,11 @@ final class ColorStruct extends Struct {
   external int alpha;
 }
 
-//ContainerStruct : SingleChildRenderObjectWidgetStruct
-final class ContainerStruct extends Struct
-    implements ISingleChildRenderObjectWidgetStruct {
-  //FlutterObject Struct
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
-  //WidgetStruct
-  external Pointer<Utf8> id;
-  //SingleChildRenderObjectWidgetStruct
-  external Pointer<WidgetStruct> child;
-
-  //ContainerStruct
-  @Int8()
-  external int hasAlignment;
-  external Pointer<AlignmentStruct> alignment;
-
-  @Int8()
-  external int hasPadding;
-
-  external Pointer<EdgeInsetGemoetryStruct> padding;
-
-  @Int8()
-  external int hasMargin;
-
-  external Pointer<EdgeInsetGemoetryStruct> margin;
-
-  @Int8()
-  external int hasColor;
-
-  external Pointer<ColorStruct> color;
-
-  @Int8()
-  external int hasWidth;
-
-  @Double()
-  external double width;
-
-  @Int8()
-  external int hasHeight;
-
-  @Double()
-  external double height;
-}
+// NOTE: ContainerStruct is now generated
+// See: lib/generated/structs/container_struct.dart
 
 //DefaultTabControllerStruct : SingleChildRenderObjectWidgetStruct
-final class DefaultTabControllerStruct extends Struct
-    implements ISingleChildRenderObjectWidgetStruct {
+final class DefaultTabControllerStruct extends Struct {
   //FlutterObject Struct
   external Pointer handle;
   external Pointer managedHandle;
@@ -269,23 +136,11 @@ final class DefaultTabControllerStruct extends Struct
   external int tabCount;
 }
 
-//IconStruct : WidgetStruct
-final class IconStruct extends Struct implements IWidgetStruct {
-  //FlutterObject Struct
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
-  //WidgetStruct
-  external Pointer<Utf8> id;
-
-  //IconStruct
-  external Pointer<Utf8> codePoint;
-
-  external Pointer<Utf8> fontFamily;
-}
+// NOTE: IconStruct is now generated
+// See: lib/generated/structs/icon_struct.dart
 
 //ListViewBuilderStruct : Widget
-final class ListViewBuilderStruct extends Struct implements IWidgetStruct {
+final class ListViewBuilderStruct extends Struct {
   //FlutterObject Struct
   external Pointer handle;
   external Pointer managedHandle;
@@ -298,26 +153,11 @@ final class ListViewBuilderStruct extends Struct implements IWidgetStruct {
   external int itemCount;
 }
 
-//RowStruct : MultiChildRenderObjectWidgetStruct
-final class RowStruct extends Struct {
-  //FlutterObject Struct
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
-  //WidgetStruct
-  external Pointer<Utf8> id;
-  //MultiChildRenderObjectWidgetStruct
-  external Pointer<ChildrenStruct> children;
-  //RowStruct
-  @Int8()
-  external int hasAlignment;
-
-  @Int32()
-  external int alignment;
-}
+// NOTE: RowStruct is now generated
+// See: lib/generated/structs/row_struct.dart
 
 //ScaffoldStruct : Widget
-final class ScaffoldStruct extends Struct implements IWidgetStruct {
+final class ScaffoldStruct extends Struct {
   //FlutterObject Struct
   external Pointer handle;
   external Pointer managedHandle;
@@ -332,26 +172,11 @@ final class ScaffoldStruct extends Struct implements IWidgetStruct {
   external Pointer<WidgetStruct> body;
 }
 
-//TextStruct : Widget
-final class TextStruct extends Struct implements IWidgetStruct {
-  //FlutterObject Struct
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
-  //WidgetStruct
-  external Pointer<Utf8> id;
-
-  //TextStruct
-  external Pointer<Utf8> value;
-  @Int8()
-  external int hasScaleFactor;
-
-  @Double()
-  external double scaleFactor;
-}
+// NOTE: TextStruct is now generated
+// See: lib/generated/structs/text_struct.dart
 
 //TextFieldStruct : Widget
-final class TextFieldStruct extends Struct implements IWidgetStruct {
+final class TextFieldStruct extends Struct {
   //FlutterObject Struct
   external Pointer handle;
   external Pointer managedHandle;

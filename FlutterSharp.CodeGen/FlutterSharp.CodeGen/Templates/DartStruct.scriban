@@ -5,14 +5,54 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
+{{~ if base_struct && base_struct != "Struct" ~}}
+{{~ if base_struct == "WidgetStruct" ~}}
+import '../../flutter_sharp_structs.dart';
+{{~ else ~}}
+{{~ base_import = string.downcase (string.replace base_struct "Struct" "") ~}}
+import '{{ base_import }}_struct.dart';
+{{~ end ~}}
+{{~ end ~}}
+{{~ for imp in imports ~}}
+{{~ if !(string.starts_with imp "dart:") && !(string.starts_with imp "package:") ~}}
+import '{{ imp }}';
+{{~ end ~}}
+{{~ end ~}}
+
+{{~ if documentation ~}}
+/// {{ documentation }}
+{{~ end ~}}
+/// Interface for {{ struct_name }} to support inheritance despite final class restriction
+class I{{ struct_name }} {
+{{~ for prop in properties ~}}
+{{~ if prop.is_nullable ~}}
+  external int has{{ prop.property_name | string.capitalize }};
+{{~ end ~}}
+  external {{ prop.ffi_type }} {{ prop.property_name }};
+{{~ end ~}}
+}
 
 {{~ if documentation ~}}
 /// {{ documentation }}
 {{~ end ~}}
 /// FFI struct representation of {{ name }} widget.
 /// This struct is used to pass widget data across the FFI boundary.
-class {{ struct_name }} extends {{ base_struct }} {
+final class {{ struct_name }} extends Struct implements I{{ struct_name }} {
+{{~ if base_struct && base_struct != "Struct" ~}}
+  //FlutterObject Struct
+  external Pointer handle;
+  external Pointer managedHandle;
+  external Pointer<Utf8> widgetType;
+  //WidgetStruct
+  external Pointer<Utf8> id;
+
+{{~ end ~}}
 {{~ for prop in properties ~}}
+{{~ if prop.is_nullable ~}}
+  @Int8()
+  external int has{{ prop.property_name | string.capitalize }};
+
+{{~ end ~}}
 {{~ if prop.documentation ~}}
   /// {{ prop.documentation }}
 {{~ end ~}}

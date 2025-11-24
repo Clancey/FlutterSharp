@@ -153,6 +153,9 @@ namespace FlutterSharp.CodeGen.TypeMapping
 
 			// Common third-party types
 			RegisterThirdPartyTypes();
+
+			// Additional Flutter SDK types
+			RegisterAdditionalFlutterTypes();
 		}
 
 		private void RegisterPrimitiveTypes()
@@ -199,12 +202,12 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				Metadata = new Dictionary<string, object> { ["FfiSize"] = 8 }
 			});
 
-			// bool
+			// bool - represented as int in FFI structs with @Int8() annotation
 			RegisterMapping(new TypeMapping
 			{
 				DartType = "bool",
 				CSharpType = "bool",
-				DartStructType = "Bool",
+				DartStructType = "Int8",
 				DartParserFunction = "parseBool",
 				IsPrimitive = true,
 				IsNullable = false,
@@ -308,7 +311,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				DartType = "Widget",
 				CSharpType = "Widget",
 				DartStructType = "Pointer<Void>",
-				DartParserFunction = "parseWidget",
+				DartParserFunction = null,  // Widget properties are handled by template child/children logic
 				IsWidget = true,
 				Package = "flutter/widgets",
 				RequiresCustomMarshalling = true
@@ -320,7 +323,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				DartType = "StatelessWidget",
 				CSharpType = "StatelessWidget",
 				DartStructType = "Pointer<Void>",
-				DartParserFunction = "parseWidget",
+				DartParserFunction = null,  // Widget properties are handled by template child/children logic
 				IsWidget = true,
 				Package = "flutter/widgets",
 				RequiresCustomMarshalling = true
@@ -332,7 +335,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				DartType = "StatefulWidget",
 				CSharpType = "StatefulWidget",
 				DartStructType = "Pointer<Void>",
-				DartParserFunction = "parseWidget",
+				DartParserFunction = null,  // Widget properties are handled by template child/children logic
 				IsWidget = true,
 				Package = "flutter/widgets",
 				RequiresCustomMarshalling = true
@@ -344,7 +347,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				DartType = "PreferredSizeWidget",
 				CSharpType = "PreferredSizeWidget",
 				DartStructType = "Pointer<Void>",
-				DartParserFunction = "parseWidget",
+				DartParserFunction = null,  // Widget properties are handled by template child/children logic
 				IsWidget = true,
 				Package = "flutter/widgets",
 				RequiresCustomMarshalling = true
@@ -626,7 +629,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			{
 				DartType = "Matrix4",
 				CSharpType = "Matrix4",
-				DartStructType = "Pointer<Void>",
+				DartStructType = "Pointer<Matrix4Struct>",
 				DartParserFunction = "parseMatrix4",
 				IsPrimitive = false,
 				Package = "package:vector_math/vector_math_64.dart",
@@ -884,6 +887,995 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				DartParserFunction = "parseBlendMode",
 				IsEnum = true,
 				Package = "dart:ui"
+			});
+		}
+
+		private void RegisterAdditionalFlutterTypes()
+		{
+			// Navigation types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Route",
+				CSharpType = "Route",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseRoute",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "PageRoute",
+				CSharpType = "PageRoute",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parsePageRoute",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "NavigatorState",
+				CSharpType = "NavigatorState",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseNavigatorState",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "RouteSettings",
+				CSharpType = "RouteSettings",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseRouteSettings",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "RouterDelegate",
+				CSharpType = "RouterDelegate",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseRouterDelegate",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "RouterConfig",
+				CSharpType = "RouterConfig",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseRouterConfig",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "RouteInformationParser",
+				CSharpType = "RouteInformationParser",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseRouteInformationParser",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "BackButtonDispatcher",
+				CSharpType = "BackButtonDispatcher",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseBackButtonDispatcher",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "RouteInformationProvider",
+				CSharpType = "RouteInformationProvider",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseRouteInformationProvider",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "NavigatorObserver",
+				CSharpType = "NavigatorObserver",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseNavigatorObserver",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "NavigationNotification",
+				CSharpType = "NavigationNotification",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseNavigationNotification",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			// Localization types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Locale",
+				CSharpType = "Locale",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseLocale",
+				Package = "dart:ui",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "LocalizationsDelegate",
+				CSharpType = "LocalizationsDelegate",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseLocalizationsDelegate",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			// Shortcut/Intent types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ShortcutActivator",
+				CSharpType = "ShortcutActivator",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseShortcutActivator",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Intent",
+				CSharpType = "Intent",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseIntent",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Action",
+				CSharpType = "FlutterAction",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseFlutterAction",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			// State/GlobalKey types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "GlobalKey",
+				CSharpType = "GlobalKey",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseGlobalKey",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "State",
+				CSharpType = "State",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseState",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "StatefulWidget",
+				CSharpType = "StatefulWidget",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseStatefulWidget",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			// Delegate types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "SingleChildLayoutDelegate",
+				CSharpType = "SingleChildLayoutDelegate",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseSingleChildLayoutDelegate",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "MultiChildLayoutDelegate",
+				CSharpType = "MultiChildLayoutDelegate",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseMultiChildLayoutDelegate",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "LayoutWidgetBuilder",
+				CSharpType = "LayoutWidgetBuilder",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseLayoutWidgetBuilder",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ScrollController",
+				CSharpType = "ScrollController",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseScrollController",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ScrollPhysics",
+				CSharpType = "ScrollPhysics",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseScrollPhysics",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			// Gesture types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "GestureRecognizer",
+				CSharpType = "GestureRecognizer",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseGestureRecognizer",
+				Package = "flutter/gestures",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "GestureRecognizerFactory",
+				CSharpType = "GestureRecognizerFactory",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseGestureRecognizerFactory",
+				IsGeneric = true,
+				Package = "flutter/gestures",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "DragStartBehavior",
+				CSharpType = "DragStartBehavior",
+				DartStructType = "Int32",
+				DartParserFunction = "parseDragStartBehavior",
+				IsEnum = true,
+				Package = "flutter/gestures"
+			});
+
+			// Animation types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Animation",
+				CSharpType = "Animation",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseAnimation",
+				IsGeneric = true,
+				Package = "flutter/animation",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "AnimationController",
+				CSharpType = "AnimationController",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseAnimationController",
+				Package = "flutter/animation",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Curve",
+				CSharpType = "Curve",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseCurve",
+				Package = "flutter/animation",
+				RequiresCustomMarshalling = true
+			});
+
+			// Text/Input types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextEditingController",
+				CSharpType = "TextEditingController",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseTextEditingController",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FocusNode",
+				CSharpType = "FocusNode",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseFocusNode",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextInputType",
+				CSharpType = "TextInputType",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseTextInputType",
+				Package = "flutter/services",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextCapitalization",
+				CSharpType = "TextCapitalization",
+				DartStructType = "Int32",
+				DartParserFunction = "parseTextCapitalization",
+				IsEnum = true,
+				Package = "flutter/services"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextInputAction",
+				CSharpType = "TextInputAction",
+				DartStructType = "Int32",
+				DartParserFunction = "parseTextInputAction",
+				IsEnum = true,
+				Package = "flutter/services"
+			});
+
+			// Material types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FloatingActionButtonLocation",
+				CSharpType = "FloatingActionButtonLocation",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseFloatingActionButtonLocation",
+				Package = "flutter/material",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FloatingActionButtonAnimator",
+				CSharpType = "FloatingActionButtonAnimator",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseFloatingActionButtonAnimator",
+				Package = "flutter/material",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "SnackBarBehavior",
+				CSharpType = "SnackBarBehavior",
+				DartStructType = "Int32",
+				DartParserFunction = "parseSnackBarBehavior",
+				IsEnum = true,
+				Package = "flutter/material"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "MaterialTapTargetSize",
+				CSharpType = "MaterialTapTargetSize",
+				DartStructType = "Int32",
+				DartParserFunction = "parseMaterialTapTargetSize",
+				IsEnum = true,
+				Package = "flutter/material"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Brightness",
+				CSharpType = "Brightness",
+				DartStructType = "Int32",
+				DartParserFunction = "parseBrightness",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			// Form/Validation types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FormFieldValidator",
+				CSharpType = "FormFieldValidator",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseFormFieldValidator",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FormFieldSetter",
+				CSharpType = "FormFieldSetter",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseFormFieldSetter",
+				IsGeneric = true,
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "AutovalidateMode",
+				CSharpType = "AutovalidateMode",
+				DartStructType = "Int32",
+				DartParserFunction = "parseAutovalidateMode",
+				IsEnum = true,
+				Package = "flutter/widgets"
+			});
+
+			// Rendering types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "RenderObject",
+				CSharpType = "RenderObject",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseRenderObject",
+				Package = "flutter/rendering",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "RenderBox",
+				CSharpType = "RenderBox",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseRenderBox",
+				Package = "flutter/rendering",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "HitTestBehavior",
+				CSharpType = "HitTestBehavior",
+				DartStructType = "Int32",
+				DartParserFunction = "parseHitTestBehavior",
+				IsEnum = true,
+				Package = "flutter/rendering"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "StackFit",
+				CSharpType = "StackFit",
+				DartStructType = "Int32",
+				DartParserFunction = "parseStackFit",
+				IsEnum = true,
+				Package = "flutter/rendering"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "WrapAlignment",
+				CSharpType = "WrapAlignment",
+				DartStructType = "Int32",
+				DartParserFunction = "parseWrapAlignment",
+				IsEnum = true,
+				Package = "flutter/rendering"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "WrapCrossAlignment",
+				CSharpType = "WrapCrossAlignment",
+				DartStructType = "Int32",
+				DartParserFunction = "parseWrapCrossAlignment",
+				IsEnum = true,
+				Package = "flutter/rendering"
+			});
+
+			// Overflow/Clipping types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Overflow",
+				CSharpType = "Overflow",
+				DartStructType = "Int32",
+				DartParserFunction = "parseOverflow",
+				IsEnum = true,
+				Package = "flutter/rendering"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextOverflow",
+				CSharpType = "TextOverflow",
+				DartStructType = "Int32",
+				DartParserFunction = "parseTextOverflow",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextBaseline",
+				CSharpType = "TextBaseline",
+				DartStructType = "Int32",
+				DartParserFunction = "parseTextBaseline",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextWidthBasis",
+				CSharpType = "TextWidthBasis",
+				DartStructType = "Int32",
+				DartParserFunction = "parseTextWidthBasis",
+				IsEnum = true,
+				Package = "flutter/painting"
+			});
+
+			// Image types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ImageRepeat",
+				CSharpType = "ImageRepeat",
+				DartStructType = "Int32",
+				DartParserFunction = "parseImageRepeat",
+				IsEnum = true,
+				Package = "flutter/painting"
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FilterQuality",
+				CSharpType = "FilterQuality",
+				DartStructType = "Int32",
+				DartParserFunction = "parseFilterQuality",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			// Scroll types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ScrollViewKeyboardDismissBehavior",
+				CSharpType = "ScrollViewKeyboardDismissBehavior",
+				DartStructType = "Int32",
+				DartParserFunction = "parseScrollViewKeyboardDismissBehavior",
+				IsEnum = true,
+				Package = "flutter/widgets"
+			});
+
+			// Sliver types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "SliverChildDelegate",
+				CSharpType = "SliverChildDelegate",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseSliverChildDelegate",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			// Semantics types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "SemanticsProperties",
+				CSharpType = "SemanticsProperties",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseSemanticsProperties",
+				Package = "flutter/semantics",
+				RequiresCustomMarshalling = true
+			});
+
+			// Hero types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "HeroFlightDirection",
+				CSharpType = "HeroFlightDirection",
+				DartStructType = "Int32",
+				DartParserFunction = "parseHeroFlightDirection",
+				IsEnum = true,
+				Package = "flutter/widgets"
+			});
+
+			// Notification types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Notification",
+				CSharpType = "Notification",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseNotification",
+				Package = "flutter/widgets",
+				RequiresCustomMarshalling = true
+			});
+
+			// Tooltip types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TooltipTriggerMode",
+				CSharpType = "TooltipTriggerMode",
+				DartStructType = "Int32",
+				DartParserFunction = "parseTooltipTriggerMode",
+				IsEnum = true,
+				Package = "flutter/material"
+			});
+
+			// Type (for Type references in Dart)
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Type",
+				CSharpType = "Type",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseType",
+				Package = "dart:core",
+				RequiresCustomMarshalling = true
+			});
+
+			// Key event types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "KeyEvent",
+				CSharpType = "KeyEvent",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseKeyEvent",
+				Package = "flutter/services",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "KeyEventResult",
+				CSharpType = "KeyEventResult",
+				DartStructType = "Int32",
+				DartParserFunction = "parseKeyEventResult",
+				IsEnum = true,
+				Package = "flutter/services"
+			});
+
+			// Pointer event types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "PointerEvent",
+				CSharpType = "PointerEvent",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parsePointerEvent",
+				Package = "flutter/gestures",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TapUpDetails",
+				CSharpType = "TapUpDetails",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseTapUpDetails",
+				Package = "flutter/gestures",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TapDownDetails",
+				CSharpType = "TapDownDetails",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseTapDownDetails",
+				Package = "flutter/gestures",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "DragUpdateDetails",
+				CSharpType = "DragUpdateDetails",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseDragUpdateDetails",
+				Package = "flutter/gestures",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "DragEndDetails",
+				CSharpType = "DragEndDetails",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseDragEndDetails",
+				Package = "flutter/gestures",
+				RequiresCustomMarshalling = true
+			});
+
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "DragStartDetails",
+				CSharpType = "DragStartDetails",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseDragStartDetails",
+				Package = "flutter/gestures",
+				RequiresCustomMarshalling = true
+			});
+
+			// Input formatter types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextInputFormatter",
+				CSharpType = "TextInputFormatter",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseTextInputFormatter",
+				Package = "flutter/services",
+				RequiresCustomMarshalling = true
+			});
+
+			// Selection types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextSelection",
+				CSharpType = "TextSelection",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseTextSelection",
+				Package = "flutter/services",
+				RequiresCustomMarshalling = true
+			});
+
+			// Device types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "PointerDeviceKind",
+				CSharpType = "PointerDeviceKind",
+				DartStructType = "Int32",
+				DartParserFunction = "parsePointerDeviceKind",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			// Key types
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Key",
+				CSharpType = "string",
+				DartStructType = "Pointer<Utf8>",
+				DartParserFunction = "parseString",
+				Package = "flutter/foundation"
+			});
+
+			// BuildContext - Flutter build context
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "BuildContext",
+				CSharpType = "BuildContext",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseBuildContext",
+				Package = "flutter/widgets"
+			});
+
+			// FocusNode - Focus management
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FocusNode",
+				CSharpType = "FocusNode",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseFocusNode",
+				Package = "flutter/widgets"
+			});
+
+			// ScrollController - Scroll control
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ScrollController",
+				CSharpType = "ScrollController",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseScrollController",
+				Package = "flutter/widgets"
+			});
+
+			// ScrollPhysics - Scroll physics
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ScrollPhysics",
+				CSharpType = "ScrollPhysics",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseScrollPhysics",
+				Package = "flutter/widgets"
+			});
+
+			// ScrollBehavior - Scroll behavior
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ScrollBehavior",
+				CSharpType = "ScrollBehavior",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseScrollBehavior",
+				Package = "flutter/widgets"
+			});
+
+			// RouteSettings - Navigation route settings
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "RouteSettings",
+				CSharpType = "RouteSettings",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseRouteSettings",
+				Package = "flutter/widgets"
+			});
+
+			// Intent - Shortcut/action intent
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Intent",
+				CSharpType = "Intent",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseIntent",
+				Package = "flutter/widgets"
+			});
+
+			// StackTrace - Dart stack trace
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "StackTrace",
+				CSharpType = "StackTrace",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseStackTrace",
+				Package = "dart:core"
+			});
+
+			// ScrollViewKeyboardDismissBehavior - Enum for keyboard dismiss behavior
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ScrollViewKeyboardDismissBehavior",
+				CSharpType = "ScrollViewKeyboardDismissBehavior",
+				DartStructType = "Int32",
+				DartParserFunction = "parseScrollViewKeyboardDismissBehavior",
+				IsEnum = true,
+				Package = "flutter/widgets"
+			});
+
+			// DragStartBehavior - Enum for drag start behavior
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "DragStartBehavior",
+				CSharpType = "DragStartBehavior",
+				DartStructType = "Int32",
+				DartParserFunction = "parseDragStartBehavior",
+				IsEnum = true,
+				Package = "flutter/gestures"
+			});
+
+			// Clip - Enum for clipping behavior
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Clip",
+				CSharpType = "Clip",
+				DartStructType = "Int32",
+				DartParserFunction = "parseClip",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			// HitTestBehavior - Enum for hit test behavior
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "HitTestBehavior",
+				CSharpType = "HitTestBehavior",
+				DartStructType = "Int32",
+				DartParserFunction = "parseHitTestBehavior",
+				IsEnum = true,
+				Package = "flutter/rendering"
+			});
+
+			// ImageRepeat - Enum for image repeat
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ImageRepeat",
+				CSharpType = "ImageRepeat",
+				DartStructType = "Int32",
+				DartParserFunction = "parseImageRepeat",
+				IsEnum = true,
+				Package = "flutter/painting"
+			});
+
+			// FilterQuality - Enum for filter quality
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FilterQuality",
+				CSharpType = "FilterQuality",
+				DartStructType = "Int32",
+				DartParserFunction = "parseFilterQuality",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			// BlendMode - Enum for blend mode
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "BlendMode",
+				CSharpType = "BlendMode",
+				DartStructType = "Int32",
+				DartParserFunction = "parseBlendMode",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			// BoxFit - Enum for box fit
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "BoxFit",
+				CSharpType = "BoxFit",
+				DartStructType = "Int32",
+				DartParserFunction = "parseBoxFit",
+				IsEnum = true,
+				Package = "flutter/painting"
+			});
+
+			// ImageProvider - Image provider base class
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ImageProvider",
+				CSharpType = "ImageProvider",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseImageProvider",
+				Package = "flutter/painting"
+			});
+
+			// Animation - Animation base class
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Animation",
+				CSharpType = "Animation",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseAnimation",
+				Package = "flutter/animation"
+			});
+
+			// Listenable - Listenable interface
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Listenable",
+				CSharpType = "Listenable",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseListenable",
+				Package = "flutter/foundation"
+			});
+
+			// ValueListenable - Value listenable
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ValueListenable",
+				CSharpType = "ValueListenable",
+				DartStructType = "IntPtr",
+				DartParserFunction = "parseValueListenable",
+				Package = "flutter/foundation"
 			});
 		}
 	}

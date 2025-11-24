@@ -38,6 +38,19 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			var isNullable = dartType.EndsWith("?");
 			var cleanType = isNullable ? dartType.TrimEnd('?') : dartType;
 
+			// Handle Dart function signatures with named parameters (contains '{')
+			// These cannot be directly mapped to C# and should be treated as Delegate
+			if (cleanType.Contains(" Function(") && cleanType.Contains("{"))
+			{
+				return "Delegate";
+			}
+
+			// Handle simple Dart function signatures without named parameters
+			if (cleanType.Contains(" Function("))
+			{
+				return MapFunctionSignature(cleanType);
+			}
+
 			// Try exact match first
 			var mapping = _registry.GetMapping(cleanType);
 			if (mapping != null)
@@ -70,6 +83,52 @@ namespace FlutterSharp.CodeGen.TypeMapping
 
 			// Fallback: return the type as-is (might be a custom type)
 			return isNullable ? $"{cleanType}?" : cleanType;
+		}
+
+		/// <summary>
+		/// Maps a Dart function signature to a C# delegate type.
+		/// </summary>
+		/// <param name="dartFunctionSignature">The Dart function signature (e.g., "void Function(int)" or "Widget Function(BuildContext)").</param>
+		/// <returns>The mapped C# delegate type.</returns>
+		private string MapFunctionSignature(string dartFunctionSignature)
+		{
+			// Extract return type and parameters
+			var functionMatch = Regex.Match(dartFunctionSignature, @"^(.+?)\s+Function\(([^)]*)\)$");
+			if (!functionMatch.Success)
+			{
+				// Fallback to Delegate for complex signatures
+				return "Delegate";
+			}
+
+			var returnType = functionMatch.Groups[1].Value.Trim();
+			var parameters = functionMatch.Groups[2].Value.Trim();
+
+			// Map return type
+			var mappedReturnType = MapType(returnType);
+
+			// Map parameters
+			var paramList = string.IsNullOrWhiteSpace(parameters)
+				? new List<string>()
+				: parameters.Split(',').Select(p => MapType(p.Trim())).ToList();
+
+			// Generate appropriate C# delegate type
+			if (mappedReturnType == "void")
+			{
+				if (paramList.Count == 0)
+				{
+					return "Action";
+				}
+				return $"Action<{string.Join(", ", paramList)}>";
+			}
+			else
+			{
+				if (paramList.Count == 0)
+				{
+					return $"Func<{mappedReturnType}>";
+				}
+				paramList.Add(mappedReturnType); // Func<T1, T2, ..., TResult>
+				return $"Func<{string.Join(", ", paramList)}>";
+			}
 		}
 
 		/// <summary>
