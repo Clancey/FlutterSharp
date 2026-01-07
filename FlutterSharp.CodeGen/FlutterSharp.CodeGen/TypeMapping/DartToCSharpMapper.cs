@@ -14,6 +14,66 @@ namespace FlutterSharp.CodeGen.TypeMapping
 		private static readonly Regex GenericTypeRegex = new(@"^(\w+)<(.+)>$", RegexOptions.Compiled);
 
 		/// <summary>
+		/// Maps parameter names to their expected types when type resolution fails.
+		/// This mirrors the Dart analyzer's _inferTypeFromParameterName function.
+		/// </summary>
+		private static readonly Dictionary<string, string> ParameterNameToType = new(StringComparer.OrdinalIgnoreCase)
+		{
+			// Flutter layout enums
+			["mainAxisAlignment"] = "MainAxisAlignment",
+			["crossAxisAlignment"] = "CrossAxisAlignment",
+			["mainAxisSize"] = "MainAxisSize",
+			["verticalDirection"] = "VerticalDirection",
+			["textBaseline"] = "TextBaseline",
+			["flexFit"] = "FlexFit",
+			["fit"] = "BoxFit",
+			["filterQuality"] = "FilterQuality",
+			["blendMode"] = "BlendMode",
+			["stackFit"] = "StackFit",
+			["overflow"] = "Overflow",
+			["textOverflow"] = "TextOverflow",
+			["textAlign"] = "TextAlign",
+			["textWidthBasis"] = "TextWidthBasis",
+			["selectionHeightStyle"] = "BoxHeightStyle",
+			["selectionWidthStyle"] = "BoxWidthStyle",
+			["axis"] = "Axis",
+			["scrollDirection"] = "Axis",
+			["dragStartBehavior"] = "DragStartBehavior",
+			["keyboardDismissBehavior"] = "ScrollViewKeyboardDismissBehavior",
+			["clipBehavior"] = "Clip",
+			["shape"] = "BoxShape",
+			["textDirection"] = "TextDirection",
+			["hitTestBehavior"] = "HitTestBehavior",
+			["baselineType"] = "TextBaseline",
+			// Alignment and spacing
+			["alignment"] = "AlignmentGeometry",
+			["padding"] = "EdgeInsetsGeometry",
+			["margin"] = "EdgeInsetsGeometry",
+			["decoration"] = "Decoration",
+			["foregroundDecoration"] = "Decoration",
+			["constraints"] = "BoxConstraints",
+			["transform"] = "Matrix4",
+			["transformAlignment"] = "AlignmentGeometry",
+			["borderRadius"] = "BorderRadiusGeometry",
+			["border"] = "BoxBorder",
+			["gradient"] = "Gradient",
+			["curve"] = "Curve",
+			["duration"] = "TimeSpan",
+			["style"] = "TextStyle",
+			["textStyle"] = "TextStyle",
+			["offset"] = "Offset",
+			["size"] = "Size",
+			["rect"] = "Rect",
+			["image"] = "ImageProvider",
+			["focusNode"] = "FocusNode",
+			["physics"] = "ScrollPhysics",
+			["controller"] = "ScrollController",
+			// Common children
+			["child"] = "Widget",
+			["sliver"] = "Widget",
+		};
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="DartToCSharpMapper"/> class.
 		/// </summary>
 		/// <param name="registry">The type mapping registry to use.</param>
@@ -29,6 +89,17 @@ namespace FlutterSharp.CodeGen.TypeMapping
 		/// <returns>The mapped C# type string.</returns>
 		public string MapType(string dartType)
 		{
+			return MapType(dartType, null);
+		}
+
+		/// <summary>
+		/// Maps a Dart type string to its corresponding C# type, with optional parameter name inference.
+		/// </summary>
+		/// <param name="dartType">The Dart type string (e.g., "String", "int?", "List&lt;Widget&gt;").</param>
+		/// <param name="parameterName">Optional parameter name used for type inference when dartType is "InvalidType".</param>
+		/// <returns>The mapped C# type string.</returns>
+		public string MapType(string dartType, string? parameterName)
+		{
 			if (string.IsNullOrWhiteSpace(dartType))
 			{
 				throw new ArgumentException("Dart type cannot be null or empty.", nameof(dartType));
@@ -37,6 +108,18 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			// Handle nullable types
 			var isNullable = dartType.EndsWith("?");
 			var cleanType = isNullable ? dartType.TrimEnd('?') : dartType;
+
+			// Handle InvalidType - try to infer from parameter name
+			if (cleanType == "InvalidType" && !string.IsNullOrEmpty(parameterName))
+			{
+				var inferredType = InferTypeFromParameterName(parameterName);
+				if (inferredType != null)
+				{
+					return isNullable ? $"{inferredType}?" : inferredType;
+				}
+				// If inference failed, return object as a safe fallback
+				return isNullable ? "object?" : "object";
+			}
 
 			// Handle Dart function signatures with named parameters (contains '{')
 			// These cannot be directly mapped to C# and should be treated as Delegate
@@ -84,7 +167,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			{
 				var baseType = genericMatch.Groups[1].Value;
 				var typeArgs = ParseGenericArguments(genericMatch.Groups[2].Value);
-				var mappedArgs = typeArgs.Select(MapType).ToList();
+				var mappedArgs = typeArgs.Select(t => MapType(t, null)).ToList();
 
 				// Map the base type
 				var baseMapping = _registry.GetMapping(baseType);
@@ -102,6 +185,67 @@ namespace FlutterSharp.CodeGen.TypeMapping
 
 			// Fallback: return the type as-is (might be a custom type)
 			return isNullable ? $"{cleanType}?" : cleanType;
+		}
+
+		/// <summary>
+		/// Infers a C# type from a parameter name when type resolution fails.
+		/// </summary>
+		/// <param name="parameterName">The parameter name to infer type from.</param>
+		/// <returns>The inferred C# type, or null if no inference could be made.</returns>
+		public static string? InferTypeFromParameterName(string parameterName)
+		{
+			if (string.IsNullOrEmpty(parameterName))
+			{
+				return null;
+			}
+
+			// Try exact match first
+			if (ParameterNameToType.TryGetValue(parameterName, out var exactType))
+			{
+				return exactType;
+			}
+
+			// Try suffix matching for common patterns
+			var lowerName = parameterName.ToLowerInvariant();
+
+			if (lowerName.EndsWith("color"))
+			{
+				return "Color";
+			}
+			if (lowerName.EndsWith("alignment") && !lowerName.Contains("main") && !lowerName.Contains("cross"))
+			{
+				return "AlignmentGeometry";
+			}
+			if (lowerName.EndsWith("padding"))
+			{
+				return "EdgeInsetsGeometry";
+			}
+			if (lowerName.EndsWith("margin"))
+			{
+				return "EdgeInsetsGeometry";
+			}
+			if (lowerName.EndsWith("radius"))
+			{
+				return "BorderRadiusGeometry";
+			}
+			if (lowerName.EndsWith("decoration"))
+			{
+				return "Decoration";
+			}
+			if (lowerName.EndsWith("constraints"))
+			{
+				return "BoxConstraints";
+			}
+			if (lowerName.EndsWith("style") && lowerName.Contains("text"))
+			{
+				return "TextStyle";
+			}
+			if (lowerName.EndsWith("callback") || lowerName.StartsWith("on"))
+			{
+				return "Action";
+			}
+
+			return null;
 		}
 
 		/// <summary>

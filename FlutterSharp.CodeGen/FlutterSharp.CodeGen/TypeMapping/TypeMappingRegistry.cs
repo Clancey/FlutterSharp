@@ -1881,6 +1881,194 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				DartParserFunction = "parseValueListenable",
 				Package = "flutter/foundation"
 			});
+
+			// FlexFit - Enum for flexible widget fit behavior
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FlexFit",
+				CSharpType = "FlexFit",
+				DartStructType = "Int32",
+				DartParserFunction = "parseFlexFit",
+				IsEnum = true,
+				Package = "flutter/rendering"
+			});
+
+			// BoxHeightStyle - Enum for text selection height style
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "BoxHeightStyle",
+				CSharpType = "BoxHeightStyle",
+				DartStructType = "Int32",
+				DartParserFunction = "parseBoxHeightStyle",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			// BoxWidthStyle - Enum for text selection width style
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "BoxWidthStyle",
+				CSharpType = "BoxWidthStyle",
+				DartStructType = "Int32",
+				DartParserFunction = "parseBoxWidthStyle",
+				IsEnum = true,
+				Package = "dart:ui"
+			});
+
+			// BoxShape - Enum for decoration shape
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "BoxShape",
+				CSharpType = "BoxShape",
+				DartStructType = "Int32",
+				DartParserFunction = "parseBoxShape",
+				IsEnum = true,
+				Package = "flutter/painting"
+			});
+
+			// BoxBorder - Base class for box border
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "BoxBorder",
+				CSharpType = "BoxBorder",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseBoxBorder",
+				Package = "flutter/painting",
+				RequiresCustomMarshalling = true
+			});
+
+			// StrutStyle - Text strut style
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "StrutStyle",
+				CSharpType = "StrutStyle",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseStrutStyle",
+				Package = "flutter/painting",
+				RequiresCustomMarshalling = true
+			});
+
+			// TextHeightBehavior - Text height behavior
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "TextHeightBehavior",
+				CSharpType = "TextHeightBehavior",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseTextHeightBehavior",
+				Package = "dart:ui",
+				RequiresCustomMarshalling = true
+			});
+
+			// InlineSpan - Base class for text spans
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "InlineSpan",
+				CSharpType = "InlineSpan",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseInlineSpan",
+				Package = "flutter/painting",
+				RequiresCustomMarshalling = true
+			});
+
+			// SliverGridDelegate - Grid delegate for slivers
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "SliverGridDelegate",
+				CSharpType = "SliverGridDelegate",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseSliverGridDelegate",
+				Package = "flutter/rendering",
+				RequiresCustomMarshalling = true
+			});
+
+			// LayerLink - Layer link for composited transforms
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "LayerLink",
+				CSharpType = "LayerLink",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseLayerLink",
+				Package = "flutter/rendering",
+				RequiresCustomMarshalling = true
+			});
+
+			// ImageFilter - Image filter for visual effects
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ImageFilter",
+				CSharpType = "ImageFilter",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseImageFilter",
+				Package = "dart:ui",
+				RequiresCustomMarshalling = true
+			});
+
+			// ColorFilter - Color filter for visual effects
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "ColorFilter",
+				CSharpType = "ColorFilter",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseColorFilter",
+				Package = "dart:ui",
+				RequiresCustomMarshalling = true
+			});
+
+			// AssetBundle - Asset bundle for resource loading
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "AssetBundle",
+				CSharpType = "AssetBundle",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseAssetBundle",
+				Package = "flutter/services",
+				RequiresCustomMarshalling = true
+			});
+
+			// FlutterView - Flutter view
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "FlutterView",
+				CSharpType = "FlutterView",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseFlutterView",
+				Package = "dart:ui",
+				RequiresCustomMarshalling = true
+			});
+
+			// PlatformViewHitTestBehavior - Enum for platform view hit testing
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "PlatformViewHitTestBehavior",
+				CSharpType = "PlatformViewHitTestBehavior",
+				DartStructType = "Int32",
+				DartParserFunction = "parsePlatformViewHitTestBehavior",
+				IsEnum = true,
+				Package = "flutter/rendering"
+			});
+
+			// BoxConstraintsTransform - Transform function type for constraints
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "BoxConstraintsTransform",
+				CSharpType = "Func<BoxConstraints, BoxConstraints>",
+				DartStructType = "Pointer<Utf8>",
+				DartParserFunction = "parseBoxConstraintsTransform",
+				Package = "flutter/rendering",
+				RequiresCustomMarshalling = true
+			});
+
+			// Tween - Animation tween
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Tween",
+				CSharpType = "Tween",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseTween",
+				IsGeneric = true,
+				Package = "flutter/animation",
+				RequiresCustomMarshalling = true
+			});
 		}
 	}
 }

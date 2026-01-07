@@ -138,6 +138,51 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ---
 
+## Phase 2.5: C# Widget API Improvements
+
+**Goal**: Make generated C# widgets usable with developer-friendly APIs.
+
+**Discovery**: Sample/FlutterSample app revealed that generated widgets have incompatible APIs:
+- Enum parameters mapped to `InvalidType` instead of proper C# enums
+- No collection initializer support for multi-child widgets
+- Underscore-prefixed positional parameters instead of named parameters
+- Empty constructor bodies with TODO comments
+
+### 2.5.1 Fix InvalidType Enum Mappings (HIGH PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| API001 | Investigate Dart analyzer enum type resolution | completed | Added InvalidType fallback with parameter name inference to DartToCSharpMapper |
+| API002 | Add Flutter enum package imports to analyzer | completed | Not needed - implemented C# side type inference instead |
+| API003 | Map common Flutter enums manually if needed | completed | Added 40+ parameter→type mappings + 17 new types to TypeMappingRegistry (FlexFit, BoxHeightStyle, BoxWidthStyle, BoxShape, BoxBorder, StrutStyle, TextHeightBehavior, etc.) |
+| API004 | Regenerate widgets with correct enum types | pending | Depends on API001-003 (now ready) |
+
+### 2.5.2 Collection Initializer Support (MEDIUM PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| API005 | Add IEnumerable<Widget> to multi-child widgets | pending | Row, Column, Stack, Wrap, ListView |
+| API006 | Implement Add(Widget) method for initializers | pending | C# collection initializer pattern |
+| API007 | Update Row/Column templates for collection support | pending | Widget.scriban or new template |
+
+### 2.5.3 Named Parameters with Defaults (MEDIUM PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| API008 | Remove underscore prefix from C# parameters | pending | _mainAxisAlignment → mainAxisAlignment |
+| API009 | Add proper default values for optional params | pending | MainAxisAlignment.start, etc. |
+| API010 | Make required params actually required | pending | child for Expanded, etc. |
+
+### 2.5.4 Constructor Property Assignment (HIGH PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| API011 | Implement backing struct property assignment | pending | Set struct fields from constructor args |
+| API012 | Handle enum-to-int conversion in assignment | pending | Enums map to int fields |
+| API013 | Handle children list assignment | pending | Use SetChildren helper |
+
+---
+
 ## Phase 3: Callback System
 
 **Goal**: Full bidirectional event handling.
@@ -241,6 +286,7 @@ When starting a new loop, work on these in order:
 | M001 | 2026-01-07 | df9933c | GCHandle lifecycle: BaseStruct pins itself, proper cleanup on dispose with IsAllocated check |
 | M002 | 2026-01-07 | df9933c | String pointer cleanup: Track allocated strings in List<IntPtr>, free on SetString and Dispose. Also fixed NativeNullable<T>.Value logic bug and 'manahedHandle' typo. |
 | M003 | 2026-01-07 | c5218c0 | Children array cleanup: Added _allocatedChildrenArrays list, SetChildren() methods for allocation/tracking, Dispose() frees arrays with FreeHGlobal. |
+| API001-003 | 2026-01-07 | pending | Fixed InvalidType enum resolution: Added 40+ parameter→type mappings in DartToCSharpMapper.ParameterNameToType, InferTypeFromParameterName() method, MapType() overload with parameterName. Added 17 missing types to TypeMappingRegistry (FlexFit, BoxHeightStyle, BoxWidthStyle, BoxShape, etc.). |
 
 ---
 
@@ -426,6 +472,20 @@ Add notes here when exploring the codebase:
   4. Extended `Dispose()` to iterate and free all tracked children arrays with `Marshal.FreeHGlobal()`
 - **Memory pattern**: Parent widgets now properly clean up children array allocations when disposed
 - **Note**: Child widgets themselves are tracked separately via FlutterManager.AliveWidgets
+
+### Sample App API Mismatch Discovery (2026-01-07)
+- Attempted to build `Sample/FlutterSample/FlutterSample.csproj` to verify runtime works
+- Build failed with 87 errors due to generated widget API incompatibilities
+- Key issues discovered:
+  1. **InvalidType enums**: `MainAxisAlignment`, `CrossAxisAlignment`, `FlexFit`, `MainAxisSize`, `VerticalDirection`, `TextBaseline` all mapped to `InvalidType` in generated code
+  2. **No collection initializers**: `Row`, `Column` don't support `new Row { child1, child2 }` syntax
+  3. **Underscore parameters**: `_mainAxisAlignment` instead of `mainAxisAlignment`
+  4. **Empty constructors**: Have `// TODO: Property assignments will be handled by a proper FFI marshaling layer` comments
+  5. **Missing types**: `TextField`, `FloatingActionButton`, `ListViewBuilder` not generated
+  6. **Wrong constructors**: Sample expects different signatures than generated
+- Root cause: Dart analyzer cannot resolve Flutter SDK enum types, returns `InvalidType`
+- Grep found ~300+ occurrences of `InvalidType` across generated code
+- Added Phase 2.5 tasks to fix these API issues before runtime testing can continue
 
 ### M001/M002 Memory Management Fix Details (2026-01-07)
 - **Location**: `src/Flutter/FlutterStructs.Base.cs`

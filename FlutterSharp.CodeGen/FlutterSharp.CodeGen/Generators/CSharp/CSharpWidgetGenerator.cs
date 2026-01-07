@@ -154,8 +154,9 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["type"] = p.CSharpType,
 				["backing_field_name"] = p.BackingFieldName,
 				["is_nullable"] = p.IsNullable,
-				["default_value"] = p.DefaultValue,
+				["default_value"] = ConvertDartDefaultValueToCSharp(p.DefaultValue, p.CSharpType ?? "object"),
 				["is_generic_type_param"] = p.IsGenericTypeParam,
+				["is_enum"] = p.IsEnum,
 				["is_required"] = false
 			}).ToList();
 
@@ -188,7 +189,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		{
 			var csharpType = !string.IsNullOrEmpty(property.CSharpType)
 				? property.CSharpType
-				: _typeMapper.MapType(property.DartType);
+				: _typeMapper.MapType(property.DartType, property.Name);
 
 			// Handle nullable reference types
 			if (property.IsNullable && !csharpType.EndsWith("?") && !IsReferenceType(csharpType))
@@ -338,6 +339,15 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				return null;
 			}
 
+			// Handle Dart single-quoted strings - convert to C# double-quoted strings
+			// '' -> ""
+			// 'text' -> "text"
+			if (dartDefaultValue.StartsWith("'") && dartDefaultValue.EndsWith("'"))
+			{
+				var content = dartDefaultValue.Substring(1, dartDefaultValue.Length - 2);
+				return $"\"{content}\"";
+			}
+
 			// Handle Dart collection literals (maps, lists, sets)
 			// <String, WidgetBuilder>{} -> null
 			// <NavigatorObserver>[] -> null
@@ -417,6 +427,8 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
