@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -62,9 +63,14 @@ namespace Flutter.Widgets
 			Widget? _child = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<MouseRegionStruct>();
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			s.opaque = _opaque;
+			s.hitTestBehavior = _hitTestBehavior;
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new MouseRegionStruct();

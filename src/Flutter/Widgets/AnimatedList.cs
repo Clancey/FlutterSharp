@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -89,9 +90,18 @@ namespace Flutter.Widgets
 			Clip _clipBehavior = Clip.HardEdge
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<AnimatedListStruct>();
+			// Complex type: object - skipped (requires marshaling)
+			s.initialItemCount = _initialItemCount;
+			s.scrollDirection = _scrollDirection;
+			s.reverse = _reverse;
+			// Complex type: ScrollController? - skipped (requires marshaling)
+			if (_primary.HasValue)
+				s.primary = _primary.Value;
+			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			s.shrinkWrap = _shrinkWrap;
+			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
+			s.clipBehavior = _clipBehavior;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedListStruct();

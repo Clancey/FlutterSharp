@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -22,8 +23,66 @@ namespace {{ namespace }}
 {{~ if is_deprecated ~}}
 	[Obsolete("{{ deprecation_message }}")]
 {{~ end ~}}
-	public {{ if is_abstract }}abstract {{ end }}class {{ name }}{{~ if is_generic }}<{{ type_parameters | array.join ", " }}>{{ end }} : {{ base_class }}
+	public {{ if is_abstract }}abstract {{ end }}class {{ name }}{{~ if is_generic }}<{{ type_parameters | array.join ", " }}>{{ end }} : {{ base_class }}{{~ if has_widget_children && !is_abstract }}, IEnumerable<Widget>{{ end }}
 	{
+{{~ if has_widget_children ~}}
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+{{~ if !is_abstract ~}}
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+{{~ end ~}}
+{{~ end ~}}
+{{~ # Calculate if has any non-children properties ~}}
+{{~ has_non_children_required = false ~}}
+{{~ for prop in required_properties ~}}
+{{~ if !prop.is_children ~}}
+{{~ has_non_children_required = true ~}}
+{{~ end ~}}
+{{~ end ~}}
+{{~ has_non_children_optional = false ~}}
+{{~ for prop in optional_properties ~}}
+{{~ if !prop.is_children ~}}
+{{~ has_non_children_optional = true ~}}
+{{~ end ~}}
+{{~ end ~}}
+{{~ has_properties = required_properties.size > 0 || optional_properties.size > 0 ~}}
+{{~ if is_abstract ~}}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="{{ name }}"/> class.
+		/// </summary>
+		protected {{ name }}()
+		{
+		}
+
+{{~ if has_properties ~}}
 		/// <summary>
 		/// Initializes a new instance of the <see cref="{{ name }}"/> class.
 		/// </summary>
@@ -37,11 +96,112 @@ namespace {{ namespace }}
 {{~ end ~}}
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+{{~ if has_widget_children ~}}
+			if (_{{ children_property_name }} != null)
+				_childrenList.AddRange(_{{ children_property_name }});
+{{~ end ~}}
+			var s = GetBackingStruct<{{ struct_name }}>();
+{{~ for prop in all_properties ~}}
+{{~ if prop.is_children && has_widget_children ~}}
+			// Children are set in PrepareForSending to support collection initializers
+{{~ else if prop.is_children ~}}
+			s.{{ prop.struct_field_name }} = SetChildrenAndGetPointer({{ prop.backing_field_name }});
+{{~ else if prop.is_child ~}}
+			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ else if prop.is_string ~}}
+			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ else if prop.is_intptr ~}}
+			// Complex type: {{ prop.type }} - skipped (requires marshaling)
+{{~ else if prop.is_nullable_value_type ~}}
+			if ({{ prop.backing_field_name }}.HasValue)
+				s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }}.Value;
+{{~ else if prop.is_enum ~}}
+{{~ if prop.is_nullable ~}}
+			if ({{ prop.backing_field_name }}.HasValue)
+				s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }}.Value;
+{{~ else ~}}
+			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ end ~}}
+{{~ else if prop.is_nullable ~}}
+			// Nullable reference type: {{ prop.type }} - skipped
+{{~ else ~}}
+			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ end ~}}
+{{~ end ~}}
+		}
+{{~ end ~}}
+{{~ else ~}}
+{{~ # Concrete class ~}}
+{{~ if has_widget_children ~}}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="{{ name }}"/> class.
+		/// Use collection initializer syntax: new {{ name }} { child1, child2, child3 }
+		/// </summary>
+		public {{ name }}()
+		{
 		}
 
+{{~ end ~}}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="{{ name }}"/> class.
+		/// </summary>
+		public {{ name }}(
+{{~ for prop in required_properties ~}}
+			{{ prop.type }} {{ prop.backing_field_name }}{{ if !for.last }},{{ end }}
+{{~ end ~}}
+{{~ if required_properties.size > 0 && optional_properties.size > 0 }},{{ end }}
+{{~ for prop in optional_properties ~}}
+			{{ prop.nullable_type }} {{ prop.backing_field_name }} = {{ if prop.is_generic_type_param }}default{{ else }}{{ prop.default_value ?? "null" }}{{ end }}{{ if !for.last }},{{ end }}
+{{~ end ~}}
+		)
+		{
+{{~ if has_widget_children ~}}
+			if (_{{ children_property_name }} != null)
+				_childrenList.AddRange(_{{ children_property_name }});
+{{~ end ~}}
+			var s = GetBackingStruct<{{ struct_name }}>();
+{{~ for prop in all_properties ~}}
+{{~ if prop.is_children && has_widget_children ~}}
+			// Children are set in PrepareForSending to support collection initializers
+{{~ else if prop.is_children ~}}
+			s.{{ prop.struct_field_name }} = SetChildrenAndGetPointer({{ prop.backing_field_name }});
+{{~ else if prop.is_child ~}}
+			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ else if prop.is_string ~}}
+			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ else if prop.is_intptr ~}}
+			// Complex type: {{ prop.type }} - skipped (requires marshaling)
+{{~ else if prop.is_nullable_value_type ~}}
+			if ({{ prop.backing_field_name }}.HasValue)
+				s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }}.Value;
+{{~ else if prop.is_enum ~}}
+{{~ if prop.is_nullable ~}}
+			if ({{ prop.backing_field_name }}.HasValue)
+				s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }}.Value;
+{{~ else ~}}
+			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ end ~}}
+{{~ else if prop.is_nullable ~}}
+			// Nullable reference type: {{ prop.type }} - skipped
+{{~ else ~}}
+			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ end ~}}
+{{~ end ~}}
+		}
+{{~ end ~}}
+
+{{~ if has_widget_children && !is_abstract ~}}
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<{{ struct_name }}>();
+			s.{{ children_property_name }} = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
+		}
+
+{{~ end ~}}
 		protected override FlutterObjectStruct CreateBackingStruct() => new {{ struct_name }}();
 	}
 }

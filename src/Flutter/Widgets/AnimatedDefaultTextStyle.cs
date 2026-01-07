@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -46,19 +47,29 @@ namespace Flutter.Widgets
 			TextStyle? _style,
 			TextAlign? _textAlign,
 			bool _softWrap,
-			Overflow _overflow,
+			TextOverflow _overflow,
 			TextWidthBasis _textWidthBasis,
 			TextHeightBehavior _textHeightBehavior,
 			TimeSpan _duration
 ,
 			int? _maxLines = null,
 			Curve _curve = null,
-			Action _onEnd = null
+			Action? _onEnd = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<AnimatedDefaultTextStyleStruct>();
+			s.child = _child;
+			// Complex type: TextStyle? - skipped (requires marshaling)
+			// Complex type: TextAlign? - skipped (requires marshaling)
+			s.softWrap = _softWrap;
+			s.overflow = _overflow;
+			if (_maxLines.HasValue)
+				s.maxLines = _maxLines.Value;
+			s.textWidthBasis = _textWidthBasis;
+			// Complex type: TextHeightBehavior - skipped (requires marshaling)
+			// Complex type: Curve - skipped (requires marshaling)
+			// Complex type: TimeSpan - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedDefaultTextStyleStruct();

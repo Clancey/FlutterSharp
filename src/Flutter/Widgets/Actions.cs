@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -63,9 +64,10 @@ namespace Flutter.Widgets
 			ActionDispatcher? _dispatcher = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<ActionsStruct>();
+			// Complex type: ActionDispatcher? - skipped (requires marshaling)
+			// Complex type: Dictionary<Type, FlutterAction<Intent>> - skipped (requires marshaling)
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ActionsStruct();

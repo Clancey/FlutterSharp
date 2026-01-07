@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -171,9 +172,22 @@ namespace Flutter.Widgets
 			double? _height = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<ContainerStruct>();
+			s.child = _child;
+			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
+			// Complex type: Color? - skipped (requires marshaling)
+			// Complex type: Decoration? - skipped (requires marshaling)
+			// Complex type: Decoration? - skipped (requires marshaling)
+			// Complex type: BoxConstraints? - skipped (requires marshaling)
+			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
+			// Complex type: Matrix4? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			s.clipBehavior = _clipBehavior;
+			if (_width.HasValue)
+				s.width = _width.Value;
+			if (_height.HasValue)
+				s.height = _height.Value;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ContainerStruct();

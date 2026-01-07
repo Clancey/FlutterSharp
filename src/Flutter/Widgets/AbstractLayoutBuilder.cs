@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -41,14 +42,20 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AbstractLayoutBuilder"/> class.
 		/// </summary>
+		protected AbstractLayoutBuilder()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AbstractLayoutBuilder"/> class.
+		/// </summary>
 		public AbstractLayoutBuilder(
 			Func<BuildContext, LayoutInfoType, Widget> _builder
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<AbstractLayoutBuilderStruct>();
+			// Complex type: Func<BuildContext, LayoutInfoType, Widget> - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AbstractLayoutBuilderStruct();

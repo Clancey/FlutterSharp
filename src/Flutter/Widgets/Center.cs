@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -47,9 +48,12 @@ namespace Flutter.Widgets
 			Widget? _child = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<CenterStruct>();
+			if (_widthFactor.HasValue)
+				s.widthFactor = _widthFactor.Value;
+			if (_heightFactor.HasValue)
+				s.heightFactor = _heightFactor.Value;
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new CenterStruct();

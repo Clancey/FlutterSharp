@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -73,9 +74,14 @@ namespace Flutter.Widgets
 			TimeSpan? _reverseDuration = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<AnimatedSwitcherStruct>();
+			s.child = _child;
+			// Complex type: TimeSpan - skipped (requires marshaling)
+			// Complex type: TimeSpan? - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: Func<Widget, InvalidType, Widget> - skipped (requires marshaling)
+			// Complex type: Func<Widget?, List<Widget>, Widget> - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedSwitcherStruct();

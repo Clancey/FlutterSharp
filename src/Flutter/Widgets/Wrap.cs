@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -68,8 +69,47 @@ namespace Flutter.Widgets
 /// * [Row], which places children in one line, and gives control over their
 /// alignment and spacing.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class Wrap : MultiChildRenderObjectWidget
+	public class Wrap : MultiChildRenderObjectWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Wrap"/> class.
+		/// Use collection initializer syntax: new Wrap { child1, child2, child3 }
+		/// </summary>
+		public Wrap()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Wrap"/> class.
 		/// </summary>
@@ -87,9 +127,29 @@ namespace Flutter.Widgets
 			List<Widget> _children = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<WrapStruct>();
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			s.spacing = _spacing;
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
+			s.runSpacing = _runSpacing;
+			s.crossAxisAlignment = _crossAxisAlignment;
+			s.textDirection = _textDirection;
+			s.verticalDirection = _verticalDirection;
+			s.clipBehavior = _clipBehavior;
+			// Children are set in PrepareForSending to support collection initializers
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<WrapStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new WrapStruct();

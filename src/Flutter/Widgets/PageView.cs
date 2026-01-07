@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -55,8 +56,47 @@ namespace Flutter.Widgets
 /// * [GridView], for a scrollable grid of boxes.
 /// * [ScrollNotification] and [NotificationListener], which can be used to watch
 /// the scroll position without using a [ScrollController].
-	public class PageView : StatefulWidget
+	public class PageView : StatefulWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PageView"/> class.
+		/// Use collection initializer syntax: new PageView { child1, child2, child3 }
+		/// </summary>
+		public PageView()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PageView"/> class.
 		/// </summary>
@@ -79,9 +119,34 @@ namespace Flutter.Widgets
 			List<Widget> _children = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<PageViewStruct>();
+			s.allowImplicitScrolling = _allowImplicitScrolling;
+			s.restorationId = _restorationId;
+			s.scrollDirection = _scrollDirection;
+			s.reverse = _reverse;
+			// Complex type: PageController? - skipped (requires marshaling)
+			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			s.pageSnapping = _pageSnapping;
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: SliverChildDelegate - skipped (requires marshaling)
+			s.dragStartBehavior = _dragStartBehavior;
+			s.clipBehavior = _clipBehavior;
+			s.hitTestBehavior = _hitTestBehavior;
+			// Complex type: ScrollBehavior? - skipped (requires marshaling)
+			s.padEnds = _padEnds;
+			// Children are set in PrepareForSending to support collection initializers
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<PageViewStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PageViewStruct();

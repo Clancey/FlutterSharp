@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -40,16 +41,21 @@ namespace Flutter.Widgets
 		public DefaultTextStyleTransition(
 			TextAlign? _textAlign,
 			bool _softWrap,
-			Overflow _overflow,
+			TextOverflow _overflow,
 			Widget _child,
 			TextStyle? _style
 ,
 			int? _maxLines = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<DefaultTextStyleTransitionStruct>();
+			// Complex type: TextAlign? - skipped (requires marshaling)
+			s.softWrap = _softWrap;
+			s.overflow = _overflow;
+			if (_maxLines.HasValue)
+				s.maxLines = _maxLines.Value;
+			s.child = _child;
+			// Complex type: TextStyle? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DefaultTextStyleTransitionStruct();

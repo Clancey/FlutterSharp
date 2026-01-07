@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -88,9 +89,43 @@ namespace Flutter.Widgets
 			string? _restorationScopeId = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<WidgetsAppStruct>();
+			// Complex type: GlobalKey<NavigatorState>? - skipped (requires marshaling)
+			// Complex type: Func<RouteSettings, Route<object>?> - skipped (requires marshaling)
+			// Complex type: Func<string, List<Route<object>>> - skipped (requires marshaling)
+			// Complex type: Delegate - skipped (requires marshaling)
+			// Complex type: RouteInformationParser<object>? - skipped (requires marshaling)
+			// Complex type: RouterDelegate<object>? - skipped (requires marshaling)
+			// Complex type: BackButtonDispatcher? - skipped (requires marshaling)
+			// Complex type: RouteInformationProvider? - skipped (requires marshaling)
+			// Complex type: RouterConfig<object>? - skipped (requires marshaling)
+			// Nullable reference type: Widget? - skipped
+			// Complex type: Delegate - skipped (requires marshaling)
+			// Complex type: Func<RouteSettings, Route<object>?> - skipped (requires marshaling)
+			// Complex type: Func<NavigationNotification, bool> - skipped (requires marshaling)
+			s.initialRoute = _initialRoute;
+			// Complex type: List<NavigatorObserver>? - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, Widget?, Widget> - skipped (requires marshaling)
+			s.title = _title;
+			// Complex type: Func<BuildContext, string> - skipped (requires marshaling)
+			// Complex type: TextStyle? - skipped (requires marshaling)
+			// Complex type: Color? - skipped (requires marshaling)
+			// Complex type: Locale? - skipped (requires marshaling)
+			// Complex type: IEnumerable<LocalizationsDelegate<object>>? - skipped (requires marshaling)
+			// Complex type: Func<List<InvalidType>?, IEnumerable<InvalidType>, InvalidType> - skipped (requires marshaling)
+			// Complex type: Func<InvalidType, IEnumerable<InvalidType>, InvalidType> - skipped (requires marshaling)
+			// Complex type: IEnumerable<object> - skipped (requires marshaling)
+			s.showPerformanceOverlay = _showPerformanceOverlay;
+			s.showSemanticsDebugger = _showSemanticsDebugger;
+			s.debugShowWidgetInspector = _debugShowWidgetInspector;
+			// Complex type: Delegate - skipped (requires marshaling)
+			// Complex type: Delegate - skipped (requires marshaling)
+			// Complex type: Delegate - skipped (requires marshaling)
+			s.debugShowCheckedModeBanner = _debugShowCheckedModeBanner;
+			// Complex type: Dictionary<ShortcutActivator, Intent>? - skipped (requires marshaling)
+			// Complex type: Dictionary<Type, FlutterAction<Intent>>? - skipped (requires marshaling)
+			s.restorationScopeId = _restorationScopeId;
+			s.useInheritedMediaQuery = _useInheritedMediaQuery;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new WidgetsAppStruct();

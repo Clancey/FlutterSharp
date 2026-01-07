@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -146,7 +147,7 @@ namespace Flutter.Widgets
 			TextAlign? _textAlign,
 			TextDirection _textDirection,
 			Locale? _locale,
-			Overflow _overflow,
+			TextOverflow _overflow,
 			object _textScaler,
 			TextWidthBasis _textWidthBasis,
 			TextHeightBehavior _textHeightBehavior,
@@ -160,9 +161,27 @@ namespace Flutter.Widgets
 			string? _semanticsIdentifier = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<TextStruct>();
+			s.data = _data;
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: TextStyle? - skipped (requires marshaling)
+			// Complex type: StrutStyle? - skipped (requires marshaling)
+			// Complex type: TextAlign? - skipped (requires marshaling)
+			s.textDirection = _textDirection;
+			// Complex type: Locale? - skipped (requires marshaling)
+			if (_softWrap.HasValue)
+				s.softWrap = _softWrap.Value;
+			s.overflow = _overflow;
+			if (_textScaleFactor.HasValue)
+				s.textScaleFactor = _textScaleFactor.Value;
+			// Complex type: object - skipped (requires marshaling)
+			if (_maxLines.HasValue)
+				s.maxLines = _maxLines.Value;
+			s.semanticsLabel = _semanticsLabel;
+			s.semanticsIdentifier = _semanticsIdentifier;
+			s.textWidthBasis = _textWidthBasis;
+			// Complex type: TextHeightBehavior - skipped (requires marshaling)
+			// Complex type: Color? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TextStruct();

@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -44,9 +45,14 @@ namespace Flutter.Widgets
 			UndoHistoryController? _controller = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<UndoHistoryStruct>();
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: Func<T?, T, bool> - skipped (requires marshaling)
+			// Complex type: Func<T, T> - skipped (requires marshaling)
+			// Complex type: Action<T> - skipped (requires marshaling)
+			// Complex type: FocusNode - skipped (requires marshaling)
+			// Complex type: UndoHistoryController? - skipped (requires marshaling)
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new UndoHistoryStruct();

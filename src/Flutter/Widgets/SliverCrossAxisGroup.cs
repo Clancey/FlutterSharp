@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -59,8 +60,47 @@ namespace Flutter.Widgets
 /// an extent to constrain the widget to.
 /// * [SliverMainAxisGroup], which is the [RenderObjectWidget] for laying out
 /// multiple slivers along the main axis.
-	public class SliverCrossAxisGroup : MultiChildRenderObjectWidget
+	public class SliverCrossAxisGroup : MultiChildRenderObjectWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SliverCrossAxisGroup"/> class.
+		/// Use collection initializer syntax: new SliverCrossAxisGroup { child1, child2, child3 }
+		/// </summary>
+		public SliverCrossAxisGroup()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SliverCrossAxisGroup"/> class.
 		/// </summary>
@@ -70,9 +110,21 @@ namespace Flutter.Widgets
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<SliverCrossAxisGroupStruct>();
+			// Children are set in PrepareForSending to support collection initializers
+			// Children are set in PrepareForSending to support collection initializers
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<SliverCrossAxisGroupStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverCrossAxisGroupStruct();

@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -94,9 +95,32 @@ namespace Flutter.Widgets
 			string? _imageSemanticLabel = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<FadeInImageStruct>();
+			// Complex type: ImageProvider? - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires marshaling)
+			// Complex type: ImageProvider - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires marshaling)
+			// Complex type: TimeSpan - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: TimeSpan - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			if (_width.HasValue)
+				s.width = _width.Value;
+			// Complex type: Color? - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: Color - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			if (_height.HasValue)
+				s.height = _height.Value;
+			s.fit = _fit;
+			// Complex type: object - skipped (requires marshaling)
+			s.filterQuality = _filterQuality;
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			s.matchTextDirection = _matchTextDirection;
+			s.excludeFromSemantics = _excludeFromSemantics;
+			s.imageSemanticLabel = _imageSemanticLabel;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FadeInImageStruct();

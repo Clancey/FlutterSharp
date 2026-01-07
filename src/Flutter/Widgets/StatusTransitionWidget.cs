@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -22,14 +23,20 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="StatusTransitionWidget"/> class.
 		/// </summary>
+		protected StatusTransitionWidget()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="StatusTransitionWidget"/> class.
+		/// </summary>
 		public StatusTransitionWidget(
 			Animation<double> _animation
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<StatusTransitionWidgetStruct>();
+			// Complex type: Animation<double> - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new StatusTransitionWidgetStruct();

@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -61,9 +62,15 @@ namespace Flutter.Widgets
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<ExpansibleStruct>();
+			// Complex type: ExpansibleController - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, InvalidType, Widget> - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, InvalidType, Widget> - skipped (requires marshaling)
+			// Complex type: TimeSpan - skipped (requires marshaling)
+			// Complex type: Curve - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			s.maintainState = _maintainState;
+			// Complex type: Func<BuildContext, Widget, Widget, InvalidType, Widget> - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ExpansibleStruct();

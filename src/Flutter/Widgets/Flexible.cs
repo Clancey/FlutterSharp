@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -49,9 +50,11 @@ namespace Flutter.Widgets
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<FlexibleStruct>();
+			s.flex = _flex;
+			s.fit = _fit;
+			// Complex type: Type - skipped (requires marshaling)
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FlexibleStruct();

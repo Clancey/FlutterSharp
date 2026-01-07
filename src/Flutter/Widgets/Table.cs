@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -65,9 +66,14 @@ namespace Flutter.Widgets
 			Dictionary<object, object>? _columnWidths = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<TableStruct>();
+			// Complex type: List<TableRow> - skipped (requires marshaling)
+			// Complex type: Dictionary<object, object>? - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			s.textDirection = _textDirection;
+			// Complex type: BoxBorder? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
+			// Complex type: TextBaseline? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TableStruct();

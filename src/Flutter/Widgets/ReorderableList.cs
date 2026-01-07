@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -75,9 +76,35 @@ namespace Flutter.Widgets
 			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> _dragBoundaryProvider = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<ReorderableListStruct>();
+			// Complex type: Func<BuildContext, int, Widget> - skipped (requires marshaling)
+			s.itemCount = _itemCount;
+			// Complex type: Action<int, int> - skipped (requires marshaling)
+			// Complex type: Action<int> - skipped (requires marshaling)
+			// Complex type: Action<int> - skipped (requires marshaling)
+			// Complex type: Func<Widget, int, InvalidType, Widget> - skipped (requires marshaling)
+			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
+			s.scrollDirection = _scrollDirection;
+			s.reverse = _reverse;
+			// Complex type: ScrollController? - skipped (requires marshaling)
+			if (_primary.HasValue)
+				s.primary = _primary.Value;
+			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			s.shrinkWrap = _shrinkWrap;
+			s.anchor = _anchor;
+			if (_cacheExtent.HasValue)
+				s.cacheExtent = _cacheExtent.Value;
+			s.dragStartBehavior = _dragStartBehavior;
+			// Complex type: ScrollViewKeyboardDismissBehavior? - skipped (requires marshaling)
+			s.restorationId = _restorationId;
+			s.clipBehavior = _clipBehavior;
+			if (_itemExtent.HasValue)
+				s.itemExtent = _itemExtent.Value;
+			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: Widget? - skipped
+			if (_autoScrollerVelocityScalar.HasValue)
+				s.autoScrollerVelocityScalar = _autoScrollerVelocityScalar.Value;
+			// Complex type: Func<BuildContext, DragBoundaryDelegate<InvalidType>?> - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ReorderableListStruct();

@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -90,9 +91,17 @@ namespace Flutter.Widgets
 			DraggableScrollableController? _controller = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<DraggableScrollableSheetStruct>();
+			s.initialChildSize = _initialChildSize;
+			s.minChildSize = _minChildSize;
+			s.maxChildSize = _maxChildSize;
+			s.expand = _expand;
+			s.snap = _snap;
+			// Complex type: List<double>? - skipped (requires marshaling)
+			// Complex type: TimeSpan? - skipped (requires marshaling)
+			// Complex type: DraggableScrollableController? - skipped (requires marshaling)
+			s.shouldCloseOnMinExtent = _shouldCloseOnMinExtent;
+			// Complex type: Func<BuildContext, ScrollController, Widget> - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DraggableScrollableSheetStruct();

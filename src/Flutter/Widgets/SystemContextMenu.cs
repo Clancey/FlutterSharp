@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -65,9 +66,10 @@ namespace Flutter.Widgets
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<SystemContextMenuStruct>();
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: List<IOSSystemContextMenuItem> - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SystemContextMenuStruct();

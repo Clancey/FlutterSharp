@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -156,9 +157,20 @@ namespace Flutter.Widgets
 			ScrollViewKeyboardDismissBehavior? _keyboardDismissBehavior = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<SingleChildScrollViewStruct>();
+			s.scrollDirection = _scrollDirection;
+			s.reverse = _reverse;
+			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
+			// Complex type: ScrollController? - skipped (requires marshaling)
+			if (_primary.HasValue)
+				s.primary = _primary.Value;
+			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			s.child = _child;
+			s.dragStartBehavior = _dragStartBehavior;
+			s.clipBehavior = _clipBehavior;
+			s.hitTestBehavior = _hitTestBehavior;
+			s.restorationId = _restorationId;
+			// Complex type: ScrollViewKeyboardDismissBehavior? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SingleChildScrollViewStruct();

@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -131,9 +132,28 @@ namespace Flutter.Widgets
 			string? _semanticLabel = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<ImageStruct>();
+			// Complex type: ImageProvider - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, Widget, int?, bool, Widget> - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, Widget, InvalidType, Widget> - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires marshaling)
+			if (_width.HasValue)
+				s.width = _width.Value;
+			if (_height.HasValue)
+				s.height = _height.Value;
+			// Complex type: Color? - skipped (requires marshaling)
+			// Complex type: Animation<double> - skipped (requires marshaling)
+			s.filterQuality = _filterQuality;
+			// Complex type: object - skipped (requires marshaling)
+			s.fit = _fit;
+			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			s.matchTextDirection = _matchTextDirection;
+			s.gaplessPlayback = _gaplessPlayback;
+			s.semanticLabel = _semanticLabel;
+			s.excludeFromSemantics = _excludeFromSemantics;
+			s.isAntiAlias = _isAntiAlias;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ImageStruct();

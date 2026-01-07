@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -91,6 +92,13 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TwoDimensionalViewport"/> class.
 		/// </summary>
+		protected TwoDimensionalViewport()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TwoDimensionalViewport"/> class.
+		/// </summary>
 		public TwoDimensionalViewport(
 			object _verticalOffset,
 			object _verticalAxisDirection,
@@ -103,9 +111,16 @@ namespace Flutter.Widgets
 			double? _cacheExtent = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<TwoDimensionalViewportStruct>();
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			if (_cacheExtent.HasValue)
+				s.cacheExtent = _cacheExtent.Value;
+			s.clipBehavior = _clipBehavior;
+			// Complex type: TwoDimensionalChildDelegate - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TwoDimensionalViewportStruct();

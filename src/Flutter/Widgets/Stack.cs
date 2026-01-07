@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -131,8 +132,47 @@ namespace Flutter.Widgets
 /// * [Flow], which provides paint-time control of its children using transform
 /// matrices.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class Stack : MultiChildRenderObjectWidget
+	public class Stack : MultiChildRenderObjectWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Stack"/> class.
+		/// Use collection initializer syntax: new Stack { child1, child2, child3 }
+		/// </summary>
+		public Stack()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Stack"/> class.
 		/// </summary>
@@ -145,9 +185,24 @@ namespace Flutter.Widgets
 			List<Widget> _children = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<StackStruct>();
+			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			s.textDirection = _textDirection;
+			s.fit = _fit;
+			s.clipBehavior = _clipBehavior;
+			// Children are set in PrepareForSending to support collection initializers
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<StackStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new StackStruct();

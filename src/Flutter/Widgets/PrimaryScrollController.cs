@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -59,9 +60,11 @@ namespace Flutter.Widgets
 			ScrollController? _controller = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<PrimaryScrollControllerStruct>();
+			// Complex type: ScrollController? - skipped (requires marshaling)
+			s.scrollDirection = _scrollDirection;
+			// Complex type: HashSet<object> - skipped (requires marshaling)
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PrimaryScrollControllerStruct();

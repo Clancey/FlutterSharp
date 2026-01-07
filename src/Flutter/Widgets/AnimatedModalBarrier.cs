@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -48,9 +49,15 @@ namespace Flutter.Widgets
 			string? _semanticsOnTapHint = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<AnimatedModalBarrierStruct>();
+			s.dismissible = _dismissible;
+			s.semanticsLabel = _semanticsLabel;
+			if (_barrierSemanticsDismissible.HasValue)
+				s.barrierSemanticsDismissible = _barrierSemanticsDismissible.Value;
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			s.semanticsOnTapHint = _semanticsOnTapHint;
+			// Complex type: Color? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedModalBarrierStruct();

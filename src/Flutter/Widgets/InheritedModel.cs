@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -128,14 +129,20 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InheritedModel"/> class.
 		/// </summary>
+		protected InheritedModel()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="InheritedModel"/> class.
+		/// </summary>
 		public InheritedModel(
 			Widget _child
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<InheritedModelStruct>();
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new InheritedModelStruct();

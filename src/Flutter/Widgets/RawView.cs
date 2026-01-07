@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -68,9 +69,11 @@ namespace Flutter.Widgets
 			object _deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<RawViewStruct>();
+			// Complex type: FlutterView - skipped (requires marshaling)
+			s.child = _child;
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RawViewStruct();

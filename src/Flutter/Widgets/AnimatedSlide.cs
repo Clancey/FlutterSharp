@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -48,12 +49,15 @@ namespace Flutter.Widgets
 ,
 			Widget? _child = null,
 			Curve _curve = null,
-			Action _onEnd = null
+			Action? _onEnd = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<AnimatedSlideStruct>();
+			s.child = _child;
+			// Complex type: Offset - skipped (requires marshaling)
+			// Complex type: Curve - skipped (requires marshaling)
+			// Complex type: TimeSpan - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedSlideStruct();

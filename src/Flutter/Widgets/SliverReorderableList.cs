@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -59,9 +60,20 @@ namespace Flutter.Widgets
 			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> _dragBoundaryProvider = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<SliverReorderableListStruct>();
+			// Complex type: Func<BuildContext, int, Widget> - skipped (requires marshaling)
+			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
+			s.itemCount = _itemCount;
+			// Complex type: Action<int, int> - skipped (requires marshaling)
+			// Complex type: Action<int> - skipped (requires marshaling)
+			// Complex type: Action<int> - skipped (requires marshaling)
+			// Complex type: Func<Widget, int, InvalidType, Widget> - skipped (requires marshaling)
+			if (_itemExtent.HasValue)
+				s.itemExtent = _itemExtent.Value;
+			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: Widget? - skipped
+			s.autoScrollerVelocityScalar = _autoScrollerVelocityScalar;
+			// Complex type: Func<BuildContext, DragBoundaryDelegate<InvalidType>?> - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverReorderableListStruct();

@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -138,9 +139,20 @@ namespace Flutter.Widgets
 			string? _debugLabel = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<FocusStruct>();
+			// Complex type: FocusNode? - skipped (requires marshaling)
+			s.child = _child;
+			// Complex type: FocusNode? - skipped (requires marshaling)
+			s.autofocus = _autofocus;
+			// Complex type: Action - skipped (requires marshaling)
+			s.includeSemantics = _includeSemantics;
+			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
+			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
+			s.canRequestFocus = _canRequestFocus;
+			s.skipTraversal = _skipTraversal;
+			s.descendantsAreFocusable = _descendantsAreFocusable;
+			s.descendantsAreTraversable = _descendantsAreTraversable;
+			s.debugLabel = _debugLabel;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FocusStruct();

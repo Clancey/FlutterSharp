@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -44,14 +45,20 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="InheritedTheme"/> class.
 		/// </summary>
+		protected InheritedTheme()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="InheritedTheme"/> class.
+		/// </summary>
 		public InheritedTheme(
 			Widget _child
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<InheritedThemeStruct>();
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new InheritedThemeStruct();

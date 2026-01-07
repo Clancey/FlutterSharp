@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -48,9 +49,12 @@ namespace Flutter.Widgets
 			Widget? _child = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<RotationTransitionStruct>();
+			// Complex type: Animation<double> - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			if (_filterQuality.HasValue)
+				s.filterQuality = _filterQuality.Value;
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RotationTransitionStruct();

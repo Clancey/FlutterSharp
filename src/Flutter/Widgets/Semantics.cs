@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -124,9 +125,110 @@ namespace Flutter.Widgets
 			object _inputType = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<SemanticsStruct>();
+			// Complex type: object - skipped (requires marshaling)
+			s.container = _container;
+			s.explicitChildNodes = _explicitChildNodes;
+			s.excludeSemantics = _excludeSemantics;
+			s.blockUserActions = _blockUserActions;
+			s.child = _child;
+			if (_enabled.HasValue)
+				s.enabled = _enabled.Value;
+			if (_checked.HasValue)
+				s.@checked = _checked.Value;
+			if (_mixed.HasValue)
+				s.mixed = _mixed.Value;
+			if (_selected.HasValue)
+				s.selected = _selected.Value;
+			if (_toggled.HasValue)
+				s.toggled = _toggled.Value;
+			if (_button.HasValue)
+				s.button = _button.Value;
+			if (_slider.HasValue)
+				s.slider = _slider.Value;
+			if (_keyboardKey.HasValue)
+				s.keyboardKey = _keyboardKey.Value;
+			if (_link.HasValue)
+				s.link = _link.Value;
+			// Complex type: Uri? - skipped (requires marshaling)
+			if (_header.HasValue)
+				s.header = _header.Value;
+			if (_headingLevel.HasValue)
+				s.headingLevel = _headingLevel.Value;
+			if (_textField.HasValue)
+				s.textField = _textField.Value;
+			if (_readOnly.HasValue)
+				s.@readOnly = _readOnly.Value;
+			if (_focusable.HasValue)
+				s.focusable = _focusable.Value;
+			if (_focused.HasValue)
+				s.focused = _focused.Value;
+			if (_inMutuallyExclusiveGroup.HasValue)
+				s.inMutuallyExclusiveGroup = _inMutuallyExclusiveGroup.Value;
+			if (_obscured.HasValue)
+				s.obscured = _obscured.Value;
+			if (_multiline.HasValue)
+				s.multiline = _multiline.Value;
+			if (_scopesRoute.HasValue)
+				s.scopesRoute = _scopesRoute.Value;
+			if (_namesRoute.HasValue)
+				s.namesRoute = _namesRoute.Value;
+			if (_hidden.HasValue)
+				s.hidden = _hidden.Value;
+			if (_image.HasValue)
+				s.image = _image.Value;
+			if (_liveRegion.HasValue)
+				s.liveRegion = _liveRegion.Value;
+			if (_expanded.HasValue)
+				s.expanded = _expanded.Value;
+			if (_isRequired.HasValue)
+				s.isRequired = _isRequired.Value;
+			if (_maxValueLength.HasValue)
+				s.maxValueLength = _maxValueLength.Value;
+			if (_currentValueLength.HasValue)
+				s.currentValueLength = _currentValueLength.Value;
+			s.identifier = _identifier;
+			s.label = _label;
+			// Complex type: object - skipped (requires marshaling)
+			s.value = _value;
+			// Complex type: object - skipped (requires marshaling)
+			s.increasedValue = _increasedValue;
+			// Complex type: object - skipped (requires marshaling)
+			s.decreasedValue = _decreasedValue;
+			// Complex type: object - skipped (requires marshaling)
+			s.hint = _hint;
+			// Complex type: object - skipped (requires marshaling)
+			s.tooltip = _tooltip;
+			s.onTapHint = _onTapHint;
+			s.onLongPressHint = _onLongPressHint;
+			if (_textDirection.HasValue)
+				s.textDirection = _textDirection.Value;
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Dictionary<object, object>? - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: HashSet<string>? - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SemanticsStruct();

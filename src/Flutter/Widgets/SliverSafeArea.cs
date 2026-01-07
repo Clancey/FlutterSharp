@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -51,9 +52,13 @@ namespace Flutter.Widgets
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<SliverSafeAreaStruct>();
+			s.left = _left;
+			s.top = _top;
+			s.right = _right;
+			s.bottom = _bottom;
+			// Complex type: object - skipped (requires marshaling)
+			s.sliver = _sliver;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverSafeAreaStruct();

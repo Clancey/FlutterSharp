@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -64,9 +65,20 @@ namespace Flutter.Widgets
 			double? _height = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<PositionedDirectionalStruct>();
+			if (_start.HasValue)
+				s.start = _start.Value;
+			if (_top.HasValue)
+				s.top = _top.Value;
+			if (_end.HasValue)
+				s.end = _end.Value;
+			if (_bottom.HasValue)
+				s.bottom = _bottom.Value;
+			if (_width.HasValue)
+				s.width = _width.Value;
+			if (_height.HasValue)
+				s.height = _height.Value;
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PositionedDirectionalStruct();

@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -52,9 +53,11 @@ namespace Flutter.Widgets
 			int _initialItemCount = 0
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<SliverAnimatedGridStruct>();
+			// Complex type: SliverGridDelegate - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
+			s.initialItemCount = _initialItemCount;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverAnimatedGridStruct();

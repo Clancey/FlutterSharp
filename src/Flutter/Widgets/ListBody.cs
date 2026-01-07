@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -35,8 +36,47 @@ namespace Flutter.Widgets
 /// * [ListView], which implements an efficient scrolling version of this
 /// layout algorithm.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class ListBody : MultiChildRenderObjectWidget
+	public class ListBody : MultiChildRenderObjectWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ListBody"/> class.
+		/// Use collection initializer syntax: new ListBody { child1, child2, child3 }
+		/// </summary>
+		public ListBody()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ListBody"/> class.
 		/// </summary>
@@ -47,9 +87,22 @@ namespace Flutter.Widgets
 			List<Widget> _children = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<ListBodyStruct>();
+			// Complex type: object - skipped (requires marshaling)
+			s.reverse = _reverse;
+			// Children are set in PrepareForSending to support collection initializers
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<ListBodyStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ListBodyStruct();

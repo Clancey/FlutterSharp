@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -97,8 +98,47 @@ namespace Flutter.Widgets
 /// * [Text.rich], a const text widget that provides similar functionality
 /// as [RichText]. [Text.rich] will inherit [TextStyle] from [DefaultTextStyle].
 /// * [SelectableRegion], which provides an overview of the selection system.
-	public class RichText : MultiChildRenderObjectWidget
+	public class RichText : MultiChildRenderObjectWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RichText"/> class.
+		/// Use collection initializer syntax: new RichText { child1, child2, child3 }
+		/// </summary>
+		public RichText()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RichText"/> class.
 		/// </summary>
@@ -108,7 +148,7 @@ namespace Flutter.Widgets
 			TextAlign? _textAlign,
 			TextDirection _textDirection,
 			bool _softWrap,
-			Overflow _overflow,
+			TextOverflow _overflow,
 			object _textScaler,
 			Locale? _locale,
 			StrutStyle? _strutStyle,
@@ -121,9 +161,35 @@ namespace Flutter.Widgets
 			int? _maxLines = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<RichTextStruct>();
+			// Children are set in PrepareForSending to support collection initializers
+			// Complex type: InlineSpan - skipped (requires marshaling)
+			// Complex type: TextAlign? - skipped (requires marshaling)
+			s.textDirection = _textDirection;
+			s.softWrap = _softWrap;
+			s.overflow = _overflow;
+			// Complex type: object - skipped (requires marshaling)
+			if (_maxLines.HasValue)
+				s.maxLines = _maxLines.Value;
+			// Complex type: Locale? - skipped (requires marshaling)
+			// Complex type: StrutStyle? - skipped (requires marshaling)
+			s.textWidthBasis = _textWidthBasis;
+			// Complex type: TextHeightBehavior - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: Color? - skipped (requires marshaling)
+			s.textScaleFactor = _textScaleFactor;
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<RichTextStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RichTextStruct();

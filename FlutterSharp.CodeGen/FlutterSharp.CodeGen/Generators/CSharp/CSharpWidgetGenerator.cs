@@ -127,6 +127,11 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			// Convert enriched properties to template model format with assignment metadata
 			var allProperties = enrichedWidget.AllProperties.Select(p => BuildPropertyModel(p, enrichedWidget)).ToList();
 
+			// Check if any property is a List<Widget> children type - for collection initializer support
+			var hasWidgetChildren = enrichedWidget.AllProperties.Any(p =>
+				p.IsList && IsWidgetListType(p.CSharpType ?? "") &&
+				(p.Name == "children" || p.Name == enrichedWidget.ChildrenPropertyName));
+
 			var requiredProperties = enrichedWidget.RequiredProperties.Select(p => new Dictionary<string, object?>
 			{
 				["name"] = p.Name,
@@ -170,6 +175,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["all_properties"] = allProperties,
 				["has_single_child"] = enrichedWidget.HasSingleChild,
 				["has_multiple_children"] = enrichedWidget.HasMultipleChildren,
+				["has_widget_children"] = hasWidgetChildren, // true only if children are List<Widget>
 				["child_property_name"] = enrichedWidget.ChildPropertyName,
 				["children_property_name"] = enrichedWidget.ChildrenPropertyName,
 				["documentation"] = FormatDocumentation(enrichedWidget.Documentation),

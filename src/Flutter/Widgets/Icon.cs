@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -89,9 +90,25 @@ namespace Flutter.Widgets
 			bool? _applyTextScaling = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<IconStruct>();
+			// Complex type: IconData? - skipped (requires marshaling)
+			if (_size.HasValue)
+				s.size = _size.Value;
+			if (_fill.HasValue)
+				s.fill = _fill.Value;
+			if (_weight.HasValue)
+				s.weight = _weight.Value;
+			if (_grade.HasValue)
+				s.grade = _grade.Value;
+			if (_opticalSize.HasValue)
+				s.opticalSize = _opticalSize.Value;
+			// Complex type: Color? - skipped (requires marshaling)
+			// Complex type: List<object>? - skipped (requires marshaling)
+			s.semanticLabel = _semanticLabel;
+			s.textDirection = _textDirection;
+			if (_applyTextScaling.HasValue)
+				s.applyTextScaling = _applyTextScaling.Value;
+			s.blendMode = _blendMode;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new IconStruct();

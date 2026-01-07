@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -53,9 +54,18 @@ namespace Flutter.Widgets
 			Widget? _child = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<OverflowBoxStruct>();
+			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			if (_minWidth.HasValue)
+				s.minWidth = _minWidth.Value;
+			if (_maxWidth.HasValue)
+				s.maxWidth = _maxWidth.Value;
+			if (_minHeight.HasValue)
+				s.minHeight = _minHeight.Value;
+			if (_maxHeight.HasValue)
+				s.maxHeight = _maxHeight.Value;
+			s.fit = _fit;
+			s.child = _child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new OverflowBoxStruct();

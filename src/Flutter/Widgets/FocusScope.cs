@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -98,9 +99,24 @@ namespace Flutter.Widgets
 			bool? _descendantsAreTraversable = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<FocusScopeStruct>();
+			// Complex type: FocusScopeNode? - skipped (requires marshaling)
+			// Complex type: FocusNode? - skipped (requires marshaling)
+			s.child = _child;
+			s.autofocus = _autofocus;
+			// Complex type: Action - skipped (requires marshaling)
+			if (_canRequestFocus.HasValue)
+				s.canRequestFocus = _canRequestFocus.Value;
+			if (_skipTraversal.HasValue)
+				s.skipTraversal = _skipTraversal.Value;
+			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
+			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
+			s.debugLabel = _debugLabel;
+			s.includeSemantics = _includeSemantics;
+			if (_descendantsAreFocusable.HasValue)
+				s.descendantsAreFocusable = _descendantsAreFocusable.Value;
+			if (_descendantsAreTraversable.HasValue)
+				s.descendantsAreTraversable = _descendantsAreTraversable.Value;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FocusScopeStruct();

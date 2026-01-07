@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -29,8 +30,47 @@ namespace Flutter.Widgets
 /// 
 /// The children are rendered as if rotating on a wheel instead of scrolling on
 /// a plane.
-	public class ListWheelScrollView : StatefulWidget
+	public class ListWheelScrollView : StatefulWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ListWheelScrollView"/> class.
+		/// Use collection initializer syntax: new ListWheelScrollView { child1, child2, child3 }
+		/// </summary>
+		public ListWheelScrollView()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ListWheelScrollView"/> class.
 		/// </summary>
@@ -57,9 +97,38 @@ namespace Flutter.Widgets
 			ScrollBehavior? _scrollBehavior = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<ListWheelScrollViewStruct>();
+			// Complex type: ScrollController? - skipped (requires marshaling)
+			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			s.diameterRatio = _diameterRatio;
+			s.perspective = _perspective;
+			s.offAxisFraction = _offAxisFraction;
+			s.useMagnifier = _useMagnifier;
+			s.magnification = _magnification;
+			s.overAndUnderCenterOpacity = _overAndUnderCenterOpacity;
+			s.itemExtent = _itemExtent;
+			s.squeeze = _squeeze;
+			// Complex type: Action - skipped (requires marshaling)
+			s.renderChildrenOutsideViewport = _renderChildrenOutsideViewport;
+			// Complex type: ListWheelChildDelegate - skipped (requires marshaling)
+			s.clipBehavior = _clipBehavior;
+			s.hitTestBehavior = _hitTestBehavior;
+			s.restorationId = _restorationId;
+			// Complex type: ScrollBehavior? - skipped (requires marshaling)
+			s.dragStartBehavior = _dragStartBehavior;
+			// Children are set in PrepareForSending to support collection initializers
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<ListWheelScrollViewStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ListWheelScrollViewStruct();

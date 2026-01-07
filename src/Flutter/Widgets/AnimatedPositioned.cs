@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -71,12 +72,26 @@ namespace Flutter.Widgets
 			double? _width = null,
 			double? _height = null,
 			Curve _curve = null,
-			Action _onEnd = null
+			Action? _onEnd = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<AnimatedPositionedStruct>();
+			s.child = _child;
+			if (_left.HasValue)
+				s.left = _left.Value;
+			if (_top.HasValue)
+				s.top = _top.Value;
+			if (_right.HasValue)
+				s.right = _right.Value;
+			if (_bottom.HasValue)
+				s.bottom = _bottom.Value;
+			if (_width.HasValue)
+				s.width = _width.Value;
+			if (_height.HasValue)
+				s.height = _height.Value;
+			// Complex type: Curve - skipped (requires marshaling)
+			// Complex type: TimeSpan - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedPositionedStruct();

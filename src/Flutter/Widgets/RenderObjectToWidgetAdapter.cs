@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -38,9 +39,10 @@ namespace Flutter.Widgets
 			string? _debugShortDescription = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<RenderObjectToWidgetAdapterStruct>();
+			s.child = _child;
+			// Complex type: object - skipped (requires marshaling)
+			s.debugShortDescription = _debugShortDescription;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RenderObjectToWidgetAdapterStruct();

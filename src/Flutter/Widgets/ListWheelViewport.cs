@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -49,9 +50,19 @@ namespace Flutter.Widgets
 
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<ListWheelViewportStruct>();
+			s.diameterRatio = _diameterRatio;
+			s.perspective = _perspective;
+			s.offAxisFraction = _offAxisFraction;
+			s.useMagnifier = _useMagnifier;
+			s.magnification = _magnification;
+			s.overAndUnderCenterOpacity = _overAndUnderCenterOpacity;
+			s.itemExtent = _itemExtent;
+			s.squeeze = _squeeze;
+			s.renderChildrenOutsideViewport = _renderChildrenOutsideViewport;
+			// Complex type: Offset - skipped (requires marshaling)
+			// Complex type: ListWheelChildDelegate - skipped (requires marshaling)
+			s.clipBehavior = _clipBehavior;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ListWheelViewportStruct();

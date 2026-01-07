@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -51,9 +52,13 @@ namespace Flutter.Widgets
 			Widget? _child = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<RawMagnifierStruct>();
+			s.child = _child;
+			// Complex type: MagnifierDecoration - skipped (requires marshaling)
+			s.clipBehavior = _clipBehavior;
+			// Complex type: object - skipped (requires marshaling)
+			s.magnificationScale = _magnificationScale;
+			// Complex type: Size - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RawMagnifierStruct();

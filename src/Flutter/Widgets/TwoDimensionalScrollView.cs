@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -45,6 +46,13 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TwoDimensionalScrollView"/> class.
 		/// </summary>
+		protected TwoDimensionalScrollView()
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TwoDimensionalScrollView"/> class.
+		/// </summary>
 		public TwoDimensionalScrollView(
 			TwoDimensionalChildDelegate _delegate,
 			DiagonalDragBehavior _diagonalDragBehavior,
@@ -60,9 +68,20 @@ namespace Flutter.Widgets
 			ScrollViewKeyboardDismissBehavior? _keyboardDismissBehavior = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<TwoDimensionalScrollViewStruct>();
+			// Complex type: TwoDimensionalChildDelegate - skipped (requires marshaling)
+			if (_cacheExtent.HasValue)
+				s.cacheExtent = _cacheExtent.Value;
+			// Complex type: DiagonalDragBehavior - skipped (requires marshaling)
+			if (_primary.HasValue)
+				s.primary = _primary.Value;
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: ScrollableDetails - skipped (requires marshaling)
+			// Complex type: ScrollableDetails - skipped (requires marshaling)
+			s.dragStartBehavior = _dragStartBehavior;
+			// Complex type: ScrollViewKeyboardDismissBehavior? - skipped (requires marshaling)
+			s.hitTestBehavior = _hitTestBehavior;
+			s.clipBehavior = _clipBehavior;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TwoDimensionalScrollViewStruct();

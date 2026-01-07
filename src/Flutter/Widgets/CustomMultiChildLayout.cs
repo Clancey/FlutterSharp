@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -51,8 +52,47 @@ namespace Flutter.Widgets
 /// * [Flow], which provides paint-time control of its children using transform
 /// matrices.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class CustomMultiChildLayout : MultiChildRenderObjectWidget
+	public class CustomMultiChildLayout : MultiChildRenderObjectWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CustomMultiChildLayout"/> class.
+		/// Use collection initializer syntax: new CustomMultiChildLayout { child1, child2, child3 }
+		/// </summary>
+		public CustomMultiChildLayout()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="CustomMultiChildLayout"/> class.
 		/// </summary>
@@ -62,9 +102,21 @@ namespace Flutter.Widgets
 			List<Widget> _children = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<CustomMultiChildLayoutStruct>();
+			// Complex type: object - skipped (requires marshaling)
+			// Children are set in PrepareForSending to support collection initializers
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<CustomMultiChildLayoutStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new CustomMultiChildLayoutStruct();

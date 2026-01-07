@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -62,9 +63,16 @@ namespace Flutter.Widgets
 			FocusNode? _childFocusNode = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<RawMenuAnchorStruct>();
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, MenuController, Widget?, Widget> - skipped (requires marshaling)
+			s.child = _child;
+			// Complex type: Func<BuildContext, RawMenuOverlayInfo, Widget> - skipped (requires marshaling)
+			s.useRootOverlay = _useRootOverlay;
+			// Complex type: FocusNode? - skipped (requires marshaling)
+			s.consumeOutsideTaps = _consumeOutsideTaps;
+			// Complex type: MenuController - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RawMenuAnchorStruct();

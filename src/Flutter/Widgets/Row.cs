@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -199,8 +200,47 @@ namespace Flutter.Widgets
 /// that may by sized smaller (leaving some remaining room unused).
 /// * [Spacer], a widget that takes up space proportional to its flex value.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class Row : MultiChildRenderObjectWidget
+	public class Row : MultiChildRenderObjectWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Row"/> class.
+		/// Use collection initializer syntax: new Row { child1, child2, child3 }
+		/// </summary>
+		public Row()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Row"/> class.
 		/// </summary>
@@ -212,13 +252,36 @@ namespace Flutter.Widgets
 			TextDirection? _textDirection = null,
 			VerticalDirection? _verticalDirection = null,
 			TextBaseline? _textBaseline = null,
-			double? _spacing = null,
+			double _spacing = 0.0,
 			List<Widget> _children = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<RowStruct>();
+			if (_mainAxisAlignment.HasValue)
+				s.mainAxisAlignment = _mainAxisAlignment.Value;
+			if (_mainAxisSize.HasValue)
+				s.mainAxisSize = _mainAxisSize.Value;
+			if (_crossAxisAlignment.HasValue)
+				s.crossAxisAlignment = _crossAxisAlignment.Value;
+			if (_textDirection.HasValue)
+				s.textDirection = _textDirection.Value;
+			if (_verticalDirection.HasValue)
+				s.verticalDirection = _verticalDirection.Value;
+			// Complex type: TextBaseline? - skipped (requires marshaling)
+			s.spacing = _spacing;
+			// Children are set in PrepareForSending to support collection initializers
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<RowStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RowStruct();

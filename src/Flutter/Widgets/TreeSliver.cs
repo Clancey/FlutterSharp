@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -76,9 +77,20 @@ namespace Flutter.Widgets
 			Func<InvalidType, int?> _findChildIndexCallback = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			var s = GetBackingStruct<TreeSliverStruct>();
+			// Complex type: List<TreeSliverNode<T>> - skipped (requires marshaling)
+			// Complex type: Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> - skipped (requires marshaling)
+			// Complex type: Func<TreeSliverNode<object?>, InvalidType, double> - skipped (requires marshaling)
+			// Complex type: TreeSliverController? - skipped (requires marshaling)
+			// Complex type: Action<TreeSliverNode<object?>> - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			s.addAutomaticKeepAlives = _addAutomaticKeepAlives;
+			s.addRepaintBoundaries = _addRepaintBoundaries;
+			s.addSemanticIndexes = _addSemanticIndexes;
+			// Complex type: Func<Widget, int, int?> - skipped (requires marshaling)
+			s.semanticIndexOffset = _semanticIndexOffset;
+			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TreeSliverStruct();

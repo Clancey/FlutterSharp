@@ -4,6 +4,7 @@
 // </auto-generated>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Flutter;
 using Flutter.Enums;
@@ -41,8 +42,47 @@ namespace Flutter.Widgets
 /// * [SliverToBoxAdapter], which allows a box widget to be placed inside a
 /// sliver context (the opposite of this widget).
 /// * [Viewport], a viewport that does not shrink-wrap its contents.
-	public class ShrinkWrappingViewport : MultiChildRenderObjectWidget
+	public class ShrinkWrappingViewport : MultiChildRenderObjectWidget, IEnumerable<Widget>
 	{
+		/// <summary>
+		/// Internal list for collection initializer support
+		/// </summary>
+		private List<Widget> _childrenList = new List<Widget>();
+
+		/// <summary>
+		/// Adds a child widget. Supports collection initializer syntax.
+		/// </summary>
+		public void Add(Widget child)
+		{
+			_childrenList.Add(child);
+		}
+
+		/// <summary>
+		/// Adds multiple child widgets.
+		/// </summary>
+		public void AddRange(IEnumerable<Widget> children)
+		{
+			_childrenList.AddRange(children);
+		}
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		public IEnumerator<Widget> GetEnumerator() => _childrenList.GetEnumerator();
+
+		/// <summary>
+		/// Gets the enumerator for child widgets.
+		/// </summary>
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ShrinkWrappingViewport"/> class.
+		/// Use collection initializer syntax: new ShrinkWrappingViewport { child1, child2, child3 }
+		/// </summary>
+		public ShrinkWrappingViewport()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ShrinkWrappingViewport"/> class.
 		/// </summary>
@@ -56,9 +96,25 @@ namespace Flutter.Widgets
 			List<Widget> _slivers = null
 		)
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			if (_children != null)
+				_childrenList.AddRange(_children);
+			var s = GetBackingStruct<ShrinkWrappingViewportStruct>();
+			// Children are set in PrepareForSending to support collection initializers
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: object - skipped (requires marshaling)
+			// Complex type: Offset - skipped (requires marshaling)
+			s.clipBehavior = _clipBehavior;
+			// Children are set in PrepareForSending to support collection initializers
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting children.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			var s = GetBackingStruct<ShrinkWrappingViewportStruct>();
+			s.children = SetChildrenAndGetPointer(_childrenList);
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ShrinkWrappingViewportStruct();
