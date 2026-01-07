@@ -28,7 +28,7 @@ class RowWidgetParser extends WidgetParser {
       // verticalDirection: map.containsKey('verticalDirection')
       //     ? parseVerticalDirection(map['verticalDirection'])
       //     : VerticalDirection.down,
-      children: DynamicWidgetBuilder.buildWidgets(map.children, buildContext),
+      children: DynamicWidgetBuilder.buildWidgets(map.children.cast<ChildrenStruct>(), buildContext),
     );
   }
 
@@ -59,7 +59,7 @@ class ColumnWidgetParser extends WidgetParser {
       // verticalDirection: map.containsKey('verticalDirection')
       //     ? parseVerticalDirection(map['verticalDirection'])
       //     : VerticalDirection.down,
-      children: DynamicWidgetBuilder.buildWidgets(map.children, buildContext),
+      children: DynamicWidgetBuilder.buildWidgets(map.children.cast<ChildrenStruct>(), buildContext),
     );
   }
 

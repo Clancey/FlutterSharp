@@ -58,8 +58,10 @@ class {{ parser_name }} extends WidgetParser {
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Curves.linear{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "EdgeInsetsGeometry" || base_type == "EdgeInsets" ~}}
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : EdgeInsets.zero{{ if !for.last || has_children }},{{ end }}
-{{~ else if base_type == "BorderRadiusGeometry" || base_type == "BorderRadius" ~}}
+{{~ else if base_type == "BorderRadiusGeometry" ~}}
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : BorderRadius.zero{{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "BorderRadius" ~}}
+      {{ prop.property_name }}: (map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : BorderRadius.zero) as BorderRadius?{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "BoxConstraints" ~}}
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const BoxConstraints(){{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Offset" ~}}
@@ -98,7 +100,7 @@ class {{ parser_name }} extends WidgetParser {
       {{ child_property_name }}: DynamicWidgetBuilder.buildFromPointerNotNull(map.{{ child_property_name }}, buildContext)
 {{~ end ~}}
 {{~ else if children_property_name ~}}
-      {{ children_property_name }}: DynamicWidgetBuilder.buildWidgets(map.{{ children_property_name }}, buildContext)
+      {{ children_property_name }}: DynamicWidgetBuilder.buildWidgets(map.{{ children_property_name }}.cast<ChildrenStruct>(), buildContext)
 {{~ end ~}}
 {{~ end ~}}
     );
