@@ -13,16 +13,17 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ## Current Build Status
 
-**Last checked**: 2026-01-07 (fourth continuation session - Phase 2 started)
+**Last checked**: 2026-01-07 (fifth continuation session - API fixes continued)
 **C# compilation errors**: 0 ✅ (Flutter.csproj builds successfully)
-**Dart analysis errors**: 11 (pre-existing in hand-written parsers, not blocking)
-**Note**: The 11 Dart errors are in manual parsers (lib/parsers/) with type mismatches and missing imports. These don't affect generated code.
+**Dart analysis errors**: 2 (pre-existing in hand-written utils.dart, not blocking)
+**Dart warnings**: ~1935 (unused imports, unnecessary null comparisons - cosmetic)
+**Note**: The 2 Dart errors are in `lib/utils.dart` (hand-written) with type mismatches. Generated code compiles.
 
 ### Error Resolution Summary (this session)
-- **duplicate_definition**: Fixed TextStyleStruct - removed explicit has* fields from JSON (template auto-generates them)
-- **empty_struct**: Removed 10 stale old struct files from lib/structs/
-- **undefined_getter**: Fixed manual parsers (aspectratio, container, row_column, text) and parseTextStyleFromStruct
-- **argument_type_not_assignable**: Added skipParserGeneration for ~40 Animation<T> widgets that can't be FFI serialized
+- **Overflow → TextOverflow**: Fixed deprecated Overflow enum mapping in DartToCSharpMapper.cs, package_scanner.dart, TypeMappingRegistry.cs
+- **DragStartBehavior import**: Added gestures.dart import to DartParser.scriban template
+- **Widget exclusions**: Excluded UiKitView, AppKitView, SliverCrossAxisExpanded, NestedScrollViewViewport from generation
+- **VoidCallback detection**: Enhanced _isCallback() in analyzer, fixed inherited property override in WidgetAnalysisEnricher.cs
 
 ---
 
@@ -177,9 +178,16 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| API011 | Implement backing struct property assignment | pending | Set struct fields from constructor args |
-| API012 | Handle enum-to-int conversion in assignment | pending | Enums map to int fields |
-| API013 | Handle children list assignment | pending | Use SetChildren helper |
+| API011 | Implement backing struct property assignment | completed | Set struct fields from constructor args - CSharpWidget.scriban template updated |
+| API012 | Handle enum-to-int conversion in assignment | completed | Nullable enums use .HasValue/.Value, non-nullable use direct assignment |
+| API013 | Handle children list assignment | completed | Uses SetChildrenAndGetPointer() helper for List<Widget> properties |
+| API014 | Fix complex type detection | completed | Added inverse approach in IsComplexType() - treats non-primitives as complex |
+| API015 | Fix abstract class constructors | completed | Added protected parameterless constructors for abstract classes |
+| API016 | Fix child property assignment | completed | Direct Widget assignment (struct setter handles conversion) |
+| API017 | Exclude edge-case widgets | completed | SliverCrossAxisExpanded, NestedScrollViewViewport, UiKitView, AppKitView excluded |
+| API018 | Fix Overflow → TextOverflow mapping | completed | Deprecated Overflow enum replaced with TextOverflow |
+| API019 | Add DragStartBehavior import | completed | Added gestures.dart import to DartParser.scriban |
+| API020 | Fix VoidCallback callback detection | completed | Enhanced analyzer _isCallback(), fixed inherited property override |
 
 ---
 
@@ -288,6 +296,7 @@ When starting a new loop, work on these in order:
 | M003 | 2026-01-07 | c5218c0 | Children array cleanup: Added _allocatedChildrenArrays list, SetChildren() methods for allocation/tracking, Dispose() frees arrays with FreeHGlobal. |
 | API001-003 | 2026-01-07 | d479921 | Fixed InvalidType enum resolution: Added 40+ parameter→type mappings in DartToCSharpMapper.ParameterNameToType, InferTypeFromParameterName() method, MapType() overload with parameterName. Added 17 missing types to TypeMappingRegistry (FlexFit, BoxHeightStyle, BoxWidthStyle, BoxShape, etc.). |
 | API004 | 2026-01-07 | a4b961b | Regenerated widgets with correct enum types. Fixed WidgetAnalysisEnricher to pass property name for type inference. Fixed IsReferenceType to recognize enum types as value types. Fixed nullable_type for optional enum parameters. Reduced InvalidType from 292→36 (88% reduction). |
+| API018-020 | 2026-01-07 | 7d6d58a | Fixed: Overflow→TextOverflow mapping (deprecated enum), DragStartBehavior import, VoidCallback callback detection for inherited properties. Generator and Flutter library build with 0 errors. |
 
 ---
 
