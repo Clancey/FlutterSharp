@@ -14,17 +14,17 @@ This is the active task list for autonomous agent execution. The agent selects O
 ## Current Build Status
 
 **Last checked**: 2026-01-07
-**C# compilation errors**: 0
-**Dart analysis errors**: 1018 total
-**uri_does_not_exist**: 206
-**argument_type_not_assignable**: 186
-**undefined_named_parameter**: 177
-**missing_required_argument**: 345 (reduced from 411 → 16% fixed)
-**ambiguous_import**: 35
+**C# compilation errors**: 0 ✅
+**Dart analysis errors**: 415 total (down from 1018 → 59% reduction!)
+**missing_required_argument**: 140 (down from 345 → 59% fixed)
+**argument_type_not_assignable**: 120 (down from 186 → 35% fixed)
+**undefined_named_parameter**: 99 (down from 177 → 44% fixed)
 **undefined_getter**: 27
-**empty_struct**: 19 (reduced from 20)
-**non_type_as_type_argument**: 0 (reduced from 119 → 100% fixed)
-**undefined_method**: 4 (reduced from 136 → 97% fixed, remaining are web-only widgets)
+**empty_struct**: 19
+**uri_does_not_exist**: 0 ✅ (down from 206 → 100% fixed)
+**ambiguous_import**: 0 ✅ (down from 35 → 100% fixed)
+**non_type_as_type_argument**: 0 ✅ (100% fixed)
+**undefined_method**: 2 (down from 4)
 
 ---
 
@@ -175,8 +175,11 @@ When starting a new loop, work on these in order:
 9. ~~**D008** - Fix undefined_getter errors (183) - struct field accessors~~ ✅ DONE (183→0)
 10. ~~**D009** - Fix non_type_as_type_argument errors (119) - struct imports~~ ✅ DONE (119→0, 100% fixed)
 11. ~~**D010** - Fix undefined_method errors (136) - add missing parse methods~~ ✅ DONE (136→4, 97% fixed)
-12. **D011** - Fix missing_required_argument errors (411) - widget constructor parameters
-13. **D012** - Fix undefined_named_parameter errors (156) - incorrect parameter names
+12. ~~**D013** - Remove duplicate parsers and fix imports~~ ✅ DONE (removed 234 duplicate parsers, fixed imports)
+13. ~~**D014** - Fix uri_does_not_exist errors - remove base struct imports~~ ✅ DONE (206→0, 100% fixed)
+14. ~~**D015** - Fix ambiguous_import errors - hide conflicting imports~~ ✅ DONE (35→0, 100% fixed)
+15. **D011** - Fix missing_required_argument errors (140 remaining) - widget constructor parameters
+16. **D012** - Fix undefined_named_parameter errors (99 remaining) - incorrect parameter names
 
 ---
 
@@ -205,6 +208,9 @@ When starting a new loop, work on these in order:
 | D008 | 2026-01-07 | 4b508b9 | Fixed callback property naming (remove double Action suffix), added IsString property for Pointer<Utf8> handling |
 | D009 | 2026-01-07 | d13d5fc | Added SingleChildRenderObjectWidgetStruct/MultiChildRenderObjectWidgetStruct to flutter_sharp_structs.dart, fixed DartStruct.scriban to always import flutter_sharp_structs.dart |
 | D010 | 2026-01-07 | 7eedbc1 | Changed callback FFI types to Pointer<Utf8> for action strings, added utils.dart import to parser template |
+| D013 | 2026-01-07 | 428397a | Removed 234 duplicate parsers from lib/parsers, deleted orphan generated files |
+| D014 | 2026-01-07 | 428397a | Fixed DartStruct.scriban to not import non-existent base struct files |
+| D015 | 2026-01-07 | 428397a | Fixed DartParser.scriban to hide conflicting imports (parseBoxConstraints, parseEdgeInsetsGeometry, parseColor) |
 
 ---
 
@@ -237,6 +243,18 @@ Add notes here when exploring the codebase:
   - 139 undefined_getter - missing struct field accessors
   - 101 undefined_named_parameter - wrong param names
   - 0 undefined_method - FIXED by adding stub parsers
+
+### D013-D015 Fix Details (2026-01-07)
+- Discovered 234 duplicate parsers in `lib/parsers/` that matched generated ones in `lib/generated/parsers/`
+- Removed duplicates, kept 40 unique hand-written parsers (scaffold_parser, appbar_parser, etc.)
+- Deleted orphan files: `lib/generated_parsers.dart`, `lib/generated_utility_parsers.dart`
+- These root-level files were importing from wrong locations
+- Fixed `lib/maui_flutter.dart` import for flexible_parser to use generated version
+- Fixed DartParser.scriban to hide conflicting function names from utils.dart:
+  - `parseBoxConstraints`, `parseEdgeInsetsGeometry`, `parseColor`
+- Fixed DartStruct.scriban to not import base struct files (e.g., `statefulwidget_struct.dart`)
+  - These files don't need to exist - all widgets use WidgetStruct at FFI level
+- Results: 1018→415 errors (59% reduction!), eliminated uri_does_not_exist and ambiguous_import
   - 0 invalid_field_type_in_struct - FIXED by ToCamelCase @ stripping
 
 ### D007 Fix Details (2026-01-07)

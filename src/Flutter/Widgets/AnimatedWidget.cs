@@ -78,14 +78,9 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AnimatedWidget"/> class.
 		/// </summary>
-		public AnimatedWidget(
-			InvalidType _listenable
-
-		)
+		protected AnimatedWidget()
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			// Parameterless constructor for abstract base class
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedWidgetStruct();

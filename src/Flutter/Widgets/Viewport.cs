@@ -52,22 +52,9 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Viewport"/> class.
 		/// </summary>
-		public Viewport(
-			List<Widget> _children,
-			InvalidType _axisDirection,
-			InvalidType _crossAxisDirection,
-			double _anchor,
-			InvalidType _offset,
-			InvalidType _center,
-			InvalidType _cacheExtentStyle,
-			Clip _clipBehavior
-,
-			double? _cacheExtent = null
-		)
+		public Viewport()
 		{
-			// TODO: Property assignments will be handled by a proper FFI marshaling layer
-			// For now, constructors accept parameters but don't assign them
-			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
+			// Parameterless constructor to allow derived classes
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ViewportStruct();

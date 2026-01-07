@@ -26,7 +26,7 @@ import 'parsers/drawer_parser.dart';
 import 'parsers/dropcaptext_widget_parser.dart';
 import 'parsers/expanded_widget_parser.dart';
 import 'parsers/fittedbox_widget_parser.dart';
-import 'parsers/flexible_parser.dart';
+import 'generated/parsers/flexible_parser.dart';
 import 'parsers/floatingactionbutton_parser.dart';
 import 'parsers/gridview_widget_parser.dart';
 import 'parsers/icon_widget_parser.dart';
