@@ -15,8 +15,8 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 **Last checked**: 2026-01-07
 **C# compilation errors**: 0 ✅
-**Dart analysis errors**: 223 total (down from 338 → 34% reduction this run)
-**argument_type_not_assignable**: 77 (down from 192 → 60% fixed, child nullability + type defaults)
+**Dart analysis errors**: 209 total (down from 223 → 6% reduction this task)
+**argument_type_not_assignable**: 63 (down from 77 → 18% fixed, children pointer casting)
 **missing_required_argument**: 64 (unchanged - complex types need manual wrappers)
 **undefined_named_parameter**: 27 (unchanged - widget-specific quirks)
 **undefined_method**: 15 (unchanged - undefined parse methods)
@@ -184,7 +184,8 @@ When starting a new loop, work on these in order:
 16. ~~**D018** - Fix argument_type_not_assignable for child & type defaults~~ ✅ DONE (192→77, 60% fixed)
 17. **D011** - Fix missing_required_argument errors (64 remaining) - complex types like delegates/controllers
 18. **D012** - Fix remaining undefined_named_parameter errors (27 remaining) - widget-specific quirks (sliver, text, icon)
-19. **D019** - Fix remaining argument_type_not_assignable errors (77) - Animation types, more type mismatches
+19. ~~**D019** - Fix children pointer casting for buildWidgets~~ ✅ DONE (77→63, 14 fixed)
+20. **D020** - Fix remaining argument_type_not_assignable errors (63 remaining) - Animation types, TextStyleStruct, etc.
 
 ---
 
@@ -219,6 +220,7 @@ When starting a new loop, work on these in order:
 | D016 | 2026-01-07 | 2bf8588 | Separated PropertyName (Flutter param) from StructPropertyName (FFI struct field) - fixes callback parameter naming. Also fixed child vs children for multi-child widgets. |
 | D017 | 2026-01-07 | 7d0bf3b | Enhanced Dart analyzer to extract constructor parameters that aren't public fields. Added 40+ common type mappings for parameter name inference. Reduced missing_required_argument from 118→64 (46%). |
 | D018 | 2026-01-07 | 4fc4444 | Fixed childIsNullable default to false in DartParserGenerator. Added default values for known types in DartParser.scriban template. Reduced argument_type_not_assignable from 192→77 (60%). |
+| D019 | 2026-01-07 | 410449e | Fixed children pointer casting in DartParser.scriban. Added `.cast<ChildrenStruct>()` to buildWidgets calls. Reduced argument_type_not_assignable from 77→63 (18%). |
 
 ---
 
@@ -375,6 +377,19 @@ Add notes here when exploring the codebase:
   - String? → String for viewType parameters
   - BorderRadiusGeometry → BorderRadius (concrete type required)
   - Complex controller/delegate types
+
+### D019 Fix Details (2026-01-07)
+- Root cause: `buildWidgets` expects `Pointer<ChildrenStruct>` but structs define `children` as `Pointer<Void>`
+- Fix: Added `.cast<ChildrenStruct>()` to children property in DartParser.scriban template (line 101)
+- Also fixed row_column_widget_parser.dart (hand-written parser) with same casting fix
+- Results: argument_type_not_assignable 77→63 (18% reduction, 14 errors fixed)
+- Remaining 63 errors are various type mismatches:
+  - Animation<T> wrapper types (AlignmentGeometry → Animation<AlignmentGeometry>)
+  - TextStyleStruct → Map<String, dynamic> (parseTextStyle expects wrong type)
+  - String? → String (viewType parameters in platform views)
+  - BorderRadiusGeometry → BorderRadius? (abstract → concrete type)
+  - AlignmentGeometry → Alignment (abstract → concrete type)
+  - Various controller types (nullable → non-nullable)
 
 ---
 
