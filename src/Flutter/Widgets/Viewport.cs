@@ -52,19 +52,9 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Viewport"/> class.
 		/// </summary>
-		public Viewport(
-			double? _cacheExtent = null
-		)
+		public Viewport()
 		{
-			var backingStruct = GetBackingStruct<ViewportStruct>();
-			backingStruct.axisDirection = _axisDirection;
-			backingStruct.crossAxisDirection = _crossAxisDirection;
-			backingStruct.anchor = _anchor;
-			backingStruct.offset = _offset;
-			backingStruct.center = _center;
-			backingStruct.cacheExtent = _cacheExtent;
-			backingStruct.cacheExtentStyle = _cacheExtentStyle;
-			backingStruct.clipBehavior = _clipBehavior;
+			// Default constructor for FFI interop
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ViewportStruct();

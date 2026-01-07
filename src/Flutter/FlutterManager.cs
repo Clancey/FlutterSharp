@@ -27,7 +27,10 @@ namespace Flutter.Internal
 					Console.WriteLine(foo);
 					var msg = JsonSerializer.Deserialize<EventMessage>(message.Data, serializeOptions);
 					if (AliveWidgets.TryGetValue(msg.ComponentId, out var widget))
-						widget?.SendEvent(msg.EventName, msg.Data, message.Callback);
+					{
+						var dataStr = msg.Data is string s ? s : JsonSerializer.Serialize(msg.Data, serializeOptions);
+						widget?.SendEvent(msg.EventName, dataStr, message.Callback);
+					}
 					return;
 
 			}

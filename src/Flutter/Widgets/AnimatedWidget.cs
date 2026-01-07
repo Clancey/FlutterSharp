@@ -78,11 +78,9 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AnimatedWidget"/> class.
 		/// </summary>
-		public AnimatedWidget(
-		)
+		protected AnimatedWidget()
 		{
-			var backingStruct = GetBackingStruct<AnimatedWidgetStruct>();
-			backingStruct.listenable = _listenable;
+			// Base class constructor - derived classes don't need to pass parameters
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedWidgetStruct();

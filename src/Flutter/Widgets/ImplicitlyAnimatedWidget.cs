@@ -76,13 +76,9 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ImplicitlyAnimatedWidget"/> class.
 		/// </summary>
-		public ImplicitlyAnimatedWidget(
-		)
+		protected ImplicitlyAnimatedWidget()
 		{
-			var backingStruct = GetBackingStruct<ImplicitlyAnimatedWidgetStruct>();
-			backingStruct.curve = _curve;
-			backingStruct.duration = _duration;
-			backingStruct.onEnd = _onEnd;
+			// Base class constructor - derived classes don't need to pass parameters
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ImplicitlyAnimatedWidgetStruct();

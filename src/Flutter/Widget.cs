@@ -13,6 +13,22 @@ namespace Flutter
 		protected bool disposed = false;
 
 		/// <summary>
+		/// Unique identifier for this widget instance
+		/// </summary>
+		public string Id { get; } = Guid.NewGuid().ToString();
+
+		/// <summary>
+		/// Sends an event to this widget
+		/// </summary>
+		/// <param name="eventName">The name of the event</param>
+		/// <param name="data">Event data as JSON string</param>
+		/// <param name="callback">Optional callback for responses</param>
+		public virtual void SendEvent(string eventName, string data, Action<string>? callback = null)
+		{
+			// Override in derived classes to handle specific events
+		}
+
+		/// <summary>
 		/// Gets the backing struct for FFI interop
 		/// </summary>
 		protected T GetBackingStruct<T>() where T : FlutterObjectStruct, new()
