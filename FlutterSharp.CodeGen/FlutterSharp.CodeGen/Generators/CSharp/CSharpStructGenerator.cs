@@ -117,9 +117,13 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			var callbackIdField = isCallback ? $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}Id" : null;
 			var callbackIdProperty = isCallback ? $"{property.Name}Id" : null;
 
+			// Raw name without @ prefix - for use in composite identifiers like Has{Name}
+			var rawName = property.Name;
+
 			return new Dictionary<string, object?>
 			{
 				["name"] = propertyName,
+				["raw_name"] = rawName, // Original name without @ escape for composite identifiers
 				["type"] = cleanStructType,
 				["original_type"] = property.DartType,
 				["is_nullable"] = property.IsNullable,
@@ -293,6 +297,8 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 using System;
 using System.Runtime.InteropServices;
 using Flutter;
+using Flutter.Enums;
+using Flutter.UI;
 using Flutter.Widgets;
 using Flutter.Material;
 using Flutter.Cupertino;

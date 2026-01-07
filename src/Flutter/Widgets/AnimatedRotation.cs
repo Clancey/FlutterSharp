@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -73,12 +76,12 @@ namespace Flutter.Widgets
 		public AnimatedRotation(
 			double _turns,
 			AlignmentGeometry? _alignment,
-			InvalidType _filterQuality,
+			FilterQuality _filterQuality,
 			TimeSpan _duration
 ,
 			Widget? _child = null,
 			Curve _curve = null,
-			InvalidType _onEnd = null
+			Action _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

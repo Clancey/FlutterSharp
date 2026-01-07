@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -27,42 +27,54 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ListWheelViewportStruct : WidgetStruct
 	{
+		// Simple field: diameterRatio
 /// {@macro flutter.rendering.RenderListWheelViewport.diameterRatio}
 		public double diameterRatio { get; set; }
 
+		// Simple field: perspective
 /// {@macro flutter.rendering.RenderListWheelViewport.perspective}
 		public double perspective { get; set; }
 
+		// Simple field: offAxisFraction
 /// {@macro flutter.rendering.RenderListWheelViewport.offAxisFraction}
 		public double offAxisFraction { get; set; }
 
+		// Simple field: useMagnifier
 /// {@macro flutter.rendering.RenderListWheelViewport.useMagnifier}
 		public bool useMagnifier { get; set; }
 
+		// Simple field: magnification
 /// {@macro flutter.rendering.RenderListWheelViewport.magnification}
 		public double magnification { get; set; }
 
+		// Simple field: overAndUnderCenterOpacity
 /// {@macro flutter.rendering.RenderListWheelViewport.overAndUnderCenterOpacity}
 		public double overAndUnderCenterOpacity { get; set; }
 
+		// Simple field: itemExtent
 /// {@macro flutter.rendering.RenderListWheelViewport.itemExtent}
 		public double itemExtent { get; set; }
 
+		// Simple field: squeeze
 /// {@macro flutter.rendering.RenderListWheelViewport.squeeze}
 /// 
 /// Defaults to 1.
 		public double squeeze { get; set; }
 
+		// Simple field: renderChildrenOutsideViewport
 /// {@macro flutter.rendering.RenderListWheelViewport.renderChildrenOutsideViewport}
 		public bool renderChildrenOutsideViewport { get; set; }
 
+		// Simple field: offset
 /// [ViewportOffset] object describing the content that should be visible
 /// in the viewport.
 		public IntPtr offset { get; set; }
 
+		// Simple field: childDelegate
 /// A delegate that lazily instantiates children.
 		public IntPtr childDelegate { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -73,7 +76,7 @@ namespace Flutter.Widgets
 		public Icon(
 			Color? _color,
 			TextDirection _textDirection,
-			InvalidType _blendMode
+			BlendMode _blendMode
 ,
 			IconData? _icon = null,
 			double? _size = null,

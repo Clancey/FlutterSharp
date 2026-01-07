@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -50,6 +50,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ShaderMaskStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: shaderCallback
 /// Called to create the [dart:ui.Shader] that generates the mask.
 /// 
 /// The shader callback is called with the current size of the child so that
@@ -60,15 +61,22 @@ namespace Flutter.Structs
 /// [dart:ui.ImageShader] class could also be used.
 		public IntPtr shaderCallback { get; set; }
 
+		// Simple field: blendMode
 /// The [BlendMode] to use when applying the shader to the child.
 /// 
 /// The default, [BlendMode.modulate], is useful for applying an alpha blend
 /// to the child. Other blend modes can be used to create other effects.
-		public IntPtr blendMode { get; set; }
+		public BlendMode blendMode { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

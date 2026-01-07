@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -39,12 +39,18 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TwoDimensionalScrollViewStruct : WidgetStruct
 	{
+		// Simple field: @delegate
 /// A delegate that provides the children for the [TwoDimensionalScrollView].
 		public IntPtr @delegate { get; set; }
 
+		// Has flag for nullable property: cacheExtent
+		public byte HascacheExtent { get; set; }
+
+		// Nullable value type: cacheExtent
 /// {@macro flutter.rendering.RenderViewportBase.cacheExtent}
 		public NativeNullable<double> cacheExtent { get; set; }
 
+		// Simple field: diagonalDragBehavior
 /// Whether scrolling gestures should lock to one axes, allow free movement
 /// in both axes, or be evaluated on a weighted scale.
 /// 
@@ -52,9 +58,14 @@ namespace Flutter.Structs
 /// at a time.
 		public IntPtr diagonalDragBehavior { get; set; }
 
+		// Has flag for nullable property: primary
+		public byte Hasprimary { get; set; }
+
+		// Nullable value type: primary
 /// {@macro flutter.widgets.scroll_view.primary}
 		public NativeNullable<bool> primary { get; set; }
 
+		// Simple field: mainAxis
 /// The main axis of the two.
 /// 
 /// Used to determine how to apply [primary] when true.
@@ -64,32 +75,41 @@ namespace Flutter.Structs
 /// children.
 		public IntPtr mainAxis { get; set; }
 
+		// Simple field: verticalDetails
 /// The configuration of the vertical Scrollable.
 /// 
 /// These [ScrollableDetails] can be used to set the [AxisDirection],
 /// [ScrollController], [ScrollPhysics] and more for the vertical axis.
 		public IntPtr verticalDetails { get; set; }
 
+		// Simple field: horizontalDetails
 /// The configuration of the horizontal Scrollable.
 /// 
 /// These [ScrollableDetails] can be used to set the [AxisDirection],
 /// [ScrollController], [ScrollPhysics] and more for the horizontal axis.
 		public IntPtr horizontalDetails { get; set; }
 
+		// Simple field: dragStartBehavior
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
-		public IntPtr dragStartBehavior { get; set; }
+		public DragStartBehavior dragStartBehavior { get; set; }
 
+		// Has flag for nullable property: keyboardDismissBehavior
+		public byte HaskeyboardDismissBehavior { get; set; }
+
+		// Simple field: keyboardDismissBehavior
 /// {@macro flutter.widgets.scroll_view.keyboardDismissBehavior}
 /// 
 /// If [keyboardDismissBehavior] is null then it will fallback to the inherited
 /// [ScrollBehavior.getKeyboardDismissBehavior].
 		public ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior { get; set; }
 
+		// Simple field: hitTestBehavior
 /// {@macro flutter.widgets.scrollable.hitTestBehavior}
 /// 
 /// This value applies to both axes.
-		public IntPtr hitTestBehavior { get; set; }
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].

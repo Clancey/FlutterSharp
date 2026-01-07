@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -42,12 +42,15 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TextureStruct : WidgetStruct
 	{
+		// Simple field: textureId
 /// The identity of the backend texture.
 		public int textureId { get; set; }
 
+		// Simple field: freeze
 /// When true the texture will not be updated with new frames.
 		public bool freeze { get; set; }
 
+		// Simple field: filterQuality
 /// {@template flutter.widgets.Texture.filterQuality}
 /// The quality of sampling the texture and rendering it on screen.
 /// 
@@ -56,7 +59,7 @@ namespace Flutter.Structs
 /// faster interpolation (typically nearest-neighbor). See also [FilterQuality.medium] and
 /// [FilterQuality.high] for more options.
 /// {@endtemplate}
-		public IntPtr filterQuality { get; set; }
+		public FilterQuality filterQuality { get; set; }
 
 	}
 }

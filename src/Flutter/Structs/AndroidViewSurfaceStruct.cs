@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -30,18 +30,21 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AndroidViewSurfaceStruct : WidgetStruct
 	{
+		// Simple field: controller
 /// The controller for the platform view integrated by this [AndroidViewSurface].
 /// 
 /// See [PlatformViewSurface.controller] for details.
 		public IntPtr controller { get; set; }
 
+		// Simple field: gestureRecognizers
 /// Which gestures should be forwarded to the PlatformView.
 /// 
 /// See [PlatformViewSurface.gestureRecognizers] for details.
 		public IntPtr gestureRecognizers { get; set; }
 
+		// Simple field: hitTestBehavior
 /// {@macro flutter.widgets.AndroidView.hitTestBehavior}
-		public IntPtr hitTestBehavior { get; set; }
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
 	}
 }

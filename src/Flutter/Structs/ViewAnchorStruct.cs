@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -40,27 +40,36 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ViewAnchorStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _view;
+		// Has flag for nullable property: view
+		public byte Hasview { get; set; }
+
+		// Widget field: view
+		private IntPtr _view;
+
 /// The widget that defines the view anchored to this widget.
 /// 
 /// Typically, a [View] or [ViewCollection] widget is used, which may be
 /// wrapped in other non-[RenderObjectWidget]s (e.g. [InheritedWidget]s).
 /// 
 /// {@macro flutter.widgets.ViewAnchor}
-		public Widget? view
+		public IntPtr? view
 		{
+			get => _view != IntPtr.Zero ? (IntPtr)_view : null;
 			set => SetIntPtr(ref _view, value);
 		}
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// It is rendered into the surrounding view, not in the view defined by
 /// [view].
 /// 
 /// {@macro flutter.widgets.ViewAnchor}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

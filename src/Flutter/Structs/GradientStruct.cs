@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -23,6 +23,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class GradientStruct : WidgetStruct
 	{
+		// Simple field: colors
 /// The colors the gradient should obtain at each of the stops.
 /// 
 /// If [stops] is non-null, this list must have the same length as [stops].
@@ -31,6 +32,10 @@ namespace Flutter.Structs
 /// gradient!).
 		public IntPtr colors { get; set; }
 
+		// Has flag for nullable property: stops
+		public byte Hasstops { get; set; }
+
+		// Simple field: stops
 /// A list of values from 0.0 to 1.0 that denote fractions along the gradient.
 /// 
 /// If non-null, this list must have the same length as [colors].
@@ -49,6 +54,10 @@ namespace Flutter.Structs
 /// with the first stop at 0.0 and the last stop at 1.0.
 		public IntPtr? stops { get; set; }
 
+		// Has flag for nullable property: transform
+		public byte Hastransform { get; set; }
+
+		// Simple field: transform
 /// The transform, if any, to apply to the gradient.
 /// 
 /// This transform is in addition to any other transformations applied to the

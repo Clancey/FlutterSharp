@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -68,19 +71,19 @@ namespace Flutter.Widgets
 			ImageProvider? _placeholder,
 			ImageProvider _image,
 			TimeSpan _fadeOutDuration,
-			InvalidType _fadeOutCurve,
+			object _fadeOutCurve,
 			TimeSpan _fadeInDuration,
-			InvalidType _fadeInCurve,
+			object _fadeInCurve,
 			Color? _color,
-			InvalidType _colorBlendMode,
-			InvalidType _placeholderColor,
-			InvalidType _placeholderColorBlendMode,
-			InvalidType _fit,
-			InvalidType _placeholderFit,
-			InvalidType _filterQuality,
-			InvalidType _placeholderFilterQuality,
+			object _colorBlendMode,
+			Color _placeholderColor,
+			object _placeholderColorBlendMode,
+			BoxFit _fit,
+			object _placeholderFit,
+			FilterQuality _filterQuality,
+			object _placeholderFilterQuality,
 			AlignmentGeometry? _alignment,
-			InvalidType _repeat,
+			object _repeat,
 			bool _matchTextDirection,
 			bool _excludeFromSemantics
 ,

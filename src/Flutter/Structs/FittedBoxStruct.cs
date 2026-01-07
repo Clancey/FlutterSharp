@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -32,9 +32,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class FittedBoxStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: fit
 /// How to inscribe the child into the space allocated during layout.
-		public IntPtr fit { get; set; }
+		public BoxFit fit { get; set; }
 
+		// Simple field: alignment
 /// How to align the child within its parent's bounds.
 /// 
 /// An alignment of (-1.0, -1.0) aligns the child to the top-left corner of its
@@ -51,14 +53,21 @@ namespace Flutter.Structs
 /// relative to text direction.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

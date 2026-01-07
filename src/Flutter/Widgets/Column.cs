@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -187,13 +190,13 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Column(
 
-			InvalidType _mainAxisAlignment = null,
-			InvalidType _mainAxisSize = null,
-			InvalidType _crossAxisAlignment = null,
+			MainAxisAlignment? _mainAxisAlignment = null,
+			MainAxisSize? _mainAxisSize = null,
+			CrossAxisAlignment? _crossAxisAlignment = null,
 			TextDirection? _textDirection = null,
-			InvalidType _verticalDirection = null,
-			InvalidType _textBaseline = null,
-			double _spacing = 0.0,
+			VerticalDirection? _verticalDirection = null,
+			TextBaseline? _textBaseline = null,
+			double? _spacing = null,
 			List<Widget> _children = null
 		)
 		{

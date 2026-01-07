@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -102,8 +102,16 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ImageStruct : WidgetStruct
 	{
+		// Simple field: image
 /// The image to display.
 		public IntPtr image { get; set; }
+
+		// Has flag for nullable property: frameBuilder
+		public byte HasframeBuilder { get; set; }
+
+		// Callback field: frameBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _frameBuilder;
 
 /// A builder function responsible for creating the widget that represents
 /// this image.
@@ -164,7 +172,23 @@ namespace Flutter.Structs
 /// 
 /// ** See code in examples/api/lib/widgets/image/image.frame_builder.0.dart **
 /// {@end-tool}
-		public IntPtr? frameBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for frameBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? frameBuilderAction
+		{
+			get => GetString(_frameBuilder);
+			set => SetString(ref _frameBuilder, value);
+		}
+
+		// Has flag for nullable property: loadingBuilder
+		public byte HasloadingBuilder { get; set; }
+
+		// Callback field: loadingBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _loadingBuilder;
 
 /// A builder that specifies the widget to display to the user while an image
 /// is still loading.
@@ -207,7 +231,23 @@ namespace Flutter.Structs
 /// before rendering the completed image.
 /// 
 /// {@animation 400 400 https://flutter.github.io/assets-for-api-docs/assets/widgets/loading_progress_image.mp4}
-		public IntPtr? loadingBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for loadingBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? loadingBuilderAction
+		{
+			get => GetString(_loadingBuilder);
+			set => SetString(ref _loadingBuilder, value);
+		}
+
+		// Has flag for nullable property: errorBuilder
+		public byte HaserrorBuilder { get; set; }
+
+		// Callback field: errorBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _errorBuilder;
 
 /// A builder function that is called if an error occurs during image loading.
 /// 
@@ -221,8 +261,21 @@ namespace Flutter.Structs
 /// 
 /// ** See code in examples/api/lib/widgets/image/image.error_builder.0.dart **
 /// {@end-tool}
-		public IntPtr? errorBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for errorBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? errorBuilderAction
+		{
+			get => GetString(_errorBuilder);
+			set => SetString(ref _errorBuilder, value);
+		}
 
+		// Has flag for nullable property: width
+		public byte Haswidth { get; set; }
+
+		// Nullable value type: width
 /// If non-null, require the image to have this width (in logical pixels).
 /// 
 /// If null, the image will pick a size that best preserves its intrinsic
@@ -235,6 +288,10 @@ namespace Flutter.Structs
 /// and height if the exact image dimensions are not known in advance.
 		public NativeNullable<double> width { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 /// If non-null, require the image to have this height (in logical pixels).
 /// 
 /// If null, the image will pick a size that best preserves its intrinsic
@@ -247,9 +304,11 @@ namespace Flutter.Structs
 /// and height if the exact image dimensions are not known in advance.
 		public NativeNullable<double> height { get; set; }
 
+		// Simple field: color
 /// If non-null, this color is blended with each image pixel using [colorBlendMode].
 		public IntPtr color { get; set; }
 
+		// Simple field: opacity
 /// If non-null, the value from the [Animation] is multiplied with the opacity
 /// of each image pixel before painting onto the canvas.
 /// 
@@ -264,6 +323,7 @@ namespace Flutter.Structs
 /// from a single opacity value.
 		public IntPtr opacity { get; set; }
 
+		// Simple field: filterQuality
 /// The rendering quality of the image.
 /// 
 /// {@template flutter.widgets.image.filterQuality}
@@ -284,8 +344,9 @@ namespace Flutter.Structs
 /// * [FilterQuality], the enum containing all possible filter quality
 /// options.
 /// {@endtemplate}
-		public IntPtr filterQuality { get; set; }
+		public FilterQuality filterQuality { get; set; }
 
+		// Simple field: colorBlendMode
 /// Used to combine [color] with this image.
 /// 
 /// The default is [BlendMode.srcIn]. In terms of the blend mode, [color] is
@@ -296,12 +357,14 @@ namespace Flutter.Structs
 /// * [BlendMode], which includes an illustration of the effect of each blend mode.
 		public IntPtr colorBlendMode { get; set; }
 
+		// Simple field: fit
 /// How to inscribe the image into the space allocated during layout.
 /// 
 /// The default varies based on the other fields. See the discussion at
 /// [paintImage].
-		public IntPtr fit { get; set; }
+		public BoxFit fit { get; set; }
 
+		// Simple field: alignment
 /// How to align the image within its bounds.
 /// 
 /// The alignment aligns the given position in the image to the given position
@@ -329,9 +392,11 @@ namespace Flutter.Structs
 /// relative to text direction.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: repeat
 /// How to paint any portions of the layout bounds not covered by the image.
 		public IntPtr repeat { get; set; }
 
+		// Simple field: centerSlice
 /// The center slice for a nine-patch image.
 /// 
 /// The region of the image inside the center slice will be stretched both
@@ -341,6 +406,7 @@ namespace Flutter.Structs
 /// the center slice will be stretched only vertically.
 		public IntPtr centerSlice { get; set; }
 
+		// Simple field: matchTextDirection
 /// Whether to paint the image in the direction of the [TextDirection].
 /// 
 /// If this is true, then in [TextDirection.ltr] contexts, the image will be
@@ -358,6 +424,7 @@ namespace Flutter.Structs
 /// scope.
 		public bool matchTextDirection { get; set; }
 
+		// Simple field: gaplessPlayback
 /// Whether to continue showing the old image (true), or briefly show nothing
 /// (false), when the image provider changes. The default value is false.
 /// 
@@ -388,7 +455,12 @@ namespace Flutter.Structs
 /// expectation and re-use the old widget.
 		public bool gaplessPlayback { get; set; }
 
-		IntPtr _semanticLabel;
+		// Has flag for nullable property: semanticLabel
+		public byte HassemanticLabel { get; set; }
+
+		// String field: semanticLabel
+		private IntPtr _semanticLabel;
+
 /// A Semantic description of the image.
 /// 
 /// Used to provide a description of the image to TalkBack on Android, and
@@ -399,12 +471,14 @@ namespace Flutter.Structs
 			set => SetString(ref _semanticLabel, value);
 		}
 
+		// Simple field: excludeFromSemantics
 /// Whether to exclude this image from semantics.
 /// 
 /// Useful for images which do not contribute meaningful information to an
 /// application.
 		public bool excludeFromSemantics { get; set; }
 
+		// Simple field: isAntiAlias
 /// Whether to paint the image with anti-aliasing.
 /// 
 /// Anti-aliasing alleviates the sawtooth artifact when the image is rotated.

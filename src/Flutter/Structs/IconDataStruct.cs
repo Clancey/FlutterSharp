@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -23,10 +23,16 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class IconDataStruct : WidgetStruct
 	{
+		// Simple field: codePoint
 /// The Unicode code point at which this icon is stored in the icon font.
 		public int codePoint { get; set; }
 
-		IntPtr _fontFamily;
+		// Has flag for nullable property: fontFamily
+		public byte HasfontFamily { get; set; }
+
+		// String field: fontFamily
+		private IntPtr _fontFamily;
+
 /// The font family from which the glyph for the [codePoint] will be selected.
 		public string? fontFamily
 		{
@@ -34,7 +40,12 @@ namespace Flutter.Structs
 			set => SetString(ref _fontFamily, value);
 		}
 
-		IntPtr _fontPackage;
+		// Has flag for nullable property: fontPackage
+		public byte HasfontPackage { get; set; }
+
+		// String field: fontPackage
+		private IntPtr _fontPackage;
+
 /// The name of the package from which the font family is included.
 /// 
 /// The name is used by the [Icon] widget when configuring the [TextStyle] so
@@ -49,6 +60,7 @@ namespace Flutter.Structs
 			set => SetString(ref _fontPackage, value);
 		}
 
+		// Simple field: matchTextDirection
 /// Whether this icon should be automatically mirrored in right-to-left
 /// environments.
 /// 
@@ -56,11 +68,16 @@ namespace Flutter.Structs
 /// [Directionality] is [TextDirection.rtl].
 		public bool matchTextDirection { get; set; }
 
+		// Has flag for nullable property: fontFamilyFallback
+		public byte HasfontFamilyFallback { get; set; }
+
+		// Simple field: fontFamilyFallback
 /// The ordered list of font families to fall back on when a glyph cannot be found in a higher priority font family.
 /// 
 /// For more details, refer to the documentation of [TextStyle]
 		public IntPtr? fontFamilyFallback { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
 	}

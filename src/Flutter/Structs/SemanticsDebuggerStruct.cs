@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -19,15 +19,19 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SemanticsDebuggerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: labelStyle
 /// The [TextStyle] to use when rendering semantics labels.
 		public IntPtr labelStyle { get; set; }
 

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -18,9 +18,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SizeStruct : WidgetStruct
 	{
+		// Simple field: width
 /// The horizontal extent of this size.
 		public double width { get; set; }
 
+		// Simple field: height
 /// The vertical extent of this size.
 		public double height { get; set; }
 

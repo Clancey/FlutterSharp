@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -35,6 +35,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PhysicalShapeStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: clipper
 /// Determines which clip to use.
 /// 
 /// If the path in question is expressed as a [ShapeBorder] subclass,
@@ -42,26 +43,36 @@ namespace Flutter.Structs
 /// shape for use with this widget.
 		public IntPtr clipper { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: elevation
 /// The z-coordinate relative to the parent at which to place this physical
 /// object.
 /// 
 /// The value is non-negative.
 		public double elevation { get; set; }
 
+		// Simple field: color
 /// The background color.
 		public IntPtr color { get; set; }
 
+		// Simple field: shadowColor
 /// When elevation is non zero the color to use for the shadow color.
 		public IntPtr shadowColor { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

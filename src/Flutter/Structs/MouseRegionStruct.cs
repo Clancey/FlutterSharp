@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -45,6 +45,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class MouseRegionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: onEnter
 /// Triggered when a mouse pointer has entered this widget.
 /// 
 /// This callback is triggered when the pointer, with or without buttons
@@ -73,6 +74,7 @@ namespace Flutter.Structs
 /// internally implemented.
 		public IntPtr onEnter { get; set; }
 
+		// Simple field: onHover
 /// Triggered when a pointer moves into a position within this widget without
 /// buttons pressed.
 /// 
@@ -92,6 +94,7 @@ namespace Flutter.Structs
 /// events.
 		public IntPtr onHover { get; set; }
 
+		// Simple field: onExit
 /// Triggered when a mouse pointer has exited this widget when the widget is
 /// still mounted.
 /// 
@@ -162,6 +165,7 @@ namespace Flutter.Structs
 /// this callback is internally implemented, but without the restriction.
 		public IntPtr onExit { get; set; }
 
+		// Simple field: cursor
 /// The mouse cursor for mouse pointers that are hovering over the region.
 /// 
 /// When a mouse enters the region, its cursor will be changed to the [cursor].
@@ -172,6 +176,7 @@ namespace Flutter.Structs
 /// cursor to the next region behind it in hit-test order.
 		public IntPtr cursor { get; set; }
 
+		// Simple field: opaque
 /// Whether this widget should prevent other [MouseRegion]s visually behind it
 /// from detecting the pointer.
 /// 
@@ -190,14 +195,21 @@ namespace Flutter.Structs
 /// This defaults to true.
 		public bool opaque { get; set; }
 
+		// Simple field: hitTestBehavior
 /// How to behave during hit testing.
 /// 
 /// This defaults to [HitTestBehavior.opaque] if null.
-		public IntPtr hitTestBehavior { get; set; }
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

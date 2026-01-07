@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -37,9 +37,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ImageFilteredStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: imageFilter
 /// The image filter to apply to the child of this widget.
 		public IntPtr imageFilter { get; set; }
 
+		// Simple field: enabled
 /// Whether or not to apply the image filter operation to the child of this
 /// widget.
 /// 
@@ -47,9 +49,15 @@ namespace Flutter.Structs
 /// type for performance reasons.
 		public bool enabled { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

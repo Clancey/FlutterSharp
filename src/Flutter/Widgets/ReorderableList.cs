@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -49,13 +52,13 @@ namespace Flutter.Widgets
 			int _itemCount,
 			Action<int, int> _onReorder,
 			EdgeInsetsGeometry? _padding,
-			InvalidType _scrollDirection,
+			Axis _scrollDirection,
 			bool _reverse,
 			bool _shrinkWrap,
 			double _anchor,
-			InvalidType _dragStartBehavior,
+			DragStartBehavior _dragStartBehavior,
 			Clip _clipBehavior,
-			InvalidType _itemExtentBuilder
+			object _itemExtentBuilder
 ,
 			Action<int> _onReorderStart = null,
 			Action<int> _onReorderEnd = null,

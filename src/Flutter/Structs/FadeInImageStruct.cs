@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -61,8 +61,16 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class FadeInImageStruct : WidgetStruct
 	{
+		// Simple field: placeholder
 /// Image displayed while the target [image] is loading.
 		public IntPtr placeholder { get; set; }
+
+		// Has flag for nullable property: placeholderErrorBuilder
+		public byte HasplaceholderErrorBuilder { get; set; }
+
+		// Callback field: placeholderErrorBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _placeholderErrorBuilder;
 
 /// A builder function that is called if an error occurs during placeholder
 /// image loading.
@@ -70,30 +78,64 @@ namespace Flutter.Structs
 /// If this builder is not provided, any exceptions will be reported to
 /// [FlutterError.onError]. If it is provided, the caller should either handle
 /// the exception by providing a replacement widget, or rethrow the exception.
-		public IntPtr? placeholderErrorBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for placeholderErrorBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? placeholderErrorBuilderAction
+		{
+			get => GetString(_placeholderErrorBuilder);
+			set => SetString(ref _placeholderErrorBuilder, value);
+		}
 
+		// Simple field: image
 /// The target image that is displayed once it has loaded.
 		public IntPtr image { get; set; }
+
+		// Has flag for nullable property: imageErrorBuilder
+		public byte HasimageErrorBuilder { get; set; }
+
+		// Callback field: imageErrorBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _imageErrorBuilder;
 
 /// A builder function that is called if an error occurs during image loading.
 /// 
 /// If this builder is not provided, any exceptions will be reported to
 /// [FlutterError.onError]. If it is provided, the caller should either handle
 /// the exception by providing a replacement widget, or rethrow the exception.
-		public IntPtr? imageErrorBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for imageErrorBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? imageErrorBuilderAction
+		{
+			get => GetString(_imageErrorBuilder);
+			set => SetString(ref _imageErrorBuilder, value);
+		}
 
+		// Simple field: fadeOutDuration
 /// The duration of the fade-out animation for the [placeholder].
 		public IntPtr fadeOutDuration { get; set; }
 
+		// Simple field: fadeOutCurve
 /// The curve of the fade-out animation for the [placeholder].
 		public IntPtr fadeOutCurve { get; set; }
 
+		// Simple field: fadeInDuration
 /// The duration of the fade-in animation for the [image].
 		public IntPtr fadeInDuration { get; set; }
 
+		// Simple field: fadeInCurve
 /// The curve of the fade-in animation for the [image].
 		public IntPtr fadeInCurve { get; set; }
 
+		// Has flag for nullable property: width
+		public byte Haswidth { get; set; }
+
+		// Nullable value type: width
 /// If non-null, require the image to have this width.
 /// 
 /// If null, the image will pick a size that best preserves its intrinsic
@@ -102,6 +144,7 @@ namespace Flutter.Structs
 /// also affected by the scale factor.
 		public NativeNullable<double> width { get; set; }
 
+		// Simple field: color
 /// If non-null, this color is blended with each image pixel using [colorBlendMode].
 /// 
 /// Color applies to the [image].
@@ -111,6 +154,7 @@ namespace Flutter.Structs
 /// * [placeholderColor], the color which applies to the [placeholder].
 		public IntPtr color { get; set; }
 
+		// Simple field: colorBlendMode
 /// Used to combine [color] with this [image].
 /// 
 /// The default is [BlendMode.srcIn]. In terms of the blend mode, [color] is
@@ -122,6 +166,7 @@ namespace Flutter.Structs
 /// * [placeholderColorBlendMode], the color blend mode which applies to the [placeholder].
 		public IntPtr colorBlendMode { get; set; }
 
+		// Simple field: placeholderColor
 /// If non-null, this color is blended with each placeholder image pixel using [placeholderColorBlendMode].
 /// 
 /// Color applies to the [placeholder].
@@ -131,6 +176,7 @@ namespace Flutter.Structs
 /// * [color], the color which applies to the [image].
 		public IntPtr placeholderColor { get; set; }
 
+		// Simple field: placeholderColorBlendMode
 /// Used to combine [placeholderColor] with the [placeholder] image.
 /// 
 /// The default is [BlendMode.srcIn]. In terms of the blend mode, [placeholderColor] is
@@ -142,6 +188,10 @@ namespace Flutter.Structs
 /// * [colorBlendMode], the color blend mode which applies to the [image].
 		public IntPtr placeholderColorBlendMode { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 /// If non-null, require the image to have this height.
 /// 
 /// If null, the image will pick a size that best preserves its intrinsic
@@ -150,27 +200,32 @@ namespace Flutter.Structs
 /// also affected by the scale factor.
 		public NativeNullable<double> height { get; set; }
 
+		// Simple field: fit
 /// How to inscribe the image into the space allocated during layout.
 /// 
 /// The default varies based on the other fields. See the discussion at
 /// [paintImage].
-		public IntPtr fit { get; set; }
+		public BoxFit fit { get; set; }
 
+		// Simple field: placeholderFit
 /// How to inscribe the placeholder image into the space allocated during layout.
 /// 
 /// If not value set, it will fallback to [fit].
 		public IntPtr placeholderFit { get; set; }
 
+		// Simple field: filterQuality
 /// The rendering quality of the image.
 /// 
 /// {@macro flutter.widgets.image.filterQuality}
-		public IntPtr filterQuality { get; set; }
+		public FilterQuality filterQuality { get; set; }
 
+		// Simple field: placeholderFilterQuality
 /// The rendering quality of the placeholder image.
 /// 
 /// {@macro flutter.widgets.image.filterQuality}
 		public IntPtr placeholderFilterQuality { get; set; }
 
+		// Simple field: alignment
 /// How to align the image within its bounds.
 /// 
 /// The alignment aligns the given position in the image to the given position
@@ -195,9 +250,11 @@ namespace Flutter.Structs
 /// relative to text direction.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: repeat
 /// How to paint any portions of the layout bounds not covered by the image.
 		public IntPtr repeat { get; set; }
 
+		// Simple field: matchTextDirection
 /// Whether to paint the image in the direction of the [TextDirection].
 /// 
 /// If this is true, then in [TextDirection.ltr] contexts, the image will be
@@ -215,13 +272,19 @@ namespace Flutter.Structs
 /// scope.
 		public bool matchTextDirection { get; set; }
 
+		// Simple field: excludeFromSemantics
 /// Whether to exclude this image from semantics.
 /// 
 /// This is useful for images which do not contribute meaningful information
 /// to an application.
 		public bool excludeFromSemantics { get; set; }
 
-		IntPtr _imageSemanticLabel;
+		// Has flag for nullable property: imageSemanticLabel
+		public byte HasimageSemanticLabel { get; set; }
+
+		// String field: imageSemanticLabel
+		private IntPtr _imageSemanticLabel;
+
 /// A semantic description of the [image].
 /// 
 /// Used to provide a description of the [image] to TalkBack on Android, and

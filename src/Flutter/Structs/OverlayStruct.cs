@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -55,6 +55,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class OverlayStruct : WidgetStruct
 	{
+		// Simple field: initialEntries
 /// The entries to include in the overlay initially.
 /// 
 /// These entries are only used when the [OverlayState] is initialized. If you
@@ -70,6 +71,7 @@ namespace Flutter.Structs
 /// To remove an entry from an [Overlay], use [OverlayEntry.remove].
 		public IntPtr initialEntries { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].

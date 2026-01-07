@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -31,7 +34,7 @@ namespace Flutter.Widgets
 		public DefaultSelectionStyle(
 			Color _cursorColor,
 			Color? _selectionColor,
-			InvalidType _mouseCursor,
+			object _mouseCursor,
 			Widget _child
 
 		)

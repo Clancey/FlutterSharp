@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -26,12 +26,15 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PlaceholderStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: color
 /// The color to draw the placeholder box.
 		public IntPtr color { get; set; }
 
+		// Simple field: strokeWidth
 /// The width of the lines in the placeholder box.
 		public double strokeWidth { get; set; }
 
+		// Simple field: fallbackWidth
 /// The width to use when the placeholder is in a situation with an unbounded
 /// width.
 /// 
@@ -40,6 +43,7 @@ namespace Flutter.Structs
 /// * [fallbackHeight], the same but vertically.
 		public double fallbackWidth { get; set; }
 
+		// Simple field: fallbackHeight
 /// The height to use when the placeholder is in a situation with an unbounded
 /// height.
 /// 
@@ -48,12 +52,18 @@ namespace Flutter.Structs
 /// * [fallbackWidth], the same but horizontally.
 		public double fallbackHeight { get; set; }
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The [child] contained by the placeholder box.
 /// 
 /// Defaults to null.
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -46,6 +46,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class FocusableActionDetectorStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: enabled
 /// Is this widget enabled or not.
 /// 
 /// If disabled, will not send any notifications needed to update highlight or
@@ -55,40 +56,59 @@ namespace Flutter.Structs
 /// [Focus.canRequestFocus] to false.
 		public bool enabled { get; set; }
 
+		// Has flag for nullable property: focusNode
+		public byte HasfocusNode { get; set; }
+
+		// Simple field: focusNode
 /// {@macro flutter.widgets.Focus.focusNode}
 		public IntPtr? focusNode { get; set; }
 
+		// Simple field: autofocus
 /// {@macro flutter.widgets.Focus.autofocus}
 		public bool autofocus { get; set; }
 
+		// Simple field: descendantsAreFocusable
 /// {@macro flutter.widgets.Focus.descendantsAreFocusable}
 		public bool descendantsAreFocusable { get; set; }
 
+		// Simple field: descendantsAreTraversable
 /// {@macro flutter.widgets.Focus.descendantsAreTraversable}
 		public bool descendantsAreTraversable { get; set; }
 
+		// Has flag for nullable property: actions
+		public byte Hasactions { get; set; }
+
+		// Simple field: actions
 /// {@macro flutter.widgets.actions.actions}
 		public IntPtr? actions { get; set; }
 
+		// Has flag for nullable property: shortcuts
+		public byte Hasshortcuts { get; set; }
+
+		// Simple field: shortcuts
 /// {@macro flutter.widgets.shortcuts.shortcuts}
 		public IntPtr? shortcuts { get; set; }
 
+		// Simple field: onShowFocusHighlight
 /// A function that will be called when the focus highlight should be shown or
 /// hidden.
 /// 
 /// This method is not triggered at the unmount of the widget.
 		public IntPtr onShowFocusHighlight { get; set; }
 
+		// Simple field: onShowHoverHighlight
 /// A function that will be called when the hover highlight should be shown or hidden.
 /// 
 /// This method is not triggered at the unmount of the widget.
 		public IntPtr onShowHoverHighlight { get; set; }
 
+		// Simple field: onFocusChange
 /// A function that will be called when the focus changes.
 /// 
 /// Called with true if the [focusNode] has primary focus.
 		public IntPtr onFocusChange { get; set; }
 
+		// Simple field: mouseCursor
 /// The cursor for a mouse pointer when it enters or is hovering over the
 /// widget.
 /// 
@@ -96,17 +116,21 @@ namespace Flutter.Structs
 /// cursor to the next region behind it in hit-test order.
 		public IntPtr mouseCursor { get; set; }
 
+		// Simple field: includeFocusSemantics
 /// Whether to include semantics from [Focus].
 /// 
 /// Defaults to true.
 		public bool includeFocusSemantics { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The child widget for this [FocusableActionDetector] widget.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

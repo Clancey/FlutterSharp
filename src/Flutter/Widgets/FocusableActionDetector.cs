@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -54,10 +57,10 @@ namespace Flutter.Widgets
 			bool _autofocus,
 			bool _descendantsAreFocusable,
 			bool _descendantsAreTraversable,
-			InvalidType _onShowFocusHighlight,
-			InvalidType _onShowHoverHighlight,
-			InvalidType _onFocusChange,
-			InvalidType _mouseCursor,
+			Action _onShowFocusHighlight,
+			Action _onShowHoverHighlight,
+			Action _onFocusChange,
+			object _mouseCursor,
 			bool _includeFocusSemantics,
 			Widget _child
 ,

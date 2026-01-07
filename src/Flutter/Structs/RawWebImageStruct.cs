@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -17,10 +17,16 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RawWebImageStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: image
 /// The underlying HTML element to be displayed.
 		public IntPtr image { get; set; }
 
-		IntPtr _debugImageLabel;
+		// Has flag for nullable property: debugImageLabel
+		public byte HasdebugImageLabel { get; set; }
+
+		// String field: debugImageLabel
+		private IntPtr _debugImageLabel;
+
 /// A debug label explaining the image.
 		public string? debugImageLabel
 		{
@@ -28,18 +34,29 @@ namespace Flutter.Structs
 			set => SetString(ref _debugImageLabel, value);
 		}
 
+		// Has flag for nullable property: width
+		public byte Haswidth { get; set; }
+
+		// Nullable value type: width
 /// The requested width for this widget.
 		public NativeNullable<double> width { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 /// The requested height for this widget.
 		public NativeNullable<double> height { get; set; }
 
+		// Simple field: fit
 /// How the HTML element should be inscribed in the box constraining it.
-		public IntPtr fit { get; set; }
+		public BoxFit fit { get; set; }
 
+		// Simple field: alignment
 /// How the image should be aligned in the box constraining it.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: matchTextDirection
 /// Whether or not the alignment of the image should match the text direction.
 		public bool matchTextDirection { get; set; }
 

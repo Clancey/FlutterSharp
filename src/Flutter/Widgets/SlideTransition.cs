@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -52,8 +55,7 @@ namespace Flutter.Widgets
 		public SlideTransition(
 			TextDirection _textDirection,
 			bool _transformHitTests,
-			InvalidType _position,
-			object _listenable
+			object _position
 ,
 			Widget? _child = null
 		)

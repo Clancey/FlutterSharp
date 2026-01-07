@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -56,17 +56,25 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DecoratedBoxStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: decoration
 /// What decoration to paint.
 /// 
 /// Commonly a [BoxDecoration].
 		public IntPtr decoration { get; set; }
 
+		// Simple field: position
 /// Whether to paint the box decoration behind or in front of the child.
 		public IntPtr position { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

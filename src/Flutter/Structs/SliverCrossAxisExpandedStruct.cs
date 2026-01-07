@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -22,17 +22,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverCrossAxisExpandedStruct : WidgetStruct
 	{
+		// Simple field: flex
 /// Flex value for allocating cross axis extent left after laying out the children with
 /// constrained cross axis. The children with flex values will have the remaining extent
 /// allocated proportionally to their flex value. This must an integer between
 /// 0 and infinity, exclusive.
 		public int flex { get; set; }
 
+		// Simple field: debugTypicalAncestorWidgetClass
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }
 
-		IntPtr _sliver;
-		public Widget sliver
+		// Widget field: sliver
+		private IntPtr _sliver;
+
+		public IntPtr sliver
 		{
+			get => (IntPtr)_sliver;
 			set => SetIntPtr(ref _sliver, value);
 		}
 

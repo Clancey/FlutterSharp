@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -89,11 +92,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TwoDimensionalViewport"/> class.
 		/// </summary>
 		public TwoDimensionalViewport(
-			InvalidType _verticalOffset,
-			InvalidType _verticalAxisDirection,
-			InvalidType _horizontalOffset,
-			InvalidType _horizontalAxisDirection,
-			InvalidType _mainAxis,
+			object _verticalOffset,
+			object _verticalAxisDirection,
+			object _horizontalOffset,
+			object _horizontalAxisDirection,
+			object _mainAxis,
 			Clip _clipBehavior,
 			TwoDimensionalChildDelegate _delegate
 ,

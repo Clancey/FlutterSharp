@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -24,18 +24,23 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class BorderRadiusStruct : WidgetStruct
 	{
+		// Simple field: topLeft
 /// The top-left [Radius].
 		public IntPtr topLeft { get; set; }
 
+		// Simple field: topRight
 /// The top-right [Radius].
 		public IntPtr topRight { get; set; }
 
+		// Simple field: bottomLeft
 /// The bottom-left [Radius].
 		public IntPtr bottomLeft { get; set; }
 
+		// Simple field: bottomRight
 /// The bottom-right [Radius].
 		public IntPtr bottomRight { get; set; }
 
+		// Simple field: radius
 		public IntPtr radius { get; set; }
 
 	}

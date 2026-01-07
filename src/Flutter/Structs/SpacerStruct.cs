@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -48,6 +48,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SpacerStruct : WidgetStruct
 	{
+		// Simple field: flex
 /// The flex factor to use in determining how much space to take up.
 /// 
 /// The amount of space the [Spacer] can occupy in the main axis is determined

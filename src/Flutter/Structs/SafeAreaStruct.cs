@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -62,24 +62,30 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SafeAreaStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: left
 /// Whether to avoid system intrusions on the left.
 		public bool left { get; set; }
 
+		// Simple field: top
 /// Whether to avoid system intrusions at the top of the screen, typically the
 /// system status bar.
 		public bool top { get; set; }
 
+		// Simple field: right
 /// Whether to avoid system intrusions on the right.
 		public bool right { get; set; }
 
+		// Simple field: bottom
 /// Whether to avoid system intrusions on the bottom side of the screen.
 		public bool bottom { get; set; }
 
+		// Simple field: minimum
 /// This minimum padding to apply.
 /// 
 /// The greater of the minimum insets and the media padding will be applied.
 		public IntPtr minimum { get; set; }
 
+		// Simple field: maintainBottomViewPadding
 /// Specifies whether the [SafeArea] should maintain the bottom
 /// [MediaQueryData.viewPadding] instead of the bottom [MediaQueryData.padding],
 /// defaults to false.
@@ -92,15 +98,18 @@ namespace Flutter.Structs
 /// avoid the UI shift.
 		public bool maintainBottomViewPadding { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// The padding on the [MediaQuery] for the [child] will be suitably adjusted
 /// to zero out any sides that were avoided by this widget.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

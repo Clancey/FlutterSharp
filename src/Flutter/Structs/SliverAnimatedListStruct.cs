@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -39,10 +39,40 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverAnimatedListStruct : WidgetStruct
 	{
-		public IntPtr itemBuilder { get; set; }
+		// Callback field: itemBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _itemBuilder;
 
-		public IntPtr? findChildIndexCallback { get; set; }
+		/// <summary>
+		/// Action identifier for itemBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? itemBuilderAction
+		{
+			get => GetString(_itemBuilder);
+			set => SetString(ref _itemBuilder, value);
+		}
 
+		// Has flag for nullable property: findChildIndexCallback
+		public byte HasfindChildIndexCallback { get; set; }
+
+		// Callback field: findChildIndexCallback
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _findChildIndexCallback;
+
+		/// <summary>
+		/// Action identifier for findChildIndexCallback callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? findChildIndexCallbackAction
+		{
+			get => GetString(_findChildIndexCallback);
+			set => SetString(ref _findChildIndexCallback, value);
+		}
+
+		// Simple field: initialItemCount
 		public int initialItemCount { get; set; }
 
 	}

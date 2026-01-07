@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -40,12 +43,12 @@ namespace Flutter.Widgets
 			double _overAndUnderCenterOpacity,
 			double _itemExtent,
 			double _squeeze,
-			InvalidType _onSelectedItemChanged,
+			Action _onSelectedItemChanged,
 			bool _renderChildrenOutsideViewport,
 			ListWheelChildDelegate _childDelegate,
 			Clip _clipBehavior,
 			PlatformViewHitTestBehavior _hitTestBehavior,
-			InvalidType _dragStartBehavior,
+			DragStartBehavior _dragStartBehavior,
 			List<Widget> _children
 ,
 			ScrollController? _controller = null,

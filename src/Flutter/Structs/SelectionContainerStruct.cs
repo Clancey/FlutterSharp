@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -45,19 +45,27 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SelectionContainerStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: registrar
 /// The [SelectionRegistrar] this container is registered to.
 /// 
 /// If null, this widget gets the [SelectionRegistrar] from the current
 /// context.
 		public IntPtr registrar { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Has flag for nullable property: @delegate
+		public byte Hasdelegate { get; set; }
+
+		// Simple field: @delegate
 /// The delegate for [SelectionEvent]s sent to this selection container.
 /// 
 /// The [Selectable]s in the subtree are added or removed from this delegate

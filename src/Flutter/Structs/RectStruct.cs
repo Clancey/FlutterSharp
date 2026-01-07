@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -24,15 +24,19 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RectStruct : WidgetStruct
 	{
+		// Simple field: left
 /// The offset of the left edge of this rectangle from the x axis.
 		public double left { get; set; }
 
+		// Simple field: top
 /// The offset of the top edge of this rectangle from the y axis.
 		public double top { get; set; }
 
+		// Simple field: right
 /// The offset of the right edge of this rectangle from the x axis.
 		public double right { get; set; }
 
+		// Simple field: bottom
 /// The offset of the bottom edge of this rectangle from the y axis.
 		public double bottom { get; set; }
 

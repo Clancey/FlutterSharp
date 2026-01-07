@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -31,6 +31,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedModalBarrierStruct : WidgetStruct
 	{
+		// Simple field: dismissible
 /// Whether touching the barrier will pop the current route off the [Navigator].
 /// 
 /// See also:
@@ -39,7 +40,12 @@ namespace Flutter.Structs
 /// [AnimatedModalBarrier] built by [ModalRoute] pages.
 		public bool dismissible { get; set; }
 
-		IntPtr _semanticsLabel;
+		// Has flag for nullable property: semanticsLabel
+		public byte HassemanticsLabel { get; set; }
+
+		// String field: semanticsLabel
+		private IntPtr _semanticsLabel;
+
 /// Semantics label used for the barrier if it is [dismissible].
 /// 
 /// The semantics label is read out by accessibility tools (e.g. TalkBack
@@ -54,6 +60,10 @@ namespace Flutter.Structs
 			set => SetString(ref _semanticsLabel, value);
 		}
 
+		// Has flag for nullable property: barrierSemanticsDismissible
+		public byte HasbarrierSemanticsDismissible { get; set; }
+
+		// Nullable value type: barrierSemanticsDismissible
 /// Whether the modal barrier semantics are included in the semantics tree.
 /// 
 /// See also:
@@ -62,13 +72,20 @@ namespace Flutter.Structs
 /// the [ModalBarrier] built by [ModalRoute] pages.
 		public NativeNullable<bool> barrierSemanticsDismissible { get; set; }
 
+		// Simple field: onDismiss
 /// {@macro flutter.widgets.ModalBarrier.onDismiss}
 		public IntPtr onDismiss { get; set; }
 
+		// Simple field: clipDetailsNotifier
 /// {@macro flutter.widgets.ModalBarrier.clipDetailsNotifier}
 		public IntPtr clipDetailsNotifier { get; set; }
 
-		IntPtr _semanticsOnTapHint;
+		// Has flag for nullable property: semanticsOnTapHint
+		public byte HassemanticsOnTapHint { get; set; }
+
+		// String field: semanticsOnTapHint
+		private IntPtr _semanticsOnTapHint;
+
 /// This hint text instructs users what they are able to do when they tap on
 /// the [ModalBarrier]
 /// 
@@ -83,6 +100,7 @@ namespace Flutter.Structs
 			set => SetString(ref _semanticsOnTapHint, value);
 		}
 
+		// Simple field: color
 		public IntPtr color { get; set; }
 
 	}

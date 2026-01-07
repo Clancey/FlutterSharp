@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -59,12 +62,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public PageView(
 			bool _allowImplicitScrolling,
-			InvalidType _scrollDirection,
+			Axis _scrollDirection,
 			bool _reverse,
 			bool _pageSnapping,
-			InvalidType _onPageChanged,
+			Action _onPageChanged,
 			SliverChildDelegate _childrenDelegate,
-			InvalidType _dragStartBehavior,
+			DragStartBehavior _dragStartBehavior,
 			Clip _clipBehavior,
 			PlatformViewHitTestBehavior _hitTestBehavior,
 			bool _padEnds

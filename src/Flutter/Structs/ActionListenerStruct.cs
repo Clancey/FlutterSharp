@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -33,16 +33,33 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ActionListenerStruct : SingleChildRenderObjectWidgetStruct
 	{
-/// The [ActionListenerCallback] callback to register with the [action].
-		public IntPtr listener { get; set; }
+		// Callback field: listener
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _listener;
 
+/// The [ActionListenerCallback] callback to register with the [action].
+		/// <summary>
+		/// Action identifier for listener callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? listenerAction
+		{
+			get => GetString(_listener);
+			set => SetString(ref _listener, value);
+		}
+
+		// Simple field: action
 /// The [Action] that the callback will be registered with.
 		public IntPtr action { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

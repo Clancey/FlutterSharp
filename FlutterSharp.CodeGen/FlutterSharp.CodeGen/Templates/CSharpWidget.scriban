@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -30,7 +33,7 @@ namespace {{ namespace }}
 {{~ end ~}}
 {{~ if required_properties.size > 0 && optional_properties.size > 0 }},{{ end }}
 {{~ for prop in optional_properties ~}}
-			{{ prop.type }} {{ prop.backing_field_name }} = {{ if prop.is_generic_type_param }}default{{ else }}{{ prop.default_value ?? "null" }}{{ end }}{{ if !for.last }},{{ end }}
+			{{ prop.nullable_type }} {{ prop.backing_field_name }} = {{ if prop.is_generic_type_param }}default{{ else }}{{ prop.default_value ?? "null" }}{{ end }}{{ if !for.last }},{{ end }}
 {{~ end ~}}
 		)
 		{

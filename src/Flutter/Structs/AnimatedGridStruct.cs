@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -71,6 +71,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedGridStruct : WidgetStruct
 	{
+		// Simple field: gridDelegate
 /// {@template flutter.widgets.AnimatedGrid.gridDelegate}
 /// A delegate that controls the layout of the children within the
 /// [AnimatedGrid].
@@ -84,22 +85,52 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr gridDelegate { get; set; }
 
-		public IntPtr itemBuilder { get; set; }
+		// Callback field: itemBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _itemBuilder;
 
+		/// <summary>
+		/// Action identifier for itemBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? itemBuilderAction
+		{
+			get => GetString(_itemBuilder);
+			set => SetString(ref _itemBuilder, value);
+		}
+
+		// Simple field: initialItemCount
 		public int initialItemCount { get; set; }
 
-		public IntPtr scrollDirection { get; set; }
+		// Simple field: scrollDirection
+		public Axis scrollDirection { get; set; }
 
+		// Simple field: reverse
 		public bool reverse { get; set; }
 
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		// Simple field: controller
 		public IntPtr? controller { get; set; }
 
+		// Has flag for nullable property: primary
+		public byte Hasprimary { get; set; }
+
+		// Nullable value type: primary
 		public NativeNullable<bool> primary { get; set; }
 
+		// Has flag for nullable property: physics
+		public byte Hasphysics { get; set; }
+
+		// Simple field: physics
 		public IntPtr? physics { get; set; }
 
+		// Simple field: padding
 		public IntPtr padding { get; set; }
 
+		// Simple field: clipBehavior
 		public Clip clipBehavior { get; set; }
 
 	}

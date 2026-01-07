@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -40,17 +40,25 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class LimitedBoxStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: maxWidth
 /// The maximum width limit to apply in the absence of a
 /// [BoxConstraints.maxWidth] constraint.
 		public double maxWidth { get; set; }
 
+		// Simple field: maxHeight
 /// The maximum height limit to apply in the absence of a
 /// [BoxConstraints.maxHeight] constraint.
 		public double maxHeight { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

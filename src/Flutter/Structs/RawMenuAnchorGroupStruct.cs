@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -45,16 +45,20 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RawMenuAnchorGroupStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The child displayed by the [RawMenuAnchorGroup].
 /// 
 /// To access the [MenuController] from the [child], place the child in a
 /// builder and call [MenuController.maybeOf].
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: controller
 /// An [MenuController] that allows the closing of the menu from other
 /// widgets.
 		public IntPtr controller { get; set; }

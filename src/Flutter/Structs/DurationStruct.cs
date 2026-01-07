@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -44,6 +44,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DurationStruct : WidgetStruct
 	{
+		// Simple field: inMicroseconds
 /// The number of whole microseconds spanned by this Duration.
 		public int inMicroseconds { get; set; }
 

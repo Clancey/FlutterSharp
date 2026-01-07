@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -30,6 +30,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverOffstageStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: offstage
 /// Whether the sliver child is hidden from the rest of the tree.
 /// 
 /// If true, the sliver child is laid out as if it was in the tree, but
@@ -39,9 +40,15 @@ namespace Flutter.Structs
 /// If false, the sliver child is included in the tree as normal.
 		public bool offstage { get; set; }
 
-		IntPtr _sliver;
-		public Widget? sliver
+		// Has flag for nullable property: sliver
+		public byte Hassliver { get; set; }
+
+		// Widget field: sliver
+		private IntPtr _sliver;
+
+		public IntPtr? sliver
 		{
+			get => _sliver != IntPtr.Zero ? (IntPtr)_sliver : null;
 			set => SetIntPtr(ref _sliver, value);
 		}
 

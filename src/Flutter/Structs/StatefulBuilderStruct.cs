@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -61,6 +61,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class StatefulBuilderStruct : WidgetStruct
 	{
+		// Callback field: builder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _builder;
+
 /// Called to obtain the child widget.
 /// 
 /// This function is called whenever this widget is included in its parent's
@@ -68,7 +72,16 @@ namespace Flutter.Structs
 /// object identity. Typically the parent's build method will construct
 /// a new tree of widgets and so a new Builder child will not be [identical]
 /// to the corresponding old one.
-		public IntPtr builder { get; set; }
+		/// <summary>
+		/// Action identifier for builder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? builderAction
+		{
+			get => GetString(_builder);
+			set => SetString(ref _builder, value);
+		}
 
 	}
 }

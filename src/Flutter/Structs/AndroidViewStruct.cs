@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -57,7 +57,9 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AndroidViewStruct : WidgetStruct
 	{
-		IntPtr _viewType;
+		// String field: viewType
+		private IntPtr _viewType;
+
 /// The unique identifier for Android view type to be embedded by this widget.
 /// 
 /// A [PlatformViewFactory](/javadoc/io/flutter/plugin/platform/PlatformViewFactory.html)
@@ -72,6 +74,7 @@ namespace Flutter.Structs
 			set => SetString(ref _viewType, value);
 		}
 
+		// Simple field: onPlatformViewCreated
 /// {@template flutter.widgets.AndroidView.onPlatformViewCreated}
 /// Callback to invoke after the platform view has been created.
 /// 
@@ -79,13 +82,15 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr onPlatformViewCreated { get; set; }
 
+		// Simple field: hitTestBehavior
 /// {@template flutter.widgets.AndroidView.hitTestBehavior}
 /// How this widget should behave during hit testing.
 /// 
 /// This defaults to [PlatformViewHitTestBehavior.opaque].
 /// {@endtemplate}
-		public IntPtr hitTestBehavior { get; set; }
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
+		// Simple field: layoutDirection
 /// {@template flutter.widgets.AndroidView.layoutDirection}
 /// The text direction to use for the embedded view.
 /// 
@@ -93,6 +98,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr layoutDirection { get; set; }
 
+		// Has flag for nullable property: gestureRecognizers
+		public byte HasgestureRecognizers { get; set; }
+
+		// Simple field: gestureRecognizers
 /// Which gestures should be forwarded to the Android view.
 /// 
 /// {@template flutter.widgets.AndroidView.gestureRecognizers.descHead}
@@ -152,11 +161,13 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? gestureRecognizers { get; set; }
 
+		// Simple field: creationParams
 /// Passed as the args argument of [PlatformViewFactory#create](/javadoc/io/flutter/plugin/platform/PlatformViewFactory.html#create-android.content.Context-int-java.lang.Object-)
 /// 
 /// This can be used by plugins to pass constructor parameters to the embedded Android view.
 		public IntPtr creationParams { get; set; }
 
+		// Simple field: creationParamsCodec
 /// The codec used to encode `creationParams` before sending it to the
 /// platform side. It should match the codec passed to the constructor of [PlatformViewFactory](/javadoc/io/flutter/plugin/platform/PlatformViewFactory.html#PlatformViewFactory-io.flutter.plugin.common.MessageCodec-).
 /// 
@@ -165,6 +176,7 @@ namespace Flutter.Structs
 /// This must not be null if [creationParams] is not null.
 		public IntPtr creationParamsCodec { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].

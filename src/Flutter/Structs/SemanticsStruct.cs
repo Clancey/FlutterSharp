@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -39,10 +39,12 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SemanticsStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: properties
 /// Contains properties used by assistive technologies to make the application
 /// more accessible.
 		public IntPtr properties { get; set; }
 
+		// Simple field: container
 /// If [container] is true, this widget will introduce a new
 /// node in the semantics tree. Otherwise, the semantics will be
 /// merged with the semantics of any ancestors (if the ancestor allows that).
@@ -52,6 +54,7 @@ namespace Flutter.Structs
 /// [explicitChildNodes].
 		public bool container { get; set; }
 
+		// Simple field: explicitChildNodes
 /// Whether descendants of this widget are allowed to add semantic information
 /// to the [SemanticsNode] annotated by this widget.
 /// 
@@ -70,6 +73,7 @@ namespace Flutter.Structs
 /// to create semantic boundaries that are either writable or not for children.
 		public bool explicitChildNodes { get; set; }
 
+		// Simple field: excludeSemantics
 /// Whether to replace all child semantics with this node.
 /// 
 /// Defaults to false.
@@ -79,6 +83,7 @@ namespace Flutter.Structs
 /// an [ExcludeSemantics] widget and then another [Semantics] widget.
 		public bool excludeSemantics { get; set; }
 
+		// Simple field: blockUserActions
 /// Whether to block user interactions for the rendering subtree.
 /// 
 /// Setting this to true will prevent users from interacting with The
@@ -114,193 +119,394 @@ namespace Flutter.Structs
 /// will be blocked.
 		public bool blockUserActions { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Has flag for nullable property: enabled
+		public byte Hasenabled { get; set; }
+
+		// Nullable value type: enabled
 		public NativeNullable<bool> enabled { get; set; }
 
+		// Has flag for nullable property: @checked
+		public byte Haschecked { get; set; }
+
+		// Nullable value type: @checked
 		public NativeNullable<bool> @checked { get; set; }
 
+		// Has flag for nullable property: mixed
+		public byte Hasmixed { get; set; }
+
+		// Nullable value type: mixed
 		public NativeNullable<bool> mixed { get; set; }
 
+		// Has flag for nullable property: selected
+		public byte Hasselected { get; set; }
+
+		// Nullable value type: selected
 		public NativeNullable<bool> selected { get; set; }
 
+		// Has flag for nullable property: toggled
+		public byte Hastoggled { get; set; }
+
+		// Nullable value type: toggled
 		public NativeNullable<bool> toggled { get; set; }
 
+		// Has flag for nullable property: button
+		public byte Hasbutton { get; set; }
+
+		// Nullable value type: button
 		public NativeNullable<bool> button { get; set; }
 
+		// Has flag for nullable property: slider
+		public byte Hasslider { get; set; }
+
+		// Nullable value type: slider
 		public NativeNullable<bool> slider { get; set; }
 
+		// Has flag for nullable property: keyboardKey
+		public byte HaskeyboardKey { get; set; }
+
+		// Nullable value type: keyboardKey
 		public NativeNullable<bool> keyboardKey { get; set; }
 
+		// Has flag for nullable property: link
+		public byte Haslink { get; set; }
+
+		// Nullable value type: link
 		public NativeNullable<bool> link { get; set; }
 
+		// Has flag for nullable property: linkUrl
+		public byte HaslinkUrl { get; set; }
+
+		// Simple field: linkUrl
 		public IntPtr? linkUrl { get; set; }
 
+		// Has flag for nullable property: header
+		public byte Hasheader { get; set; }
+
+		// Nullable value type: header
 		public NativeNullable<bool> header { get; set; }
 
+		// Has flag for nullable property: headingLevel
+		public byte HasheadingLevel { get; set; }
+
+		// Nullable value type: headingLevel
 		public NativeNullable<int> headingLevel { get; set; }
 
+		// Has flag for nullable property: textField
+		public byte HastextField { get; set; }
+
+		// Nullable value type: textField
 		public NativeNullable<bool> textField { get; set; }
 
+		// Has flag for nullable property: @readOnly
+		public byte HasreadOnly { get; set; }
+
+		// Nullable value type: @readOnly
 		public NativeNullable<bool> @readOnly { get; set; }
 
+		// Has flag for nullable property: focusable
+		public byte Hasfocusable { get; set; }
+
+		// Nullable value type: focusable
 		public NativeNullable<bool> focusable { get; set; }
 
+		// Has flag for nullable property: focused
+		public byte Hasfocused { get; set; }
+
+		// Nullable value type: focused
 		public NativeNullable<bool> focused { get; set; }
 
+		// Has flag for nullable property: inMutuallyExclusiveGroup
+		public byte HasinMutuallyExclusiveGroup { get; set; }
+
+		// Nullable value type: inMutuallyExclusiveGroup
 		public NativeNullable<bool> inMutuallyExclusiveGroup { get; set; }
 
+		// Has flag for nullable property: obscured
+		public byte Hasobscured { get; set; }
+
+		// Nullable value type: obscured
 		public NativeNullable<bool> obscured { get; set; }
 
+		// Has flag for nullable property: multiline
+		public byte Hasmultiline { get; set; }
+
+		// Nullable value type: multiline
 		public NativeNullable<bool> multiline { get; set; }
 
+		// Has flag for nullable property: scopesRoute
+		public byte HasscopesRoute { get; set; }
+
+		// Nullable value type: scopesRoute
 		public NativeNullable<bool> scopesRoute { get; set; }
 
+		// Has flag for nullable property: namesRoute
+		public byte HasnamesRoute { get; set; }
+
+		// Nullable value type: namesRoute
 		public NativeNullable<bool> namesRoute { get; set; }
 
+		// Has flag for nullable property: hidden
+		public byte Hashidden { get; set; }
+
+		// Nullable value type: hidden
 		public NativeNullable<bool> hidden { get; set; }
 
+		// Has flag for nullable property: image
+		public byte Hasimage { get; set; }
+
+		// Nullable value type: image
 		public NativeNullable<bool> image { get; set; }
 
+		// Has flag for nullable property: liveRegion
+		public byte HasliveRegion { get; set; }
+
+		// Nullable value type: liveRegion
 		public NativeNullable<bool> liveRegion { get; set; }
 
+		// Has flag for nullable property: expanded
+		public byte Hasexpanded { get; set; }
+
+		// Nullable value type: expanded
 		public NativeNullable<bool> expanded { get; set; }
 
+		// Has flag for nullable property: isRequired
+		public byte HasisRequired { get; set; }
+
+		// Nullable value type: isRequired
 		public NativeNullable<bool> isRequired { get; set; }
 
+		// Has flag for nullable property: maxValueLength
+		public byte HasmaxValueLength { get; set; }
+
+		// Nullable value type: maxValueLength
 		public NativeNullable<int> maxValueLength { get; set; }
 
+		// Has flag for nullable property: currentValueLength
+		public byte HascurrentValueLength { get; set; }
+
+		// Nullable value type: currentValueLength
 		public NativeNullable<int> currentValueLength { get; set; }
 
-		IntPtr _identifier;
+		// Has flag for nullable property: identifier
+		public byte Hasidentifier { get; set; }
+
+		// String field: identifier
+		private IntPtr _identifier;
+
 		public string? identifier
 		{
 			get => GetString(_identifier);
 			set => SetString(ref _identifier, value);
 		}
 
-		IntPtr _label;
+		// Has flag for nullable property: label
+		public byte Haslabel { get; set; }
+
+		// String field: label
+		private IntPtr _label;
+
 		public string? label
 		{
 			get => GetString(_label);
 			set => SetString(ref _label, value);
 		}
 
+		// Simple field: attributedLabel
 		public IntPtr attributedLabel { get; set; }
 
-		IntPtr _value;
+		// Has flag for nullable property: value
+		public byte Hasvalue { get; set; }
+
+		// String field: value
+		private IntPtr _value;
+
 		public string? value
 		{
 			get => GetString(_value);
 			set => SetString(ref _value, value);
 		}
 
+		// Simple field: attributedValue
 		public IntPtr attributedValue { get; set; }
 
-		IntPtr _increasedValue;
+		// Has flag for nullable property: increasedValue
+		public byte HasincreasedValue { get; set; }
+
+		// String field: increasedValue
+		private IntPtr _increasedValue;
+
 		public string? increasedValue
 		{
 			get => GetString(_increasedValue);
 			set => SetString(ref _increasedValue, value);
 		}
 
+		// Simple field: attributedIncreasedValue
 		public IntPtr attributedIncreasedValue { get; set; }
 
-		IntPtr _decreasedValue;
+		// Has flag for nullable property: decreasedValue
+		public byte HasdecreasedValue { get; set; }
+
+		// String field: decreasedValue
+		private IntPtr _decreasedValue;
+
 		public string? decreasedValue
 		{
 			get => GetString(_decreasedValue);
 			set => SetString(ref _decreasedValue, value);
 		}
 
+		// Simple field: attributedDecreasedValue
 		public IntPtr attributedDecreasedValue { get; set; }
 
-		IntPtr _hint;
+		// Has flag for nullable property: hint
+		public byte Hashint { get; set; }
+
+		// String field: hint
+		private IntPtr _hint;
+
 		public string? hint
 		{
 			get => GetString(_hint);
 			set => SetString(ref _hint, value);
 		}
 
+		// Simple field: attributedHint
 		public IntPtr attributedHint { get; set; }
 
-		IntPtr _tooltip;
+		// Has flag for nullable property: tooltip
+		public byte Hastooltip { get; set; }
+
+		// String field: tooltip
+		private IntPtr _tooltip;
+
 		public string? tooltip
 		{
 			get => GetString(_tooltip);
 			set => SetString(ref _tooltip, value);
 		}
 
-		IntPtr _onTapHint;
+		// Has flag for nullable property: onTapHint
+		public byte HasonTapHint { get; set; }
+
+		// String field: onTapHint
+		private IntPtr _onTapHint;
+
 		public string? onTapHint
 		{
 			get => GetString(_onTapHint);
 			set => SetString(ref _onTapHint, value);
 		}
 
-		IntPtr _onLongPressHint;
+		// Has flag for nullable property: onLongPressHint
+		public byte HasonLongPressHint { get; set; }
+
+		// String field: onLongPressHint
+		private IntPtr _onLongPressHint;
+
 		public string? onLongPressHint
 		{
 			get => GetString(_onLongPressHint);
 			set => SetString(ref _onLongPressHint, value);
 		}
 
+		// Simple field: textDirection
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: sortKey
 		public IntPtr sortKey { get; set; }
 
+		// Simple field: tagForChildren
 		public IntPtr tagForChildren { get; set; }
 
+		// Simple field: onTap
 		public IntPtr onTap { get; set; }
 
+		// Simple field: onLongPress
 		public IntPtr onLongPress { get; set; }
 
+		// Simple field: onScrollLeft
 		public IntPtr onScrollLeft { get; set; }
 
+		// Simple field: onScrollRight
 		public IntPtr onScrollRight { get; set; }
 
+		// Simple field: onScrollUp
 		public IntPtr onScrollUp { get; set; }
 
+		// Simple field: onScrollDown
 		public IntPtr onScrollDown { get; set; }
 
+		// Simple field: onIncrease
 		public IntPtr onIncrease { get; set; }
 
+		// Simple field: onDecrease
 		public IntPtr onDecrease { get; set; }
 
+		// Simple field: onCopy
 		public IntPtr onCopy { get; set; }
 
+		// Simple field: onCut
 		public IntPtr onCut { get; set; }
 
+		// Simple field: onPaste
 		public IntPtr onPaste { get; set; }
 
+		// Simple field: onDismiss
 		public IntPtr onDismiss { get; set; }
 
+		// Simple field: onMoveCursorForwardByCharacter
 		public IntPtr onMoveCursorForwardByCharacter { get; set; }
 
+		// Simple field: onMoveCursorBackwardByCharacter
 		public IntPtr onMoveCursorBackwardByCharacter { get; set; }
 
+		// Simple field: onSetSelection
 		public IntPtr onSetSelection { get; set; }
 
+		// Simple field: onSetText
 		public IntPtr onSetText { get; set; }
 
+		// Simple field: onDidGainAccessibilityFocus
 		public IntPtr onDidGainAccessibilityFocus { get; set; }
 
+		// Simple field: onDidLoseAccessibilityFocus
 		public IntPtr onDidLoseAccessibilityFocus { get; set; }
 
+		// Simple field: onFocus
 		public IntPtr onFocus { get; set; }
 
+		// Has flag for nullable property: customSemanticsActions
+		public byte HascustomSemanticsActions { get; set; }
+
+		// Simple field: customSemanticsActions
 		public IntPtr? customSemanticsActions { get; set; }
 
+		// Simple field: role
 		public IntPtr role { get; set; }
 
+		// Has flag for nullable property: controlsNodes
+		public byte HascontrolsNodes { get; set; }
+
+		// Simple field: controlsNodes
 		public IntPtr? controlsNodes { get; set; }
 
+		// Simple field: validationResult
 		public IntPtr validationResult { get; set; }
 
+		// Simple field: inputType
 		public IntPtr inputType { get; set; }
 
 	}

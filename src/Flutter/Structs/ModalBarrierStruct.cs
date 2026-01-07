@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -29,6 +29,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ModalBarrierStruct : WidgetStruct
 	{
+		// Simple field: color
 /// If non-null, fill the barrier with this color.
 /// 
 /// See also:
@@ -37,6 +38,7 @@ namespace Flutter.Structs
 /// [ModalBarrier] built by [ModalRoute] pages.
 		public IntPtr color { get; set; }
 
+		// Simple field: dismissible
 /// Specifies if the barrier will be dismissed when the user taps on it.
 /// 
 /// If true, and [onDismiss] is non-null, [onDismiss] will be called,
@@ -50,6 +52,7 @@ namespace Flutter.Structs
 /// [ModalBarrier] built by [ModalRoute] pages.
 		public bool dismissible { get; set; }
 
+		// Simple field: onDismiss
 /// {@template flutter.widgets.ModalBarrier.onDismiss}
 /// Called when the barrier is being dismissed.
 /// 
@@ -62,6 +65,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr onDismiss { get; set; }
 
+		// Has flag for nullable property: barrierSemanticsDismissible
+		public byte HasbarrierSemanticsDismissible { get; set; }
+
+		// Nullable value type: barrierSemanticsDismissible
 /// Whether the modal barrier semantics are included in the semantics tree.
 /// 
 /// See also:
@@ -70,7 +77,12 @@ namespace Flutter.Structs
 /// the [ModalBarrier] built by [ModalRoute] pages.
 		public NativeNullable<bool> barrierSemanticsDismissible { get; set; }
 
-		IntPtr _semanticsLabel;
+		// Has flag for nullable property: semanticsLabel
+		public byte HassemanticsLabel { get; set; }
+
+		// String field: semanticsLabel
+		private IntPtr _semanticsLabel;
+
 /// Semantics label used for the barrier if it is [dismissible].
 /// 
 /// The semantics label is read out by accessibility tools (e.g. TalkBack
@@ -86,6 +98,7 @@ namespace Flutter.Structs
 			set => SetString(ref _semanticsLabel, value);
 		}
 
+		// Simple field: clipDetailsNotifier
 /// {@template flutter.widgets.ModalBarrier.clipDetailsNotifier}
 /// Contains a value of type [EdgeInsets] that specifies how the
 /// [SemanticsNode.rect] of the widget should be clipped.
@@ -97,7 +110,12 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr clipDetailsNotifier { get; set; }
 
-		IntPtr _semanticsOnTapHint;
+		// Has flag for nullable property: semanticsOnTapHint
+		public byte HassemanticsOnTapHint { get; set; }
+
+		// String field: semanticsOnTapHint
+		private IntPtr _semanticsOnTapHint;
+
 /// {@macro flutter.material.ModalBottomSheetRoute.barrierOnTapHint}
 		public string? semanticsOnTapHint
 		{

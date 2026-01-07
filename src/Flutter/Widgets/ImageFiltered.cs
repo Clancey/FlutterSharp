@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -41,7 +44,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ImageFiltered"/> class.
 		/// </summary>
 		public ImageFiltered(
-			InvalidType _imageFilter,
+			object _imageFilter,
 			bool _enabled
 ,
 			Widget? _child = null

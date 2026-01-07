@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -53,6 +53,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TreeSliverStruct : WidgetStruct
 	{
+		// Simple field: tree
 /// The list of [TreeSliverNode]s that may be displayed in the [TreeSliver].
 /// 
 /// Beyond root nodes, whether or not a given [TreeSliverNode] is displayed
@@ -62,11 +63,28 @@ namespace Flutter.Structs
 /// integrity of the tree.
 		public IntPtr tree { get; set; }
 
+		// Callback field: treeNodeBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _treeNodeBuilder;
+
 /// Called to build and entry of the [TreeSliver] for the given node.
 /// 
 /// By default, if this is unset, the [TreeSliver.defaultTreeNodeBuilder]
 /// is used.
-		public IntPtr treeNodeBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for treeNodeBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? treeNodeBuilderAction
+		{
+			get => GetString(_treeNodeBuilder);
+			set => SetString(ref _treeNodeBuilder, value);
+		}
+
+		// Callback field: treeRowExtentBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _treeRowExtentBuilder;
 
 /// Called to calculate the extent of the widget built for the given
 /// [TreeSliverNode].
@@ -78,18 +96,48 @@ namespace Flutter.Structs
 /// 
 /// * [SliverVariedExtentList.itemExtentBuilder], a very similar method that
 /// allows users to dynamically compute extents on demand.
-		public IntPtr treeRowExtentBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for treeRowExtentBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? treeRowExtentBuilderAction
+		{
+			get => GetString(_treeRowExtentBuilder);
+			set => SetString(ref _treeRowExtentBuilder, value);
+		}
 
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		// Simple field: controller
 /// If provided, the controller can be used to expand and collapse
 /// [TreeSliverNode]s, or lookup information about the current state of the
 /// [TreeSliver].
 		public IntPtr? controller { get; set; }
 
+		// Has flag for nullable property: onNodeToggle
+		public byte HasonNodeToggle { get; set; }
+
+		// Callback field: onNodeToggle
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onNodeToggle;
+
 /// Called when a [TreeSliverNode] expands or collapses.
 /// 
 /// This will not be called if a [TreeSliverNode] does not have any children.
-		public IntPtr? onNodeToggle { get; set; }
+		/// <summary>
+		/// Action identifier for onNodeToggle callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onNodeToggleAction
+		{
+			get => GetString(_onNodeToggle);
+			set => SetString(ref _onNodeToggle, value);
+		}
 
+		// Simple field: toggleAnimationStyle
 /// The default [AnimationStyle] for expanding and collapsing nodes in the
 /// [TreeSliver].
 /// 
@@ -102,29 +150,63 @@ namespace Flutter.Structs
 /// To disable the tree animation, use [AnimationStyle.noAnimation].
 		public IntPtr toggleAnimationStyle { get; set; }
 
+		// Simple field: indentation
 /// The number of pixels children will be offset by in the cross axis based on
 /// their [TreeSliverNode.depth].
 /// 
 /// {@macro flutter.rendering.TreeSliverIndentationType}
 		public IntPtr indentation { get; set; }
 
+		// Simple field: addAutomaticKeepAlives
 /// {@macro flutter.widgets.SliverChildBuilderDelegate.addAutomaticKeepAlives}
 		public bool addAutomaticKeepAlives { get; set; }
 
+		// Simple field: addRepaintBoundaries
 /// {@macro flutter.widgets.SliverChildBuilderDelegate.addRepaintBoundaries}
 		public bool addRepaintBoundaries { get; set; }
 
+		// Simple field: addSemanticIndexes
 /// {@macro flutter.widgets.SliverChildBuilderDelegate.addSemanticIndexes}
 		public bool addSemanticIndexes { get; set; }
 
-/// {@macro flutter.widgets.SliverChildBuilderDelegate.semanticIndexCallback}
-		public IntPtr semanticIndexCallback { get; set; }
+		// Callback field: semanticIndexCallback
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _semanticIndexCallback;
 
+/// {@macro flutter.widgets.SliverChildBuilderDelegate.semanticIndexCallback}
+		/// <summary>
+		/// Action identifier for semanticIndexCallback callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? semanticIndexCallbackAction
+		{
+			get => GetString(_semanticIndexCallback);
+			set => SetString(ref _semanticIndexCallback, value);
+		}
+
+		// Simple field: semanticIndexOffset
 /// {@macro flutter.widgets.SliverChildBuilderDelegate.semanticIndexOffset}
 		public int semanticIndexOffset { get; set; }
 
+		// Has flag for nullable property: findChildIndexCallback
+		public byte HasfindChildIndexCallback { get; set; }
+
+		// Callback field: findChildIndexCallback
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _findChildIndexCallback;
+
 /// {@macro flutter.widgets.SliverChildBuilderDelegate.findChildIndexCallback}
-		public IntPtr? findChildIndexCallback { get; set; }
+		/// <summary>
+		/// Action identifier for findChildIndexCallback callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? findChildIndexCallbackAction
+		{
+			get => GetString(_findChildIndexCallback);
+			set => SetString(ref _findChildIndexCallback, value);
+		}
 
 	}
 }

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -16,7 +16,12 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ImgElementPlatformViewStruct : WidgetStruct
 	{
-		IntPtr _src;
+		// Has flag for nullable property: src
+		public byte Hassrc { get; set; }
+
+		// String field: src
+		private IntPtr _src;
+
 /// The `src` URL for the `<img>` tag.
 		public string? src
 		{

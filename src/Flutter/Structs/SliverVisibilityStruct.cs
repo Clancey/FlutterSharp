@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -45,25 +45,32 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverVisibilityStruct : WidgetStruct
 	{
-		IntPtr _sliver;
+		// Widget field: sliver
+		private IntPtr _sliver;
+
 /// The sliver to show or hide, as controlled by [visible].
-		public Widget sliver
+		public IntPtr sliver
 		{
+			get => (IntPtr)_sliver;
 			set => SetIntPtr(ref _sliver, value);
 		}
 
-		IntPtr _replacementSliver;
+		// Widget field: replacementSliver
+		private IntPtr _replacementSliver;
+
 /// The widget to use when the sliver child is not [visible], assuming that
 /// none of the `maintain` flags (in particular, [maintainState]) are set.
 /// 
 /// The normal behavior is to replace the widget with a childless
 /// [SliverToBoxAdapter], which by default has a geometry of
 /// [SliverGeometry.zero].
-		public Widget replacementSliver
+		public IntPtr replacementSliver
 		{
+			get => (IntPtr)_replacementSliver;
 			set => SetIntPtr(ref _replacementSliver, value);
 		}
 
+		// Simple field: visible
 /// Switches between showing the [sliver] or hiding it.
 /// 
 /// The `maintain` flags should be set to the same values regardless of the
@@ -76,6 +83,7 @@ namespace Flutter.Structs
 /// (removed from the tree) while hidden.
 		public bool visible { get; set; }
 
+		// Simple field: maintainState
 /// Whether to maintain the [State] objects of the [sliver] subtree when it is
 /// not [visible].
 /// 
@@ -96,6 +104,7 @@ namespace Flutter.Structs
 /// objects, to be immediately created if [visible] is true).
 		public bool maintainState { get; set; }
 
+		// Simple field: maintainAnimation
 /// Whether to maintain animations within the [sliver] subtree when it is
 /// not [visible].
 /// 
@@ -119,6 +128,7 @@ namespace Flutter.Structs
 /// objects, to be immediately created if [visible] is true).
 		public bool maintainAnimation { get; set; }
 
+		// Simple field: maintainSize
 /// Whether to maintain space for where the sliver would have been.
 /// 
 /// To set this, [maintainAnimation] must also be set.
@@ -141,6 +151,7 @@ namespace Flutter.Structs
 /// objects, to be immediately created if [visible] is true).
 		public bool maintainSize { get; set; }
 
+		// Simple field: maintainSemantics
 /// Whether to maintain the semantics for the sliver when it is hidden (e.g.
 /// for accessibility).
 /// 
@@ -152,6 +163,7 @@ namespace Flutter.Structs
 /// it was present.
 		public bool maintainSemantics { get; set; }
 
+		// Simple field: maintainInteractivity
 /// Whether to allow the sliver to be interactive when hidden.
 /// 
 /// To set this, [maintainSize] must also be set.

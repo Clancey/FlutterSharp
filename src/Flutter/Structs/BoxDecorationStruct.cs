@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -71,6 +71,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class BoxDecorationStruct : WidgetStruct
 	{
+		// Simple field: color
 /// The color to fill in the background of the box.
 /// 
 /// The color is filled into the [shape] of the box (e.g., either a rectangle,
@@ -81,6 +82,10 @@ namespace Flutter.Structs
 /// The [color] is drawn under the [image].
 		public IntPtr color { get; set; }
 
+		// Has flag for nullable property: image
+		public byte Hasimage { get; set; }
+
+		// Simple field: image
 /// An image to paint above the background [color] or [gradient].
 /// 
 /// If [shape] is [BoxShape.circle] then the image is clipped to the circle's
@@ -88,6 +93,10 @@ namespace Flutter.Structs
 /// given radii.
 		public IntPtr? image { get; set; }
 
+		// Has flag for nullable property: border
+		public byte Hasborder { get; set; }
+
+		// Simple field: border
 /// A border to draw above the background [color], [gradient], or [image].
 /// 
 /// Follows the [shape] and [borderRadius].
@@ -100,6 +109,10 @@ namespace Flutter.Structs
 /// right-to-left.
 		public IntPtr? border { get; set; }
 
+		// Has flag for nullable property: borderRadius
+		public byte HasborderRadius { get; set; }
+
+		// Simple field: borderRadius
 /// If non-null, the corners of this box are rounded by this [BorderRadius].
 /// 
 /// Applies only to boxes with rectangular shapes; ignored if [shape] is not
@@ -108,6 +121,10 @@ namespace Flutter.Structs
 /// {@macro flutter.painting.BoxDecoration.clip}
 		public IntPtr? borderRadius { get; set; }
 
+		// Has flag for nullable property: boxShadow
+		public byte HasboxShadow { get; set; }
+
+		// Simple field: boxShadow
 /// A list of shadows cast by this box behind the box.
 /// 
 /// The shadow follows the [shape] of the box.
@@ -119,6 +136,10 @@ namespace Flutter.Structs
 /// * [PhysicalModel], a widget for showing shadows.
 		public IntPtr? boxShadow { get; set; }
 
+		// Has flag for nullable property: gradient
+		public byte Hasgradient { get; set; }
+
+		// Simple field: gradient
 /// A gradient to use when filling the box.
 /// 
 /// If this is specified, [color] has no effect.
@@ -126,6 +147,7 @@ namespace Flutter.Structs
 /// The [gradient] is drawn under the [image].
 		public IntPtr? gradient { get; set; }
 
+		// Simple field: backgroundBlendMode
 /// The blend mode applied to the [color] or [gradient] background of the box.
 /// 
 /// If no [backgroundBlendMode] is provided then the default painting blend
@@ -134,6 +156,7 @@ namespace Flutter.Structs
 /// If no [color] or [gradient] is provided then the blend mode has no impact.
 		public IntPtr backgroundBlendMode { get; set; }
 
+		// Simple field: shape
 /// The shape to fill the background [color], [gradient], and [image] into and
 /// to cast as the [boxShadow].
 /// 
@@ -147,12 +170,15 @@ namespace Flutter.Structs
 /// [BoxShape.rectangle].
 /// 
 /// {@macro flutter.painting.BoxDecoration.clip}
-		public IntPtr shape { get; set; }
+		public BoxShape shape { get; set; }
 
+		// Simple field: padding
 		public IntPtr padding { get; set; }
 
+		// Simple field: isComplex
 		public bool isComplex { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
 	}

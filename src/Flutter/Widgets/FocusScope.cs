@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -84,7 +87,7 @@ namespace Flutter.Widgets
 			FocusScopeNode? _node = null,
 			FocusNode? _parentNode = null,
 			bool _autofocus = false,
-			InvalidType _onFocusChange = null,
+			Action _onFocusChange = null,
 			bool? _canRequestFocus = null,
 			bool? _skipTraversal = null,
 			Func<FocusNode, InvalidType, KeyEventResult> _onKeyEvent = null,

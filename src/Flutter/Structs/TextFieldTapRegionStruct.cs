@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -41,31 +41,112 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TextFieldTapRegionStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: enabled
 		public bool enabled { get; set; }
 
-		public IntPtr? onTapOutside { get; set; }
+		// Has flag for nullable property: onTapOutside
+		public byte HasonTapOutside { get; set; }
 
-		public IntPtr? onTapInside { get; set; }
+		// Callback field: onTapOutside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapOutside;
 
-		public IntPtr? onTapUpOutside { get; set; }
+		/// <summary>
+		/// Action identifier for onTapOutside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapOutsideAction
+		{
+			get => GetString(_onTapOutside);
+			set => SetString(ref _onTapOutside, value);
+		}
 
-		public IntPtr? onTapUpInside { get; set; }
+		// Has flag for nullable property: onTapInside
+		public byte HasonTapInside { get; set; }
 
+		// Callback field: onTapInside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapInside;
+
+		/// <summary>
+		/// Action identifier for onTapInside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapInsideAction
+		{
+			get => GetString(_onTapInside);
+			set => SetString(ref _onTapInside, value);
+		}
+
+		// Has flag for nullable property: onTapUpOutside
+		public byte HasonTapUpOutside { get; set; }
+
+		// Callback field: onTapUpOutside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapUpOutside;
+
+		/// <summary>
+		/// Action identifier for onTapUpOutside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapUpOutsideAction
+		{
+			get => GetString(_onTapUpOutside);
+			set => SetString(ref _onTapUpOutside, value);
+		}
+
+		// Has flag for nullable property: onTapUpInside
+		public byte HasonTapUpInside { get; set; }
+
+		// Callback field: onTapUpInside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapUpInside;
+
+		/// <summary>
+		/// Action identifier for onTapUpInside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapUpInsideAction
+		{
+			get => GetString(_onTapUpInside);
+			set => SetString(ref _onTapUpInside, value);
+		}
+
+		// Simple field: consumeOutsideTaps
 		public bool consumeOutsideTaps { get; set; }
 
-		IntPtr _debugLabel;
+		// Has flag for nullable property: debugLabel
+		public byte HasdebugLabel { get; set; }
+
+		// String field: debugLabel
+		private IntPtr _debugLabel;
+
 		public string? debugLabel
 		{
 			get => GetString(_debugLabel);
 			set => SetString(ref _debugLabel, value);
 		}
 
+		// Has flag for nullable property: groupId
+		public byte HasgroupId { get; set; }
+
+		// Simple field: groupId
 		public IntPtr? groupId { get; set; }
 
 	}

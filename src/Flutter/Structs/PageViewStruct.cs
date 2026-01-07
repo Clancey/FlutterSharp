@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -54,6 +54,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PageViewStruct : MultiChildRenderObjectWidgetStruct
 	{
+		// Simple field: allowImplicitScrolling
 /// Controls whether the widget's pages will respond to
 /// [RenderObject.showOnScreen], which will allow for implicit accessibility
 /// scrolling.
@@ -67,7 +68,12 @@ namespace Flutter.Structs
 /// will traverse to the next page in the page view.
 		public bool allowImplicitScrolling { get; set; }
 
-		IntPtr _restorationId;
+		// Has flag for nullable property: restorationId
+		public byte HasrestorationId { get; set; }
+
+		// String field: restorationId
+		private IntPtr _restorationId;
+
 /// {@macro flutter.widgets.scrollable.restorationId}
 		public string? restorationId
 		{
@@ -75,14 +81,16 @@ namespace Flutter.Structs
 			set => SetString(ref _restorationId, value);
 		}
 
+		// Simple field: scrollDirection
 /// The [Axis] along which the scroll view's offset increases with each page.
 /// 
 /// For the direction in which active scrolling may be occurring, see
 /// [ScrollDirection].
 /// 
 /// Defaults to [Axis.horizontal].
-		public IntPtr scrollDirection { get; set; }
+		public Axis scrollDirection { get; set; }
 
+		// Simple field: reverse
 /// Whether the page view scrolls in the reading direction.
 /// 
 /// For example, if the reading direction is left-to-right and
@@ -97,10 +105,18 @@ namespace Flutter.Structs
 /// Defaults to false.
 		public bool reverse { get; set; }
 
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		// Simple field: controller
 /// An object that can be used to control the position to which this page
 /// view is scrolled.
 		public IntPtr? controller { get; set; }
 
+		// Has flag for nullable property: physics
+		public byte Hasphysics { get; set; }
+
+		// Simple field: physics
 /// How the page view should respond to user input.
 /// 
 /// For example, determines how the page view continues to animate after the
@@ -116,6 +132,7 @@ namespace Flutter.Structs
 /// Defaults to matching platform conventions.
 		public IntPtr? physics { get; set; }
 
+		// Simple field: pageSnapping
 /// Set to false to disable page snapping, useful for custom scroll behavior.
 /// 
 /// If the [padEnds] is false and [PageController.viewportFraction] < 1.0,
@@ -123,9 +140,11 @@ namespace Flutter.Structs
 /// will snap to the center of the viewport.
 		public bool pageSnapping { get; set; }
 
+		// Simple field: onPageChanged
 /// Called whenever the page in the center of the viewport changes.
 		public IntPtr onPageChanged { get; set; }
 
+		// Simple field: childrenDelegate
 /// A delegate that provides the children for the [PageView].
 /// 
 /// The [PageView.custom] constructor lets you specify this delegate
@@ -134,25 +153,33 @@ namespace Flutter.Structs
 /// respectively.
 		public IntPtr childrenDelegate { get; set; }
 
+		// Simple field: dragStartBehavior
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
-		public IntPtr dragStartBehavior { get; set; }
+		public DragStartBehavior dragStartBehavior { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: hitTestBehavior
 /// {@macro flutter.widgets.scrollable.hitTestBehavior}
 /// 
 /// Defaults to [HitTestBehavior.opaque].
-		public IntPtr hitTestBehavior { get; set; }
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
+		// Has flag for nullable property: scrollBehavior
+		public byte HasscrollBehavior { get; set; }
+
+		// Simple field: scrollBehavior
 /// {@macro flutter.widgets.scrollable.scrollBehavior}
 /// 
 /// The [ScrollBehavior] of the inherited [ScrollConfiguration] will be
 /// modified by default to not apply a [Scrollbar].
 		public IntPtr? scrollBehavior { get; set; }
 
+		// Simple field: padEnds
 /// Whether to add padding to both ends of the list.
 /// 
 /// If this is set to true and [PageController.viewportFraction] < 1.0, padding will be added
@@ -164,6 +191,7 @@ namespace Flutter.Structs
 /// This property defaults to true.
 		public bool padEnds { get; set; }
 
+		// Simple field: children
 		public IntPtr children { get; set; }
 
 	}

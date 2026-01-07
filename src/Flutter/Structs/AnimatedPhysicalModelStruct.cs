@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -29,52 +29,66 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedPhysicalModelStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: shape
 /// The type of shape.
 /// 
 /// This property is not animated.
-		public IntPtr shape { get; set; }
+		public BoxShape shape { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: borderRadius
 /// The target border radius of the rounded corners for a rectangle shape.
 /// 
 /// If null, treated as [BorderRadius.zero].
 		public IntPtr borderRadius { get; set; }
 
+		// Simple field: elevation
 /// The target z-coordinate relative to the parent at which to place this
 /// physical object.
 /// 
 /// The value will always be non-negative.
 		public double elevation { get; set; }
 
+		// Simple field: color
 /// The target background color.
 		public IntPtr color { get; set; }
 
+		// Simple field: animateColor
 /// Whether the color should be animated.
 		public bool animateColor { get; set; }
 
+		// Simple field: shadowColor
 /// The target shadow color.
 		public IntPtr shadowColor { get; set; }
 
+		// Simple field: animateShadowColor
 /// Whether the shadow color should be animated.
 		public bool animateShadowColor { get; set; }
 
+		// Simple field: curve
 		public IntPtr curve { get; set; }
 
+		// Simple field: duration
 		public IntPtr duration { get; set; }
 
+		// Simple field: onEnd
 		public IntPtr onEnd { get; set; }
 
 	}

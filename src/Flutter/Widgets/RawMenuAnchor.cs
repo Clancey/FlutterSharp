@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -47,8 +50,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawMenuAnchor"/> class.
 		/// </summary>
 		public RawMenuAnchor(
-			InvalidType _onOpen,
-			InvalidType _onClose,
+			Action _onOpen,
+			Action _onClose,
 			Func<BuildContext, RawMenuOverlayInfo, Widget> _overlayBuilder,
 			bool _useRootOverlay,
 			bool _consumeOutsideTaps,

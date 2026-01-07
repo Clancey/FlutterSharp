@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -61,8 +64,8 @@ namespace Flutter.Widgets
 			FlutterView _view,
 			Widget _child
 ,
-			InvalidType _deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner = null,
-			InvalidType _deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView = null
+			object _deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner = null,
+			object _deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

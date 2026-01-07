@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -57,6 +57,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class LinearGradientStruct : WidgetStruct
 	{
+		// Simple field: begin
 /// The offset at which stop 0.0 of the gradient is placed.
 /// 
 /// If this is an [Alignment], then it is expressed as a vector from
@@ -72,6 +73,7 @@ namespace Flutter.Structs
 /// method will need to be given a [TextDirection].
 		public IntPtr begin { get; set; }
 
+		// Simple field: end
 /// The offset at which stop 1.0 of the gradient is placed.
 /// 
 /// If this is an [Alignment], then it is expressed as a vector from
@@ -87,6 +89,7 @@ namespace Flutter.Structs
 /// method will need to be given a [TextDirection].
 		public IntPtr end { get; set; }
 
+		// Simple field: tileMode
 /// How this gradient should tile the plane beyond in the region before
 /// [begin] and after [end].
 /// 
@@ -98,12 +101,22 @@ namespace Flutter.Structs
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/dart-ui/tile_mode_repeated_linear.png)
 		public IntPtr tileMode { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
+		// Simple field: colors
 		public IntPtr colors { get; set; }
 
+		// Has flag for nullable property: stops
+		public byte Hasstops { get; set; }
+
+		// Simple field: stops
 		public IntPtr? stops { get; set; }
 
+		// Has flag for nullable property: transform
+		public byte Hastransform { get; set; }
+
+		// Simple field: transform
 		public IntPtr? transform { get; set; }
 
 	}

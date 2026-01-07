@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -52,9 +52,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SystemContextMenuStruct : WidgetStruct
 	{
+		// Simple field: anchor
 /// The [Rect] that the context menu should point to.
 		public IntPtr anchor { get; set; }
 
+		// Simple field: items
 /// A list of the items to be displayed in the system context menu.
 /// 
 /// When passed, items will be shown regardless of the state of text input.
@@ -66,6 +68,7 @@ namespace Flutter.Structs
 /// Defaults to the result of [getDefaultItems].
 		public IntPtr items { get; set; }
 
+		// Simple field: onSystemHide
 /// Called when the system hides this context menu.
 /// 
 /// For example, tapping outside of the context menu typically causes the

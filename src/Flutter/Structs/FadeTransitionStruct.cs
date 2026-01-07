@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -58,6 +58,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class FadeTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: opacity
 /// The animation that controls the opacity of the child.
 /// 
 /// If the current value of the opacity animation is v, the child will be
@@ -66,6 +67,7 @@ namespace Flutter.Structs
 /// completely transparent.
 		public IntPtr opacity { get; set; }
 
+		// Simple field: alwaysIncludeSemantics
 /// Whether the semantic information of the children is always included.
 /// 
 /// Defaults to false.
@@ -76,9 +78,15 @@ namespace Flutter.Structs
 /// would otherwise contribute relevant semantics.
 		public bool alwaysIncludeSemantics { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

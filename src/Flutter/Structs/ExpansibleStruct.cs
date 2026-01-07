@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -43,39 +43,70 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ExpansibleStruct : WidgetStruct
 	{
+		// Simple field: controller
 /// Expands and collapses the widget.
 /// 
 /// The controller manages the expansion state and toggles the expansion.
 		public IntPtr controller { get; set; }
+
+		// Callback field: headerBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _headerBuilder;
 
 /// Builds the always-displayed header.
 /// 
 /// Many use cases involve toggling the expansion state when this header is
 /// tapped. To toggle the expansion state, call [ExpansibleController.expand]
 /// or [ExpansibleController.collapse].
-		public IntPtr headerBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for headerBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? headerBuilderAction
+		{
+			get => GetString(_headerBuilder);
+			set => SetString(ref _headerBuilder, value);
+		}
+
+		// Callback field: bodyBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _bodyBuilder;
 
 /// Builds the collapsible body.
 /// 
 /// When this widget is expanded, the height of its body animates from 0 to
 /// its fully extended height.
-		public IntPtr bodyBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for bodyBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? bodyBuilderAction
+		{
+			get => GetString(_bodyBuilder);
+			set => SetString(ref _bodyBuilder, value);
+		}
 
+		// Simple field: duration
 /// The duration of the expansion animation.
 /// 
 /// Defaults to a duration of 200ms.
 		public IntPtr duration { get; set; }
 
+		// Simple field: curve
 /// The curve of the expansion animation.
 /// 
 /// Defaults to [Curves.ease].
 		public IntPtr curve { get; set; }
 
+		// Simple field: reverseCurve
 /// The reverse curve of the expansion animation.
 /// 
 /// If null, uses [curve] in both directions.
 		public IntPtr reverseCurve { get; set; }
 
+		// Simple field: maintainState
 /// Whether the state of the body is maintained when the widget expands or
 /// collapses.
 /// 
@@ -86,10 +117,23 @@ namespace Flutter.Structs
 /// Defaults to false.
 		public bool maintainState { get; set; }
 
+		// Callback field: expansibleBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _expansibleBuilder;
+
 /// Builds the widget with the results of [headerBuilder] and [bodyBuilder].
 /// 
 /// Defaults to placing the header and body in a [Column].
-		public IntPtr expansibleBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for expansibleBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? expansibleBuilderAction
+		{
+			get => GetString(_expansibleBuilder);
+			set => SetString(ref _expansibleBuilder, value);
+		}
 
 	}
 }

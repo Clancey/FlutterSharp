@@ -47,7 +47,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="InteractiveViewer"/> class.
 		/// </summary>
 		public InteractiveViewer(
-			Func<BuildContext, InvalidType, Widget> _builder = null,
+			Func<BuildContext, object?, Widget> _builder = null,
 			Widget? _child = null,
 			TransformationController? _transformationController = null
 		)

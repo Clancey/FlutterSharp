@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -28,7 +31,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TableCell"/> class.
 		/// </summary>
 		public TableCell(
-			InvalidType _verticalAlignment,
+			AlignmentGeometry _verticalAlignment,
 			Widget _child
 
 		)

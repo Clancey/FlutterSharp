@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -48,11 +48,16 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TableStruct : MultiChildRenderObjectWidgetStruct
 	{
+		// Simple field: children
 /// The rows of the table.
 /// 
 /// Every row in a table must have the same number of children.
 		public IntPtr children { get; set; }
 
+		// Has flag for nullable property: columnWidths
+		public byte HascolumnWidths { get; set; }
+
+		// Simple field: columnWidths
 /// How the horizontal extents of the columns of this table should be determined.
 /// 
 /// If the [Map] has a null entry for a given column, the table uses the
@@ -72,6 +77,7 @@ namespace Flutter.Structs
 /// If this is set to null, then an empty map is assumed.
 		public IntPtr? columnWidths { get; set; }
 
+		// Simple field: defaultColumnWidth
 /// How to determine with widths of columns that don't have an explicit sizing
 /// algorithm.
 /// 
@@ -84,25 +90,29 @@ namespace Flutter.Structs
 /// an [IntrinsicColumnWidth] as the horizontal space is infinite.
 		public IntPtr defaultColumnWidth { get; set; }
 
+		// Simple field: textDirection
 /// The direction in which the columns are ordered.
 /// 
 /// Defaults to the ambient [Directionality].
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: border
 /// The style to use when painting the boundary and interior divisions of the table.
 		public IntPtr border { get; set; }
 
+		// Simple field: defaultVerticalAlignment
 /// How cells that do not explicitly specify a vertical alignment are aligned vertically.
 /// 
 /// Cells may specify a vertical alignment by wrapping their contents in a
 /// [TableCell] widget.
 		public IntPtr defaultVerticalAlignment { get; set; }
 
+		// Simple field: textBaseline
 /// The text baseline to use when aligning rows using [TableCellVerticalAlignment.baseline].
 /// 
 /// This must be set if using baseline alignment. There is no default because there is no
 /// way for the framework to know the correct baseline _a priori_.
-		public IntPtr textBaseline { get; set; }
+		public TextBaseline textBaseline { get; set; }
 
 	}
 }

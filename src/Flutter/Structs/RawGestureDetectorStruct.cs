@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -55,15 +55,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RawGestureDetectorStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: gestures
 /// The gestures that this widget will attempt to recognize.
 /// 
 /// This should be a map from [GestureRecognizer] subclasses to
@@ -73,12 +80,14 @@ namespace Flutter.Structs
 /// [RawGestureDetectorState.replaceGestureRecognizers].
 		public IntPtr gestures { get; set; }
 
+		// Simple field: behavior
 /// How this gesture detector should behave during hit testing.
 /// 
 /// This defaults to [HitTestBehavior.deferToChild] if [child] is not null and
 /// [HitTestBehavior.translucent] if child is null.
 		public IntPtr behavior { get; set; }
 
+		// Simple field: excludeFromSemantics
 /// Whether to exclude these gestures from the semantics tree. For
 /// example, the long-press gesture for showing a tooltip is
 /// excluded because the tooltip itself is included in the semantics
@@ -86,6 +95,10 @@ namespace Flutter.Structs
 /// duplication of information.
 		public bool excludeFromSemantics { get; set; }
 
+		// Has flag for nullable property: semantics
+		public byte Hassemantics { get; set; }
+
+		// Simple field: semantics
 /// Describes the semantics notations that should be added to the underlying
 /// render object [RenderSemanticsGestureHandler].
 /// 

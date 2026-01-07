@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -86,6 +86,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class FlexStruct : MultiChildRenderObjectWidgetStruct
 	{
+		// Simple field: direction
 /// The direction to use as the main axis.
 /// 
 /// If you know the axis in advance, then consider using a [Row] (if it's
@@ -94,13 +95,15 @@ namespace Flutter.Structs
 /// the appropriate axis.)
 		public IntPtr direction { get; set; }
 
+		// Simple field: mainAxisAlignment
 /// How the children should be placed along the main axis.
 /// 
 /// For example, [MainAxisAlignment.start], the default, places the children
 /// at the start (i.e., the left for a [Row] or the top for a [Column]) of the
 /// main axis.
-		public IntPtr mainAxisAlignment { get; set; }
+		public MainAxisAlignment mainAxisAlignment { get; set; }
 
+		// Simple field: mainAxisSize
 /// How much space should be occupied in the main axis.
 /// 
 /// After allocating space to children, there might be some remaining free
@@ -111,8 +114,9 @@ namespace Flutter.Structs
 /// [FlexFit.loose]), they will expand to consume all the available space and
 /// there will be no remaining free space to maximize or minimize, making this
 /// value irrelevant to the final layout.
-		public IntPtr mainAxisSize { get; set; }
+		public MainAxisSize mainAxisSize { get; set; }
 
+		// Simple field: crossAxisAlignment
 /// How the children should be placed along the cross axis.
 /// 
 /// For example, [CrossAxisAlignment.center], the default, centers the
@@ -124,8 +128,9 @@ namespace Flutter.Structs
 /// have text with different font metrics, for example because they differ in
 /// [TextStyle.fontSize] or other [TextStyle] properties, or because
 /// they use different fonts due to being written in different scripts.
-		public IntPtr crossAxisAlignment { get; set; }
+		public CrossAxisAlignment crossAxisAlignment { get; set; }
 
+		// Simple field: textDirection
 /// Determines the order to lay children out horizontally and how to interpret
 /// `start` and `end` in the horizontal direction.
 /// 
@@ -155,6 +160,7 @@ namespace Flutter.Structs
 /// [textDirection] (or the ambient [Directionality]) must not be null.
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: verticalDirection
 /// Determines the order to lay children out vertically and how to interpret
 /// `start` and `end` in the vertical direction.
 /// 
@@ -175,22 +181,26 @@ namespace Flutter.Structs
 /// If the [direction] is [Axis.horizontal], and the [crossAxisAlignment] is
 /// either [CrossAxisAlignment.start] or [CrossAxisAlignment.end], then the
 /// [verticalDirection] must not be null.
-		public IntPtr verticalDirection { get; set; }
+		public VerticalDirection verticalDirection { get; set; }
 
+		// Simple field: textBaseline
 /// If aligning items according to their baseline, which baseline to use.
 /// 
 /// This must be set if using baseline alignment. There is no default because there is no
 /// way for the framework to know the correct baseline _a priori_.
-		public IntPtr textBaseline { get; set; }
+		public TextBaseline textBaseline { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: spacing
 /// {@macro flutter.rendering.RenderFlex.spacing}
 		public double spacing { get; set; }
 
+		// Simple field: children
 		public IntPtr children { get; set; }
 
 	}

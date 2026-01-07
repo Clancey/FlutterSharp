@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -25,19 +25,31 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RenderObjectToWidgetAdapterStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: container
 /// The [RenderObject] that is the parent of the [Element] created by this widget.
 		public IntPtr container { get; set; }
 
-		IntPtr _debugShortDescription;
+		// Has flag for nullable property: debugShortDescription
+		public byte HasdebugShortDescription { get; set; }
+
+		// String field: debugShortDescription
+		private IntPtr _debugShortDescription;
+
 /// A short description of this widget used by debugging aids.
 		public string? debugShortDescription
 		{

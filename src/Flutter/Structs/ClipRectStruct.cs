@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -54,17 +54,25 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ClipRectStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: clipper
 /// If non-null, determines which clip to use.
 		public IntPtr clipper { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.rendering.ClipRectLayer.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

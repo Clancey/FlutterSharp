@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -29,17 +29,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ReorderableDragStartListenerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget for which the application would like to respond to a tap and
 /// drag gesture by starting a reordering drag on a reorderable list.
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: index
 /// The index of the associated item that will be dragged in the list.
 		public int index { get; set; }
 
+		// Simple field: enabled
 /// Whether the [child] item can be dragged and moved in the list.
 /// 
 /// If true, the item can be moved to another location in the list when the

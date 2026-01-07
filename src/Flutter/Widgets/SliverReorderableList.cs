@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -44,7 +47,7 @@ namespace Flutter.Widgets
 			Func<BuildContext, int, Widget> _itemBuilder,
 			int _itemCount,
 			Action<int, int> _onReorder,
-			InvalidType _itemExtentBuilder,
+			object _itemExtentBuilder,
 			double _autoScrollerVelocityScalar
 ,
 			Func<InvalidType, int?> _findChildIndexCallback = null,

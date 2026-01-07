@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -134,9 +134,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SingleChildScrollViewStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: scrollDirection
 /// {@macro flutter.widgets.scroll_view.scrollDirection}
-		public IntPtr scrollDirection { get; set; }
+		public Axis scrollDirection { get; set; }
 
+		// Simple field: reverse
 /// Whether the scroll view scrolls in the reading direction.
 /// 
 /// For example, if the reading direction is left-to-right and
@@ -151,9 +153,14 @@ namespace Flutter.Structs
 /// Defaults to false.
 		public bool reverse { get; set; }
 
+		// Simple field: padding
 /// The amount of space by which to inset the child.
 		public IntPtr padding { get; set; }
 
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		// Simple field: controller
 /// An object that can be used to control the position to which this scroll
 /// view is scrolled.
 /// 
@@ -168,9 +175,17 @@ namespace Flutter.Structs
 /// [ScrollController.animateTo]).
 		public IntPtr? controller { get; set; }
 
+		// Has flag for nullable property: primary
+		public byte Hasprimary { get; set; }
+
+		// Nullable value type: primary
 /// {@macro flutter.widgets.scroll_view.primary}
 		public NativeNullable<bool> primary { get; set; }
 
+		// Has flag for nullable property: physics
+		public byte Hasphysics { get; set; }
+
+		// Simple field: physics
 /// How the scroll view should respond to user input.
 /// 
 /// For example, determines how the scroll view continues to animate after the
@@ -179,29 +194,43 @@ namespace Flutter.Structs
 /// Defaults to matching platform conventions.
 		public IntPtr? physics { get; set; }
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget that scrolls.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: dragStartBehavior
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
-		public IntPtr dragStartBehavior { get; set; }
+		public DragStartBehavior dragStartBehavior { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: hitTestBehavior
 /// {@macro flutter.widgets.scrollable.hitTestBehavior}
 /// 
 /// Defaults to [HitTestBehavior.opaque].
-		public IntPtr hitTestBehavior { get; set; }
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
-		IntPtr _restorationId;
+		// Has flag for nullable property: restorationId
+		public byte HasrestorationId { get; set; }
+
+		// String field: restorationId
+		private IntPtr _restorationId;
+
 /// {@macro flutter.widgets.scrollable.restorationId}
 		public string? restorationId
 		{
@@ -209,6 +238,10 @@ namespace Flutter.Structs
 			set => SetString(ref _restorationId, value);
 		}
 
+		// Has flag for nullable property: keyboardDismissBehavior
+		public byte HaskeyboardDismissBehavior { get; set; }
+
+		// Simple field: keyboardDismissBehavior
 /// {@macro flutter.widgets.scroll_view.keyboardDismissBehavior}
 /// 
 /// If [keyboardDismissBehavior] is null then it will fallback to the inherited

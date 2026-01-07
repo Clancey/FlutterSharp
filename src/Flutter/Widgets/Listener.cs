@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -44,16 +47,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Listener"/> class.
 		/// </summary>
 		public Listener(
-			InvalidType _onPointerDown,
-			InvalidType _onPointerMove,
-			InvalidType _onPointerUp,
-			InvalidType _onPointerHover,
-			InvalidType _onPointerCancel,
-			InvalidType _onPointerPanZoomStart,
-			InvalidType _onPointerPanZoomUpdate,
-			InvalidType _onPointerPanZoomEnd,
-			InvalidType _onPointerSignal,
-			InvalidType _behavior
+			Action _onPointerDown,
+			Action _onPointerMove,
+			Action _onPointerUp,
+			Action _onPointerHover,
+			Action _onPointerCancel,
+			Action _onPointerPanZoomStart,
+			Action _onPointerPanZoomUpdate,
+			Action _onPointerPanZoomEnd,
+			Action _onPointerSignal,
+			object _behavior
 ,
 			Widget? _child = null
 		)

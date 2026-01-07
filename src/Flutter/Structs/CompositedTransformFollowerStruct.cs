@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -42,10 +42,12 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class CompositedTransformFollowerStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: link
 /// The link object that connects this [CompositedTransformFollower] with a
 /// [CompositedTransformTarget].
 		public IntPtr link { get; set; }
 
+		// Simple field: showWhenUnlinked
 /// Whether to show the widget's contents when there is no corresponding
 /// [CompositedTransformTarget] with the same [link].
 /// 
@@ -57,6 +59,7 @@ namespace Flutter.Structs
 /// hidden.
 		public bool showWhenUnlinked { get; set; }
 
+		// Simple field: targetAnchor
 /// The anchor point on the linked [CompositedTransformTarget] that
 /// [followerAnchor] will line up with.
 /// 
@@ -73,6 +76,7 @@ namespace Flutter.Structs
 /// Defaults to [Alignment.topLeft].
 		public IntPtr targetAnchor { get; set; }
 
+		// Simple field: followerAnchor
 /// The anchor point on this widget that will line up with [targetAnchor] on
 /// the linked [CompositedTransformTarget].
 /// 
@@ -81,14 +85,21 @@ namespace Flutter.Structs
 /// Defaults to [Alignment.topLeft].
 		public IntPtr followerAnchor { get; set; }
 
+		// Simple field: offset
 /// The additional offset to apply to the [targetAnchor] of the linked
 /// [CompositedTransformTarget] to obtain this widget's [followerAnchor]
 /// position.
 		public IntPtr offset { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

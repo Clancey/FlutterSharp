@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -35,16 +35,23 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RawMagnifierStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// An optional widget to position inside the len of the [RawMagnifier].
 /// 
 /// This is positioned over the [RawMagnifier] - it may be useful for tinting the
 /// [RawMagnifier], or drawing a crosshair-like UI.
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: decoration
 /// This magnifier's decoration.
 /// 
 /// This sets the shape of the loupe, plus any borders and shadows that it
@@ -58,6 +65,7 @@ namespace Flutter.Structs
 /// the magnified image is visible.
 		public IntPtr decoration { get; set; }
 
+		// Simple field: clipBehavior
 /// Whether and how to clip the parts of [decoration] that render inside the
 /// loupe.
 /// 
@@ -66,6 +74,7 @@ namespace Flutter.Structs
 /// See the discussion at [decoration].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: focalPointOffset
 /// The offset of the magnifier from [RawMagnifier]'s center.
 /// 
 /// {@template flutter.widgets.magnifier.offset}
@@ -78,11 +87,13 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr focalPointOffset { get; set; }
 
+		// Simple field: magnificationScale
 /// How "zoomed in" the magnification subject is in the lens.
 /// 
 /// The default is 1.0, which is no magnification.
 		public double magnificationScale { get; set; }
 
+		// Simple field: size
 /// The size of the magnifier.
 /// 
 /// This does not include the border from the [decoration]; it only includes

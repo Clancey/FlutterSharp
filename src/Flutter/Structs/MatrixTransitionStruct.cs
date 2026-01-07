@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -33,10 +33,24 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class MatrixTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Callback field: onTransform
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTransform;
+
 /// The callback to compute a [Matrix4] from the [animation]. It's called
 /// every time [animation] changes its value.
-		public IntPtr onTransform { get; set; }
+		/// <summary>
+		/// Action identifier for onTransform callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTransformAction
+		{
+			get => GetString(_onTransform);
+			set => SetString(ref _onTransform, value);
+		}
 
+		// Simple field: alignment
 /// The alignment of the origin of the coordinate system in which the
 /// transform takes place, relative to the size of the box.
 /// 
@@ -44,23 +58,31 @@ namespace Flutter.Structs
 /// use an alignment of (0.0, 1.0).
 		public IntPtr alignment { get; set; }
 
+		// Simple field: filterQuality
 /// The filter quality with which to apply the transform as a bitmap operation.
 /// 
 /// When the animation is stopped (either in [AnimationStatus.dismissed] or
 /// [AnimationStatus.completed]), the filter quality argument will be ignored.
 /// 
 /// {@macro flutter.widgets.Transform.optional.FilterQuality}
-		public IntPtr filterQuality { get; set; }
+		public FilterQuality filterQuality { get; set; }
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: animation
 		public IntPtr animation { get; set; }
 
 	}

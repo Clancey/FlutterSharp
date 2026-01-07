@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -41,6 +41,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ReorderableListStruct : WidgetStruct
 	{
+		// Callback field: itemBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _itemBuilder;
+
 /// {@template flutter.widgets.reorderable_list.itemBuilder}
 /// Called, as needed, to build list item widgets.
 /// 
@@ -53,8 +57,18 @@ namespace Flutter.Structs
 /// (usually a [ReorderableDragStartListener] or
 /// [ReorderableDelayedDragStartListener]).
 /// {@endtemplate}
-		public IntPtr itemBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for itemBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? itemBuilderAction
+		{
+			get => GetString(_itemBuilder);
+			set => SetString(ref _itemBuilder, value);
+		}
 
+		// Simple field: itemCount
 /// {@template flutter.widgets.reorderable_list.itemCount}
 /// The number of items in the list.
 /// 
@@ -63,12 +77,32 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public int itemCount { get; set; }
 
+		// Callback field: onReorder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onReorder;
+
 /// {@template flutter.widgets.reorderable_list.onReorder}
 /// A callback used by the list to report that a list item has been dragged
 /// to a new location in the list and the application should update the order
 /// of the items.
 /// {@endtemplate}
-		public IntPtr onReorder { get; set; }
+		/// <summary>
+		/// Action identifier for onReorder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onReorderAction
+		{
+			get => GetString(_onReorder);
+			set => SetString(ref _onReorder, value);
+		}
+
+		// Has flag for nullable property: onReorderStart
+		public byte HasonReorderStart { get; set; }
+
+		// Callback field: onReorderStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onReorderStart;
 
 /// {@template flutter.widgets.reorderable_list.onReorderStart}
 /// A callback that is called when an item drag has started.
@@ -81,7 +115,23 @@ namespace Flutter.Structs
 /// * [onReorder], which reports that a list item has been dragged to a new
 /// location.
 /// {@endtemplate}
-		public IntPtr? onReorderStart { get; set; }
+		/// <summary>
+		/// Action identifier for onReorderStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onReorderStartAction
+		{
+			get => GetString(_onReorderStart);
+			set => SetString(ref _onReorderStart, value);
+		}
+
+		// Has flag for nullable property: onReorderEnd
+		public byte HasonReorderEnd { get; set; }
+
+		// Callback field: onReorderEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onReorderEnd;
 
 /// {@template flutter.widgets.reorderable_list.onReorderEnd}
 /// A callback that is called when the dragged item is dropped.
@@ -96,14 +146,40 @@ namespace Flutter.Structs
 /// * [onReorder], which reports that a list item has been dragged to a new
 /// location.
 /// {@endtemplate}
-		public IntPtr? onReorderEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onReorderEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onReorderEndAction
+		{
+			get => GetString(_onReorderEnd);
+			set => SetString(ref _onReorderEnd, value);
+		}
+
+		// Has flag for nullable property: proxyDecorator
+		public byte HasproxyDecorator { get; set; }
+
+		// Callback field: proxyDecorator
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _proxyDecorator;
 
 /// {@template flutter.widgets.reorderable_list.proxyDecorator}
 /// A callback that allows the app to add an animated decoration around
 /// an item when it is being dragged.
 /// {@endtemplate}
-		public IntPtr? proxyDecorator { get; set; }
+		/// <summary>
+		/// Action identifier for proxyDecorator callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? proxyDecoratorAction
+		{
+			get => GetString(_proxyDecorator);
+			set => SetString(ref _proxyDecorator, value);
+		}
 
+		// Simple field: padding
 /// {@template flutter.widgets.reorderable_list.padding}
 /// The amount of space by which to inset the list contents.
 /// 
@@ -111,40 +187,70 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr padding { get; set; }
 
+		// Simple field: scrollDirection
 /// {@macro flutter.widgets.scroll_view.scrollDirection}
-		public IntPtr scrollDirection { get; set; }
+		public Axis scrollDirection { get; set; }
 
+		// Simple field: reverse
 /// {@macro flutter.widgets.scroll_view.reverse}
 		public bool reverse { get; set; }
 
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		// Simple field: controller
 /// {@macro flutter.widgets.scroll_view.controller}
 		public IntPtr? controller { get; set; }
 
+		// Has flag for nullable property: primary
+		public byte Hasprimary { get; set; }
+
+		// Nullable value type: primary
 /// {@macro flutter.widgets.scroll_view.primary}
 		public NativeNullable<bool> primary { get; set; }
 
+		// Has flag for nullable property: physics
+		public byte Hasphysics { get; set; }
+
+		// Simple field: physics
 /// {@macro flutter.widgets.scroll_view.physics}
 		public IntPtr? physics { get; set; }
 
+		// Simple field: shrinkWrap
 /// {@macro flutter.widgets.scroll_view.shrinkWrap}
 		public bool shrinkWrap { get; set; }
 
+		// Simple field: anchor
 /// {@macro flutter.widgets.scroll_view.anchor}
 		public double anchor { get; set; }
 
+		// Has flag for nullable property: cacheExtent
+		public byte HascacheExtent { get; set; }
+
+		// Nullable value type: cacheExtent
 /// {@macro flutter.rendering.RenderViewportBase.cacheExtent}
 		public NativeNullable<double> cacheExtent { get; set; }
 
+		// Simple field: dragStartBehavior
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
-		public IntPtr dragStartBehavior { get; set; }
+		public DragStartBehavior dragStartBehavior { get; set; }
 
+		// Has flag for nullable property: keyboardDismissBehavior
+		public byte HaskeyboardDismissBehavior { get; set; }
+
+		// Simple field: keyboardDismissBehavior
 /// {@macro flutter.widgets.scroll_view.keyboardDismissBehavior}
 /// 
 /// If [keyboardDismissBehavior] is null then it will fallback to the inherited
 /// [ScrollBehavior.getKeyboardDismissBehavior].
 		public ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior { get; set; }
 
-		IntPtr _restorationId;
+		// Has flag for nullable property: restorationId
+		public byte HasrestorationId { get; set; }
+
+		// String field: restorationId
+		private IntPtr _restorationId;
+
 /// {@macro flutter.widgets.scrollable.restorationId}
 		public string? restorationId
 		{
@@ -152,28 +258,51 @@ namespace Flutter.Structs
 			set => SetString(ref _restorationId, value);
 		}
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
+		// Has flag for nullable property: itemExtent
+		public byte HasitemExtent { get; set; }
+
+		// Nullable value type: itemExtent
 /// {@macro flutter.widgets.list_view.itemExtent}
 		public NativeNullable<double> itemExtent { get; set; }
 
+		// Simple field: itemExtentBuilder
 /// {@macro flutter.widgets.list_view.itemExtentBuilder}
 		public IntPtr itemExtentBuilder { get; set; }
 
-		IntPtr _prototypeItem;
+		// Has flag for nullable property: prototypeItem
+		public byte HasprototypeItem { get; set; }
+
+		// Widget field: prototypeItem
+		private IntPtr _prototypeItem;
+
 /// {@macro flutter.widgets.list_view.prototypeItem}
-		public Widget? prototypeItem
+		public IntPtr? prototypeItem
 		{
+			get => _prototypeItem != IntPtr.Zero ? (IntPtr)_prototypeItem : null;
 			set => SetIntPtr(ref _prototypeItem, value);
 		}
 
+		// Has flag for nullable property: autoScrollerVelocityScalar
+		public byte HasautoScrollerVelocityScalar { get; set; }
+
+		// Nullable value type: autoScrollerVelocityScalar
 /// {@macro flutter.widgets.EdgeDraggingAutoScroller.velocityScalar}
 /// 
 /// {@macro flutter.widgets.SliverReorderableList.autoScrollerVelocityScalar.default}
 		public NativeNullable<double> autoScrollerVelocityScalar { get; set; }
+
+		// Has flag for nullable property: dragBoundaryProvider
+		public byte HasdragBoundaryProvider { get; set; }
+
+		// Callback field: dragBoundaryProvider
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _dragBoundaryProvider;
 
 /// {@template flutter.widgets.reorderable_list.dragBoundaryProvider}
 /// A callback used to provide drag boundaries during drag-and-drop reordering.
@@ -181,7 +310,16 @@ namespace Flutter.Structs
 /// If null, the delegate returned by `DragBoundary.forRectMaybeOf` will be used.
 /// Defaults to null.
 /// {@endtemplate}
-		public IntPtr? dragBoundaryProvider { get; set; }
+		/// <summary>
+		/// Action identifier for dragBoundaryProvider callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? dragBoundaryProviderAction
+		{
+			get => GetString(_dragBoundaryProvider);
+			set => SetString(ref _dragBoundaryProvider, value);
+		}
 
 	}
 }

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -443,6 +443,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TextStyleStruct : WidgetStruct
 	{
+		// Simple field: inherit
 /// Whether null values in this [TextStyle] can be replaced with their value
 /// in another [TextStyle] using [merge].
 /// 
@@ -466,6 +467,7 @@ namespace Flutter.Structs
 /// [TextStyle]s.
 		public bool inherit { get; set; }
 
+		// Simple field: color
 /// The color to use when painting the text.
 /// 
 /// If [foreground] is specified, this value must be null. The [color] property
@@ -476,6 +478,7 @@ namespace Flutter.Structs
 /// specified in one place, it will dominate [color] in another.
 		public IntPtr color { get; set; }
 
+		// Simple field: backgroundColor
 /// The color to use as the background for the text.
 /// 
 /// If [background] is specified, this value must be null. The
@@ -487,7 +490,12 @@ namespace Flutter.Structs
 /// specified in one place, it will dominate [color] in another.
 		public IntPtr backgroundColor { get; set; }
 
-		IntPtr _fontFamily;
+		// Has flag for nullable property: fontFamily
+		public byte HasfontFamily { get; set; }
+
+		// String field: fontFamily
+		private IntPtr _fontFamily;
+
 /// The name of the font to use when painting the text (e.g., Roboto).
 /// 
 /// If the font is defined in a package, this will be prefixed with
@@ -515,6 +523,10 @@ namespace Flutter.Structs
 			set => SetString(ref _fontFamily, value);
 		}
 
+		// Has flag for nullable property: fontSize
+		public byte HasfontSize { get; set; }
+
+		// Nullable value type: fontSize
 /// The size of fonts (in logical pixels) to use when painting the text.
 /// 
 /// The value specified matches the dimension of the
@@ -530,25 +542,40 @@ namespace Flutter.Structs
 /// is set to null.
 		public NativeNullable<double> fontSize { get; set; }
 
+		// Simple field: fontWeight
 /// The typeface thickness to use when painting the text (e.g., bold).
 		public IntPtr fontWeight { get; set; }
 
+		// Simple field: fontStyle
 /// The typeface variant to use when drawing the letters (e.g., italics).
 		public IntPtr fontStyle { get; set; }
 
+		// Has flag for nullable property: letterSpacing
+		public byte HasletterSpacing { get; set; }
+
+		// Nullable value type: letterSpacing
 /// The amount of space (in logical pixels) to add between each letter.
 /// A negative value can be used to bring the letters closer.
 		public NativeNullable<double> letterSpacing { get; set; }
 
+		// Has flag for nullable property: wordSpacing
+		public byte HaswordSpacing { get; set; }
+
+		// Nullable value type: wordSpacing
 /// The amount of space (in logical pixels) to add at each sequence of
 /// white-space (i.e. between each word). A negative value can be used to
 /// bring the words closer.
 		public NativeNullable<double> wordSpacing { get; set; }
 
+		// Simple field: textBaseline
 /// The common baseline that should be aligned between this text span and its
 /// parent text span, or, for the root text spans, with the line box.
-		public IntPtr textBaseline { get; set; }
+		public TextBaseline textBaseline { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 /// The height of this text span, as a multiple of the font size.
 /// 
 /// When [height] is [kTextHeightNone], the line height will be determined by
@@ -573,6 +600,7 @@ namespace Flutter.Structs
 /// height at the paragraph level.
 		public NativeNullable<double> height { get; set; }
 
+		// Simple field: leadingDistribution
 /// How the vertical space added by the [height] multiplier should be
 /// distributed over and under the text.
 /// 
@@ -589,6 +617,7 @@ namespace Flutter.Structs
 /// `ParagraphStyle.textHeightBehavior`'s [leadingDistribution].
 		public IntPtr leadingDistribution { get; set; }
 
+		// Simple field: locale
 /// The locale used to select region-specific glyphs.
 /// 
 /// This property is rarely set. Typically the locale used to select
@@ -599,6 +628,7 @@ namespace Flutter.Structs
 /// different region-specific glyphs for each text span.
 		public IntPtr locale { get; set; }
 
+		// Simple field: foreground
 /// The paint drawn as a foreground for the text.
 /// 
 /// The value should ideally be cached and reused each time if multiple text
@@ -614,6 +644,7 @@ namespace Flutter.Structs
 /// specified in one place, it will dominate [color] in another.
 		public IntPtr foreground { get; set; }
 
+		// Simple field: background
 /// The paint drawn as a background for the text.
 /// 
 /// The value should ideally be cached and reused each time if multiple text
@@ -631,17 +662,24 @@ namespace Flutter.Structs
 /// in another.
 		public IntPtr background { get; set; }
 
+		// Simple field: decoration
 /// The decorations to paint near the text (e.g., an underline).
 /// 
 /// Multiple decorations can be applied using [TextDecoration.combine].
 		public IntPtr decoration { get; set; }
 
+		// Simple field: decorationColor
 /// The color in which to paint the text decorations.
 		public IntPtr decorationColor { get; set; }
 
+		// Simple field: decorationStyle
 /// The style in which to paint the text decorations (e.g., dashed).
 		public IntPtr decorationStyle { get; set; }
 
+		// Has flag for nullable property: decorationThickness
+		public byte HasdecorationThickness { get; set; }
+
+		// Nullable value type: decorationThickness
 /// The thickness of the decoration stroke as a multiplier of the thickness
 /// defined by the font.
 /// 
@@ -687,7 +725,12 @@ namespace Flutter.Structs
 /// stroke thickness/width.
 		public NativeNullable<double> decorationThickness { get; set; }
 
-		IntPtr _debugLabel;
+		// Has flag for nullable property: debugLabel
+		public byte HasdebugLabel { get; set; }
+
+		// String field: debugLabel
+		private IntPtr _debugLabel;
+
 /// A human-readable description of this text style.
 /// 
 /// This property is maintained only in debug builds.
@@ -705,6 +748,10 @@ namespace Flutter.Structs
 			set => SetString(ref _debugLabel, value);
 		}
 
+		// Has flag for nullable property: shadows
+		public byte Hasshadows { get; set; }
+
+		// Simple field: shadows
 /// A list of [Shadow]s that will be painted underneath the text.
 /// 
 /// Multiple shadows are supported to replicate lighting from multiple light
@@ -714,6 +761,10 @@ namespace Flutter.Structs
 /// equivalent as order produces differing transparency.
 		public IntPtr? shadows { get; set; }
 
+		// Has flag for nullable property: fontFeatures
+		public byte HasfontFeatures { get; set; }
+
+		// Simple field: fontFeatures
 /// A list of [FontFeature]s that affect how the font selects glyphs.
 /// 
 /// Some fonts support multiple variants of how a given character can be
@@ -729,6 +780,10 @@ namespace Flutter.Structs
 /// * [fontVariations], for font features that have continuous parameters.
 		public IntPtr? fontFeatures { get; set; }
 
+		// Has flag for nullable property: fontVariations
+		public byte HasfontVariations { get; set; }
+
+		// Simple field: fontVariations
 /// A list of [FontVariation]s that affect how a variable font is rendered.
 /// 
 /// Some fonts are variable fonts that can generate multiple font faces based
@@ -754,14 +809,28 @@ namespace Flutter.Structs
 /// * [fontFeatures], for font variations that have discrete values.
 		public IntPtr? fontVariations { get; set; }
 
+		// Has flag for nullable property: overflow
+		public byte Hasoverflow { get; set; }
+
+		// Simple field: overflow
 /// How visual text overflow should be handled.
 		public TextOverflow? overflow { get; set; }
 
+		// Has flag for nullable property: fontFamilyFallback
+		public byte HasfontFamilyFallback { get; set; }
+
+		// Simple field: fontFamilyFallback
 		public IntPtr? fontFamilyFallback { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
-		IntPtr _package;
+		// Has flag for nullable property: package
+		public byte Haspackage { get; set; }
+
+		// String field: package
+		private IntPtr _package;
+
 		public string? package
 		{
 			get => GetString(_package);

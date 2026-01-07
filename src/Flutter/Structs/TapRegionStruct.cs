@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -32,9 +32,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TapRegionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: enabled
 /// Whether or not this [TapRegion] is enabled as part of the composite region.
 		public bool enabled { get; set; }
 
+		// Simple field: behavior
 /// How to behave during hit testing when deciding how the hit test propagates
 /// to children and whether to consider targets behind this [TapRegion].
 /// 
@@ -42,6 +44,13 @@ namespace Flutter.Structs
 /// 
 /// See [HitTestBehavior] for the allowed values and their meanings.
 		public IntPtr behavior { get; set; }
+
+		// Has flag for nullable property: onTapOutside
+		public byte HasonTapOutside { get; set; }
+
+		// Callback field: onTapOutside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapOutside;
 
 /// A callback to be invoked when a tap down is detected outside of this
 /// [TapRegion] and any other region with the same [groupId], if any.
@@ -54,7 +63,23 @@ namespace Flutter.Structs
 /// See also:
 /// * [onTapUpOutside], which is called when a tap up is detected outside
 /// of this region.
-		public IntPtr? onTapOutside { get; set; }
+		/// <summary>
+		/// Action identifier for onTapOutside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapOutsideAction
+		{
+			get => GetString(_onTapOutside);
+			set => SetString(ref _onTapOutside, value);
+		}
+
+		// Has flag for nullable property: onTapInside
+		public byte HasonTapInside { get; set; }
+
+		// Callback field: onTapInside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapInside;
 
 /// A callback to be invoked when a tap down is detected inside of this
 /// [TapRegion], or any other tap region with the same [groupId], if any.
@@ -67,7 +92,23 @@ namespace Flutter.Structs
 /// See also:
 /// * [onTapUpInside], which is called when a tap up is detected inside
 /// of this region.
-		public IntPtr? onTapInside { get; set; }
+		/// <summary>
+		/// Action identifier for onTapInside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapInsideAction
+		{
+			get => GetString(_onTapInside);
+			set => SetString(ref _onTapInside, value);
+		}
+
+		// Has flag for nullable property: onTapUpOutside
+		public byte HasonTapUpOutside { get; set; }
+
+		// Callback field: onTapUpOutside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapUpOutside;
 
 /// A callback to be invoked when a tap up is detected outside of this
 /// [TapRegion] and any other region with the same [groupId], if any.
@@ -80,7 +121,23 @@ namespace Flutter.Structs
 /// See also:
 /// * [onTapOutside], which is called when a tap down is detected outside
 /// of this region.
-		public IntPtr? onTapUpOutside { get; set; }
+		/// <summary>
+		/// Action identifier for onTapUpOutside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapUpOutsideAction
+		{
+			get => GetString(_onTapUpOutside);
+			set => SetString(ref _onTapUpOutside, value);
+		}
+
+		// Has flag for nullable property: onTapUpInside
+		public byte HasonTapUpInside { get; set; }
+
+		// Callback field: onTapUpInside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapUpInside;
 
 /// A callback to be invoked when a tap up is detected inside of this
 /// [TapRegion], or any other tap region with the same [groupId], if any.
@@ -93,8 +150,21 @@ namespace Flutter.Structs
 /// See also:
 /// * [onTapInside], which is called when a tap down is detected inside
 /// of this region.
-		public IntPtr? onTapUpInside { get; set; }
+		/// <summary>
+		/// Action identifier for onTapUpInside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapUpInsideAction
+		{
+			get => GetString(_onTapUpInside);
+			set => SetString(ref _onTapUpInside, value);
+		}
 
+		// Has flag for nullable property: groupId
+		public byte HasgroupId { get; set; }
+
+		// Simple field: groupId
 /// An optional group ID that groups [TapRegion]s together so that they
 /// operate as one region. If any member of a group is hit by a particular
 /// tap, then the [onTapOutside] / [onTapUpOutside] will not be called for
@@ -104,6 +174,7 @@ namespace Flutter.Structs
 /// If the group id is null, then only this region is hit tested.
 		public IntPtr? groupId { get; set; }
 
+		// Simple field: consumeOutsideTaps
 /// If true, then the group that this region belongs to will stop the
 /// propagation of all events in the gesture arena.
 /// 
@@ -117,7 +188,12 @@ namespace Flutter.Structs
 /// Defaults to false.
 		public bool consumeOutsideTaps { get; set; }
 
-		IntPtr _debugLabel;
+		// Has flag for nullable property: debugLabel
+		public byte HasdebugLabel { get; set; }
+
+		// String field: debugLabel
+		private IntPtr _debugLabel;
+
 /// An optional debug label to help with debugging in debug mode.
 /// 
 /// Will be null in release mode.
@@ -127,9 +203,15 @@ namespace Flutter.Structs
 			set => SetString(ref _debugLabel, value);
 		}
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

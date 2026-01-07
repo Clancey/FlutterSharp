@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -284,7 +287,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public HtmlElementView(
 			string _viewType,
-			InvalidType _onPlatformViewCreated,
+			Action _onPlatformViewCreated,
 			PlatformViewHitTestBehavior _hitTestBehavior
 ,
 			object? _creationParams = null

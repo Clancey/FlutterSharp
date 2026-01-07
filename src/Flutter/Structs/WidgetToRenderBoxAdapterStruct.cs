@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -25,18 +25,21 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class WidgetToRenderBoxAdapterStruct : WidgetStruct
 	{
+		// Simple field: renderBox
 /// The render box to place in the widget tree.
 /// 
 /// This widget takes ownership of the render object. When it is unmounted,
 /// it also calls [RenderObject.dispose].
 		public IntPtr renderBox { get; set; }
 
+		// Simple field: onBuild
 /// Called when it is safe to update the render box and its descendants. If
 /// you update the RenderObject subtree under this widget outside of
 /// invocations of this callback, features like hit-testing will fail as the
 /// tree will be dirty.
 		public IntPtr onBuild { get; set; }
 
+		// Simple field: onUnmount
 /// Called when it is safe to dispose of children that were manually added to
 /// the [renderBox].
 /// 

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -42,6 +42,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class WidgetsAppStruct : WidgetStruct
 	{
+		// Has flag for nullable property: navigatorKey
+		public byte HasnavigatorKey { get; set; }
+
+		// Simple field: navigatorKey
 /// {@template flutter.widgets.widgetsApp.navigatorKey}
 /// A key to use when building the [Navigator].
 /// 
@@ -59,6 +63,13 @@ namespace Flutter.Structs
 /// null, [navigatorKey] must also be null.
 /// {@endtemplate}
 		public IntPtr? navigatorKey { get; set; }
+
+		// Has flag for nullable property: onGenerateRoute
+		public byte HasonGenerateRoute { get; set; }
+
+		// Callback field: onGenerateRoute
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onGenerateRoute;
 
 /// {@template flutter.widgets.widgetsApp.onGenerateRoute}
 /// The route generator callback used when the app is navigated to a
@@ -82,7 +93,23 @@ namespace Flutter.Structs
 /// If this property is not set, either the [routes] or [home] properties must
 /// be set, and the [pageRouteBuilder] must also be set so that the
 /// default handler will know what routes and [PageRoute]s to build.
-		public IntPtr? onGenerateRoute { get; set; }
+		/// <summary>
+		/// Action identifier for onGenerateRoute callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onGenerateRouteAction
+		{
+			get => GetString(_onGenerateRoute);
+			set => SetString(ref _onGenerateRoute, value);
+		}
+
+		// Has flag for nullable property: onGenerateInitialRoutes
+		public byte HasonGenerateInitialRoutes { get; set; }
+
+		// Callback field: onGenerateInitialRoutes
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onGenerateInitialRoutes;
 
 /// {@template flutter.widgets.widgetsApp.onGenerateInitialRoutes}
 /// The routes generator callback used for generating initial routes if
@@ -92,7 +119,23 @@ namespace Flutter.Structs
 /// [Navigator.onGenerateInitialRoutes] will default to
 /// [Navigator.defaultGenerateInitialRoutes].
 /// {@endtemplate}
-		public IntPtr? onGenerateInitialRoutes { get; set; }
+		/// <summary>
+		/// Action identifier for onGenerateInitialRoutes callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onGenerateInitialRoutesAction
+		{
+			get => GetString(_onGenerateInitialRoutes);
+			set => SetString(ref _onGenerateInitialRoutes, value);
+		}
+
+		// Has flag for nullable property: pageRouteBuilder
+		public byte HaspageRouteBuilder { get; set; }
+
+		// Callback field: pageRouteBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _pageRouteBuilder;
 
 /// The [PageRoute] generator callback used when the app is navigated to a
 /// named route.
@@ -114,8 +157,21 @@ namespace Flutter.Structs
 /// pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) => builder(context),
 /// ),
 /// ```
-		public IntPtr? pageRouteBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for pageRouteBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? pageRouteBuilderAction
+		{
+			get => GetString(_pageRouteBuilder);
+			set => SetString(ref _pageRouteBuilder, value);
+		}
 
+		// Has flag for nullable property: routeInformationParser
+		public byte HasrouteInformationParser { get; set; }
+
+		// Simple field: routeInformationParser
 /// {@template flutter.widgets.widgetsApp.routeInformationParser}
 /// A delegate to parse the route information from the
 /// [routeInformationProvider] into a generic data type to be processed by
@@ -132,6 +188,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? routeInformationParser { get; set; }
 
+		// Has flag for nullable property: routerDelegate
+		public byte HasrouterDelegate { get; set; }
+
+		// Simple field: routerDelegate
 /// {@template flutter.widgets.widgetsApp.routerDelegate}
 /// A delegate that configures a widget, typically a [Navigator], with
 /// parsed result from the [routeInformationParser].
@@ -148,6 +208,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? routerDelegate { get; set; }
 
+		// Has flag for nullable property: backButtonDispatcher
+		public byte HasbackButtonDispatcher { get; set; }
+
+		// Simple field: backButtonDispatcher
 /// {@template flutter.widgets.widgetsApp.backButtonDispatcher}
 /// A delegate that decide whether to handle the Android back button intent.
 /// 
@@ -163,6 +227,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? backButtonDispatcher { get; set; }
 
+		// Has flag for nullable property: routeInformationProvider
+		public byte HasrouteInformationProvider { get; set; }
+
+		// Simple field: routeInformationProvider
 /// {@template flutter.widgets.widgetsApp.routeInformationProvider}
 /// A object that provides route information through the
 /// [RouteInformationProvider.value] and notifies its listener when its value
@@ -181,6 +249,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? routeInformationProvider { get; set; }
 
+		// Has flag for nullable property: routerConfig
+		public byte HasrouterConfig { get; set; }
+
+		// Simple field: routerConfig
 /// {@template flutter.widgets.widgetsApp.routerConfig}
 /// An object to configure the underlying [Router].
 /// 
@@ -195,7 +267,12 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? routerConfig { get; set; }
 
-		IntPtr _home;
+		// Has flag for nullable property: home
+		public byte Hashome { get; set; }
+
+		// Widget field: home
+		private IntPtr _home;
+
 /// {@template flutter.widgets.widgetsApp.home}
 /// The widget for the default route of the app ([Navigator.defaultRouteName],
 /// which is `/`).
@@ -227,11 +304,16 @@ namespace Flutter.Structs
 /// If this property is set, the [pageRouteBuilder] property must also be set
 /// so that the default route handler will know what kind of [PageRoute]s to
 /// build.
-		public Widget? home
+		public IntPtr? home
 		{
+			get => _home != IntPtr.Zero ? (IntPtr)_home : null;
 			set => SetIntPtr(ref _home, value);
 		}
 
+		// Has flag for nullable property: routes
+		public byte Hasroutes { get; set; }
+
+		// Simple field: routes
 /// The application's top-level routing table.
 /// 
 /// When a named route is pushed with [Navigator.pushNamed], the route name is
@@ -261,6 +343,13 @@ namespace Flutter.Structs
 /// build.
 		public IntPtr? routes { get; set; }
 
+		// Has flag for nullable property: onUnknownRoute
+		public byte HasonUnknownRoute { get; set; }
+
+		// Callback field: onUnknownRoute
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onUnknownRoute;
+
 /// {@template flutter.widgets.widgetsApp.onUnknownRoute}
 /// Called when [onGenerateRoute] fails to generate a route, except for the
 /// [initialRoute].
@@ -276,7 +365,23 @@ namespace Flutter.Structs
 /// [routes], [onGenerateRoute], or [onUnknownRoute]); if they are not,
 /// [builder] must not be null.
 /// {@endtemplate}
-		public IntPtr? onUnknownRoute { get; set; }
+		/// <summary>
+		/// Action identifier for onUnknownRoute callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onUnknownRouteAction
+		{
+			get => GetString(_onUnknownRoute);
+			set => SetString(ref _onUnknownRoute, value);
+		}
+
+		// Has flag for nullable property: onNavigationNotification
+		public byte HasonNavigationNotification { get; set; }
+
+		// Callback field: onNavigationNotification
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onNavigationNotification;
 
 /// {@template flutter.widgets.widgetsApp.onNavigationNotification}
 /// The callback to use when receiving a [NavigationNotification].
@@ -288,9 +393,23 @@ namespace Flutter.Structs
 /// 
 /// * [NotificationListener.onNotification], which uses this callback.
 /// {@endtemplate}
-		public IntPtr? onNavigationNotification { get; set; }
+		/// <summary>
+		/// Action identifier for onNavigationNotification callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onNavigationNotificationAction
+		{
+			get => GetString(_onNavigationNotification);
+			set => SetString(ref _onNavigationNotification, value);
+		}
 
-		IntPtr _initialRoute;
+		// Has flag for nullable property: initialRoute
+		public byte HasinitialRoute { get; set; }
+
+		// String field: initialRoute
+		private IntPtr _initialRoute;
+
 /// {@template flutter.widgets.widgetsApp.initialRoute}
 /// The name of the first route to show, if a [Navigator] is built.
 /// 
@@ -332,6 +451,10 @@ namespace Flutter.Structs
 			set => SetString(ref _initialRoute, value);
 		}
 
+		// Has flag for nullable property: navigatorObservers
+		public byte HasnavigatorObservers { get; set; }
+
+		// Simple field: navigatorObservers
 /// {@template flutter.widgets.widgetsApp.navigatorObservers}
 /// The list of observers for the [Navigator] created for this app.
 /// 
@@ -343,6 +466,13 @@ namespace Flutter.Structs
 /// [navigatorObservers] must be the empty list and [builder] must not be null.
 /// {@endtemplate}
 		public IntPtr? navigatorObservers { get; set; }
+
+		// Has flag for nullable property: builder
+		public byte Hasbuilder { get; set; }
+
+		// Callback field: builder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _builder;
 
 /// {@template flutter.widgets.widgetsApp.builder}
 /// A builder for inserting widgets above the [Navigator] or - when the
@@ -391,9 +521,23 @@ namespace Flutter.Structs
 /// building one, widgets and APIs such as [Hero], [Navigator.push] and
 /// [Navigator.pop], will not function.
 /// {@endtemplate}
-		public IntPtr? builder { get; set; }
+		/// <summary>
+		/// Action identifier for builder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? builderAction
+		{
+			get => GetString(_builder);
+			set => SetString(ref _builder, value);
+		}
 
-		IntPtr _title;
+		// Has flag for nullable property: title
+		public byte Hastitle { get; set; }
+
+		// String field: title
+		private IntPtr _title;
+
 /// {@template flutter.widgets.widgetsApp.title}
 /// A one-line description used by the device to identify the app for the user.
 /// 
@@ -411,6 +555,13 @@ namespace Flutter.Structs
 			set => SetString(ref _title, value);
 		}
 
+		// Has flag for nullable property: onGenerateTitle
+		public byte HasonGenerateTitle { get; set; }
+
+		// Callback field: onGenerateTitle
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onGenerateTitle;
+
 /// {@template flutter.widgets.widgetsApp.onGenerateTitle}
 /// If non-null this callback function is called to produce the app's
 /// title string, otherwise [title] is used.
@@ -424,11 +575,22 @@ namespace Flutter.Structs
 /// The [onGenerateTitle] callback is called each time the [WidgetsApp]
 /// rebuilds.
 /// {@endtemplate}
-		public IntPtr? onGenerateTitle { get; set; }
+		/// <summary>
+		/// Action identifier for onGenerateTitle callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onGenerateTitleAction
+		{
+			get => GetString(_onGenerateTitle);
+			set => SetString(ref _onGenerateTitle, value);
+		}
 
+		// Simple field: textStyle
 /// The default text style for [Text] in the application.
 		public IntPtr textStyle { get; set; }
 
+		// Simple field: color
 /// {@template flutter.widgets.widgetsApp.color}
 /// The primary color to use for the application in the operating system
 /// interface.
@@ -438,6 +600,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr color { get; set; }
 
+		// Simple field: locale
 /// {@template flutter.widgets.widgetsApp.locale}
 /// The initial locale for this app's [Localizations] widget is based
 /// on this value.
@@ -457,6 +620,10 @@ namespace Flutter.Structs
 /// resources used by this app.
 		public IntPtr locale { get; set; }
 
+		// Has flag for nullable property: localizationsDelegates
+		public byte HaslocalizationsDelegates { get; set; }
+
+		// Simple field: localizationsDelegates
 /// {@template flutter.widgets.widgetsApp.localizationsDelegates}
 /// The delegates for this app's [Localizations] widget.
 /// 
@@ -464,6 +631,13 @@ namespace Flutter.Structs
 /// for this application's [Localizations] widget.
 /// {@endtemplate}
 		public IntPtr? localizationsDelegates { get; set; }
+
+		// Has flag for nullable property: localeListResolutionCallback
+		public byte HaslocaleListResolutionCallback { get; set; }
+
+		// Callback field: localeListResolutionCallback
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _localeListResolutionCallback;
 
 /// {@template flutter.widgets.widgetsApp.localeListResolutionCallback}
 /// This callback is responsible for choosing the app's locale
@@ -502,7 +676,23 @@ namespace Flutter.Structs
 /// * [MaterialApp.localeListResolutionCallback], which sets the callback of the
 /// [WidgetsApp] it creates.
 /// * [basicLocaleListResolution], the default locale resolution algorithm.
-		public IntPtr? localeListResolutionCallback { get; set; }
+		/// <summary>
+		/// Action identifier for localeListResolutionCallback callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? localeListResolutionCallbackAction
+		{
+			get => GetString(_localeListResolutionCallback);
+			set => SetString(ref _localeListResolutionCallback, value);
+		}
+
+		// Has flag for nullable property: localeResolutionCallback
+		public byte HaslocaleResolutionCallback { get; set; }
+
+		// Callback field: localeResolutionCallback
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _localeResolutionCallback;
 
 /// {@macro flutter.widgets.widgetsApp.localeListResolutionCallback}
 /// 
@@ -518,8 +708,18 @@ namespace Flutter.Structs
 /// * [MaterialApp.localeResolutionCallback], which sets the callback of the
 /// [WidgetsApp] it creates.
 /// * [basicLocaleListResolution], the default locale resolution algorithm.
-		public IntPtr? localeResolutionCallback { get; set; }
+		/// <summary>
+		/// Action identifier for localeResolutionCallback callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? localeResolutionCallbackAction
+		{
+			get => GetString(_localeResolutionCallback);
+			set => SetString(ref _localeResolutionCallback, value);
+		}
 
+		// Simple field: supportedLocales
 /// {@template flutter.widgets.widgetsApp.supportedLocales}
 /// The list of locales that this app has been localized for.
 /// 
@@ -589,6 +789,7 @@ namespace Flutter.Structs
 /// * [basicLocaleListResolution], the default locale resolution algorithm.
 		public IntPtr supportedLocales { get; set; }
 
+		// Simple field: showPerformanceOverlay
 /// Turns on a performance overlay.
 /// 
 /// See also:
@@ -596,10 +797,12 @@ namespace Flutter.Structs
 /// * <https://flutter.dev/to/performance-overlay>
 		public bool showPerformanceOverlay { get; set; }
 
+		// Simple field: showSemanticsDebugger
 /// Turns on an overlay that shows the accessibility information
 /// reported by the framework.
 		public bool showSemanticsDebugger { get; set; }
 
+		// Simple field: debugShowWidgetInspector
 /// Turns on an overlay that enables inspecting the widget tree.
 /// 
 /// The inspector is only available in debug mode as it depends on
@@ -607,12 +810,35 @@ namespace Flutter.Structs
 /// debug mode.
 		public bool debugShowWidgetInspector { get; set; }
 
+		// Has flag for nullable property: exitWidgetSelectionButtonBuilder
+		public byte HasexitWidgetSelectionButtonBuilder { get; set; }
+
+		// Callback field: exitWidgetSelectionButtonBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _exitWidgetSelectionButtonBuilder;
+
 /// Builds the widget the [WidgetInspector] uses to exit selection mode.
 /// 
 /// This lets [MaterialApp] and [CupertinoApp] use an appropriately styled
 /// button for their design systems without requiring [WidgetInspector] to
 /// depend on the Material or Cupertino packages.
-		public IntPtr? exitWidgetSelectionButtonBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for exitWidgetSelectionButtonBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? exitWidgetSelectionButtonBuilderAction
+		{
+			get => GetString(_exitWidgetSelectionButtonBuilder);
+			set => SetString(ref _exitWidgetSelectionButtonBuilder, value);
+		}
+
+		// Has flag for nullable property: moveExitWidgetSelectionButtonBuilder
+		public byte HasmoveExitWidgetSelectionButtonBuilder { get; set; }
+
+		// Callback field: moveExitWidgetSelectionButtonBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _moveExitWidgetSelectionButtonBuilder;
 
 /// Builds the widget the [WidgetInspector] uses to move the exit selection
 /// mode button.
@@ -620,7 +846,23 @@ namespace Flutter.Structs
 /// This lets [MaterialApp] and [CupertinoApp] use an appropriately styled
 /// button for their design systems without requiring [WidgetInspector] to
 /// depend on the Material or Cupertino packages.
-		public IntPtr? moveExitWidgetSelectionButtonBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for moveExitWidgetSelectionButtonBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? moveExitWidgetSelectionButtonBuilderAction
+		{
+			get => GetString(_moveExitWidgetSelectionButtonBuilder);
+			set => SetString(ref _moveExitWidgetSelectionButtonBuilder, value);
+		}
+
+		// Has flag for nullable property: tapBehaviorButtonBuilder
+		public byte HastapBehaviorButtonBuilder { get; set; }
+
+		// Callback field: tapBehaviorButtonBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _tapBehaviorButtonBuilder;
 
 /// Builds the widget the [WidgetInspector] uses to change the default
 /// behavior when tapping on widgets in the app.
@@ -628,8 +870,18 @@ namespace Flutter.Structs
 /// This lets [MaterialApp] and [CupertinoApp] use an appropriately styled
 /// button for their design systems without requiring [WidgetInspector] to
 /// depend on the Material or Cupertino packages.
-		public IntPtr? tapBehaviorButtonBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for tapBehaviorButtonBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? tapBehaviorButtonBuilderAction
+		{
+			get => GetString(_tapBehaviorButtonBuilder);
+			set => SetString(ref _tapBehaviorButtonBuilder, value);
+		}
 
+		// Simple field: debugShowCheckedModeBanner
 /// {@template flutter.widgets.widgetsApp.debugShowCheckedModeBanner}
 /// Turns on a little "DEBUG" banner in debug mode to indicate
 /// that the app is in debug mode. This is on by default (in
@@ -647,6 +899,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool debugShowCheckedModeBanner { get; set; }
 
+		// Has flag for nullable property: shortcuts
+		public byte Hasshortcuts { get; set; }
+
+		// Simple field: shortcuts
 /// {@template flutter.widgets.widgetsApp.shortcuts}
 /// The default map of keyboard shortcuts to intents for the application.
 /// 
@@ -693,6 +949,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? shortcuts { get; set; }
 
+		// Has flag for nullable property: actions
+		public byte Hasactions { get; set; }
+
+		// Simple field: actions
 /// {@template flutter.widgets.widgetsApp.actions}
 /// The default map of intent keys to actions for the application.
 /// 
@@ -747,7 +1007,12 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? actions { get; set; }
 
-		IntPtr _restorationScopeId;
+		// Has flag for nullable property: restorationScopeId
+		public byte HasrestorationScopeId { get; set; }
+
+		// String field: restorationScopeId
+		private IntPtr _restorationScopeId;
+
 /// {@template flutter.widgets.widgetsApp.restorationScopeId}
 /// The identifier to use for state restoration of this app.
 /// 
@@ -770,6 +1035,7 @@ namespace Flutter.Structs
 			set => SetString(ref _restorationScopeId, value);
 		}
 
+		// Simple field: useInheritedMediaQuery
 /// {@template flutter.widgets.widgetsApp.useInheritedMediaQuery}
 /// Deprecated. This setting is now ignored.
 /// 

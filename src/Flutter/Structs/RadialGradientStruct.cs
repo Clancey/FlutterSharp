@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -84,6 +84,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RadialGradientStruct : WidgetStruct
 	{
+		// Simple field: center
 /// The center of the gradient, as an offset into the (-1.0, -1.0) x (1.0, 1.0)
 /// square describing the gradient which will be mapped onto the paint box.
 /// 
@@ -100,6 +101,7 @@ namespace Flutter.Structs
 /// method will need to be given a [TextDirection].
 		public IntPtr center { get; set; }
 
+		// Simple field: radius
 /// The radius of the gradient, as a fraction of the shortest side
 /// of the paint box.
 /// 
@@ -108,6 +110,7 @@ namespace Flutter.Structs
 /// will place the 1.0 stop at 100.0 pixels from the [center].
 		public double radius { get; set; }
 
+		// Simple field: tileMode
 /// How this gradient should tile the plane beyond the outer ring at [radius]
 /// pixels from the [center].
 /// 
@@ -124,6 +127,10 @@ namespace Flutter.Structs
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/dart-ui/tile_mode_repeated_radialWithFocal.png)
 		public IntPtr tileMode { get; set; }
 
+		// Has flag for nullable property: focal
+		public byte Hasfocal { get; set; }
+
+		// Simple field: focal
 /// The focal point of the gradient. If specified, the gradient will appear
 /// to be focused along the vector from [center] to focal.
 /// 
@@ -134,6 +141,7 @@ namespace Flutter.Structs
 /// [Offset.zero], which would fail to create a valid gradient.
 		public IntPtr? focal { get; set; }
 
+		// Simple field: focalRadius
 /// The radius of the focal point of gradient, as a fraction of the shortest
 /// side of the paint box.
 /// 
@@ -146,12 +154,22 @@ namespace Flutter.Structs
 /// a valid gradient.
 		public double focalRadius { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
+		// Simple field: colors
 		public IntPtr colors { get; set; }
 
+		// Has flag for nullable property: stops
+		public byte Hasstops { get; set; }
+
+		// Simple field: stops
 		public IntPtr? stops { get; set; }
 
+		// Has flag for nullable property: transform
+		public byte Hastransform { get; set; }
+
+		// Simple field: transform
 		public IntPtr? transform { get; set; }
 
 	}

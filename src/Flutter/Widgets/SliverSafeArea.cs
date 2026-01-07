@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -43,7 +46,7 @@ namespace Flutter.Widgets
 			bool _top,
 			bool _right,
 			bool _bottom,
-			InvalidType _minimum,
+			object _minimum,
 			Widget _sliver
 
 		)

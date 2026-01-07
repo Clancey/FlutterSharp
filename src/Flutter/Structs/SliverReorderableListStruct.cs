@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -37,40 +37,143 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverReorderableListStruct : WidgetStruct
 	{
+		// Callback field: itemBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _itemBuilder;
+
 /// {@macro flutter.widgets.reorderable_list.itemBuilder}
-		public IntPtr itemBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for itemBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? itemBuilderAction
+		{
+			get => GetString(_itemBuilder);
+			set => SetString(ref _itemBuilder, value);
+		}
+
+		// Has flag for nullable property: findChildIndexCallback
+		public byte HasfindChildIndexCallback { get; set; }
+
+		// Callback field: findChildIndexCallback
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _findChildIndexCallback;
 
 /// {@macro flutter.widgets.SliverChildBuilderDelegate.findChildIndexCallback}
-		public IntPtr? findChildIndexCallback { get; set; }
+		/// <summary>
+		/// Action identifier for findChildIndexCallback callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? findChildIndexCallbackAction
+		{
+			get => GetString(_findChildIndexCallback);
+			set => SetString(ref _findChildIndexCallback, value);
+		}
 
+		// Simple field: itemCount
 /// {@macro flutter.widgets.reorderable_list.itemCount}
 		public int itemCount { get; set; }
 
+		// Callback field: onReorder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onReorder;
+
 /// {@macro flutter.widgets.reorderable_list.onReorder}
-		public IntPtr onReorder { get; set; }
+		/// <summary>
+		/// Action identifier for onReorder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onReorderAction
+		{
+			get => GetString(_onReorder);
+			set => SetString(ref _onReorder, value);
+		}
+
+		// Has flag for nullable property: onReorderStart
+		public byte HasonReorderStart { get; set; }
+
+		// Callback field: onReorderStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onReorderStart;
 
 /// {@macro flutter.widgets.reorderable_list.onReorderStart}
-		public IntPtr? onReorderStart { get; set; }
+		/// <summary>
+		/// Action identifier for onReorderStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onReorderStartAction
+		{
+			get => GetString(_onReorderStart);
+			set => SetString(ref _onReorderStart, value);
+		}
+
+		// Has flag for nullable property: onReorderEnd
+		public byte HasonReorderEnd { get; set; }
+
+		// Callback field: onReorderEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onReorderEnd;
 
 /// {@macro flutter.widgets.reorderable_list.onReorderEnd}
-		public IntPtr? onReorderEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onReorderEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onReorderEndAction
+		{
+			get => GetString(_onReorderEnd);
+			set => SetString(ref _onReorderEnd, value);
+		}
+
+		// Has flag for nullable property: proxyDecorator
+		public byte HasproxyDecorator { get; set; }
+
+		// Callback field: proxyDecorator
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _proxyDecorator;
 
 /// {@macro flutter.widgets.reorderable_list.proxyDecorator}
-		public IntPtr? proxyDecorator { get; set; }
+		/// <summary>
+		/// Action identifier for proxyDecorator callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? proxyDecoratorAction
+		{
+			get => GetString(_proxyDecorator);
+			set => SetString(ref _proxyDecorator, value);
+		}
 
+		// Has flag for nullable property: itemExtent
+		public byte HasitemExtent { get; set; }
+
+		// Nullable value type: itemExtent
 /// {@macro flutter.widgets.list_view.itemExtent}
 		public NativeNullable<double> itemExtent { get; set; }
 
+		// Simple field: itemExtentBuilder
 /// {@macro flutter.widgets.list_view.itemExtentBuilder}
 		public IntPtr itemExtentBuilder { get; set; }
 
-		IntPtr _prototypeItem;
+		// Has flag for nullable property: prototypeItem
+		public byte HasprototypeItem { get; set; }
+
+		// Widget field: prototypeItem
+		private IntPtr _prototypeItem;
+
 /// {@macro flutter.widgets.list_view.prototypeItem}
-		public Widget? prototypeItem
+		public IntPtr? prototypeItem
 		{
+			get => _prototypeItem != IntPtr.Zero ? (IntPtr)_prototypeItem : null;
 			set => SetIntPtr(ref _prototypeItem, value);
 		}
 
+		// Simple field: autoScrollerVelocityScalar
 /// {@macro flutter.widgets.EdgeDraggingAutoScroller.velocityScalar}
 /// 
 /// {@template flutter.widgets.SliverReorderableList.autoScrollerVelocityScalar.default}
@@ -78,8 +181,24 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public double autoScrollerVelocityScalar { get; set; }
 
+		// Has flag for nullable property: dragBoundaryProvider
+		public byte HasdragBoundaryProvider { get; set; }
+
+		// Callback field: dragBoundaryProvider
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _dragBoundaryProvider;
+
 /// {@macro flutter.widgets.reorderable_list.dragBoundaryProvider}
-		public IntPtr? dragBoundaryProvider { get; set; }
+		/// <summary>
+		/// Action identifier for dragBoundaryProvider callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? dragBoundaryProviderAction
+		{
+			get => GetString(_dragBoundaryProvider);
+			set => SetString(ref _dragBoundaryProvider, value);
+		}
 
 	}
 }

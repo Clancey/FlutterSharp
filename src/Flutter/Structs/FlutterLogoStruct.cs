@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -25,6 +25,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class FlutterLogoStruct : WidgetStruct
 	{
+		// Has flag for nullable property: size
+		public byte Hassize { get; set; }
+
+		// Nullable value type: size
 /// The size of the logo in logical pixels.
 /// 
 /// The logo will be fit into a square this size.
@@ -34,6 +38,7 @@ namespace Flutter.Structs
 /// 24.0.
 		public NativeNullable<double> size { get; set; }
 
+		// Simple field: textColor
 /// The color used to paint the "Flutter" text on the logo, if [style] is
 /// [FlutterLogoStyle.horizontal] or [FlutterLogoStyle.stacked].
 /// 
@@ -41,14 +46,17 @@ namespace Flutter.Structs
 /// background.
 		public IntPtr textColor { get; set; }
 
+		// Simple field: style
 /// Whether and where to draw the "Flutter" text. By default, only the logo
 /// itself is drawn.
 		public IntPtr style { get; set; }
 
+		// Simple field: duration
 /// The length of time for the animation if the [style] or [textColor]
 /// properties are changed.
 		public IntPtr duration { get; set; }
 
+		// Simple field: curve
 /// The curve for the logo animation if the [style] or [textColor] change.
 		public IntPtr curve { get; set; }
 

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -43,7 +46,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Semantics"/> class.
 		/// </summary>
 		public Semantics(
-			InvalidType _properties,
+			object _properties,
 			bool _container,
 			bool _explicitChildNodes,
 			bool _excludeSemantics,
@@ -80,45 +83,45 @@ namespace Flutter.Widgets
 			int? _currentValueLength = null,
 			string? _identifier = null,
 			string? _label = null,
-			InvalidType _attributedLabel = null,
+			object _attributedLabel = null,
 			string? _value = null,
-			InvalidType _attributedValue = null,
+			object _attributedValue = null,
 			string? _increasedValue = null,
-			InvalidType _attributedIncreasedValue = null,
+			object _attributedIncreasedValue = null,
 			string? _decreasedValue = null,
-			InvalidType _attributedDecreasedValue = null,
+			object _attributedDecreasedValue = null,
 			string? _hint = null,
-			InvalidType _attributedHint = null,
+			object _attributedHint = null,
 			string? _tooltip = null,
 			string? _onTapHint = null,
 			string? _onLongPressHint = null,
 			TextDirection? _textDirection = null,
-			InvalidType _sortKey = null,
-			InvalidType _tagForChildren = null,
-			InvalidType _onTap = null,
-			InvalidType _onLongPress = null,
-			InvalidType _onScrollLeft = null,
-			InvalidType _onScrollRight = null,
-			InvalidType _onScrollUp = null,
-			InvalidType _onScrollDown = null,
-			InvalidType _onIncrease = null,
-			InvalidType _onDecrease = null,
-			InvalidType _onCopy = null,
-			InvalidType _onCut = null,
-			InvalidType _onPaste = null,
-			InvalidType _onDismiss = null,
-			InvalidType _onMoveCursorForwardByCharacter = null,
-			InvalidType _onMoveCursorBackwardByCharacter = null,
-			InvalidType _onSetSelection = null,
-			InvalidType _onSetText = null,
-			InvalidType _onDidGainAccessibilityFocus = null,
-			InvalidType _onDidLoseAccessibilityFocus = null,
-			InvalidType _onFocus = null,
+			object _sortKey = null,
+			object _tagForChildren = null,
+			Action _onTap = null,
+			Action _onLongPress = null,
+			Action _onScrollLeft = null,
+			Action _onScrollRight = null,
+			Action _onScrollUp = null,
+			Action _onScrollDown = null,
+			Action _onIncrease = null,
+			Action _onDecrease = null,
+			Action _onCopy = null,
+			Action _onCut = null,
+			Action _onPaste = null,
+			Action _onDismiss = null,
+			Action _onMoveCursorForwardByCharacter = null,
+			Action _onMoveCursorBackwardByCharacter = null,
+			Action _onSetSelection = null,
+			Action _onSetText = null,
+			Action _onDidGainAccessibilityFocus = null,
+			Action _onDidLoseAccessibilityFocus = null,
+			Action _onFocus = null,
 			Dictionary<object, object>? _customSemanticsActions = null,
-			InvalidType _role = null,
+			object _role = null,
 			HashSet<string>? _controlsNodes = null,
-			SemanticsValidationResult _validationResult = SemanticsValidationResult.None,
-			InvalidType _inputType = null
+			object _validationResult = null,
+			object _inputType = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

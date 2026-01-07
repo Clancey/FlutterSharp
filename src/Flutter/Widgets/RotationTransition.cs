@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -41,7 +44,7 @@ namespace Flutter.Widgets
 			Animation<double> _turns
 ,
 			AlignmentGeometry? _alignment = null,
-			InvalidType _filterQuality = null,
+			FilterQuality? _filterQuality = null,
 			Widget? _child = null
 		)
 		{

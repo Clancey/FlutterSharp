@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -29,9 +29,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class BoxShadowStruct : WidgetStruct
 	{
+		// Simple field: spreadRadius
 /// The amount the box should be inflated prior to applying the blur.
 		public double spreadRadius { get; set; }
 
+		// Simple field: blurStyle
 /// The [BlurStyle] to use for this shadow.
 /// 
 /// Defaults to [BlurStyle.normal].
@@ -40,12 +42,16 @@ namespace Flutter.Structs
 /// acts as if [BlurStyle.normal] was used.
 		public IntPtr blurStyle { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
+		// Simple field: color
 		public IntPtr color { get; set; }
 
+		// Simple field: offset
 		public IntPtr offset { get; set; }
 
+		// Simple field: blurRadius
 		public IntPtr blurRadius { get; set; }
 
 	}

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -28,6 +28,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SizedOverflowBoxStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: alignment
 /// How to align the child.
 /// 
 /// The x and y values of the alignment control the horizontal and vertical
@@ -48,12 +49,19 @@ namespace Flutter.Structs
 /// relative to text direction.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: size
 /// The size this widget should attempt to be.
 		public IntPtr size { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

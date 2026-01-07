@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -24,13 +24,17 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TableCellStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: verticalAlignment
 /// How this cell is aligned vertically.
 		public IntPtr verticalAlignment { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The child of this cell.
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

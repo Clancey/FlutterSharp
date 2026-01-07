@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -47,7 +47,9 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PlatformViewLinkStruct : WidgetStruct
 	{
-		IntPtr _viewType;
+		// String field: viewType
+		private IntPtr _viewType;
+
 /// The unique identifier for the view type to be embedded.
 /// 
 /// Typically, this viewType has already been registered on the platform side.
@@ -57,9 +59,35 @@ namespace Flutter.Structs
 			set => SetString(ref _viewType, value);
 		}
 
-		public IntPtr surfaceFactory { get; set; }
+		// Callback field: surfaceFactory
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _surfaceFactory;
 
-		public IntPtr onCreatePlatformView { get; set; }
+		/// <summary>
+		/// Action identifier for surfaceFactory callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? surfaceFactoryAction
+		{
+			get => GetString(_surfaceFactory);
+			set => SetString(ref _surfaceFactory, value);
+		}
+
+		// Callback field: onCreatePlatformView
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onCreatePlatformView;
+
+		/// <summary>
+		/// Action identifier for onCreatePlatformView callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onCreatePlatformViewAction
+		{
+			get => GetString(_onCreatePlatformView);
+			set => SetString(ref _onCreatePlatformView, value);
+		}
 
 	}
 }

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -36,6 +36,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class OverflowBoxStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: alignment
 /// How to align the child.
 /// 
 /// The x and y values of the alignment control the horizontal and vertical
@@ -56,22 +57,39 @@ namespace Flutter.Structs
 /// relative to text direction.
 		public IntPtr alignment { get; set; }
 
+		// Has flag for nullable property: minWidth
+		public byte HasminWidth { get; set; }
+
+		// Nullable value type: minWidth
 /// The minimum width constraint to give the child. Set this to null (the
 /// default) to use the constraint from the parent instead.
 		public NativeNullable<double> minWidth { get; set; }
 
+		// Has flag for nullable property: maxWidth
+		public byte HasmaxWidth { get; set; }
+
+		// Nullable value type: maxWidth
 /// The maximum width constraint to give the child. Set this to null (the
 /// default) to use the constraint from the parent instead.
 		public NativeNullable<double> maxWidth { get; set; }
 
+		// Has flag for nullable property: minHeight
+		public byte HasminHeight { get; set; }
+
+		// Nullable value type: minHeight
 /// The minimum height constraint to give the child. Set this to null (the
 /// default) to use the constraint from the parent instead.
 		public NativeNullable<double> minHeight { get; set; }
 
+		// Has flag for nullable property: maxHeight
+		public byte HasmaxHeight { get; set; }
+
+		// Nullable value type: maxHeight
 /// The maximum height constraint to give the child. Set this to null (the
 /// default) to use the constraint from the parent instead.
 		public NativeNullable<double> maxHeight { get; set; }
 
+		// Simple field: fit
 /// The way to size the render object.
 /// 
 /// This only affects scenario when the child does not indeed overflow.
@@ -80,11 +98,17 @@ namespace Flutter.Structs
 /// as small as the parent allows if no child is set. If set to
 /// [OverflowBoxFit.max] (the default), the render object will size itself
 /// to be as large as the parent allows.
-		public IntPtr fit { get; set; }
+		public BoxFit fit { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

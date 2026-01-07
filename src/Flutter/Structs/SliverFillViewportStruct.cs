@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -32,6 +32,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverFillViewportStruct : WidgetStruct
 	{
+		// Simple field: viewportFraction
 /// The fraction of the viewport that each child should fill in the main axis.
 /// 
 /// If this fraction is less than 1.0, more than one child will be visible at
@@ -39,6 +40,7 @@ namespace Flutter.Structs
 /// the viewport in the main axis.
 		public double viewportFraction { get; set; }
 
+		// Simple field: padEnds
 /// Whether to add padding to both ends of the list.
 /// 
 /// If this is set to true and [viewportFraction] < 1.0, padding will be added
@@ -52,6 +54,7 @@ namespace Flutter.Structs
 /// Defaults to true.
 		public bool padEnds { get; set; }
 
+		// Simple field: @delegate
 /// {@macro flutter.widgets.SliverMultiBoxAdaptorWidget.delegate}
 		public IntPtr @delegate { get; set; }
 

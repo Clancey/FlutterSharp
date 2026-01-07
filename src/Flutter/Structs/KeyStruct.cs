@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -29,7 +29,9 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class KeyStruct : WidgetStruct
 	{
-		IntPtr _value;
+		// String field: value
+		private IntPtr _value;
+
 		public string value
 		{
 			get => GetString(_value);

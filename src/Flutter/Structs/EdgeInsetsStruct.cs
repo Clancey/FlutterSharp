@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -60,26 +60,35 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class EdgeInsetsStruct : WidgetStruct
 	{
+		// Simple field: left
 /// The offset from the left.
 		public double left { get; set; }
 
+		// Simple field: top
 /// The offset from the top.
 		public double top { get; set; }
 
+		// Simple field: right
 /// The offset from the right.
 		public double right { get; set; }
 
+		// Simple field: bottom
 /// The offset from the bottom.
 		public double bottom { get; set; }
 
+		// Simple field: topLeft
 		public IntPtr topLeft { get; set; }
 
+		// Simple field: topRight
 		public IntPtr topRight { get; set; }
 
+		// Simple field: bottomLeft
 		public IntPtr bottomLeft { get; set; }
 
+		// Simple field: bottomRight
 		public IntPtr bottomRight { get; set; }
 
+		// Simple field: flipped
 		public IntPtr flipped { get; set; }
 
 	}

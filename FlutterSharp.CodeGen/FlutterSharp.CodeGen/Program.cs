@@ -367,8 +367,9 @@ internal class Program
 
 		// Pass template paths to generators
 		var csharpWidgetTemplatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "CSharpWidget.scriban");
+		var csharpStructTemplatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "CSharpStruct.scriban");
 		var csharpWidgetGenerator = new CSharpWidgetGenerator(dartToCSharpMapper, csharpWidgetTemplatePath);
-		var csharpStructGenerator = new CSharpStructGenerator(dartToCSharpMapper);
+		var csharpStructGenerator = new CSharpStructGenerator(dartToCSharpMapper, csharpStructTemplatePath);
 		var csharpEnumGenerator = new CSharpEnumGenerator(dartToCSharpMapper);
 		var dartStructGenerator = new DartStructGenerator(csharpToDartMapper);
 		var dartParserGenerator = new DartParserGenerator(csharpToDartMapper);

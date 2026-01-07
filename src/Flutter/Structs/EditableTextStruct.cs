@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -231,13 +231,17 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class EditableTextStruct : WidgetStruct
 	{
+		// Simple field: controller
 /// Controls the text being edited.
 		public IntPtr controller { get; set; }
 
+		// Simple field: focusNode
 /// Controls whether this widget has keyboard focus.
 		public IntPtr focusNode { get; set; }
 
-		IntPtr _obscuringCharacter;
+		// String field: obscuringCharacter
+		private IntPtr _obscuringCharacter;
+
 /// {@template flutter.widgets.editableText.obscuringCharacter}
 /// Character used for obscuring text if [obscureText] is true.
 /// 
@@ -251,6 +255,7 @@ namespace Flutter.Structs
 			set => SetString(ref _obscuringCharacter, value);
 		}
 
+		// Simple field: obscureText
 /// {@template flutter.widgets.editableText.obscureText}
 /// Whether to hide the text being edited (e.g., for passwords).
 /// 
@@ -263,12 +268,15 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool obscureText { get; set; }
 
+		// Simple field: textHeightBehavior
 /// {@macro dart.ui.textHeightBehavior}
 		public IntPtr textHeightBehavior { get; set; }
 
+		// Simple field: textWidthBasis
 /// {@macro flutter.painting.textPainter.textWidthBasis}
-		public IntPtr textWidthBasis { get; set; }
+		public TextWidthBasis textWidthBasis { get; set; }
 
+		// Simple field: @readOnly
 /// {@template flutter.widgets.editableText.readOnly}
 /// Whether the text can be changed.
 /// 
@@ -279,6 +287,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool @readOnly { get; set; }
 
+		// Simple field: forceLine
 /// Whether the text will take the full width regardless of the text width.
 /// 
 /// When this is set to false, the width will be based on text width, which
@@ -291,6 +300,7 @@ namespace Flutter.Structs
 /// * [textWidthBasis], which controls the calculation of text width.
 		public bool forceLine { get; set; }
 
+		// Simple field: toolbarOptions
 /// Configuration of toolbar options.
 /// 
 /// By default, all options are enabled. If [readOnly] is true, paste and cut
@@ -299,6 +309,7 @@ namespace Flutter.Structs
 /// select all will also be disabled.
 		public IntPtr toolbarOptions { get; set; }
 
+		// Simple field: showSelectionHandles
 /// Whether to show selection handles.
 /// 
 /// When a selection is active, there will be two handles at each side of
@@ -310,6 +321,7 @@ namespace Flutter.Structs
 /// * [showCursor], which controls the visibility of the cursor.
 		public bool showSelectionHandles { get; set; }
 
+		// Simple field: showCursor
 /// {@template flutter.widgets.editableText.showCursor}
 /// Whether to show cursor.
 /// 
@@ -321,6 +333,7 @@ namespace Flutter.Structs
 /// * [showSelectionHandles], which controls the visibility of the selection handles.
 		public bool showCursor { get; set; }
 
+		// Simple field: autocorrect
 /// {@template flutter.widgets.editableText.autocorrect}
 /// Whether to enable autocorrection.
 /// 
@@ -328,30 +341,40 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool autocorrect { get; set; }
 
+		// Simple field: smartDashesType
 /// {@macro flutter.services.TextInputConfiguration.smartDashesType}
 		public IntPtr smartDashesType { get; set; }
 
+		// Simple field: smartQuotesType
 /// {@macro flutter.services.TextInputConfiguration.smartQuotesType}
 		public IntPtr smartQuotesType { get; set; }
 
+		// Simple field: enableSuggestions
 /// {@macro flutter.services.TextInputConfiguration.enableSuggestions}
 		public bool enableSuggestions { get; set; }
 
+		// Simple field: style
 /// The text style to use for the editable text.
 		public IntPtr style { get; set; }
 
+		// Has flag for nullable property: undoController
+		public byte HasundoController { get; set; }
+
+		// Simple field: undoController
 /// Controls the undo state of the current editable text.
 /// 
 /// If null, this widget will create its own [UndoHistoryController].
 		public IntPtr? undoController { get; set; }
 
+		// Simple field: textAlign
 /// {@template flutter.widgets.editableText.textAlign}
 /// How the text should be aligned horizontally.
 /// 
 /// Defaults to [TextAlign.start].
 /// {@endtemplate}
-		public IntPtr textAlign { get; set; }
+		public TextAlign textAlign { get; set; }
 
+		// Simple field: textDirection
 /// {@template flutter.widgets.editableText.textDirection}
 /// The directionality of the text.
 /// 
@@ -369,6 +392,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: textCapitalization
 /// {@template flutter.widgets.editableText.textCapitalization}
 /// Configures how the platform keyboard will select an uppercase or
 /// lowercase keyboard.
@@ -385,6 +409,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr textCapitalization { get; set; }
 
+		// Simple field: locale
 /// Used to select a font when the same Unicode character can
 /// be rendered differently, depending on the locale.
 /// 
@@ -394,6 +419,10 @@ namespace Flutter.Structs
 /// See [RenderEditable.locale] for more information.
 		public IntPtr locale { get; set; }
 
+		// Has flag for nullable property: textScaleFactor
+		public byte HastextScaleFactor { get; set; }
+
+		// Nullable value type: textScaleFactor
 /// {@template flutter.widgets.editableText.textScaleFactor}
 /// Deprecated. Will be removed in a future version of Flutter. Use
 /// [textScaler] instead.
@@ -408,12 +437,15 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public NativeNullable<double> textScaleFactor { get; set; }
 
+		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}
 		public IntPtr textScaler { get; set; }
 
+		// Simple field: cursorColor
 /// The color to use when painting the cursor.
 		public IntPtr cursorColor { get; set; }
 
+		// Simple field: autocorrectionTextRectColor
 /// The color to use when painting the autocorrection Rect.
 /// 
 /// For [CupertinoTextField]s, the value is set to the ambient
@@ -426,6 +458,7 @@ namespace Flutter.Structs
 /// Defaults to null, which disables autocorrection Rect painting.
 		public IntPtr autocorrectionTextRectColor { get; set; }
 
+		// Simple field: backgroundCursorColor
 /// The color to use when painting the background cursor aligned with the text
 /// while rendering the floating cursor.
 /// 
@@ -437,6 +470,10 @@ namespace Flutter.Structs
 /// in detail.
 		public IntPtr backgroundCursorColor { get; set; }
 
+		// Has flag for nullable property: maxLines
+		public byte HasmaxLines { get; set; }
+
+		// Nullable value type: maxLines
 /// {@template flutter.widgets.editableText.maxLines}
 /// The maximum number of lines to show at one time, wrapping if necessary.
 /// 
@@ -492,6 +529,10 @@ namespace Flutter.Structs
 /// its parent.
 		public NativeNullable<int> maxLines { get; set; }
 
+		// Has flag for nullable property: minLines
+		public byte HasminLines { get; set; }
+
+		// Nullable value type: minLines
 /// {@template flutter.widgets.editableText.minLines}
 /// The minimum number of lines to occupy when the content spans fewer lines.
 /// 
@@ -540,6 +581,7 @@ namespace Flutter.Structs
 /// its parent.
 		public NativeNullable<int> minLines { get; set; }
 
+		// Simple field: expands
 /// {@template flutter.widgets.editableText.expands}
 /// Whether this widget's height will be sized to fill its parent.
 /// 
@@ -563,6 +605,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool expands { get; set; }
 
+		// Simple field: autofocus
 /// {@template flutter.widgets.editableText.autofocus}
 /// Whether this text field should focus itself if nothing else is already
 /// focused.
@@ -574,6 +617,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool autofocus { get; set; }
 
+		// Simple field: selectionColor
 /// The color to use when painting the selection.
 /// 
 /// If this property is null, this widget gets the selection color from the
@@ -584,6 +628,10 @@ namespace Flutter.Structs
 /// value is set to the ambient [TextSelectionThemeData.selectionColor].
 		public IntPtr selectionColor { get; set; }
 
+		// Has flag for nullable property: selectionControls
+		public byte HasselectionControls { get; set; }
+
+		// Simple field: selectionControls
 /// {@template flutter.widgets.editableText.selectionControls}
 /// Optional delegate for building the text selection handles.
 /// 
@@ -604,6 +652,7 @@ namespace Flutter.Structs
 /// user's platform set in [ThemeData.platform].
 		public IntPtr? selectionControls { get; set; }
 
+		// Simple field: keyboardType
 /// {@template flutter.widgets.editableText.keyboardType}
 /// The type of keyboard to use for editing the text.
 /// 
@@ -612,9 +661,11 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr keyboardType { get; set; }
 
+		// Simple field: textInputAction
 /// The type of action button to use with the soft keyboard.
 		public IntPtr textInputAction { get; set; }
 
+		// Simple field: onChanged
 /// {@template flutter.widgets.editableText.onChanged}
 /// Called when the user initiates a change to the TextField's
 /// value: when they have inserted or deleted text.
@@ -666,6 +717,7 @@ namespace Flutter.Structs
 /// and notifies its listeners on [TextEditingValue] changes.
 		public IntPtr onChanged { get; set; }
 
+		// Simple field: onEditingComplete
 /// {@template flutter.widgets.editableText.onEditingComplete}
 /// Called when the user submits editable content (e.g., user presses the "done"
 /// button on the keyboard).
@@ -686,6 +738,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr onEditingComplete { get; set; }
 
+		// Simple field: onSubmitted
 /// {@template flutter.widgets.editableText.onSubmitted}
 /// Called when the user indicates that they are done editing the text in the
 /// field.
@@ -708,6 +761,13 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr onSubmitted { get; set; }
 
+		// Has flag for nullable property: onAppPrivateCommand
+		public byte HasonAppPrivateCommand { get; set; }
+
+		// Callback field: onAppPrivateCommand
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onAppPrivateCommand;
+
 /// {@template flutter.widgets.editableText.onAppPrivateCommand}
 /// This is used to receive a private command from the input method.
 /// 
@@ -725,17 +785,44 @@ namespace Flutter.Structs
 /// which is the Android documentation for sendAppPrivateCommand, used to
 /// send a command to the input method.
 /// {@endtemplate}
-		public IntPtr? onAppPrivateCommand { get; set; }
+		/// <summary>
+		/// Action identifier for onAppPrivateCommand callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onAppPrivateCommandAction
+		{
+			get => GetString(_onAppPrivateCommand);
+			set => SetString(ref _onAppPrivateCommand, value);
+		}
+
+		// Has flag for nullable property: onSelectionChanged
+		public byte HasonSelectionChanged { get; set; }
+
+		// Callback field: onSelectionChanged
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSelectionChanged;
 
 /// {@template flutter.widgets.editableText.onSelectionChanged}
 /// Called when the user changes the selection of text (including the cursor
 /// location).
 /// {@endtemplate}
-		public IntPtr? onSelectionChanged { get; set; }
+		/// <summary>
+		/// Action identifier for onSelectionChanged callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSelectionChangedAction
+		{
+			get => GetString(_onSelectionChanged);
+			set => SetString(ref _onSelectionChanged, value);
+		}
 
+		// Simple field: onSelectionHandleTapped
 /// {@macro flutter.widgets.SelectionOverlay.onSelectionHandleTapped}
 		public IntPtr onSelectionHandleTapped { get; set; }
 
+		// Simple field: groupId
 /// {@template flutter.widgets.editableText.groupId}
 /// The group identifier for the [TextFieldTapRegion] of this text field.
 /// 
@@ -748,6 +835,13 @@ namespace Flutter.Structs
 /// included in a [EditableText]'s tap region that has [groupId] set.
 /// {@endtemplate}
 		public IntPtr groupId { get; set; }
+
+		// Has flag for nullable property: onTapOutside
+		public byte HasonTapOutside { get; set; }
+
+		// Callback field: onTapOutside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapOutside;
 
 /// {@template flutter.widgets.editableText.onTapOutside}
 /// Called for each tap down that occurs outside of the [TextFieldTapRegion]
@@ -791,7 +885,23 @@ namespace Flutter.Structs
 /// * [onTapUpOutside] which is called for each tap up.
 /// * [EditableTextTapOutsideIntent] for the intent that is invoked if
 /// this is null.
-		public IntPtr? onTapOutside { get; set; }
+		/// <summary>
+		/// Action identifier for onTapOutside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapOutsideAction
+		{
+			get => GetString(_onTapOutside);
+			set => SetString(ref _onTapOutside, value);
+		}
+
+		// Has flag for nullable property: onTapUpOutside
+		public byte HasonTapUpOutside { get; set; }
+
+		// Callback field: onTapUpOutside
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapUpOutside;
 
 /// {@template flutter.widgets.editableText.onTapUpOutside}
 /// Called for each tap up that occurs outside of the [TextFieldTapRegion]
@@ -813,8 +923,21 @@ namespace Flutter.Structs
 /// * [onTapOutside], which is called for each tap down.
 /// * [EditableTextTapOutsideIntent], the intent that is invoked if
 /// this is null.
-		public IntPtr? onTapUpOutside { get; set; }
+		/// <summary>
+		/// Action identifier for onTapUpOutside callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapUpOutsideAction
+		{
+			get => GetString(_onTapUpOutside);
+			set => SetString(ref _onTapUpOutside, value);
+		}
 
+		// Has flag for nullable property: inputFormatters
+		public byte HasinputFormatters { get; set; }
+
+		// Simple field: inputFormatters
 /// {@template flutter.widgets.editableText.inputFormatters}
 /// Optional input validation and formatting overrides.
 /// 
@@ -831,6 +954,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? inputFormatters { get; set; }
 
+		// Simple field: mouseCursor
 /// The cursor for a mouse pointer when it enters or is hovering over the
 /// widget.
 /// 
@@ -842,6 +966,7 @@ namespace Flutter.Structs
 /// the editing position.
 		public IntPtr mouseCursor { get; set; }
 
+		// Simple field: rendererIgnoresPointer
 /// Whether the caller will provide gesture handling (true), or if the
 /// [EditableText] is expected to handle basic gestures (false).
 /// 
@@ -866,6 +991,7 @@ namespace Flutter.Structs
 /// gestures and behaviors.
 		public bool rendererIgnoresPointer { get; set; }
 
+		// Simple field: cursorWidth
 /// {@template flutter.widgets.editableText.cursorWidth}
 /// How thick the cursor will be.
 /// 
@@ -879,6 +1005,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public double cursorWidth { get; set; }
 
+		// Has flag for nullable property: cursorHeight
+		public byte HascursorHeight { get; set; }
+
+		// Nullable value type: cursorHeight
 /// {@template flutter.widgets.editableText.cursorHeight}
 /// How tall the cursor will be.
 /// 
@@ -886,6 +1016,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public NativeNullable<double> cursorHeight { get; set; }
 
+		// Simple field: cursorRadius
 /// {@template flutter.widgets.editableText.cursorRadius}
 /// How rounded the corners of the cursor should be.
 /// 
@@ -893,6 +1024,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr cursorRadius { get; set; }
 
+		// Simple field: cursorOpacityAnimates
 /// {@template flutter.widgets.editableText.cursorOpacityAnimates}
 /// Whether the cursor will animate from fully transparent to fully opaque
 /// during each cursor blink.
@@ -902,22 +1034,27 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool cursorOpacityAnimates { get; set; }
 
+		// Simple field: cursorOffset
 /// {@macro flutter.rendering.RenderEditable.cursorOffset}
 		public IntPtr cursorOffset { get; set; }
 
+		// Simple field: paintCursorAboveText
 /// {@macro flutter.rendering.RenderEditable.paintCursorAboveText}
 		public bool paintCursorAboveText { get; set; }
 
+		// Simple field: selectionHeightStyle
 /// Controls how tall the selection highlight boxes are computed to be.
 /// 
 /// See [ui.BoxHeightStyle] for details on available styles.
-		public IntPtr selectionHeightStyle { get; set; }
+		public BoxHeightStyle selectionHeightStyle { get; set; }
 
+		// Simple field: selectionWidthStyle
 /// Controls how wide the selection highlight boxes are computed to be.
 /// 
 /// See [ui.BoxWidthStyle] for details on available styles.
-		public IntPtr selectionWidthStyle { get; set; }
+		public BoxWidthStyle selectionWidthStyle { get; set; }
 
+		// Simple field: keyboardAppearance
 /// The appearance of the keyboard.
 /// 
 /// This setting is only honored on iOS devices.
@@ -925,6 +1062,7 @@ namespace Flutter.Structs
 /// Defaults to [Brightness.light].
 		public IntPtr keyboardAppearance { get; set; }
 
+		// Simple field: scrollPadding
 /// {@template flutter.widgets.editableText.scrollPadding}
 /// Configures the padding for the edges surrounding a [Scrollable] when the
 /// text field scrolls into view.
@@ -939,6 +1077,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr scrollPadding { get; set; }
 
+		// Simple field: enableInteractiveSelection
 /// {@template flutter.widgets.editableText.enableInteractiveSelection}
 /// Whether to enable user interface affordances for changing the
 /// text selection.
@@ -955,9 +1094,14 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool enableInteractiveSelection { get; set; }
 
+		// Simple field: dragStartBehavior
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
-		public IntPtr dragStartBehavior { get; set; }
+		public DragStartBehavior dragStartBehavior { get; set; }
 
+		// Has flag for nullable property: scrollController
+		public byte HasscrollController { get; set; }
+
+		// Simple field: scrollController
 /// {@template flutter.widgets.editableText.scrollController}
 /// The [ScrollController] to use when vertically scrolling the input.
 /// 
@@ -967,6 +1111,10 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? scrollController { get; set; }
 
+		// Has flag for nullable property: scrollPhysics
+		public byte HasscrollPhysics { get; set; }
+
+		// Simple field: scrollPhysics
 /// {@template flutter.widgets.editableText.scrollPhysics}
 /// The [ScrollPhysics] to use when vertically scrolling the input.
 /// 
@@ -980,6 +1128,7 @@ namespace Flutter.Structs
 /// [scrollPhysics].
 		public IntPtr? scrollPhysics { get; set; }
 
+		// Simple field: scribbleEnabled
 /// {@template flutter.widgets.editableText.scribbleEnabled}
 /// Whether iOS 14 Scribble features are enabled for this widget.
 /// 
@@ -989,6 +1138,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool scribbleEnabled { get; set; }
 
+		// Simple field: stylusHandwritingEnabled
 /// {@template flutter.widgets.editableText.stylusHandwritingEnabled}
 /// Whether this input supports stylus handwriting, where the user can write
 /// directly on top of a field.
@@ -1010,6 +1160,10 @@ namespace Flutter.Structs
 /// * [Scribe], which can be used to interact with Android Scribe directly.
 		public bool stylusHandwritingEnabled { get; set; }
 
+		// Has flag for nullable property: autofillHints
+		public byte HasautofillHints { get; set; }
+
+		// Simple field: autofillHints
 /// {@template flutter.widgets.editableText.autofillHints}
 /// A list of strings that helps the autofill service identify the type of this
 /// text input.
@@ -1086,18 +1240,25 @@ namespace Flutter.Structs
 /// {@macro flutter.services.AutofillConfiguration.autofillHints}
 		public IntPtr? autofillHints { get; set; }
 
+		// Simple field: autofillClient
 /// The [AutofillClient] that controls this input field's autofill behavior.
 /// 
 /// When null, this widget's [EditableTextState] will be used as the
 /// [AutofillClient]. This property may override [autofillHints].
 		public IntPtr autofillClient { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
-		IntPtr _restorationId;
+		// Has flag for nullable property: restorationId
+		public byte HasrestorationId { get; set; }
+
+		// String field: restorationId
+		private IntPtr _restorationId;
+
 /// Restoration ID to save and restore the scroll offset of the
 /// [EditableText].
 /// 
@@ -1121,6 +1282,10 @@ namespace Flutter.Structs
 			set => SetString(ref _restorationId, value);
 		}
 
+		// Has flag for nullable property: scrollBehavior
+		public byte HasscrollBehavior { get; set; }
+
+		// Simple field: scrollBehavior
 /// {@template flutter.widgets.editableText.scrollBehavior}
 /// A [ScrollBehavior] that will be applied to this widget individually.
 /// 
@@ -1138,9 +1303,14 @@ namespace Flutter.Structs
 /// than 1.
 		public IntPtr? scrollBehavior { get; set; }
 
+		// Simple field: enableIMEPersonalizedLearning
 /// {@macro flutter.services.TextInputConfiguration.enableIMEPersonalizedLearning}
 		public bool enableIMEPersonalizedLearning { get; set; }
 
+		// Has flag for nullable property: contentInsertionConfiguration
+		public byte HascontentInsertionConfiguration { get; set; }
+
+		// Simple field: contentInsertionConfiguration
 /// {@template flutter.widgets.editableText.contentInsertionConfiguration}
 /// Configuration of handler for media content inserted via the system input
 /// method.
@@ -1171,6 +1341,13 @@ namespace Flutter.Structs
 /// inserting rich content.
 /// {@endtemplate}
 		public IntPtr? contentInsertionConfiguration { get; set; }
+
+		// Has flag for nullable property: contextMenuBuilder
+		public byte HascontextMenuBuilder { get; set; }
+
+		// Callback field: contextMenuBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _contextMenuBuilder;
 
 /// {@template flutter.widgets.EditableText.contextMenuBuilder}
 /// Builds the text selection toolbar when requested by the user.
@@ -1227,8 +1404,21 @@ namespace Flutter.Structs
 /// * [BrowserContextMenu], which allows the browser's context menu on web
 /// to be disabled and Flutter-rendered context menus to appear.
 /// {@endtemplate}
-		public IntPtr? contextMenuBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for contextMenuBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? contextMenuBuilderAction
+		{
+			get => GetString(_contextMenuBuilder);
+			set => SetString(ref _contextMenuBuilder, value);
+		}
 
+		// Has flag for nullable property: spellCheckConfiguration
+		public byte HasspellCheckConfiguration { get; set; }
+
+		// Simple field: spellCheckConfiguration
 /// {@template flutter.widgets.EditableText.spellCheckConfiguration}
 /// Configuration that details how spell check should be performed.
 /// 
@@ -1243,14 +1433,17 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? spellCheckConfiguration { get; set; }
 
+		// Simple field: magnifierConfiguration
 /// The configuration for the magnifier to use with selections in this text
 /// field.
 /// 
 /// {@macro flutter.widgets.magnifier.intro}
 		public IntPtr magnifierConfiguration { get; set; }
 
+		// Simple field: strutStyle
 		public IntPtr strutStyle { get; set; }
 
+		// Simple field: selectionEnabled
 		public bool selectionEnabled { get; set; }
 
 	}

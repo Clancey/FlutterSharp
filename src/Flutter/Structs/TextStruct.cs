@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -133,7 +133,12 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TextStruct : WidgetStruct
 	{
-		IntPtr _data;
+		// Has flag for nullable property: data
+		public byte Hasdata { get; set; }
+
+		// String field: data
+		private IntPtr _data;
+
 /// The text to display.
 /// 
 /// This will be null if a [textSpan] is provided instead.
@@ -143,11 +148,13 @@ namespace Flutter.Structs
 			set => SetString(ref _data, value);
 		}
 
+		// Simple field: textSpan
 /// The text to display as a [InlineSpan].
 /// 
 /// This will be null if [data] is provided instead.
 		public IntPtr textSpan { get; set; }
 
+		// Simple field: style
 /// If non-null, the style to use for this text.
 /// 
 /// If the style's "inherit" property is true, the style will be merged with
@@ -155,12 +162,15 @@ namespace Flutter.Structs
 /// replace the closest enclosing [DefaultTextStyle].
 		public IntPtr style { get; set; }
 
+		// Simple field: strutStyle
 /// {@macro flutter.painting.textPainter.strutStyle}
 		public IntPtr strutStyle { get; set; }
 
+		// Simple field: textAlign
 /// How the text should be aligned horizontally.
-		public IntPtr textAlign { get; set; }
+		public TextAlign textAlign { get; set; }
 
+		// Simple field: textDirection
 /// The directionality of the text.
 /// 
 /// This decides how [textAlign] values like [TextAlign.start] and
@@ -176,6 +186,7 @@ namespace Flutter.Structs
 /// Defaults to the ambient [Directionality], if any.
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: locale
 /// Used to select a font when the same Unicode character can
 /// be rendered differently, depending on the locale.
 /// 
@@ -185,17 +196,26 @@ namespace Flutter.Structs
 /// See [RenderParagraph.locale] for more information.
 		public IntPtr locale { get; set; }
 
+		// Has flag for nullable property: softWrap
+		public byte HassoftWrap { get; set; }
+
+		// Nullable value type: softWrap
 /// Whether the text should break at soft line breaks.
 /// 
 /// If false, the glyphs in the text will be positioned as if there was unlimited horizontal space.
 		public NativeNullable<bool> softWrap { get; set; }
 
+		// Simple field: overflow
 /// How visual overflow should be handled.
 /// 
 /// If this is null [TextStyle.overflow] will be used, otherwise the value
 /// from the nearest [DefaultTextStyle] ancestor will be used.
-		public IntPtr overflow { get; set; }
+		public Overflow overflow { get; set; }
 
+		// Has flag for nullable property: textScaleFactor
+		public byte HastextScaleFactor { get; set; }
+
+		// Nullable value type: textScaleFactor
 /// Deprecated. Will be removed in a future version of Flutter. Use
 /// [textScaler] instead.
 /// 
@@ -209,9 +229,14 @@ namespace Flutter.Structs
 /// [MediaQuery], or 1.0 if there is no [MediaQuery] in scope.
 		public NativeNullable<double> textScaleFactor { get; set; }
 
+		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}
 		public IntPtr textScaler { get; set; }
 
+		// Has flag for nullable property: maxLines
+		public byte HasmaxLines { get; set; }
+
+		// Nullable value type: maxLines
 /// An optional maximum number of lines for the text to span, wrapping if necessary.
 /// If the text exceeds the given number of lines, it will be truncated according
 /// to [overflow].
@@ -225,7 +250,12 @@ namespace Flutter.Structs
 /// widget directly to entirely override the [DefaultTextStyle].
 		public NativeNullable<int> maxLines { get; set; }
 
-		IntPtr _semanticsLabel;
+		// Has flag for nullable property: semanticsLabel
+		public byte HassemanticsLabel { get; set; }
+
+		// String field: semanticsLabel
+		private IntPtr _semanticsLabel;
+
 /// {@template flutter.widgets.Text.semanticsLabel}
 /// An alternative semantics label for this text.
 /// 
@@ -246,7 +276,12 @@ namespace Flutter.Structs
 			set => SetString(ref _semanticsLabel, value);
 		}
 
-		IntPtr _semanticsIdentifier;
+		// Has flag for nullable property: semanticsIdentifier
+		public byte HassemanticsIdentifier { get; set; }
+
+		// String field: semanticsIdentifier
+		private IntPtr _semanticsIdentifier;
+
 /// A unique identifier for the semantics node for this widget.
 /// 
 /// This is useful for cases where the text widget needs to have a uniquely
@@ -259,12 +294,15 @@ namespace Flutter.Structs
 			set => SetString(ref _semanticsIdentifier, value);
 		}
 
+		// Simple field: textWidthBasis
 /// {@macro flutter.painting.textPainter.textWidthBasis}
-		public IntPtr textWidthBasis { get; set; }
+		public TextWidthBasis textWidthBasis { get; set; }
 
+		// Simple field: textHeightBehavior
 /// {@macro dart.ui.textHeightBehavior}
 		public IntPtr textHeightBehavior { get; set; }
 
+		// Simple field: selectionColor
 /// The color to use when painting the selection.
 /// 
 /// This is ignored if [SelectionContainer.maybeOf] returns null

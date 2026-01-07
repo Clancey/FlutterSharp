@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -55,20 +55,39 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ValueListenableBuilderStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: valueListenable
 /// The [ValueListenable] whose value you depend on in order to build.
 /// 
 /// This widget does not ensure that the [ValueListenable]'s value is not
 /// null, therefore your [builder] may need to handle null values.
 		public IntPtr valueListenable { get; set; }
 
+		// Callback field: builder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _builder;
+
 /// A [ValueWidgetBuilder] which builds a widget depending on the
 /// [valueListenable]'s value.
 /// 
 /// Can incorporate a [valueListenable] value-independent widget subtree
 /// from the [child] parameter into the returned widget tree.
-		public IntPtr builder { get; set; }
+		/// <summary>
+		/// Action identifier for builder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? builderAction
+		{
+			get => GetString(_builder);
+			set => SetString(ref _builder, value);
+		}
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// A [valueListenable]-independent widget which is passed back to the [builder].
 /// 
 /// This argument is optional and can be null if the entire widget subtree the
@@ -76,8 +95,9 @@ namespace Flutter.Structs
 /// example, in the case where the [valueListenable] is a [String] and the
 /// [builder] returns a [Text] widget with the current [String] value, there
 /// would be no useful [child].
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

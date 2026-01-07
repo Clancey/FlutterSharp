@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -29,9 +32,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="WidgetToRenderBoxAdapter"/> class.
 		/// </summary>
 		public WidgetToRenderBoxAdapter(
-			InvalidType _renderBox,
-			InvalidType _onBuild,
-			InvalidType _onUnmount
+			object _renderBox,
+			Action _onBuild,
+			Action _onUnmount
 
 		)
 		{

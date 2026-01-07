@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -55,6 +55,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverFadeTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: opacity
 /// The animation that controls the opacity of the sliver child.
 /// 
 /// If the current value of the opacity animation is v, the child will be
@@ -63,6 +64,7 @@ namespace Flutter.Structs
 /// completely transparent.
 		public IntPtr opacity { get; set; }
 
+		// Simple field: alwaysIncludeSemantics
 /// Whether the semantic information of the sliver child is always included.
 /// 
 /// Defaults to false.
@@ -73,9 +75,15 @@ namespace Flutter.Structs
 /// would otherwise contribute relevant semantics.
 		public bool alwaysIncludeSemantics { get; set; }
 
-		IntPtr _sliver;
-		public Widget? sliver
+		// Has flag for nullable property: sliver
+		public byte Hassliver { get; set; }
+
+		// Widget field: sliver
+		private IntPtr _sliver;
+
+		public IntPtr? sliver
 		{
+			get => _sliver != IntPtr.Zero ? (IntPtr)_sliver : null;
 			set => SetIntPtr(ref _sliver, value);
 		}
 

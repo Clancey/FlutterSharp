@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -35,8 +38,8 @@ namespace Flutter.Widgets
 		public ModalBarrier(
 			Color? _color,
 			bool _dismissible,
-			InvalidType _onDismiss,
-			InvalidType _clipDetailsNotifier
+			Action _onDismiss,
+			object _clipDetailsNotifier
 ,
 			bool? _barrierSemanticsDismissible = true,
 			string? _semanticsLabel = null,

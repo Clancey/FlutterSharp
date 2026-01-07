@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -25,12 +25,16 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ColorSwatchStruct : WidgetStruct
 	{
+		// Simple field: keys
 		public IntPtr keys { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
+		// Simple field: primary
 		public IntPtr primary { get; set; }
 
+		// Simple field: _swatch
 		public IntPtr _swatch { get; set; }
 
 	}

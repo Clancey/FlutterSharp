@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -42,21 +42,33 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AlignTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: widthFactor
+		public byte HaswidthFactor { get; set; }
+
+		// Nullable value type: widthFactor
 /// If non-null, the child's width factor, see [Align.widthFactor].
 		public NativeNullable<double> widthFactor { get; set; }
 
+		// Has flag for nullable property: heightFactor
+		public byte HasheightFactor { get; set; }
+
+		// Nullable value type: heightFactor
 /// If non-null, the child's height factor, see [Align.heightFactor].
 		public NativeNullable<double> heightFactor { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: alignment
 		public IntPtr alignment { get; set; }
 
 	}

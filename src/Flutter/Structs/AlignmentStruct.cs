@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -55,6 +55,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AlignmentStruct : WidgetStruct
 	{
+		// Simple field: x
 /// The distance fraction in the horizontal direction.
 /// 
 /// A value of -1.0 corresponds to the leftmost edge. A value of 1.0
@@ -64,6 +65,7 @@ namespace Flutter.Structs
 /// edge.
 		public double x { get; set; }
 
+		// Simple field: y
 /// The distance fraction in the vertical direction.
 /// 
 /// A value of -1.0 corresponds to the topmost edge. A value of 1.0

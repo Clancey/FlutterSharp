@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -70,18 +70,26 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedScaleStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: scale
 /// The target scale.
 		public double scale { get; set; }
 
+		// Simple field: alignment
 /// The alignment of the origin of the coordinate system in which the scale
 /// takes place, relative to the size of the box.
 /// 
@@ -89,15 +97,19 @@ namespace Flutter.Structs
 /// an alignment of (0.0, 1.0).
 		public IntPtr alignment { get; set; }
 
+		// Simple field: filterQuality
 /// The filter quality with which to apply the transform as a bitmap operation.
 /// 
 /// {@macro flutter.widgets.Transform.optional.FilterQuality}
-		public IntPtr filterQuality { get; set; }
+		public FilterQuality filterQuality { get; set; }
 
+		// Simple field: curve
 		public IntPtr curve { get; set; }
 
+		// Simple field: duration
 		public IntPtr duration { get; set; }
 
+		// Simple field: onEnd
 		public IntPtr onEnd { get; set; }
 
 	}

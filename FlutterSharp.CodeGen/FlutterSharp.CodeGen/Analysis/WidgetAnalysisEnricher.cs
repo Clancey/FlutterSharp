@@ -101,9 +101,10 @@ namespace FlutterSharp.CodeGen.Analysis
 		private EnrichedPropertyDefinition EnrichProperty(PropertyDefinition property)
 		{
 			// Map Dart type to C#
+			// Pass property name for parameter-name-based type inference when DartType is "InvalidType"
 			var csharpType = !string.IsNullOrEmpty(property.CSharpType)
 				? property.CSharpType
-				: _dartToCSharpMapper.MapType(property.DartType);
+				: _dartToCSharpMapper.MapType(property.DartType, property.Name);
 
 			// Map C# type to Dart FFI type annotation (e.g., "Int32", "Double")
 			var rawFfiType = _csharpToDartMapper.MapToFfiType(csharpType);
@@ -133,6 +134,9 @@ namespace FlutterSharp.CodeGen.Analysis
 			var isGenericTypeParam = csharpType == "T" || csharpType == "T?" ||
 			                         csharpType == "S" || csharpType == "S?";
 
+			// Check if this is an enum type
+			var isEnum = _dartToCSharpMapper.IsEnum(property.DartType);
+
 			// Track both the original Dart nullability and the FFI representation nullability
 			// Original nullability is what the Flutter widget expects (for parser generation)
 			// FFI nullability includes pointer types (for struct generation)
@@ -155,6 +159,7 @@ namespace FlutterSharp.CodeGen.Analysis
 				IsCallback = property.IsCallback,
 				IsList = property.IsList,
 				IsGenericTypeParam = isGenericTypeParam,
+				IsEnum = isEnum,
 				Documentation = property.Documentation
 			};
 		}
@@ -694,6 +699,7 @@ namespace FlutterSharp.CodeGen.Analysis
 		public bool IsCallback { get; set; }
 		public bool IsList { get; set; }
 		public bool IsGenericTypeParam { get; set; }
+		public bool IsEnum { get; set; }
 		public string? Documentation { get; set; }
 	}
 

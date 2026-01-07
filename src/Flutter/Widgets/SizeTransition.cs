@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -53,10 +56,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SizeTransition"/> class.
 		/// </summary>
 		public SizeTransition(
-			InvalidType _axis,
+			Axis _axis,
 			double _axisAlignment,
-			InvalidType _sizeFactor,
-			object _listenable
+			object _sizeFactor
 ,
 			double? _fixedCrossAxisSizeFactor = null,
 			Widget? _child = null

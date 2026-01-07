@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -24,20 +24,39 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class WillPopScopeStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
+
+		// Has flag for nullable property: onWillPop
+		public byte HasonWillPop { get; set; }
+
+		// Callback field: onWillPop
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onWillPop;
 
 /// Called to veto attempts by the user to dismiss the enclosing [ModalRoute].
 /// 
 /// If the callback returns a Future that resolves to false, the enclosing
 /// route will not be popped.
-		public IntPtr? onWillPop { get; set; }
+		/// <summary>
+		/// Action identifier for onWillPop callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onWillPopAction
+		{
+			get => GetString(_onWillPop);
+			set => SetString(ref _onWillPop, value);
+		}
 
 	}
 }

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -45,8 +48,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ShrinkWrappingViewport(
 			List<Widget> _children,
-			InvalidType _axisDirection,
-			InvalidType _crossAxisDirection,
+			object _axisDirection,
+			object _crossAxisDirection,
 			Offset _offset,
 			Clip _clipBehavior
 ,

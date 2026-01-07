@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -36,10 +39,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedModalBarrier(
 			bool _dismissible,
-			InvalidType _onDismiss,
-			InvalidType _clipDetailsNotifier,
-			Color? _color,
-			object _listenable
+			Action _onDismiss,
+			object _clipDetailsNotifier,
+			Color? _color
 ,
 			string? _semanticsLabel = null,
 			bool? _barrierSemanticsDismissible = null,

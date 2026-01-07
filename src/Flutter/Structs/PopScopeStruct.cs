@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -69,14 +69,24 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PopScopeStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
+
+		// Has flag for nullable property: onPopInvokedWithResult
+		public byte HasonPopInvokedWithResult { get; set; }
+
+		// Callback field: onPopInvokedWithResult
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPopInvokedWithResult;
 
 /// {@template flutter.widgets.PopScope.onPopInvokedWithResult}
 /// Called after a route pop was handled.
@@ -97,7 +107,23 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [Route.onPopInvokedWithResult], which is similar.
-		public IntPtr? onPopInvokedWithResult { get; set; }
+		/// <summary>
+		/// Action identifier for onPopInvokedWithResult callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPopInvokedWithResultAction
+		{
+			get => GetString(_onPopInvokedWithResult);
+			set => SetString(ref _onPopInvokedWithResult, value);
+		}
+
+		// Has flag for nullable property: onPopInvoked
+		public byte HasonPopInvoked { get; set; }
+
+		// Callback field: onPopInvoked
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPopInvoked;
 
 /// Called after a route pop was handled.
 /// 
@@ -110,8 +136,18 @@ namespace Flutter.Structs
 /// [canPop] is set to false on a [PopScope]. The `didPop` parameter
 /// indicates whether or not the back navigation actually happened
 /// successfully.
-		public IntPtr? onPopInvoked { get; set; }
+		/// <summary>
+		/// Action identifier for onPopInvoked callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPopInvokedAction
+		{
+			get => GetString(_onPopInvoked);
+			set => SetString(ref _onPopInvoked, value);
+		}
 
+		// Simple field: canPop
 /// {@template flutter.widgets.PopScope.canPop}
 /// When false, blocks the current route from being popped.
 /// 

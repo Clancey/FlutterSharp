@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -25,6 +25,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverPersistentHeaderStruct : WidgetStruct
 	{
+		// Simple field: @delegate
 /// Configuration for the sliver's layout.
 /// 
 /// The delegate provides the following information:
@@ -36,6 +37,7 @@ namespace Flutter.Structs
 /// * The instructions for snapping the scroll offset, if [floating] is true.
 		public IntPtr @delegate { get; set; }
 
+		// Simple field: pinned
 /// Whether to stick the header to the start of the viewport once it has
 /// reached its minimum size.
 /// 
@@ -43,6 +45,7 @@ namespace Flutter.Structs
 /// it has shrunk to its minimum extent.
 		public bool pinned { get; set; }
 
+		// Simple field: floating
 /// Whether the header should immediately grow again if the user reverses
 /// scroll direction.
 /// 

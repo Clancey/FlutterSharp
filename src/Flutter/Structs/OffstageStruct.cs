@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -46,6 +46,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class OffstageStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: offstage
 /// Whether the child is hidden from the rest of the tree.
 /// 
 /// If true, the child is laid out as if it was in the tree, but without
@@ -61,9 +62,15 @@ namespace Flutter.Structs
 /// If false, the child is included in the tree as normal.
 		public bool offstage { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

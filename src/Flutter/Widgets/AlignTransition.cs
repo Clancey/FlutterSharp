@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -47,8 +50,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AlignTransition(
 			Widget _child,
-			AlignmentGeometry? _alignment,
-			object _listenable
+			AlignmentGeometry? _alignment
 ,
 			double? _widthFactor = null,
 			double? _heightFactor = null

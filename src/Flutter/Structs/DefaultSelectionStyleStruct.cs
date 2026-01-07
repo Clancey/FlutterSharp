@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -25,23 +25,29 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DefaultSelectionStyleStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: cursorColor
 /// The color of the text field's cursor.
 /// 
 /// The cursor indicates the current location of the text insertion point in
 /// the field.
 		public IntPtr cursorColor { get; set; }
 
+		// Simple field: selectionColor
 /// The background color of selected text.
 		public IntPtr selectionColor { get; set; }
 
+		// Simple field: mouseCursor
 /// The [MouseCursor] for mouse pointers hovering over selectable Text widgets.
 /// 
 /// If this property is null, [SystemMouseCursors.text] will be used.
 		public IntPtr mouseCursor { get; set; }
 
-		IntPtr _child;
-		public Widget child
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

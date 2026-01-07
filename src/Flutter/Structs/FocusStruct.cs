@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -115,6 +115,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class FocusStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: parentNode
+		public byte HasparentNode { get; set; }
+
+		// Simple field: parentNode
 /// The optional parent node to use when reparenting the [focusNode] for this
 /// [Focus] widget.
 /// 
@@ -131,15 +135,22 @@ namespace Flutter.Structs
 /// Defaults to null.
 		public IntPtr? parentNode { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The child widget of this [Focus].
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Has flag for nullable property: focusNode
+		public byte HasfocusNode { get; set; }
+
+		// Simple field: focusNode
 /// {@template flutter.widgets.Focus.focusNode}
 /// An optional focus node to use as the focus node for this widget.
 /// 
@@ -160,6 +171,7 @@ namespace Flutter.Structs
 /// [Focus.withExternalFocusNode] constructor.
 		public IntPtr? focusNode { get; set; }
 
+		// Simple field: autofocus
 /// {@template flutter.widgets.Focus.autofocus}
 /// True if this widget will be selected as the initial focus when no other
 /// node in its scope is currently focused.
@@ -172,12 +184,14 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool autofocus { get; set; }
 
+		// Simple field: onFocusChange
 /// Handler called when the focus changes.
 /// 
 /// Called with true if this widget's node gains focus, and false if it loses
 /// focus.
 		public IntPtr onFocusChange { get; set; }
 
+		// Simple field: includeSemantics
 /// {@template flutter.widgets.Focus.includeSemantics}
 /// Include semantics information in this widget.
 /// 
@@ -192,19 +206,60 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public bool includeSemantics { get; set; }
 
-		public IntPtr? onKeyEvent { get; set; }
+		// Has flag for nullable property: onKeyEvent
+		public byte HasonKeyEvent { get; set; }
 
-		public IntPtr? onKey { get; set; }
+		// Callback field: onKeyEvent
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onKeyEvent;
 
+		/// <summary>
+		/// Action identifier for onKeyEvent callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onKeyEventAction
+		{
+			get => GetString(_onKeyEvent);
+			set => SetString(ref _onKeyEvent, value);
+		}
+
+		// Has flag for nullable property: onKey
+		public byte HasonKey { get; set; }
+
+		// Callback field: onKey
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onKey;
+
+		/// <summary>
+		/// Action identifier for onKey callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onKeyAction
+		{
+			get => GetString(_onKey);
+			set => SetString(ref _onKey, value);
+		}
+
+		// Simple field: canRequestFocus
 		public bool canRequestFocus { get; set; }
 
+		// Simple field: skipTraversal
 		public bool skipTraversal { get; set; }
 
+		// Simple field: descendantsAreFocusable
 		public bool descendantsAreFocusable { get; set; }
 
+		// Simple field: descendantsAreTraversable
 		public bool descendantsAreTraversable { get; set; }
 
-		IntPtr _debugLabel;
+		// Has flag for nullable property: debugLabel
+		public byte HasdebugLabel { get; set; }
+
+		// String field: debugLabel
+		private IntPtr _debugLabel;
+
 		public string? debugLabel
 		{
 			get => GetString(_debugLabel);

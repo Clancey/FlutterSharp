@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -48,7 +51,7 @@ namespace Flutter.Widgets
 		public UnconstrainedBox(
 			TextDirection _textDirection,
 			AlignmentGeometry? _alignment,
-			InvalidType _constrainedAxis,
+			object _constrainedAxis,
 			Clip _clipBehavior
 ,
 			Widget? _child = null

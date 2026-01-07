@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -34,6 +34,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverIgnorePointerStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: ignoring
 /// Whether this sliver is ignored during hit testing.
 /// 
 /// Regardless of whether this sliver is ignored during hit testing, it will
@@ -42,15 +43,25 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.IgnorePointer.semantics}
 		public bool ignoring { get; set; }
 
+		// Has flag for nullable property: ignoringSemantics
+		public byte HasignoringSemantics { get; set; }
+
+		// Nullable value type: ignoringSemantics
 /// Whether the semantics of this sliver is ignored when compiling the
 /// semantics tree.
 /// 
 /// {@macro flutter.widgets.IgnorePointer.ignoringSemantics}
 		public NativeNullable<bool> ignoringSemantics { get; set; }
 
-		IntPtr _sliver;
-		public Widget? sliver
+		// Has flag for nullable property: sliver
+		public byte Hassliver { get; set; }
+
+		// Widget field: sliver
+		private IntPtr _sliver;
+
+		public IntPtr? sliver
 		{
+			get => _sliver != IntPtr.Zero ? (IntPtr)_sliver : null;
 			set => SetIntPtr(ref _sliver, value);
 		}
 

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -38,23 +38,30 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class KeepAliveStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: keepAlive
 /// Whether to keep the child alive.
 /// 
 /// If this is false, it is as if this widget was omitted.
 		public bool keepAlive { get; set; }
 
+		// Simple field: debugTypicalAncestorWidgetClass
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }
 
-		IntPtr _debugTypicalAncestorWidgetDescription;
+		// String field: debugTypicalAncestorWidgetDescription
+		private IntPtr _debugTypicalAncestorWidgetDescription;
+
 		public string debugTypicalAncestorWidgetDescription
 		{
 			get => GetString(_debugTypicalAncestorWidgetDescription);
 			set => SetString(ref _debugTypicalAncestorWidgetDescription, value);
 		}
 
-		IntPtr _child;
-		public Widget child
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -45,10 +48,10 @@ namespace Flutter.Widgets
 		public TwoDimensionalScrollView(
 			TwoDimensionalChildDelegate _delegate,
 			DiagonalDragBehavior _diagonalDragBehavior,
-			InvalidType _mainAxis,
+			object _mainAxis,
 			ScrollableDetails _verticalDetails,
 			ScrollableDetails _horizontalDetails,
-			InvalidType _dragStartBehavior,
+			DragStartBehavior _dragStartBehavior,
 			PlatformViewHitTestBehavior _hitTestBehavior,
 			Clip _clipBehavior
 ,

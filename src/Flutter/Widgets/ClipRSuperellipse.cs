@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -41,7 +44,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ClipRSuperellipse(
 			BorderRadiusGeometry? _borderRadius,
-			InvalidType _clipper,
+			object _clipper,
 			Clip _clipBehavior
 ,
 			Widget? _child = null

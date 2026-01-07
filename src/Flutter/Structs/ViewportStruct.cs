@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -49,6 +49,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ViewportStruct : MultiChildRenderObjectWidgetStruct
 	{
+		// Simple field: axisDirection
 /// The direction in which the [offset]'s [ViewportOffset.pixels] increases.
 /// 
 /// For example, if the [axisDirection] is [AxisDirection.down], a scroll
@@ -56,6 +57,7 @@ namespace Flutter.Structs
 /// bottom of the viewport.
 		public IntPtr axisDirection { get; set; }
 
+		// Simple field: crossAxisDirection
 /// The direction in which child should be laid out in the cross axis.
 /// 
 /// If the [axisDirection] is [AxisDirection.down] or [AxisDirection.up], this
@@ -67,6 +69,7 @@ namespace Flutter.Structs
 /// this property defaults to [AxisDirection.down].
 		public IntPtr crossAxisDirection { get; set; }
 
+		// Simple field: anchor
 /// The relative position of the zero scroll offset.
 /// 
 /// For example, if [anchor] is 0.5 and the [axisDirection] is
@@ -78,6 +81,7 @@ namespace Flutter.Structs
 /// {@macro flutter.rendering.GrowthDirection.sample}
 		public double anchor { get; set; }
 
+		// Simple field: offset
 /// Which part of the content inside the viewport should be visible.
 /// 
 /// The [ViewportOffset.pixels] value determines the scroll offset that the
@@ -88,6 +92,7 @@ namespace Flutter.Structs
 /// Typically a [ScrollPosition].
 		public IntPtr offset { get; set; }
 
+		// Simple field: center
 /// The first child in the [GrowthDirection.forward] growth direction.
 /// 
 /// Children after [center] will be placed in the [axisDirection] relative to
@@ -99,6 +104,10 @@ namespace Flutter.Structs
 /// {@macro flutter.rendering.GrowthDirection.sample}
 		public IntPtr center { get; set; }
 
+		// Has flag for nullable property: cacheExtent
+		public byte HascacheExtent { get; set; }
+
+		// Nullable value type: cacheExtent
 /// {@macro flutter.rendering.RenderViewportBase.cacheExtent}
 /// 
 /// See also:
@@ -106,14 +115,17 @@ namespace Flutter.Structs
 /// * [cacheExtentStyle], which controls the units of the [cacheExtent].
 		public NativeNullable<double> cacheExtent { get; set; }
 
+		// Simple field: cacheExtentStyle
 /// {@macro flutter.rendering.RenderViewportBase.cacheExtentStyle}
 		public IntPtr cacheExtentStyle { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: slivers
 		public IntPtr slivers { get; set; }
 
 	}

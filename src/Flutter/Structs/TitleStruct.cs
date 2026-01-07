@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -16,7 +16,9 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TitleStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _title;
+		// String field: title
+		private IntPtr _title;
+
 /// A one-line description of this app for use in the window manager.
 		public string title
 		{
@@ -24,17 +26,21 @@ namespace Flutter.Structs
 			set => SetString(ref _title, value);
 		}
 
+		// Simple field: color
 /// A color that the window manager should use to identify this app. Must be
 /// an opaque color (i.e. color.alpha must be 255 (0xFF)), and must not be
 /// null.
 		public IntPtr color { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

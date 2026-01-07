@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -49,10 +49,12 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SizeTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: axis
 /// [Axis.horizontal] if [sizeFactor] modifies the width, otherwise
 /// [Axis.vertical].
-		public IntPtr axis { get; set; }
+		public Axis axis { get; set; }
 
+		// Simple field: axisAlignment
 /// Describes how to align the child along the axis that [sizeFactor] is
 /// modifying.
 /// 
@@ -66,6 +68,10 @@ namespace Flutter.Structs
 /// A value of 0.0 (the default) indicates the center for either [axis] value.
 		public double axisAlignment { get; set; }
 
+		// Has flag for nullable property: fixedCrossAxisSizeFactor
+		public byte HasfixedCrossAxisSizeFactor { get; set; }
+
+		// Nullable value type: fixedCrossAxisSizeFactor
 /// The factor by which to multiply the cross axis size of the child.
 /// 
 /// If the value of [fixedCrossAxisSizeFactor] is less than one, the child
@@ -74,15 +80,22 @@ namespace Flutter.Structs
 /// If `null` (the default), the cross axis size is as large as the parent.
 		public NativeNullable<double> fixedCrossAxisSizeFactor { get; set; }
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: sizeFactor
 		public IntPtr sizeFactor { get; set; }
 
 	}

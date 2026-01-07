@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -18,9 +18,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class OffsetStruct : WidgetStruct
 	{
+		// Simple field: dx
 /// The horizontal component.
 		public double dx { get; set; }
 
+		// Simple field: dy
 /// The vertical component.
 		public double dy { get; set; }
 

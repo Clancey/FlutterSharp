@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -56,7 +56,12 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedSwitcherStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The current child widget to display. If there was a previous child, then
 /// that child will be faded out using the [switchOutCurve], while the new
 /// child is faded in with the [switchInCurve], over the [duration].
@@ -68,11 +73,13 @@ namespace Flutter.Structs
 /// (see [Widget.canUpdate]).
 /// 
 /// To change the kind of transition used, see [transitionBuilder].
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: duration
 /// The duration of the transition from the old [child] value to the new one.
 /// 
 /// This duration is applied to the given [child] when that property is set to
@@ -81,6 +88,10 @@ namespace Flutter.Structs
 /// durations of transitions already in progress.
 		public IntPtr duration { get; set; }
 
+		// Has flag for nullable property: reverseDuration
+		public byte HasreverseDuration { get; set; }
+
+		// Simple field: reverseDuration
 /// The duration of the transition from the new [child] value to the old one.
 /// 
 /// This duration is applied to the given [child] when that property is set to
@@ -90,6 +101,7 @@ namespace Flutter.Structs
 /// If not set, then the value of [duration] is used by default.
 		public IntPtr? reverseDuration { get; set; }
 
+		// Simple field: switchInCurve
 /// The animation curve to use when transitioning in a new [child].
 /// 
 /// This curve is applied to the given [child] when that property is set to a
@@ -102,6 +114,7 @@ namespace Flutter.Structs
 /// to the corresponding point on [switchOutCurve].
 		public IntPtr switchInCurve { get; set; }
 
+		// Simple field: switchOutCurve
 /// The animation curve to use when transitioning a previous [child] out.
 /// 
 /// This curve is applied to the [child] when the child is faded in (or when
@@ -113,6 +126,10 @@ namespace Flutter.Structs
 /// in, [switchInCurve] will be run in reverse from that point instead of
 /// jumping to the corresponding point on [switchOutCurve].
 		public IntPtr switchOutCurve { get; set; }
+
+		// Callback field: transitionBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _transitionBuilder;
 
 /// A function that wraps a new [child] with an animation that transitions
 /// the [child] in when the animation runs in the forward direction and out
@@ -132,7 +149,20 @@ namespace Flutter.Structs
 /// 
 /// * [AnimatedSwitcherTransitionBuilder] for more information about
 /// how a transition builder should function.
-		public IntPtr transitionBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for transitionBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? transitionBuilderAction
+		{
+			get => GetString(_transitionBuilder);
+			set => SetString(ref _transitionBuilder, value);
+		}
+
+		// Callback field: layoutBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _layoutBuilder;
 
 /// A function that wraps all of the children that are transitioning out, and
 /// the [child] that's transitioning in, with a widget that lays all of them
@@ -145,7 +175,16 @@ namespace Flutter.Structs
 /// 
 /// * [AnimatedSwitcherLayoutBuilder] for more information about
 /// how a layout builder should function.
-		public IntPtr layoutBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for layoutBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? layoutBuilderAction
+		{
+			get => GetString(_layoutBuilder);
+			set => SetString(ref _layoutBuilder, value);
+		}
 
 	}
 }

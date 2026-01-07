@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -57,7 +60,7 @@ namespace Flutter.Widgets
 			double? _heightFactor = null,
 			double? _widthFactor = null,
 			Curve _curve = null,
-			InvalidType _onEnd = null
+			Action _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

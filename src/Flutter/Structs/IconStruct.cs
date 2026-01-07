@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -67,12 +67,20 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class IconStruct : WidgetStruct
 	{
+		// Has flag for nullable property: icon
+		public byte Hasicon { get; set; }
+
+		// Simple field: icon
 /// The icon to display. The available icons are described in [Icons].
 /// 
 /// The icon can be null, in which case the widget will render as an empty
 /// space of the specified [size].
 		public IntPtr? icon { get; set; }
 
+		// Has flag for nullable property: size
+		public byte Hassize { get; set; }
+
+		// Nullable value type: size
 /// The size of the icon in logical pixels.
 /// 
 /// Icons occupy a square with width and height equal to size.
@@ -85,6 +93,10 @@ namespace Flutter.Structs
 /// pass down the size to the [Icon].
 		public NativeNullable<double> size { get; set; }
 
+		// Has flag for nullable property: fill
+		public byte Hasfill { get; set; }
+
+		// Nullable value type: fill
 /// The fill for drawing the icon.
 /// 
 /// Requires the underlying icon font to support the `FILL` [FontVariation]
@@ -102,6 +114,10 @@ namespace Flutter.Structs
 /// * [opticalSize], for controlling optical size.
 		public NativeNullable<double> fill { get; set; }
 
+		// Has flag for nullable property: weight
+		public byte Hasweight { get; set; }
+
+		// Nullable value type: weight
 /// The stroke weight for drawing the icon.
 /// 
 /// Requires the underlying icon font to support the `wght` [FontVariation]
@@ -117,6 +133,10 @@ namespace Flutter.Structs
 /// * https://fonts.google.com/knowledge/glossary/weight_axis
 		public NativeNullable<double> weight { get; set; }
 
+		// Has flag for nullable property: grade
+		public byte Hasgrade { get; set; }
+
+		// Nullable value type: grade
 /// The grade (granular stroke weight) for drawing the icon.
 /// 
 /// Requires the underlying icon font to support the `GRAD` [FontVariation]
@@ -140,6 +160,10 @@ namespace Flutter.Structs
 /// * https://fonts.google.com/knowledge/glossary/grade_axis
 		public NativeNullable<double> grade { get; set; }
 
+		// Has flag for nullable property: opticalSize
+		public byte HasopticalSize { get; set; }
+
+		// Nullable value type: opticalSize
 /// The optical size for drawing the icon.
 /// 
 /// Requires the underlying icon font to support the `opsz` [FontVariation]
@@ -159,6 +183,7 @@ namespace Flutter.Structs
 /// * https://fonts.google.com/knowledge/glossary/optical_size_axis
 		public NativeNullable<double> opticalSize { get; set; }
 
+		// Simple field: color
 /// The color to use when drawing the icon.
 /// 
 /// Defaults to the nearest [IconTheme]'s [IconThemeData.color].
@@ -179,6 +204,10 @@ namespace Flutter.Structs
 /// {@end-tool}
 		public IntPtr color { get; set; }
 
+		// Has flag for nullable property: shadows
+		public byte Hasshadows { get; set; }
+
+		// Simple field: shadows
 /// A list of [Shadow]s that will be painted underneath the icon.
 /// 
 /// Multiple shadows are supported to replicate lighting from multiple light
@@ -190,7 +219,12 @@ namespace Flutter.Structs
 /// Defaults to the nearest [IconTheme]'s [IconThemeData.shadows].
 		public IntPtr? shadows { get; set; }
 
-		IntPtr _semanticLabel;
+		// Has flag for nullable property: semanticLabel
+		public byte HassemanticLabel { get; set; }
+
+		// String field: semanticLabel
+		private IntPtr _semanticLabel;
+
 /// Semantic label for the icon.
 /// 
 /// Announced by assistive technologies (e.g TalkBack/VoiceOver).
@@ -204,6 +238,7 @@ namespace Flutter.Structs
 			set => SetString(ref _semanticLabel, value);
 		}
 
+		// Simple field: textDirection
 /// The text direction to use for rendering the icon.
 /// 
 /// If this is null, the ambient [Directionality] is used instead.
@@ -219,6 +254,10 @@ namespace Flutter.Structs
 /// specified, either directly using this property or using [Directionality].
 		public TextDirection textDirection { get; set; }
 
+		// Has flag for nullable property: applyTextScaling
+		public byte HasapplyTextScaling { get; set; }
+
+		// Nullable value type: applyTextScaling
 /// Whether to scale the size of this widget using the ambient [MediaQuery]'s [TextScaler].
 /// 
 /// This is specially useful when you have an icon associated with a text, as
@@ -229,10 +268,11 @@ namespace Flutter.Structs
 /// [IconThemeData.applyTextScaling].
 		public NativeNullable<bool> applyTextScaling { get; set; }
 
+		// Simple field: blendMode
 /// The [BlendMode] to apply to the foreground of the icon.
 /// 
 /// Defaults to [BlendMode.srcOver]
-		public IntPtr blendMode { get; set; }
+		public BlendMode blendMode { get; set; }
 
 	}
 }

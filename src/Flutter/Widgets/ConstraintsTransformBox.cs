@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -75,7 +78,7 @@ namespace Flutter.Widgets
 		public ConstraintsTransformBox(
 			TextDirection _textDirection,
 			AlignmentGeometry? _alignment,
-			BoxConstraintsTransform _constraintsTransform,
+			Func<BoxConstraints, BoxConstraints> _constraintsTransform,
 			Clip _clipBehavior
 ,
 			Widget? _child = null,

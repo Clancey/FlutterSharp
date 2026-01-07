@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -61,8 +64,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedSwitcher(
 			TimeSpan _duration,
-			InvalidType _switchInCurve,
-			InvalidType _switchOutCurve,
+			object _switchInCurve,
+			object _switchOutCurve,
 			Func<Widget, InvalidType, Widget> _transitionBuilder,
 			Func<Widget?, List<Widget>, Widget> _layoutBuilder
 ,

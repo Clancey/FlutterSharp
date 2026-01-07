@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -28,12 +28,17 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DualTransitionBuilderStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: animation
 /// The animation that drives the [child]'s transition.
 /// 
 /// When this animation runs forward, the [child] transitions as specified by
 /// [forwardBuilder]. When it runs in reverse, the child transitions according
 /// to [reverseBuilder].
 		public IntPtr animation { get; set; }
+
+		// Callback field: forwardBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _forwardBuilder;
 
 /// A builder for the transition that makes [child] appear on screen.
 /// 
@@ -48,7 +53,20 @@ namespace Flutter.Structs
 /// 
 /// * [reverseBuilder], which builds the transition for making the [child]
 /// disappear from the screen.
-		public IntPtr forwardBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for forwardBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? forwardBuilderAction
+		{
+			get => GetString(_forwardBuilder);
+			set => SetString(ref _forwardBuilder, value);
+		}
+
+		// Callback field: reverseBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _reverseBuilder;
 
 /// A builder for a transition that makes [child] disappear from the screen.
 /// 
@@ -63,15 +81,30 @@ namespace Flutter.Structs
 /// 
 /// * [forwardBuilder], which builds the transition for making the [child]
 /// appear on screen.
-		public IntPtr reverseBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for reverseBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? reverseBuilderAction
+		{
+			get => GetString(_reverseBuilder);
+			set => SetString(ref _reverseBuilder, value);
+		}
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this [DualTransitionBuilder] in the tree.
 /// 
 /// This child widget will be wrapped by the transitions built by
 /// [forwardBuilder] and [reverseBuilder].
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

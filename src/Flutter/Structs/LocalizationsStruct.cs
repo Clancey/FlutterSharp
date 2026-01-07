@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -126,19 +126,27 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class LocalizationsStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: locale
 /// The resources returned by [Localizations.of] will be specific to this locale.
 		public IntPtr locale { get; set; }
 
+		// Simple field: delegates
 /// This list collectively defines the localized resources objects that can
 /// be retrieved with [Localizations.of].
 		public IntPtr delegates { get; set; }
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

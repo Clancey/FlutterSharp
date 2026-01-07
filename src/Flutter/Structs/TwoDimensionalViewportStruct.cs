@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -85,6 +85,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TwoDimensionalViewportStruct : WidgetStruct
 	{
+		// Simple field: verticalOffset
 /// Which part of the content inside the viewport should be visible in the
 /// vertical axis.
 /// 
@@ -96,6 +97,7 @@ namespace Flutter.Structs
 /// Typically a [ScrollPosition].
 		public IntPtr verticalOffset { get; set; }
 
+		// Simple field: verticalAxisDirection
 /// The direction in which the [verticalOffset]'s [ViewportOffset.pixels]
 /// increases.
 /// 
@@ -107,6 +109,7 @@ namespace Flutter.Structs
 /// with an [Axis.vertical].
 		public IntPtr verticalAxisDirection { get; set; }
 
+		// Simple field: horizontalOffset
 /// Which part of the content inside the viewport should be visible in the
 /// horizontal axis.
 /// 
@@ -118,6 +121,7 @@ namespace Flutter.Structs
 /// Typically a [ScrollPosition].
 		public IntPtr horizontalOffset { get; set; }
 
+		// Simple field: horizontalAxisDirection
 /// The direction in which the [horizontalOffset]'s [ViewportOffset.pixels]
 /// increases.
 /// 
@@ -129,6 +133,7 @@ namespace Flutter.Structs
 /// with an [Axis.horizontal].
 		public IntPtr horizontalAxisDirection { get; set; }
 
+		// Simple field: mainAxis
 /// The main axis of the two.
 /// 
 /// Used to determine the paint order of the children of the viewport. When
@@ -137,12 +142,18 @@ namespace Flutter.Structs
 /// is [Axis.horizontal], the children will be painted in column major order.
 		public IntPtr mainAxis { get; set; }
 
+		// Has flag for nullable property: cacheExtent
+		public byte HascacheExtent { get; set; }
+
+		// Nullable value type: cacheExtent
 /// {@macro flutter.rendering.RenderViewportBase.cacheExtent}
 		public NativeNullable<double> cacheExtent { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: @delegate
 /// A delegate that provides the children for the [TwoDimensionalViewport].
 		public IntPtr @delegate { get; set; }
 

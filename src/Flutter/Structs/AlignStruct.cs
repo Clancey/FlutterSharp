@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -151,6 +151,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AlignStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: alignment
 /// How to align the child.
 /// 
 /// The x and y values of the [Alignment] control the horizontal and vertical
@@ -169,19 +170,33 @@ namespace Flutter.Structs
 /// that depends on the [TextDirection].
 		public IntPtr alignment { get; set; }
 
+		// Has flag for nullable property: widthFactor
+		public byte HaswidthFactor { get; set; }
+
+		// Nullable value type: widthFactor
 /// If non-null, sets its width to the child's width multiplied by this factor.
 /// 
 /// Can be both greater and less than 1.0 but must be non-negative.
 		public NativeNullable<double> widthFactor { get; set; }
 
+		// Has flag for nullable property: heightFactor
+		public byte HasheightFactor { get; set; }
+
+		// Nullable value type: heightFactor
 /// If non-null, sets its height to the child's height multiplied by this factor.
 /// 
 /// Can be both greater and less than 1.0 but must be non-negative.
 		public NativeNullable<double> heightFactor { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -40,7 +43,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Flexible(
 			int _flex,
-			InvalidType _fit,
+			BoxFit _fit,
 			Type _debugTypicalAncestorWidgetClass,
 			Widget _child
 

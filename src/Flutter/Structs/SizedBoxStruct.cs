@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -68,15 +68,29 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SizedBoxStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: width
+		public byte Haswidth { get; set; }
+
+		// Nullable value type: width
 /// If non-null, requires the child to have exactly this width.
 		public NativeNullable<double> width { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 /// If non-null, requires the child to have exactly this height.
 		public NativeNullable<double> height { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -65,9 +65,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverGridStruct : WidgetStruct
 	{
+		// Simple field: gridDelegate
 /// The delegate that controls the size and position of the children.
 		public IntPtr gridDelegate { get; set; }
 
+		// Simple field: @delegate
 		public IntPtr @delegate { get; set; }
 
 	}

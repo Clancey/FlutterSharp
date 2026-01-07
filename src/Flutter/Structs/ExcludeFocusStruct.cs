@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -26,6 +26,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ExcludeFocusStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: excluding
 /// If true, will make this widget's descendants unfocusable.
 /// 
 /// Defaults to true.
@@ -47,12 +48,15 @@ namespace Flutter.Structs
 /// subtree.
 		public bool excluding { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The child widget of this [ExcludeFocus].
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

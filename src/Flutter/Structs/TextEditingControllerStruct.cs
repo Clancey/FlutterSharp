@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -62,15 +62,19 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TextEditingControllerStruct : WidgetStruct
 	{
-		IntPtr _text;
+		// String field: text
+		private IntPtr _text;
+
 		public string text
 		{
 			get => GetString(_text);
 			set => SetString(ref _text, value);
 		}
 
+		// Simple field: value
 		public IntPtr value { get; set; }
 
+		// Simple field: selection
 		public IntPtr selection { get; set; }
 
 	}

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -31,14 +31,17 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PhysicalModelStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: shape
 /// The type of shape.
-		public IntPtr shape { get; set; }
+		public BoxShape shape { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: borderRadius
 /// The border radius of the rounded corners.
 /// 
 /// Values are clamped so that horizontal and vertical radii sums do not
@@ -47,21 +50,30 @@ namespace Flutter.Structs
 /// This is ignored if the [shape] is not [BoxShape.rectangle].
 		public IntPtr borderRadius { get; set; }
 
+		// Simple field: elevation
 /// The z-coordinate relative to the parent at which to place this physical
 /// object.
 /// 
 /// The value is non-negative.
 		public double elevation { get; set; }
 
+		// Simple field: color
 /// The background color.
 		public IntPtr color { get; set; }
 
+		// Simple field: shadowColor
 /// The shadow color.
 		public IntPtr shadowColor { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

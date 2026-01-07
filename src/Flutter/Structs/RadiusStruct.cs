@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -16,9 +16,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RadiusStruct : WidgetStruct
 	{
+		// Simple field: x
 /// The radius value on the horizontal axis.
 		public double x { get; set; }
 
+		// Simple field: y
 /// The radius value on the vertical axis.
 		public double y { get; set; }
 

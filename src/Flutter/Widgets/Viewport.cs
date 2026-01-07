@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -53,14 +56,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Viewport"/> class.
 		/// </summary>
 		public Viewport(
-			List<Widget> _children = null,
-			InvalidType _axisDirection = null,
-			InvalidType _crossAxisDirection = null,
-			double _anchor = 0.0,
-			Offset _offset = default,
-			InvalidType _center = null,
-			InvalidType _cacheExtentStyle = null,
-			Clip _clipBehavior = Clip.HardEdge,
+			List<Widget> _children,
+			object _axisDirection,
+			object _crossAxisDirection,
+			double _anchor,
+			Offset _offset,
+			object _center,
+			object _cacheExtentStyle,
+			Clip _clipBehavior
+,
 			double? _cacheExtent = null,
 			List<Widget> _slivers = null
 		)

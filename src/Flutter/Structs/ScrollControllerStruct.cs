@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -43,6 +43,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ScrollControllerStruct : WidgetStruct
 	{
+		// Simple field: keepScrollOffset
 /// Each time a scroll completes, save the current scroll [offset] with
 /// [PageStorage] and restore it if this controller's scrollable is recreated.
 /// 
@@ -59,6 +60,13 @@ namespace Flutter.Structs
 /// scrollable appears in the same route, to distinguish the [PageStorage]
 /// locations used to save scroll offsets.
 		public bool keepScrollOffset { get; set; }
+
+		// Has flag for nullable property: onAttach
+		public byte HasonAttach { get; set; }
+
+		// Callback field: onAttach
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onAttach;
 
 /// Called when a [ScrollPosition] is attached to the scroll controller.
 /// 
@@ -80,7 +88,23 @@ namespace Flutter.Structs
 /// 
 /// ** See code in examples/api/lib/widgets/scroll_position/scroll_controller_on_attach.0.dart **
 /// {@end-tool}
-		public IntPtr? onAttach { get; set; }
+		/// <summary>
+		/// Action identifier for onAttach callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onAttachAction
+		{
+			get => GetString(_onAttach);
+			set => SetString(ref _onAttach, value);
+		}
+
+		// Has flag for nullable property: onDetach
+		public byte HasonDetach { get; set; }
+
+		// Callback field: onDetach
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onDetach;
 
 /// Called when a [ScrollPosition] is detached from the scroll controller.
 /// 
@@ -92,9 +116,23 @@ namespace Flutter.Structs
 /// 
 /// ** See code in examples/api/lib/widgets/scroll_position/scroll_controller_on_attach.0.dart **
 /// {@end-tool}
-		public IntPtr? onDetach { get; set; }
+		/// <summary>
+		/// Action identifier for onDetach callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onDetachAction
+		{
+			get => GetString(_onDetach);
+			set => SetString(ref _onDetach, value);
+		}
 
-		IntPtr _debugLabel;
+		// Has flag for nullable property: debugLabel
+		public byte HasdebugLabel { get; set; }
+
+		// String field: debugLabel
+		private IntPtr _debugLabel;
+
 /// A label that is used in the [toString] output. Intended to aid with
 /// identifying scroll controller instances in debug output.
 		public string? debugLabel
@@ -103,14 +141,19 @@ namespace Flutter.Structs
 			set => SetString(ref _debugLabel, value);
 		}
 
+		// Simple field: initialScrollOffset
 		public double initialScrollOffset { get; set; }
 
+		// Simple field: positions
 		public IntPtr positions { get; set; }
 
+		// Simple field: hasClients
 		public bool hasClients { get; set; }
 
+		// Simple field: position
 		public IntPtr position { get; set; }
 
+		// Simple field: offset
 		public double offset { get; set; }
 
 	}

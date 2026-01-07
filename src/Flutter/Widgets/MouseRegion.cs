@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -49,10 +52,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MouseRegion"/> class.
 		/// </summary>
 		public MouseRegion(
-			InvalidType _onEnter,
-			InvalidType _onHover,
-			InvalidType _onExit,
-			InvalidType _cursor,
+			Action _onEnter,
+			Action _onHover,
+			Action _onExit,
+			object _cursor,
 			bool _opaque,
 			PlatformViewHitTestBehavior _hitTestBehavior
 ,

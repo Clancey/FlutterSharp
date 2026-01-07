@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -42,7 +45,7 @@ namespace Flutter.Widgets
 			AlignmentGeometry? _alignment,
 			TextDirection _textDirection,
 			Clip _clipBehavior,
-			InvalidType _sizing,
+			object _sizing,
 			List<Widget> _children
 ,
 			int? _index = 0

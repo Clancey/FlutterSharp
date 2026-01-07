@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -26,6 +26,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class EdgeInsetsDirectionalStruct : WidgetStruct
 	{
+		// Simple field: start
 /// The offset from the start side, the side from which the user will start
 /// reading text.
 /// 
@@ -33,12 +34,14 @@ namespace Flutter.Structs
 /// value by the [resolve] method.
 		public double start { get; set; }
 
+		// Simple field: top
 /// The offset from the top.
 /// 
 /// This value is passed through to [EdgeInsets.top] unmodified by the
 /// [resolve] method.
 		public double top { get; set; }
 
+		// Simple field: end
 /// The offset from the end side, the side on which the user ends reading
 /// text.
 /// 
@@ -46,14 +49,17 @@ namespace Flutter.Structs
 /// value by the [resolve] method.
 		public double end { get; set; }
 
+		// Simple field: bottom
 /// The offset from the bottom.
 /// 
 /// This value is passed through to [EdgeInsets.bottom] unmodified by the
 /// [resolve] method.
 		public double bottom { get; set; }
 
+		// Simple field: isNonNegative
 		public bool isNonNegative { get; set; }
 
+		// Simple field: flipped
 		public IntPtr flipped { get; set; }
 
 	}

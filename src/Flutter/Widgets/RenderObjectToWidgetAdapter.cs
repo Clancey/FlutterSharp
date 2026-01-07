@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -29,7 +32,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RenderObjectToWidgetAdapter"/> class.
 		/// </summary>
 		public RenderObjectToWidgetAdapter(
-			InvalidType _container
+			object _container
 ,
 			Widget? _child = null,
 			string? _debugShortDescription = null

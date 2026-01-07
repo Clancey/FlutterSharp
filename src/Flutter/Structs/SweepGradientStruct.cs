@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -93,6 +93,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SweepGradientStruct : WidgetStruct
 	{
+		// Simple field: center
 /// The center of the gradient, as an offset into the (-1.0, -1.0) x (1.0, 1.0)
 /// square describing the gradient which will be mapped onto the paint box.
 /// 
@@ -109,16 +110,19 @@ namespace Flutter.Structs
 /// method will need to be given a [TextDirection].
 		public IntPtr center { get; set; }
 
+		// Simple field: startAngle
 /// The angle in radians at which stop 0.0 of the gradient is placed.
 /// 
 /// Defaults to 0.0.
 		public double startAngle { get; set; }
 
+		// Simple field: endAngle
 /// The angle in radians at which stop 1.0 of the gradient is placed.
 /// 
 /// Defaults to math.pi * 2.
 		public double endAngle { get; set; }
 
+		// Simple field: tileMode
 /// How this gradient should tile the plane beyond in the region before
 /// [startAngle] and after [endAngle].
 /// 
@@ -130,12 +134,22 @@ namespace Flutter.Structs
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/dart-ui/tile_mode_repeated_sweep.png)
 		public IntPtr tileMode { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
+		// Simple field: colors
 		public IntPtr colors { get; set; }
 
+		// Has flag for nullable property: stops
+		public byte Hasstops { get; set; }
+
+		// Simple field: stops
 		public IntPtr? stops { get; set; }
 
+		// Has flag for nullable property: transform
+		public byte Hastransform { get; set; }
+
+		// Simple field: transform
 		public IntPtr? transform { get; set; }
 
 	}

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -63,9 +63,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverFixedExtentListStruct : WidgetStruct
 	{
+		// Simple field: itemExtent
 /// The extent the children are forced to have in the main axis.
 		public double itemExtent { get; set; }
 
+		// Simple field: @delegate
 		public IntPtr @delegate { get; set; }
 
 	}

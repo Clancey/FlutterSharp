@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -37,12 +40,12 @@ namespace Flutter.Widgets
 			double _scale,
 			Color? _color,
 			Animation<double> _opacity,
-			InvalidType _filterQuality,
-			InvalidType _colorBlendMode,
-			InvalidType _fit,
+			FilterQuality _filterQuality,
+			object _colorBlendMode,
+			BoxFit _fit,
 			AlignmentGeometry? _alignment,
-			InvalidType _repeat,
-			InvalidType _centerSlice,
+			object _repeat,
+			object _centerSlice,
 			bool _matchTextDirection,
 			bool _invertColors,
 			bool _isAntiAlias

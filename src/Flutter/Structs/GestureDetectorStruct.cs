@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -118,15 +118,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class GestureDetectorStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: onTapDown
 /// A pointer that might cause a tap with a primary button has contacted the
 /// screen at a particular location.
 /// 
@@ -139,6 +146,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onTapDown { get; set; }
 
+		// Simple field: onTapUp
 /// A pointer that will trigger a tap with a primary button has stopped
 /// contacting the screen at a particular location.
 /// 
@@ -150,6 +158,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onTapUp { get; set; }
 
+		// Simple field: onTap
 /// A tap with a primary button has occurred.
 /// 
 /// This triggers when the tap gesture wins. If the tap gesture did not win,
@@ -162,6 +171,7 @@ namespace Flutter.Structs
 /// regarding the pointer position.
 		public IntPtr onTap { get; set; }
 
+		// Simple field: onTapMove
 /// A pointer that triggered a tap has moved.
 /// 
 /// This triggers when the pointer moves after the tap gesture has been recognized.
@@ -171,6 +181,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onTapMove { get; set; }
 
+		// Simple field: onTapCancel
 /// The pointer that previously triggered [onTapDown] will not end up causing
 /// a tap.
 /// 
@@ -182,6 +193,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onTapCancel { get; set; }
 
+		// Simple field: onSecondaryTap
 /// A tap with a secondary button has occurred.
 /// 
 /// This triggers when the tap gesture wins. If the tap gesture did not win,
@@ -194,6 +206,7 @@ namespace Flutter.Structs
 /// regarding the pointer position.
 		public IntPtr onSecondaryTap { get; set; }
 
+		// Simple field: onSecondaryTapDown
 /// A pointer that might cause a tap with a secondary button has contacted the
 /// screen at a particular location.
 /// 
@@ -206,6 +219,7 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 		public IntPtr onSecondaryTapDown { get; set; }
 
+		// Simple field: onSecondaryTapUp
 /// A pointer that will trigger a tap with a secondary button has stopped
 /// contacting the screen at a particular location.
 /// 
@@ -219,6 +233,7 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 		public IntPtr onSecondaryTapUp { get; set; }
 
+		// Simple field: onSecondaryTapCancel
 /// The pointer that previously triggered [onSecondaryTapDown] will not end up
 /// causing a tap.
 /// 
@@ -230,6 +245,7 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 		public IntPtr onSecondaryTapCancel { get; set; }
 
+		// Simple field: onTertiaryTapDown
 /// A pointer that might cause a tap with a tertiary button has contacted the
 /// screen at a particular location.
 /// 
@@ -242,6 +258,7 @@ namespace Flutter.Structs
 /// * [kTertiaryButton], the button this callback responds to.
 		public IntPtr onTertiaryTapDown { get; set; }
 
+		// Simple field: onTertiaryTapUp
 /// A pointer that will trigger a tap with a tertiary button has stopped
 /// contacting the screen at a particular location.
 /// 
@@ -253,6 +270,7 @@ namespace Flutter.Structs
 /// * [kTertiaryButton], the button this callback responds to.
 		public IntPtr onTertiaryTapUp { get; set; }
 
+		// Simple field: onTertiaryTapCancel
 /// The pointer that previously triggered [onTertiaryTapDown] will not end up
 /// causing a tap.
 /// 
@@ -264,6 +282,7 @@ namespace Flutter.Structs
 /// * [kTertiaryButton], the button this callback responds to.
 		public IntPtr onTertiaryTapCancel { get; set; }
 
+		// Simple field: onDoubleTapDown
 /// A pointer that might cause a double tap has contacted the screen at a
 /// particular location.
 /// 
@@ -278,6 +297,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onDoubleTapDown { get; set; }
 
+		// Simple field: onDoubleTap
 /// The user has tapped the screen with a primary button at the same location
 /// twice in quick succession.
 /// 
@@ -286,6 +306,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onDoubleTap { get; set; }
 
+		// Simple field: onDoubleTapCancel
 /// The pointer that previously triggered [onDoubleTapDown] will not end up
 /// causing a double tap.
 /// 
@@ -294,6 +315,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onDoubleTapCancel { get; set; }
 
+		// Simple field: onLongPressDown
 /// The pointer has contacted the screen with a primary button, which might
 /// be the start of a long-press.
 /// 
@@ -312,6 +334,7 @@ namespace Flutter.Structs
 /// callback at the gesture layer.
 		public IntPtr onLongPressDown { get; set; }
 
+		// Simple field: onLongPressCancel
 /// A pointer that previously triggered [onLongPressDown] will not end up
 /// causing a long-press.
 /// 
@@ -328,6 +351,7 @@ namespace Flutter.Structs
 /// callback at the gesture layer.
 		public IntPtr onLongPressCancel { get; set; }
 
+		// Simple field: onLongPress
 /// Called when a long press gesture with a primary button has been recognized.
 /// 
 /// Triggered when a pointer has remained in contact with the screen at the
@@ -345,6 +369,7 @@ namespace Flutter.Structs
 /// callback at the gesture layer.
 		public IntPtr onLongPress { get; set; }
 
+		// Simple field: onLongPressStart
 /// Called when a long press gesture with a primary button has been recognized.
 /// 
 /// Triggered when a pointer has remained in contact with the screen at the
@@ -362,6 +387,7 @@ namespace Flutter.Structs
 /// callback at the gesture layer.
 		public IntPtr onLongPressStart { get; set; }
 
+		// Simple field: onLongPressMoveUpdate
 /// A pointer has been drag-moved after a long-press with a primary button.
 /// 
 /// See also:
@@ -371,6 +397,7 @@ namespace Flutter.Structs
 /// callback at the gesture layer.
 		public IntPtr onLongPressMoveUpdate { get; set; }
 
+		// Simple field: onLongPressUp
 /// A pointer that has triggered a long-press with a primary button has
 /// stopped contacting the screen.
 /// 
@@ -386,6 +413,7 @@ namespace Flutter.Structs
 /// callback at the gesture layer.
 		public IntPtr onLongPressUp { get; set; }
 
+		// Simple field: onLongPressEnd
 /// A pointer that has triggered a long-press with a primary button has
 /// stopped contacting the screen.
 /// 
@@ -401,6 +429,7 @@ namespace Flutter.Structs
 /// callback at the gesture layer.
 		public IntPtr onLongPressEnd { get; set; }
 
+		// Simple field: onSecondaryLongPressDown
 /// The pointer has contacted the screen with a secondary button, which might
 /// be the start of a long-press.
 /// 
@@ -419,6 +448,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onSecondaryLongPressDown { get; set; }
 
+		// Simple field: onSecondaryLongPressCancel
 /// A pointer that previously triggered [onSecondaryLongPressDown] will not
 /// end up causing a long-press.
 /// 
@@ -435,6 +465,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onSecondaryLongPressCancel { get; set; }
 
+		// Simple field: onSecondaryLongPress
 /// Called when a long press gesture with a secondary button has been
 /// recognized.
 /// 
@@ -453,6 +484,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onSecondaryLongPress { get; set; }
 
+		// Simple field: onSecondaryLongPressStart
 /// Called when a long press gesture with a secondary button has been
 /// recognized.
 /// 
@@ -471,6 +503,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onSecondaryLongPressStart { get; set; }
 
+		// Simple field: onSecondaryLongPressMoveUpdate
 /// A pointer has been drag-moved after a long press with a secondary button.
 /// 
 /// See also:
@@ -480,6 +513,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onSecondaryLongPressMoveUpdate { get; set; }
 
+		// Simple field: onSecondaryLongPressUp
 /// A pointer that has triggered a long-press with a secondary button has
 /// stopped contacting the screen.
 /// 
@@ -495,6 +529,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onSecondaryLongPressUp { get; set; }
 
+		// Simple field: onSecondaryLongPressEnd
 /// A pointer that has triggered a long-press with a secondary button has
 /// stopped contacting the screen.
 /// 
@@ -510,6 +545,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onSecondaryLongPressEnd { get; set; }
 
+		// Simple field: onTertiaryLongPressDown
 /// The pointer has contacted the screen with a tertiary button, which might
 /// be the start of a long-press.
 /// 
@@ -528,6 +564,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onTertiaryLongPressDown { get; set; }
 
+		// Simple field: onTertiaryLongPressCancel
 /// A pointer that previously triggered [onTertiaryLongPressDown] will not
 /// end up causing a long-press.
 /// 
@@ -544,6 +581,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onTertiaryLongPressCancel { get; set; }
 
+		// Simple field: onTertiaryLongPress
 /// Called when a long press gesture with a tertiary button has been
 /// recognized.
 /// 
@@ -562,6 +600,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onTertiaryLongPress { get; set; }
 
+		// Simple field: onTertiaryLongPressStart
 /// Called when a long press gesture with a tertiary button has been
 /// recognized.
 /// 
@@ -580,6 +619,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onTertiaryLongPressStart { get; set; }
 
+		// Simple field: onTertiaryLongPressMoveUpdate
 /// A pointer has been drag-moved after a long press with a tertiary button.
 /// 
 /// See also:
@@ -589,6 +629,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onTertiaryLongPressMoveUpdate { get; set; }
 
+		// Simple field: onTertiaryLongPressUp
 /// A pointer that has triggered a long-press with a tertiary button has
 /// stopped contacting the screen.
 /// 
@@ -604,6 +645,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onTertiaryLongPressUp { get; set; }
 
+		// Simple field: onTertiaryLongPressEnd
 /// A pointer that has triggered a long-press with a tertiary button has
 /// stopped contacting the screen.
 /// 
@@ -619,6 +661,7 @@ namespace Flutter.Structs
 /// this callback at the gesture layer.
 		public IntPtr onTertiaryLongPressEnd { get; set; }
 
+		// Simple field: onVerticalDragDown
 /// A pointer has contacted the screen with a primary button and might begin
 /// to move vertically.
 /// 
@@ -627,6 +670,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onVerticalDragDown { get; set; }
 
+		// Simple field: onVerticalDragStart
 /// A pointer has contacted the screen with a primary button and has begun to
 /// move vertically.
 /// 
@@ -635,6 +679,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onVerticalDragStart { get; set; }
 
+		// Simple field: onVerticalDragUpdate
 /// A pointer that is in contact with the screen with a primary button and
 /// moving vertically has moved in the vertical direction.
 /// 
@@ -643,6 +688,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onVerticalDragUpdate { get; set; }
 
+		// Simple field: onVerticalDragEnd
 /// A pointer that was previously in contact with the screen with a primary
 /// button and moving vertically is no longer in contact with the screen and
 /// was moving at a specific velocity when it stopped contacting the screen.
@@ -652,6 +698,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onVerticalDragEnd { get; set; }
 
+		// Simple field: onVerticalDragCancel
 /// The pointer that previously triggered [onVerticalDragDown] did not
 /// complete.
 /// 
@@ -660,6 +707,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onVerticalDragCancel { get; set; }
 
+		// Simple field: onHorizontalDragDown
 /// A pointer has contacted the screen with a primary button and might begin
 /// to move horizontally.
 /// 
@@ -668,6 +716,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onHorizontalDragDown { get; set; }
 
+		// Simple field: onHorizontalDragStart
 /// A pointer has contacted the screen with a primary button and has begun to
 /// move horizontally.
 /// 
@@ -676,6 +725,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onHorizontalDragStart { get; set; }
 
+		// Simple field: onHorizontalDragUpdate
 /// A pointer that is in contact with the screen with a primary button and
 /// moving horizontally has moved in the horizontal direction.
 /// 
@@ -684,6 +734,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onHorizontalDragUpdate { get; set; }
 
+		// Simple field: onHorizontalDragEnd
 /// A pointer that was previously in contact with the screen with a primary
 /// button and moving horizontally is no longer in contact with the screen and
 /// was moving at a specific velocity when it stopped contacting the screen.
@@ -693,6 +744,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onHorizontalDragEnd { get; set; }
 
+		// Simple field: onHorizontalDragCancel
 /// The pointer that previously triggered [onHorizontalDragDown] did not
 /// complete.
 /// 
@@ -701,6 +753,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onHorizontalDragCancel { get; set; }
 
+		// Simple field: onPanDown
 /// A pointer has contacted the screen with a primary button and might begin
 /// to move.
 /// 
@@ -709,6 +762,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onPanDown { get; set; }
 
+		// Simple field: onPanStart
 /// A pointer has contacted the screen with a primary button and has begun to
 /// move.
 /// 
@@ -717,6 +771,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onPanStart { get; set; }
 
+		// Simple field: onPanUpdate
 /// A pointer that is in contact with the screen with a primary button and
 /// moving has moved again.
 /// 
@@ -725,6 +780,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onPanUpdate { get; set; }
 
+		// Simple field: onPanEnd
 /// A pointer that was previously in contact with the screen with a primary
 /// button and moving is no longer in contact with the screen and was moving
 /// at a specific velocity when it stopped contacting the screen.
@@ -734,6 +790,7 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onPanEnd { get; set; }
 
+		// Simple field: onPanCancel
 /// The pointer that previously triggered [onPanDown] did not complete.
 /// 
 /// See also:
@@ -741,17 +798,21 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 		public IntPtr onPanCancel { get; set; }
 
+		// Simple field: onScaleStart
 /// The pointers in contact with the screen have established a focal point and
 /// initial scale of 1.0.
 		public IntPtr onScaleStart { get; set; }
 
+		// Simple field: onScaleUpdate
 /// The pointers in contact with the screen have indicated a new focal point
 /// and/or scale.
 		public IntPtr onScaleUpdate { get; set; }
 
+		// Simple field: onScaleEnd
 /// The pointers are no longer in contact with the screen.
 		public IntPtr onScaleEnd { get; set; }
 
+		// Simple field: onForcePressStart
 /// The pointer is in contact with the screen and has pressed with sufficient
 /// force to initiate a force press. The amount of force is at least
 /// [ForcePressGestureRecognizer.startPressure].
@@ -760,6 +821,7 @@ namespace Flutter.Structs
 /// detecting screens.
 		public IntPtr onForcePressStart { get; set; }
 
+		// Simple field: onForcePressPeak
 /// The pointer is in contact with the screen and has pressed with the maximum
 /// force. The amount of force is at least
 /// [ForcePressGestureRecognizer.peakPressure].
@@ -768,6 +830,7 @@ namespace Flutter.Structs
 /// detecting screens.
 		public IntPtr onForcePressPeak { get; set; }
 
+		// Simple field: onForcePressUpdate
 /// A pointer is in contact with the screen, has previously passed the
 /// [ForcePressGestureRecognizer.startPressure] and is either moving on the
 /// plane of the screen, pressing the screen with varying forces or both
@@ -777,12 +840,14 @@ namespace Flutter.Structs
 /// detecting screens.
 		public IntPtr onForcePressUpdate { get; set; }
 
+		// Simple field: onForcePressEnd
 /// The pointer tracked by [onForcePressStart] is no longer in contact with the screen.
 /// 
 /// This callback will only be fired on devices with pressure
 /// detecting screens.
 		public IntPtr onForcePressEnd { get; set; }
 
+		// Simple field: behavior
 /// How this gesture detector should behave during hit testing when deciding
 /// how the hit test propagates to children and whether to consider targets
 /// behind this one.
@@ -793,6 +858,7 @@ namespace Flutter.Structs
 /// See [HitTestBehavior] for the allowed values and their meanings.
 		public IntPtr behavior { get; set; }
 
+		// Simple field: excludeFromSemantics
 /// Whether to exclude these gestures from the semantics tree. For
 /// example, the long-press gesture for showing a tooltip is
 /// excluded because the tooltip itself is included in the semantics
@@ -800,6 +866,7 @@ namespace Flutter.Structs
 /// duplication of information.
 		public bool excludeFromSemantics { get; set; }
 
+		// Simple field: dragStartBehavior
 /// Determines the way that drag start behavior is handled.
 /// 
 /// If set to [DragStartBehavior.start], gesture drag behavior will
@@ -820,16 +887,22 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [DragGestureRecognizer.dragStartBehavior], which gives an example for the different behaviors.
-		public IntPtr dragStartBehavior { get; set; }
+		public DragStartBehavior dragStartBehavior { get; set; }
 
+		// Has flag for nullable property: supportedDevices
+		public byte HassupportedDevices { get; set; }
+
+		// Simple field: supportedDevices
 /// The kind of devices that are allowed to be recognized.
 /// 
 /// If set to null, events from all device types will be recognized. Defaults to null.
 		public IntPtr? supportedDevices { get; set; }
 
+		// Simple field: trackpadScrollCausesScale
 /// {@macro flutter.gestures.scale.trackpadScrollCausesScale}
 		public bool trackpadScrollCausesScale { get; set; }
 
+		// Simple field: trackpadScrollToScaleFactor
 /// {@macro flutter.gestures.scale.trackpadScrollToScaleFactor}
 		public IntPtr trackpadScrollToScaleFactor { get; set; }
 

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -92,15 +92,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AspectRatioStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: aspectRatio
 /// The aspect ratio to attempt to use.
 /// 
 /// The aspect ratio is expressed as a ratio of width to height. For example,
 /// a 16:9 width:height aspect ratio would have a value of 16.0/9.0.
 		public double aspectRatio { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -130,7 +133,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Localizations"/> class.
 		/// </summary>
 		public Localizations(
-			InvalidType _locale,
+			Locale? _locale,
 			List<LocalizationsDelegate<object>> _delegates
 ,
 			Widget? _child = null

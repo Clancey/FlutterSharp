@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -73,12 +73,15 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ImplicitlyAnimatedWidgetStruct : WidgetStruct
 	{
+		// Simple field: curve
 /// The curve to apply when animating the parameters of this container.
 		public IntPtr curve { get; set; }
 
+		// Simple field: duration
 /// The duration over which to animate the parameters of this container.
 		public IntPtr duration { get; set; }
 
+		// Simple field: onEnd
 /// Called every time an animation completes.
 /// 
 /// This can be useful to trigger additional actions (e.g. another animation)

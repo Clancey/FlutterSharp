@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -62,11 +65,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AndroidView(
 			string _viewType,
-			InvalidType _onPlatformViewCreated,
+			Action _onPlatformViewCreated,
 			PlatformViewHitTestBehavior _hitTestBehavior,
-			InvalidType _layoutDirection,
+			object _layoutDirection,
 			object _creationParams,
-			InvalidType _creationParamsCodec,
+			object _creationParamsCodec,
 			Clip _clipBehavior
 ,
 			HashSet<object>? _gestureRecognizers = null

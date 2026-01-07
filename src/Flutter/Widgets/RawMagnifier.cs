@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -41,7 +44,7 @@ namespace Flutter.Widgets
 		public RawMagnifier(
 			MagnifierDecoration _decoration,
 			Clip _clipBehavior,
-			InvalidType _focalPointOffset,
+			object _focalPointOffset,
 			double _magnificationScale,
 			Size _size
 ,

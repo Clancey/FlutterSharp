@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -53,11 +56,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Table(
 			List<TableRow> _children,
-			InvalidType _defaultColumnWidth,
+			object _defaultColumnWidth,
 			TextDirection _textDirection,
 			BoxBorder? _border,
-			InvalidType _defaultVerticalAlignment,
-			InvalidType _textBaseline
+			AlignmentGeometry _defaultVerticalAlignment,
+			TextBaseline? _textBaseline
 ,
 			Dictionary<object, object>? _columnWidths = null
 		)

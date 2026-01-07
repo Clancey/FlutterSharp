@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -102,16 +105,16 @@ namespace Flutter.Widgets
 		public RichText(
 			List<Widget> _children,
 			InlineSpan _text,
-			InvalidType _textAlign,
+			TextAlign? _textAlign,
 			TextDirection _textDirection,
 			bool _softWrap,
-			InvalidType _overflow,
-			InvalidType _textScaler,
-			InvalidType _locale,
-			InvalidType _strutStyle,
-			InvalidType _textWidthBasis,
+			Overflow _overflow,
+			object _textScaler,
+			Locale? _locale,
+			StrutStyle? _strutStyle,
+			TextWidthBasis _textWidthBasis,
 			TextHeightBehavior _textHeightBehavior,
-			InvalidType _selectionRegistrar,
+			object _selectionRegistrar,
 			Color? _selectionColor,
 			double _textScaleFactor
 ,

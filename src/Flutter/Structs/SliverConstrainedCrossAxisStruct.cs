@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -39,17 +39,21 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverConstrainedCrossAxisStruct : WidgetStruct
 	{
+		// Simple field: maxExtent
 /// The cross axis extent to apply to the sliver child.
 /// 
 /// This value must be nonnegative.
 		public double maxExtent { get; set; }
 
-		IntPtr _sliver;
+		// Widget field: sliver
+		private IntPtr _sliver;
+
 /// The widget below this widget in the tree.
 /// 
 /// Must be a sliver.
-		public Widget sliver
+		public IntPtr sliver
 		{
+			get => (IntPtr)_sliver;
 			set => SetIntPtr(ref _sliver, value);
 		}
 

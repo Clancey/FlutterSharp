@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -44,16 +44,20 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class NavigatorPopHandlerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget to place below this in the widget tree.
 /// 
 /// Typically this is a [Navigator] that will handle the pop when [onPop] is
 /// called.
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: enabled
 /// Whether this widget's ability to handle system back gestures is enabled or
 /// disabled.
 /// 
@@ -66,6 +70,7 @@ namespace Flutter.Structs
 /// Defaults to true.
 		public bool enabled { get; set; }
 
+		// Simple field: onPop
 /// Called when a handleable pop event happens.
 /// 
 /// For example, a pop is handleable when a [Navigator] in [child] has
@@ -75,6 +80,13 @@ namespace Flutter.Structs
 /// Typically this is used to pop the [Navigator] in [child]. See the sample
 /// code on [NavigatorPopHandler] for a full example of this.
 		public IntPtr onPop { get; set; }
+
+		// Has flag for nullable property: onPopWithResult
+		public byte HasonPopWithResult { get; set; }
+
+		// Callback field: onPopWithResult
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPopWithResult;
 
 /// Called when a handleable pop event happens.
 /// 
@@ -86,7 +98,16 @@ namespace Flutter.Structs
 /// code on [NavigatorPopHandler] for a full example of this.
 /// 
 /// The passed `result` is the result of the popped [Route].
-		public IntPtr? onPopWithResult { get; set; }
+		/// <summary>
+		/// Action identifier for onPopWithResult callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPopWithResultAction
+		{
+			get => GetString(_onPopWithResult);
+			set => SetString(ref _onPopWithResult, value);
+		}
 
 	}
 }

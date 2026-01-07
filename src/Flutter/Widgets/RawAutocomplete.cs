@@ -60,7 +60,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawAutocomplete"/> class.
 		/// </summary>
 		public RawAutocomplete(
-			Func<BuildContext, TextEditingController, FocusNode, InvalidType, Widget> _fieldViewBuilder = null,
+			Func<BuildContext, TextEditingController, FocusNode, object?, Widget> _fieldViewBuilder = null,
 			FocusNode? _focusNode = null,
 			Action<T> _onSelected = null,
 			TextEditingController? _textEditingController = null

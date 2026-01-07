@@ -155,7 +155,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | API001 | Investigate Dart analyzer enum type resolution | completed | Added InvalidType fallback with parameter name inference to DartToCSharpMapper |
 | API002 | Add Flutter enum package imports to analyzer | completed | Not needed - implemented C# side type inference instead |
 | API003 | Map common Flutter enums manually if needed | completed | Added 40+ parameter→type mappings + 17 new types to TypeMappingRegistry (FlexFit, BoxHeightStyle, BoxWidthStyle, BoxShape, BoxBorder, StrutStyle, TextHeightBehavior, etc.) |
-| API004 | Regenerate widgets with correct enum types | pending | Depends on API001-003 (now ready) |
+| API004 | Regenerate widgets with correct enum types | completed | Fixed: 88% reduction in InvalidType (292→36). Fixed nullable enum types in widget constructors. |
 
 ### 2.5.2 Collection Initializer Support (MEDIUM PRIORITY)
 
@@ -286,7 +286,8 @@ When starting a new loop, work on these in order:
 | M001 | 2026-01-07 | df9933c | GCHandle lifecycle: BaseStruct pins itself, proper cleanup on dispose with IsAllocated check |
 | M002 | 2026-01-07 | df9933c | String pointer cleanup: Track allocated strings in List<IntPtr>, free on SetString and Dispose. Also fixed NativeNullable<T>.Value logic bug and 'manahedHandle' typo. |
 | M003 | 2026-01-07 | c5218c0 | Children array cleanup: Added _allocatedChildrenArrays list, SetChildren() methods for allocation/tracking, Dispose() frees arrays with FreeHGlobal. |
-| API001-003 | 2026-01-07 | pending | Fixed InvalidType enum resolution: Added 40+ parameter→type mappings in DartToCSharpMapper.ParameterNameToType, InferTypeFromParameterName() method, MapType() overload with parameterName. Added 17 missing types to TypeMappingRegistry (FlexFit, BoxHeightStyle, BoxWidthStyle, BoxShape, etc.). |
+| API001-003 | 2026-01-07 | d479921 | Fixed InvalidType enum resolution: Added 40+ parameter→type mappings in DartToCSharpMapper.ParameterNameToType, InferTypeFromParameterName() method, MapType() overload with parameterName. Added 17 missing types to TypeMappingRegistry (FlexFit, BoxHeightStyle, BoxWidthStyle, BoxShape, etc.). |
+| API004 | 2026-01-07 | a4b961b | Regenerated widgets with correct enum types. Fixed WidgetAnalysisEnricher to pass property name for type inference. Fixed IsReferenceType to recognize enum types as value types. Fixed nullable_type for optional enum parameters. Reduced InvalidType from 292→36 (88% reduction). |
 
 ---
 
@@ -472,6 +473,20 @@ Add notes here when exploring the codebase:
   4. Extended `Dispose()` to iterate and free all tracked children arrays with `Marshal.FreeHGlobal()`
 - **Memory pattern**: Parent widgets now properly clean up children array allocations when disposed
 - **Note**: Child widgets themselves are tracked separately via FlutterManager.AliveWidgets
+
+### API004 Enum Type Fix Details (2026-01-07)
+- **Problem**: Enum types like `MainAxisAlignment`, `CrossAxisAlignment`, `PlatformViewHitTestBehavior` were mapped to `InvalidType` because the Dart analyzer couldn't resolve Flutter SDK enum types
+- **Root cause 1**: `WidgetAnalysisEnricher.EnrichProperty()` called `_dartToCSharpMapper.MapType(property.DartType)` without passing the property name for inference
+- **Fix 1**: Changed to `_dartToCSharpMapper.MapType(property.DartType, property.Name)` to enable parameter-name-based type inference
+- **Root cause 2**: `CSharpWidgetGenerator.IsReferenceType()` only checked primitive value types (int, double, bool, etc.) but not enum types
+- **Fix 2**: Added enum types HashSet to `IsReferenceType()` method with 35+ Flutter enum types
+- **Root cause 3**: External template `CSharpWidget.scriban` used `{{ prop.type }}` instead of `{{ prop.nullable_type }}` for optional parameters
+- **Fix 3**: Updated template to use `{{ prop.nullable_type }}` which adds `?` suffix for value types with null defaults
+- **Results**:
+  - InvalidType occurrences: 292 → 36 (88% reduction)
+  - CS1750 errors (null for value types): 30 → 0 (100% fixed)
+  - Remaining 36 InvalidType are complex delegate/Func types that need manual handling
+  - 50 CS7036 errors (base class constructor params) are pre-existing inheritance issues, not API004 scope
 
 ### Sample App API Mismatch Discovery (2026-01-07)
 - Attempted to build `Sample/FlutterSample/FlutterSample.csproj` to verify runtime works

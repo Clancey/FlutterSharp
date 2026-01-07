@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -50,6 +50,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ActionsStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: dispatcher
+		public byte Hasdispatcher { get; set; }
+
+		// Simple field: dispatcher
 /// The [ActionDispatcher] object that invokes actions.
 /// 
 /// This is what is returned from [Actions.of], and used by [Actions.invoke].
@@ -60,6 +64,7 @@ namespace Flutter.Structs
 /// default-constructed [ActionDispatcher].
 		public IntPtr? dispatcher { get; set; }
 
+		// Simple field: actions
 /// {@template flutter.widgets.actions.actions}
 /// A map of [Intent] keys to [Action<Intent>] objects that defines which
 /// actions this widget knows about.
@@ -70,10 +75,13 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr actions { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

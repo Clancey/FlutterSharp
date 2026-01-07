@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -161,18 +161,21 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class BackdropFilterStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: filter
 /// The image filter to apply to the existing painted content before painting the child.
 /// 
 /// For example, consider using [ImageFilter.blur] to create a backdrop
 /// blur effect.
 		public IntPtr filter { get; set; }
 
+		// Simple field: blendMode
 /// The blend mode to use to apply the filtered background content onto the background
 /// surface.
 /// 
 /// {@macro flutter.widgets.BackdropFilter.blendMode}
-		public IntPtr blendMode { get; set; }
+		public BlendMode blendMode { get; set; }
 
+		// Simple field: enabled
 /// Whether or not to apply the backdrop filter operation to the child of this
 /// widget.
 /// 
@@ -180,14 +183,21 @@ namespace Flutter.Structs
 /// type for performance reasons.
 		public bool enabled { get; set; }
 
+		// Simple field: backdropGroupKey
 /// The [BackdropKey] that identifies the backdrop this filter will apply to.
 /// 
 /// The default value for the backdrop key is `null`.
 		public IntPtr backdropGroupKey { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

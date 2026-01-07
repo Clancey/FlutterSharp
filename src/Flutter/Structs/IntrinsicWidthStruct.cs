@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -50,6 +50,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class IntrinsicWidthStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: stepWidth
+		public byte HasstepWidth { get; set; }
+
+		// Nullable value type: stepWidth
 /// If non-null, force the child's width to be a multiple of this value.
 /// 
 /// If null or 0.0 the child's width will be the same as its maximum
@@ -63,6 +67,10 @@ namespace Flutter.Structs
 /// intrinsic width in general.
 		public NativeNullable<double> stepWidth { get; set; }
 
+		// Has flag for nullable property: stepHeight
+		public byte HasstepHeight { get; set; }
+
+		// Nullable value type: stepHeight
 /// If non-null, force the child's height to be a multiple of this value.
 /// 
 /// If null or 0.0 the child's height will not be constrained.
@@ -70,9 +78,15 @@ namespace Flutter.Structs
 /// This value must not be negative.
 		public NativeNullable<double> stepHeight { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

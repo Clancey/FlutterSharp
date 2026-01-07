@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -46,6 +46,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SlideTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: textDirection
 /// The direction to use for the x offset described by the [position].
 /// 
 /// If [textDirection] is null, the x offset is applied in the coordinate
@@ -59,6 +60,7 @@ namespace Flutter.Structs
 /// reading direction such that x offsets move the child towards the right.
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: transformHitTests
 /// Whether hit testing should be affected by the slide animation.
 /// 
 /// If false, hit testing will proceed as if the child was not translated at
@@ -67,15 +69,22 @@ namespace Flutter.Structs
 /// location and you want the user to benefit from "muscle memory".
 		public bool transformHitTests { get; set; }
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: position
 		public IntPtr position { get; set; }
 
 	}

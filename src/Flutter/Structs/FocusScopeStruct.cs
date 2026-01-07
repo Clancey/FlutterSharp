@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -75,39 +75,106 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class FocusScopeStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: node
+		public byte Hasnode { get; set; }
+
+		// Simple field: node
 		public IntPtr? node { get; set; }
 
+		// Has flag for nullable property: parentNode
+		public byte HasparentNode { get; set; }
+
+		// Simple field: parentNode
 		public IntPtr? parentNode { get; set; }
 
-		IntPtr _child;
-		public Widget child
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: autofocus
 		public bool autofocus { get; set; }
 
+		// Simple field: onFocusChange
 		public IntPtr onFocusChange { get; set; }
 
+		// Has flag for nullable property: canRequestFocus
+		public byte HascanRequestFocus { get; set; }
+
+		// Nullable value type: canRequestFocus
 		public NativeNullable<bool> canRequestFocus { get; set; }
 
+		// Has flag for nullable property: skipTraversal
+		public byte HasskipTraversal { get; set; }
+
+		// Nullable value type: skipTraversal
 		public NativeNullable<bool> skipTraversal { get; set; }
 
-		public IntPtr? onKeyEvent { get; set; }
+		// Has flag for nullable property: onKeyEvent
+		public byte HasonKeyEvent { get; set; }
 
-		public IntPtr? onKey { get; set; }
+		// Callback field: onKeyEvent
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onKeyEvent;
 
-		IntPtr _debugLabel;
+		/// <summary>
+		/// Action identifier for onKeyEvent callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onKeyEventAction
+		{
+			get => GetString(_onKeyEvent);
+			set => SetString(ref _onKeyEvent, value);
+		}
+
+		// Has flag for nullable property: onKey
+		public byte HasonKey { get; set; }
+
+		// Callback field: onKey
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onKey;
+
+		/// <summary>
+		/// Action identifier for onKey callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onKeyAction
+		{
+			get => GetString(_onKey);
+			set => SetString(ref _onKey, value);
+		}
+
+		// Has flag for nullable property: debugLabel
+		public byte HasdebugLabel { get; set; }
+
+		// String field: debugLabel
+		private IntPtr _debugLabel;
+
 		public string? debugLabel
 		{
 			get => GetString(_debugLabel);
 			set => SetString(ref _debugLabel, value);
 		}
 
+		// Simple field: includeSemantics
 		public bool includeSemantics { get; set; }
 
+		// Has flag for nullable property: descendantsAreFocusable
+		public byte HasdescendantsAreFocusable { get; set; }
+
+		// Nullable value type: descendantsAreFocusable
 		public NativeNullable<bool> descendantsAreFocusable { get; set; }
 
+		// Has flag for nullable property: descendantsAreTraversable
+		public byte HasdescendantsAreTraversable { get; set; }
+
+		// Nullable value type: descendantsAreTraversable
 		public NativeNullable<bool> descendantsAreTraversable { get; set; }
 
 	}

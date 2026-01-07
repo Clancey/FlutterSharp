@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -45,9 +45,12 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverEnsureSemanticsStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _sliver;
-		public Widget sliver
+		// Widget field: sliver
+		private IntPtr _sliver;
+
+		public IntPtr sliver
 		{
+			get => (IntPtr)_sliver;
 			set => SetIntPtr(ref _sliver, value);
 		}
 

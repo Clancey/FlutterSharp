@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -47,6 +47,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PositionedDirectionalStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: start
+		public byte Hasstart { get; set; }
+
+		// Nullable value type: start
 /// The distance that the child's leading edge is inset from the leading edge
 /// of the stack.
 /// 
@@ -54,12 +58,20 @@ namespace Flutter.Structs
 /// set. The third must be null.
 		public NativeNullable<double> start { get; set; }
 
+		// Has flag for nullable property: top
+		public byte Hastop { get; set; }
+
+		// Nullable value type: top
 /// The distance that the child's top edge is inset from the top of the stack.
 /// 
 /// Only two out of the three vertical values ([top], [bottom], [height]) can be
 /// set. The third must be null.
 		public NativeNullable<double> top { get; set; }
 
+		// Has flag for nullable property: end
+		public byte Hasend { get; set; }
+
+		// Nullable value type: end
 /// The distance that the child's trailing edge is inset from the trailing
 /// edge of the stack.
 /// 
@@ -67,30 +79,45 @@ namespace Flutter.Structs
 /// set. The third must be null.
 		public NativeNullable<double> end { get; set; }
 
+		// Has flag for nullable property: bottom
+		public byte Hasbottom { get; set; }
+
+		// Nullable value type: bottom
 /// The distance that the child's bottom edge is inset from the bottom of the stack.
 /// 
 /// Only two out of the three vertical values ([top], [bottom], [height]) can be
 /// set. The third must be null.
 		public NativeNullable<double> bottom { get; set; }
 
+		// Has flag for nullable property: width
+		public byte Haswidth { get; set; }
+
+		// Nullable value type: width
 /// The child's width.
 /// 
 /// Only two out of the three horizontal values ([start], [end], [width]) can be
 /// set. The third must be null.
 		public NativeNullable<double> width { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 /// The child's height.
 /// 
 /// Only two out of the three vertical values ([top], [bottom], [height]) can be
 /// set. The third must be null.
 		public NativeNullable<double> height { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

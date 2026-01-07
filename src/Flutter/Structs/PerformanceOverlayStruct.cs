@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -30,6 +30,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PerformanceOverlayStruct : WidgetStruct
 	{
+		// Simple field: optionsMask
 /// The mask is created by shifting 1 by the index of the specific
 /// [PerformanceOverlayOption] to enable.
 		public int optionsMask { get; set; }

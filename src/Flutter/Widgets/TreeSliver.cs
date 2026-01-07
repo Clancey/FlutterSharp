@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -60,8 +63,8 @@ namespace Flutter.Widgets
 			List<TreeSliverNode<T>> _tree,
 			Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> _treeNodeBuilder,
 			Func<TreeSliverNode<object?>, InvalidType, double> _treeRowExtentBuilder,
-			InvalidType _toggleAnimationStyle,
-			InvalidType _indentation,
+			object _toggleAnimationStyle,
+			object _indentation,
 			bool _addAutomaticKeepAlives,
 			bool _addRepaintBoundaries,
 			bool _addSemanticIndexes,

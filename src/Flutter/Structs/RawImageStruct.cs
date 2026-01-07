@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -29,6 +29,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RawImageStruct : WidgetStruct
 	{
+		// Simple field: image
 /// The image to display.
 /// 
 /// Since a [RawImage] is stateless, it does not ever dispose this image.
@@ -36,7 +37,12 @@ namespace Flutter.Structs
 /// this image handle when the [RawImage] will no longer be needed.
 		public IntPtr image { get; set; }
 
-		IntPtr _debugImageLabel;
+		// Has flag for nullable property: debugImageLabel
+		public byte HasdebugImageLabel { get; set; }
+
+		// String field: debugImageLabel
+		private IntPtr _debugImageLabel;
+
 /// A string identifying the source of the image.
 		public string? debugImageLabel
 		{
@@ -44,18 +50,27 @@ namespace Flutter.Structs
 			set => SetString(ref _debugImageLabel, value);
 		}
 
+		// Has flag for nullable property: width
+		public byte Haswidth { get; set; }
+
+		// Nullable value type: width
 /// If non-null, require the image to have this width.
 /// 
 /// If null, the image will pick a size that best preserves its intrinsic
 /// aspect ratio.
 		public NativeNullable<double> width { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 /// If non-null, require the image to have this height.
 /// 
 /// If null, the image will pick a size that best preserves its intrinsic
 /// aspect ratio.
 		public NativeNullable<double> height { get; set; }
 
+		// Simple field: scale
 /// The linear scale factor for drawing this image at its intended size.
 /// 
 /// The scale factor applies to the width and the height.
@@ -63,9 +78,11 @@ namespace Flutter.Structs
 /// {@macro flutter.painting.imageInfo.scale}
 		public double scale { get; set; }
 
+		// Simple field: color
 /// If non-null, this color is blended with each image pixel using [colorBlendMode].
 		public IntPtr color { get; set; }
 
+		// Simple field: opacity
 /// If non-null, the value from the [Animation] is multiplied with the opacity
 /// of each image pixel before painting onto the canvas.
 /// 
@@ -73,11 +90,13 @@ namespace Flutter.Structs
 /// of an image.
 		public IntPtr opacity { get; set; }
 
+		// Simple field: filterQuality
 /// Used to set the filterQuality of the image.
 /// 
 /// Defaults to [FilterQuality.medium].
-		public IntPtr filterQuality { get; set; }
+		public FilterQuality filterQuality { get; set; }
 
+		// Simple field: colorBlendMode
 /// Used to combine [color] with this image.
 /// 
 /// The default is [BlendMode.srcIn]. In terms of the blend mode, [color] is
@@ -88,12 +107,14 @@ namespace Flutter.Structs
 /// * [BlendMode], which includes an illustration of the effect of each blend mode.
 		public IntPtr colorBlendMode { get; set; }
 
+		// Simple field: fit
 /// How to inscribe the image into the space allocated during layout.
 /// 
 /// The default varies based on the other fields. See the discussion at
 /// [paintImage].
-		public IntPtr fit { get; set; }
+		public BoxFit fit { get; set; }
 
+		// Simple field: alignment
 /// How to align the image within its bounds.
 /// 
 /// The alignment aligns the given position in the image to the given position
@@ -121,9 +142,11 @@ namespace Flutter.Structs
 /// relative to text direction.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: repeat
 /// How to paint any portions of the layout bounds not covered by the image.
 		public IntPtr repeat { get; set; }
 
+		// Simple field: centerSlice
 /// The center slice for a nine-patch image.
 /// 
 /// The region of the image inside the center slice will be stretched both
@@ -133,6 +156,7 @@ namespace Flutter.Structs
 /// the center slice will be stretched only vertically.
 		public IntPtr centerSlice { get; set; }
 
+		// Simple field: matchTextDirection
 /// Whether to paint the image in the direction of the [TextDirection].
 /// 
 /// If this is true, then in [TextDirection.ltr] contexts, the image will be
@@ -150,6 +174,7 @@ namespace Flutter.Structs
 /// scope.
 		public bool matchTextDirection { get; set; }
 
+		// Simple field: invertColors
 /// Whether the colors of the image are inverted when drawn.
 /// 
 /// Inverting the colors of an image applies a new color filter to the paint.
@@ -161,6 +186,7 @@ namespace Flutter.Structs
 /// * [Paint.invertColors], for the dart:ui implementation.
 		public bool invertColors { get; set; }
 
+		// Simple field: isAntiAlias
 /// Whether to paint the image with anti-aliasing.
 /// 
 /// Anti-aliasing alleviates the sawtooth artifact when the image is rotated.

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -67,6 +67,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class WrapStruct : MultiChildRenderObjectWidgetStruct
 	{
+		// Simple field: direction
 /// The direction to use as the main axis.
 /// 
 /// For example, if [direction] is [Axis.horizontal], the default, the
@@ -75,6 +76,7 @@ namespace Flutter.Structs
 /// children are placed in a new run vertically adjacent to the previous run.
 		public IntPtr direction { get; set; }
 
+		// Simple field: alignment
 /// How the children within a run should be placed in the main axis.
 /// 
 /// For example, if [alignment] is [WrapAlignment.center], the children in
@@ -90,6 +92,7 @@ namespace Flutter.Structs
 /// are placed relative to each other in the cross axis.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: spacing
 /// How much space to place between children in a run in the main axis.
 /// 
 /// For example, if [spacing] is 10.0, the children will be spaced at least
@@ -103,6 +106,7 @@ namespace Flutter.Structs
 /// Defaults to 0.0.
 		public double spacing { get; set; }
 
+		// Simple field: runAlignment
 /// How the runs themselves should be placed in the cross axis.
 /// 
 /// For example, if [runAlignment] is [WrapAlignment.center], the runs are
@@ -118,6 +122,7 @@ namespace Flutter.Structs
 /// are placed relative to each other in the cross axis.
 		public IntPtr runAlignment { get; set; }
 
+		// Simple field: runSpacing
 /// How much space to place between the runs themselves in the cross axis.
 /// 
 /// For example, if [runSpacing] is 10.0, the runs will be spaced at least
@@ -130,6 +135,7 @@ namespace Flutter.Structs
 /// Defaults to 0.0.
 		public double runSpacing { get; set; }
 
+		// Simple field: crossAxisAlignment
 /// How the children within a run should be aligned relative to each other in
 /// the cross axis.
 /// 
@@ -145,8 +151,9 @@ namespace Flutter.Structs
 /// relative to each other in the main axis.
 /// * [runAlignment], which controls how the runs are placed relative to each
 /// other in the cross axis.
-		public IntPtr crossAxisAlignment { get; set; }
+		public CrossAxisAlignment crossAxisAlignment { get; set; }
 
+		// Simple field: textDirection
 /// Determines the order to lay children out horizontally and how to interpret
 /// `start` and `end` in the horizontal direction.
 /// 
@@ -175,6 +182,7 @@ namespace Flutter.Structs
 /// [textDirection] (or the ambient [Directionality]) must not be null.
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: verticalDirection
 /// Determines the order to lay children out vertically and how to interpret
 /// `start` and `end` in the vertical direction.
 /// 
@@ -197,13 +205,15 @@ namespace Flutter.Structs
 /// [crossAxisAlignment] is either [WrapCrossAlignment.start] or
 /// [WrapCrossAlignment.end], or there's more than one child, then the
 /// [verticalDirection] must not be null.
-		public IntPtr verticalDirection { get; set; }
+		public VerticalDirection verticalDirection { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: children
 		public IntPtr children { get; set; }
 
 	}

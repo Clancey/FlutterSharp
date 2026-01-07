@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -59,10 +62,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Transform(
 			Matrix4? _transform,
-			InvalidType _origin,
+			object _origin,
 			AlignmentGeometry? _alignment,
 			bool _transformHitTests,
-			InvalidType _filterQuality
+			FilterQuality _filterQuality
 ,
 			Widget? _child = null
 		)

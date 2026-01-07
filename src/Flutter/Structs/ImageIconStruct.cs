@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -23,12 +23,17 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ImageIconStruct : WidgetStruct
 	{
+		// Simple field: image
 /// The image to display as the icon.
 /// 
 /// The icon can be null, in which case the widget will render as an empty
 /// space of the specified [size].
 		public IntPtr image { get; set; }
 
+		// Has flag for nullable property: size
+		public byte Hassize { get; set; }
+
+		// Nullable value type: size
 /// The size of the icon in logical pixels.
 /// 
 /// Icons occupy a square with width and height equal to size.
@@ -38,6 +43,7 @@ namespace Flutter.Structs
 /// 24.0.
 		public NativeNullable<double> size { get; set; }
 
+		// Simple field: color
 /// The color to use when drawing the icon.
 /// 
 /// Defaults to the current [IconTheme] color, if any. If there is
@@ -47,7 +53,12 @@ namespace Flutter.Structs
 /// [IconTheme], if any.
 		public IntPtr color { get; set; }
 
-		IntPtr _semanticLabel;
+		// Has flag for nullable property: semanticLabel
+		public byte HassemanticLabel { get; set; }
+
+		// String field: semanticLabel
+		private IntPtr _semanticLabel;
+
 /// Semantic label for the icon.
 /// 
 /// Announced by assistive technologies (e.g TalkBack/VoiceOver).

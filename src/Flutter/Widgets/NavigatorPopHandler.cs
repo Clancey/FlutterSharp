@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -50,7 +53,7 @@ namespace Flutter.Widgets
 		public NavigatorPopHandler(
 			Widget _child,
 			bool _enabled,
-			InvalidType _onPop
+			Action _onPop
 ,
 			Action<T?> _onPopWithResult = null
 		)

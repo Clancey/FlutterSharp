@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -90,13 +93,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flex"/> class.
 		/// </summary>
 		public Flex(
-			InvalidType _direction,
-			InvalidType _mainAxisAlignment,
-			InvalidType _mainAxisSize,
-			InvalidType _crossAxisAlignment,
+			object _direction,
+			MainAxisAlignment _mainAxisAlignment,
+			MainAxisSize _mainAxisSize,
+			CrossAxisAlignment _crossAxisAlignment,
 			TextDirection _textDirection,
-			InvalidType _verticalDirection,
-			InvalidType _textBaseline,
+			VerticalDirection _verticalDirection,
+			TextBaseline? _textBaseline,
 			Clip _clipBehavior,
 			double _spacing
 ,

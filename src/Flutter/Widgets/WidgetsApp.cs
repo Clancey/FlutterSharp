@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -48,7 +51,7 @@ namespace Flutter.Widgets
 		public WidgetsApp(
 			TextStyle? _textStyle,
 			Color? _color,
-			InvalidType _locale,
+			Locale? _locale,
 			IEnumerable<object> _supportedLocales,
 			bool _showPerformanceOverlay,
 			bool _showSemanticsDebugger,

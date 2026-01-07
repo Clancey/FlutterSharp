@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -50,6 +50,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DisplayFeatureSubScreenStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: anchorPoint
 /// {@template flutter.widgets.DisplayFeatureSubScreen.anchorPoint}
 /// The anchor point used to pick the closest sub-screen.
 /// 
@@ -71,7 +72,9 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr anchorPoint { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// The padding on the [MediaQuery] for the [child] will be suitably adjusted
@@ -80,8 +83,9 @@ namespace Flutter.Structs
 /// screen into sub-screens.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

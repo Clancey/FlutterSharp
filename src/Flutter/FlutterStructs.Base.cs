@@ -105,6 +105,22 @@ namespace Flutter.Structs
 		}
 
 		/// <summary>
+		/// Sets an IntPtr field directly. Used when the struct property type is IntPtr.
+		/// </summary>
+		protected void SetIntPtr(ref IntPtr ptr, IntPtr value)
+		{
+			ptr = value;
+		}
+
+		/// <summary>
+		/// Sets an IntPtr field from a nullable IntPtr value.
+		/// </summary>
+		protected void SetIntPtr(ref IntPtr ptr, IntPtr? value)
+		{
+			ptr = value ?? IntPtr.Zero;
+		}
+
+		/// <summary>
 		/// Sets the children pointer field to an array of widget pointers.
 		/// The array memory is tracked and will be freed on Dispose.
 		/// </summary>

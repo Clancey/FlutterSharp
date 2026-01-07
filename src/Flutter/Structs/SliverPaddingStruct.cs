@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -28,12 +28,19 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverPaddingStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: padding
 /// The amount of space by which to inset the child sliver.
 		public IntPtr padding { get; set; }
 
-		IntPtr _sliver;
-		public Widget? sliver
+		// Has flag for nullable property: sliver
+		public byte Hassliver { get; set; }
+
+		// Widget field: sliver
+		private IntPtr _sliver;
+
+		public IntPtr? sliver
 		{
+			get => _sliver != IntPtr.Zero ? (IntPtr)_sliver : null;
 			set => SetIntPtr(ref _sliver, value);
 		}
 

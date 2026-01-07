@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -23,16 +23,19 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class GridPaperStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: color
 /// The color to draw the lines in the grid.
 /// 
 /// Defaults to a light blue commonly seen on traditional grid paper.
 		public IntPtr color { get; set; }
 
+		// Simple field: interval
 /// The distance between the primary lines in the grid, in logical pixels.
 /// 
 /// Each primary line is one logical pixel wide.
 		public double interval { get; set; }
 
+		// Simple field: divisions
 /// The number of major divisions within each primary grid cell.
 /// 
 /// This is the number of major divisions per [interval], including the
@@ -46,6 +49,7 @@ namespace Flutter.Structs
 /// next [interval]).
 		public int divisions { get; set; }
 
+		// Simple field: subdivisions
 /// The number of minor divisions within each major division, including the
 /// major division itself.
 /// 
@@ -55,12 +59,18 @@ namespace Flutter.Structs
 /// The subdivision lines after the first are a quarter of a logical pixel wide.
 		public int subdivisions { get; set; }
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

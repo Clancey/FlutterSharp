@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -32,9 +32,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DateTimeStruct : WidgetStruct
 	{
+		// Simple field: millisecondsSinceEpoch
 /// The number of milliseconds since the "Unix epoch" 1970-01-01T00:00:00Z (UTC).
 		public int millisecondsSinceEpoch { get; set; }
 
+		// Simple field: isUtc
 /// True if this DateTime is set to UTC time.
 		public bool isUtc { get; set; }
 

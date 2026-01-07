@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -32,12 +32,15 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DefaultTextStyleStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: style
 /// The text style to apply.
 		public IntPtr style { get; set; }
 
+		// Simple field: textAlign
 /// How each line of text in the Text widget should be aligned horizontally.
-		public IntPtr textAlign { get; set; }
+		public TextAlign textAlign { get; set; }
 
+		// Simple field: softWrap
 /// Whether the text should break at soft line breaks.
 /// 
 /// If false, the glyphs in the text will be positioned as if there was unlimited horizontal space.
@@ -46,12 +49,17 @@ namespace Flutter.Structs
 /// the glyph causing overflow, and those that follow, will not be rendered.
 		public bool softWrap { get; set; }
 
+		// Simple field: overflow
 /// How visual overflow should be handled.
 /// 
 /// If [softWrap] is true or null, the glyph causing overflow, and those that follow,
 /// will not be rendered. Otherwise, it will be shown with the given overflow option.
-		public IntPtr overflow { get; set; }
+		public Overflow overflow { get; set; }
 
+		// Has flag for nullable property: maxLines
+		public byte HasmaxLines { get; set; }
+
+		// Nullable value type: maxLines
 /// An optional maximum number of lines for the text to span, wrapping if necessary.
 /// If the text exceeds the given number of lines, it will be truncated according
 /// to [overflow].
@@ -63,17 +71,22 @@ namespace Flutter.Structs
 /// [Text.maxLines].
 		public NativeNullable<int> maxLines { get; set; }
 
+		// Simple field: textWidthBasis
 /// The strategy to use when calculating the width of the Text.
 /// 
 /// See [TextWidthBasis] for possible values and their implications.
-		public IntPtr textWidthBasis { get; set; }
+		public TextWidthBasis textWidthBasis { get; set; }
 
+		// Simple field: textHeightBehavior
 /// {@macro dart.ui.textHeightBehavior}
 		public IntPtr textHeightBehavior { get; set; }
 
-		IntPtr _child;
-		public Widget child
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

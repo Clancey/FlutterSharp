@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -54,9 +54,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TransformStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: transform
 /// The matrix to transform the child by during painting.
 		public IntPtr transform { get; set; }
 
+		// Simple field: origin
 /// The origin of the coordinate system (relative to the upper left corner of
 /// this render object) in which to apply the matrix.
 /// 
@@ -64,6 +66,7 @@ namespace Flutter.Structs
 /// translation. This property is provided just for convenience.
 		public IntPtr origin { get; set; }
 
+		// Simple field: alignment
 /// The alignment of the origin, relative to the size of the box.
 /// 
 /// This is equivalent to setting an origin based on the size of the box.
@@ -78,9 +81,11 @@ namespace Flutter.Structs
 /// [Directionality.of] returns [TextDirection.rtl].
 		public IntPtr alignment { get; set; }
 
+		// Simple field: transformHitTests
 /// Whether to apply the transformation when performing hit tests.
 		public bool transformHitTests { get; set; }
 
+		// Simple field: filterQuality
 /// The filter quality with which to apply the transform as a bitmap operation.
 /// 
 /// {@template flutter.widgets.Transform.optional.FilterQuality}
@@ -88,11 +93,17 @@ namespace Flutter.Structs
 /// otherwise it controls the quality of an [ImageFilter.matrix] applied to a bitmap
 /// rendering of the child.
 /// {@endtemplate}
-		public IntPtr filterQuality { get; set; }
+		public FilterQuality filterQuality { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

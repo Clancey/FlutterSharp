@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -41,18 +41,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverPrototypeExtentListStruct : WidgetStruct
 	{
-		IntPtr _prototypeItem;
+		// Widget field: prototypeItem
+		private IntPtr _prototypeItem;
+
 /// Defines the main axis extent of all of this sliver's children.
 /// 
 /// The [prototypeItem] is laid out before the rest of the sliver's children
 /// and its size along the main axis fixes the size of each child. The
 /// [prototypeItem] is essentially [Offstage]: it is not painted and it
 /// cannot respond to input.
-		public Widget prototypeItem
+		public IntPtr prototypeItem
 		{
+			get => (IntPtr)_prototypeItem;
 			set => SetIntPtr(ref _prototypeItem, value);
 		}
 
+		// Simple field: @delegate
 		public IntPtr @delegate { get; set; }
 
 	}

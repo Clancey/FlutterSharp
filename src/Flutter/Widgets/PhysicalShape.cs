@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -39,7 +42,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PhysicalShape"/> class.
 		/// </summary>
 		public PhysicalShape(
-			InvalidType _clipper,
+			object _clipper,
 			Clip _clipBehavior,
 			double _elevation,
 			Color? _color,

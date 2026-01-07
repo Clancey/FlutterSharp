@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -71,12 +71,15 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class CustomPaintStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: painter
 /// The painter that paints before the children.
 		public IntPtr painter { get; set; }
 
+		// Simple field: foregroundPainter
 /// The painter that paints after the children.
 		public IntPtr foregroundPainter { get; set; }
 
+		// Simple field: size
 /// The size that this [CustomPaint] should aim for, given the layout
 /// constraints, if there is no child.
 /// 
@@ -86,6 +89,7 @@ namespace Flutter.Structs
 /// instead.
 		public IntPtr size { get; set; }
 
+		// Simple field: isComplex
 /// Whether the painting is complex enough to benefit from caching.
 /// 
 /// The compositor contains a raster cache that holds bitmaps of layers in
@@ -98,6 +102,7 @@ namespace Flutter.Structs
 /// are null because this flag will be ignored in such case.
 		public bool isComplex { get; set; }
 
+		// Simple field: willChange
 /// Whether the raster cache should be told that this painting is likely
 /// to change in the next frame.
 /// 
@@ -110,9 +115,15 @@ namespace Flutter.Structs
 /// are null because this flag will be ignored in such case.
 		public bool willChange { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

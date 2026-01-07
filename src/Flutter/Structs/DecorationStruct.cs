@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -24,8 +24,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DecorationStruct : WidgetStruct
 	{
+		// Simple field: padding
 		public IntPtr padding { get; set; }
 
+		// Simple field: isComplex
 		public bool isComplex { get; set; }
 
 	}

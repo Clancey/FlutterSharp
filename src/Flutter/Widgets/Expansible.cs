@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -52,7 +55,7 @@ namespace Flutter.Widgets
 			Func<BuildContext, InvalidType, Widget> _bodyBuilder,
 			TimeSpan _duration,
 			Curve _curve,
-			InvalidType _reverseCurve,
+			object _reverseCurve,
 			bool _maintainState,
 			Func<BuildContext, Widget, Widget, InvalidType, Widget> _expansibleBuilder
 

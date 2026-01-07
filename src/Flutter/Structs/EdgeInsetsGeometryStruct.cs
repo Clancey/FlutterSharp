@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -28,16 +28,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class EdgeInsetsGeometryStruct : WidgetStruct
 	{
+		// Simple field: isNonNegative
 		public bool isNonNegative { get; set; }
 
+		// Simple field: horizontal
 		public double horizontal { get; set; }
 
+		// Simple field: vertical
 		public double vertical { get; set; }
 
+		// Simple field: collapsedSize
 		public IntPtr collapsedSize { get; set; }
 
+		// Simple field: flipped
 		public IntPtr flipped { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
 	}

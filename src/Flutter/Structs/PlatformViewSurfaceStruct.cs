@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -31,12 +31,14 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PlatformViewSurfaceStruct : WidgetStruct
 	{
+		// Simple field: controller
 /// The controller for the platform view integrated by this [PlatformViewSurface].
 /// 
 /// [PlatformViewController] is used for dispatching touch events to the platform view.
 /// [PlatformViewController.viewId] identifies the platform view whose contents are painted by this widget.
 		public IntPtr controller { get; set; }
 
+		// Simple field: gestureRecognizers
 /// Which gestures should be forwarded to the PlatformView.
 /// 
 /// {@macro flutter.widgets.AndroidView.gestureRecognizers.descHead}
@@ -80,8 +82,9 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.AndroidView.gestureRecognizers.descFoot}
 		public IntPtr gestureRecognizers { get; set; }
 
+		// Simple field: hitTestBehavior
 /// {@macro flutter.widgets.AndroidView.hitTestBehavior}
-		public IntPtr hitTestBehavior { get; set; }
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
 	}
 }

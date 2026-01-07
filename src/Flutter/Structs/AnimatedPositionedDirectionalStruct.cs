@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -39,43 +39,73 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedPositionedDirectionalStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Has flag for nullable property: start
+		public byte Hasstart { get; set; }
+
+		// Nullable value type: start
 /// The offset of the child's start edge from the start of the stack.
 		public NativeNullable<double> start { get; set; }
 
+		// Has flag for nullable property: top
+		public byte Hastop { get; set; }
+
+		// Nullable value type: top
 /// The offset of the child's top edge from the top of the stack.
 		public NativeNullable<double> top { get; set; }
 
+		// Has flag for nullable property: end
+		public byte Hasend { get; set; }
+
+		// Nullable value type: end
 /// The offset of the child's end edge from the end of the stack.
 		public NativeNullable<double> end { get; set; }
 
+		// Has flag for nullable property: bottom
+		public byte Hasbottom { get; set; }
+
+		// Nullable value type: bottom
 /// The offset of the child's bottom edge from the bottom of the stack.
 		public NativeNullable<double> bottom { get; set; }
 
+		// Has flag for nullable property: width
+		public byte Haswidth { get; set; }
+
+		// Nullable value type: width
 /// The child's width.
 /// 
 /// Only two out of the three horizontal values ([start], [end], [width]) can
 /// be set. The third must be null.
 		public NativeNullable<double> width { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 /// The child's height.
 /// 
 /// Only two out of the three vertical values ([top], [bottom], [height]) can
 /// be set. The third must be null.
 		public NativeNullable<double> height { get; set; }
 
+		// Simple field: curve
 		public IntPtr curve { get; set; }
 
+		// Simple field: duration
 		public IntPtr duration { get; set; }
 
+		// Simple field: onEnd
 		public IntPtr onEnd { get; set; }
 
 	}

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -43,11 +43,20 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RawMenuAnchorStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: onOpen
 /// A callback that is invoked when the menu is opened.
 		public IntPtr onOpen { get; set; }
 
+		// Simple field: onClose
 /// A callback that is invoked when the menu is closed.
 		public IntPtr onClose { get; set; }
+
+		// Has flag for nullable property: builder
+		public byte Hasbuilder { get; set; }
+
+		// Callback field: builder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _builder;
 
 /// A builder that builds the widget that this [RawMenuAnchor] surrounds.
 /// 
@@ -56,19 +65,38 @@ namespace Flutter.Structs
 /// 
 /// If not supplied, then the [RawMenuAnchor] will be the size that its parent
 /// allocates for it.
-		public IntPtr? builder { get; set; }
+		/// <summary>
+		/// Action identifier for builder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? builderAction
+		{
+			get => GetString(_builder);
+			set => SetString(ref _builder, value);
+		}
 
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The optional child to be passed to the [builder].
 /// 
 /// Supply this child if there is a portion of the widget tree built in
 /// [builder] that doesn't depend on the `controller` or `context` supplied to
 /// the [builder]. It will be more efficient, since Flutter doesn't then need
 /// to rebuild this child when those change.
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
+
+		// Callback field: overlayBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _overlayBuilder;
 
 /// The [overlayBuilder] function is passed a [RawMenuOverlayInfo] object that
 /// defines the anchor's [Rect], the [Size] of the overlay, the
@@ -88,8 +116,18 @@ namespace Flutter.Structs
 /// child: Column(children: menuItems),
 /// )
 /// ```
-		public IntPtr overlayBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for overlayBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? overlayBuilderAction
+		{
+			get => GetString(_overlayBuilder);
+			set => SetString(ref _overlayBuilder, value);
+		}
 
+		// Simple field: useRootOverlay
 /// {@template flutter.widgets.RawMenuAnchor.useRootOverlay}
 /// Whether the menu panel should be rendered in the root [Overlay].
 /// 
@@ -105,12 +143,17 @@ namespace Flutter.Structs
 /// Defaults to false on overlay menus.
 		public bool useRootOverlay { get; set; }
 
+		// Has flag for nullable property: childFocusNode
+		public byte HaschildFocusNode { get; set; }
+
+		// Simple field: childFocusNode
 /// The [FocusNode] attached to the widget that takes focus when the
 /// menu is opened or closed.
 /// 
 /// If not supplied, the anchor will not retain focus when the menu is opened.
 		public IntPtr? childFocusNode { get; set; }
 
+		// Simple field: consumeOutsideTaps
 /// Whether or not a tap event that closes the menu will be permitted to
 /// continue on to the gesture arena.
 /// 
@@ -123,6 +166,7 @@ namespace Flutter.Structs
 /// Defaults to false.
 		public bool consumeOutsideTaps { get; set; }
 
+		// Simple field: controller
 /// A [MenuController] that allows opening and closing of the menu from other
 /// widgets.
 		public IntPtr controller { get; set; }

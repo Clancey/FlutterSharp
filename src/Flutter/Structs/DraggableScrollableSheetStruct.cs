@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -70,6 +70,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DraggableScrollableSheetStruct : WidgetStruct
 	{
+		// Simple field: initialChildSize
 /// The initial fractional value of the parent container's height to use when
 /// displaying the widget.
 /// 
@@ -80,18 +81,21 @@ namespace Flutter.Structs
 /// The default value is `0.5`.
 		public double initialChildSize { get; set; }
 
+		// Simple field: minChildSize
 /// The minimum fractional value of the parent container's height to use when
 /// displaying the widget.
 /// 
 /// The default value is `0.25`.
 		public double minChildSize { get; set; }
 
+		// Simple field: maxChildSize
 /// The maximum fractional value of the parent container's height to use when
 /// displaying the widget.
 /// 
 /// The default value is `1.0`.
 		public double maxChildSize { get; set; }
 
+		// Simple field: expand
 /// Whether the widget should expand to fill the available space in its parent
 /// or not.
 /// 
@@ -102,6 +106,7 @@ namespace Flutter.Structs
 /// The default value is true.
 		public bool expand { get; set; }
 
+		// Simple field: snap
 /// Whether the widget should snap between [snapSizes] when the user lifts
 /// their finger during a drag.
 /// 
@@ -118,6 +123,10 @@ namespace Flutter.Structs
 /// [DraggableScrollableActuator.reset].
 		public bool snap { get; set; }
 
+		// Has flag for nullable property: snapSizes
+		public byte HassnapSizes { get; set; }
+
+		// Simple field: snapSizes
 /// A list of target sizes that the widget should snap to.
 /// 
 /// Snap sizes are fractional values of the parent container's height. They
@@ -137,15 +146,24 @@ namespace Flutter.Structs
 /// being built or since the last call to [DraggableScrollableActuator.reset].
 		public IntPtr? snapSizes { get; set; }
 
+		// Has flag for nullable property: snapAnimationDuration
+		public byte HassnapAnimationDuration { get; set; }
+
+		// Simple field: snapAnimationDuration
 /// Defines a duration for the snap animations.
 /// 
 /// If it's not set, then the animation duration is the distance to the snap
 /// target divided by the velocity of the widget.
 		public IntPtr? snapAnimationDuration { get; set; }
 
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		// Simple field: controller
 /// A controller that can be used to programmatically control this sheet.
 		public IntPtr? controller { get; set; }
 
+		// Simple field: shouldCloseOnMinExtent
 /// Whether the sheet, when dragged (or flung) to its minimum size, should
 /// cause its parent sheet to close.
 /// 
@@ -153,10 +171,23 @@ namespace Flutter.Structs
 /// classes to properly read and handle this value.
 		public bool shouldCloseOnMinExtent { get; set; }
 
+		// Callback field: builder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _builder;
+
 /// The builder that creates a child to display in this widget, which will
 /// use the provided [ScrollController] to enable dragging and scrolling
 /// of the contents.
-		public IntPtr builder { get; set; }
+		/// <summary>
+		/// Action identifier for builder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? builderAction
+		{
+			get => GetString(_builder);
+			set => SetString(ref _builder, value);
+		}
 
 	}
 }

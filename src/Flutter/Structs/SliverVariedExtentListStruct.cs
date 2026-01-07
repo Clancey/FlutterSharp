@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -41,12 +41,14 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverVariedExtentListStruct : WidgetStruct
 	{
+		// Simple field: itemExtentBuilder
 /// The children extent builder.
 /// 
 /// Should return null if asked to build an item extent with a greater index than
 /// exists.
 		public IntPtr itemExtentBuilder { get; set; }
 
+		// Simple field: @delegate
 		public IntPtr @delegate { get; set; }
 
 	}

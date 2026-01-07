@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -71,14 +74,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Wrap"/> class.
 		/// </summary>
 		public Wrap(
-			InvalidType _direction,
+			object _direction,
 			AlignmentGeometry? _alignment,
 			double _spacing,
-			InvalidType _runAlignment,
+			AlignmentGeometry _runAlignment,
 			double _runSpacing,
-			InvalidType _crossAxisAlignment,
+			CrossAxisAlignment _crossAxisAlignment,
 			TextDirection _textDirection,
-			InvalidType _verticalDirection,
+			VerticalDirection _verticalDirection,
 			Clip _clipBehavior
 ,
 			List<Widget> _children = null

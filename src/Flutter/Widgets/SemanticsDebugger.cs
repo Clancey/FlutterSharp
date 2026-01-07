@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -24,7 +27,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SemanticsDebugger(
 			Widget _child,
-			InvalidType _labelStyle
+			object _labelStyle
 
 		)
 		{

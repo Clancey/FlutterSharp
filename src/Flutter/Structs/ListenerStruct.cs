@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -40,18 +40,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ListenerStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: onPointerDown
 /// Called when a pointer comes into contact with the screen (for touch
 /// pointers), or has its button pressed (for mouse pointers) at this widget's
 /// location.
 		public IntPtr onPointerDown { get; set; }
 
+		// Simple field: onPointerMove
 /// Called when a pointer that triggered an [onPointerDown] changes position.
 		public IntPtr onPointerMove { get; set; }
 
+		// Simple field: onPointerUp
 /// Called when a pointer that triggered an [onPointerDown] is no longer in
 /// contact with the screen.
 		public IntPtr onPointerUp { get; set; }
 
+		// Simple field: onPointerHover
 /// Called when a pointer that has not triggered an [onPointerDown] changes
 /// position.
 /// 
@@ -59,19 +63,24 @@ namespace Flutter.Structs
 /// (e.g. mouse pointers, but not most touch pointers).
 		public IntPtr onPointerHover { get; set; }
 
+		// Simple field: onPointerCancel
 /// Called when the input from a pointer that triggered an [onPointerDown] is
 /// no longer directed towards this receiver.
 		public IntPtr onPointerCancel { get; set; }
 
+		// Simple field: onPointerPanZoomStart
 /// Called when a pan/zoom begins such as from a trackpad gesture.
 		public IntPtr onPointerPanZoomStart { get; set; }
 
+		// Simple field: onPointerPanZoomUpdate
 /// Called when a pan/zoom is updated.
 		public IntPtr onPointerPanZoomUpdate { get; set; }
 
+		// Simple field: onPointerPanZoomEnd
 /// Called when a pan/zoom finishes.
 		public IntPtr onPointerPanZoomEnd { get; set; }
 
+		// Simple field: onPointerSignal
 /// Called when a pointer signal occurs over this object.
 /// 
 /// See also:
@@ -80,12 +89,19 @@ namespace Flutter.Structs
 /// events.
 		public IntPtr onPointerSignal { get; set; }
 
+		// Simple field: behavior
 /// How to behave during hit testing.
 		public IntPtr behavior { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -166,9 +169,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public BackdropFilter(
 			ImageFilter _filter,
-			InvalidType _blendMode,
+			BlendMode _blendMode,
 			bool _enabled,
-			InvalidType _backdropGroupKey
+			object _backdropGroupKey
 ,
 			Widget? _child = null
 		)

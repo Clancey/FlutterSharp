@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -60,7 +63,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public RawGestureDetector(
 			Dictionary<object, object> _gestures,
-			InvalidType _behavior,
+			object _behavior,
 			bool _excludeFromSemantics
 ,
 			Widget? _child = null,

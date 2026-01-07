@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -23,6 +23,13 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class NotificationListenerStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: onNotification
+		public byte HasonNotification { get; set; }
+
+		// Callback field: onNotification
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onNotification;
+
 /// Called when a notification of the appropriate type arrives at this
 /// location in the tree.
 /// 
@@ -37,11 +44,23 @@ namespace Flutter.Structs
 /// in response to the notification (as layout is currently happening in a
 /// descendant, by definition, since notifications bubble up the tree). For
 /// widgets that depend on layout, consider a [LayoutBuilder] instead.
-		public IntPtr? onNotification { get; set; }
-
-		IntPtr _child;
-		public Widget child
+		/// <summary>
+		/// Action identifier for onNotification callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onNotificationAction
 		{
+			get => GetString(_onNotification);
+			set => SetString(ref _onNotification, value);
+		}
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr child
+		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

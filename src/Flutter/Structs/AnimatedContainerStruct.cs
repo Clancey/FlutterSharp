@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -50,7 +50,12 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedContainerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The [child] contained by the container.
 /// 
 /// If null, and if the [constraints] are unbounded or also null, the
@@ -59,11 +64,13 @@ namespace Flutter.Structs
 /// will attempt to be as small as possible.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: alignment
 /// Align the [child] within the container.
 /// 
 /// If non-null, the container will expand to fill its parent and position its
@@ -80,10 +87,12 @@ namespace Flutter.Structs
 /// relative to text direction.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: padding
 /// Empty space to inscribe inside the [decoration]. The [child], if any, is
 /// placed inside this padding.
 		public IntPtr padding { get; set; }
 
+		// Simple field: decoration
 /// The decoration to paint behind the [child].
 /// 
 /// A shorthand for specifying just a solid color is available in the
@@ -91,9 +100,11 @@ namespace Flutter.Structs
 /// argument.
 		public IntPtr decoration { get; set; }
 
+		// Simple field: foregroundDecoration
 /// The decoration to paint in front of the child.
 		public IntPtr foregroundDecoration { get; set; }
 
+		// Simple field: constraints
 /// Additional constraints to apply to the child.
 /// 
 /// The constructor `width` and `height` arguments are combined with the
@@ -102,12 +113,15 @@ namespace Flutter.Structs
 /// The [padding] goes inside the constraints.
 		public IntPtr constraints { get; set; }
 
+		// Simple field: margin
 /// Empty space to surround the [decoration] and [child].
 		public IntPtr margin { get; set; }
 
+		// Simple field: transform
 /// The transformation matrix to apply before painting the container.
 		public IntPtr transform { get; set; }
 
+		// Simple field: transformAlignment
 /// The alignment of the origin, relative to the size of the container, if [transform] is specified.
 /// 
 /// When [transform] is null, the value of this property is ignored.
@@ -117,6 +131,7 @@ namespace Flutter.Structs
 /// * [Transform.alignment], which is set by this property.
 		public IntPtr transformAlignment { get; set; }
 
+		// Simple field: clipBehavior
 /// The clip behavior when [AnimatedContainer.decoration] is not null.
 /// 
 /// Defaults to [Clip.none]. Must be [Clip.none] if [decoration] is null.
@@ -130,16 +145,28 @@ namespace Flutter.Structs
 /// method throws an [UnsupportedError].)
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: color
 		public IntPtr color { get; set; }
 
+		// Has flag for nullable property: width
+		public byte Haswidth { get; set; }
+
+		// Nullable value type: width
 		public NativeNullable<double> width { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 		public NativeNullable<double> height { get; set; }
 
+		// Simple field: curve
 		public IntPtr curve { get; set; }
 
+		// Simple field: duration
 		public IntPtr duration { get; set; }
 
+		// Simple field: onEnd
 		public IntPtr onEnd { get; set; }
 
 	}

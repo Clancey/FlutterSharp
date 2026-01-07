@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -35,12 +38,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultTextStyleTransition"/> class.
 		/// </summary>
 		public DefaultTextStyleTransition(
-			InvalidType _textAlign,
+			TextAlign? _textAlign,
 			bool _softWrap,
-			InvalidType _overflow,
+			Overflow _overflow,
 			Widget _child,
-			TextStyle? _style,
-			object _listenable
+			TextStyle? _style
 ,
 			int? _maxLines = null
 		)

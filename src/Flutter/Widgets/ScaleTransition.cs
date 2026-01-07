@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -40,10 +43,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ScaleTransition"/> class.
 		/// </summary>
 		public ScaleTransition(
-			InvalidType _scale
+			object _scale
 ,
 			AlignmentGeometry? _alignment = null,
-			InvalidType _filterQuality = null,
+			FilterQuality? _filterQuality = null,
 			Widget? _child = null
 		)
 		{

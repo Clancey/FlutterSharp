@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -62,7 +65,7 @@ namespace Flutter.Widgets
 		public DecoratedSliver(
 			Widget _child,
 			Decoration? _decoration,
-			InvalidType _position
+			object _position
 ,
 			Widget? _sliver = null
 		)

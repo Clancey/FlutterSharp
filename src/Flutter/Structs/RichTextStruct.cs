@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -96,12 +96,15 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RichTextStruct : MultiChildRenderObjectWidgetStruct
 	{
+		// Simple field: text
 /// The text to display in this widget.
 		public IntPtr text { get; set; }
 
+		// Simple field: textAlign
 /// How the text should be aligned horizontally.
-		public IntPtr textAlign { get; set; }
+		public TextAlign textAlign { get; set; }
 
+		// Simple field: textDirection
 /// The directionality of the text.
 /// 
 /// This decides how [textAlign] values like [TextAlign.start] and
@@ -118,17 +121,24 @@ namespace Flutter.Structs
 /// [Directionality], then this must not be null.
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: softWrap
 /// Whether the text should break at soft line breaks.
 /// 
 /// If false, the glyphs in the text will be positioned as if there was unlimited horizontal space.
 		public bool softWrap { get; set; }
 
+		// Simple field: overflow
 /// How visual overflow should be handled.
-		public IntPtr overflow { get; set; }
+		public Overflow overflow { get; set; }
 
+		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}
 		public IntPtr textScaler { get; set; }
 
+		// Has flag for nullable property: maxLines
+		public byte HasmaxLines { get; set; }
+
+		// Nullable value type: maxLines
 /// An optional maximum number of lines for the text to span, wrapping if necessary.
 /// If the text exceeds the given number of lines, it will be truncated according
 /// to [overflow].
@@ -137,6 +147,7 @@ namespace Flutter.Structs
 /// edge of the box.
 		public NativeNullable<int> maxLines { get; set; }
 
+		// Simple field: locale
 /// Used to select a font when the same Unicode character can
 /// be rendered differently, depending on the locale.
 /// 
@@ -146,20 +157,25 @@ namespace Flutter.Structs
 /// See [RenderParagraph.locale] for more information.
 		public IntPtr locale { get; set; }
 
+		// Simple field: strutStyle
 /// {@macro flutter.painting.textPainter.strutStyle}
 		public IntPtr strutStyle { get; set; }
 
+		// Simple field: textWidthBasis
 /// {@macro flutter.painting.textPainter.textWidthBasis}
-		public IntPtr textWidthBasis { get; set; }
+		public TextWidthBasis textWidthBasis { get; set; }
 
+		// Simple field: textHeightBehavior
 /// {@macro dart.ui.textHeightBehavior}
 		public IntPtr textHeightBehavior { get; set; }
 
+		// Simple field: selectionRegistrar
 /// The [SelectionRegistrar] this rich text is subscribed to.
 /// 
 /// If this is set, [selectionColor] must be non-null.
 		public IntPtr selectionRegistrar { get; set; }
 
+		// Simple field: selectionColor
 /// The color to use when painting the selection.
 /// 
 /// This is ignored if [selectionRegistrar] is null.
@@ -169,6 +185,7 @@ namespace Flutter.Structs
 /// widgets.
 		public IntPtr selectionColor { get; set; }
 
+		// Simple field: textScaleFactor
 		public double textScaleFactor { get; set; }
 
 	}

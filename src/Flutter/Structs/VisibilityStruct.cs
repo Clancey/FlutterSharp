@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -45,16 +45,21 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class VisibilityStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget to show or hide, as controlled by [visible].
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
-		IntPtr _replacement;
+		// Widget field: replacement
+		private IntPtr _replacement;
+
 /// The widget to use when the child is not [visible], assuming that none of
 /// the `maintain` flags (in particular, [maintainState]) are set.
 /// 
@@ -64,11 +69,13 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [AnimatedCrossFade], which can animate between two children.
-		public Widget replacement
+		public IntPtr replacement
 		{
+			get => (IntPtr)_replacement;
 			set => SetIntPtr(ref _replacement, value);
 		}
 
+		// Simple field: visible
 /// Switches between showing the [child] or hiding it.
 /// 
 /// The `maintain` flags should be set to the same values regardless of the
@@ -81,6 +88,7 @@ namespace Flutter.Structs
 /// (removed from the tree) while hidden.
 		public bool visible { get; set; }
 
+		// Simple field: maintainState
 /// Whether to maintain the [State] objects of the [child] subtree when it is
 /// not [visible].
 /// 
@@ -101,6 +109,7 @@ namespace Flutter.Structs
 /// objects, to be immediately created if [visible] is true).
 		public bool maintainState { get; set; }
 
+		// Simple field: maintainAnimation
 /// Whether to maintain animations within the [child] subtree when it is
 /// not [visible].
 /// 
@@ -124,6 +133,7 @@ namespace Flutter.Structs
 /// objects, to be immediately created if [visible] is true).
 		public bool maintainAnimation { get; set; }
 
+		// Simple field: maintainSize
 /// Whether to maintain space for where the widget would have been.
 /// 
 /// To set this, [maintainAnimation] and [maintainState] must also be set.
@@ -151,6 +161,7 @@ namespace Flutter.Structs
 /// opacity for a more subtle effect.
 		public bool maintainSize { get; set; }
 
+		// Simple field: maintainSemantics
 /// Whether to maintain the semantics for the widget when it is hidden (e.g.
 /// for accessibility).
 /// 
@@ -162,6 +173,7 @@ namespace Flutter.Structs
 /// it was present.
 		public bool maintainSemantics { get; set; }
 
+		// Simple field: maintainInteractivity
 /// Whether to allow the widget to be interactive when hidden.
 /// 
 /// To set this, [maintainSize] must also be set.

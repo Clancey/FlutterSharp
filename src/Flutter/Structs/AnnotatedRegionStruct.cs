@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -21,9 +21,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnnotatedRegionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: value
 /// A value which can be retrieved using [Layer.find].
 		public IntPtr value { get; set; }
 
+		// Simple field: sized
 /// If false, the layer pushed into the tree will not be provided with a size.
 /// 
 /// An [AnnotatedRegionLayer] with a size checks that the offset provided in
@@ -34,9 +36,12 @@ namespace Flutter.Structs
 /// * [AnnotatedRegionLayer], for a description of this behavior.
 		public bool sized { get; set; }
 
-		IntPtr _child;
-		public Widget child
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

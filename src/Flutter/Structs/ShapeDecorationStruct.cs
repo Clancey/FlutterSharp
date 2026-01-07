@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -55,6 +55,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ShapeDecorationStruct : WidgetStruct
 	{
+		// Simple field: color
 /// The color to fill in the background of the shape.
 /// 
 /// The color is under the [image].
@@ -62,6 +63,10 @@ namespace Flutter.Structs
 /// If a [gradient] is specified, [color] must be null.
 		public IntPtr color { get; set; }
 
+		// Has flag for nullable property: gradient
+		public byte Hasgradient { get; set; }
+
+		// Simple field: gradient
 /// A gradient to use when filling the shape.
 /// 
 /// The gradient is under the [image].
@@ -69,11 +74,19 @@ namespace Flutter.Structs
 /// If a [color] is specified, [gradient] must be null.
 		public IntPtr? gradient { get; set; }
 
+		// Has flag for nullable property: image
+		public byte Hasimage { get; set; }
+
+		// Simple field: image
 /// An image to paint inside the shape (clipped to its outline).
 /// 
 /// The image is drawn over the [color] or [gradient].
 		public IntPtr? image { get; set; }
 
+		// Has flag for nullable property: shadows
+		public byte Hasshadows { get; set; }
+
+		// Simple field: shadows
 /// A list of shadows cast by the [shape].
 /// 
 /// See also:
@@ -83,6 +96,7 @@ namespace Flutter.Structs
 /// * [PhysicalModel], a widget for showing shadows.
 		public IntPtr? shadows { get; set; }
 
+		// Simple field: shape
 /// The shape to fill the [color], [gradient], and [image] into and to cast as
 /// the [shadows].
 /// 
@@ -106,10 +120,13 @@ namespace Flutter.Structs
 /// ambient [Directionality], using [createLocalImageConfiguration].
 		public IntPtr shape { get; set; }
 
+		// Simple field: padding
 		public IntPtr padding { get; set; }
 
+		// Simple field: isComplex
 		public bool isComplex { get; set; }
 
+		// Simple field: hashCode
 		public int hashCode { get; set; }
 
 	}

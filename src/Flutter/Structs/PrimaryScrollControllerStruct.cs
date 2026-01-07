@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -45,6 +45,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PrimaryScrollControllerStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		// Simple field: controller
 /// The [ScrollController] associated with the subtree.
 /// 
 /// See also:
@@ -53,6 +57,7 @@ namespace Flutter.Structs
 /// scroll controller.
 		public IntPtr? controller { get; set; }
 
+		// Simple field: scrollDirection
 /// The [Axis] this controller is configured for [ScrollView]s to
 /// automatically inherit.
 /// 
@@ -70,8 +75,9 @@ namespace Flutter.Structs
 /// [ScrollDirection].
 /// 
 /// Defaults to [Axis.vertical].
-		public IntPtr scrollDirection { get; set; }
+		public Axis scrollDirection { get; set; }
 
+		// Simple field: automaticallyInheritForPlatforms
 /// The [TargetPlatform]s this controller is configured for [ScrollView]s to
 /// automatically inherit.
 /// 
@@ -82,9 +88,12 @@ namespace Flutter.Structs
 /// controller. Defaults to [TargetPlatformVariant.mobile].
 		public IntPtr automaticallyInheritForPlatforms { get; set; }
 
-		IntPtr _child;
-		public Widget child
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

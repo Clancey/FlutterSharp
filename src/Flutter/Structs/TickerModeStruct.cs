@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -21,6 +21,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TickerModeStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: enabled
 /// The requested ticker mode for this subtree.
 /// 
 /// The effective ticker mode of this subtree may differ from this value
@@ -34,12 +35,15 @@ namespace Flutter.Structs
 /// they just don't call their callbacks. Time still elapses.
 		public bool enabled { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

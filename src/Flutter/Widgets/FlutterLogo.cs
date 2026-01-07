@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -29,7 +32,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FlutterLogo"/> class.
 		/// </summary>
 		public FlutterLogo(
-			InvalidType _textColor,
+			Color _textColor,
 			TextStyle? _style,
 			TimeSpan _duration,
 			Curve _curve

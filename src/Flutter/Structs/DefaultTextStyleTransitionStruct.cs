@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -31,31 +31,42 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class DefaultTextStyleTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: textAlign
 /// How the text should be aligned horizontally.
-		public IntPtr textAlign { get; set; }
+		public TextAlign textAlign { get; set; }
 
+		// Simple field: softWrap
 /// Whether the text should break at soft line breaks.
 /// 
 /// See [DefaultTextStyle.softWrap] for more details.
 		public bool softWrap { get; set; }
 
+		// Simple field: overflow
 /// How visual overflow should be handled.
-		public IntPtr overflow { get; set; }
+		public Overflow overflow { get; set; }
 
+		// Has flag for nullable property: maxLines
+		public byte HasmaxLines { get; set; }
+
+		// Nullable value type: maxLines
 /// An optional maximum number of lines for the text to span, wrapping if necessary.
 /// 
 /// See [DefaultTextStyle.maxLines] for more details.
 		public NativeNullable<int> maxLines { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: style
 		public IntPtr style { get; set; }
 
 	}

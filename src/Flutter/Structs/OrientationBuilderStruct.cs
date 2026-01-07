@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -27,13 +27,26 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class OrientationBuilderStruct : WidgetStruct
 	{
+		// Callback field: builder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _builder;
+
 /// Builds the widgets below this widget given this widget's orientation.
 /// 
 /// A widget's orientation is a factor of its width relative to its
 /// height. For example, a [Column] widget will have a landscape orientation
 /// if its width exceeds its height, even though it displays its children in
 /// a vertical array.
-		public IntPtr builder { get; set; }
+		/// <summary>
+		/// Action identifier for builder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? builderAction
+		{
+			get => GetString(_builder);
+			set => SetString(ref _builder, value);
+		}
 
 	}
 }

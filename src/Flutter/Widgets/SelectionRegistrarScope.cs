@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -28,7 +31,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SelectionRegistrarScope"/> class.
 		/// </summary>
 		public SelectionRegistrarScope(
-			InvalidType _registrar,
+			object _registrar,
 			Widget _child
 
 		)

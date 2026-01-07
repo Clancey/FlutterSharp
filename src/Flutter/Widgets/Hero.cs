@@ -114,9 +114,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Hero"/> class.
 		/// </summary>
 		public Hero(
-			Func<InvalidType, InvalidType, InvalidType> _createRectTween = null,
-			Func<BuildContext, InvalidType, HeroFlightDirection, BuildContext, BuildContext, Widget> _flightShuttleBuilder = null,
-			Func<BuildContext, InvalidType, Widget, Widget> _placeholderBuilder = null
+			Func<object?, object?, object?> _createRectTween = null,
+			Func<BuildContext, object?, HeroFlightDirection, BuildContext, BuildContext, Widget> _flightShuttleBuilder = null,
+			Func<BuildContext, object?, Widget, Widget> _placeholderBuilder = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

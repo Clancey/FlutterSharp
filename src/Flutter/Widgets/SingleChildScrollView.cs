@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -138,10 +141,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SingleChildScrollView"/> class.
 		/// </summary>
 		public SingleChildScrollView(
-			InvalidType _scrollDirection,
+			Axis _scrollDirection,
 			bool _reverse,
 			EdgeInsetsGeometry? _padding,
-			InvalidType _dragStartBehavior,
+			DragStartBehavior _dragStartBehavior,
 			Clip _clipBehavior,
 			PlatformViewHitTestBehavior _hitTestBehavior
 ,

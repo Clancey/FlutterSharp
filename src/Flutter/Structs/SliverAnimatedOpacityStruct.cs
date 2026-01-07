@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -57,19 +57,27 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverAnimatedOpacityStruct : WidgetStruct
 	{
-		IntPtr _sliver;
+		// Has flag for nullable property: sliver
+		public byte Hassliver { get; set; }
+
+		// Widget field: sliver
+		private IntPtr _sliver;
+
 /// The sliver below this widget in the tree.
-		public Widget? sliver
+		public IntPtr? sliver
 		{
+			get => _sliver != IntPtr.Zero ? (IntPtr)_sliver : null;
 			set => SetIntPtr(ref _sliver, value);
 		}
 
+		// Simple field: opacity
 /// The target opacity.
 /// 
 /// An opacity of 1.0 is fully opaque. An opacity of 0.0 is fully transparent
 /// (i.e., invisible).
 		public double opacity { get; set; }
 
+		// Simple field: alwaysIncludeSemantics
 /// Whether the semantic information of the children is always included.
 /// 
 /// Defaults to false.
@@ -80,10 +88,13 @@ namespace Flutter.Structs
 /// would otherwise contribute relevant semantics.
 		public bool alwaysIncludeSemantics { get; set; }
 
+		// Simple field: curve
 		public IntPtr curve { get; set; }
 
+		// Simple field: duration
 		public IntPtr duration { get; set; }
 
+		// Simple field: onEnd
 		public IntPtr onEnd { get; set; }
 
 	}

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -54,8 +57,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ShaderMask"/> class.
 		/// </summary>
 		public ShaderMask(
-			InvalidType _shaderCallback,
-			InvalidType _blendMode
+			Action _shaderCallback,
+			BlendMode _blendMode
 ,
 			Widget? _child = null
 		)

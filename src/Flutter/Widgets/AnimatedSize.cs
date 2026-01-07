@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -36,7 +39,7 @@ namespace Flutter.Widgets
 			Curve _curve,
 			TimeSpan _duration,
 			Clip _clipBehavior,
-			InvalidType _onEnd
+			Action _onEnd
 ,
 			Widget? _child = null,
 			TimeSpan? _reverseDuration = null

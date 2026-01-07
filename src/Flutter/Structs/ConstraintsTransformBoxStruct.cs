@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -69,6 +69,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ConstraintsTransformBoxStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: textDirection
 /// The text direction to use when interpreting the [alignment] if it is an
 /// [AlignmentDirectional].
 /// 
@@ -76,6 +77,7 @@ namespace Flutter.Structs
 /// the text direction.
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: alignment
 /// The alignment to use when laying out the child, if it has a different size
 /// than this widget.
 /// 
@@ -88,6 +90,7 @@ namespace Flutter.Structs
 /// * [AlignmentDirectional] for [Directionality]-aware alignments.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: constraintsTransform
 /// {@template flutter.widgets.constraintsTransform}
 /// The function used to transform the incoming [BoxConstraints], to size
 /// [child].
@@ -100,6 +103,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr constraintsTransform { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// {@template flutter.widgets.ConstraintsTransformBox.clipBehavior}
@@ -112,13 +116,21 @@ namespace Flutter.Structs
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
-		IntPtr _debugTransformType;
+		// String field: debugTransformType
+		private IntPtr _debugTransformType;
+
 		public string debugTransformType
 		{
 			get => GetString(_debugTransformType);

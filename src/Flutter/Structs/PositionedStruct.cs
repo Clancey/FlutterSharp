@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -49,6 +49,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PositionedStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: left
+		public byte Hasleft { get; set; }
+
+		// Nullable value type: left
 /// The distance that the child's left edge is inset from the left of the stack.
 /// 
 /// Only two out of the three horizontal values ([left], [right], [width]) can be
@@ -58,6 +62,10 @@ namespace Flutter.Structs
 /// horizontally.
 		public NativeNullable<double> left { get; set; }
 
+		// Has flag for nullable property: top
+		public byte Hastop { get; set; }
+
+		// Nullable value type: top
 /// The distance that the child's top edge is inset from the top of the stack.
 /// 
 /// Only two out of the three vertical values ([top], [bottom], [height]) can be
@@ -67,6 +75,10 @@ namespace Flutter.Structs
 /// vertically.
 		public NativeNullable<double> top { get; set; }
 
+		// Has flag for nullable property: right
+		public byte Hasright { get; set; }
+
+		// Nullable value type: right
 /// The distance that the child's right edge is inset from the right of the stack.
 /// 
 /// Only two out of the three horizontal values ([left], [right], [width]) can be
@@ -76,6 +88,10 @@ namespace Flutter.Structs
 /// horizontally.
 		public NativeNullable<double> right { get; set; }
 
+		// Has flag for nullable property: bottom
+		public byte Hasbottom { get; set; }
+
+		// Nullable value type: bottom
 /// The distance that the child's bottom edge is inset from the bottom of the stack.
 /// 
 /// Only two out of the three vertical values ([top], [bottom], [height]) can be
@@ -85,6 +101,10 @@ namespace Flutter.Structs
 /// vertically.
 		public NativeNullable<double> bottom { get; set; }
 
+		// Has flag for nullable property: width
+		public byte Haswidth { get; set; }
+
+		// Nullable value type: width
 /// The child's width.
 /// 
 /// Only two out of the three horizontal values ([left], [right], [width]) can be
@@ -94,6 +114,10 @@ namespace Flutter.Structs
 /// horizontally.
 		public NativeNullable<double> width { get; set; }
 
+		// Has flag for nullable property: height
+		public byte Hasheight { get; set; }
+
+		// Nullable value type: height
 /// The child's height.
 /// 
 /// Only two out of the three vertical values ([top], [bottom], [height]) can be
@@ -103,11 +127,15 @@ namespace Flutter.Structs
 /// vertically.
 		public NativeNullable<double> height { get; set; }
 
+		// Simple field: debugTypicalAncestorWidgetClass
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }
 
-		IntPtr _child;
-		public Widget child
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

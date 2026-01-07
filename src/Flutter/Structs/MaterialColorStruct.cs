@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -101,28 +101,40 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class MaterialColorStruct : WidgetStruct
 	{
+		// Simple field: shade50
 		public IntPtr shade50 { get; set; }
 
+		// Simple field: shade100
 		public IntPtr shade100 { get; set; }
 
+		// Simple field: shade200
 		public IntPtr shade200 { get; set; }
 
+		// Simple field: shade300
 		public IntPtr shade300 { get; set; }
 
+		// Simple field: shade400
 		public IntPtr shade400 { get; set; }
 
+		// Simple field: shade500
 		public IntPtr shade500 { get; set; }
 
+		// Simple field: shade600
 		public IntPtr shade600 { get; set; }
 
+		// Simple field: shade700
 		public IntPtr shade700 { get; set; }
 
+		// Simple field: shade800
 		public IntPtr shade800 { get; set; }
 
+		// Simple field: shade900
 		public IntPtr shade900 { get; set; }
 
+		// Simple field: primary
 		public IntPtr primary { get; set; }
 
+		// Simple field: swatch
 		public IntPtr swatch { get; set; }
 
 	}

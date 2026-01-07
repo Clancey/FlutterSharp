@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -92,8 +92,13 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class OverlayPortalStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: controller
 /// The controller to show, hide and bring to top the overlay child.
 		public IntPtr controller { get; set; }
+
+		// Callback field: overlayChildBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _overlayChildBuilder;
 
 /// A [WidgetBuilder] used to build a widget below this widget in the tree,
 /// that renders on the closest [Overlay].
@@ -111,12 +116,27 @@ namespace Flutter.Structs
 /// bounds of this widget without being clipped, and receive hit-test events
 /// outside of this widget's bounds, as long as it does not extend outside of
 /// the [Overlay] on which it is rendered.
-		public IntPtr overlayChildBuilder { get; set; }
-
-		IntPtr _child;
-/// A widget below this widget in the tree.
-		public Widget? child
+		/// <summary>
+		/// Action identifier for overlayChildBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? overlayChildBuilderAction
 		{
+			get => GetString(_overlayChildBuilder);
+			set => SetString(ref _overlayChildBuilder, value);
+		}
+
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+/// A widget below this widget in the tree.
+		public IntPtr? child
+		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

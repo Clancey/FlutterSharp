@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -279,7 +279,9 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class HtmlElementViewStruct : WidgetStruct
 	{
-		IntPtr _viewType;
+		// String field: viewType
+		private IntPtr _viewType;
+
 /// The unique identifier for the HTML view type to be embedded by this widget.
 /// 
 /// A PlatformViewFactory for this type must have been registered.
@@ -289,6 +291,7 @@ namespace Flutter.Structs
 			set => SetString(ref _viewType, value);
 		}
 
+		// Simple field: onPlatformViewCreated
 /// Callback to invoke after the platform view has been created.
 /// 
 /// This method is called *before* the platform view is attached to the DOM.
@@ -296,11 +299,16 @@ namespace Flutter.Structs
 /// May be null.
 		public IntPtr onPlatformViewCreated { get; set; }
 
+		// Has flag for nullable property: creationParams
+		public byte HascreationParams { get; set; }
+
+		// Simple field: creationParams
 /// Passed as the 2nd argument (i.e. `params`) of the registered view factory.
 		public IntPtr? creationParams { get; set; }
 
+		// Simple field: hitTestBehavior
 /// {@macro flutter.widgets.AndroidView.hitTestBehavior}
-		public IntPtr hitTestBehavior { get; set; }
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
 	}
 }

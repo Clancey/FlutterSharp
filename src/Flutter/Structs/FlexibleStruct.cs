@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -35,6 +35,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class FlexibleStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: flex
 /// The flex factor to use for this child.
 /// 
 /// If zero, the child is inflexible and determines its own size. If non-zero,
@@ -43,6 +44,7 @@ namespace Flutter.Structs
 /// to the flex factors of the flexible children.
 		public int flex { get; set; }
 
+		// Simple field: fit
 /// How a flexible child is inscribed into the available space.
 /// 
 /// If [flex] is non-zero, the [fit] determines whether the child fills the
@@ -50,13 +52,17 @@ namespace Flutter.Structs
 /// [FlexFit.tight], the child is required to fill the available space. If the
 /// fit is [FlexFit.loose], the child can be at most as large as the available
 /// space (but is allowed to be smaller).
-		public IntPtr fit { get; set; }
+		public BoxFit fit { get; set; }
 
+		// Simple field: debugTypicalAncestorWidgetClass
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }
 
-		IntPtr _child;
-		public Widget child
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

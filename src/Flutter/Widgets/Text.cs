@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -137,15 +140,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Text"/> class.
 		/// </summary>
 		public Text(
-			InvalidType _textSpan,
+			object _textSpan,
 			TextStyle? _style,
-			InvalidType _strutStyle,
-			InvalidType _textAlign,
+			StrutStyle? _strutStyle,
+			TextAlign? _textAlign,
 			TextDirection _textDirection,
-			InvalidType _locale,
-			InvalidType _overflow,
-			InvalidType _textScaler,
-			InvalidType _textWidthBasis,
+			Locale? _locale,
+			Overflow _overflow,
+			object _textScaler,
+			TextWidthBasis _textWidthBasis,
 			TextHeightBehavior _textHeightBehavior,
 			Color? _selectionColor
 ,

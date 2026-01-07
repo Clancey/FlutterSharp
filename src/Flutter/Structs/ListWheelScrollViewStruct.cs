@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -28,6 +28,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ListWheelScrollViewStruct : MultiChildRenderObjectWidgetStruct
 	{
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		// Simple field: controller
 /// Typically a [FixedExtentScrollController] used to control the current item.
 /// 
 /// A [FixedExtentScrollController] can be used to read the currently
@@ -45,6 +49,10 @@ namespace Flutter.Structs
 /// [onSelectedItemChanged].
 		public IntPtr? controller { get; set; }
 
+		// Has flag for nullable property: physics
+		public byte Hasphysics { get; set; }
+
+		// Simple field: physics
 /// How the scroll view should respond to user input.
 /// 
 /// For example, determines how the scroll view continues to animate after the
@@ -57,54 +65,72 @@ namespace Flutter.Structs
 /// Defaults to matching platform conventions.
 		public IntPtr? physics { get; set; }
 
+		// Simple field: diameterRatio
 /// {@macro flutter.rendering.RenderListWheelViewport.diameterRatio}
 		public double diameterRatio { get; set; }
 
+		// Simple field: perspective
 /// {@macro flutter.rendering.RenderListWheelViewport.perspective}
 		public double perspective { get; set; }
 
+		// Simple field: offAxisFraction
 /// {@macro flutter.rendering.RenderListWheelViewport.offAxisFraction}
 		public double offAxisFraction { get; set; }
 
+		// Simple field: useMagnifier
 /// {@macro flutter.rendering.RenderListWheelViewport.useMagnifier}
 		public bool useMagnifier { get; set; }
 
+		// Simple field: magnification
 /// {@macro flutter.rendering.RenderListWheelViewport.magnification}
 		public double magnification { get; set; }
 
+		// Simple field: overAndUnderCenterOpacity
 /// {@macro flutter.rendering.RenderListWheelViewport.overAndUnderCenterOpacity}
 		public double overAndUnderCenterOpacity { get; set; }
 
+		// Simple field: itemExtent
 /// Size of each child in the main axis.
 /// 
 /// Must be positive.
 		public double itemExtent { get; set; }
 
+		// Simple field: squeeze
 /// {@macro flutter.rendering.RenderListWheelViewport.squeeze}
 /// 
 /// Defaults to 1.
 		public double squeeze { get; set; }
 
+		// Simple field: onSelectedItemChanged
 /// On optional listener that's called when the centered item changes.
 		public IntPtr onSelectedItemChanged { get; set; }
 
+		// Simple field: renderChildrenOutsideViewport
 /// {@macro flutter.rendering.RenderListWheelViewport.renderChildrenOutsideViewport}
 		public bool renderChildrenOutsideViewport { get; set; }
 
+		// Simple field: childDelegate
 /// A delegate that helps lazily instantiating child.
 		public IntPtr childDelegate { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: hitTestBehavior
 /// {@macro flutter.widgets.scrollable.hitTestBehavior}
 /// 
 /// Defaults to [HitTestBehavior.opaque].
-		public IntPtr hitTestBehavior { get; set; }
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
-		IntPtr _restorationId;
+		// Has flag for nullable property: restorationId
+		public byte HasrestorationId { get; set; }
+
+		// String field: restorationId
+		private IntPtr _restorationId;
+
 /// {@macro flutter.widgets.scrollable.restorationId}
 		public string? restorationId
 		{
@@ -112,15 +138,21 @@ namespace Flutter.Structs
 			set => SetString(ref _restorationId, value);
 		}
 
+		// Has flag for nullable property: scrollBehavior
+		public byte HasscrollBehavior { get; set; }
+
+		// Simple field: scrollBehavior
 /// {@macro flutter.widgets.scrollable.scrollBehavior}
 /// 
 /// The [ScrollBehavior] of the inherited [ScrollConfiguration] will be
 /// modified by default to not apply a [Scrollbar].
 		public IntPtr? scrollBehavior { get; set; }
 
+		// Simple field: dragStartBehavior
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
-		public IntPtr dragStartBehavior { get; set; }
+		public DragStartBehavior dragStartBehavior { get; set; }
 
+		// Simple field: children
 		public IntPtr children { get; set; }
 
 	}

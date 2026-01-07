@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -38,11 +41,11 @@ namespace Flutter.Widgets
 		public UiKitView(
 			string _viewType
 ,
-			InvalidType _onPlatformViewCreated = null,
-			PlatformViewHitTestBehavior _hitTestBehavior = PlatformViewHitTestBehavior.Opaque,
-			InvalidType _layoutDirection = null,
+			Action _onPlatformViewCreated = null,
+			PlatformViewHitTestBehavior? _hitTestBehavior = null,
+			object _layoutDirection = null,
 			object _creationParams = null,
-			InvalidType _creationParamsCodec = null,
+			object _creationParamsCodec = null,
 			HashSet<object>? _gestureRecognizers = null
 		)
 		{

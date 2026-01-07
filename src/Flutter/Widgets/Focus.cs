@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -121,7 +124,7 @@ namespace Flutter.Widgets
 		public Focus(
 			Widget _child,
 			bool _autofocus,
-			InvalidType _onFocusChange,
+			Action _onFocusChange,
 			bool _includeSemantics,
 			bool _canRequestFocus,
 			bool _skipTraversal,

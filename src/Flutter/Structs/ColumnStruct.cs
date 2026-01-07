@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -182,20 +182,28 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ColumnStruct : MultiChildRenderObjectWidgetStruct
 	{
-		public IntPtr mainAxisAlignment { get; set; }
+		// Simple field: mainAxisAlignment
+		public MainAxisAlignment mainAxisAlignment { get; set; }
 
-		public IntPtr mainAxisSize { get; set; }
+		// Simple field: mainAxisSize
+		public MainAxisSize mainAxisSize { get; set; }
 
-		public IntPtr crossAxisAlignment { get; set; }
+		// Simple field: crossAxisAlignment
+		public CrossAxisAlignment crossAxisAlignment { get; set; }
 
+		// Simple field: textDirection
 		public TextDirection textDirection { get; set; }
 
-		public IntPtr verticalDirection { get; set; }
+		// Simple field: verticalDirection
+		public VerticalDirection verticalDirection { get; set; }
 
-		public IntPtr textBaseline { get; set; }
+		// Simple field: textBaseline
+		public TextBaseline textBaseline { get; set; }
 
+		// Simple field: spacing
 		public double spacing { get; set; }
 
+		// Simple field: children
 		public IntPtr children { get; set; }
 
 	}

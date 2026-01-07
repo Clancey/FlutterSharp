@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -34,9 +34,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ListBodyStruct : MultiChildRenderObjectWidgetStruct
 	{
+		// Simple field: mainAxis
 /// The direction to use as the main axis.
 		public IntPtr mainAxis { get; set; }
 
+		// Simple field: reverse
 /// Whether the list body positions children in the reading direction.
 /// 
 /// For example, if the reading direction is left-to-right and
@@ -51,6 +53,7 @@ namespace Flutter.Structs
 /// Defaults to false.
 		public bool reverse { get; set; }
 
+		// Simple field: children
 		public IntPtr children { get; set; }
 
 	}

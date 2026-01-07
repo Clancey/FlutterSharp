@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -48,8 +51,8 @@ namespace Flutter.Widgets
 		public CompositedTransformFollower(
 			LayerLink _link,
 			bool _showWhenUnlinked,
-			InvalidType _targetAnchor,
-			InvalidType _followerAnchor,
+			object _targetAnchor,
+			object _followerAnchor,
 			Offset _offset
 ,
 			Widget? _child = null

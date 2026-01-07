@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -50,8 +53,7 @@ namespace Flutter.Widgets
 		public RelativePositionedTransition(
 			Size _size,
 			Widget _child,
-			Rect _rect,
-			object _listenable
+			Rect _rect
 
 		)
 		{

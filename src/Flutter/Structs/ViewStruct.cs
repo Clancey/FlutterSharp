@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -65,21 +65,27 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ViewStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: view
 /// The [FlutterView] into which [child] is drawn.
 		public IntPtr view { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree, which will be drawn into the
 /// [view].
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner
 		public IntPtr deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner { get; set; }
 
+		// Simple field: deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView
 		public IntPtr deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView { get; set; }
 
 	}

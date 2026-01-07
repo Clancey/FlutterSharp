@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -25,7 +28,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="BackdropGroup"/> class.
 		/// </summary>
 		public BackdropGroup(
-			InvalidType _backdropKey,
+			object _backdropKey,
 			Widget _child
 
 		)

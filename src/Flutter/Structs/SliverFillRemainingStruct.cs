@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -107,15 +107,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverFillRemainingStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// Box child widget that fills the remaining space in the viewport.
 /// 
 /// The main [SliverFillRemaining] documentation contains more details.
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: hasScrollBody
 /// Indicates whether the child has a scrollable body, this value cannot be
 /// null.
 /// 
@@ -129,6 +136,7 @@ namespace Flutter.Structs
 /// child's size rather than overriding it.
 		public bool hasScrollBody { get; set; }
 
+		// Simple field: fillOverscroll
 /// Indicates whether the child should stretch to fill the overscroll area
 /// created by certain scroll physics, such as iOS' default scroll physics.
 /// This flag is only relevant when [hasScrollBody] is false.

@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -39,9 +42,8 @@ namespace Flutter.Widgets
 		public MatrixTransition(
 			Func<double, InvalidType> _onTransform,
 			AlignmentGeometry? _alignment,
-			InvalidType _filterQuality,
-			Animation<double> _animation,
-			object _listenable
+			FilterQuality _filterQuality,
+			Animation<double> _animation
 ,
 			Widget? _child = null
 		)

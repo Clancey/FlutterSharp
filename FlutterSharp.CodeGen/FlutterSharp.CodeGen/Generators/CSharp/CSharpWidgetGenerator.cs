@@ -148,16 +148,30 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["is_required"] = true
 			}).ToList();
 
-			var optionalProperties = enrichedWidget.OptionalProperties.Select(p => new Dictionary<string, object?>
+			var optionalProperties = enrichedWidget.OptionalProperties.Select(p =>
 			{
-				["name"] = p.Name,
-				["type"] = p.CSharpType,
-				["backing_field_name"] = p.BackingFieldName,
-				["is_nullable"] = p.IsNullable,
-				["default_value"] = ConvertDartDefaultValueToCSharp(p.DefaultValue, p.CSharpType ?? "object"),
-				["is_generic_type_param"] = p.IsGenericTypeParam,
-				["is_enum"] = p.IsEnum,
-				["is_required"] = false
+				var csharpType = p.CSharpType ?? "object";
+				var defaultVal = ConvertDartDefaultValueToCSharp(p.DefaultValue, csharpType);
+				// For optional parameters, if default is null or undefined, make value types nullable
+				// This allows null to be a valid default value in C#
+				var nullableType = csharpType;
+				var needsNullable = !csharpType.EndsWith("?") && !IsReferenceType(csharpType);
+				if (needsNullable && (defaultVal == null || defaultVal == "null" || string.IsNullOrEmpty(p.DefaultValue)))
+				{
+					nullableType = csharpType + "?";
+				}
+				return new Dictionary<string, object?>
+				{
+					["name"] = p.Name,
+					["type"] = csharpType,
+					["nullable_type"] = nullableType,
+					["backing_field_name"] = p.BackingFieldName,
+					["is_nullable"] = p.IsNullable,
+					["default_value"] = defaultVal,
+					["is_generic_type_param"] = p.IsGenericTypeParam,
+					["is_enum"] = p.IsEnum,
+					["is_required"] = false
+				};
 			}).ToList();
 
 			return new Dictionary<string, object?>
@@ -339,6 +353,14 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				return null;
 			}
 
+			// Handle type names used as default values (e.g., "EditableText" should be null)
+			// These are cases where the Dart analyzer returns a type name instead of a value
+			if (char.IsUpper(dartDefaultValue[0]) && !dartDefaultValue.Contains(".") && !dartDefaultValue.Contains("("))
+			{
+				// This looks like a bare type name (e.g., "EditableText"), convert to null
+				return "null";
+			}
+
 			// Handle Dart single-quoted strings - convert to C# double-quoted strings
 			// '' -> ""
 			// 'text' -> "text"
@@ -373,10 +395,36 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			}
 
 			// Handle Dart enums (e.g., Axis.horizontal)
+			// Only preserve defaults for actual C# enums which are compile-time constants
+			// Types like Alignment.Center are NOT enums - they're static properties and not compile-time constants
 			if (dartDefaultValue.Contains(".") && !dartDefaultValue.StartsWith("const"))
 			{
-				// Keep enum syntax the same (Axis.horizontal works in C#)
-				return dartDefaultValue;
+				// Check if the type is a known enum type (value types that can be compile-time constant defaults)
+				var enumTypes = new HashSet<string>
+				{
+					"Axis", "Clip", "MainAxisAlignment", "CrossAxisAlignment", "MainAxisSize",
+					"VerticalDirection", "TextDirection", "TextAlign", "TextBaseline",
+					"TextOverflow", "TextWidthBasis", "FlexFit", "BoxFit", "FilterQuality",
+					"BlendMode", "StackFit", "Overflow", "DragStartBehavior", "HitTestBehavior",
+					"ScrollViewKeyboardDismissBehavior", "BoxShape", "BoxHeightStyle", "BoxWidthStyle",
+					"StrokeCap", "StrokeJoin", "PaintingStyle", "TileMode", "WrapAlignment",
+					"WrapCrossAlignment", "DecorationPosition", "ShapeBorder", "FontWeight",
+					"FontStyle", "TextDecorationStyle", "TableCellVerticalAlignment"
+				};
+
+				var dotIndex = dartDefaultValue.IndexOf('.');
+				if (dotIndex > 0)
+				{
+					var typeName = dartDefaultValue.Substring(0, dotIndex);
+					if (enumTypes.Contains(typeName))
+					{
+						// This is a known enum, keep the syntax
+						return dartDefaultValue;
+					}
+				}
+
+				// Not a known enum type - return null (Alignment.Center, Curves.linear, etc. are not compile-time constants)
+				return "null";
 			}
 
 			// Handle common Dart literals
@@ -411,7 +459,22 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				"char", "DateTime", "TimeSpan", "Guid"
 			};
 
-			return !valueTypes.Contains(baseType);
+			// Enum types are also value types
+			var enumTypes = new HashSet<string>
+			{
+				"Axis", "Clip", "MainAxisAlignment", "CrossAxisAlignment", "MainAxisSize",
+				"VerticalDirection", "TextDirection", "TextAlign", "TextBaseline",
+				"TextOverflow", "TextWidthBasis", "FlexFit", "BoxFit", "FilterQuality",
+				"BlendMode", "StackFit", "Overflow", "DragStartBehavior", "HitTestBehavior",
+				"ScrollViewKeyboardDismissBehavior", "BoxShape", "BoxHeightStyle", "BoxWidthStyle",
+				"StrokeCap", "StrokeJoin", "PaintingStyle", "TileMode", "WrapAlignment",
+				"WrapCrossAlignment", "DecorationPosition", "ShapeBorder", "FontWeight",
+				"FontStyle", "TextDecorationStyle", "TableCellVerticalAlignment",
+				"PlatformViewHitTestBehavior", "RoutePopDisposition", "ScrollPhysics",
+				"ScrollbarOrientation", "ScrollPositionAlignmentPolicy"
+			};
+
+			return !valueTypes.Contains(baseType) && !enumTypes.Contains(baseType);
 		}
 
 		/// <summary>
@@ -453,7 +516,7 @@ namespace {{ namespace }}
 {{~ end ~}}
 {{~ if required_properties.size > 0 && optional_properties.size > 0 }},{{ end }}
 {{~ for prop in optional_properties ~}}
-			{{ prop.type }} {{ prop.backing_field_name }} = {{ if prop.is_generic_type_param }}default{{ else }}{{ prop.default_value ?? ""null"" }}{{ end }}{{ if !for.last }},{{ end }}
+			{{ prop.nullable_type }} {{ prop.backing_field_name }} = {{ if prop.is_generic_type_param }}default{{ else }}{{ prop.default_value ?? ""null"" }}{{ end }}{{ if !for.last }},{{ end }}
 {{~ end ~}}
 		)
 		{

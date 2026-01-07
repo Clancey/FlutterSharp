@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -27,12 +27,36 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class UndoHistoryStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: value
 /// The value to track over time.
 		public IntPtr value { get; set; }
 
+		// Has flag for nullable property: shouldChangeUndoStack
+		public byte HasshouldChangeUndoStack { get; set; }
+
+		// Callback field: shouldChangeUndoStack
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _shouldChangeUndoStack;
+
 /// Called when checking whether a value change should be pushed onto
 /// the undo stack.
-		public IntPtr? shouldChangeUndoStack { get; set; }
+		/// <summary>
+		/// Action identifier for shouldChangeUndoStack callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? shouldChangeUndoStackAction
+		{
+			get => GetString(_shouldChangeUndoStack);
+			set => SetString(ref _shouldChangeUndoStack, value);
+		}
+
+		// Has flag for nullable property: undoStackModifier
+		public byte HasundoStackModifier { get; set; }
+
+		// Callback field: undoStackModifier
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _undoStackModifier;
 
 /// Called right before a new entry is pushed to the undo stack.
 /// 
@@ -40,7 +64,20 @@ namespace Flutter.Structs
 /// of the original value.
 /// 
 /// If null then the original value will always be pushed to the stack.
-		public IntPtr? undoStackModifier { get; set; }
+		/// <summary>
+		/// Action identifier for undoStackModifier callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? undoStackModifierAction
+		{
+			get => GetString(_undoStackModifier);
+			set => SetString(ref _undoStackModifier, value);
+		}
+
+		// Callback field: onTriggered
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTriggered;
 
 /// Called when an undo or redo causes a state change.
 /// 
@@ -52,12 +89,26 @@ namespace Flutter.Structs
 /// on the undo stack. For example, a [TextInputFormatter] may change the value
 /// from what was on the undo stack, but this new value will not be recorded,
 /// as that would wipe out the redo history.
-		public IntPtr onTriggered { get; set; }
+		/// <summary>
+		/// Action identifier for onTriggered callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTriggeredAction
+		{
+			get => GetString(_onTriggered);
+			set => SetString(ref _onTriggered, value);
+		}
 
+		// Simple field: focusNode
 /// The [FocusNode] that will be used to listen for focus to set the initial
 /// undo state for the element.
 		public IntPtr focusNode { get; set; }
 
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		// Simple field: controller
 /// {@template flutter.widgets.undoHistory.controller}
 /// Controls the undo state.
 /// 
@@ -65,10 +116,13 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? controller { get; set; }
 
-		IntPtr _child;
+		// Widget field: child
+		private IntPtr _child;
+
 /// The child widget of [UndoHistory].
-		public Widget child
+		public IntPtr child
 		{
+			get => (IntPtr)_child;
 			set => SetIntPtr(ref _child, value);
 		}
 

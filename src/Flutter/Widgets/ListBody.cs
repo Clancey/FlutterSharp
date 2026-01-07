@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -38,7 +41,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ListBody"/> class.
 		/// </summary>
 		public ListBody(
-			InvalidType _mainAxis,
+			object _mainAxis,
 			bool _reverse
 ,
 			List<Widget> _children = null

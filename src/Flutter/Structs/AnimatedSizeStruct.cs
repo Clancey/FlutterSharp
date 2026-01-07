@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -28,15 +28,22 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedSizeStruct : SingleChildRenderObjectWidgetStruct
 	{
-		IntPtr _child;
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
 /// The widget below this widget in the tree.
 /// 
 /// {@macro flutter.widgets.ProxyWidget.child}
-		public Widget? child
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 
+		// Simple field: alignment
 /// The alignment of the child within the parent when the parent is not yet
 /// the same size as the child.
 /// 
@@ -58,25 +65,33 @@ namespace Flutter.Structs
 /// relative to text direction.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: curve
 /// The animation curve when transitioning this widget's size to match the
 /// child's size.
 		public IntPtr curve { get; set; }
 
+		// Simple field: duration
 /// The duration when transitioning this widget's size to match the child's
 /// size.
 		public IntPtr duration { get; set; }
 
+		// Has flag for nullable property: reverseDuration
+		public byte HasreverseDuration { get; set; }
+
+		// Simple field: reverseDuration
 /// The duration when transitioning this widget's size to match the child's
 /// size when going in reverse.
 /// 
 /// If not specified, defaults to [duration].
 		public IntPtr? reverseDuration { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: onEnd
 /// Called every time an animation completes.
 /// 
 /// This can be useful to trigger additional actions (e.g. another animation)

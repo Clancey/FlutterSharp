@@ -6,6 +6,9 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -41,16 +44,16 @@ namespace Flutter.Widgets
 		public AnimatedDefaultTextStyle(
 			Widget _child,
 			TextStyle? _style,
-			InvalidType _textAlign,
+			TextAlign? _textAlign,
 			bool _softWrap,
-			InvalidType _overflow,
-			InvalidType _textWidthBasis,
+			Overflow _overflow,
+			TextWidthBasis _textWidthBasis,
 			TextHeightBehavior _textHeightBehavior,
 			TimeSpan _duration
 ,
 			int? _maxLines = null,
 			Curve _curve = null,
-			InvalidType _onEnd = null
+			Action _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

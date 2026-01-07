@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -70,6 +70,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class IgnorePointerStruct : SingleChildRenderObjectWidgetStruct
 	{
+		// Simple field: ignoring
 /// Whether this widget is ignored during hit testing.
 /// 
 /// Regardless of whether this widget is ignored during hit testing, it will
@@ -80,6 +81,10 @@ namespace Flutter.Structs
 /// Defaults to true.
 		public bool ignoring { get; set; }
 
+		// Has flag for nullable property: ignoringSemantics
+		public byte HasignoringSemantics { get; set; }
+
+		// Nullable value type: ignoringSemantics
 /// Whether the semantics of this widget is ignored when compiling the
 /// semantics subtree.
 /// 
@@ -88,9 +93,15 @@ namespace Flutter.Structs
 /// See [SemanticsNode] for additional information about the semantics tree.
 		public NativeNullable<bool> ignoringSemantics { get; set; }
 
-		IntPtr _child;
-		public Widget? child
+		// Has flag for nullable property: child
+		public byte Haschild { get; set; }
+
+		// Widget field: child
+		private IntPtr _child;
+
+		public IntPtr? child
 		{
+			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
 			set => SetIntPtr(ref _child, value);
 		}
 

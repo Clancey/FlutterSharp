@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -35,6 +35,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class IndexedStackStruct : MultiChildRenderObjectWidgetStruct
 	{
+		// Simple field: alignment
 /// How to align the non-positioned and partially-positioned children in the
 /// stack.
 /// 
@@ -43,16 +44,19 @@ namespace Flutter.Structs
 /// See [Stack.alignment] for more information.
 		public IntPtr alignment { get; set; }
 
+		// Simple field: textDirection
 /// The text direction with which to resolve [alignment].
 /// 
 /// Defaults to the ambient [Directionality].
 		public TextDirection textDirection { get; set; }
 
+		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
+		// Simple field: sizing
 /// How to size the non-positioned children in the stack.
 /// 
 /// Defaults to [StackFit.loose].
@@ -60,11 +64,16 @@ namespace Flutter.Structs
 /// See [Stack.fit] for more information.
 		public IntPtr sizing { get; set; }
 
+		// Has flag for nullable property: index
+		public byte Hasindex { get; set; }
+
+		// Nullable value type: index
 /// The index of the child to show.
 /// 
 /// If this is null, none of the children will be shown.
 		public NativeNullable<int> index { get; set; }
 
+		// Simple field: children
 /// The child widgets of the stack.
 /// 
 /// Only the child at index [index] will be shown.

@@ -5,10 +5,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using Flutter;
+using Flutter.Enums;
+using Flutter.Gestures;
+using Flutter.UI;
 using Flutter.Widgets;
-using Flutter.Material;
-using Flutter.Cupertino;
 
 namespace Flutter.Structs
 {
@@ -32,23 +32,34 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AppKitViewStruct : WidgetStruct
 	{
-		IntPtr _viewType;
+		// String field: viewType
+		private IntPtr _viewType;
+
 		public string viewType
 		{
 			get => GetString(_viewType);
 			set => SetString(ref _viewType, value);
 		}
 
+		// Simple field: onPlatformViewCreated
 		public IntPtr onPlatformViewCreated { get; set; }
 
-		public IntPtr hitTestBehavior { get; set; }
+		// Simple field: hitTestBehavior
+		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
 
+		// Simple field: layoutDirection
 		public IntPtr layoutDirection { get; set; }
 
+		// Simple field: creationParams
 		public IntPtr creationParams { get; set; }
 
+		// Simple field: creationParamsCodec
 		public IntPtr creationParamsCodec { get; set; }
 
+		// Has flag for nullable property: gestureRecognizers
+		public byte HasgestureRecognizers { get; set; }
+
+		// Simple field: gestureRecognizers
 		public IntPtr? gestureRecognizers { get; set; }
 
 	}
