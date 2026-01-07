@@ -16,12 +16,13 @@ namespace Flutter.Widgets
 /// Controls the default properties of icons in a widget subtree.
 /// 
 /// The icon theme is honored by [Icon] and [ImageIcon] widgets.
-	public class IconTheme : Widget
+	public class IconTheme : InheritedWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="IconTheme"/> class.
 		/// </summary>
 		public IconTheme(
+			Widget _child,
 			IconThemeData _data
 
 		)

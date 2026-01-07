@@ -155,6 +155,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Align"/> class.
 		/// </summary>
 		public Align(
+			Widget _child,
 			AlignmentGeometry? _alignment
 ,
 			double? _widthFactor = null,

@@ -42,6 +42,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="KeepAlive"/> class.
 		/// </summary>
 		public KeepAlive(
+			Widget _child,
 			bool _keepAlive,
 			Type _debugTypicalAncestorWidgetClass,
 			string _debugTypicalAncestorWidgetDescription

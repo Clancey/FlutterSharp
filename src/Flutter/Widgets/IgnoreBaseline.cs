@@ -25,6 +25,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IgnoreBaseline"/> class.
 		/// </summary>
 		public IgnoreBaseline(
+			Widget _child
 
 		)
 		{

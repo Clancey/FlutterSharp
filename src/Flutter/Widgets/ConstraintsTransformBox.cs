@@ -73,6 +73,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ConstraintsTransformBox"/> class.
 		/// </summary>
 		public ConstraintsTransformBox(
+			Widget _child,
 			InvalidType _textDirection,
 			AlignmentGeometry? _alignment,
 			InvalidType _constraintsTransform,

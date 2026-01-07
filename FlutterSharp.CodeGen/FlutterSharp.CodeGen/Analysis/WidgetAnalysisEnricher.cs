@@ -176,7 +176,7 @@ namespace FlutterSharp.CodeGen.Analysis
 		{
 			if (!string.IsNullOrEmpty(dartBaseClass))
 			{
-				// Direct mappings
+				// Direct mappings for base classes that exist in both Dart and C#
 				var mappings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
 				{
 					["SingleChildRenderObjectWidget"] = "SingleChildRenderObjectWidget",
@@ -188,7 +188,15 @@ namespace FlutterSharp.CodeGen.Analysis
 					["ProxyWidget"] = "ProxyWidget",
 					["ParentDataWidget"] = "ParentDataWidget",
 					["ImplicitlyAnimatedWidget"] = "ImplicitlyAnimatedWidget",
-					["AnimatedWidget"] = "AnimatedWidget"
+					["AnimatedWidget"] = "AnimatedWidget",
+					// Intermediate base classes that should map to their parent base class
+					["Flexible"] = "ParentDataWidget",           // Flexible extends ParentDataWidget
+					["Positioned"] = "ParentDataWidget",         // Positioned extends ParentDataWidget
+					["PositionedDirectional"] = "ParentDataWidget", // PositionedDirectional extends ParentDataWidget
+					["LayoutId"] = "ParentDataWidget",           // LayoutId extends ParentDataWidget
+					["InheritedTheme"] = "InheritedWidget",      // InheritedTheme extends InheritedWidget
+					["ScrollView"] = "StatelessWidget",          // ScrollView extends StatelessWidget
+					["BoxScrollView"] = "ScrollView"             // BoxScrollView extends ScrollView
 				};
 
 				if (mappings.TryGetValue(dartBaseClass, out var mapped))
@@ -266,7 +274,12 @@ namespace FlutterSharp.CodeGen.Analysis
 				"InheritedTheme",        // extends InheritedWidget
 				"InheritedModel",        // extends InheritedWidget
 				"InheritedNotifier",     // extends InheritedWidget
-				"ParentDataWidget"
+				"ParentDataWidget",
+				// Intermediate classes that extend single-child base classes
+				"Flexible",              // extends ParentDataWidget, has required child
+				"Positioned",            // extends ParentDataWidget, has required child
+				"PositionedDirectional", // extends ParentDataWidget, has required child
+				"LayoutId"               // extends ParentDataWidget, has required child
 			};
 
 			return singleChildBaseClasses.Contains(baseClass);

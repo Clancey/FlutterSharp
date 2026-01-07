@@ -62,6 +62,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverCrossAxisGroup"/> class.
 		/// </summary>
 		public SliverCrossAxisGroup(
+			List<Widget> _children
 
 		)
 		{

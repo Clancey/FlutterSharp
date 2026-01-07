@@ -71,6 +71,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Wrap"/> class.
 		/// </summary>
 		public Wrap(
+			List<Widget> _children,
 			InvalidType _direction,
 			AlignmentGeometry? _alignment,
 			double _spacing,

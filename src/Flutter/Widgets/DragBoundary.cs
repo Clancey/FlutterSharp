@@ -29,6 +29,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DragBoundary"/> class.
 		/// </summary>
 		public DragBoundary(
+			Widget _child
 
 		)
 		{

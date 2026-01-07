@@ -34,6 +34,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverOffstage"/> class.
 		/// </summary>
 		public SliverOffstage(
+			Widget _child,
 			bool _offstage
 
 		)

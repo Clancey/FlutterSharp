@@ -59,6 +59,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverFadeTransition"/> class.
 		/// </summary>
 		public SliverFadeTransition(
+			Widget _child,
 			InvalidType _opacity,
 			bool _alwaysIncludeSemantics
 

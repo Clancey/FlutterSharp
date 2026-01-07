@@ -24,12 +24,13 @@ namespace Flutter.Widgets
 /// 
 /// * [DefaultTextStyle], which defines a [TextStyle] to apply to descendant
 /// [Text] widgets.
-	public class DefaultTextHeightBehavior : Widget
+	public class DefaultTextHeightBehavior : InheritedWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DefaultTextHeightBehavior"/> class.
 		/// </summary>
 		public DefaultTextHeightBehavior(
+			Widget _child,
 			InvalidType _textHeightBehavior
 
 		)

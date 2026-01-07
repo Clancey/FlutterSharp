@@ -72,6 +72,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Padding"/> class.
 		/// </summary>
 		public Padding(
+			Widget _child,
 			EdgeInsetsGeometry? _padding
 
 		)

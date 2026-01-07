@@ -27,7 +27,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="NotificationListener"/> class.
 		/// </summary>
 		public NotificationListener(
-
+			Widget _child
+,
 			Func<T, bool> _onNotification = null
 		)
 		{

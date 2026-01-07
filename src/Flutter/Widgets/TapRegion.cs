@@ -36,6 +36,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TapRegion"/> class.
 		/// </summary>
 		public TapRegion(
+			Widget _child,
 			bool _enabled,
 			InvalidType _behavior,
 			bool _consumeOutsideTaps

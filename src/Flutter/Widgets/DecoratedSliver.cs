@@ -60,6 +60,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DecoratedSliver"/> class.
 		/// </summary>
 		public DecoratedSliver(
+			Widget _child,
 			Decoration? _decoration,
 			InvalidType _position
 

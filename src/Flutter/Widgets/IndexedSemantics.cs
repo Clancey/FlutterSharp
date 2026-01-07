@@ -51,6 +51,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IndexedSemantics"/> class.
 		/// </summary>
 		public IndexedSemantics(
+			Widget _child,
 			int _index
 
 		)

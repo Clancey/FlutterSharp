@@ -134,6 +134,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Stack"/> class.
 		/// </summary>
 		public Stack(
+			List<Widget> _children,
 			AlignmentGeometry? _alignment,
 			InvalidType _textDirection,
 			InvalidType _fit,

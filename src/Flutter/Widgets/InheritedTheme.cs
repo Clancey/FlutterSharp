@@ -42,6 +42,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="InheritedTheme"/> class.
 		/// </summary>
 		public InheritedTheme(
+			Widget _child
 
 		)
 		{

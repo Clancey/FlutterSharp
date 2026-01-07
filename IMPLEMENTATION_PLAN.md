@@ -15,12 +15,15 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 **Last checked**: 2026-01-07
 **C# compilation errors**: 0
-**Dart analysis errors**: 1009 total
+**Dart analysis errors**: 1018 total
+**uri_does_not_exist**: 206
+**argument_type_not_assignable**: 186
+**undefined_named_parameter**: 177
+**missing_required_argument**: 345 (reduced from 411 → 16% fixed)
+**ambiguous_import**: 35
+**undefined_getter**: 27
+**empty_struct**: 19 (reduced from 20)
 **non_type_as_type_argument**: 0 (reduced from 119 → 100% fixed)
-**undefined_getter**: 16
-**argument_type_not_assignable**: 141
-**missing_required_argument**: 411
-**undefined_named_parameter**: 156
 **undefined_method**: 4 (reduced from 136 → 97% fixed, remaining are web-only widgets)
 
 ---
@@ -269,6 +272,19 @@ Add notes here when exploring the codebase:
   3. Modified DartStruct.scriban to always import `flutter_sharp_structs.dart` (line 8)
   4. Regenerated all Dart structs with correct imports
 - Results: non_type_as_type_argument 119→0 (100% fixed), ambiguous_extension_member_access 43→7
+
+### D011 Fix Attempt Details (2026-01-07)
+- Root cause investigation: Many widgets have `child` as required parameter but analyzer doesn't extract it
+- Widgets like `Expanded` extend `Flexible` (which extends `ParentDataWidget`), but analyzer reports `Flexible` as base class
+- Fixes applied:
+  1. Added intermediate base class mappings in WidgetAnalysisEnricher (`Flexible` → `ParentDataWidget`, etc.)
+  2. Added `Flexible`, `Positioned`, `PositionedDirectional`, `LayoutId` to single-child base classes
+  3. Added `InheritedTheme` → `InheritedWidget`, `ScrollView` → `StatelessWidget` mappings
+- Results: missing_required_argument 346→345 (minimal improvement)
+- Remaining issues:
+  1. Most errors are in `lib/parsers/` (hand-written parsers, not regenerated)
+  2. Analyzer fails to extract properties for many widgets (e.g., FocusScope has empty struct)
+  3. Need deeper investigation of analyzer property extraction logic
 
 ---
 

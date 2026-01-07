@@ -43,6 +43,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Semantics"/> class.
 		/// </summary>
 		public Semantics(
+			Widget _child,
 			InvalidType _properties,
 			bool _container,
 			bool _explicitChildNodes,

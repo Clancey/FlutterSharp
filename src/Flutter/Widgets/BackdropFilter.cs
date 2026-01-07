@@ -165,6 +165,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="BackdropFilter"/> class.
 		/// </summary>
 		public BackdropFilter(
+			Widget _child,
 			InvalidType _filter,
 			InvalidType _blendMode,
 			bool _enabled,

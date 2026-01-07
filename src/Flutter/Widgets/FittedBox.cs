@@ -36,6 +36,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FittedBox"/> class.
 		/// </summary>
 		public FittedBox(
+			Widget _child,
 			InvalidType _fit,
 			AlignmentGeometry? _alignment,
 			Clip _clipBehavior

@@ -42,6 +42,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="UnmanagedRestorationScope"/> class.
 		/// </summary>
 		public UnmanagedRestorationScope(
+			Widget _child,
 			InvalidType _bucket
 
 		)

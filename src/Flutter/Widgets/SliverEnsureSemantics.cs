@@ -49,6 +49,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverEnsureSemantics"/> class.
 		/// </summary>
 		public SliverEnsureSemantics(
+			Widget _child
 
 		)
 		{

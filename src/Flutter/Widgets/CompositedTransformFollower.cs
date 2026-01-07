@@ -46,6 +46,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CompositedTransformFollower"/> class.
 		/// </summary>
 		public CompositedTransformFollower(
+			Widget _child,
 			InvalidType _link,
 			bool _showWhenUnlinked,
 			InvalidType _targetAnchor,

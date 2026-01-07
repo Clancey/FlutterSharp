@@ -54,7 +54,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IntrinsicWidth"/> class.
 		/// </summary>
 		public IntrinsicWidth(
-
+			Widget _child
+,
 			double? _stepWidth = null,
 			double? _stepHeight = null
 		)

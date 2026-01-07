@@ -49,6 +49,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MouseRegion"/> class.
 		/// </summary>
 		public MouseRegion(
+			Widget _child,
 			InvalidType _onEnter,
 			InvalidType _onHover,
 			InvalidType _onExit,

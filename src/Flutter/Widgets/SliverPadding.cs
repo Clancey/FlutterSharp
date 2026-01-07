@@ -32,6 +32,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverPadding"/> class.
 		/// </summary>
 		public SliverPadding(
+			Widget _child,
 			EdgeInsetsGeometry? _padding
 
 		)

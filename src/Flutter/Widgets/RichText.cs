@@ -100,6 +100,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RichText"/> class.
 		/// </summary>
 		public RichText(
+			List<Widget> _children,
 			InvalidType _text,
 			InvalidType _textAlign,
 			InvalidType _textDirection,

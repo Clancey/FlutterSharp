@@ -38,6 +38,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ListBody"/> class.
 		/// </summary>
 		public ListBody(
+			List<Widget> _children,
 			InvalidType _mainAxis,
 			bool _reverse
 

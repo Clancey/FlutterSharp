@@ -36,6 +36,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Baseline"/> class.
 		/// </summary>
 		public Baseline(
+			Widget _child,
 			double _baseline,
 			InvalidType _baselineType
 

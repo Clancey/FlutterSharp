@@ -54,6 +54,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CustomMultiChildLayout"/> class.
 		/// </summary>
 		public CustomMultiChildLayout(
+			List<Widget> _children,
 			InvalidType _delegate
 
 		)

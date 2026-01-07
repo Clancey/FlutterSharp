@@ -44,6 +44,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Listener"/> class.
 		/// </summary>
 		public Listener(
+			Widget _child,
 			InvalidType _onPointerDown,
 			InvalidType _onPointerMove,
 			InvalidType _onPointerUp,

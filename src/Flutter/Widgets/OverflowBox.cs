@@ -40,6 +40,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="OverflowBox"/> class.
 		/// </summary>
 		public OverflowBox(
+			Widget _child,
 			AlignmentGeometry? _alignment,
 			InvalidType _fit
 ,

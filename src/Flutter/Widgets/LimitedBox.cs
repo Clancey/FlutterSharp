@@ -44,6 +44,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LimitedBox"/> class.
 		/// </summary>
 		public LimitedBox(
+			Widget _child,
 			double _maxWidth,
 			double _maxHeight
 

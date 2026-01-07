@@ -26,6 +26,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverCrossAxisExpanded"/> class.
 		/// </summary>
 		public SliverCrossAxisExpanded(
+			Widget _child,
 			int _flex,
 			Type _debugTypicalAncestorWidgetClass
 

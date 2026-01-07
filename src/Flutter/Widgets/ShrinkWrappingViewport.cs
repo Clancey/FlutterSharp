@@ -44,6 +44,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ShrinkWrappingViewport"/> class.
 		/// </summary>
 		public ShrinkWrappingViewport(
+			List<Widget> _children,
 			InvalidType _axisDirection,
 			InvalidType _crossAxisDirection,
 			InvalidType _offset,

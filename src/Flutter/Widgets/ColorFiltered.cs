@@ -40,6 +40,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ColorFiltered"/> class.
 		/// </summary>
 		public ColorFiltered(
+			Widget _child,
 			InvalidType _colorFilter
 
 		)

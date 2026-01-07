@@ -68,7 +68,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="InheritedNotifier"/> class.
 		/// </summary>
 		public InheritedNotifier(
-
+			Widget _child
+,
 			T? _notifier = default
 		)
 		{

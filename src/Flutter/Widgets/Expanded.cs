@@ -51,12 +51,13 @@ namespace Flutter.Widgets
 /// * [Flexible], which does not force the child to fill the available space.
 /// * [Spacer], a widget that takes up space proportional to its flex value.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class Expanded : Widget
+	public class Expanded : ParentDataWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Expanded"/> class.
 		/// </summary>
 		public Expanded(
+			Widget _child
 
 		)
 		{

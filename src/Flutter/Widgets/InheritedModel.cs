@@ -126,6 +126,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="InheritedModel"/> class.
 		/// </summary>
 		public InheritedModel(
+			Widget _child
 
 		)
 		{

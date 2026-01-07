@@ -69,6 +69,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultAssetBundle"/> class.
 		/// </summary>
 		public DefaultAssetBundle(
+			Widget _child,
 			InvalidType _bundle
 
 		)

@@ -56,6 +56,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PinnedHeaderSliver"/> class.
 		/// </summary>
 		public PinnedHeaderSliver(
+			Widget _child
 
 		)
 		{

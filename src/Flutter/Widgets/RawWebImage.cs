@@ -21,6 +21,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawWebImage"/> class.
 		/// </summary>
 		public RawWebImage(
+			Widget _child,
 			WebImageInfo _image,
 			InvalidType _fit,
 			AlignmentGeometry? _alignment,

@@ -41,6 +41,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FractionallySizedBox"/> class.
 		/// </summary>
 		public FractionallySizedBox(
+			Widget _child,
 			AlignmentGeometry? _alignment
 ,
 			double? _widthFactor = null,

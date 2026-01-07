@@ -23,12 +23,13 @@ namespace Flutter.Widgets
 /// See also:
 /// * [TextSelectionTheme]: which also creates a [DefaultSelectionStyle] for
 /// the subtree.
-	public class DefaultSelectionStyle : Widget
+	public class DefaultSelectionStyle : InheritedWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DefaultSelectionStyle"/> class.
 		/// </summary>
 		public DefaultSelectionStyle(
+			Widget _child,
 			InvalidType _cursorColor,
 			InvalidType _selectionColor,
 			InvalidType _mouseCursor

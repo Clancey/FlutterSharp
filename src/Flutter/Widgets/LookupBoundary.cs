@@ -76,6 +76,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LookupBoundary"/> class.
 		/// </summary>
 		public LookupBoundary(
+			Widget _child
 
 		)
 		{

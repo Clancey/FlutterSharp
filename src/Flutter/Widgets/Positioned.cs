@@ -53,6 +53,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Positioned"/> class.
 		/// </summary>
 		public Positioned(
+			Widget _child,
 			Type _debugTypicalAncestorWidgetClass
 ,
 			double? _left = null,

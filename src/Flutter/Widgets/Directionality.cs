@@ -40,6 +40,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Directionality"/> class.
 		/// </summary>
 		public Directionality(
+			Widget _child,
 			InvalidType _textDirection
 
 		)

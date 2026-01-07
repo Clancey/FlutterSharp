@@ -53,6 +53,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Viewport"/> class.
 		/// </summary>
 		public Viewport(
+			List<Widget> _children,
 			InvalidType _axisDirection,
 			InvalidType _crossAxisDirection,
 			double _anchor,

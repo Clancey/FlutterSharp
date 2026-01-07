@@ -54,6 +54,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ShaderMask"/> class.
 		/// </summary>
 		public ShaderMask(
+			Widget _child,
 			InvalidType _shaderCallback,
 			InvalidType _blendMode
 

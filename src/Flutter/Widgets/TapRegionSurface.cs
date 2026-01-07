@@ -62,6 +62,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TapRegionSurface"/> class.
 		/// </summary>
 		public TapRegionSurface(
+			Widget _child
 
 		)
 		{

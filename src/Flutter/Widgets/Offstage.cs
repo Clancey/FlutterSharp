@@ -50,6 +50,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Offstage"/> class.
 		/// </summary>
 		public Offstage(
+			Widget _child,
 			bool _offstage
 
 		)

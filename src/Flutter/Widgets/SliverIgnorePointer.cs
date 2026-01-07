@@ -38,6 +38,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverIgnorePointer"/> class.
 		/// </summary>
 		public SliverIgnorePointer(
+			Widget _child,
 			bool _ignoring
 ,
 			bool? _ignoringSemantics = null

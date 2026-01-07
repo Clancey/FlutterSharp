@@ -30,12 +30,13 @@ namespace Flutter.Widgets
 /// smoothly over a given duration.
 /// * [DefaultTextStyleTransition], which takes a provided [Animation] to
 /// animate changes in text style smoothly over time.
-	public class DefaultTextStyle : Widget
+	public class DefaultTextStyle : InheritedWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DefaultTextStyle"/> class.
 		/// </summary>
 		public DefaultTextStyle(
+			Widget _child,
 			TextStyle? _style,
 			InvalidType _textAlign,
 			bool _softWrap,

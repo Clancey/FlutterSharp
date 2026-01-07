@@ -120,6 +120,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Opacity"/> class.
 		/// </summary>
 		public Opacity(
+			Widget _child,
 			double _opacity,
 			bool _alwaysIncludeSemantics
 
