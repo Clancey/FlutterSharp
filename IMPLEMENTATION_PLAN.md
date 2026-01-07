@@ -15,11 +15,11 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 **Last checked**: 2026-01-07
 **C# compilation errors**: 0 ✅
-**Dart analysis errors**: 415 total (down from 1018 → 59% reduction!)
-**missing_required_argument**: 140 (down from 345 → 59% fixed)
-**argument_type_not_assignable**: 120 (down from 186 → 35% fixed)
-**undefined_named_parameter**: 99 (down from 177 → 44% fixed)
-**undefined_getter**: 27
+**Dart analysis errors**: 301 total (down from 1018 → 70% reduction!)
+**missing_required_argument**: 118 (down from 345 → 66% fixed)
+**argument_type_not_assignable**: 123 (down from 186 → 34% fixed)
+**undefined_named_parameter**: 17 (down from 177 → 90% fixed)
+**undefined_getter**: 14 (down from 27 → 48% fixed)
 **empty_struct**: 19
 **uri_does_not_exist**: 0 ✅ (down from 206 → 100% fixed)
 **ambiguous_import**: 0 ✅ (down from 35 → 100% fixed)
@@ -178,8 +178,9 @@ When starting a new loop, work on these in order:
 12. ~~**D013** - Remove duplicate parsers and fix imports~~ ✅ DONE (removed 234 duplicate parsers, fixed imports)
 13. ~~**D014** - Fix uri_does_not_exist errors - remove base struct imports~~ ✅ DONE (206→0, 100% fixed)
 14. ~~**D015** - Fix ambiguous_import errors - hide conflicting imports~~ ✅ DONE (35→0, 100% fixed)
-15. **D011** - Fix missing_required_argument errors (140 remaining) - widget constructor parameters
-16. **D012** - Fix undefined_named_parameter errors (99 remaining) - incorrect parameter names
+15. ~~**D016** - Fix callback parameter name mapping~~ ✅ DONE (undefined_named_parameter: 99→17, 83% fixed)
+16. **D011** - Fix missing_required_argument errors (118 remaining) - widget constructor parameters
+17. **D012** - Fix remaining undefined_named_parameter errors (17 remaining) - widget-specific quirks (sliver, text, icon)
 
 ---
 
@@ -211,6 +212,7 @@ When starting a new loop, work on these in order:
 | D013 | 2026-01-07 | 428397a | Removed 234 duplicate parsers from lib/parsers, deleted orphan generated files |
 | D014 | 2026-01-07 | 428397a | Fixed DartStruct.scriban to not import non-existent base struct files |
 | D015 | 2026-01-07 | 428397a | Fixed DartParser.scriban to hide conflicting imports (parseBoxConstraints, parseEdgeInsetsGeometry, parseColor) |
+| D016 | 2026-01-07 | 2bf8588 | Separated PropertyName (Flutter param) from StructPropertyName (FFI struct field) - fixes callback parameter naming. Also fixed child vs children for multi-child widgets. |
 
 ---
 
@@ -303,6 +305,27 @@ Add notes here when exploring the codebase:
   1. Most errors are in `lib/parsers/` (hand-written parsers, not regenerated)
   2. Analyzer fails to extract properties for many widgets (e.g., FocusScope has empty struct)
   3. Need deeper investigation of analyzer property extraction logic
+
+### D016 Fix Details (2026-01-07)
+- Root cause: Callback parameter names used struct field names (`builderAction`) instead of Flutter widget parameter names (`builder`)
+- In DartParserGenerator, both Generate methods were using:
+  ```csharp
+  PropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name)
+  ```
+- This added "Action" suffix which is correct for struct field access but wrong for Flutter constructor call
+- Fix: Separated into two properties:
+  1. `PropertyName` - Always without "Action" suffix (for Flutter widget constructor)
+  2. `StructPropertyName` - Has "Action" suffix for callbacks (for FFI struct field access)
+- Also fixed child vs children parameter assignment:
+  - `ChildPropertyName` only set when `HasSingleChild && !HasMultipleChildren`
+  - `ChildrenPropertyName` only set when `HasMultipleChildren`
+- Results: 415→301 errors (27% reduction)
+  - undefined_named_parameter: 99→17 (83% fixed)
+  - undefined_getter: 27→14 (48% fixed)
+- Remaining undefined_named_parameter (17) are widget-specific quirks:
+  - Sliver widgets use `sliver` instead of `child`
+  - Text/Icon use positional parameters, not named
+  - RichText uses `text` not `children`
 
 ---
 
