@@ -15,7 +15,8 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 **Last checked**: 2026-01-07
 **C# compilation errors**: 50 (regression - needs investigation)
-**Dart analysis errors**: 853 (reduced from 1448 → 42% reduction)
+**Dart analysis errors**: 809 (reduced from 853 → 5% additional reduction)
+**argument_type_not_assignable**: 43 (reduced from 302 → 86% reduction)
 
 ---
 
@@ -68,7 +69,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | D004 | Ensure parsers match C# structs | pending | Field order, types |
 | D005 | Remove duplicate nested directories | completed | lib/structs/structs/ and lib/structs/parsers/ removed |
 | D006 | Fix FFI struct field type annotations | completed | Changed Int8/Double to int/double with @Int8()/@Double() |
-| D007 | Fix argument_type_not_assignable errors | pending | 273 remaining type conversion issues |
+| D007 | Fix argument_type_not_assignable errors | completed | 302→43 (86% reduction), fixed property name mapping in DartParserGenerator |
 | D008 | Fix undefined_getter errors | pending | 139 missing struct field accessors |
 
 ### 1.5 Code Generator Fixes (LOW PRIORITY)
@@ -158,8 +159,9 @@ When starting a new loop, work on these in order:
 5. ~~**D005** - Remove duplicate nested directories~~ ✅ DONE
 6. ~~**D006** - Fix FFI struct field type annotations~~ ✅ DONE
 7. ~~**D002** - Fix undefined_method errors (370) - add missing parse methods~~ ✅ DONE (376→0)
-8. **D007** - Fix argument_type_not_assignable errors (302) - type conversions
-9. **D008** - Fix undefined_getter errors (139) - struct field accessors
+8. ~~**D007** - Fix argument_type_not_assignable errors (302) - type conversions~~ ✅ DONE (302→43, 86% reduction)
+9. **D008** - Fix undefined_getter errors (183) - struct field accessors
+10. **D009** - Fix remaining argument_type_not_assignable errors (43) - nullable to non-nullable conversions
 
 ---
 
@@ -184,6 +186,7 @@ When starting a new loop, work on these in order:
 | D005 | 2026-01-07 | pending | Removed duplicate nested directories |
 | D006 | 2026-01-07 | pending | Fixed FFI struct field types |
 | D002 | 2026-01-07 | 4b5d8b8 | Fixed ToCamelCase in generators, added stub parsers |
+| D007 | 2026-01-07 | 1f8a846 | Fixed property name mapping in DartParserGenerator, added typed pointer detection |
 
 ---
 
@@ -217,6 +220,17 @@ Add notes here when exploring the codebase:
   - 101 undefined_named_parameter - wrong param names
   - 0 undefined_method - FIXED by adding stub parsers
   - 0 invalid_field_type_in_struct - FIXED by ToCamelCase @ stripping
+
+### D007 Fix Details (2026-01-07)
+- Root cause: DartParserGenerator property names didn't match template variables
+  - Generator used `IsPointer`, template expected `is_pointer_type`
+  - Generator used `IsEnum`, template expected `is_enum_type`
+- Fixes applied:
+  1. Fixed property name mapping: IsPointerType, IsEnumType, IsBool, IsPointerVoid, IsRequired
+  2. Added typed pointer detection in WidgetAnalysisEnricher for known struct types
+  3. Added IsDartPrimitiveType helper to distinguish enums from primitive types
+- Results: argument_type_not_assignable 302→43 (86% reduction)
+- Remaining 43 errors are nullable to non-nullable conversions (e.g., AlignmentGeometry? → AlignmentGeometry)
 
 ---
 
