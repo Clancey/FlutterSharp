@@ -26,6 +26,15 @@ const dotNetMessageChannel =
 
 final mauiComponentStatesMaps = Map<String, IFlutterObjectStruct>();
 
+/// Tracks widget IDs that have been disposed on the C# side
+final _disposedWidgetIds = Set<String>();
+
+/// Checks if a widget has been disposed
+bool isWidgetDisposed(String widgetId) => _disposedWidgetIds.contains(widgetId);
+
+/// Clears the disposed widget tracking (call on app restart/reset)
+void clearDisposedWidgets() => _disposedWidgetIds.clear();
+
 _MauiComponentState? getMauiComponentState(String componentId) {
   if (!mauiComponentStates.containsKey(componentId)) {
     return null;
@@ -102,6 +111,9 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
           final pointer = Pointer<FlutterObjectStruct>.fromAddress(ptr);
           setMauiState(componentId, pointer.ref);
           break;
+        case 'DisposedComponent':
+          _handleDisposedComponent(message);
+          break;
       // case 'CreateDartObject':
       //   createAndStoreTrackedDartObject(message);
       //   break;
@@ -113,12 +125,29 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
       //   controller.text = message['value'];
       //   break;
       default:
-        throw new Exception("Unknown message type: ${message['messageType']}");
+        print('Warning: Unknown message type: ${message['messageType']}');
     }
     } catch (e, stackTrace) {
       print('ERROR in _onEvent: $e');
       print('Stack trace: $stackTrace');
       rethrow;
+    }
+  }
+
+  /// Handles a widget disposal message from C#
+  void _handleDisposedComponent(Map<String, dynamic> message) {
+    final widgetId = message['widgetId'] as String?;
+    final componentId = message['componentId'] as String?;
+
+    if (widgetId != null) {
+      // Clean up any tracked state for this widget
+      _disposedWidgetIds.add(widgetId);
+      print('Widget disposed: $widgetId');
+    }
+
+    if (componentId != null && mauiComponentStatesMaps.containsKey(componentId)) {
+      // Optionally clear the component state if the entire component was disposed
+      // For now we leave the state to allow for widget replacement
     }
   }
 
