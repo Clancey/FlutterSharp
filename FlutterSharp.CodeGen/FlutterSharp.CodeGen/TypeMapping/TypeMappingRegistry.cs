@@ -694,12 +694,16 @@ namespace FlutterSharp.CodeGen.TypeMapping
 
 		private void RegisterCallbackTypes()
 		{
+			// All callbacks use Pointer<Utf8> to store an action ID string.
+			// The action ID is dispatched to C# via method channel, not called as a native function.
+			// This is the unified callback pattern for FlutterSharp interop.
+
 			// VoidCallback
 			RegisterMapping(new TypeMapping
 			{
 				DartType = "VoidCallback",
 				CSharpType = "Action",
-				DartStructType = "Pointer<NativeFunction<Void Function()>>",
+				DartStructType = "Pointer<Utf8>",
 				DartParserFunction = "parseVoidCallback",
 				Package = "flutter/widgets",
 				RequiresCustomMarshalling = true
@@ -710,7 +714,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			{
 				DartType = "ValueChanged",
 				CSharpType = "Action",
-				DartStructType = "Pointer<NativeFunction<Void Function(Pointer<Void>)>>",
+				DartStructType = "Pointer<Utf8>",
 				DartParserFunction = "parseValueChanged",
 				IsGeneric = true,
 				Package = "flutter/widgets",
@@ -722,7 +726,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			{
 				DartType = "ValueSetter",
 				CSharpType = "Action",
-				DartStructType = "Pointer<NativeFunction<Void Function(Pointer<Void>)>>",
+				DartStructType = "Pointer<Utf8>",
 				DartParserFunction = "parseValueSetter",
 				IsGeneric = true,
 				Package = "flutter/foundation",
@@ -734,7 +738,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			{
 				DartType = "ValueGetter",
 				CSharpType = "Func",
-				DartStructType = "Pointer<NativeFunction<Pointer<Void> Function()>>",
+				DartStructType = "Pointer<Utf8>",
 				DartParserFunction = "parseValueGetter",
 				IsGeneric = true,
 				Package = "flutter/foundation",
@@ -746,7 +750,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			{
 				DartType = "GestureTapCallback",
 				CSharpType = "Action",
-				DartStructType = "Pointer<NativeFunction<Void Function()>>",
+				DartStructType = "Pointer<Utf8>",
 				DartParserFunction = "parseGestureTapCallback",
 				Package = "flutter/gestures",
 				RequiresCustomMarshalling = true

@@ -632,11 +632,8 @@ Widget? parseWidget(dynamic input) {
   return null;
 }
 
-/// Placeholder parser for TextStyle - returns null for now.
-TextStyle? parseTextStyle(dynamic input) {
-  // TODO: Implement proper TextStyle parsing from struct
-  return null;
-}
+// Note: parseTextStyle is defined earlier in this file (line ~147) with Map<String, dynamic> signature.
+// For FFI struct-based parsing, use the function above or extend it to handle TextStyleStruct.
 
 /// Placeholder parser for ScrollController - returns null for now.
 ScrollController? parseScrollController(dynamic input) {

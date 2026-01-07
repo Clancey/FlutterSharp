@@ -104,6 +104,14 @@ namespace FlutterSharp.CodeGen.Analysis
 			// Pass the Dart type so we can determine typed pointers for known struct types
 			var ffiType = ConvertFfiTypeToStructFieldType(rawFfiType, property.DartType);
 
+			// Override FFI type for callbacks - they use Pointer<Utf8> for action string IDs
+			// The action ID is dispatched to C# via method channel, not called as native function
+			if (property.IsCallback)
+			{
+				ffiType = "Pointer<Utf8>";
+				ffiAnnotation = ""; // No annotation needed for Pointer<Utf8>
+			}
+
 			// Determine backing field name
 			var backingFieldName = $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}";
 
