@@ -143,12 +143,14 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			var optionalProperties = enrichedWidget.OptionalProperties.Select(p =>
 			{
 				var csharpType = p.CSharpType ?? "object";
-				var defaultVal = ConvertDartDefaultValueToCSharp(p.DefaultValue, csharpType);
+				// Pass property name to enable known default lookup for enum types
+				var defaultVal = ConvertDartDefaultValueToCSharp(p.DefaultValue, csharpType, p.Name);
 				// For optional parameters, if default is null or undefined, make value types nullable
 				// This allows null to be a valid default value in C#
 				var nullableType = csharpType;
 				var needsNullable = !csharpType.EndsWith("?") && !IsReferenceType(csharpType);
-				if (needsNullable && (defaultVal == null || defaultVal == "null" || string.IsNullOrEmpty(p.DefaultValue)))
+				// Only make nullable if no default value was found (including known defaults)
+				if (needsNullable && (defaultVal == null || defaultVal == "null"))
 				{
 					nullableType = csharpType + "?";
 				}
@@ -202,11 +204,14 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			// This affects how we need to generate the assignment code
 			var isNullableCSharpType = csharpType.EndsWith("?");
 
+			// Check if there's a default value from Dart OR from our known defaults table
+			var defaultVal = ConvertDartDefaultValueToCSharp(p.DefaultValue, csharpType, p.Name);
+
 			// Optional value types become nullable in the constructor ONLY IF they have no default value
 			// If they have a default value like "0", "false", or an enum value, they stay non-nullable
-			var hasNonNullDefault = !string.IsNullOrEmpty(p.DefaultValue) &&
-			                        p.DefaultValue != "null" &&
-			                        p.DefaultValue != "default";
+			var hasNonNullDefault = !string.IsNullOrEmpty(defaultVal) &&
+			                        defaultVal != "null" &&
+			                        defaultVal != "default";
 			var willBeNullableInConstructor = !p.IsRequired && !IsReferenceType(csharpType) && !isNullableCSharpType && !hasNonNullDefault;
 
 			// Determine property assignment category
@@ -262,7 +267,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["dart_type"] = p.DartType,
 				["is_required"] = p.IsRequired,
 				["is_nullable"] = effectivelyNullable, // True if type ends with ? or will be nullable in constructor
-				["default_value"] = p.DefaultValue,
+				["default_value"] = defaultVal, // Use converted default (includes known Flutter defaults)
 				["documentation"] = FormatDocumentation(p.Documentation),
 				["is_list"] = p.IsList,
 				["is_callback"] = p.IsCallback,
@@ -557,10 +562,81 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		}
 
 		/// <summary>
+		/// Known Flutter default values for common enum properties.
+		/// These are extracted from Flutter's source code where defaults are defined in parent classes
+		/// (e.g., Row uses Flex's defaults via super parameters, which the analyzer can't trace).
+		/// </summary>
+		private static readonly Dictionary<string, string> KnownEnumDefaults = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+		{
+			// MainAxisAlignment defaults (from Flex, Row, Column)
+			["mainAxisAlignment"] = "MainAxisAlignment.Start",
+			// MainAxisSize defaults (from Flex, Row, Column)
+			["mainAxisSize"] = "MainAxisSize.Max",
+			// CrossAxisAlignment defaults (from Flex, Row, Column)
+			["crossAxisAlignment"] = "CrossAxisAlignment.Center",
+			// VerticalDirection defaults (from Flex, Row, Column)
+			["verticalDirection"] = "VerticalDirection.Down",
+			// Clip defaults (from various widgets)
+			["clipBehavior"] = "Clip.None",
+			// Axis defaults
+			["axis"] = "Axis.Vertical",
+			["scrollDirection"] = "Axis.Vertical",
+			// TextAlign defaults
+			["textAlign"] = "TextAlign.Start",
+			// TextDirection - no default, depends on locale
+			// FlexFit defaults (from Flexible, Expanded)
+			["fit"] = "FlexFit.Loose",
+			// StackFit defaults (from Stack)
+			["stackFit"] = "StackFit.Loose",
+			// BoxFit defaults (from FittedBox)
+			["boxFit"] = "BoxFit.Contain",
+			// FilterQuality defaults
+			["filterQuality"] = "FilterQuality.Low",
+			// WrapAlignment defaults (from Wrap)
+			["wrapAlignment"] = "WrapAlignment.Start",
+			["runAlignment"] = "WrapAlignment.Start",
+			// WrapCrossAlignment defaults (from Wrap)
+			["wrapCrossAlignment"] = "WrapCrossAlignment.Start",
+			// DragStartBehavior defaults
+			["dragStartBehavior"] = "DragStartBehavior.Start",
+			// HitTestBehavior defaults
+			["behavior"] = "HitTestBehavior.DeferToChild",
+			["hitTestBehavior"] = "HitTestBehavior.DeferToChild",
+		};
+
+		/// <summary>
 		/// Converts a Dart default value to C# syntax.
 		/// </summary>
 		private string? ConvertDartDefaultValueToCSharp(string? dartDefaultValue, string csharpType)
 		{
+			return ConvertDartDefaultValueToCSharp(dartDefaultValue, csharpType, null);
+		}
+
+		/// <summary>
+		/// Converts a Dart default value to C# syntax, with property name for known default lookup.
+		/// </summary>
+		private string? ConvertDartDefaultValueToCSharp(string? dartDefaultValue, string csharpType, string? propertyName)
+		{
+			// If no Dart default but we have a known default for this property type, use it
+			if (string.IsNullOrEmpty(dartDefaultValue) && !string.IsNullOrEmpty(propertyName))
+			{
+				if (KnownEnumDefaults.TryGetValue(propertyName, out var knownDefault))
+				{
+					// Verify the known default matches the property type
+					var dotIndex = knownDefault.IndexOf('.');
+					if (dotIndex > 0)
+					{
+						var defaultTypeName = knownDefault.Substring(0, dotIndex);
+						var baseType = csharpType.TrimEnd('?');
+						if (baseType.Equals(defaultTypeName, StringComparison.OrdinalIgnoreCase))
+						{
+							return knownDefault;
+						}
+					}
+				}
+				return null;
+			}
+
 			if (string.IsNullOrEmpty(dartDefaultValue))
 			{
 				return null;

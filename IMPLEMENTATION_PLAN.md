@@ -171,7 +171,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
 | API008 | Remove underscore prefix from C# parameters | completed | _mainAxisAlignment → mainAxisAlignment |
-| API009 | Add proper default values for optional params | pending | MainAxisAlignment.start, etc. |
+| API009 | Add proper default values for optional params | completed | Added KnownEnumDefaults dictionary in CSharpWidgetGenerator.cs with Flutter's actual defaults for enum properties (MainAxisAlignment.Start, etc.) |
 | API010 | Make required params actually required | pending | child for Expanded, etc. |
 
 ### 2.5.4 Constructor Property Assignment (HIGH PRIORITY)
@@ -299,7 +299,8 @@ When starting a new loop, work on these in order:
 | API018-020 | 2026-01-07 | 7d6d58a | Fixed: Overflow→TextOverflow mapping (deprecated enum), DragStartBehavior import, VoidCallback callback detection for inherited properties. Generator and Flutter library build with 0 errors. |
 | E002 | 2026-01-07 | 3db3d4f | Verified TextOverflow enum has correct values: Clip, Fade, Ellipsis, Visible - matches Flutter exactly |
 | API005-007 | 2026-01-07 | 3db3d4f | Added collection initializer support for multi-child widgets. Created `has_widget_children` flag to distinguish `List<Widget>` from other list types (e.g., `List<TableRow>`). Widgets with `List<Widget>` children now implement `IEnumerable<Widget>`, have `Add(Widget)` and `AddRange()` methods, parameterless constructor, and `PrepareForSending()` override. 247 files changed. |
-| API008 | 2026-01-07 | pending | Removed underscore prefix from C# constructor parameters. Changed `_mainAxisAlignment` to `mainAxisAlignment`, etc. Updated WidgetAnalysisEnricher.cs (backingFieldName generation), CSharpWidgetGenerator.cs (parameterName generation), and CSharpWidget.scriban template (children_property_name references). C# keywords still properly escaped with `@` prefix via EscapeCSharpKeyword(). |
+| API008 | 2026-01-07 | f59caca | Removed underscore prefix from C# constructor parameters. Changed `_mainAxisAlignment` to `mainAxisAlignment`, etc. Updated WidgetAnalysisEnricher.cs (backingFieldName generation), CSharpWidgetGenerator.cs (parameterName generation), and CSharpWidget.scriban template (children_property_name references). C# keywords still properly escaped with `@` prefix via EscapeCSharpKeyword(). |
+| API009 | 2026-01-07 | 95458cf | Added proper default values for optional enum params. Created `KnownEnumDefaults` dictionary in CSharpWidgetGenerator.cs with Flutter's actual defaults (MainAxisAlignment.Start, MainAxisSize.Max, CrossAxisAlignment.Center, etc.). Modified `ConvertDartDefaultValueToCSharp()` to accept property name and lookup known defaults when Dart analyzer doesn't provide them (super parameters). Updated BuildPropertyModel and optional property generation to use known defaults. |
 
 ---
 

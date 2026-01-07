@@ -45,15 +45,14 @@ namespace Flutter.Widgets
 			Animation<double> turns
 ,
 			AlignmentGeometry? alignment = null,
-			FilterQuality? filterQuality = null,
+			FilterQuality filterQuality = FilterQuality.Low,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<RotationTransitionStruct>();
 			// Complex type: Animation<double> - skipped (requires marshaling)
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			if (filterQuality.HasValue)
-				s.filterQuality = filterQuality.Value;
+			s.filterQuality = filterQuality;
 			s.child = child;
 		}
 

@@ -230,11 +230,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Column(
 
-			MainAxisAlignment? mainAxisAlignment = null,
-			MainAxisSize? mainAxisSize = null,
-			CrossAxisAlignment? crossAxisAlignment = null,
+			MainAxisAlignment mainAxisAlignment = MainAxisAlignment.Start,
+			MainAxisSize mainAxisSize = MainAxisSize.Max,
+			CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.Center,
 			TextDirection? textDirection = null,
-			VerticalDirection? verticalDirection = null,
+			VerticalDirection verticalDirection = VerticalDirection.Down,
 			TextBaseline? textBaseline = null,
 			double spacing = 0.0,
 			List<Widget> children = null
@@ -243,16 +243,12 @@ namespace Flutter.Widgets
 			if (children != null)
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<ColumnStruct>();
-			if (mainAxisAlignment.HasValue)
-				s.mainAxisAlignment = mainAxisAlignment.Value;
-			if (mainAxisSize.HasValue)
-				s.mainAxisSize = mainAxisSize.Value;
-			if (crossAxisAlignment.HasValue)
-				s.crossAxisAlignment = crossAxisAlignment.Value;
+			s.mainAxisAlignment = mainAxisAlignment;
+			s.mainAxisSize = mainAxisSize;
+			s.crossAxisAlignment = crossAxisAlignment;
 			if (textDirection.HasValue)
 				s.textDirection = textDirection.Value;
-			if (verticalDirection.HasValue)
-				s.verticalDirection = verticalDirection.Value;
+			s.verticalDirection = verticalDirection;
 			// Complex type: TextBaseline? - skipped (requires marshaling)
 			s.spacing = spacing;
 			// Children are set in PrepareForSending to support collection initializers
