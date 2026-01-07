@@ -29,7 +29,65 @@ class {{ parser_name }} extends WidgetParser {
       // This widget needs a manual wrapper to properly handle this parameter
       {{ prop.property_name }}: _get{{ string.capitalize prop.name }}Placeholder(){{ if !for.last || has_children }},{{ end }}
 {{~ else if !prop.is_pointer_void ~}}
-      {{ prop.property_name }}: {{ if prop.is_color_primitive }}{{ if prop.is_nullable }}map.{{ prop.struct_property_name }} == 0 ? null : Color(map.{{ prop.struct_property_name }}){{ else }}Color(map.{{ prop.struct_property_name }}){{ end }}{{ else if prop.is_enum_type && !prop.parser_function }}{{ if prop.is_nullable }}map.{{ prop.struct_property_name }} == -1 ? null : {{ string.replace prop.dart_type "?" "" }}.values[map.{{ prop.struct_property_name }}]{{ else }}{{ string.replace prop.dart_type "?" "" }}.values[map.{{ prop.struct_property_name }}]{{ end }}{{ else if prop.is_string }}{{ if prop.is_nullable }}map.{{ prop.struct_property_name }}.address != 0 ? map.{{ prop.struct_property_name }}.toDartString() : null{{ else }}map.{{ prop.struct_property_name }}.toDartString(){{ end }}{{ else if prop.is_pointer_type }}{{ if prop.is_nullable }}map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : null{{ else }}{{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref){{ end }}{{ else if prop.parser_function }}{{ prop.parser_function }}(map.{{ prop.struct_property_name }}){{ else if prop.is_bool && prop.is_nullable }}map.{{ prop.struct_property_name }} == 1 ? true : (map.{{ prop.struct_property_name }} == 0 ? false : null){{ else if prop.is_bool }}map.{{ prop.struct_property_name }} == 1{{ else }}map.{{ prop.struct_property_name }}{{ end }}{{ if !for.last || has_children }},{{ end }}
+{{~ # Handle different property types with proper null handling ~}}
+{{~ base_type = string.replace prop.dart_type "?" "" ~}}
+{{~ if prop.is_color_primitive ~}}
+{{~ if prop.is_nullable ~}}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }} == 0 ? null : Color(map.{{ prop.struct_property_name }}){{ if !for.last || has_children }},{{ end }}
+{{~ else ~}}
+      {{ prop.property_name }}: Color(map.{{ prop.struct_property_name }}){{ if !for.last || has_children }},{{ end }}
+{{~ end ~}}
+{{~ else if prop.is_enum_type && !prop.parser_function ~}}
+{{~ if prop.is_nullable ~}}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }} == -1 ? null : {{ base_type }}.values[map.{{ prop.struct_property_name }}]{{ if !for.last || has_children }},{{ end }}
+{{~ else ~}}
+      {{ prop.property_name }}: {{ base_type }}.values[map.{{ prop.struct_property_name }}]{{ if !for.last || has_children }},{{ end }}
+{{~ end ~}}
+{{~ else if prop.is_string ~}}
+{{~ if prop.is_nullable ~}}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? map.{{ prop.struct_property_name }}.toDartString() : null{{ if !for.last || has_children }},{{ end }}
+{{~ else ~}}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? map.{{ prop.struct_property_name }}.toDartString() : ''{{ if !for.last || has_children }},{{ end }}
+{{~ end ~}}
+{{~ else if prop.is_pointer_type ~}}
+{{~ # For pointer types, check for known types with sensible defaults FIRST (before nullable check) ~}}
+{{~ # These types have common Flutter defaults that we should use when not set ~}}
+{{~ if base_type == "AlignmentGeometry" || base_type == "Alignment" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Alignment.center{{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "Curve" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Curves.linear{{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "EdgeInsetsGeometry" || base_type == "EdgeInsets" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : EdgeInsets.zero{{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "BorderRadiusGeometry" || base_type == "BorderRadius" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : BorderRadius.zero{{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "BoxConstraints" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const BoxConstraints(){{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "Offset" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Offset.zero{{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "Size" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Size.zero{{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "Decoration" || base_type == "BoxDecoration" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const BoxDecoration(){{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "TextStyle" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const TextStyle(){{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "Matrix4" ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Matrix4.identity(){{ if !for.last || has_children }},{{ end }}
+{{~ else if prop.is_nullable ~}}
+{{~ # Unknown nullable type - return null when not set ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : null{{ if !for.last || has_children }},{{ end }}
+{{~ else ~}}
+{{~ # Unknown non-nullable type - try to call parser anyway (will fail at runtime if pointer is null) ~}}
+      {{ prop.property_name }}: {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref){{ if !for.last || has_children }},{{ end }}
+{{~ end ~}}
+{{~ else if prop.parser_function ~}}
+      {{ prop.property_name }}: {{ prop.parser_function }}(map.{{ prop.struct_property_name }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if prop.is_bool && prop.is_nullable ~}}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }} == 1 ? true : (map.{{ prop.struct_property_name }} == 0 ? false : null){{ if !for.last || has_children }},{{ end }}
+{{~ else if prop.is_bool ~}}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }} == 1{{ if !for.last || has_children }},{{ end }}
+{{~ else ~}}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}{{ if !for.last || has_children }},{{ end }}
+{{~ end ~}}
 {{~ end ~}}
 {{~ end ~}}
 {{~ if has_children ~}}

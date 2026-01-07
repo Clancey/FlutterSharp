@@ -68,17 +68,18 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 
 			// Find the child property to check if it's nullable
 			PropertyDefinition? childProperty = null;
-			bool childIsNullable = true; // Safe default
+			// Default to false (non-nullable) since most Flutter widgets require their child
+			// and use buildFromPointerNotNull which provides a fallback Text widget if null
+			bool childIsNullable = false;
 			if (widget.ChildPropertyName != null)
 			{
 				childProperty = widget.Properties.FirstOrDefault(p =>
 					p.Name.Equals(widget.ChildPropertyName, StringComparison.OrdinalIgnoreCase));
 
-				// Determine if child is nullable by checking if DartType ends with '?'
-				if (childProperty != null && !string.IsNullOrEmpty(childProperty.DartType))
-				{
-					childIsNullable = childProperty.DartType.EndsWith("?");
-				}
+				// For child properties, we keep the default of non-nullable (false)
+				// Most Flutter widgets that have a child property require it to be non-null
+				// The DartType might end with '?' because it's optional in structs,
+				// but Flutter widgets typically require their child property
 			}
 
 			var model = new
@@ -177,17 +178,20 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 
 		// Find the child property to check if it's nullable
 		EnrichedPropertyDefinition? childProperty = null;
-		bool childIsNullable = true; // Safe default
+		// Default to false (non-nullable) since most Flutter widgets require their child
+		// The child property is typically required in Flutter widgets, so we default to non-nullable
+		// and use buildFromPointerNotNull which provides a fallback Text widget if null
+		bool childIsNullable = false;
 		if (enrichedWidget.ChildPropertyName != null)
 		{
 			childProperty = enrichedWidget.AllProperties.FirstOrDefault(p =>
 				p.Name.Equals(enrichedWidget.ChildPropertyName, StringComparison.OrdinalIgnoreCase));
 
-			// Determine if child is nullable
-			if (childProperty != null)
-			{
-				childIsNullable = childProperty.IsNullable;
-			}
+			// For child properties, we keep the default of non-nullable (false)
+			// Most Flutter widgets that have a child property require it to be non-null
+			// Only override to nullable for explicitly known nullable child widgets
+			// (The analyzer marks most child properties as nullable because they're optional
+			// in C# structs, but Flutter widgets typically require them)
 		}
 
 		var model = new
@@ -527,7 +531,8 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		}
 
 		// Enums don't need parser functions (they're int values)
-		if (property.FfiAnnotation?.Contains("Int32") == true)
+		// But NOT Duration - Duration is stored as Int64 microseconds and needs parsing
+		if (property.FfiAnnotation?.Contains("Int32") == true && baseType != "Duration")
 		{
 			return null;
 		}
@@ -536,6 +541,12 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		if (baseType == "Color")
 		{
 			return "parseColor";
+		}
+
+		// Duration is stored as microseconds (Int64), needs special parsing
+		if (baseType == "Duration")
+		{
+			return "parseDurationMicroseconds";
 		}
 
 		// Default: use the type name to derive parser name
