@@ -42,7 +42,7 @@ namespace Flutter.Structs
 
 		// Simple field: container
 /// The [RenderObject] that is the parent of the [Element] created by this widget.
-		public IntPtr container { get; set; }
+		public object container { get; set; }
 
 		// Has flag for nullable property: debugShortDescription
 		public byte HasdebugShortDescription { get; set; }

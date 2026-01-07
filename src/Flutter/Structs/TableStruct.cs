@@ -88,7 +88,7 @@ namespace Flutter.Structs
 /// 
 /// A [Table] in a horizontal [ScrollView] must use a [FixedColumnWidth], or
 /// an [IntrinsicColumnWidth] as the horizontal space is infinite.
-		public IntPtr defaultColumnWidth { get; set; }
+		public object defaultColumnWidth { get; set; }
 
 		// Simple field: textDirection
 /// The direction in which the columns are ordered.
@@ -105,7 +105,7 @@ namespace Flutter.Structs
 /// 
 /// Cells may specify a vertical alignment by wrapping their contents in a
 /// [TableCell] widget.
-		public IntPtr defaultVerticalAlignment { get; set; }
+		public TableCellVerticalAlignment defaultVerticalAlignment { get; set; }
 
 		// Simple field: textBaseline
 /// The text baseline to use when aligning rows using [TableCellVerticalAlignment.baseline].

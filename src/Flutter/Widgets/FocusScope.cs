@@ -92,7 +92,6 @@ namespace Flutter.Widgets
 			bool? skipTraversal = null,
 			Func<FocusNode, InvalidType, KeyEventResult> onKeyEvent = null,
 			Func<FocusNode, InvalidType, KeyEventResult> onKey = null,
-			string? debugLabel = null,
 			bool includeSemantics = true,
 			bool? descendantsAreFocusable = null,
 			bool? descendantsAreTraversable = null
@@ -110,7 +109,6 @@ namespace Flutter.Widgets
 				s.skipTraversal = skipTraversal.Value;
 			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
 			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
-			s.debugLabel = debugLabel;
 			s.includeSemantics = includeSemantics;
 			if (descendantsAreFocusable.HasValue)
 				s.descendantsAreFocusable = descendantsAreFocusable.Value;

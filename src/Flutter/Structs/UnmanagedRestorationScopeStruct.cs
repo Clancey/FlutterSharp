@@ -42,7 +42,7 @@ namespace Flutter.Structs
 /// The [RestorationBucket] that this widget will insert into the widget tree.
 /// 
 /// Descendant widgets may obtain this bucket via [RestorationScope.of].
-		public IntPtr bucket { get; set; }
+		public object bucket { get; set; }
 
 		// Widget field: child
 		private IntPtr _child;

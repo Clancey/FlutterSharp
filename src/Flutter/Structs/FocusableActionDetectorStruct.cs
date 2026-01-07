@@ -89,24 +89,60 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.shortcuts.shortcuts}
 		public IntPtr? shortcuts { get; set; }
 
-		// Simple field: onShowFocusHighlight
+		// Callback field: onShowFocusHighlight
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onShowFocusHighlight;
+
 /// A function that will be called when the focus highlight should be shown or
 /// hidden.
 /// 
 /// This method is not triggered at the unmount of the widget.
-		public IntPtr onShowFocusHighlight { get; set; }
+		/// <summary>
+		/// Action identifier for onShowFocusHighlight callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onShowFocusHighlightAction
+		{
+			get => GetString(_onShowFocusHighlight);
+			set => SetString(ref _onShowFocusHighlight, value);
+		}
 
-		// Simple field: onShowHoverHighlight
+		// Callback field: onShowHoverHighlight
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onShowHoverHighlight;
+
 /// A function that will be called when the hover highlight should be shown or hidden.
 /// 
 /// This method is not triggered at the unmount of the widget.
-		public IntPtr onShowHoverHighlight { get; set; }
+		/// <summary>
+		/// Action identifier for onShowHoverHighlight callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onShowHoverHighlightAction
+		{
+			get => GetString(_onShowHoverHighlight);
+			set => SetString(ref _onShowHoverHighlight, value);
+		}
 
-		// Simple field: onFocusChange
+		// Callback field: onFocusChange
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onFocusChange;
+
 /// A function that will be called when the focus changes.
 /// 
 /// Called with true if the [focusNode] has primary focus.
-		public IntPtr onFocusChange { get; set; }
+		/// <summary>
+		/// Action identifier for onFocusChange callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onFocusChangeAction
+		{
+			get => GetString(_onFocusChange);
+			set => SetString(ref _onFocusChange, value);
+		}
 
 		// Simple field: mouseCursor
 /// The cursor for a mouse pointer when it enters or is hovering over the
@@ -114,7 +150,7 @@ namespace Flutter.Structs
 /// 
 /// The [mouseCursor] defaults to [MouseCursor.defer], deferring the choice of
 /// cursor to the next region behind it in hit-test order.
-		public IntPtr mouseCursor { get; set; }
+		public object mouseCursor { get; set; }
 
 		// Simple field: includeFocusSemantics
 /// Whether to include semantics from [Focus].

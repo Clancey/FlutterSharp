@@ -41,16 +41,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MatrixTransition"/> class.
 		/// </summary>
 		public MatrixTransition(
-			Func<double, InvalidType> onTransform,
 			FilterQuality filterQuality,
-			Animation<double> animation,
-			AlignmentGeometry? alignment = null,
-			Widget? child = null
+			Func<double, InvalidType> onTransform = null,
+			AlignmentGeometry alignment = null,
+			Widget? child = null,
+			Animation<double> animation = null
 		)
 		{
 			var s = GetBackingStruct<MatrixTransitionStruct>();
 			// Complex type: Func<double, InvalidType> - skipped (requires marshaling)
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.filterQuality = filterQuality;
 			s.child = child;
 			// Complex type: Animation<double> - skipped (requires marshaling)

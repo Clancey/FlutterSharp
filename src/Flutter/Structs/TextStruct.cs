@@ -152,7 +152,7 @@ namespace Flutter.Structs
 /// The text to display as a [InlineSpan].
 /// 
 /// This will be null if [data] is provided instead.
-		public IntPtr textSpan { get; set; }
+		public object textSpan { get; set; }
 
 		// Simple field: style
 /// If non-null, the style to use for this text.
@@ -231,7 +231,7 @@ namespace Flutter.Structs
 
 		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}
-		public IntPtr textScaler { get; set; }
+		public object textScaler { get; set; }
 
 		// Has flag for nullable property: maxLines
 		public byte HasmaxLines { get; set; }

@@ -47,7 +47,7 @@ namespace Flutter.Structs
 
 		// Simple field: clipper
 /// If non-null, determines which clip to use.
-		public IntPtr clipper { get; set; }
+		public object clipper { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.rendering.ClipRectLayer.clipBehavior}

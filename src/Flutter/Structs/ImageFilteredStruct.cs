@@ -39,7 +39,7 @@ namespace Flutter.Structs
 	{
 		// Simple field: imageFilter
 /// The image filter to apply to the child of this widget.
-		public IntPtr imageFilter { get; set; }
+		public object imageFilter { get; set; }
 
 		// Simple field: enabled
 /// Whether or not to apply the image filter operation to the child of this

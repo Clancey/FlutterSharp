@@ -54,9 +54,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FocusableActionDetector"/> class.
 		/// </summary>
 		public FocusableActionDetector(
-			Action<bool> onShowFocusHighlight,
-			Action<bool> onShowHoverHighlight,
-			Action<bool> onFocusChange,
 			Widget child,
 			bool enabled = true,
 			FocusNode? focusNode = null,
@@ -65,6 +62,9 @@ namespace Flutter.Widgets
 			bool descendantsAreTraversable = true,
 			Dictionary<Type, FlutterAction<Intent>>? actions = null,
 			Dictionary<ShortcutActivator, Intent>? shortcuts = null,
+			Action<bool>? onShowFocusHighlight = null,
+			Action<bool>? onShowHoverHighlight = null,
+			Action<bool>? onFocusChange = null,
 			object mouseCursor = null,
 			bool includeFocusSemantics = true
 		)

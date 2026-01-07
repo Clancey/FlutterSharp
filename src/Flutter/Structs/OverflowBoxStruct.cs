@@ -98,7 +98,7 @@ namespace Flutter.Structs
 /// as small as the parent allows if no child is set. If set to
 /// [OverflowBoxFit.max] (the default), the render object will size itself
 /// to be as large as the parent allows.
-		public BoxFit fit { get; set; }
+		public OverflowBoxFit fit { get; set; }
 
 		// Has flag for nullable property: child
 		public byte Haschild { get; set; }

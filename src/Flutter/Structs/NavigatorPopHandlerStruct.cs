@@ -70,7 +70,10 @@ namespace Flutter.Structs
 /// Defaults to true.
 		public bool enabled { get; set; }
 
-		// Simple field: onPop
+		// Callback field: onPop
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPop;
+
 /// Called when a handleable pop event happens.
 /// 
 /// For example, a pop is handleable when a [Navigator] in [child] has
@@ -79,7 +82,16 @@ namespace Flutter.Structs
 /// 
 /// Typically this is used to pop the [Navigator] in [child]. See the sample
 /// code on [NavigatorPopHandler] for a full example of this.
-		public IntPtr onPop { get; set; }
+		/// <summary>
+		/// Action identifier for onPop callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPopAction
+		{
+			get => GetString(_onPop);
+			set => SetString(ref _onPop, value);
+		}
 
 		// Has flag for nullable property: onPopWithResult
 		public byte HasonPopWithResult { get; set; }

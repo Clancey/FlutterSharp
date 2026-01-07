@@ -54,7 +54,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public RawMenuAnchorGroup(
 			Widget child,
-			MenuController controller
+			MenuController controller = null
 		)
 		{
 			var s = GetBackingStruct<RawMenuAnchorGroupStruct>();

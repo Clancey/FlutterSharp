@@ -51,14 +51,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Expansible"/> class.
 		/// </summary>
 		public Expansible(
-			ExpansibleController controller,
-			Func<BuildContext, InvalidType, Widget> headerBuilder,
-			Func<BuildContext, InvalidType, Widget> bodyBuilder,
 			object reverseCurve,
+			ExpansibleController controller = null,
+			Func<BuildContext, InvalidType, Widget> headerBuilder = null,
+			Func<BuildContext, InvalidType, Widget> bodyBuilder = null,
 			TimeSpan? duration = null,
 			Curve curve = null,
 			bool maintainState = true,
-			Func<BuildContext, Widget, Widget, InvalidType, Widget> expansibleBuilder = _defaultExpansibleBuilder
+			Func<BuildContext, Widget, Widget, InvalidType, Widget> expansibleBuilder = null
 		)
 		{
 			if (!duration.HasValue)

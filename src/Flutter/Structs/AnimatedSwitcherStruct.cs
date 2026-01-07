@@ -112,7 +112,7 @@ namespace Flutter.Structs
 /// changed while the current child is in the middle of fading in,
 /// [switchInCurve] will be run in reverse from that point instead of jumping
 /// to the corresponding point on [switchOutCurve].
-		public IntPtr switchInCurve { get; set; }
+		public object switchInCurve { get; set; }
 
 		// Simple field: switchOutCurve
 /// The animation curve to use when transitioning a previous [child] out.
@@ -125,7 +125,7 @@ namespace Flutter.Structs
 /// If [child] is changed while the current child is in the middle of fading
 /// in, [switchInCurve] will be run in reverse from that point instead of
 /// jumping to the corresponding point on [switchOutCurve].
-		public IntPtr switchOutCurve { get; set; }
+		public object switchOutCurve { get; set; }
 
 		// Callback field: transitionBuilder
 		// Using action string pattern - Dart will dispatch action to C# via method channel

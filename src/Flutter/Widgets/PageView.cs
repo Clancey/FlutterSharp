@@ -101,8 +101,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PageView"/> class.
 		/// </summary>
 		public PageView(
-			Action onPageChanged,
-			SliverChildDelegate childrenDelegate,
 			bool allowImplicitScrolling = false,
 			string? restorationId = null,
 			Axis scrollDirection = Axis.Horizontal,
@@ -110,9 +108,11 @@ namespace Flutter.Widgets
 			PageController? controller = null,
 			ScrollPhysics? physics = null,
 			bool pageSnapping = true,
+			Action onPageChanged = null,
+			SliverChildDelegate childrenDelegate = null,
 			DragStartBehavior dragStartBehavior = DragStartBehavior.Start,
 			Clip clipBehavior = Clip.HardEdge,
-			PlatformViewHitTestBehavior hitTestBehavior = HitTestBehavior.Opaque,
+			HitTestBehavior hitTestBehavior = HitTestBehavior.Opaque,
 			ScrollBehavior? scrollBehavior = null,
 			bool padEnds = true,
 			List<Widget> children = null

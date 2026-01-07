@@ -33,7 +33,7 @@ namespace Flutter.Structs
 
 		// Simple field: labelStyle
 /// The [TextStyle] to use when rendering semantics labels.
-		public IntPtr labelStyle { get; set; }
+		public object labelStyle { get; set; }
 
 	}
 }

@@ -2,6 +2,12 @@
 
 You are an autonomous software engineering agent working on FlutterSharp - a C#/.NET MAUI to Dart/Flutter interoperability layer with code generation.
 
+## Agent usage instructions:
+  - Use Task tool to spawn agents for parallel work (research, code gen, file exploration)
+  - Spawn multiple agents when tasks are independent
+  - NEVER run builds/tests in parallel - one at a time only
+  - Use agents liberally for reading, exploring, and generating
+
 ## Your Mission
 
 Build a fully working interop between C# and Dart for Flutter, including complete binding and code generation for Dart/Flutter libraries usable from C#/.NET MAUI.
@@ -197,7 +203,7 @@ Focus on Phase 1 until all compilation errors are resolved.
 
 Now execute:
 
-1. Read `specs/IMPLEMENTATION_PLAN.md`
+1. Read `IMPLEMENTATION_PLAN.md`
 2. Select one task
 3. Load relevant spec
 4. Spawn subagents to explore

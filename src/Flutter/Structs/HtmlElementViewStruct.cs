@@ -291,13 +291,25 @@ namespace Flutter.Structs
 			set => SetString(ref _viewType, value);
 		}
 
-		// Simple field: onPlatformViewCreated
+		// Callback field: onPlatformViewCreated
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPlatformViewCreated;
+
 /// Callback to invoke after the platform view has been created.
 /// 
 /// This method is called *before* the platform view is attached to the DOM.
 /// 
 /// May be null.
-		public IntPtr onPlatformViewCreated { get; set; }
+		/// <summary>
+		/// Action identifier for onPlatformViewCreated callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPlatformViewCreatedAction
+		{
+			get => GetString(_onPlatformViewCreated);
+			set => SetString(ref _onPlatformViewCreated, value);
+		}
 
 		// Has flag for nullable property: creationParams
 		public byte HascreationParams { get; set; }

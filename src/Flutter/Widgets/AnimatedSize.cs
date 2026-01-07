@@ -37,17 +37,17 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedSize(
 			TimeSpan duration,
-			Action onEnd,
 			Widget? child = null,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			Curve curve = null,
 			TimeSpan? reverseDuration = null,
-			Clip clipBehavior = Clip.HardEdge
+			Clip clipBehavior = Clip.HardEdge,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedSizeStruct>();
 			s.child = child;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: TimeSpan? - skipped (requires marshaling)

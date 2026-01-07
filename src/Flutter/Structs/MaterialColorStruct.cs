@@ -102,34 +102,34 @@ namespace Flutter.Structs
 	internal class MaterialColorStruct : WidgetStruct
 	{
 		// Simple field: shade50
-		public IntPtr shade50 { get; set; }
+		public object shade50 { get; set; }
 
 		// Simple field: shade100
-		public IntPtr shade100 { get; set; }
+		public object shade100 { get; set; }
 
 		// Simple field: shade200
-		public IntPtr shade200 { get; set; }
+		public object shade200 { get; set; }
 
 		// Simple field: shade300
-		public IntPtr shade300 { get; set; }
+		public object shade300 { get; set; }
 
 		// Simple field: shade400
-		public IntPtr shade400 { get; set; }
+		public object shade400 { get; set; }
 
 		// Simple field: shade500
-		public IntPtr shade500 { get; set; }
+		public object shade500 { get; set; }
 
 		// Simple field: shade600
-		public IntPtr shade600 { get; set; }
+		public object shade600 { get; set; }
 
 		// Simple field: shade700
-		public IntPtr shade700 { get; set; }
+		public object shade700 { get; set; }
 
 		// Simple field: shade800
-		public IntPtr shade800 { get; set; }
+		public object shade800 { get; set; }
 
 		// Simple field: shade900
-		public IntPtr shade900 { get; set; }
+		public object shade900 { get; set; }
 
 		// Simple field: primary
 		public IntPtr primary { get; set; }

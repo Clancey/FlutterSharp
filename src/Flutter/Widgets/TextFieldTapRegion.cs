@@ -55,7 +55,6 @@ namespace Flutter.Widgets
 			Action<InvalidType> onTapUpOutside = null,
 			Action<InvalidType> onTapUpInside = null,
 			bool consumeOutsideTaps = false,
-			string? debugLabel = null,
 			object? groupId = null,
 			Widget? child = null
 		)
@@ -68,7 +67,6 @@ namespace Flutter.Widgets
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			s.consumeOutsideTaps = consumeOutsideTaps;
-			s.debugLabel = debugLabel;
 			// Complex type: object? - skipped (requires marshaling)
 		}
 

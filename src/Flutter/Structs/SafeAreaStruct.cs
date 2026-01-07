@@ -83,7 +83,7 @@ namespace Flutter.Structs
 /// This minimum padding to apply.
 /// 
 /// The greater of the minimum insets and the media padding will be applied.
-		public IntPtr minimum { get; set; }
+		public object minimum { get; set; }
 
 		// Simple field: maintainBottomViewPadding
 /// Specifies whether the [SafeArea] should maintain the bottom

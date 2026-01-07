@@ -30,13 +30,13 @@ namespace Flutter.Widgets
 		/// </summary>
 		public MetaData(
 			object metaData,
-			object behavior = HitTestBehavior.DeferToChild,
+			HitTestBehavior behavior = HitTestBehavior.DeferToChild,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<MetaDataStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.behavior = behavior;
 			s.child = child;
 		}
 

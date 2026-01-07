@@ -43,16 +43,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flexible"/> class.
 		/// </summary>
 		public Flexible(
-			Type debugTypicalAncestorWidgetClass,
 			Widget child,
 			int flex = 1,
-			BoxFit fit = FlexFit.Loose
+			FlexFit fit = FlexFit.Loose
 		)
 		{
 			var s = GetBackingStruct<FlexibleStruct>();
 			s.flex = flex;
 			s.fit = fit;
-			// Complex type: Type - skipped (requires marshaling)
 			s.child = child;
 		}
 

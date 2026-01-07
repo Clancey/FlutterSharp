@@ -110,7 +110,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Builder"/> class.
 		/// </summary>
 		public Builder(
-			Func<BuildContext, Widget> builder
+			Func<BuildContext, Widget> builder = null
 		)
 		{
 			var s = GetBackingStruct<BuilderStruct>();

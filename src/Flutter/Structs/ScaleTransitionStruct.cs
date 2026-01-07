@@ -37,7 +37,7 @@ namespace Flutter.Structs
 	internal class ScaleTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
 		// Simple field: scale
-		public IntPtr scale { get; set; }
+		public object scale { get; set; }
 
 		// Simple field: alignment
 		public IntPtr alignment { get; set; }

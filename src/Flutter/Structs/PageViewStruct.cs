@@ -140,9 +140,21 @@ namespace Flutter.Structs
 /// will snap to the center of the viewport.
 		public bool pageSnapping { get; set; }
 
-		// Simple field: onPageChanged
+		// Callback field: onPageChanged
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPageChanged;
+
 /// Called whenever the page in the center of the viewport changes.
-		public IntPtr onPageChanged { get; set; }
+		/// <summary>
+		/// Action identifier for onPageChanged callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPageChangedAction
+		{
+			get => GetString(_onPageChanged);
+			set => SetString(ref _onPageChanged, value);
+		}
 
 		// Simple field: childrenDelegate
 /// A delegate that provides the children for the [PageView].
@@ -167,7 +179,7 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.scrollable.hitTestBehavior}
 /// 
 /// Defaults to [HitTestBehavior.opaque].
-		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
+		public HitTestBehavior hitTestBehavior { get; set; }
 
 		// Has flag for nullable property: scrollBehavior
 		public byte HasscrollBehavior { get; set; }

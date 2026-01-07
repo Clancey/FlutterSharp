@@ -64,14 +64,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DecoratedBox"/> class.
 		/// </summary>
 		public DecoratedBox(
-			Decoration decoration,
-			object position = DecorationPosition.Background,
+			Decoration? decoration = null,
+			DecorationPosition position = DecorationPosition.Background,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<DecoratedBoxStruct>();
 			// Complex type: Decoration? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.position = position;
 			s.child = child;
 		}
 

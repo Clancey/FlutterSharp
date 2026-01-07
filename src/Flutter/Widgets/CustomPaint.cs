@@ -81,7 +81,7 @@ namespace Flutter.Widgets
 		public CustomPaint(
 			object painter,
 			object foregroundPainter,
-			Size size = null,
+			Size? size = null,
 			bool isComplex = false,
 			bool willChange = false,
 			Widget? child = null

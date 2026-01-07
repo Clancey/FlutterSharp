@@ -57,7 +57,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Positioned"/> class.
 		/// </summary>
 		public Positioned(
-			Type debugTypicalAncestorWidgetClass,
 			Widget child,
 			double? left = null,
 			double? top = null,
@@ -80,7 +79,6 @@ namespace Flutter.Widgets
 				s.width = width.Value;
 			if (height.HasValue)
 				s.height = height.Value;
-			// Complex type: Type - skipped (requires marshaling)
 			s.child = child;
 		}
 

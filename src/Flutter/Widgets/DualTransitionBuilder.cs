@@ -36,9 +36,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DualTransitionBuilder"/> class.
 		/// </summary>
 		public DualTransitionBuilder(
-			Animation<double> animation,
-			Func<BuildContext, InvalidType, Widget?, Widget> forwardBuilder,
-			Func<BuildContext, InvalidType, Widget?, Widget> reverseBuilder,
+			Animation<double> animation = null,
+			Func<BuildContext, InvalidType, Widget?, Widget> forwardBuilder = null,
+			Func<BuildContext, InvalidType, Widget?, Widget> reverseBuilder = null,
 			Widget? child = null
 		)
 		{

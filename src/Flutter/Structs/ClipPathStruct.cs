@@ -39,7 +39,7 @@ namespace Flutter.Structs
 /// The default clip, which is used if this property is null, is the
 /// bounding box rectangle of the widget. [ClipRect] is a more
 /// efficient way of obtaining that effect.
-		public IntPtr clipper { get; set; }
+		public object clipper { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.rendering.ClipRectLayer.clipBehavior}

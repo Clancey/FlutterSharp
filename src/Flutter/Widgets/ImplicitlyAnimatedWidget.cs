@@ -89,8 +89,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ImplicitlyAnimatedWidget(
 			TimeSpan duration,
-			Action onEnd,
-			Curve curve = null
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<ImplicitlyAnimatedWidgetStruct>();

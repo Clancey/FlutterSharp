@@ -159,14 +159,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Align"/> class.
 		/// </summary>
 		public Align(
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			double? widthFactor = null,
 			double? heightFactor = null,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<AlignStruct>();
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			if (widthFactor.HasValue)
 				s.widthFactor = widthFactor.Value;
 			if (heightFactor.HasValue)

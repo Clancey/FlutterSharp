@@ -72,13 +72,25 @@ namespace Flutter.Structs
 /// the [ModalBarrier] built by [ModalRoute] pages.
 		public NativeNullable<bool> barrierSemanticsDismissible { get; set; }
 
-		// Simple field: onDismiss
+		// Callback field: onDismiss
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onDismiss;
+
 /// {@macro flutter.widgets.ModalBarrier.onDismiss}
-		public IntPtr onDismiss { get; set; }
+		/// <summary>
+		/// Action identifier for onDismiss callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onDismissAction
+		{
+			get => GetString(_onDismiss);
+			set => SetString(ref _onDismiss, value);
+		}
 
 		// Simple field: clipDetailsNotifier
 /// {@macro flutter.widgets.ModalBarrier.clipDetailsNotifier}
-		public IntPtr clipDetailsNotifier { get; set; }
+		public object clipDetailsNotifier { get; set; }
 
 		// Has flag for nullable property: semanticsOnTapHint
 		public byte HassemanticsOnTapHint { get; set; }

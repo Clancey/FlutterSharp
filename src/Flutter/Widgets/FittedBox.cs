@@ -41,14 +41,14 @@ namespace Flutter.Widgets
 		/// </summary>
 		public FittedBox(
 			BoxFit fit = BoxFit.Contain,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			Clip clipBehavior = Clip.None,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<FittedBoxStruct>();
 			s.fit = fit;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;
 			s.child = child;
 		}

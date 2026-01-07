@@ -57,7 +57,7 @@ namespace Flutter.Structs
 		}
 
 		// Simple field: preferredSize
-		public IntPtr preferredSize { get; set; }
+		public object preferredSize { get; set; }
 
 	}
 }

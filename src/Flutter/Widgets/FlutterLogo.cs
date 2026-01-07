@@ -34,7 +34,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public FlutterLogo(
 			double? size = null,
-			Color textColor = null,
+			Color? textColor = null,
 			TextStyle? style = null,
 			TimeSpan? duration = null,
 			Curve curve = null

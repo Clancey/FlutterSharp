@@ -58,7 +58,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ConstrainedBox"/> class.
 		/// </summary>
 		public ConstrainedBox(
-			BoxConstraints constraints,
+			BoxConstraints? constraints = null,
 			Widget? child = null
 		)
 		{

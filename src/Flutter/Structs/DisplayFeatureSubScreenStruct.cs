@@ -70,7 +70,7 @@ namespace Flutter.Structs
 /// `Offset(double.maxFinite, 0)`, which will cause the top-right
 /// sub-screen to be picked.
 /// {@endtemplate}
-		public IntPtr anchorPoint { get; set; }
+		public object anchorPoint { get; set; }
 
 		// Widget field: child
 		private IntPtr _child;

@@ -56,7 +56,7 @@ namespace Flutter.Widgets
 			Widget child,
 			ScrollController? controller = null,
 			Axis scrollDirection = Axis.Vertical,
-			ISet<object> automaticallyInheritForPlatforms = _kMobilePlatforms
+			ISet<object> automaticallyInheritForPlatforms = null
 		)
 		{
 			var s = GetBackingStruct<PrimaryScrollControllerStruct>();

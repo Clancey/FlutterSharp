@@ -72,10 +72,10 @@ namespace Flutter.Structs
 		}
 
 		// Simple field: deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner
-		public IntPtr deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner { get; set; }
+		public object deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner { get; set; }
 
 		// Simple field: deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView
-		public IntPtr deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView { get; set; }
+		public object deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView { get; set; }
 
 	}
 }

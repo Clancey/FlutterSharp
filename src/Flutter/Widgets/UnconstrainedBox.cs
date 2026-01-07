@@ -52,14 +52,14 @@ namespace Flutter.Widgets
 		public UnconstrainedBox(
 			TextDirection textDirection,
 			object constrainedAxis,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			Clip clipBehavior = Clip.None,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<UnconstrainedBoxStruct>();
 			s.textDirection = textDirection;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;
 			s.child = child;

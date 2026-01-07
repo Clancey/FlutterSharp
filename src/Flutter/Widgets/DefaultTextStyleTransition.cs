@@ -41,10 +41,10 @@ namespace Flutter.Widgets
 		public DefaultTextStyleTransition(
 			TextAlign textAlign,
 			Widget child,
-			TextStyle style,
 			bool softWrap = true,
 			TextOverflow overflow = TextOverflow.Clip,
-			int? maxLines = null
+			int? maxLines = null,
+			TextStyle? style = null
 		)
 		{
 			var s = GetBackingStruct<DefaultTextStyleTransitionStruct>();

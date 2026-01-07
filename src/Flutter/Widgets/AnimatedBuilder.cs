@@ -70,9 +70,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedBuilder"/> class.
 		/// </summary>
 		public AnimatedBuilder(
-			Animation<double> animation,
-			Listenable listenable,
-			Func<BuildContext, Widget?, Widget> builder,
+			Animation<double> animation = null,
+			Listenable listenable = null,
+			Func<BuildContext, Widget?, Widget> builder = null,
 			Widget? child = null
 		)
 		{

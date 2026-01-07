@@ -122,7 +122,7 @@ namespace Flutter.Structs
 
 		// Simple field: fadeOutCurve
 /// The curve of the fade-out animation for the [placeholder].
-		public IntPtr fadeOutCurve { get; set; }
+		public object fadeOutCurve { get; set; }
 
 		// Simple field: fadeInDuration
 /// The duration of the fade-in animation for the [image].
@@ -130,7 +130,7 @@ namespace Flutter.Structs
 
 		// Simple field: fadeInCurve
 /// The curve of the fade-in animation for the [image].
-		public IntPtr fadeInCurve { get; set; }
+		public object fadeInCurve { get; set; }
 
 		// Has flag for nullable property: width
 		public byte Haswidth { get; set; }
@@ -164,7 +164,7 @@ namespace Flutter.Structs
 /// 
 /// * [BlendMode], which includes an illustration of the effect of each blend mode.
 /// * [placeholderColorBlendMode], the color blend mode which applies to the [placeholder].
-		public IntPtr colorBlendMode { get; set; }
+		public object colorBlendMode { get; set; }
 
 		// Simple field: placeholderColor
 /// If non-null, this color is blended with each placeholder image pixel using [placeholderColorBlendMode].
@@ -186,7 +186,7 @@ namespace Flutter.Structs
 /// 
 /// * [BlendMode], which includes an illustration of the effect of each blend mode.
 /// * [colorBlendMode], the color blend mode which applies to the [image].
-		public IntPtr placeholderColorBlendMode { get; set; }
+		public object placeholderColorBlendMode { get; set; }
 
 		// Has flag for nullable property: height
 		public byte Hasheight { get; set; }
@@ -211,7 +211,7 @@ namespace Flutter.Structs
 /// How to inscribe the placeholder image into the space allocated during layout.
 /// 
 /// If not value set, it will fallback to [fit].
-		public IntPtr placeholderFit { get; set; }
+		public object placeholderFit { get; set; }
 
 		// Simple field: filterQuality
 /// The rendering quality of the image.
@@ -223,7 +223,7 @@ namespace Flutter.Structs
 /// The rendering quality of the placeholder image.
 /// 
 /// {@macro flutter.widgets.image.filterQuality}
-		public IntPtr placeholderFilterQuality { get; set; }
+		public object placeholderFilterQuality { get; set; }
 
 		// Simple field: alignment
 /// How to align the image within its bounds.
@@ -252,7 +252,7 @@ namespace Flutter.Structs
 
 		// Simple field: repeat
 /// How to paint any portions of the layout bounds not covered by the image.
-		public IntPtr repeat { get; set; }
+		public object repeat { get; set; }
 
 		// Simple field: matchTextDirection
 /// Whether to paint the image in the direction of the [TextDirection].

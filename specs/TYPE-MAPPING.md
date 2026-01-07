@@ -503,7 +503,7 @@ Maps are typically serialized as JSON due to their dynamic nature.
 
 | Dart Type | C# Type | Notes |
 |-----------|---------|-------|
-| `Set<T>` | `HashSet<T>` | As array |
+| `Set<T>` | `ISet<T>` | As array |
 
 ## Nullable Types
 

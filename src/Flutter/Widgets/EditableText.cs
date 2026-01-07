@@ -239,34 +239,22 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="EditableText"/> class.
 		/// </summary>
 		public EditableText(
-			TextEditingController controller,
-			FocusNode focusNode,
 			TextHeightBehavior textHeightBehavior,
 			ToolbarOptions toolbarOptions,
 			bool showCursor,
 			object smartDashesType,
 			object smartQuotesType,
-			TextStyle style,
 			TextDirection textDirection,
-			Locale locale,
 			object textScaler,
-			Color cursorColor,
-			Color autocorrectionTextRectColor,
-			Color backgroundCursorColor,
-			Color selectionColor,
 			object keyboardType,
 			object textInputAction,
-			Action<bool> onChanged,
-			Action onEditingComplete,
-			Action onSubmitted,
-			Action onSelectionHandleTapped,
 			object mouseCursor,
-			BorderRadiusGeometry cursorRadius,
 			object cursorOffset,
 			bool enableInteractiveSelection,
 			object autofillClient,
-			StrutStyle strutStyle,
 			bool selectionEnabled,
+			TextEditingController controller = null,
+			FocusNode focusNode = null,
 			string obscuringCharacter = "•",
 			bool obscureText = false,
 			TextWidthBasis textWidthBasis = TextWidthBasis.Parent,
@@ -275,17 +263,27 @@ namespace Flutter.Widgets
 			bool showSelectionHandles = false,
 			bool autocorrect = true,
 			bool enableSuggestions = true,
+			TextStyle? style = null,
 			UndoHistoryController? undoController = null,
 			TextAlign? textAlign = TextAlign.Start,
 			object textCapitalization = null,
+			Locale? locale = null,
 			double? textScaleFactor = null,
+			Color? cursorColor = null,
+			Color? autocorrectionTextRectColor = null,
+			Color? backgroundCursorColor = null,
 			int? maxLines = 1,
 			int? minLines = null,
 			bool expands = false,
 			bool autofocus = false,
+			Color? selectionColor = null,
 			TextSelectionControls? selectionControls = null,
+			Action<bool>? onChanged = null,
+			Action onEditingComplete = null,
+			Action onSubmitted = null,
 			Action<string, Map<String, dynamic>> onAppPrivateCommand = null,
 			Action<InvalidType, InvalidType> onSelectionChanged = null,
+			Action onSelectionHandleTapped = null,
 			object groupId = null,
 			Action<InvalidType> onTapOutside = null,
 			Action<InvalidType> onTapUpOutside = null,
@@ -293,6 +291,7 @@ namespace Flutter.Widgets
 			bool rendererIgnoresPointer = false,
 			double cursorWidth = 2.0,
 			double? cursorHeight = null,
+			BorderRadiusGeometry cursorRadius = null,
 			bool cursorOpacityAnimates = false,
 			bool paintCursorAboveText = false,
 			BoxHeightStyle? selectionHeightStyle = null,
@@ -303,7 +302,7 @@ namespace Flutter.Widgets
 			ScrollController? scrollController = null,
 			ScrollPhysics? scrollPhysics = null,
 			bool scribbleEnabled = true,
-			bool stylusHandwritingEnabled = defaultStylusHandwritingEnabled,
+			bool? stylusHandwritingEnabled = null,
 			IEnumerable<string>? autofillHints = null,
 			Clip clipBehavior = Clip.HardEdge,
 			string? restorationId = null,
@@ -312,7 +311,8 @@ namespace Flutter.Widgets
 			ContentInsertionConfiguration? contentInsertionConfiguration = null,
 			Func<BuildContext, EditableTextState, Widget> contextMenuBuilder = null,
 			SpellCheckConfiguration? spellCheckConfiguration = null,
-			TextMagnifierConfiguration magnifierConfiguration = null
+			TextMagnifierConfiguration magnifierConfiguration = null,
+			StrutStyle? strutStyle = null
 		)
 		{
 			var s = GetBackingStruct<EditableTextStruct>();
@@ -383,7 +383,8 @@ namespace Flutter.Widgets
 			// Complex type: ScrollController? - skipped (requires marshaling)
 			// Complex type: ScrollPhysics? - skipped (requires marshaling)
 			s.scribbleEnabled = scribbleEnabled;
-			s.stylusHandwritingEnabled = stylusHandwritingEnabled;
+			if (stylusHandwritingEnabled.HasValue)
+				s.stylusHandwritingEnabled = stylusHandwritingEnabled.Value;
 			// Complex type: IEnumerable<string>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;

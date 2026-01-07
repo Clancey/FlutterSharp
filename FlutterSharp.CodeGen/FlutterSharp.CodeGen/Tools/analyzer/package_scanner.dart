@@ -416,16 +416,18 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
         dartType = _inferTypeFromParameterName(field.name, dartType);
       }
 
+      final hasDefaultValue = defaultValues.containsKey(field.name);
+
       properties.add({
         'name': field.name,
         'dartType': dartType,
-        'isRequired': !_isNullable(field.type),
+        'isRequired': !_isNullable(field.type) && !hasDefaultValue,
         'isNullable': _isNullable(field.type),
         'isNamed': true,
         'defaultValue': defaultValues[field.name],
         'documentation': _getDocumentation(field),
         'isList': _isList(field.type),
-        'isCallback': _isCallback(field.type),
+        'isCallback': _isCallback(field.type, field.name),
         'typeArguments': _getTypeArguments(field.type),
       });
       propertyNames.add(field.name);
@@ -457,7 +459,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
           'defaultValue': param.defaultValueCode,
           'documentation': _getDocumentation(param),
           'isList': _isList(param.type),
-          'isCallback': _isCallback(param.type),
+          'isCallback': _isCallback(param.type, param.name),
           'typeArguments': _getTypeArguments(param.type),
         });
         propertyNames.add(param.name);
@@ -485,7 +487,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       'defaultValue': param.defaultValueCode,
       'documentation': _getDocumentation(param),
       'isList': _isList(param.type),
-      'isCallback': _isCallback(param.type),
+      'isCallback': _isCallback(param.type, param.name),
       'typeArguments': _getTypeArguments(param.type),
     };
   }
@@ -498,19 +500,24 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
     }
 
     // Common parameter name patterns to type mappings
+    // NOTE: AMBIGUOUS parameter names (like 'fit', 'direction', 'behavior', 'position')
+    // are intentionally EXCLUDED from this list. They are handled by widget-context-aware
+    // type mapping in the C# code generator (DartToCSharpMapper.WidgetSpecificParameterTypes)
+    // to ensure each widget gets the correct type for its specific context.
     final nameToType = {
       // Flutter layout enums (commonly unresolved by analyzer)
+      // UNAMBIGUOUS parameter names only
       'mainAxisAlignment': 'MainAxisAlignment',
-      'crossAxisAlignment': 'CrossAxisAlignment',
+      // crossAxisAlignment is AMBIGUOUS: CrossAxisAlignment vs WrapCrossAlignment - excluded
       'mainAxisSize': 'MainAxisSize',
       'verticalDirection': 'VerticalDirection',
       'textBaseline': 'TextBaseline?',
       'flexFit': 'FlexFit',
-      'fit': 'BoxFit',
+      // 'fit' is AMBIGUOUS: FlexFit vs BoxFit vs StackFit - excluded, handled in C#
       'filterQuality': 'FilterQuality',
       'blendMode': 'BlendMode',
       'stackFit': 'StackFit',
-      'overflow': 'TextOverflow',
+      // 'overflow' is somewhat ambiguous but usually TextOverflow
       'textOverflow': 'TextOverflow',
       'softWrap': 'bool',
       'maxLines': 'int?',
@@ -534,7 +541,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       'restorationId': 'String?',
       'clipBehavior': 'Clip',
       // Alignment and spacing
-      'alignment': 'AlignmentGeometry?',
+      // 'alignment' is AMBIGUOUS: AlignmentGeometry vs WrapAlignment vs TableCellVerticalAlignment - excluded
       'padding': 'EdgeInsetsGeometry?',
       'margin': 'EdgeInsetsGeometry?',
       'decoration': 'Decoration?',
@@ -609,7 +616,168 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       'constraintsTransform': 'BoxConstraintsTransform',
     };
 
+    // Check for callback type mappings based on name patterns
+    final callbackTypeMapping = _inferCallbackType(paramName);
+    if (callbackTypeMapping != null) {
+      return callbackTypeMapping;
+    }
+
     return nameToType[paramName] ?? fallback;
+  }
+
+  /// Infers the callback type from a parameter name
+  String? _inferCallbackType(String paramName) {
+    // Gesture tap callbacks
+    if (paramName == 'onTap' || paramName == 'onSecondaryTap' ||
+        paramName == 'onDoubleTap') {
+      return 'GestureTapCallback?';
+    }
+    if (paramName == 'onTapDown' || paramName == 'onSecondaryTapDown' ||
+        paramName == 'onTertiaryTapDown' || paramName == 'onDoubleTapDown') {
+      return 'GestureTapDownCallback?';
+    }
+    if (paramName == 'onTapUp' || paramName == 'onSecondaryTapUp' ||
+        paramName == 'onTertiaryTapUp') {
+      return 'GestureTapUpCallback?';
+    }
+    if (paramName == 'onTapCancel' || paramName == 'onSecondaryTapCancel' ||
+        paramName == 'onTertiaryTapCancel' || paramName == 'onDoubleTapCancel') {
+      return 'GestureTapCancelCallback?';
+    }
+    if (paramName == 'onTapMove') {
+      return 'GestureTapMoveCallback?';
+    }
+
+    // Long press callbacks
+    if (paramName == 'onLongPress' || paramName == 'onSecondaryLongPress' ||
+        paramName == 'onTertiaryLongPress') {
+      return 'GestureLongPressCallback?';
+    }
+    if (paramName == 'onLongPressDown' || paramName == 'onSecondaryLongPressDown' ||
+        paramName == 'onTertiaryLongPressDown') {
+      return 'GestureLongPressDownCallback?';
+    }
+    if (paramName == 'onLongPressUp' || paramName == 'onSecondaryLongPressUp' ||
+        paramName == 'onTertiaryLongPressUp') {
+      return 'GestureLongPressUpCallback?';
+    }
+    if (paramName == 'onLongPressStart' || paramName == 'onSecondaryLongPressStart' ||
+        paramName == 'onTertiaryLongPressStart') {
+      return 'GestureLongPressStartCallback?';
+    }
+    if (paramName == 'onLongPressEnd' || paramName == 'onSecondaryLongPressEnd' ||
+        paramName == 'onTertiaryLongPressEnd') {
+      return 'GestureLongPressEndCallback?';
+    }
+    if (paramName == 'onLongPressCancel' || paramName == 'onSecondaryLongPressCancel' ||
+        paramName == 'onTertiaryLongPressCancel') {
+      return 'GestureLongPressCancelCallback?';
+    }
+    if (paramName == 'onLongPressMoveUpdate' || paramName == 'onSecondaryLongPressMoveUpdate' ||
+        paramName == 'onTertiaryLongPressMoveUpdate') {
+      return 'GestureLongPressMoveUpdateCallback?';
+    }
+
+    // Drag callbacks
+    if (paramName == 'onVerticalDragDown' || paramName == 'onHorizontalDragDown' ||
+        paramName == 'onPanDown') {
+      return 'GestureDragDownCallback?';
+    }
+    if (paramName == 'onVerticalDragStart' || paramName == 'onHorizontalDragStart' ||
+        paramName == 'onPanStart') {
+      return 'GestureDragStartCallback?';
+    }
+    if (paramName == 'onVerticalDragUpdate' || paramName == 'onHorizontalDragUpdate' ||
+        paramName == 'onPanUpdate') {
+      return 'GestureDragUpdateCallback?';
+    }
+    if (paramName == 'onVerticalDragEnd' || paramName == 'onHorizontalDragEnd' ||
+        paramName == 'onPanEnd') {
+      return 'GestureDragEndCallback?';
+    }
+    if (paramName == 'onVerticalDragCancel' || paramName == 'onHorizontalDragCancel' ||
+        paramName == 'onPanCancel') {
+      return 'GestureDragCancelCallback?';
+    }
+
+    // Scale callbacks
+    if (paramName == 'onScaleStart') {
+      return 'GestureScaleStartCallback?';
+    }
+    if (paramName == 'onScaleUpdate') {
+      return 'GestureScaleUpdateCallback?';
+    }
+    if (paramName == 'onScaleEnd') {
+      return 'GestureScaleEndCallback?';
+    }
+
+    // Force press callbacks
+    if (paramName == 'onForcePressStart') {
+      return 'GestureForcePressStartCallback?';
+    }
+    if (paramName == 'onForcePressPeak') {
+      return 'GestureForcePressPeakCallback?';
+    }
+    if (paramName == 'onForcePressUpdate') {
+      return 'GestureForcePressUpdateCallback?';
+    }
+    if (paramName == 'onForcePressEnd') {
+      return 'GestureForcePressEndCallback?';
+    }
+
+    // Pointer event listeners
+    if (paramName == 'onPointerDown') {
+      return 'PointerDownEventListener?';
+    }
+    if (paramName == 'onPointerMove') {
+      return 'PointerMoveEventListener?';
+    }
+    if (paramName == 'onPointerUp') {
+      return 'PointerUpEventListener?';
+    }
+    if (paramName == 'onPointerCancel') {
+      return 'PointerCancelEventListener?';
+    }
+    if (paramName == 'onPointerHover' || paramName == 'onHover') {
+      return 'PointerHoverEventListener?';
+    }
+    if (paramName == 'onPointerEnter' || paramName == 'onEnter') {
+      return 'PointerEnterEventListener?';
+    }
+    if (paramName == 'onPointerExit' || paramName == 'onExit') {
+      return 'PointerExitEventListener?';
+    }
+    if (paramName == 'onPointerSignal') {
+      return 'PointerSignalEventListener?';
+    }
+    if (paramName == 'onPointerPanZoomStart') {
+      return 'PointerPanZoomStartEventListener?';
+    }
+    if (paramName == 'onPointerPanZoomUpdate') {
+      return 'PointerPanZoomUpdateEventListener?';
+    }
+    if (paramName == 'onPointerPanZoomEnd') {
+      return 'PointerPanZoomEndEventListener?';
+    }
+
+    // Common callbacks
+    if (paramName == 'onPressed' || paramName == 'onEnd' || paramName == 'onDismissed') {
+      return 'VoidCallback?';
+    }
+    if (paramName == 'onChanged') {
+      return 'ValueChanged<bool>?';
+    }
+    if (paramName == 'onFocusChange') {
+      return 'ValueChanged<bool>?';
+    }
+    if (paramName == 'onShowFocusHighlight' || paramName == 'onShowHoverHighlight') {
+      return 'ValueChanged<bool>?';
+    }
+    if (paramName == 'onViewCreated') {
+      return 'PlatformViewCreatedCallback?';
+    }
+
+    return null;
   }
 
   /// Gets the namespace/library path for an element
@@ -708,7 +876,8 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Checks if a type is a callback/function
-  bool _isCallback(type) {
+  /// Also accepts optional paramName to detect callbacks by naming convention
+  bool _isCallback(type, [String? paramName]) {
     // Check if it's a direct FunctionType
     if (type.runtimeType.toString().contains('FunctionType')) {
       return true;
@@ -716,19 +885,73 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
 
     // Check for callback typedef names (e.g., VoidCallback, ValueChanged)
     final typeString = _getTypeString(type);
+
+    // If type is InvalidType but parameter name suggests a callback, use name-based detection
+    if (paramName != null && (typeString == 'InvalidType' || typeString.contains('InvalidType'))) {
+      if (_isCallbackByName(paramName)) {
+        return true;
+      }
+    }
+
     final callbackTypeNames = [
-      'VoidCallback', 'ValueChanged', 'GestureTapCallback', 'GestureTapDownCallback',
-      'GestureTapUpCallback', 'GestureLongPressCallback', 'GestureDragStartCallback',
-      'GestureDragUpdateCallback', 'GestureDragEndCallback', 'GestureScaleStartCallback',
-      'GestureScaleUpdateCallback', 'GestureScaleEndCallback', 'PointerDownEventListener',
-      'PointerMoveEventListener', 'PointerUpEventListener', 'PointerCancelEventListener',
-      'DismissedCallback', 'TransitionBuilder', 'AnimatedWidgetBuilder', 'IndexedWidgetBuilder',
-      'WidgetBuilder', 'NullableIndexedWidgetBuilder', 'DragTargetAccept', 'DragTargetAcceptWithDetails',
-      'DragTargetBuilder', 'DragTargetLeave', 'DragTargetMove', 'DragTargetWillAccept',
-      'ReorderCallback', 'FormFieldBuilder', 'FormFieldSetter', 'FormFieldValidator',
+      // Basic callbacks
+      'VoidCallback', 'ValueChanged', 'ValueSetter', 'ValueGetter',
+
+      // Gesture tap callbacks
+      'GestureTapCallback', 'GestureTapDownCallback', 'GestureTapUpCallback',
+      'GestureTapCancelCallback', 'GestureTapMoveCallback',
+
+      // Gesture long press callbacks
+      'GestureLongPressCallback', 'GestureLongPressDownCallback', 'GestureLongPressUpCallback',
+      'GestureLongPressStartCallback', 'GestureLongPressEndCallback',
+      'GestureLongPressCancelCallback', 'GestureLongPressMoveUpdateCallback',
+
+      // Gesture drag callbacks
+      'GestureDragStartCallback', 'GestureDragUpdateCallback', 'GestureDragEndCallback',
+      'GestureDragDownCallback', 'GestureDragCancelCallback',
+
+      // Gesture scale callbacks
+      'GestureScaleStartCallback', 'GestureScaleUpdateCallback', 'GestureScaleEndCallback',
+
+      // Gesture force press callbacks
+      'GestureForcePressStartCallback', 'GestureForcePressPeakCallback',
+      'GestureForcePressUpdateCallback', 'GestureForcePressEndCallback',
+
+      // Pointer event listeners
+      'PointerDownEventListener', 'PointerMoveEventListener', 'PointerUpEventListener',
+      'PointerCancelEventListener', 'PointerEnterEventListener', 'PointerExitEventListener',
+      'PointerHoverEventListener', 'PointerSignalEventListener',
+      'PointerPanZoomStartEventListener', 'PointerPanZoomUpdateEventListener',
+      'PointerPanZoomEndEventListener',
+
+      // Animation and transition callbacks
+      'DismissedCallback', 'TransitionBuilder', 'AnimatedWidgetBuilder',
+
+      // Builder callbacks
+      'IndexedWidgetBuilder', 'WidgetBuilder', 'NullableIndexedWidgetBuilder',
+      'ValueWidgetBuilder',
+
+      // Drag and drop callbacks
+      'DragTargetAccept', 'DragTargetAcceptWithDetails', 'DragTargetBuilder',
+      'DragTargetLeave', 'DragTargetMove', 'DragTargetWillAccept', 'ReorderCallback',
+
+      // Form callbacks
+      'FormFieldBuilder', 'FormFieldSetter', 'FormFieldValidator',
+
+      // Route and locale callbacks
       'GenerateAppTitle', 'InitialRouteListFactory', 'LocaleListResolutionCallback',
-      'LocaleResolutionCallback', 'NotificationListenerCallback', 'PageRouteFactory',
-      'RouteFactory', 'SelectionChangedCallback', 'ValueWidgetBuilder',
+      'LocaleResolutionCallback', 'PageRouteFactory', 'RouteFactory',
+
+      // Notification and selection callbacks
+      'NotificationListenerCallback', 'SelectionChangedCallback',
+
+      // Platform callbacks
+      'PlatformViewCreatedCallback',
+
+      // Shader callback
+      'ShaderCallback',
+
+      // Other callbacks ending in 'Callback' or 'Listener'
     ];
     for (final name in callbackTypeNames) {
       if (typeString.startsWith(name)) {
@@ -736,6 +959,50 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       }
     }
     return false;
+  }
+
+  /// Checks if a parameter name follows callback naming conventions
+  /// Common Flutter patterns: onXxx, xxxCallback, xxxListener, xxxHandler, builder
+  bool _isCallbackByName(String paramName) {
+    // Common callback prefixes in Flutter
+    if (paramName.startsWith('on')) {
+      // onTap, onPressed, onChanged, onTapDown, onLongPress, etc.
+      return true;
+    }
+
+    // Common callback suffixes
+    final lowerName = paramName.toLowerCase();
+    if (lowerName.endsWith('callback') ||
+        lowerName.endsWith('listener') ||
+        lowerName.endsWith('handler') ||
+        lowerName.endsWith('builder') ||
+        lowerName.endsWith('factory')) {
+      return true;
+    }
+
+    // Specific known callback parameter names
+    final knownCallbackNames = {
+      'builder',
+      'itemBuilder',
+      'separatorBuilder',
+      'childBuilder',
+      'headerBuilder',
+      'footerBuilder',
+      'layoutBuilder',
+      'transitionBuilder',
+      'routeBuilder',
+      'pageBuilder',
+      'errorBuilder',
+      'loadingBuilder',
+      'placeholderBuilder',
+      'emptyBuilder',
+      'validator',
+      'onSaved',
+      'onFieldSubmitted',
+      'inputFormatters',
+    };
+
+    return knownCallbackNames.contains(paramName);
   }
 
   /// Gets type arguments for generic types

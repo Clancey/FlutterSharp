@@ -37,18 +37,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawImage"/> class.
 		/// </summary>
 		public RawImage(
-			ImageProvider image,
-			Color color,
-			Animation<double> opacity,
 			object colorBlendMode,
 			BoxFit fit,
 			object centerSlice,
+			ImageProvider image = null,
 			string? debugImageLabel = null,
 			double? width = null,
 			double? height = null,
 			double scale = 1.0,
+			Color? color = null,
+			Animation<double> opacity = null,
 			FilterQuality filterQuality = FilterQuality.Medium,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			object repeat = null,
 			bool matchTextDirection = false,
 			bool invertColors = false,
@@ -68,7 +68,7 @@ namespace Flutter.Widgets
 			s.filterQuality = filterQuality;
 			// Complex type: object - skipped (requires marshaling)
 			s.fit = fit;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.matchTextDirection = matchTextDirection;

@@ -343,11 +343,11 @@ namespace Flutter.Structs
 
 		// Simple field: smartDashesType
 /// {@macro flutter.services.TextInputConfiguration.smartDashesType}
-		public IntPtr smartDashesType { get; set; }
+		public object smartDashesType { get; set; }
 
 		// Simple field: smartQuotesType
 /// {@macro flutter.services.TextInputConfiguration.smartQuotesType}
-		public IntPtr smartQuotesType { get; set; }
+		public object smartQuotesType { get; set; }
 
 		// Simple field: enableSuggestions
 /// {@macro flutter.services.TextInputConfiguration.enableSuggestions}
@@ -407,7 +407,7 @@ namespace Flutter.Structs
 /// * [TextCapitalization], for a description of each capitalization behavior.
 /// 
 /// {@endtemplate}
-		public IntPtr textCapitalization { get; set; }
+		public object textCapitalization { get; set; }
 
 		// Simple field: locale
 /// Used to select a font when the same Unicode character can
@@ -439,7 +439,7 @@ namespace Flutter.Structs
 
 		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}
-		public IntPtr textScaler { get; set; }
+		public object textScaler { get; set; }
 
 		// Simple field: cursorColor
 /// The color to use when painting the cursor.
@@ -659,13 +659,16 @@ namespace Flutter.Structs
 /// Defaults to [TextInputType.text] if [maxLines] is one and
 /// [TextInputType.multiline] otherwise.
 /// {@endtemplate}
-		public IntPtr keyboardType { get; set; }
+		public object keyboardType { get; set; }
 
 		// Simple field: textInputAction
 /// The type of action button to use with the soft keyboard.
-		public IntPtr textInputAction { get; set; }
+		public object textInputAction { get; set; }
 
-		// Simple field: onChanged
+		// Callback field: onChanged
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onChanged;
+
 /// {@template flutter.widgets.editableText.onChanged}
 /// Called when the user initiates a change to the TextField's
 /// value: when they have inserted or deleted text.
@@ -715,9 +718,21 @@ namespace Flutter.Structs
 /// which are more specialized input change notifications.
 /// * [TextEditingController], which implements the [Listenable] interface
 /// and notifies its listeners on [TextEditingValue] changes.
-		public IntPtr onChanged { get; set; }
+		/// <summary>
+		/// Action identifier for onChanged callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onChangedAction
+		{
+			get => GetString(_onChanged);
+			set => SetString(ref _onChanged, value);
+		}
 
-		// Simple field: onEditingComplete
+		// Callback field: onEditingComplete
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onEditingComplete;
+
 /// {@template flutter.widgets.editableText.onEditingComplete}
 /// Called when the user submits editable content (e.g., user presses the "done"
 /// button on the keyboard).
@@ -736,9 +751,21 @@ namespace Flutter.Structs
 /// 
 /// Providing [onEditingComplete] prevents the aforementioned default behavior.
 /// {@endtemplate}
-		public IntPtr onEditingComplete { get; set; }
+		/// <summary>
+		/// Action identifier for onEditingComplete callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onEditingCompleteAction
+		{
+			get => GetString(_onEditingComplete);
+			set => SetString(ref _onEditingComplete, value);
+		}
 
-		// Simple field: onSubmitted
+		// Callback field: onSubmitted
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSubmitted;
+
 /// {@template flutter.widgets.editableText.onSubmitted}
 /// Called when the user indicates that they are done editing the text in the
 /// field.
@@ -759,7 +786,16 @@ namespace Flutter.Structs
 /// translates the enter key to a done action, but `tester.sendKeyEvent` sends
 /// the key to the framework only.
 /// {@endtemplate}
-		public IntPtr onSubmitted { get; set; }
+		/// <summary>
+		/// Action identifier for onSubmitted callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSubmittedAction
+		{
+			get => GetString(_onSubmitted);
+			set => SetString(ref _onSubmitted, value);
+		}
 
 		// Has flag for nullable property: onAppPrivateCommand
 		public byte HasonAppPrivateCommand { get; set; }
@@ -818,9 +854,21 @@ namespace Flutter.Structs
 			set => SetString(ref _onSelectionChanged, value);
 		}
 
-		// Simple field: onSelectionHandleTapped
+		// Callback field: onSelectionHandleTapped
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSelectionHandleTapped;
+
 /// {@macro flutter.widgets.SelectionOverlay.onSelectionHandleTapped}
-		public IntPtr onSelectionHandleTapped { get; set; }
+		/// <summary>
+		/// Action identifier for onSelectionHandleTapped callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSelectionHandleTappedAction
+		{
+			get => GetString(_onSelectionHandleTapped);
+			set => SetString(ref _onSelectionHandleTapped, value);
+		}
 
 		// Simple field: groupId
 /// {@template flutter.widgets.editableText.groupId}
@@ -964,7 +1012,7 @@ namespace Flutter.Structs
 /// appearance of the mouse pointer. All other properties related to "cursor"
 /// stands for the text cursor, which is usually a blinking vertical line at
 /// the editing position.
-		public IntPtr mouseCursor { get; set; }
+		public object mouseCursor { get; set; }
 
 		// Simple field: rendererIgnoresPointer
 /// Whether the caller will provide gesture handling (true), or if the
@@ -1036,7 +1084,7 @@ namespace Flutter.Structs
 
 		// Simple field: cursorOffset
 /// {@macro flutter.rendering.RenderEditable.cursorOffset}
-		public IntPtr cursorOffset { get; set; }
+		public object cursorOffset { get; set; }
 
 		// Simple field: paintCursorAboveText
 /// {@macro flutter.rendering.RenderEditable.paintCursorAboveText}
@@ -1060,7 +1108,7 @@ namespace Flutter.Structs
 /// This setting is only honored on iOS devices.
 /// 
 /// Defaults to [Brightness.light].
-		public IntPtr keyboardAppearance { get; set; }
+		public object keyboardAppearance { get; set; }
 
 		// Simple field: scrollPadding
 /// {@template flutter.widgets.editableText.scrollPadding}
@@ -1245,7 +1293,7 @@ namespace Flutter.Structs
 /// 
 /// When null, this widget's [EditableTextState] will be used as the
 /// [AutofillClient]. This property may override [autofillHints].
-		public IntPtr autofillClient { get; set; }
+		public object autofillClient { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}

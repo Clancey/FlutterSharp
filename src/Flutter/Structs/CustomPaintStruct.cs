@@ -73,11 +73,11 @@ namespace Flutter.Structs
 	{
 		// Simple field: painter
 /// The painter that paints before the children.
-		public IntPtr painter { get; set; }
+		public object painter { get; set; }
 
 		// Simple field: foregroundPainter
 /// The painter that paints after the children.
-		public IntPtr foregroundPainter { get; set; }
+		public object foregroundPainter { get; set; }
 
 		// Simple field: size
 /// The size that this [CustomPaint] should aim for, given the layout

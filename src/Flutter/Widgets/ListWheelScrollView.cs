@@ -76,8 +76,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ListWheelScrollView(
 			double itemExtent,
-			Action onSelectedItemChanged,
-			ListWheelChildDelegate childDelegate,
 			List<Widget> children,
 			ScrollController? controller = null,
 			ScrollPhysics? physics = null,
@@ -88,9 +86,11 @@ namespace Flutter.Widgets
 			double magnification = 1.0,
 			double overAndUnderCenterOpacity = 1.0,
 			double squeeze = 1.0,
+			Action onSelectedItemChanged = null,
 			bool renderChildrenOutsideViewport = false,
+			ListWheelChildDelegate childDelegate = null,
 			Clip clipBehavior = Clip.HardEdge,
-			PlatformViewHitTestBehavior hitTestBehavior = HitTestBehavior.Opaque,
+			HitTestBehavior hitTestBehavior = HitTestBehavior.Opaque,
 			string? restorationId = null,
 			ScrollBehavior? scrollBehavior = null,
 			DragStartBehavior dragStartBehavior = DragStartBehavior.Start

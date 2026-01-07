@@ -50,7 +50,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverPrototypeExtentList(
 			Widget prototypeItem,
-			SliverChildDelegate @delegate
+			SliverChildDelegate @delegate = null
 		)
 		{
 			var s = GetBackingStruct<SliverPrototypeExtentListStruct>();

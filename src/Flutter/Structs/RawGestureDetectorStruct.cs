@@ -85,7 +85,7 @@ namespace Flutter.Structs
 /// 
 /// This defaults to [HitTestBehavior.deferToChild] if [child] is not null and
 /// [HitTestBehavior.translucent] if child is null.
-		public IntPtr behavior { get; set; }
+		public HitTestBehavior behavior { get; set; }
 
 		// Simple field: excludeFromSemantics
 /// Whether to exclude these gestures from the semantics tree. For

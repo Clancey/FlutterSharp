@@ -90,7 +90,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedWidget"/> class.
 		/// </summary>
 		public AnimatedWidget(
-			Listenable listenable
+			Listenable listenable = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedWidgetStruct>();

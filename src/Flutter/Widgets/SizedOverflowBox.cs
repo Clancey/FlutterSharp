@@ -37,12 +37,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SizedOverflowBox(
 			Size size,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<SizedOverflowBoxStruct>();
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: Size - skipped (requires marshaling)
 			s.child = child;
 		}

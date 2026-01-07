@@ -48,16 +48,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Listener"/> class.
 		/// </summary>
 		public Listener(
-			Action onPointerDown,
-			Action onPointerMove,
-			Action onPointerUp,
-			Action onPointerHover,
-			Action onPointerCancel,
-			Action onPointerPanZoomStart,
-			Action onPointerPanZoomUpdate,
-			Action onPointerPanZoomEnd,
-			Action onPointerSignal,
-			object behavior = HitTestBehavior.DeferToChild,
+			Action? onPointerDown = null,
+			Action? onPointerMove = null,
+			Action? onPointerUp = null,
+			Action? onPointerHover = null,
+			Action? onPointerCancel = null,
+			Action? onPointerPanZoomStart = null,
+			Action? onPointerPanZoomUpdate = null,
+			Action? onPointerPanZoomEnd = null,
+			Action? onPointerSignal = null,
+			HitTestBehavior behavior = HitTestBehavior.DeferToChild,
 			Widget? child = null
 		)
 		{
@@ -71,7 +71,7 @@ namespace Flutter.Widgets
 			// Complex type: Action? - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.behavior = behavior;
 			s.child = child;
 		}
 

@@ -115,12 +115,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Wrap(
 			TextDirection textDirection,
-			object direction = Axis.Horizontal,
-			AlignmentGeometry? alignment = WrapAlignment.Start,
+			Axis direction = Axis.Horizontal,
+			WrapAlignment alignment = WrapAlignment.Start,
 			double spacing = 0.0,
-			AlignmentGeometry runAlignment = WrapAlignment.Start,
+			WrapAlignment runAlignment = WrapAlignment.Start,
 			double runSpacing = 0.0,
-			CrossAxisAlignment crossAxisAlignment = WrapCrossAlignment.Start,
+			WrapCrossAlignment crossAxisAlignment = WrapCrossAlignment.Start,
 			VerticalDirection verticalDirection = VerticalDirection.Down,
 			Clip clipBehavior = Clip.None,
 			List<Widget> children = null
@@ -129,10 +129,10 @@ namespace Flutter.Widgets
 			if (children != null)
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<WrapStruct>();
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			s.direction = direction;
+			s.alignment = alignment;
 			s.spacing = spacing;
-			// Complex type: AlignmentGeometry - skipped (requires marshaling)
+			s.runAlignment = runAlignment;
 			s.runSpacing = runSpacing;
 			s.crossAxisAlignment = crossAxisAlignment;
 			s.textDirection = textDirection;

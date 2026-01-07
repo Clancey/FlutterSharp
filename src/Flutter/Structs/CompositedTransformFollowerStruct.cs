@@ -74,7 +74,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 /// 
 /// Defaults to [Alignment.topLeft].
-		public IntPtr targetAnchor { get; set; }
+		public object targetAnchor { get; set; }
 
 		// Simple field: followerAnchor
 /// The anchor point on this widget that will line up with [targetAnchor] on
@@ -83,7 +83,7 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.CompositedTransformFollower.targetAnchor}
 /// 
 /// Defaults to [Alignment.topLeft].
-		public IntPtr followerAnchor { get; set; }
+		public object followerAnchor { get; set; }
 
 		// Simple field: offset
 /// The additional offset to apply to the [targetAnchor] of the linked

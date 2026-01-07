@@ -100,8 +100,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="OverlayPortal"/> class.
 		/// </summary>
 		public OverlayPortal(
-			OverlayPortalController controller,
-			Func<BuildContext, Widget> overlayChildBuilder,
+			OverlayPortalController controller = null,
+			Func<BuildContext, Widget> overlayChildBuilder = null,
 			Widget? child = null
 		)
 		{

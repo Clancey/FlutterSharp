@@ -83,9 +83,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public IndexedStack(
 			TextDirection textDirection,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			Clip clipBehavior = Clip.HardEdge,
-			object sizing = StackFit.Loose,
+			StackFit sizing = StackFit.Loose,
 			int? index = 0,
 			List<Widget> children = null
 		)
@@ -93,10 +93,10 @@ namespace Flutter.Widgets
 			if (children != null)
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<IndexedStackStruct>();
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.textDirection = textDirection;
 			s.clipBehavior = clipBehavior;
-			// Complex type: object - skipped (requires marshaling)
+			s.sizing = sizing;
 			if (index.HasValue)
 				s.index = index.Value;
 			// Children are set in PrepareForSending to support collection initializers

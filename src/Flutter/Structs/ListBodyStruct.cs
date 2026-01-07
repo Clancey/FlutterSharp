@@ -36,7 +36,7 @@ namespace Flutter.Structs
 	{
 		// Simple field: mainAxis
 /// The direction to use as the main axis.
-		public IntPtr mainAxis { get; set; }
+		public Axis mainAxis { get; set; }
 
 		// Simple field: reverse
 /// Whether the list body positions children in the reading direction.

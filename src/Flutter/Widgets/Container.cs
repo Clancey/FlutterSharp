@@ -156,16 +156,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Container"/> class.
 		/// </summary>
 		public Container(
-			AlignmentGeometry alignment,
-			EdgeInsetsGeometry padding,
-			Color color,
-			Decoration decoration,
-			Decoration foregroundDecoration,
-			BoxConstraints constraints,
-			EdgeInsetsGeometry margin,
-			Matrix4 transform,
-			AlignmentGeometry transformAlignment,
 			Widget? child = null,
+			AlignmentGeometry alignment = null,
+			EdgeInsetsGeometry? padding = null,
+			Color? color = null,
+			Decoration? decoration = null,
+			Decoration? foregroundDecoration = null,
+			BoxConstraints? constraints = null,
+			EdgeInsetsGeometry? margin = null,
+			Matrix4? transform = null,
+			AlignmentGeometry? transformAlignment = null,
 			Clip clipBehavior = Clip.None,
 			double? width = null,
 			double? height = null
@@ -173,7 +173,7 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<ContainerStruct>();
 			s.child = child;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: Decoration? - skipped (requires marshaling)

@@ -43,7 +43,7 @@ namespace Flutter.Structs
 /// Defaults to [HitTestBehavior.deferToChild].
 /// 
 /// See [HitTestBehavior] for the allowed values and their meanings.
-		public IntPtr behavior { get; set; }
+		public HitTestBehavior behavior { get; set; }
 
 		// Has flag for nullable property: onTapOutside
 		public byte HasonTapOutside { get; set; }

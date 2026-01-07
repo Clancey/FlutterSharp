@@ -77,16 +77,16 @@ namespace Flutter.Structs
 		public double bottom { get; set; }
 
 		// Simple field: topLeft
-		public IntPtr topLeft { get; set; }
+		public object topLeft { get; set; }
 
 		// Simple field: topRight
-		public IntPtr topRight { get; set; }
+		public object topRight { get; set; }
 
 		// Simple field: bottomLeft
-		public IntPtr bottomLeft { get; set; }
+		public object bottomLeft { get; set; }
 
 		// Simple field: bottomRight
-		public IntPtr bottomRight { get; set; }
+		public object bottomRight { get; set; }
 
 		// Simple field: flipped
 		public IntPtr flipped { get; set; }

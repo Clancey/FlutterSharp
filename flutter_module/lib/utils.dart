@@ -623,12 +623,11 @@ dynamic parseInvalidType(dynamic input) {
 }
 
 /// Placeholder parser for Widget types that couldn't be directly parsed.
+/// Note: This is a stub that returns null. Actual widget parsing should use
+/// DynamicWidgetBuilder.buildFromPointer with proper BuildContext.
 Widget? parseWidget(dynamic input) {
-  if (input == null) return null;
-  // If it's a pointer, try to build from it
-  if (input is Pointer) {
-    return DynamicWidgetBuilder.buildFromPointer(input, null);
-  }
+  // Widget parsing requires BuildContext which is not available in utility functions.
+  // This stub returns null - actual widget parsing should be done in the parser.
   return null;
 }
 

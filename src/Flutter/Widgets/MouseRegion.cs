@@ -53,10 +53,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MouseRegion"/> class.
 		/// </summary>
 		public MouseRegion(
-			Action onEnter,
-			Action onHover,
-			Action onExit,
-			PlatformViewHitTestBehavior hitTestBehavior,
+			HitTestBehavior hitTestBehavior,
+			Action? onEnter = null,
+			Action? onHover = null,
+			Action? onExit = null,
 			object cursor = null,
 			bool opaque = true,
 			Widget? child = null

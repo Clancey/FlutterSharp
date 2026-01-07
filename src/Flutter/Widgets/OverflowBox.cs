@@ -44,17 +44,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="OverflowBox"/> class.
 		/// </summary>
 		public OverflowBox(
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			double? minWidth = null,
 			double? maxWidth = null,
 			double? minHeight = null,
 			double? maxHeight = null,
-			BoxFit? fit = null,
+			OverflowBoxFit? fit = null,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<OverflowBoxStruct>();
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			if (minWidth.HasValue)
 				s.minWidth = minWidth.Value;
 			if (maxWidth.HasValue)
@@ -63,8 +63,7 @@ namespace Flutter.Widgets
 				s.minHeight = minHeight.Value;
 			if (maxHeight.HasValue)
 				s.maxHeight = maxHeight.Value;
-			if (fit.HasValue)
-				s.fit = fit.Value;
+			// Nullable reference type: OverflowBoxFit - skipped
 			s.child = child;
 		}
 

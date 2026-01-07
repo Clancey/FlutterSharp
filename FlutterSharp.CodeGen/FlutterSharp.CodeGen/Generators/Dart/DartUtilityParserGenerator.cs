@@ -48,10 +48,15 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		sb.AppendLine("// </auto-generated>");
 		sb.AppendLine();
 		sb.AppendLine("import 'dart:ffi' hide Size;");
+		sb.AppendLine("import 'dart:collection';  // For Set/HashSet");
 		sb.AppendLine("import 'dart:ui';");
 		sb.AppendLine("import 'package:ffi/ffi.dart';");
 		sb.AppendLine("import 'package:flutter/material.dart';");
 		sb.AppendLine("import 'package:flutter/widgets.dart';");
+		sb.AppendLine("import 'package:flutter/gestures.dart';  // For gesture callbacks");
+		sb.AppendLine("import 'package:flutter/rendering.dart';  // For PlatformViewHitTestBehavior, PointerSignalEventListener, etc.");
+		sb.AppendLine("import 'package:flutter/services.dart';  // For PointerEnterEventListener, PlatformViewCreatedCallback, etc.");
+		sb.AppendLine("import 'package:flutter_module/mauiRenderer.dart' show methodChannel;  // For callback invocation");
 		sb.AppendLine("import '../flutter_sharp_structs.dart';");
 		sb.AppendLine();
 
@@ -410,8 +415,8 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 				case "LinearGradient":
 				case "RadialGradient":
 				case "SweepGradient":
-					// Gradient types are complex - return null for now
-					return "null /* TODO: Gradient parsing not yet implemented */";
+					// Gradient types are complex - throw for now since abstract Gradient can't have a simple default
+					return null; // Will generate UnimplementedError throw
 				default:
 					// For other types, try to auto-generate if we have constructor info
 					return null;
@@ -700,10 +705,7 @@ DateTime {{ parser_name }}(int millisecondsSinceEpoch) {
 			sb.AppendLine("// These functions create Flutter callbacks that dispatch to C# via method channel.");
 			sb.AppendLine("// The actionId parameter is a string identifier for the C# action handler.");
 			sb.AppendLine();
-
-			// Import methodChannel (should already be imported via maui_flutter.dart)
-			sb.AppendLine("import 'package:flutter_module/mauiRenderer.dart' show methodChannel;");
-			sb.AppendLine("import 'package:flutter/gestures.dart';");
+			// Note: Imports for gestures.dart and mauiRenderer.dart are now at the top of the file
 			sb.AppendLine();
 
 			// Helper function to invoke action
@@ -780,7 +782,7 @@ DateTime {{ parser_name }}(int millisecondsSinceEpoch) {
 			sb.AppendLine("/// Creates a GestureTapMoveCallback that invokes the C# action.");
 			sb.AppendLine("GestureTapMoveCallback? createGestureTapMoveCallback(String? actionId) {");
 			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
-			sb.AppendLine("  return (TapDragUpdateDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("  return (TapMoveDetails details) => _invokeAction(actionId, args: {");
 			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
 			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
 			sb.AppendLine("  });");

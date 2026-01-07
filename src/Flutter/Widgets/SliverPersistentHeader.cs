@@ -33,7 +33,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverPersistentHeader"/> class.
 		/// </summary>
 		public SliverPersistentHeader(
-			SliverPersistentHeaderDelegate @delegate,
+			SliverPersistentHeaderDelegate @delegate = null,
 			bool pinned = false,
 			bool floating = false
 		)

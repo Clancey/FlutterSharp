@@ -47,7 +47,7 @@ namespace Flutter.Widgets
 		public FractionallySizedBox(
 			double? widthFactor = null,
 			double? heightFactor = null,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			Widget? child = null
 		)
 		{
@@ -56,7 +56,7 @@ namespace Flutter.Widgets
 				s.widthFactor = widthFactor.Value;
 			if (heightFactor.HasValue)
 				s.heightFactor = heightFactor.Value;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.child = child;
 		}
 

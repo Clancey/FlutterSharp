@@ -14,6 +14,84 @@ namespace FlutterSharp.CodeGen.TypeMapping
 		private static readonly Regex GenericTypeRegex = new(@"^(\w+)<(.+)>$", RegexOptions.Compiled);
 
 		/// <summary>
+		/// Maps (WidgetName, ParameterName) to their expected types for AMBIGUOUS parameters.
+		/// These are parameters that have different types depending on which widget they appear in.
+		/// Format: "WidgetName.parameterName" -> "C#Type"
+		/// </summary>
+		private static readonly Dictionary<string, string> WidgetSpecificParameterTypes = new(StringComparer.OrdinalIgnoreCase)
+		{
+			// fit parameter - different enum types in different widgets
+			["Flexible.fit"] = "FlexFit",
+			["Expanded.fit"] = "FlexFit",  // Expanded extends Flexible
+			["Spacer.fit"] = "FlexFit",    // Spacer wraps Expanded
+			["Stack.fit"] = "StackFit",
+			["IndexedStack.fit"] = "StackFit",
+			["IndexedStack.sizing"] = "StackFit",  // sizing parameter also uses StackFit
+			["Image.fit"] = "BoxFit",
+			["FittedBox.fit"] = "BoxFit",
+			["RawImage.fit"] = "BoxFit",
+			["FadeInImage.fit"] = "BoxFit",
+			["DecorationImage.fit"] = "BoxFit",
+			["OverflowBox.fit"] = "OverflowBoxFit",
+
+			// direction parameter - Axis vs TextDirection
+			["Wrap.direction"] = "Axis",
+			["ListBody.mainAxis"] = "Axis",
+			["Flex.direction"] = "Axis",
+			["Row.direction"] = "Axis",
+			["Column.direction"] = "Axis",
+			["TwoDimensionalScrollView.mainAxis"] = "Axis",
+			["Scrollable.axis"] = "Axis",
+
+			// alignment parameters - widget-specific enum types
+			["Wrap.alignment"] = "WrapAlignment",
+			["Wrap.runAlignment"] = "WrapAlignment",
+			["Wrap.crossAxisAlignment"] = "WrapCrossAlignment",
+			["Table.defaultVerticalAlignment"] = "TableCellVerticalAlignment",
+
+			// position parameter - DecorationPosition enum
+			["DecoratedBox.position"] = "DecorationPosition",
+			["DecoratedBoxTransition.position"] = "DecorationPosition",
+			["DecoratedSliver.position"] = "DecorationPosition",
+
+			// behavior parameter - HitTestBehavior vs PlatformViewHitTestBehavior
+			["Listener.behavior"] = "HitTestBehavior",
+			["MetaData.behavior"] = "HitTestBehavior",
+			["TapRegion.behavior"] = "HitTestBehavior",
+			["TextFieldTapRegion.behavior"] = "HitTestBehavior",
+			["GestureDetector.behavior"] = "HitTestBehavior",
+			["RawGestureDetector.behavior"] = "HitTestBehavior",
+			["MouseRegion.hitTestBehavior"] = "HitTestBehavior",
+			// Platform view widgets use PlatformViewHitTestBehavior
+			["AndroidView.hitTestBehavior"] = "PlatformViewHitTestBehavior",
+			["AndroidViewSurface.hitTestBehavior"] = "PlatformViewHitTestBehavior",
+			["UiKitView.hitTestBehavior"] = "PlatformViewHitTestBehavior",
+			["PlatformViewSurface.hitTestBehavior"] = "PlatformViewHitTestBehavior",
+			["HtmlElementView.hitTestBehavior"] = "PlatformViewHitTestBehavior",
+			// Regular scroll views use HitTestBehavior
+			["ListWheelScrollView.hitTestBehavior"] = "HitTestBehavior",
+			["PageView.hitTestBehavior"] = "HitTestBehavior",
+			["SingleChildScrollView.hitTestBehavior"] = "HitTestBehavior",
+			["TwoDimensionalScrollView.hitTestBehavior"] = "HitTestBehavior",
+
+			// overflow parameter - usually TextOverflow for text-related widgets
+			["DefaultTextStyle.overflow"] = "TextOverflow",
+			["DefaultTextStyleTransition.overflow"] = "TextOverflow",
+			["RichText.overflow"] = "TextOverflow",
+			["Text.overflow"] = "TextOverflow",
+			["AnimatedDefaultTextStyle.overflow"] = "TextOverflow",
+
+			// crossAxisAlignment - CrossAxisAlignment for Flex-based widgets, WrapCrossAlignment for Wrap
+			["Flex.crossAxisAlignment"] = "CrossAxisAlignment",
+			["Row.crossAxisAlignment"] = "CrossAxisAlignment",
+			["Column.crossAxisAlignment"] = "CrossAxisAlignment",
+
+			// TwoDimensionalScrollView specific
+			["TwoDimensionalScrollView.mainAxis"] = "Axis",
+			["TwoDimensionalScrollView.diagonalDragBehavior"] = "DiagonalDragBehavior",
+		};
+
+		/// <summary>
 		/// Maps UNAMBIGUOUS parameter names to their expected types when type resolution fails.
 		/// Only includes names that have a unique meaning across all widgets.
 		/// AMBIGUOUS names (alignment, direction, fit, crossAxisAlignment, shape) are excluded
@@ -110,6 +188,18 @@ namespace FlutterSharp.CodeGen.TypeMapping
 		/// <returns>The mapped C# type string.</returns>
 		public string MapType(string dartType, string? parameterName)
 		{
+			return MapType(dartType, parameterName, null);
+		}
+
+		/// <summary>
+		/// Maps a Dart type string to its corresponding C# type, with widget-context-aware parameter name inference.
+		/// </summary>
+		/// <param name="dartType">The Dart type string (e.g., "String", "int?", "List&lt;Widget&gt;").</param>
+		/// <param name="parameterName">Optional parameter name used for type inference when dartType is "InvalidType".</param>
+		/// <param name="widgetName">Optional widget name for widget-specific type inference of ambiguous parameters.</param>
+		/// <returns>The mapped C# type string.</returns>
+		public string MapType(string dartType, string? parameterName, string? widgetName)
+		{
 			if (string.IsNullOrWhiteSpace(dartType))
 			{
 				throw new ArgumentException("Dart type cannot be null or empty.", nameof(dartType));
@@ -119,10 +209,22 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			var isNullable = dartType.EndsWith("?");
 			var cleanType = isNullable ? dartType.TrimEnd('?') : dartType;
 
-			// Handle InvalidType - try to infer from parameter name
+			// FIRST: Check for widget-specific type overrides (even when we have a valid Dart type)
+			// This handles cases where the Dart analyzer returns a type that differs from the actual widget type
+			// (e.g., Dart may resolve hitTestBehavior to PlatformViewHitTestBehavior when it should be HitTestBehavior)
+			if (!string.IsNullOrEmpty(widgetName) && !string.IsNullOrEmpty(parameterName))
+			{
+				var key = $"{widgetName}.{parameterName}";
+				if (WidgetSpecificParameterTypes.TryGetValue(key, out var widgetSpecificType))
+				{
+					return ApplyNullability(widgetSpecificType, isNullable);
+				}
+			}
+
+			// Handle InvalidType - try to infer from parameter name (with widget context if available)
 			if (cleanType == "InvalidType" && !string.IsNullOrEmpty(parameterName))
 			{
-				var inferredType = InferTypeFromParameterName(parameterName);
+				var inferredType = InferTypeFromParameterName(parameterName, widgetName);
 				if (inferredType != null)
 				{
 					return ApplyNullability(inferredType, isNullable);
@@ -249,12 +351,34 @@ namespace FlutterSharp.CodeGen.TypeMapping
 		/// <returns>The inferred C# type, or null if no inference could be made.</returns>
 		public static string? InferTypeFromParameterName(string parameterName)
 		{
+			return InferTypeFromParameterName(parameterName, null);
+		}
+
+		/// <summary>
+		/// Infers a C# type from a parameter name when type resolution fails,
+		/// with optional widget-context-aware inference for ambiguous parameters.
+		/// </summary>
+		/// <param name="parameterName">The parameter name to infer type from.</param>
+		/// <param name="widgetName">Optional widget name for context-aware inference.</param>
+		/// <returns>The inferred C# type, or null if no inference could be made.</returns>
+		public static string? InferTypeFromParameterName(string parameterName, string? widgetName)
+		{
 			if (string.IsNullOrEmpty(parameterName))
 			{
 				return null;
 			}
 
-			// Try exact match first
+			// Try widget-specific type mapping first (for ambiguous parameters like fit, direction, behavior)
+			if (!string.IsNullOrEmpty(widgetName))
+			{
+				var key = $"{widgetName}.{parameterName}";
+				if (WidgetSpecificParameterTypes.TryGetValue(key, out var widgetSpecificType))
+				{
+					return widgetSpecificType;
+				}
+			}
+
+			// Try exact match for unambiguous parameters
 			if (ParameterNameToType.TryGetValue(parameterName, out var exactType))
 			{
 				return exactType;

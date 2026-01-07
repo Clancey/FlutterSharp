@@ -72,7 +72,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		private Dictionary<string, object?> BuildTemplateModel(WidgetDefinition widget)
 		{
 			var baseStruct = MapBaseStruct(widget.Type, widget.HasSingleChild, widget.HasMultipleChildren);
-			var properties = widget.Properties.Select(p => MapStructProperty(p)).ToList();
+			var properties = widget.Properties.Select(p => MapStructProperty(p, widget.Name)).ToList();
 			var structName = $"{widget.Name}Struct";
 
 			// Prevent circular inheritance: if the struct would inherit from itself, use WidgetStruct instead
@@ -97,9 +97,11 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		/// <summary>
 		/// Maps a property definition to a struct property model.
 		/// </summary>
-		private Dictionary<string, object?> MapStructProperty(PropertyDefinition property)
+		/// <param name="property">The property definition to map.</param>
+		/// <param name="widgetName">The widget name for context-aware type mapping of ambiguous parameters.</param>
+		private Dictionary<string, object?> MapStructProperty(PropertyDefinition property, string widgetName)
 		{
-			var structType = MapToStructType(property);
+			var structType = MapToStructType(property, widgetName);
 			var isString = property.DartType == "String" || property.DartType == "String?";
 			var isWidget = _typeMapper.IsWidget(property.DartType);
 			var isCallback = property.IsCallback;
@@ -163,7 +165,9 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		/// <summary>
 		/// Maps a property to its FFI struct type.
 		/// </summary>
-		private string MapToStructType(PropertyDefinition property)
+		/// <param name="property">The property definition to map.</param>
+		/// <param name="widgetName">The widget name for context-aware type mapping of ambiguous parameters.</param>
+		private string MapToStructType(PropertyDefinition property, string widgetName)
 		{
 			var typeMapping = _typeMapper.MapTypeWithInfo(property.DartType);
 
@@ -181,12 +185,12 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				return "IntPtr";
 			}
 
-			// For enums, use int
+			// For enums, use the enum type directly - pass widget name for context-aware type mapping
 			if (typeMapping?.IsEnum == true)
 			{
 				var csharpType = !string.IsNullOrEmpty(property.CSharpType)
 					? property.CSharpType
-					: _typeMapper.MapType(property.DartType);
+					: _typeMapper.MapType(property.DartType, property.Name, widgetName);
 				return csharpType;
 			}
 
@@ -196,19 +200,57 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				return "IntPtr";
 			}
 
-			// For custom types, check if there's a corresponding struct
+			// For InvalidType or unknown types, first try to infer from parameter name with widget context
+			// This handles ambiguous parameter names like 'fit', 'direction', 'behavior', etc.
 			var mappedType = !string.IsNullOrEmpty(property.CSharpType)
 				? property.CSharpType
-				: _typeMapper.MapType(property.DartType);
+				: _typeMapper.MapType(property.DartType, property.Name, widgetName);
+
+			// Check if the inferred type is a known enum
+			var inferredTypeMapping = _typeMapper.MapTypeWithInfo(mappedType);
+			if (inferredTypeMapping?.IsEnum == true)
+			{
+				// Use the enum type directly for struct fields
+				return mappedType;
+			}
+
+			// Check if the inferred type is an enum by name convention (common Flutter enums)
+			if (IsKnownEnumType(mappedType))
+			{
+				return mappedType;
+			}
 
 			// If it's a known custom type, use IntPtr or struct
-			if (char.IsUpper(mappedType[0]))
+			if (!string.IsNullOrEmpty(mappedType) && char.IsUpper(mappedType[0]))
 			{
 				// Complex types become IntPtr in structs
 				return "IntPtr";
 			}
 
 			return mappedType;
+		}
+
+		/// <summary>
+		/// Checks if a type name is a known enum type in Flutter.
+		/// </summary>
+		private static bool IsKnownEnumType(string typeName)
+		{
+			var knownEnums = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+			{
+				"FlexFit", "BoxFit", "StackFit", "OverflowBoxFit",
+				"Axis", "VerticalDirection", "TextDirection",
+				"MainAxisAlignment", "CrossAxisAlignment", "MainAxisSize",
+				"WrapAlignment", "WrapCrossAlignment",
+				"DecorationPosition",
+				"HitTestBehavior", "PlatformViewHitTestBehavior",
+				"Clip", "BlendMode", "FilterQuality",
+				"TextAlign", "TextBaseline", "TextOverflow", "TextWidthBasis",
+				"BoxHeightStyle", "BoxWidthStyle",
+				"DragStartBehavior", "ScrollViewKeyboardDismissBehavior",
+				"TableCellVerticalAlignment",
+				"DiagonalDragBehavior"
+			};
+			return knownEnums.Contains(typeName.TrimEnd('?'));
 		}
 
 		/// <summary>

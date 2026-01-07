@@ -156,9 +156,21 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.list_view.itemExtent}
 		public NativeNullable<double> itemExtent { get; set; }
 
-		// Simple field: itemExtentBuilder
+		// Callback field: itemExtentBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _itemExtentBuilder;
+
 /// {@macro flutter.widgets.list_view.itemExtentBuilder}
-		public IntPtr itemExtentBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for itemExtentBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? itemExtentBuilderAction
+		{
+			get => GetString(_itemExtentBuilder);
+			set => SetString(ref _itemExtentBuilder, value);
+		}
 
 		// Has flag for nullable property: prototypeItem
 		public byte HasprototypeItem { get; set; }

@@ -40,7 +40,7 @@ namespace Flutter.Structs
 /// 
 /// When [debugDisableShadows] is true, [toPaint] ignores the [blurStyle] and
 /// acts as if [BlurStyle.normal] was used.
-		public IntPtr blurStyle { get; set; }
+		public object blurStyle { get; set; }
 
 		// Simple field: hashCode
 		public int hashCode { get; set; }

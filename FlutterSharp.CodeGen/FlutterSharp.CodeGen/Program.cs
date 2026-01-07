@@ -408,6 +408,7 @@ internal class Program
 			"SizeTransition", "SlideTransition", "SliverFadeTransition",
 			// Animated builders (require Listenable/Animation parameters)
 			"AnimatedBuilder", "AnimatedModalBarrier", "DualTransitionBuilder",
+			"TweenAnimationBuilder", "ValueListenableBuilder",
 			// Widgets with complex required parameters that can't be FFI serialized
 			"EditableText", "FadeInImage", "FlutterLogo", "Image", "RawImage",
 			"KeyboardListener", "RawKeyboardListener", "UndoHistory",
@@ -415,12 +416,23 @@ internal class Program
 			"PrimaryScrollController", "WidgetsApp", "Table",
 			// Platform-specific widgets
 			"ImgElementPlatformView", "RawWebImage", "SystemContextMenu",
+			"AndroidView", "HtmlElementView",
 			// Widgets with delegate parameters
 			"AnnotatedRegion", "SelectionContainer",
 			// Widgets with positional-only arguments or special constructors
 			"Icon", "ImageIcon", "Text", "RichText", "Dismissible",
 			"LayoutId", "ListWheelScrollView", "PageView", "Semantics",
-			"SliverConstrainedCrossAxis", "SliverSafeArea", "SliverVisibility", "Wrap"
+			"SliverConstrainedCrossAxis", "SliverSafeArea", "SliverVisibility", "Wrap",
+			// Widgets with complex callback types that can't be FFI serialized
+			"ActionListener", "AnimatedGrid", "AnimatedList", "AnimatedSwitcher",
+			"Builder", "ConstraintsTransformBox", "DraggableScrollableSheet",
+			"Expansible", "Focus", "FocusScope", "LayoutBuilder", "ListenableBuilder",
+			"MouseRegion", "NavigatorPopHandler", "NotificationListener",
+			"OrientationBuilder", "OverlayPortal", "PlatformViewLink", "PopScope",
+			"RawMenuAnchor", "ReorderableList", "ShaderMask",
+			"SliverAnimatedGrid", "SliverAnimatedList", "SliverLayoutBuilder",
+			"SliverReorderableList", "SliverVariedExtentList", "StatefulBuilder",
+			"TapRegion", "TextFieldTapRegion", "TreeSliver", "WillPopScope"
 		};
 
 		// Generate widgets

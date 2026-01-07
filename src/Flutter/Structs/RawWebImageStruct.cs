@@ -50,7 +50,7 @@ namespace Flutter.Structs
 
 		// Simple field: fit
 /// How the HTML element should be inscribed in the box constraining it.
-		public BoxFit fit { get; set; }
+		public object fit { get; set; }
 
 		// Simple field: alignment
 /// How the image should be aligned in the box constraining it.

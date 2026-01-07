@@ -96,7 +96,7 @@ namespace Flutter.Structs
 		}
 
 		// Simple field: sizeFactor
-		public IntPtr sizeFactor { get; set; }
+		public object sizeFactor { get; set; }
 
 	}
 }

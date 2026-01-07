@@ -50,7 +50,7 @@ namespace Flutter.Structs
 /// If the [clipper] delegate is null, then the oval uses the
 /// widget's bounding box (the layout dimensions of the render
 /// object) instead.
-		public IntPtr clipper { get; set; }
+		public object clipper { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.rendering.ClipRectLayer.clipBehavior}

@@ -13,7 +13,7 @@ class TabBarViewParser extends WidgetParser {
             fos.handle.address)
         .ref;
     return TabBarView(
-      children: DynamicWidgetBuilder.buildWidgets(map.children, buildContext),
+      children: DynamicWidgetBuilder.buildWidgets(map.children.cast<ChildrenStruct>(), buildContext),
     );
   }
 

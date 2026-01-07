@@ -42,7 +42,7 @@ namespace Flutter.Structs
 		// Simple field: properties
 /// Contains properties used by assistive technologies to make the application
 /// more accessible.
-		public IntPtr properties { get; set; }
+		public object properties { get; set; }
 
 		// Simple field: container
 /// If [container] is true, this widget will introduce a new
@@ -324,7 +324,7 @@ namespace Flutter.Structs
 		}
 
 		// Simple field: attributedLabel
-		public IntPtr attributedLabel { get; set; }
+		public object attributedLabel { get; set; }
 
 		// Has flag for nullable property: value
 		public byte Hasvalue { get; set; }
@@ -339,7 +339,7 @@ namespace Flutter.Structs
 		}
 
 		// Simple field: attributedValue
-		public IntPtr attributedValue { get; set; }
+		public object attributedValue { get; set; }
 
 		// Has flag for nullable property: increasedValue
 		public byte HasincreasedValue { get; set; }
@@ -354,7 +354,7 @@ namespace Flutter.Structs
 		}
 
 		// Simple field: attributedIncreasedValue
-		public IntPtr attributedIncreasedValue { get; set; }
+		public object attributedIncreasedValue { get; set; }
 
 		// Has flag for nullable property: decreasedValue
 		public byte HasdecreasedValue { get; set; }
@@ -369,7 +369,7 @@ namespace Flutter.Structs
 		}
 
 		// Simple field: attributedDecreasedValue
-		public IntPtr attributedDecreasedValue { get; set; }
+		public object attributedDecreasedValue { get; set; }
 
 		// Has flag for nullable property: hint
 		public byte Hashint { get; set; }
@@ -384,7 +384,7 @@ namespace Flutter.Structs
 		}
 
 		// Simple field: attributedHint
-		public IntPtr attributedHint { get; set; }
+		public object attributedHint { get; set; }
 
 		// Has flag for nullable property: tooltip
 		public byte Hastooltip { get; set; }
@@ -426,67 +426,295 @@ namespace Flutter.Structs
 		public TextDirection textDirection { get; set; }
 
 		// Simple field: sortKey
-		public IntPtr sortKey { get; set; }
+		public object sortKey { get; set; }
 
 		// Simple field: tagForChildren
-		public IntPtr tagForChildren { get; set; }
+		public object tagForChildren { get; set; }
 
-		// Simple field: onTap
-		public IntPtr onTap { get; set; }
+		// Callback field: onTap
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTap;
 
-		// Simple field: onLongPress
-		public IntPtr onLongPress { get; set; }
+		/// <summary>
+		/// Action identifier for onTap callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapAction
+		{
+			get => GetString(_onTap);
+			set => SetString(ref _onTap, value);
+		}
 
-		// Simple field: onScrollLeft
-		public IntPtr onScrollLeft { get; set; }
+		// Callback field: onLongPress
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onLongPress;
 
-		// Simple field: onScrollRight
-		public IntPtr onScrollRight { get; set; }
+		/// <summary>
+		/// Action identifier for onLongPress callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onLongPressAction
+		{
+			get => GetString(_onLongPress);
+			set => SetString(ref _onLongPress, value);
+		}
 
-		// Simple field: onScrollUp
-		public IntPtr onScrollUp { get; set; }
+		// Callback field: onScrollLeft
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onScrollLeft;
 
-		// Simple field: onScrollDown
-		public IntPtr onScrollDown { get; set; }
+		/// <summary>
+		/// Action identifier for onScrollLeft callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onScrollLeftAction
+		{
+			get => GetString(_onScrollLeft);
+			set => SetString(ref _onScrollLeft, value);
+		}
 
-		// Simple field: onIncrease
-		public IntPtr onIncrease { get; set; }
+		// Callback field: onScrollRight
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onScrollRight;
 
-		// Simple field: onDecrease
-		public IntPtr onDecrease { get; set; }
+		/// <summary>
+		/// Action identifier for onScrollRight callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onScrollRightAction
+		{
+			get => GetString(_onScrollRight);
+			set => SetString(ref _onScrollRight, value);
+		}
 
-		// Simple field: onCopy
-		public IntPtr onCopy { get; set; }
+		// Callback field: onScrollUp
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onScrollUp;
 
-		// Simple field: onCut
-		public IntPtr onCut { get; set; }
+		/// <summary>
+		/// Action identifier for onScrollUp callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onScrollUpAction
+		{
+			get => GetString(_onScrollUp);
+			set => SetString(ref _onScrollUp, value);
+		}
 
-		// Simple field: onPaste
-		public IntPtr onPaste { get; set; }
+		// Callback field: onScrollDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onScrollDown;
 
-		// Simple field: onDismiss
-		public IntPtr onDismiss { get; set; }
+		/// <summary>
+		/// Action identifier for onScrollDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onScrollDownAction
+		{
+			get => GetString(_onScrollDown);
+			set => SetString(ref _onScrollDown, value);
+		}
 
-		// Simple field: onMoveCursorForwardByCharacter
-		public IntPtr onMoveCursorForwardByCharacter { get; set; }
+		// Callback field: onIncrease
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onIncrease;
 
-		// Simple field: onMoveCursorBackwardByCharacter
-		public IntPtr onMoveCursorBackwardByCharacter { get; set; }
+		/// <summary>
+		/// Action identifier for onIncrease callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onIncreaseAction
+		{
+			get => GetString(_onIncrease);
+			set => SetString(ref _onIncrease, value);
+		}
 
-		// Simple field: onSetSelection
-		public IntPtr onSetSelection { get; set; }
+		// Callback field: onDecrease
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onDecrease;
 
-		// Simple field: onSetText
-		public IntPtr onSetText { get; set; }
+		/// <summary>
+		/// Action identifier for onDecrease callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onDecreaseAction
+		{
+			get => GetString(_onDecrease);
+			set => SetString(ref _onDecrease, value);
+		}
 
-		// Simple field: onDidGainAccessibilityFocus
-		public IntPtr onDidGainAccessibilityFocus { get; set; }
+		// Callback field: onCopy
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onCopy;
 
-		// Simple field: onDidLoseAccessibilityFocus
-		public IntPtr onDidLoseAccessibilityFocus { get; set; }
+		/// <summary>
+		/// Action identifier for onCopy callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onCopyAction
+		{
+			get => GetString(_onCopy);
+			set => SetString(ref _onCopy, value);
+		}
 
-		// Simple field: onFocus
-		public IntPtr onFocus { get; set; }
+		// Callback field: onCut
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onCut;
+
+		/// <summary>
+		/// Action identifier for onCut callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onCutAction
+		{
+			get => GetString(_onCut);
+			set => SetString(ref _onCut, value);
+		}
+
+		// Callback field: onPaste
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPaste;
+
+		/// <summary>
+		/// Action identifier for onPaste callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPasteAction
+		{
+			get => GetString(_onPaste);
+			set => SetString(ref _onPaste, value);
+		}
+
+		// Callback field: onDismiss
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onDismiss;
+
+		/// <summary>
+		/// Action identifier for onDismiss callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onDismissAction
+		{
+			get => GetString(_onDismiss);
+			set => SetString(ref _onDismiss, value);
+		}
+
+		// Callback field: onMoveCursorForwardByCharacter
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onMoveCursorForwardByCharacter;
+
+		/// <summary>
+		/// Action identifier for onMoveCursorForwardByCharacter callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onMoveCursorForwardByCharacterAction
+		{
+			get => GetString(_onMoveCursorForwardByCharacter);
+			set => SetString(ref _onMoveCursorForwardByCharacter, value);
+		}
+
+		// Callback field: onMoveCursorBackwardByCharacter
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onMoveCursorBackwardByCharacter;
+
+		/// <summary>
+		/// Action identifier for onMoveCursorBackwardByCharacter callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onMoveCursorBackwardByCharacterAction
+		{
+			get => GetString(_onMoveCursorBackwardByCharacter);
+			set => SetString(ref _onMoveCursorBackwardByCharacter, value);
+		}
+
+		// Callback field: onSetSelection
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSetSelection;
+
+		/// <summary>
+		/// Action identifier for onSetSelection callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSetSelectionAction
+		{
+			get => GetString(_onSetSelection);
+			set => SetString(ref _onSetSelection, value);
+		}
+
+		// Callback field: onSetText
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSetText;
+
+		/// <summary>
+		/// Action identifier for onSetText callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSetTextAction
+		{
+			get => GetString(_onSetText);
+			set => SetString(ref _onSetText, value);
+		}
+
+		// Callback field: onDidGainAccessibilityFocus
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onDidGainAccessibilityFocus;
+
+		/// <summary>
+		/// Action identifier for onDidGainAccessibilityFocus callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onDidGainAccessibilityFocusAction
+		{
+			get => GetString(_onDidGainAccessibilityFocus);
+			set => SetString(ref _onDidGainAccessibilityFocus, value);
+		}
+
+		// Callback field: onDidLoseAccessibilityFocus
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onDidLoseAccessibilityFocus;
+
+		/// <summary>
+		/// Action identifier for onDidLoseAccessibilityFocus callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onDidLoseAccessibilityFocusAction
+		{
+			get => GetString(_onDidLoseAccessibilityFocus);
+			set => SetString(ref _onDidLoseAccessibilityFocus, value);
+		}
+
+		// Callback field: onFocus
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onFocus;
+
+		/// <summary>
+		/// Action identifier for onFocus callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onFocusAction
+		{
+			get => GetString(_onFocus);
+			set => SetString(ref _onFocus, value);
+		}
 
 		// Has flag for nullable property: customSemanticsActions
 		public byte HascustomSemanticsActions { get; set; }
@@ -495,7 +723,7 @@ namespace Flutter.Structs
 		public IntPtr? customSemanticsActions { get; set; }
 
 		// Simple field: role
-		public IntPtr role { get; set; }
+		public object role { get; set; }
 
 		// Has flag for nullable property: controlsNodes
 		public byte HascontrolsNodes { get; set; }
@@ -504,10 +732,10 @@ namespace Flutter.Structs
 		public IntPtr? controlsNodes { get; set; }
 
 		// Simple field: validationResult
-		public IntPtr validationResult { get; set; }
+		public object validationResult { get; set; }
 
 		// Simple field: inputType
-		public IntPtr inputType { get; set; }
+		public object inputType { get; set; }
 
 	}
 }

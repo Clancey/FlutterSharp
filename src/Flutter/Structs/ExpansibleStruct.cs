@@ -104,7 +104,7 @@ namespace Flutter.Structs
 /// The reverse curve of the expansion animation.
 /// 
 /// If null, uses [curve] in both directions.
-		public IntPtr reverseCurve { get; set; }
+		public object reverseCurve { get; set; }
 
 		// Simple field: maintainState
 /// Whether the state of the body is maintained when the widget expands or

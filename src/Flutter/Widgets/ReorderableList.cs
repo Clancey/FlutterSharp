@@ -49,14 +49,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ReorderableList"/> class.
 		/// </summary>
 		public ReorderableList(
-			Func<BuildContext, int, Widget> itemBuilder,
 			int itemCount,
-			Action<int, int> onReorder,
-			EdgeInsetsGeometry padding,
 			object itemExtentBuilder,
+			Func<BuildContext, int, Widget> itemBuilder = null,
+			Action<int, int> onReorder = null,
 			Action<int> onReorderStart = null,
 			Action<int> onReorderEnd = null,
 			Func<Widget, int, InvalidType, Widget> proxyDecorator = null,
+			EdgeInsetsGeometry? padding = null,
 			Axis scrollDirection = Axis.Vertical,
 			bool reverse = false,
 			ScrollController? controller = null,

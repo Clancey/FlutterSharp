@@ -124,7 +124,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Focus(
 			Widget child,
-			Action<bool> onFocusChange,
 			bool canRequestFocus,
 			bool skipTraversal,
 			bool descendantsAreFocusable,
@@ -132,10 +131,10 @@ namespace Flutter.Widgets
 			FocusNode? parentNode = null,
 			FocusNode? focusNode = null,
 			bool autofocus = false,
+			Action<bool>? onFocusChange = null,
 			bool includeSemantics = true,
 			Func<FocusNode, InvalidType, KeyEventResult> onKeyEvent = null,
-			Func<FocusNode, InvalidType, KeyEventResult> onKey = null,
-			string? debugLabel = null
+			Func<FocusNode, InvalidType, KeyEventResult> onKey = null
 		)
 		{
 			var s = GetBackingStruct<FocusStruct>();
@@ -151,7 +150,6 @@ namespace Flutter.Widgets
 			s.skipTraversal = skipTraversal;
 			s.descendantsAreFocusable = descendantsAreFocusable;
 			s.descendantsAreTraversable = descendantsAreTraversable;
-			s.debugLabel = debugLabel;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FocusStruct();

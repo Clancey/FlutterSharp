@@ -75,7 +75,7 @@ namespace Flutter.Structs
 		public IntPtr value { get; set; }
 
 		// Simple field: selection
-		public IntPtr selection { get; set; }
+		public object selection { get; set; }
 
 	}
 }

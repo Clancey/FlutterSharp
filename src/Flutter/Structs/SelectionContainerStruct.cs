@@ -50,7 +50,7 @@ namespace Flutter.Structs
 /// 
 /// If null, this widget gets the [SelectionRegistrar] from the current
 /// context.
-		public IntPtr registrar { get; set; }
+		public object registrar { get; set; }
 
 		// Widget field: child
 		private IntPtr _child;

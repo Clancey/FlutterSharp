@@ -64,7 +64,7 @@ namespace Flutter.Structs
 /// 
 /// Setting an origin is equivalent to conjugating the transform matrix by a
 /// translation. This property is provided just for convenience.
-		public IntPtr origin { get; set; }
+		public object origin { get; set; }
 
 		// Simple field: alignment
 /// The alignment of the origin, relative to the size of the box.

@@ -184,8 +184,20 @@ namespace Flutter.Structs
 		// Simple field: curve
 		public IntPtr curve { get; set; }
 
-		// Simple field: onEnd
-		public IntPtr onEnd { get; set; }
+		// Callback field: onEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onEnd;
+
+		/// <summary>
+		/// Action identifier for onEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onEndAction
+		{
+			get => GetString(_onEnd);
+			set => SetString(ref _onEnd, value);
+		}
 
 	}
 }

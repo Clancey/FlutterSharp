@@ -125,7 +125,7 @@ namespace Flutter.Structs
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/dart-ui/tile_mode_decal_radialWithFocal.png)
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/dart-ui/tile_mode_mirror_radialWithFocal.png)
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/dart-ui/tile_mode_repeated_radialWithFocal.png)
-		public IntPtr tileMode { get; set; }
+		public object tileMode { get; set; }
 
 		// Has flag for nullable property: focal
 		public byte Hasfocal { get; set; }

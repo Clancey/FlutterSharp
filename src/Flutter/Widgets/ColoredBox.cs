@@ -25,7 +25,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ColoredBox"/> class.
 		/// </summary>
 		public ColoredBox(
-			Color color,
+			Color? color = null,
 			Widget? child = null
 		)
 		{

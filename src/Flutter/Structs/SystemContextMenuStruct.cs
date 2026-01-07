@@ -54,7 +54,7 @@ namespace Flutter.Structs
 	{
 		// Simple field: anchor
 /// The [Rect] that the context menu should point to.
-		public IntPtr anchor { get; set; }
+		public object anchor { get; set; }
 
 		// Simple field: items
 /// A list of the items to be displayed in the system context menu.
@@ -68,7 +68,10 @@ namespace Flutter.Structs
 /// Defaults to the result of [getDefaultItems].
 		public IntPtr items { get; set; }
 
-		// Simple field: onSystemHide
+		// Callback field: onSystemHide
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSystemHide;
+
 /// Called when the system hides this context menu.
 /// 
 /// For example, tapping outside of the context menu typically causes the
@@ -76,7 +79,16 @@ namespace Flutter.Structs
 /// 
 /// This is not called when showing a new system context menu causes another
 /// to be hidden.
-		public IntPtr onSystemHide { get; set; }
+		/// <summary>
+		/// Action identifier for onSystemHide callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSystemHideAction
+		{
+			get => GetString(_onSystemHide);
+			set => SetString(ref _onSystemHide, value);
+		}
 
 	}
 }

@@ -64,7 +64,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverFadeTransition(
 			Widget child,
-			Animation<double> opacity,
+			Animation<double> opacity = null,
 			bool alwaysIncludeSemantics = false,
 			Widget? sliver = null
 		)

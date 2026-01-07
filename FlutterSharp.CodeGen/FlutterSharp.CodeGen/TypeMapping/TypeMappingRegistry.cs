@@ -656,12 +656,25 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			RegisterMapping(new TypeMapping
 			{
 				DartType = "Set",
-				CSharpType = "HashSet",
+				CSharpType = "ISet",
 				DartStructType = "Pointer<Void>",
 				DartParserFunction = "parseSet",
 				IsCollection = true,
 				IsGeneric = true,
 				Package = "dart:core",
+				RequiresCustomMarshalling = true
+			});
+
+			// HashSet<T> (dart:collection) - use Set as base type since HashSet extends Set
+			RegisterMapping(new TypeMapping
+			{
+				DartType = "Set",  // Use Set (built-in) instead of HashSet for Dart return type
+				CSharpType = "ISet",
+				DartStructType = "Pointer<Void>",
+				DartParserFunction = "parseSet",
+				IsCollection = true,
+				IsGeneric = true,
+				Package = "dart:core",  // Set is in dart:core
 				RequiresCustomMarshalling = true
 			});
 

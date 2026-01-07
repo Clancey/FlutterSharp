@@ -93,7 +93,7 @@ namespace Flutter.Structs
 /// horizontal) or [Column] (if it's vertical) instead of a [Flex], since that
 /// will be less verbose. (For [Row] and [Column] this property is fixed to
 /// the appropriate axis.)
-		public IntPtr direction { get; set; }
+		public Axis direction { get; set; }
 
 		// Simple field: mainAxisAlignment
 /// How the children should be placed along the main axis.

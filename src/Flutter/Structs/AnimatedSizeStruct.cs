@@ -91,12 +91,24 @@ namespace Flutter.Structs
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
-		// Simple field: onEnd
+		// Callback field: onEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onEnd;
+
 /// Called every time an animation completes.
 /// 
 /// This can be useful to trigger additional actions (e.g. another animation)
 /// at the end of the current animation.
-		public IntPtr onEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onEndAction
+		{
+			get => GetString(_onEnd);
+			set => SetString(ref _onEnd, value);
+		}
 
 	}
 }

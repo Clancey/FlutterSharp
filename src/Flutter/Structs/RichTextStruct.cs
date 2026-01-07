@@ -133,7 +133,7 @@ namespace Flutter.Structs
 
 		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}
-		public IntPtr textScaler { get; set; }
+		public object textScaler { get; set; }
 
 		// Has flag for nullable property: maxLines
 		public byte HasmaxLines { get; set; }
@@ -173,7 +173,7 @@ namespace Flutter.Structs
 /// The [SelectionRegistrar] this rich text is subscribed to.
 /// 
 /// If this is set, [selectionColor] must be non-null.
-		public IntPtr selectionRegistrar { get; set; }
+		public object selectionRegistrar { get; set; }
 
 		// Simple field: selectionColor
 /// The color to use when painting the selection.

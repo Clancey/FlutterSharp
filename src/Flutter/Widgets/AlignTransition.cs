@@ -51,9 +51,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AlignTransition(
 			Widget child,
-			AlignmentGeometry alignment,
 			double? widthFactor = null,
-			double? heightFactor = null
+			double? heightFactor = null,
+			AlignmentGeometry alignment = null
 		)
 		{
 			var s = GetBackingStruct<AlignTransitionStruct>();
@@ -62,7 +62,7 @@ namespace Flutter.Widgets
 			if (heightFactor.HasValue)
 				s.heightFactor = heightFactor.Value;
 			s.child = child;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AlignTransitionStruct();

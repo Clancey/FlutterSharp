@@ -74,13 +74,25 @@ namespace Flutter.Structs
 			set => SetString(ref _viewType, value);
 		}
 
-		// Simple field: onPlatformViewCreated
+		// Callback field: onPlatformViewCreated
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPlatformViewCreated;
+
 /// {@template flutter.widgets.AndroidView.onPlatformViewCreated}
 /// Callback to invoke after the platform view has been created.
 /// 
 /// May be null.
 /// {@endtemplate}
-		public IntPtr onPlatformViewCreated { get; set; }
+		/// <summary>
+		/// Action identifier for onPlatformViewCreated callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPlatformViewCreatedAction
+		{
+			get => GetString(_onPlatformViewCreated);
+			set => SetString(ref _onPlatformViewCreated, value);
+		}
 
 		// Simple field: hitTestBehavior
 /// {@template flutter.widgets.AndroidView.hitTestBehavior}
@@ -96,7 +108,7 @@ namespace Flutter.Structs
 /// 
 /// If this is null, the ambient [Directionality] is used instead.
 /// {@endtemplate}
-		public IntPtr layoutDirection { get; set; }
+		public object layoutDirection { get; set; }
 
 		// Has flag for nullable property: gestureRecognizers
 		public byte HasgestureRecognizers { get; set; }
@@ -174,7 +186,7 @@ namespace Flutter.Structs
 /// This is typically one of: [StandardMessageCodec], [JSONMessageCodec], [StringCodec], or [BinaryCodec].
 /// 
 /// This must not be null if [creationParams] is not null.
-		public IntPtr creationParamsCodec { get; set; }
+		public object creationParamsCodec { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}

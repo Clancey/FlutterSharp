@@ -62,7 +62,7 @@ namespace Flutter.Structs
 /// Defaults to [StackFit.loose].
 /// 
 /// See [Stack.fit] for more information.
-		public IntPtr sizing { get; set; }
+		public StackFit sizing { get; set; }
 
 		// Has flag for nullable property: index
 		public byte Hasindex { get; set; }

@@ -43,11 +43,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawKeyboardListener"/> class.
 		/// </summary>
 		public RawKeyboardListener(
-			FocusNode focusNode,
-			Action onKey,
 			Widget child,
+			FocusNode focusNode = null,
 			bool autofocus = false,
-			bool includeSemantics = true
+			bool includeSemantics = true,
+			Action onKey = null
 		)
 		{
 			var s = GetBackingStruct<RawKeyboardListenerStruct>();

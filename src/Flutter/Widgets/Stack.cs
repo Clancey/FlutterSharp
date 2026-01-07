@@ -178,8 +178,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Stack(
 			TextDirection textDirection,
-			AlignmentGeometry? alignment = null,
-			BoxFit fit = StackFit.Loose,
+			AlignmentGeometry alignment = null,
+			StackFit fit = StackFit.Loose,
 			Clip clipBehavior = Clip.HardEdge,
 			List<Widget> children = null
 		)
@@ -187,7 +187,7 @@ namespace Flutter.Widgets
 			if (children != null)
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<StackStruct>();
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.textDirection = textDirection;
 			s.fit = fit;
 			s.clipBehavior = clipBehavior;

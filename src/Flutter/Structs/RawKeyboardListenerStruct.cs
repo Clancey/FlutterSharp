@@ -46,9 +46,21 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.Focus.includeSemantics}
 		public bool includeSemantics { get; set; }
 
-		// Simple field: onKey
+		// Callback field: onKey
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onKey;
+
 /// Called whenever this widget receives a raw keyboard event.
-		public IntPtr onKey { get; set; }
+		/// <summary>
+		/// Action identifier for onKey callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onKeyAction
+		{
+			get => GetString(_onKey);
+			set => SetString(ref _onKey, value);
+		}
 
 		// Widget field: child
 		private IntPtr _child;

@@ -31,7 +31,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="StatusTransitionWidget"/> class.
 		/// </summary>
 		public StatusTransitionWidget(
-			Animation<double> animation
+			Animation<double> animation = null
 		)
 		{
 			var s = GetBackingStruct<StatusTransitionWidgetStruct>();

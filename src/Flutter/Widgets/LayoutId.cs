@@ -28,12 +28,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LayoutId"/> class.
 		/// </summary>
 		public LayoutId(
-			Type debugTypicalAncestorWidgetClass,
 			Widget child
 		)
 		{
 			var s = GetBackingStruct<LayoutIdStruct>();
-			// Complex type: Type - skipped (requires marshaling)
 			s.child = child;
 		}
 

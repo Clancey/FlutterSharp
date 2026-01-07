@@ -71,7 +71,7 @@ namespace Flutter.Widgets
 			bool addAutomaticKeepAlives = true,
 			bool addRepaintBoundaries = true,
 			bool addSemanticIndexes = true,
-			Func<Widget, int, int?> semanticIndexCallback = _kDefaultSemanticIndexCallback,
+			Func<Widget, int, int?> semanticIndexCallback = null,
 			int semanticIndexOffset = 0,
 			Func<InvalidType, int?> findChildIndexCallback = null
 		)

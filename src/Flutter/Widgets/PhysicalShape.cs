@@ -44,9 +44,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public PhysicalShape(
 			object clipper,
-			Color color,
 			Clip clipBehavior = Clip.None,
 			double elevation = 0.0,
+			Color? color = null,
 			Color? shadowColor = null,
 			Widget? child = null
 		)

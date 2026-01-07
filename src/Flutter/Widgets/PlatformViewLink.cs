@@ -57,7 +57,7 @@ namespace Flutter.Widgets
 		public PlatformViewLink(
 			string viewType,
 			object surfaceFactory,
-			Func<PlatformViewCreationParams, InvalidType> onCreatePlatformView
+			Func<PlatformViewCreationParams, InvalidType> onCreatePlatformView = null
 		)
 		{
 			var s = GetBackingStruct<PlatformViewLinkStruct>();

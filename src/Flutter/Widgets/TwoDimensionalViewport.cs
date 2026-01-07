@@ -105,9 +105,9 @@ namespace Flutter.Widgets
 			object horizontalOffset,
 			object horizontalAxisDirection,
 			object mainAxis,
-			TwoDimensionalChildDelegate @delegate,
 			double? cacheExtent = null,
-			Clip clipBehavior = Clip.HardEdge
+			Clip clipBehavior = Clip.HardEdge,
+			TwoDimensionalChildDelegate @delegate = null
 		)
 		{
 			var s = GetBackingStruct<TwoDimensionalViewportStruct>();

@@ -74,7 +74,7 @@ namespace Flutter.Structs
 /// children are placed adjacent to one another in a horizontal run until the
 /// available horizontal space is consumed, at which point a subsequent
 /// children are placed in a new run vertically adjacent to the previous run.
-		public IntPtr direction { get; set; }
+		public Axis direction { get; set; }
 
 		// Simple field: alignment
 /// How the children within a run should be placed in the main axis.
@@ -90,7 +90,7 @@ namespace Flutter.Structs
 /// other in the cross axis.
 /// * [crossAxisAlignment], which controls how the children within each run
 /// are placed relative to each other in the cross axis.
-		public IntPtr alignment { get; set; }
+		public WrapAlignment alignment { get; set; }
 
 		// Simple field: spacing
 /// How much space to place between children in a run in the main axis.
@@ -120,7 +120,7 @@ namespace Flutter.Structs
 /// relative to each other in the main axis.
 /// * [crossAxisAlignment], which controls how the children within each run
 /// are placed relative to each other in the cross axis.
-		public IntPtr runAlignment { get; set; }
+		public WrapAlignment runAlignment { get; set; }
 
 		// Simple field: runSpacing
 /// How much space to place between the runs themselves in the cross axis.
@@ -151,7 +151,7 @@ namespace Flutter.Structs
 /// relative to each other in the main axis.
 /// * [runAlignment], which controls how the runs are placed relative to each
 /// other in the cross axis.
-		public CrossAxisAlignment crossAxisAlignment { get; set; }
+		public WrapCrossAlignment crossAxisAlignment { get; set; }
 
 		// Simple field: textDirection
 /// Determines the order to lay children out horizontally and how to interpret

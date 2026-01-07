@@ -31,9 +31,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ImageIcon"/> class.
 		/// </summary>
 		public ImageIcon(
-			ImageProvider image,
-			Color color,
+			ImageProvider image = null,
 			double? size = null,
+			Color? color = null,
 			string? semanticLabel = null
 		)
 		{

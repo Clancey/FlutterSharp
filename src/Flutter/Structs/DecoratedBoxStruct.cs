@@ -64,7 +64,7 @@ namespace Flutter.Structs
 
 		// Simple field: position
 /// Whether to paint the box decoration behind or in front of the child.
-		public IntPtr position { get; set; }
+		public DecorationPosition position { get; set; }
 
 		// Has flag for nullable property: child
 		public byte Haschild { get; set; }

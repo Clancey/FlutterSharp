@@ -41,27 +41,25 @@ namespace Flutter.Widgets
 		/// </summary>
 		public TapRegion(
 			bool enabled = true,
-			object behavior = HitTestBehavior.DeferToChild,
+			HitTestBehavior behavior = HitTestBehavior.DeferToChild,
 			Action<InvalidType> onTapOutside = null,
 			Action<InvalidType> onTapInside = null,
 			Action<InvalidType> onTapUpOutside = null,
 			Action<InvalidType> onTapUpInside = null,
 			object? groupId = null,
 			bool consumeOutsideTaps = false,
-			string? debugLabel = null,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<TapRegionStruct>();
 			s.enabled = enabled;
-			// Complex type: object - skipped (requires marshaling)
+			s.behavior = behavior;
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: object? - skipped (requires marshaling)
 			s.consumeOutsideTaps = consumeOutsideTaps;
-			s.debugLabel = debugLabel;
 			s.child = child;
 		}
 

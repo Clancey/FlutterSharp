@@ -166,7 +166,7 @@ namespace Flutter.Structs
 /// The constraints passed into the [Stack] from its parent are either
 /// loosened ([StackFit.loose]) or tightened to their biggest size
 /// ([StackFit.expand]).
-		public BoxFit fit { get; set; }
+		public StackFit fit { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}

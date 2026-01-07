@@ -36,11 +36,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public UndoHistory(
 			object value,
-			Action<T> onTriggered,
-			FocusNode focusNode,
 			Widget child,
 			Func<T?, T, bool> shouldChangeUndoStack = null,
 			Func<T, T> undoStackModifier = null,
+			Action<T> onTriggered = null,
+			FocusNode focusNode = null,
 			UndoHistoryController? controller = null
 		)
 		{

@@ -43,13 +43,37 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RawMenuAnchorStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Simple field: onOpen
-/// A callback that is invoked when the menu is opened.
-		public IntPtr onOpen { get; set; }
+		// Callback field: onOpen
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onOpen;
 
-		// Simple field: onClose
+/// A callback that is invoked when the menu is opened.
+		/// <summary>
+		/// Action identifier for onOpen callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onOpenAction
+		{
+			get => GetString(_onOpen);
+			set => SetString(ref _onOpen, value);
+		}
+
+		// Callback field: onClose
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onClose;
+
 /// A callback that is invoked when the menu is closed.
-		public IntPtr onClose { get; set; }
+		/// <summary>
+		/// Action identifier for onClose callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onCloseAction
+		{
+			get => GetString(_onClose);
+			set => SetString(ref _onClose, value);
+		}
 
 		// Has flag for nullable property: builder
 		public byte Hasbuilder { get; set; }

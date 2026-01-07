@@ -53,7 +53,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			// Act & Assert
 			AssertEqual("List<string>", mapper.MapType("List<String>"));
 			AssertEqual("Dictionary<string, int>", mapper.MapType("Map<String, int>"));
-			AssertEqual("HashSet<double>", mapper.MapType("Set<double>"));
+			AssertEqual("ISet<double>", mapper.MapType("Set<double>"));
 		}
 
 		// [Fact]

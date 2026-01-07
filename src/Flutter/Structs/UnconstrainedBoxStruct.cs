@@ -66,7 +66,7 @@ namespace Flutter.Structs
 /// constraints. If set to [Axis.vertical], then vertical constraints will
 /// be retained, and if set to [Axis.horizontal], then horizontal constraints
 /// will be retained.
-		public IntPtr constrainedAxis { get; set; }
+		public object constrainedAxis { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}

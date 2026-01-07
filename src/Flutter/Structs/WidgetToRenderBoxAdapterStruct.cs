@@ -30,16 +30,31 @@ namespace Flutter.Structs
 /// 
 /// This widget takes ownership of the render object. When it is unmounted,
 /// it also calls [RenderObject.dispose].
-		public IntPtr renderBox { get; set; }
+		public object renderBox { get; set; }
 
-		// Simple field: onBuild
+		// Callback field: onBuild
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onBuild;
+
 /// Called when it is safe to update the render box and its descendants. If
 /// you update the RenderObject subtree under this widget outside of
 /// invocations of this callback, features like hit-testing will fail as the
 /// tree will be dirty.
-		public IntPtr onBuild { get; set; }
+		/// <summary>
+		/// Action identifier for onBuild callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onBuildAction
+		{
+			get => GetString(_onBuild);
+			set => SetString(ref _onBuild, value);
+		}
 
-		// Simple field: onUnmount
+		// Callback field: onUnmount
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onUnmount;
+
 /// Called when it is safe to dispose of children that were manually added to
 /// the [renderBox].
 /// 
@@ -57,7 +72,16 @@ namespace Flutter.Structs
 /// disposing of its render object.
 /// * [RenderObject.dispose], which instructs a render object to release
 /// any resources it may be holding.
-		public IntPtr onUnmount { get; set; }
+		/// <summary>
+		/// Action identifier for onUnmount callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onUnmountAction
+		{
+			get => GetString(_onUnmount);
+			set => SetString(ref _onUnmount, value);
+		}
 
 	}
 }

@@ -39,11 +39,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PhysicalModel"/> class.
 		/// </summary>
 		public PhysicalModel(
-			BorderRadiusGeometry borderRadius,
-			Color color,
 			BoxShape shape = BoxShape.Rectangle,
 			Clip clipBehavior = Clip.None,
+			BorderRadiusGeometry? borderRadius = null,
 			double elevation = 0.0,
+			Color? color = null,
 			Color? shadowColor = null,
 			Widget? child = null
 		)

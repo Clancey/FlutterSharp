@@ -11,7 +11,7 @@ class AlignWidgetParser extends WidgetParser {
     var map = Pointer<AlignStruct>.fromAddress(fos.handle.address).ref;
     return Align(
       alignment: map.hasAlignment == 1
-          ? parseAlignment(map.alignment.ref)
+          ? parseAlignment(map.alignment.cast<AlignmentStruct>().ref)
           : Alignment.center,
       widthFactor: map.hasWidthFactor == 1 ? map.widthFactor : null,
       heightFactor: map.hasHeightFactor == 1 ? map.heightFactor : null,

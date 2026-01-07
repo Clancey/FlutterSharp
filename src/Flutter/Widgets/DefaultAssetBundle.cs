@@ -73,8 +73,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultAssetBundle"/> class.
 		/// </summary>
 		public DefaultAssetBundle(
-			AssetBundle bundle,
-			Widget child
+			Widget child,
+			AssetBundle bundle = null
 		)
 		{
 			var s = GetBackingStruct<DefaultAssetBundleStruct>();

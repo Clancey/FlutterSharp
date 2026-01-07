@@ -56,7 +56,7 @@ namespace Flutter.Structs
 /// 
 /// Defaults to [DiagonalDragBehavior.none], locking axes to receive input one
 /// at a time.
-		public IntPtr diagonalDragBehavior { get; set; }
+		public DiagonalDragBehavior diagonalDragBehavior { get; set; }
 
 		// Has flag for nullable property: primary
 		public byte Hasprimary { get; set; }
@@ -73,7 +73,7 @@ namespace Flutter.Structs
 /// This value should also be provided to the subclass of
 /// [TwoDimensionalViewport], where it is used to determine paint order of
 /// children.
-		public IntPtr mainAxis { get; set; }
+		public Axis mainAxis { get; set; }
 
 		// Simple field: verticalDetails
 /// The configuration of the vertical Scrollable.
@@ -107,7 +107,7 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.scrollable.hitTestBehavior}
 /// 
 /// This value applies to both axes.
-		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
+		public HitTestBehavior hitTestBehavior { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}

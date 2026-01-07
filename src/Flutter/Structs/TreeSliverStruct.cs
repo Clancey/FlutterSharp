@@ -148,14 +148,14 @@ namespace Flutter.Structs
 /// which is [Curves.linear].
 /// 
 /// To disable the tree animation, use [AnimationStyle.noAnimation].
-		public IntPtr toggleAnimationStyle { get; set; }
+		public object toggleAnimationStyle { get; set; }
 
 		// Simple field: indentation
 /// The number of pixels children will be offset by in the cross axis based on
 /// their [TreeSliverNode.depth].
 /// 
 /// {@macro flutter.rendering.TreeSliverIndentationType}
-		public IntPtr indentation { get; set; }
+		public object indentation { get; set; }
 
 		// Simple field: addAutomaticKeepAlives
 /// {@macro flutter.widgets.SliverChildBuilderDelegate.addAutomaticKeepAlives}

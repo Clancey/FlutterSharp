@@ -92,7 +92,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		{
 			var csharpNamespace = MapNamespace(widget.Namespace);
 			var baseClass = MapBaseClass(widget.BaseClass, widget.Type);
-			var properties = widget.Properties.Select(p => MapProperty(p)).ToList();
+			var properties = widget.Properties.Select(p => MapProperty(p, widget.Name)).ToList();
 			var constructor = widget.Constructors.FirstOrDefault() ?? new ConstructorDefinition();
 
 			return new Dictionary<string, object?>
@@ -132,15 +132,30 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				p.IsList && IsWidgetListType(p.CSharpType ?? "") &&
 				(p.Name == "children" || p.Name == enrichedWidget.ChildrenPropertyName));
 
-			var requiredProperties = enrichedWidget.RequiredProperties.Select(p => new Dictionary<string, object?>
-			{
-				["name"] = p.Name,
-				["type"] = p.CSharpType,
-				["backing_field_name"] = p.BackingFieldName,
-				["is_required"] = true
-			}).ToList();
+			var requiredProperties = enrichedWidget.RequiredProperties
+				.Where(p => !p.IsDartNullable) // Truly required: marked required AND not nullable in Dart
+				.Select(p =>
+				{
+					var csharpType = p.CSharpType ?? "object";
+					// Required properties should not be nullable - strip trailing ?
+					var nonNullableType = csharpType.TrimEnd('?');
+					return new Dictionary<string, object?>
+					{
+						["name"] = p.Name,
+						["type"] = nonNullableType,
+						["backing_field_name"] = p.BackingFieldName,
+						["is_required"] = true,
+						["is_reference_type"] = IsReferenceType(nonNullableType)
+					};
+				}).ToList();
 
-			var optionalProperties = enrichedWidget.OptionalProperties.Select(p =>
+			// Optional properties include:
+			// 1. Properties explicitly marked as optional (!IsRequired)
+			// 2. Properties marked required but with nullable Dart types (they're actually optional)
+			var allOptionalProperties = enrichedWidget.OptionalProperties
+				.Concat(enrichedWidget.RequiredProperties.Where(p => p.IsDartNullable));
+
+			var optionalProperties = allOptionalProperties.Select(p =>
 			{
 				var csharpType = p.CSharpType ?? "object";
 				// Pass property name to enable known default lookup for enum types
@@ -259,6 +274,15 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			// The actual nullability for assignment purposes is whether the type ends with ?
 			// OR whether it will be made nullable for optional parameters
 			var effectivelyNullable = isNullableCSharpType || willBeNullableInConstructor;
+			var isTimeSpan = baseType == "TimeSpan";
+			var rawDefaultValue = p.RawDefaultValue ?? p.DefaultValue;
+			var runtimeDefaultValue = isTimeSpan
+				? ConvertDartDurationDefaultToTimeSpan(rawDefaultValue)
+				: null;
+			if (!effectivelyNullable)
+			{
+				runtimeDefaultValue = null;
+			}
 
 			return new Dictionary<string, object?>
 			{
@@ -282,7 +306,9 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["is_enum"] = p.IsEnum,
 				["is_nullable_value_type"] = isNullableValueType,
 				["is_intptr"] = isIntPtr,
-				["underlying_type"] = baseType
+				["underlying_type"] = baseType,
+				["is_time_span"] = isTimeSpan,
+				["runtime_default_value"] = runtimeDefaultValue
 			};
 		}
 
@@ -355,7 +381,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			// Special value types that need marshaling (not blittable to IntPtr)
 			var specialValueTypes = new HashSet<string>
 			{
-				"TimeSpan", "DateTime", "Guid", "Offset", "Size", "Rect"
+				"TimeSpan", "DateTime", "Guid", "Offset", "Size", "Rect", "Color"
 			};
 			if (specialValueTypes.Contains(baseType))
 				return true;
@@ -377,7 +403,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				return true;
 
 			// Check for IEnumerable types that aren't Widget lists
-			if (baseType.StartsWith("IEnumerable<") || baseType.StartsWith("IList<") || baseType.StartsWith("HashSet<"))
+			if (baseType.StartsWith("IEnumerable<") || baseType.StartsWith("IList<") || baseType.StartsWith("ISet<") || baseType.StartsWith("HashSet<"))
 				return true;
 
 			// Everything else that is a reference type (class) is complex
@@ -416,11 +442,13 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		/// <summary>
 		/// Maps a property definition to a template property model.
 		/// </summary>
-		private Dictionary<string, object?> MapProperty(PropertyDefinition property)
+		/// <param name="property">The property definition to map.</param>
+		/// <param name="widgetName">The widget name for context-aware type mapping of ambiguous parameters.</param>
+		private Dictionary<string, object?> MapProperty(PropertyDefinition property, string widgetName)
 		{
 			var csharpType = !string.IsNullOrEmpty(property.CSharpType)
 				? property.CSharpType
-				: _typeMapper.MapType(property.DartType, property.Name);
+				: _typeMapper.MapType(property.DartType, property.Name, widgetName);
 
 			// Handle nullable reference types
 			if (property.IsNullable && !csharpType.EndsWith("?") && !IsReferenceType(csharpType))
@@ -584,8 +612,8 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			// TextAlign defaults
 			["textAlign"] = "TextAlign.Start",
 			// TextDirection - no default, depends on locale
-			// FlexFit defaults (from Flexible, Expanded)
-			["fit"] = "FlexFit.Loose",
+			// Note: "fit" is ambiguous - can be FlexFit (Flexible), BoxFit (FittedBox), or StackFit (Stack)
+			// Don't provide a default for ambiguous names; let each widget type specify its own
 			// StackFit defaults (from Stack)
 			["stackFit"] = "StackFit.Loose",
 			// BoxFit defaults (from FittedBox)
@@ -640,6 +668,25 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			if (string.IsNullOrEmpty(dartDefaultValue))
 			{
 				return null;
+			}
+
+			var targetBaseType = csharpType.TrimEnd('?');
+			// TimeSpan defaults are never compile-time constants in C#.
+			// Use runtime defaults in the constructor instead.
+			if (targetBaseType == "TimeSpan")
+			{
+				return null;
+			}
+
+			// Handle Dart private constants (e.g., "_kDefaultSemanticIndexCallback", "_kMobilePlatforms")
+			// These are compile-time constants in Dart but don't exist in C#
+			// Also handle public k-prefixed constants (e.g., "kDefaultTrackpadScrollToScaleFactor")
+			if (dartDefaultValue.StartsWith("_k") ||
+			    dartDefaultValue.StartsWith("_default") ||
+			    dartDefaultValue.StartsWith("kDefault") ||
+			    dartDefaultValue.StartsWith("default") && char.IsUpper(dartDefaultValue.Length > 7 ? dartDefaultValue[7] : ' '))
+			{
+				return "null";
 			}
 
 			// Handle type names used as default values (e.g., "EditableText" should be null)
@@ -734,6 +781,72 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			return dartDefaultValue;
 		}
 
+		private string? ConvertDartDurationDefaultToTimeSpan(string? dartDefaultValue)
+		{
+			if (string.IsNullOrWhiteSpace(dartDefaultValue))
+				return null;
+
+			var trimmed = dartDefaultValue.Trim();
+			if (trimmed.StartsWith("const ", StringComparison.Ordinal))
+			{
+				trimmed = trimmed.Substring("const ".Length).Trim();
+			}
+
+			if (trimmed == "Duration.zero")
+				return "TimeSpan.Zero";
+
+			if (!trimmed.StartsWith("Duration(", StringComparison.Ordinal) || !trimmed.EndsWith(")", StringComparison.Ordinal))
+				return null;
+
+			var args = trimmed.Substring("Duration(".Length, trimmed.Length - "Duration(".Length - 1).Trim();
+			if (string.IsNullOrEmpty(args))
+				return "TimeSpan.Zero";
+
+			long totalTicks = 0;
+			var parts = args.Split(',');
+			foreach (var part in parts)
+			{
+				var piece = part.Trim();
+				if (string.IsNullOrEmpty(piece))
+					continue;
+
+				var colonIndex = piece.IndexOf(':');
+				if (colonIndex <= 0 || colonIndex >= piece.Length - 1)
+					return null;
+
+				var name = piece.Substring(0, colonIndex).Trim();
+				var valueText = piece.Substring(colonIndex + 1).Trim();
+				if (!long.TryParse(valueText, out var value))
+					return null;
+
+				switch (name)
+				{
+					case "days":
+						totalTicks += value * TimeSpan.TicksPerDay;
+						break;
+					case "hours":
+						totalTicks += value * TimeSpan.TicksPerHour;
+						break;
+					case "minutes":
+						totalTicks += value * TimeSpan.TicksPerMinute;
+						break;
+					case "seconds":
+						totalTicks += value * TimeSpan.TicksPerSecond;
+						break;
+					case "milliseconds":
+						totalTicks += value * TimeSpan.TicksPerMillisecond;
+						break;
+					case "microseconds":
+						totalTicks += value * 10;
+						break;
+					default:
+						return null;
+				}
+			}
+
+			return $"TimeSpan.FromTicks({totalTicks}L)";
+		}
+
 		/// <summary>
 		/// Checks if a C# type is a reference type.
 		/// </summary>
@@ -743,11 +856,18 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			var baseType = csharpType.Split('<')[0];
 
 			// Value types that don't need nullable reference type annotation
+			// Includes primitive types and structs
 			var valueTypes = new HashSet<string>
 			{
 				"int", "double", "float", "bool", "byte", "sbyte",
 				"short", "ushort", "uint", "long", "ulong", "decimal",
-				"char", "DateTime", "TimeSpan", "Guid"
+				"char", "DateTime", "TimeSpan", "Guid",
+				// Flutter/Dart structs that are value types
+				"Size", "Offset", "Rect", "Color", "Radius",
+				"EdgeInsets", "EdgeInsetsDirectional",
+				"Alignment", "AlignmentDirectional",
+				"BorderRadius", "BorderRadiusDirectional",
+				"Matrix4", "Vector2", "Vector3", "Vector4"
 			};
 
 			// Enum types are also value types
@@ -762,7 +882,9 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				"WrapCrossAlignment", "DecorationPosition", "ShapeBorder", "FontWeight",
 				"FontStyle", "TextDecorationStyle", "TableCellVerticalAlignment",
 				"PlatformViewHitTestBehavior", "RoutePopDisposition", "ScrollPhysics",
-				"ScrollbarOrientation", "ScrollPositionAlignmentPolicy"
+				"ScrollbarOrientation", "ScrollPositionAlignmentPolicy",
+				// Additional enum types found during generation
+				"DiagonalDragBehavior", "OverflowBoxFit", "ImageRepeat", "BlurStyle"
 			};
 
 			return !valueTypes.Contains(baseType) && !enumTypes.Contains(baseType);

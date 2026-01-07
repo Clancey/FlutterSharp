@@ -133,7 +133,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flex"/> class.
 		/// </summary>
 		public Flex(
-			object direction,
+			Axis direction,
 			TextDirection textDirection,
 			TextBaseline textBaseline,
 			MainAxisAlignment mainAxisAlignment = MainAxisAlignment.Start,
@@ -148,7 +148,7 @@ namespace Flutter.Widgets
 			if (children != null)
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<FlexStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			s.direction = direction;
 			s.mainAxisAlignment = mainAxisAlignment;
 			s.mainAxisSize = mainAxisSize;
 			s.crossAxisAlignment = crossAxisAlignment;

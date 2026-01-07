@@ -142,22 +142,22 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Text(
 			object textSpan,
-			TextStyle style,
-			StrutStyle strutStyle,
 			TextAlign textAlign,
 			TextDirection textDirection,
-			Locale locale,
 			TextOverflow overflow,
 			object textScaler,
 			TextWidthBasis textWidthBasis,
 			TextHeightBehavior textHeightBehavior,
-			Color selectionColor,
 			string? data = null,
+			TextStyle? style = null,
+			StrutStyle? strutStyle = null,
+			Locale? locale = null,
 			bool? softWrap = null,
 			double? textScaleFactor = null,
 			int? maxLines = null,
 			string? semanticsLabel = null,
-			string? semanticsIdentifier = null
+			string? semanticsIdentifier = null,
+			Color? selectionColor = null
 		)
 		{
 			var s = GetBackingStruct<TextStruct>();

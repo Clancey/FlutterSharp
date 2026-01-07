@@ -133,7 +133,10 @@ namespace Flutter.Structs
 			set => SetIntPtr(ref _child, value);
 		}
 
-		// Simple field: onTapDown
+		// Callback field: onTapDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapDown;
+
 /// A pointer that might cause a tap with a primary button has contacted the
 /// screen at a particular location.
 /// 
@@ -144,9 +147,21 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onTapDown { get; set; }
+		/// <summary>
+		/// Action identifier for onTapDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapDownAction
+		{
+			get => GetString(_onTapDown);
+			set => SetString(ref _onTapDown, value);
+		}
 
-		// Simple field: onTapUp
+		// Callback field: onTapUp
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapUp;
+
 /// A pointer that will trigger a tap with a primary button has stopped
 /// contacting the screen at a particular location.
 /// 
@@ -156,9 +171,21 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onTapUp { get; set; }
+		/// <summary>
+		/// Action identifier for onTapUp callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapUpAction
+		{
+			get => GetString(_onTapUp);
+			set => SetString(ref _onTapUp, value);
+		}
 
-		// Simple field: onTap
+		// Callback field: onTap
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTap;
+
 /// A tap with a primary button has occurred.
 /// 
 /// This triggers when the tap gesture wins. If the tap gesture did not win,
@@ -169,9 +196,21 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 /// * [onTapUp], which is called at the same time but includes details
 /// regarding the pointer position.
-		public IntPtr onTap { get; set; }
+		/// <summary>
+		/// Action identifier for onTap callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapAction
+		{
+			get => GetString(_onTap);
+			set => SetString(ref _onTap, value);
+		}
 
-		// Simple field: onTapMove
+		// Callback field: onTapMove
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapMove;
+
 /// A pointer that triggered a tap has moved.
 /// 
 /// This triggers when the pointer moves after the tap gesture has been recognized.
@@ -179,9 +218,21 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onTapMove { get; set; }
+		/// <summary>
+		/// Action identifier for onTapMove callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapMoveAction
+		{
+			get => GetString(_onTapMove);
+			set => SetString(ref _onTapMove, value);
+		}
 
-		// Simple field: onTapCancel
+		// Callback field: onTapCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTapCancel;
+
 /// The pointer that previously triggered [onTapDown] will not end up causing
 /// a tap.
 /// 
@@ -191,9 +242,21 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onTapCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onTapCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTapCancelAction
+		{
+			get => GetString(_onTapCancel);
+			set => SetString(ref _onTapCancel, value);
+		}
 
-		// Simple field: onSecondaryTap
+		// Callback field: onSecondaryTap
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryTap;
+
 /// A tap with a secondary button has occurred.
 /// 
 /// This triggers when the tap gesture wins. If the tap gesture did not win,
@@ -204,9 +267,21 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 /// * [onSecondaryTapUp], which is called at the same time but includes details
 /// regarding the pointer position.
-		public IntPtr onSecondaryTap { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryTap callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryTapAction
+		{
+			get => GetString(_onSecondaryTap);
+			set => SetString(ref _onSecondaryTap, value);
+		}
 
-		// Simple field: onSecondaryTapDown
+		// Callback field: onSecondaryTapDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryTapDown;
+
 /// A pointer that might cause a tap with a secondary button has contacted the
 /// screen at a particular location.
 /// 
@@ -217,9 +292,21 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kSecondaryButton], the button this callback responds to.
-		public IntPtr onSecondaryTapDown { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryTapDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryTapDownAction
+		{
+			get => GetString(_onSecondaryTapDown);
+			set => SetString(ref _onSecondaryTapDown, value);
+		}
 
-		// Simple field: onSecondaryTapUp
+		// Callback field: onSecondaryTapUp
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryTapUp;
+
 /// A pointer that will trigger a tap with a secondary button has stopped
 /// contacting the screen at a particular location.
 /// 
@@ -231,9 +318,21 @@ namespace Flutter.Structs
 /// * [onSecondaryTap], a handler triggered right after this one that doesn't
 /// pass any details about the tap.
 /// * [kSecondaryButton], the button this callback responds to.
-		public IntPtr onSecondaryTapUp { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryTapUp callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryTapUpAction
+		{
+			get => GetString(_onSecondaryTapUp);
+			set => SetString(ref _onSecondaryTapUp, value);
+		}
 
-		// Simple field: onSecondaryTapCancel
+		// Callback field: onSecondaryTapCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryTapCancel;
+
 /// The pointer that previously triggered [onSecondaryTapDown] will not end up
 /// causing a tap.
 /// 
@@ -243,9 +342,21 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kSecondaryButton], the button this callback responds to.
-		public IntPtr onSecondaryTapCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryTapCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryTapCancelAction
+		{
+			get => GetString(_onSecondaryTapCancel);
+			set => SetString(ref _onSecondaryTapCancel, value);
+		}
 
-		// Simple field: onTertiaryTapDown
+		// Callback field: onTertiaryTapDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryTapDown;
+
 /// A pointer that might cause a tap with a tertiary button has contacted the
 /// screen at a particular location.
 /// 
@@ -256,9 +367,21 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kTertiaryButton], the button this callback responds to.
-		public IntPtr onTertiaryTapDown { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryTapDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryTapDownAction
+		{
+			get => GetString(_onTertiaryTapDown);
+			set => SetString(ref _onTertiaryTapDown, value);
+		}
 
-		// Simple field: onTertiaryTapUp
+		// Callback field: onTertiaryTapUp
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryTapUp;
+
 /// A pointer that will trigger a tap with a tertiary button has stopped
 /// contacting the screen at a particular location.
 /// 
@@ -268,9 +391,21 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kTertiaryButton], the button this callback responds to.
-		public IntPtr onTertiaryTapUp { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryTapUp callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryTapUpAction
+		{
+			get => GetString(_onTertiaryTapUp);
+			set => SetString(ref _onTertiaryTapUp, value);
+		}
 
-		// Simple field: onTertiaryTapCancel
+		// Callback field: onTertiaryTapCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryTapCancel;
+
 /// The pointer that previously triggered [onTertiaryTapDown] will not end up
 /// causing a tap.
 /// 
@@ -280,9 +415,21 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kTertiaryButton], the button this callback responds to.
-		public IntPtr onTertiaryTapCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryTapCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryTapCancelAction
+		{
+			get => GetString(_onTertiaryTapCancel);
+			set => SetString(ref _onTertiaryTapCancel, value);
+		}
 
-		// Simple field: onDoubleTapDown
+		// Callback field: onDoubleTapDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onDoubleTapDown;
+
 /// A pointer that might cause a double tap has contacted the screen at a
 /// particular location.
 /// 
@@ -295,27 +442,63 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onDoubleTapDown { get; set; }
+		/// <summary>
+		/// Action identifier for onDoubleTapDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onDoubleTapDownAction
+		{
+			get => GetString(_onDoubleTapDown);
+			set => SetString(ref _onDoubleTapDown, value);
+		}
 
-		// Simple field: onDoubleTap
+		// Callback field: onDoubleTap
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onDoubleTap;
+
 /// The user has tapped the screen with a primary button at the same location
 /// twice in quick succession.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onDoubleTap { get; set; }
+		/// <summary>
+		/// Action identifier for onDoubleTap callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onDoubleTapAction
+		{
+			get => GetString(_onDoubleTap);
+			set => SetString(ref _onDoubleTap, value);
+		}
 
-		// Simple field: onDoubleTapCancel
+		// Callback field: onDoubleTapCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onDoubleTapCancel;
+
 /// The pointer that previously triggered [onDoubleTapDown] will not end up
 /// causing a double tap.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onDoubleTapCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onDoubleTapCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onDoubleTapCancelAction
+		{
+			get => GetString(_onDoubleTapCancel);
+			set => SetString(ref _onDoubleTapCancel, value);
+		}
 
-		// Simple field: onLongPressDown
+		// Callback field: onLongPressDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onLongPressDown;
+
 /// The pointer has contacted the screen with a primary button, which might
 /// be the start of a long-press.
 /// 
@@ -332,9 +515,21 @@ namespace Flutter.Structs
 /// * [onTertiaryLongPressDown], a similar callback but for a tertiary button.
 /// * [LongPressGestureRecognizer.onLongPressDown], which exposes this
 /// callback at the gesture layer.
-		public IntPtr onLongPressDown { get; set; }
+		/// <summary>
+		/// Action identifier for onLongPressDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onLongPressDownAction
+		{
+			get => GetString(_onLongPressDown);
+			set => SetString(ref _onLongPressDown, value);
+		}
 
-		// Simple field: onLongPressCancel
+		// Callback field: onLongPressCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onLongPressCancel;
+
 /// A pointer that previously triggered [onLongPressDown] will not end up
 /// causing a long-press.
 /// 
@@ -349,9 +544,21 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onLongPressCancel], which exposes this
 /// callback at the gesture layer.
-		public IntPtr onLongPressCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onLongPressCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onLongPressCancelAction
+		{
+			get => GetString(_onLongPressCancel);
+			set => SetString(ref _onLongPressCancel, value);
+		}
 
-		// Simple field: onLongPress
+		// Callback field: onLongPress
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onLongPress;
+
 /// Called when a long press gesture with a primary button has been recognized.
 /// 
 /// Triggered when a pointer has remained in contact with the screen at the
@@ -367,9 +574,21 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onLongPress], which exposes this
 /// callback at the gesture layer.
-		public IntPtr onLongPress { get; set; }
+		/// <summary>
+		/// Action identifier for onLongPress callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onLongPressAction
+		{
+			get => GetString(_onLongPress);
+			set => SetString(ref _onLongPress, value);
+		}
 
-		// Simple field: onLongPressStart
+		// Callback field: onLongPressStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onLongPressStart;
+
 /// Called when a long press gesture with a primary button has been recognized.
 /// 
 /// Triggered when a pointer has remained in contact with the screen at the
@@ -385,9 +604,21 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onLongPressStart], which exposes this
 /// callback at the gesture layer.
-		public IntPtr onLongPressStart { get; set; }
+		/// <summary>
+		/// Action identifier for onLongPressStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onLongPressStartAction
+		{
+			get => GetString(_onLongPressStart);
+			set => SetString(ref _onLongPressStart, value);
+		}
 
-		// Simple field: onLongPressMoveUpdate
+		// Callback field: onLongPressMoveUpdate
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onLongPressMoveUpdate;
+
 /// A pointer has been drag-moved after a long-press with a primary button.
 /// 
 /// See also:
@@ -395,9 +626,21 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onLongPressMoveUpdate], which exposes this
 /// callback at the gesture layer.
-		public IntPtr onLongPressMoveUpdate { get; set; }
+		/// <summary>
+		/// Action identifier for onLongPressMoveUpdate callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onLongPressMoveUpdateAction
+		{
+			get => GetString(_onLongPressMoveUpdate);
+			set => SetString(ref _onLongPressMoveUpdate, value);
+		}
 
-		// Simple field: onLongPressUp
+		// Callback field: onLongPressUp
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onLongPressUp;
+
 /// A pointer that has triggered a long-press with a primary button has
 /// stopped contacting the screen.
 /// 
@@ -411,9 +654,21 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onLongPressUp], which exposes this
 /// callback at the gesture layer.
-		public IntPtr onLongPressUp { get; set; }
+		/// <summary>
+		/// Action identifier for onLongPressUp callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onLongPressUpAction
+		{
+			get => GetString(_onLongPressUp);
+			set => SetString(ref _onLongPressUp, value);
+		}
 
-		// Simple field: onLongPressEnd
+		// Callback field: onLongPressEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onLongPressEnd;
+
 /// A pointer that has triggered a long-press with a primary button has
 /// stopped contacting the screen.
 /// 
@@ -427,9 +682,21 @@ namespace Flutter.Structs
 /// * [kPrimaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onLongPressEnd], which exposes this
 /// callback at the gesture layer.
-		public IntPtr onLongPressEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onLongPressEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onLongPressEndAction
+		{
+			get => GetString(_onLongPressEnd);
+			set => SetString(ref _onLongPressEnd, value);
+		}
 
-		// Simple field: onSecondaryLongPressDown
+		// Callback field: onSecondaryLongPressDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryLongPressDown;
+
 /// The pointer has contacted the screen with a secondary button, which might
 /// be the start of a long-press.
 /// 
@@ -446,9 +713,21 @@ namespace Flutter.Structs
 /// * [onTertiaryLongPressDown], a similar callback but for a tertiary button.
 /// * [LongPressGestureRecognizer.onSecondaryLongPressDown], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onSecondaryLongPressDown { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryLongPressDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryLongPressDownAction
+		{
+			get => GetString(_onSecondaryLongPressDown);
+			set => SetString(ref _onSecondaryLongPressDown, value);
+		}
 
-		// Simple field: onSecondaryLongPressCancel
+		// Callback field: onSecondaryLongPressCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryLongPressCancel;
+
 /// A pointer that previously triggered [onSecondaryLongPressDown] will not
 /// end up causing a long-press.
 /// 
@@ -463,9 +742,21 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onSecondaryLongPressCancel], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onSecondaryLongPressCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryLongPressCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryLongPressCancelAction
+		{
+			get => GetString(_onSecondaryLongPressCancel);
+			set => SetString(ref _onSecondaryLongPressCancel, value);
+		}
 
-		// Simple field: onSecondaryLongPress
+		// Callback field: onSecondaryLongPress
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryLongPress;
+
 /// Called when a long press gesture with a secondary button has been
 /// recognized.
 /// 
@@ -482,9 +773,21 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onSecondaryLongPress], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onSecondaryLongPress { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryLongPress callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryLongPressAction
+		{
+			get => GetString(_onSecondaryLongPress);
+			set => SetString(ref _onSecondaryLongPress, value);
+		}
 
-		// Simple field: onSecondaryLongPressStart
+		// Callback field: onSecondaryLongPressStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryLongPressStart;
+
 /// Called when a long press gesture with a secondary button has been
 /// recognized.
 /// 
@@ -501,9 +804,21 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onSecondaryLongPressStart], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onSecondaryLongPressStart { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryLongPressStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryLongPressStartAction
+		{
+			get => GetString(_onSecondaryLongPressStart);
+			set => SetString(ref _onSecondaryLongPressStart, value);
+		}
 
-		// Simple field: onSecondaryLongPressMoveUpdate
+		// Callback field: onSecondaryLongPressMoveUpdate
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryLongPressMoveUpdate;
+
 /// A pointer has been drag-moved after a long press with a secondary button.
 /// 
 /// See also:
@@ -511,9 +826,21 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onSecondaryLongPressMoveUpdate], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onSecondaryLongPressMoveUpdate { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryLongPressMoveUpdate callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryLongPressMoveUpdateAction
+		{
+			get => GetString(_onSecondaryLongPressMoveUpdate);
+			set => SetString(ref _onSecondaryLongPressMoveUpdate, value);
+		}
 
-		// Simple field: onSecondaryLongPressUp
+		// Callback field: onSecondaryLongPressUp
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryLongPressUp;
+
 /// A pointer that has triggered a long-press with a secondary button has
 /// stopped contacting the screen.
 /// 
@@ -527,9 +854,21 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onSecondaryLongPressUp], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onSecondaryLongPressUp { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryLongPressUp callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryLongPressUpAction
+		{
+			get => GetString(_onSecondaryLongPressUp);
+			set => SetString(ref _onSecondaryLongPressUp, value);
+		}
 
-		// Simple field: onSecondaryLongPressEnd
+		// Callback field: onSecondaryLongPressEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSecondaryLongPressEnd;
+
 /// A pointer that has triggered a long-press with a secondary button has
 /// stopped contacting the screen.
 /// 
@@ -543,9 +882,21 @@ namespace Flutter.Structs
 /// * [kSecondaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onSecondaryLongPressEnd], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onSecondaryLongPressEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onSecondaryLongPressEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSecondaryLongPressEndAction
+		{
+			get => GetString(_onSecondaryLongPressEnd);
+			set => SetString(ref _onSecondaryLongPressEnd, value);
+		}
 
-		// Simple field: onTertiaryLongPressDown
+		// Callback field: onTertiaryLongPressDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryLongPressDown;
+
 /// The pointer has contacted the screen with a tertiary button, which might
 /// be the start of a long-press.
 /// 
@@ -562,9 +913,21 @@ namespace Flutter.Structs
 /// * [onSecondaryLongPressDown], a similar callback but for a secondary button.
 /// * [LongPressGestureRecognizer.onTertiaryLongPressDown], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onTertiaryLongPressDown { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryLongPressDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryLongPressDownAction
+		{
+			get => GetString(_onTertiaryLongPressDown);
+			set => SetString(ref _onTertiaryLongPressDown, value);
+		}
 
-		// Simple field: onTertiaryLongPressCancel
+		// Callback field: onTertiaryLongPressCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryLongPressCancel;
+
 /// A pointer that previously triggered [onTertiaryLongPressDown] will not
 /// end up causing a long-press.
 /// 
@@ -579,9 +942,21 @@ namespace Flutter.Structs
 /// * [kTertiaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onTertiaryLongPressCancel], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onTertiaryLongPressCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryLongPressCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryLongPressCancelAction
+		{
+			get => GetString(_onTertiaryLongPressCancel);
+			set => SetString(ref _onTertiaryLongPressCancel, value);
+		}
 
-		// Simple field: onTertiaryLongPress
+		// Callback field: onTertiaryLongPress
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryLongPress;
+
 /// Called when a long press gesture with a tertiary button has been
 /// recognized.
 /// 
@@ -598,9 +973,21 @@ namespace Flutter.Structs
 /// * [kTertiaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onTertiaryLongPress], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onTertiaryLongPress { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryLongPress callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryLongPressAction
+		{
+			get => GetString(_onTertiaryLongPress);
+			set => SetString(ref _onTertiaryLongPress, value);
+		}
 
-		// Simple field: onTertiaryLongPressStart
+		// Callback field: onTertiaryLongPressStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryLongPressStart;
+
 /// Called when a long press gesture with a tertiary button has been
 /// recognized.
 /// 
@@ -617,9 +1004,21 @@ namespace Flutter.Structs
 /// * [kTertiaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onTertiaryLongPressStart], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onTertiaryLongPressStart { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryLongPressStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryLongPressStartAction
+		{
+			get => GetString(_onTertiaryLongPressStart);
+			set => SetString(ref _onTertiaryLongPressStart, value);
+		}
 
-		// Simple field: onTertiaryLongPressMoveUpdate
+		// Callback field: onTertiaryLongPressMoveUpdate
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryLongPressMoveUpdate;
+
 /// A pointer has been drag-moved after a long press with a tertiary button.
 /// 
 /// See also:
@@ -627,9 +1026,21 @@ namespace Flutter.Structs
 /// * [kTertiaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onTertiaryLongPressMoveUpdate], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onTertiaryLongPressMoveUpdate { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryLongPressMoveUpdate callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryLongPressMoveUpdateAction
+		{
+			get => GetString(_onTertiaryLongPressMoveUpdate);
+			set => SetString(ref _onTertiaryLongPressMoveUpdate, value);
+		}
 
-		// Simple field: onTertiaryLongPressUp
+		// Callback field: onTertiaryLongPressUp
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryLongPressUp;
+
 /// A pointer that has triggered a long-press with a tertiary button has
 /// stopped contacting the screen.
 /// 
@@ -643,9 +1054,21 @@ namespace Flutter.Structs
 /// * [kTertiaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onTertiaryLongPressUp], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onTertiaryLongPressUp { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryLongPressUp callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryLongPressUpAction
+		{
+			get => GetString(_onTertiaryLongPressUp);
+			set => SetString(ref _onTertiaryLongPressUp, value);
+		}
 
-		// Simple field: onTertiaryLongPressEnd
+		// Callback field: onTertiaryLongPressEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onTertiaryLongPressEnd;
+
 /// A pointer that has triggered a long-press with a tertiary button has
 /// stopped contacting the screen.
 /// 
@@ -659,36 +1082,84 @@ namespace Flutter.Structs
 /// * [kTertiaryButton], the button this callback responds to.
 /// * [LongPressGestureRecognizer.onTertiaryLongPressEnd], which exposes
 /// this callback at the gesture layer.
-		public IntPtr onTertiaryLongPressEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onTertiaryLongPressEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onTertiaryLongPressEndAction
+		{
+			get => GetString(_onTertiaryLongPressEnd);
+			set => SetString(ref _onTertiaryLongPressEnd, value);
+		}
 
-		// Simple field: onVerticalDragDown
+		// Callback field: onVerticalDragDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onVerticalDragDown;
+
 /// A pointer has contacted the screen with a primary button and might begin
 /// to move vertically.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onVerticalDragDown { get; set; }
+		/// <summary>
+		/// Action identifier for onVerticalDragDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onVerticalDragDownAction
+		{
+			get => GetString(_onVerticalDragDown);
+			set => SetString(ref _onVerticalDragDown, value);
+		}
 
-		// Simple field: onVerticalDragStart
+		// Callback field: onVerticalDragStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onVerticalDragStart;
+
 /// A pointer has contacted the screen with a primary button and has begun to
 /// move vertically.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onVerticalDragStart { get; set; }
+		/// <summary>
+		/// Action identifier for onVerticalDragStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onVerticalDragStartAction
+		{
+			get => GetString(_onVerticalDragStart);
+			set => SetString(ref _onVerticalDragStart, value);
+		}
 
-		// Simple field: onVerticalDragUpdate
+		// Callback field: onVerticalDragUpdate
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onVerticalDragUpdate;
+
 /// A pointer that is in contact with the screen with a primary button and
 /// moving vertically has moved in the vertical direction.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onVerticalDragUpdate { get; set; }
+		/// <summary>
+		/// Action identifier for onVerticalDragUpdate callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onVerticalDragUpdateAction
+		{
+			get => GetString(_onVerticalDragUpdate);
+			set => SetString(ref _onVerticalDragUpdate, value);
+		}
 
-		// Simple field: onVerticalDragEnd
+		// Callback field: onVerticalDragEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onVerticalDragEnd;
+
 /// A pointer that was previously in contact with the screen with a primary
 /// button and moving vertically is no longer in contact with the screen and
 /// was moving at a specific velocity when it stopped contacting the screen.
@@ -696,45 +1167,105 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onVerticalDragEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onVerticalDragEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onVerticalDragEndAction
+		{
+			get => GetString(_onVerticalDragEnd);
+			set => SetString(ref _onVerticalDragEnd, value);
+		}
 
-		// Simple field: onVerticalDragCancel
+		// Callback field: onVerticalDragCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onVerticalDragCancel;
+
 /// The pointer that previously triggered [onVerticalDragDown] did not
 /// complete.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onVerticalDragCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onVerticalDragCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onVerticalDragCancelAction
+		{
+			get => GetString(_onVerticalDragCancel);
+			set => SetString(ref _onVerticalDragCancel, value);
+		}
 
-		// Simple field: onHorizontalDragDown
+		// Callback field: onHorizontalDragDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onHorizontalDragDown;
+
 /// A pointer has contacted the screen with a primary button and might begin
 /// to move horizontally.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onHorizontalDragDown { get; set; }
+		/// <summary>
+		/// Action identifier for onHorizontalDragDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onHorizontalDragDownAction
+		{
+			get => GetString(_onHorizontalDragDown);
+			set => SetString(ref _onHorizontalDragDown, value);
+		}
 
-		// Simple field: onHorizontalDragStart
+		// Callback field: onHorizontalDragStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onHorizontalDragStart;
+
 /// A pointer has contacted the screen with a primary button and has begun to
 /// move horizontally.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onHorizontalDragStart { get; set; }
+		/// <summary>
+		/// Action identifier for onHorizontalDragStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onHorizontalDragStartAction
+		{
+			get => GetString(_onHorizontalDragStart);
+			set => SetString(ref _onHorizontalDragStart, value);
+		}
 
-		// Simple field: onHorizontalDragUpdate
+		// Callback field: onHorizontalDragUpdate
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onHorizontalDragUpdate;
+
 /// A pointer that is in contact with the screen with a primary button and
 /// moving horizontally has moved in the horizontal direction.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onHorizontalDragUpdate { get; set; }
+		/// <summary>
+		/// Action identifier for onHorizontalDragUpdate callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onHorizontalDragUpdateAction
+		{
+			get => GetString(_onHorizontalDragUpdate);
+			set => SetString(ref _onHorizontalDragUpdate, value);
+		}
 
-		// Simple field: onHorizontalDragEnd
+		// Callback field: onHorizontalDragEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onHorizontalDragEnd;
+
 /// A pointer that was previously in contact with the screen with a primary
 /// button and moving horizontally is no longer in contact with the screen and
 /// was moving at a specific velocity when it stopped contacting the screen.
@@ -742,45 +1273,105 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onHorizontalDragEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onHorizontalDragEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onHorizontalDragEndAction
+		{
+			get => GetString(_onHorizontalDragEnd);
+			set => SetString(ref _onHorizontalDragEnd, value);
+		}
 
-		// Simple field: onHorizontalDragCancel
+		// Callback field: onHorizontalDragCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onHorizontalDragCancel;
+
 /// The pointer that previously triggered [onHorizontalDragDown] did not
 /// complete.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onHorizontalDragCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onHorizontalDragCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onHorizontalDragCancelAction
+		{
+			get => GetString(_onHorizontalDragCancel);
+			set => SetString(ref _onHorizontalDragCancel, value);
+		}
 
-		// Simple field: onPanDown
+		// Callback field: onPanDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPanDown;
+
 /// A pointer has contacted the screen with a primary button and might begin
 /// to move.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onPanDown { get; set; }
+		/// <summary>
+		/// Action identifier for onPanDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPanDownAction
+		{
+			get => GetString(_onPanDown);
+			set => SetString(ref _onPanDown, value);
+		}
 
-		// Simple field: onPanStart
+		// Callback field: onPanStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPanStart;
+
 /// A pointer has contacted the screen with a primary button and has begun to
 /// move.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onPanStart { get; set; }
+		/// <summary>
+		/// Action identifier for onPanStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPanStartAction
+		{
+			get => GetString(_onPanStart);
+			set => SetString(ref _onPanStart, value);
+		}
 
-		// Simple field: onPanUpdate
+		// Callback field: onPanUpdate
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPanUpdate;
+
 /// A pointer that is in contact with the screen with a primary button and
 /// moving has moved again.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onPanUpdate { get; set; }
+		/// <summary>
+		/// Action identifier for onPanUpdate callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPanUpdateAction
+		{
+			get => GetString(_onPanUpdate);
+			set => SetString(ref _onPanUpdate, value);
+		}
 
-		// Simple field: onPanEnd
+		// Callback field: onPanEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPanEnd;
+
 /// A pointer that was previously in contact with the screen with a primary
 /// button and moving is no longer in contact with the screen and was moving
 /// at a specific velocity when it stopped contacting the screen.
@@ -788,49 +1379,133 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onPanEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onPanEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPanEndAction
+		{
+			get => GetString(_onPanEnd);
+			set => SetString(ref _onPanEnd, value);
+		}
 
-		// Simple field: onPanCancel
+		// Callback field: onPanCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPanCancel;
+
 /// The pointer that previously triggered [onPanDown] did not complete.
 /// 
 /// See also:
 /// 
 /// * [kPrimaryButton], the button this callback responds to.
-		public IntPtr onPanCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onPanCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPanCancelAction
+		{
+			get => GetString(_onPanCancel);
+			set => SetString(ref _onPanCancel, value);
+		}
 
-		// Simple field: onScaleStart
+		// Callback field: onScaleStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onScaleStart;
+
 /// The pointers in contact with the screen have established a focal point and
 /// initial scale of 1.0.
-		public IntPtr onScaleStart { get; set; }
+		/// <summary>
+		/// Action identifier for onScaleStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onScaleStartAction
+		{
+			get => GetString(_onScaleStart);
+			set => SetString(ref _onScaleStart, value);
+		}
 
-		// Simple field: onScaleUpdate
+		// Callback field: onScaleUpdate
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onScaleUpdate;
+
 /// The pointers in contact with the screen have indicated a new focal point
 /// and/or scale.
-		public IntPtr onScaleUpdate { get; set; }
+		/// <summary>
+		/// Action identifier for onScaleUpdate callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onScaleUpdateAction
+		{
+			get => GetString(_onScaleUpdate);
+			set => SetString(ref _onScaleUpdate, value);
+		}
 
-		// Simple field: onScaleEnd
+		// Callback field: onScaleEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onScaleEnd;
+
 /// The pointers are no longer in contact with the screen.
-		public IntPtr onScaleEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onScaleEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onScaleEndAction
+		{
+			get => GetString(_onScaleEnd);
+			set => SetString(ref _onScaleEnd, value);
+		}
 
-		// Simple field: onForcePressStart
+		// Callback field: onForcePressStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onForcePressStart;
+
 /// The pointer is in contact with the screen and has pressed with sufficient
 /// force to initiate a force press. The amount of force is at least
 /// [ForcePressGestureRecognizer.startPressure].
 /// 
 /// This callback will only be fired on devices with pressure
 /// detecting screens.
-		public IntPtr onForcePressStart { get; set; }
+		/// <summary>
+		/// Action identifier for onForcePressStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onForcePressStartAction
+		{
+			get => GetString(_onForcePressStart);
+			set => SetString(ref _onForcePressStart, value);
+		}
 
-		// Simple field: onForcePressPeak
+		// Callback field: onForcePressPeak
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onForcePressPeak;
+
 /// The pointer is in contact with the screen and has pressed with the maximum
 /// force. The amount of force is at least
 /// [ForcePressGestureRecognizer.peakPressure].
 /// 
 /// This callback will only be fired on devices with pressure
 /// detecting screens.
-		public IntPtr onForcePressPeak { get; set; }
+		/// <summary>
+		/// Action identifier for onForcePressPeak callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onForcePressPeakAction
+		{
+			get => GetString(_onForcePressPeak);
+			set => SetString(ref _onForcePressPeak, value);
+		}
 
-		// Simple field: onForcePressUpdate
+		// Callback field: onForcePressUpdate
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onForcePressUpdate;
+
 /// A pointer is in contact with the screen, has previously passed the
 /// [ForcePressGestureRecognizer.startPressure] and is either moving on the
 /// plane of the screen, pressing the screen with varying forces or both
@@ -838,14 +1513,35 @@ namespace Flutter.Structs
 /// 
 /// This callback will only be fired on devices with pressure
 /// detecting screens.
-		public IntPtr onForcePressUpdate { get; set; }
+		/// <summary>
+		/// Action identifier for onForcePressUpdate callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onForcePressUpdateAction
+		{
+			get => GetString(_onForcePressUpdate);
+			set => SetString(ref _onForcePressUpdate, value);
+		}
 
-		// Simple field: onForcePressEnd
+		// Callback field: onForcePressEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onForcePressEnd;
+
 /// The pointer tracked by [onForcePressStart] is no longer in contact with the screen.
 /// 
 /// This callback will only be fired on devices with pressure
 /// detecting screens.
-		public IntPtr onForcePressEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onForcePressEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onForcePressEndAction
+		{
+			get => GetString(_onForcePressEnd);
+			set => SetString(ref _onForcePressEnd, value);
+		}
 
 		// Simple field: behavior
 /// How this gesture detector should behave during hit testing when deciding
@@ -856,7 +1552,7 @@ namespace Flutter.Structs
 /// [HitTestBehavior.translucent] if child is null.
 /// 
 /// See [HitTestBehavior] for the allowed values and their meanings.
-		public IntPtr behavior { get; set; }
+		public HitTestBehavior behavior { get; set; }
 
 		// Simple field: excludeFromSemantics
 /// Whether to exclude these gestures from the semantics tree. For
@@ -904,7 +1600,7 @@ namespace Flutter.Structs
 
 		// Simple field: trackpadScrollToScaleFactor
 /// {@macro flutter.gestures.scale.trackpadScrollToScaleFactor}
-		public IntPtr trackpadScrollToScaleFactor { get; set; }
+		public object trackpadScrollToScaleFactor { get; set; }
 
 	}
 }

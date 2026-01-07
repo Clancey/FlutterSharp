@@ -39,13 +39,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedModalBarrier"/> class.
 		/// </summary>
 		public AnimatedModalBarrier(
-			Action onDismiss,
 			object clipDetailsNotifier,
-			Color color,
 			bool dismissible = true,
 			string? semanticsLabel = null,
 			bool? barrierSemanticsDismissible = null,
-			string? semanticsOnTapHint = null
+			Action onDismiss = null,
+			string? semanticsOnTapHint = null,
+			Color? color = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedModalBarrierStruct>();

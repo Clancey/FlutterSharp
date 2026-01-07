@@ -187,7 +187,7 @@ namespace Flutter.Structs
 /// The [BackdropKey] that identifies the backdrop this filter will apply to.
 /// 
 /// The default value for the backdrop key is `null`.
-		public IntPtr backdropGroupKey { get; set; }
+		public object backdropGroupKey { get; set; }
 
 		// Has flag for nullable property: child
 		public byte Haschild { get; set; }

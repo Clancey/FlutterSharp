@@ -54,16 +54,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TwoDimensionalScrollView"/> class.
 		/// </summary>
 		public TwoDimensionalScrollView(
-			TwoDimensionalChildDelegate @delegate,
+			TwoDimensionalChildDelegate @delegate = null,
 			double? cacheExtent = null,
-			DiagonalDragBehavior diagonalDragBehavior = null,
+			DiagonalDragBehavior? diagonalDragBehavior = null,
 			bool? primary = null,
-			object mainAxis = Axis.Vertical,
+			Axis mainAxis = Axis.Vertical,
 			ScrollableDetails verticalDetails = null,
 			ScrollableDetails horizontalDetails = null,
 			DragStartBehavior dragStartBehavior = DragStartBehavior.Start,
 			ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior = null,
-			PlatformViewHitTestBehavior hitTestBehavior = HitTestBehavior.Opaque,
+			HitTestBehavior hitTestBehavior = HitTestBehavior.Opaque,
 			Clip clipBehavior = Clip.HardEdge
 		)
 		{
@@ -71,10 +71,10 @@ namespace Flutter.Widgets
 			// Complex type: TwoDimensionalChildDelegate - skipped (requires marshaling)
 			if (cacheExtent.HasValue)
 				s.cacheExtent = cacheExtent.Value;
-			// Complex type: DiagonalDragBehavior - skipped (requires marshaling)
+			// Nullable reference type: DiagonalDragBehavior - skipped
 			if (primary.HasValue)
 				s.primary = primary.Value;
-			// Complex type: object - skipped (requires marshaling)
+			s.mainAxis = mainAxis;
 			// Complex type: ScrollableDetails - skipped (requires marshaling)
 			// Complex type: ScrollableDetails - skipped (requires marshaling)
 			s.dragStartBehavior = dragStartBehavior;

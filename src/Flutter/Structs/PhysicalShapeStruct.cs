@@ -41,7 +41,7 @@ namespace Flutter.Structs
 /// If the path in question is expressed as a [ShapeBorder] subclass,
 /// consider using the [ShapeBorderClipper] delegate class to adapt the
 /// shape for use with this widget.
-		public IntPtr clipper { get; set; }
+		public object clipper { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}

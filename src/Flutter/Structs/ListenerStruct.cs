@@ -40,58 +40,166 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ListenerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Simple field: onPointerDown
+		// Callback field: onPointerDown
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPointerDown;
+
 /// Called when a pointer comes into contact with the screen (for touch
 /// pointers), or has its button pressed (for mouse pointers) at this widget's
 /// location.
-		public IntPtr onPointerDown { get; set; }
+		/// <summary>
+		/// Action identifier for onPointerDown callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPointerDownAction
+		{
+			get => GetString(_onPointerDown);
+			set => SetString(ref _onPointerDown, value);
+		}
 
-		// Simple field: onPointerMove
+		// Callback field: onPointerMove
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPointerMove;
+
 /// Called when a pointer that triggered an [onPointerDown] changes position.
-		public IntPtr onPointerMove { get; set; }
+		/// <summary>
+		/// Action identifier for onPointerMove callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPointerMoveAction
+		{
+			get => GetString(_onPointerMove);
+			set => SetString(ref _onPointerMove, value);
+		}
 
-		// Simple field: onPointerUp
+		// Callback field: onPointerUp
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPointerUp;
+
 /// Called when a pointer that triggered an [onPointerDown] is no longer in
 /// contact with the screen.
-		public IntPtr onPointerUp { get; set; }
+		/// <summary>
+		/// Action identifier for onPointerUp callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPointerUpAction
+		{
+			get => GetString(_onPointerUp);
+			set => SetString(ref _onPointerUp, value);
+		}
 
-		// Simple field: onPointerHover
+		// Callback field: onPointerHover
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPointerHover;
+
 /// Called when a pointer that has not triggered an [onPointerDown] changes
 /// position.
 /// 
 /// This is only fired for pointers which report their location when not down
 /// (e.g. mouse pointers, but not most touch pointers).
-		public IntPtr onPointerHover { get; set; }
+		/// <summary>
+		/// Action identifier for onPointerHover callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPointerHoverAction
+		{
+			get => GetString(_onPointerHover);
+			set => SetString(ref _onPointerHover, value);
+		}
 
-		// Simple field: onPointerCancel
+		// Callback field: onPointerCancel
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPointerCancel;
+
 /// Called when the input from a pointer that triggered an [onPointerDown] is
 /// no longer directed towards this receiver.
-		public IntPtr onPointerCancel { get; set; }
+		/// <summary>
+		/// Action identifier for onPointerCancel callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPointerCancelAction
+		{
+			get => GetString(_onPointerCancel);
+			set => SetString(ref _onPointerCancel, value);
+		}
 
-		// Simple field: onPointerPanZoomStart
+		// Callback field: onPointerPanZoomStart
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPointerPanZoomStart;
+
 /// Called when a pan/zoom begins such as from a trackpad gesture.
-		public IntPtr onPointerPanZoomStart { get; set; }
+		/// <summary>
+		/// Action identifier for onPointerPanZoomStart callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPointerPanZoomStartAction
+		{
+			get => GetString(_onPointerPanZoomStart);
+			set => SetString(ref _onPointerPanZoomStart, value);
+		}
 
-		// Simple field: onPointerPanZoomUpdate
+		// Callback field: onPointerPanZoomUpdate
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPointerPanZoomUpdate;
+
 /// Called when a pan/zoom is updated.
-		public IntPtr onPointerPanZoomUpdate { get; set; }
+		/// <summary>
+		/// Action identifier for onPointerPanZoomUpdate callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPointerPanZoomUpdateAction
+		{
+			get => GetString(_onPointerPanZoomUpdate);
+			set => SetString(ref _onPointerPanZoomUpdate, value);
+		}
 
-		// Simple field: onPointerPanZoomEnd
+		// Callback field: onPointerPanZoomEnd
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPointerPanZoomEnd;
+
 /// Called when a pan/zoom finishes.
-		public IntPtr onPointerPanZoomEnd { get; set; }
+		/// <summary>
+		/// Action identifier for onPointerPanZoomEnd callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPointerPanZoomEndAction
+		{
+			get => GetString(_onPointerPanZoomEnd);
+			set => SetString(ref _onPointerPanZoomEnd, value);
+		}
 
-		// Simple field: onPointerSignal
+		// Callback field: onPointerSignal
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onPointerSignal;
+
 /// Called when a pointer signal occurs over this object.
 /// 
 /// See also:
 /// 
 /// * [PointerSignalEvent], which goes into more detail on pointer signal
 /// events.
-		public IntPtr onPointerSignal { get; set; }
+		/// <summary>
+		/// Action identifier for onPointerSignal callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onPointerSignalAction
+		{
+			get => GetString(_onPointerSignal);
+			set => SetString(ref _onPointerSignal, value);
+		}
 
 		// Simple field: behavior
 /// How to behave during hit testing.
-		public IntPtr behavior { get; set; }
+		public HitTestBehavior behavior { get; set; }
 
 		// Has flag for nullable property: child
 		public byte Haschild { get; set; }

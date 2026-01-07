@@ -544,11 +544,11 @@ namespace Flutter.Structs
 
 		// Simple field: fontWeight
 /// The typeface thickness to use when painting the text (e.g., bold).
-		public IntPtr fontWeight { get; set; }
+		public object fontWeight { get; set; }
 
 		// Simple field: fontStyle
 /// The typeface variant to use when drawing the letters (e.g., italics).
-		public IntPtr fontStyle { get; set; }
+		public object fontStyle { get; set; }
 
 		// Has flag for nullable property: letterSpacing
 		public byte HasletterSpacing { get; set; }
@@ -615,7 +615,7 @@ namespace Flutter.Structs
 /// 
 /// Defaults to null, which defers to the paragraph's
 /// `ParagraphStyle.textHeightBehavior`'s [leadingDistribution].
-		public IntPtr leadingDistribution { get; set; }
+		public object leadingDistribution { get; set; }
 
 		// Simple field: locale
 /// The locale used to select region-specific glyphs.
@@ -642,7 +642,7 @@ namespace Flutter.Structs
 /// In [merge], [apply], and [lerp], conflicts between [color] and [foreground]
 /// specification are resolved in [foreground]'s favor - i.e. if [foreground] is
 /// specified in one place, it will dominate [color] in another.
-		public IntPtr foreground { get; set; }
+		public object foreground { get; set; }
 
 		// Simple field: background
 /// The paint drawn as a background for the text.
@@ -660,7 +660,7 @@ namespace Flutter.Structs
 /// [background] specification are resolved in [background]'s favor - i.e. if
 /// [background] is specified in one place, it will dominate [backgroundColor]
 /// in another.
-		public IntPtr background { get; set; }
+		public object background { get; set; }
 
 		// Simple field: decoration
 /// The decorations to paint near the text (e.g., an underline).
@@ -674,7 +674,7 @@ namespace Flutter.Structs
 
 		// Simple field: decorationStyle
 /// The style in which to paint the text decorations (e.g., dashed).
-		public IntPtr decorationStyle { get; set; }
+		public object decorationStyle { get; set; }
 
 		// Has flag for nullable property: decorationThickness
 		public byte HasdecorationThickness { get; set; }

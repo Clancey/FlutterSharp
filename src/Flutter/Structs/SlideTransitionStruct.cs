@@ -85,7 +85,7 @@ namespace Flutter.Structs
 		}
 
 		// Simple field: position
-		public IntPtr position { get; set; }
+		public object position { get; set; }
 
 	}
 }

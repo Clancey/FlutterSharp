@@ -38,7 +38,7 @@ namespace Flutter.Structs
 		public double vertical { get; set; }
 
 		// Simple field: collapsedSize
-		public IntPtr collapsedSize { get; set; }
+		public object collapsedSize { get; set; }
 
 		// Simple field: flipped
 		public IntPtr flipped { get; set; }

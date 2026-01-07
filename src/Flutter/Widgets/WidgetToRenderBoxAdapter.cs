@@ -34,8 +34,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public WidgetToRenderBoxAdapter(
 			object renderBox,
-			Action onBuild,
-			Action onUnmount
+			Action onBuild = null,
+			Action onUnmount = null
 		)
 		{
 			var s = GetBackingStruct<WidgetToRenderBoxAdapterStruct>();

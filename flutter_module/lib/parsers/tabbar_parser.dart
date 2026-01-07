@@ -14,7 +14,7 @@ class TabBarParser extends WidgetParser {
         .ref;
     // map.children.asTypedList()
     return TabBar(
-      tabs: DynamicWidgetBuilder.buildWidgets(map.children, buildContext),
+      tabs: DynamicWidgetBuilder.buildWidgets(map.children.cast<ChildrenStruct>(), buildContext),
     );
   }
 

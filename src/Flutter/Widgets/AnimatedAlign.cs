@@ -54,8 +54,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedAlign"/> class.
 		/// </summary>
 		public AnimatedAlign(
-			AlignmentGeometry alignment,
 			TimeSpan duration,
+			AlignmentGeometry alignment = null,
 			Widget? child = null,
 			double? heightFactor = null,
 			double? widthFactor = null,
@@ -64,7 +64,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<AnimatedAlignStruct>();
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.child = child;
 			if (heightFactor.HasValue)
 				s.heightFactor = heightFactor.Value;

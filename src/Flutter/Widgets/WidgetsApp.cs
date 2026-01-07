@@ -50,9 +50,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="WidgetsApp"/> class.
 		/// </summary>
 		public WidgetsApp(
-			TextStyle textStyle,
-			Color color,
-			Locale locale,
 			GlobalKey<NavigatorState>? navigatorKey = null,
 			Func<RouteSettings, Route<object>?> onGenerateRoute = null,
 			Func<string, List<Route<object>>> onGenerateInitialRoutes = null,
@@ -71,6 +68,9 @@ namespace Flutter.Widgets
 			Func<BuildContext, Widget?, Widget> builder = null,
 			string? title = null,
 			Func<BuildContext, string> onGenerateTitle = null,
+			TextStyle? textStyle = null,
+			Color? color = null,
+			Locale? locale = null,
 			IEnumerable<LocalizationsDelegate<object>>? localizationsDelegates = null,
 			Func<List<InvalidType>?, IEnumerable<InvalidType>, InvalidType> localeListResolutionCallback = null,
 			Func<InvalidType, IEnumerable<InvalidType>, InvalidType> localeResolutionCallback = null,

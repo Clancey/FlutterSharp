@@ -47,14 +47,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public KeepAlive(
 			bool keepAlive,
-			Type debugTypicalAncestorWidgetClass,
 			string debugTypicalAncestorWidgetDescription,
 			Widget child
 		)
 		{
 			var s = GetBackingStruct<KeepAliveStruct>();
 			s.keepAlive = keepAlive;
-			// Complex type: Type - skipped (requires marshaling)
 			s.debugTypicalAncestorWidgetDescription = debugTypicalAncestorWidgetDescription;
 			s.child = child;
 		}

@@ -46,8 +46,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverAnimatedGrid"/> class.
 		/// </summary>
 		public SliverAnimatedGrid(
-			SliverGridDelegate gridDelegate,
 			object itemBuilder,
+			SliverGridDelegate gridDelegate = null,
 			Func<InvalidType, int?> findChildIndexCallback = null,
 			int initialItemCount = 0
 		)

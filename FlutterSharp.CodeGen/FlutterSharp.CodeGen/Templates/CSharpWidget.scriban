@@ -88,9 +88,8 @@ namespace {{ namespace }}
 		/// </summary>
 		public {{ name }}(
 {{~ for prop in required_properties ~}}
-			{{ prop.type }} {{ prop.backing_field_name }}{{ if !for.last }},{{ end }}
+			{{ prop.type }} {{ prop.backing_field_name }}{{ if !for.last || optional_properties.size > 0 }},{{ end }}
 {{~ end ~}}
-{{~ if required_properties.size > 0 && optional_properties.size > 0 }},{{ end }}
 {{~ for prop in optional_properties ~}}
 			{{ prop.nullable_type }} {{ prop.backing_field_name }} = {{ if prop.is_generic_type_param }}default{{ else }}{{ prop.default_value ?? "null" }}{{ end }}{{ if !for.last }},{{ end }}
 {{~ end ~}}
@@ -99,6 +98,12 @@ namespace {{ namespace }}
 {{~ if has_widget_children ~}}
 			if ({{ children_property_name }} != null)
 				_childrenList.AddRange({{ children_property_name }});
+{{~ end ~}}
+{{~ for prop in all_properties ~}}
+{{~ if prop.is_time_span && prop.runtime_default_value && prop.is_nullable ~}}
+			if (!{{ prop.backing_field_name }}.HasValue)
+				{{ prop.backing_field_name }} = {{ prop.runtime_default_value }};
+{{~ end ~}}
 {{~ end ~}}
 			var s = GetBackingStruct<{{ struct_name }}>();
 {{~ for prop in all_properties ~}}
@@ -147,9 +152,8 @@ namespace {{ namespace }}
 		/// </summary>
 		public {{ name }}(
 {{~ for prop in required_properties ~}}
-			{{ prop.type }} {{ prop.backing_field_name }}{{ if !for.last }},{{ end }}
+			{{ prop.type }} {{ prop.backing_field_name }}{{ if !for.last || optional_properties.size > 0 }},{{ end }}
 {{~ end ~}}
-{{~ if required_properties.size > 0 && optional_properties.size > 0 }},{{ end }}
 {{~ for prop in optional_properties ~}}
 			{{ prop.nullable_type }} {{ prop.backing_field_name }} = {{ if prop.is_generic_type_param }}default{{ else }}{{ prop.default_value ?? "null" }}{{ end }}{{ if !for.last }},{{ end }}
 {{~ end ~}}
@@ -158,6 +162,12 @@ namespace {{ namespace }}
 {{~ if has_widget_children ~}}
 			if ({{ children_property_name }} != null)
 				_childrenList.AddRange({{ children_property_name }});
+{{~ end ~}}
+{{~ for prop in all_properties ~}}
+{{~ if prop.is_time_span && prop.runtime_default_value && prop.is_nullable ~}}
+			if (!{{ prop.backing_field_name }}.HasValue)
+				{{ prop.backing_field_name }} = {{ prop.runtime_default_value }};
+{{~ end ~}}
 {{~ end ~}}
 			var s = GetBackingStruct<{{ struct_name }}>();
 {{~ for prop in all_properties ~}}

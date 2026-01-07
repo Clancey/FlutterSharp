@@ -179,6 +179,13 @@ After completing a task:
 2. Add any new discovered tasks
 3. Re-prioritize if needed
 ```
+### Rule 8: Do not edit generated code
+
+```
+c# and dart generated code cannot be manually edited. 
+Fix the code generator and regenerate.
+```
+
 
 ## Task Selection Algorithm
 

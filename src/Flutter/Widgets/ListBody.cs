@@ -81,7 +81,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ListBody"/> class.
 		/// </summary>
 		public ListBody(
-			object mainAxis = Axis.Vertical,
+			Axis mainAxis = Axis.Vertical,
 			bool reverse = false,
 			List<Widget> children = null
 		)
@@ -89,7 +89,7 @@ namespace Flutter.Widgets
 			if (children != null)
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<ListBodyStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			s.mainAxis = mainAxis;
 			s.reverse = reverse;
 			// Children are set in PrepareForSending to support collection initializers
 		}

@@ -223,7 +223,7 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.scrollable.hitTestBehavior}
 /// 
 /// Defaults to [HitTestBehavior.opaque].
-		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
+		public HitTestBehavior hitTestBehavior { get; set; }
 
 		// Has flag for nullable property: restorationId
 		public byte HasrestorationId { get; set; }

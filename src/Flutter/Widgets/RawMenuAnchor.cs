@@ -51,15 +51,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawMenuAnchor"/> class.
 		/// </summary>
 		public RawMenuAnchor(
-			Action onOpen,
-			Action onClose,
-			Func<BuildContext, RawMenuOverlayInfo, Widget> overlayBuilder,
-			MenuController controller,
+			Action onOpen = null,
+			Action onClose = null,
 			Func<BuildContext, MenuController, Widget?, Widget> builder = null,
 			Widget? child = null,
+			Func<BuildContext, RawMenuOverlayInfo, Widget> overlayBuilder = null,
 			bool useRootOverlay = false,
 			FocusNode? childFocusNode = null,
-			bool consumeOutsideTaps = false
+			bool consumeOutsideTaps = false,
+			MenuController controller = null
 		)
 		{
 			var s = GetBackingStruct<RawMenuAnchorStruct>();

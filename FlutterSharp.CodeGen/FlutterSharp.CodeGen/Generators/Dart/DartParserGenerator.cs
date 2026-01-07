@@ -254,6 +254,16 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 				var baseType = p.DartType?.TrimEnd('?') ?? "";
 				var ffiType = p.FfiType;
 
+				// Fix InvalidType by inferring the correct type from parameter name and widget context
+				if (string.IsNullOrEmpty(baseType) || baseType == "InvalidType")
+				{
+					var inferredType = DartToCSharpMapper.InferTypeFromParameterName(p.Name, enrichedWidget.Name);
+					if (!string.IsNullOrEmpty(inferredType))
+					{
+						baseType = inferredType;
+					}
+				}
+
 				// Determine if this is an enum (stored as Int32 but not a primitive Dart type)
 				var isEnumType = (p.FfiAnnotation?.Contains("Int32") == true || p.FfiAnnotation?.Contains("Int8") == true)
 					&& !IsDartPrimitiveType(baseType)
@@ -267,7 +277,16 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 
 				var parserFunc = GetParserFunctionFromEnriched(p);
 
-	
+				// DEBUG: Log callback status
+				if (enrichedWidget.Name == "GestureDetector" && p.Name.StartsWith("on"))
+				{
+					Console.WriteLine($"[DEBUG CALLBACK] {enrichedWidget.Name}.{p.Name}: IsCallback={p.IsCallback}, DartType={p.DartType}");
+				}
+
+
+				// Reconstruct DartType with corrected baseType (add back nullability marker if needed)
+				var correctedDartType = p.IsDartNullable ? baseType + "?" : baseType;
+
 				return new
 				{
 					p.Name,
@@ -275,7 +294,7 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 					PropertyName = ToCamelCase(p.Name),
 					// StructPropertyName is for accessing the struct field (has "Action" suffix for callbacks)
 					StructPropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
-					p.DartType,
+					DartType = correctedDartType,
 					FfiType = ffiType,
 					// Match template variable names (Scriban converts to snake_case)
 					IsPointerVoid = isPointerVoid,

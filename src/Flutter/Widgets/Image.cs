@@ -110,19 +110,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Image"/> class.
 		/// </summary>
 		public Image(
-			ImageProvider image,
-			Color color,
-			Animation<double> opacity,
 			object colorBlendMode,
 			BoxFit fit,
 			object centerSlice,
+			ImageProvider image = null,
 			Func<BuildContext, Widget, int?, bool, Widget> frameBuilder = null,
 			Func<BuildContext, Widget, InvalidType, Widget> loadingBuilder = null,
 			Func<BuildContext, object, StackTrace?, Widget> errorBuilder = null,
 			double? width = null,
 			double? height = null,
+			Color? color = null,
+			Animation<double> opacity = null,
 			FilterQuality filterQuality = FilterQuality.Medium,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			object repeat = null,
 			bool matchTextDirection = false,
 			bool gaplessPlayback = false,
@@ -145,7 +145,7 @@ namespace Flutter.Widgets
 			s.filterQuality = filterQuality;
 			// Complex type: object - skipped (requires marshaling)
 			s.fit = fit;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.matchTextDirection = matchTextDirection;

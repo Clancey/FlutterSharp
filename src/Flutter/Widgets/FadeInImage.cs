@@ -69,25 +69,25 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FadeInImage"/> class.
 		/// </summary>
 		public FadeInImage(
-			ImageProvider placeholder,
-			ImageProvider image,
-			Color color,
 			object colorBlendMode,
-			Color placeholderColor,
 			object placeholderColorBlendMode,
 			BoxFit fit,
 			object placeholderFit,
 			object placeholderFilterQuality,
+			ImageProvider? placeholder = null,
 			Func<BuildContext, object, StackTrace?, Widget> placeholderErrorBuilder = null,
+			ImageProvider image = null,
 			Func<BuildContext, object, StackTrace?, Widget> imageErrorBuilder = null,
 			TimeSpan? fadeOutDuration = null,
 			object fadeOutCurve = null,
 			TimeSpan? fadeInDuration = null,
 			object fadeInCurve = null,
 			double? width = null,
+			Color? color = null,
+			Color? placeholderColor = null,
 			double? height = null,
 			FilterQuality filterQuality = FilterQuality.Medium,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			object repeat = null,
 			bool matchTextDirection = false,
 			bool excludeFromSemantics = false,
@@ -119,7 +119,7 @@ namespace Flutter.Widgets
 			// Complex type: object - skipped (requires marshaling)
 			s.filterQuality = filterQuality;
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.matchTextDirection = matchTextDirection;
 			s.excludeFromSemantics = excludeFromSemantics;

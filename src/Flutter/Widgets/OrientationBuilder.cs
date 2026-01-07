@@ -35,7 +35,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="OrientationBuilder"/> class.
 		/// </summary>
 		public OrientationBuilder(
-			Func<BuildContext, Orientation, Widget> builder
+			Func<BuildContext, Orientation, Widget> builder = null
 		)
 		{
 			var s = GetBackingStruct<OrientationBuilderStruct>();

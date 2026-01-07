@@ -37,7 +37,6 @@ namespace Flutter.Widgets
 		public ListWheelViewport(
 			double itemExtent,
 			Offset offset,
-			ListWheelChildDelegate childDelegate,
 			double? diameterRatio = null,
 			double? perspective = null,
 			double offAxisFraction = 0.0,
@@ -46,6 +45,7 @@ namespace Flutter.Widgets
 			double overAndUnderCenterOpacity = 1.0,
 			double squeeze = 1.0,
 			bool renderChildrenOutsideViewport = false,
+			ListWheelChildDelegate childDelegate = null,
 			Clip clipBehavior = Clip.HardEdge
 		)
 		{

@@ -99,8 +99,20 @@ namespace Flutter.Structs
 		// Simple field: autofocus
 		public bool autofocus { get; set; }
 
-		// Simple field: onFocusChange
-		public IntPtr onFocusChange { get; set; }
+		// Callback field: onFocusChange
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onFocusChange;
+
+		/// <summary>
+		/// Action identifier for onFocusChange callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onFocusChangeAction
+		{
+			get => GetString(_onFocusChange);
+			set => SetString(ref _onFocusChange, value);
+		}
 
 		// Has flag for nullable property: canRequestFocus
 		public byte HascanRequestFocus { get; set; }

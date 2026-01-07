@@ -50,7 +50,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ShaderMaskStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Simple field: shaderCallback
+		// Callback field: shaderCallback
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _shaderCallback;
+
 /// Called to create the [dart:ui.Shader] that generates the mask.
 /// 
 /// The shader callback is called with the current size of the child so that
@@ -59,7 +62,16 @@ namespace Flutter.Structs
 /// Typically this will use a [LinearGradient], [RadialGradient], or
 /// [SweepGradient] to create the [dart:ui.Shader], though the
 /// [dart:ui.ImageShader] class could also be used.
-		public IntPtr shaderCallback { get; set; }
+		/// <summary>
+		/// Action identifier for shaderCallback callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? shaderCallbackAction
+		{
+			get => GetString(_shaderCallback);
+			set => SetString(ref _shaderCallback, value);
+		}
 
 		// Simple field: blendMode
 /// The [BlendMode] to use when applying the shader to the child.

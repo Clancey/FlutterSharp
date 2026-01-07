@@ -52,7 +52,7 @@ namespace Flutter.Structs
 /// [FlexFit.tight], the child is required to fill the available space. If the
 /// fit is [FlexFit.loose], the child can be at most as large as the available
 /// space (but is allowed to be smaller).
-		public BoxFit fit { get; set; }
+		public FlexFit fit { get; set; }
 
 		// Simple field: debugTypicalAncestorWidgetClass
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }

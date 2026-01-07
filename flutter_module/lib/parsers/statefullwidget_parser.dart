@@ -3,8 +3,8 @@ import 'dart:ffi';
 import 'package:flutter/widgets.dart';
 import '../flutter_sharp_structs.dart';
 import '../utils.dart';
-import '../maui_flutter.dart' as mauiFlutter;
 import '../maui_flutter.dart' show WidgetParser, DynamicWidgetBuilder;
+import '../mauiRenderer.dart' show MauiComponent;
 import 'package:ffi/ffi.dart';
 
 class StatefulWidgetParser extends WidgetParser {
@@ -19,7 +19,7 @@ class StatefulWidgetParser extends WidgetParser {
     if (id == null) return null;
 
     // Return a MauiComponent that will handle the stateful widget
-    return mauiFlutter.MauiComponent(componentId: id);
+    return MauiComponent(componentId: id);
   }
 
   @override

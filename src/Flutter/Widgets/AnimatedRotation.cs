@@ -79,7 +79,7 @@ namespace Flutter.Widgets
 			FilterQuality filterQuality,
 			TimeSpan duration,
 			Widget? child = null,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			Curve curve = null,
 			Action? onEnd = null
 		)
@@ -87,7 +87,7 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<AnimatedRotationStruct>();
 			s.child = child;
 			s.turns = turns;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.filterQuality = filterQuality;
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)

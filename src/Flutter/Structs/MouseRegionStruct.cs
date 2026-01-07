@@ -45,7 +45,10 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class MouseRegionStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Simple field: onEnter
+		// Callback field: onEnter
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onEnter;
+
 /// Triggered when a mouse pointer has entered this widget.
 /// 
 /// This callback is triggered when the pointer, with or without buttons
@@ -72,9 +75,21 @@ namespace Flutter.Structs
 /// * [onExit], which is triggered when a mouse pointer exits the region.
 /// * [MouseTrackerAnnotation.onEnter], which is how this callback is
 /// internally implemented.
-		public IntPtr onEnter { get; set; }
+		/// <summary>
+		/// Action identifier for onEnter callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onEnterAction
+		{
+			get => GetString(_onEnter);
+			set => SetString(ref _onEnter, value);
+		}
 
-		// Simple field: onHover
+		// Callback field: onHover
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onHover;
+
 /// Triggered when a pointer moves into a position within this widget without
 /// buttons pressed.
 /// 
@@ -92,9 +107,21 @@ namespace Flutter.Structs
 /// * [Listener.onPointerHover], which does the same job. Prefer using
 /// [Listener.onPointerHover], since hover events are similar to other regular
 /// events.
-		public IntPtr onHover { get; set; }
+		/// <summary>
+		/// Action identifier for onHover callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onHoverAction
+		{
+			get => GetString(_onHover);
+			set => SetString(ref _onHover, value);
+		}
 
-		// Simple field: onExit
+		// Callback field: onExit
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onExit;
+
 /// Triggered when a mouse pointer has exited this widget when the widget is
 /// still mounted.
 /// 
@@ -163,7 +190,16 @@ namespace Flutter.Structs
 /// * [onEnter], which is triggered when a mouse pointer enters the region.
 /// * [RenderMouseRegion] and [MouseTrackerAnnotation.onExit], which are how
 /// this callback is internally implemented, but without the restriction.
-		public IntPtr onExit { get; set; }
+		/// <summary>
+		/// Action identifier for onExit callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onExitAction
+		{
+			get => GetString(_onExit);
+			set => SetString(ref _onExit, value);
+		}
 
 		// Simple field: cursor
 /// The mouse cursor for mouse pointers that are hovering over the region.
@@ -174,7 +210,7 @@ namespace Flutter.Structs
 /// 
 /// The [cursor] defaults to [MouseCursor.defer], deferring the choice of
 /// cursor to the next region behind it in hit-test order.
-		public IntPtr cursor { get; set; }
+		public object cursor { get; set; }
 
 		// Simple field: opaque
 /// Whether this widget should prevent other [MouseRegion]s visually behind it
@@ -199,7 +235,7 @@ namespace Flutter.Structs
 /// How to behave during hit testing.
 /// 
 /// This defaults to [HitTestBehavior.opaque] if null.
-		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
+		public HitTestBehavior hitTestBehavior { get; set; }
 
 		// Has flag for nullable property: child
 		public byte Haschild { get; set; }

@@ -41,12 +41,24 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverVariedExtentListStruct : WidgetStruct
 	{
-		// Simple field: itemExtentBuilder
+		// Callback field: itemExtentBuilder
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _itemExtentBuilder;
+
 /// The children extent builder.
 /// 
 /// Should return null if asked to build an item extent with a greater index than
 /// exists.
-		public IntPtr itemExtentBuilder { get; set; }
+		/// <summary>
+		/// Action identifier for itemExtentBuilder callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? itemExtentBuilderAction
+		{
+			get => GetString(_itemExtentBuilder);
+			set => SetString(ref _itemExtentBuilder, value);
+		}
 
 		// Simple field: @delegate
 		public IntPtr @delegate { get; set; }

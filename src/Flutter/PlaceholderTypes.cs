@@ -72,7 +72,7 @@ namespace Flutter
 	public class TwoDimensionalChildDelegate { }
 	public class ScrollableDetails { }
 	public class ListWheelChildDelegate { }
-	public class BoxShape { }
+	// BoxShape is defined as an enum in Flutter.UI namespace - don't add placeholder here
 	public class WebImageInfo { }
 	public class ToolbarOptions { }
 	public class TextMagnifierConfiguration { }

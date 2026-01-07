@@ -50,11 +50,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CompositedTransformFollower"/> class.
 		/// </summary>
 		public CompositedTransformFollower(
-			LayerLink link,
+			LayerLink link = null,
 			bool showWhenUnlinked = true,
 			object targetAnchor = null,
 			object followerAnchor = null,
-			Offset offset = null,
+			Offset? offset = null,
 			Widget? child = null
 		)
 		{

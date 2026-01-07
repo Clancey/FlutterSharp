@@ -41,9 +41,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ActionListener"/> class.
 		/// </summary>
 		public ActionListener(
-			Action<FlutterAction<Intent>> listener,
 			FlutterAction<Intent> action,
-			Widget child
+			Widget child,
+			Action<FlutterAction<Intent>> listener = null
 		)
 		{
 			var s = GetBackingStruct<ActionListenerStruct>();

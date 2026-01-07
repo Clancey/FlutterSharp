@@ -72,7 +72,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverFixedExtentList(
 			double itemExtent,
-			SliverChildDelegate @delegate
+			SliverChildDelegate @delegate = null
 		)
 		{
 			var s = GetBackingStruct<SliverFixedExtentListStruct>();

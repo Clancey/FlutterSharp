@@ -78,8 +78,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ConstraintsTransformBox(
 			TextDirection textDirection,
-			Func<BoxConstraints, BoxConstraints> constraintsTransform,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
+			Func<BoxConstraints, BoxConstraints> constraintsTransform = null,
 			Clip clipBehavior = Clip.None,
 			Widget? child = null,
 			string debugTransformType = ""
@@ -87,7 +87,7 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<ConstraintsTransformBoxStruct>();
 			s.textDirection = textDirection;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: Func<BoxConstraints, BoxConstraints> - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;
 			s.child = child;

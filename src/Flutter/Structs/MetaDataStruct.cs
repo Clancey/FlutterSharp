@@ -27,7 +27,7 @@ namespace Flutter.Structs
 
 		// Simple field: behavior
 /// How to behave during hit testing.
-		public IntPtr behavior { get; set; }
+		public HitTestBehavior behavior { get; set; }
 
 		// Has flag for nullable property: child
 		public byte Haschild { get; set; }

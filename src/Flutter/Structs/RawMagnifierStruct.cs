@@ -85,7 +85,7 @@ namespace Flutter.Structs
 /// If left as [Offset.zero], the [RawMagnifier] will show the content that
 /// is directly below it.
 /// {@endtemplate}
-		public IntPtr focalPointOffset { get; set; }
+		public object focalPointOffset { get; set; }
 
 		// Simple field: magnificationScale
 /// How "zoomed in" the magnification subject is in the lens.

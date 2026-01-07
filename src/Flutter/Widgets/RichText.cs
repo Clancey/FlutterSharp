@@ -146,17 +146,17 @@ namespace Flutter.Widgets
 			List<Widget> children,
 			InlineSpan text,
 			TextDirection textDirection,
-			Locale locale,
-			StrutStyle strutStyle,
 			TextHeightBehavior textHeightBehavior,
 			object selectionRegistrar,
-			Color selectionColor,
 			TextAlign? textAlign = TextAlign.Start,
 			bool softWrap = true,
 			TextOverflow overflow = TextOverflow.Clip,
 			object textScaler = null,
 			int? maxLines = null,
+			Locale? locale = null,
+			StrutStyle? strutStyle = null,
 			TextWidthBasis textWidthBasis = TextWidthBasis.Parent,
+			Color? selectionColor = null,
 			double textScaleFactor = 1.0
 		)
 		{

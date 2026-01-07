@@ -52,7 +52,7 @@ namespace Flutter.Widgets
 			Widget? child = null,
 			double? heightFactor = null,
 			double? widthFactor = null,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			Curve curve = null,
 			Action? onEnd = null
 		)
@@ -63,7 +63,7 @@ namespace Flutter.Widgets
 				s.heightFactor = heightFactor.Value;
 			if (widthFactor.HasValue)
 				s.widthFactor = widthFactor.Value;
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)

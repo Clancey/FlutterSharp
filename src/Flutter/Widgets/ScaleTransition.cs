@@ -45,14 +45,14 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ScaleTransition(
 			object scale,
-			AlignmentGeometry? alignment = null,
+			AlignmentGeometry alignment = null,
 			FilterQuality filterQuality = FilterQuality.Low,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ScaleTransitionStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
+			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.filterQuality = filterQuality;
 			s.child = child;
 		}

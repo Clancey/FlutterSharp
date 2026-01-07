@@ -46,7 +46,7 @@ namespace Flutter.Structs
 /// For example, if the [axisDirection] is [AxisDirection.down], a scroll
 /// offset of zero is at the top of the viewport and increases towards the
 /// bottom of the viewport.
-		public IntPtr axisDirection { get; set; }
+		public object axisDirection { get; set; }
 
 		// Simple field: crossAxisDirection
 /// The direction in which child should be laid out in the cross axis.
@@ -58,7 +58,7 @@ namespace Flutter.Structs
 /// 
 /// If the [axisDirection] is [AxisDirection.left] or [AxisDirection.right],
 /// this property defaults to [AxisDirection.down].
-		public IntPtr crossAxisDirection { get; set; }
+		public object crossAxisDirection { get; set; }
 
 		// Simple field: offset
 /// Which part of the content inside the viewport should be visible.

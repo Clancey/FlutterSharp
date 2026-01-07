@@ -65,15 +65,15 @@ namespace Flutter.Widgets
 		/// </summary>
 		public DecoratedSliver(
 			Widget child,
-			Decoration decoration,
-			object position = DecorationPosition.Background,
+			Decoration? decoration = null,
+			DecorationPosition position = DecorationPosition.Background,
 			Widget? sliver = null
 		)
 		{
 			var s = GetBackingStruct<DecoratedSliverStruct>();
 			s.child = child;
 			// Complex type: Decoration? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.position = position;
 			s.sliver = sliver;
 		}
 

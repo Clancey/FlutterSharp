@@ -101,9 +101,21 @@ namespace Flutter.Structs
 /// Defaults to 1.
 		public double squeeze { get; set; }
 
-		// Simple field: onSelectedItemChanged
+		// Callback field: onSelectedItemChanged
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr _onSelectedItemChanged;
+
 /// On optional listener that's called when the centered item changes.
-		public IntPtr onSelectedItemChanged { get; set; }
+		/// <summary>
+		/// Action identifier for onSelectedItemChanged callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? onSelectedItemChangedAction
+		{
+			get => GetString(_onSelectedItemChanged);
+			set => SetString(ref _onSelectedItemChanged, value);
+		}
 
 		// Simple field: renderChildrenOutsideViewport
 /// {@macro flutter.rendering.RenderListWheelViewport.renderChildrenOutsideViewport}
@@ -123,7 +135,7 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.scrollable.hitTestBehavior}
 /// 
 /// Defaults to [HitTestBehavior.opaque].
-		public PlatformViewHitTestBehavior hitTestBehavior { get; set; }
+		public HitTestBehavior hitTestBehavior { get; set; }
 
 		// Has flag for nullable property: restorationId
 		public byte HasrestorationId { get; set; }

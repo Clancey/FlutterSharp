@@ -53,7 +53,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LayoutBuilder"/> class.
 		/// </summary>
 		public LayoutBuilder(
-			Action builder
+			Action? builder = null
 		)
 		{
 			var s = GetBackingStruct<LayoutBuilderStruct>();

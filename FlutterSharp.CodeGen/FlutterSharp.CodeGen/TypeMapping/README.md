@@ -88,7 +88,7 @@ string widgetType = dartToCSharp.MapType("Widget"); // Returns: "Widget"
 
 ### Collection Types
 - `List<T>` → `List<T>`
-- `Set<T>` → `HashSet<T>`
+- `Set<T>` → `ISet<T>`
 - `Map<K,V>` → `Dictionary<K,V>`
 - `Iterable<T>` → `IEnumerable<T>`
 

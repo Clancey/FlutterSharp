@@ -45,12 +45,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverReorderableList"/> class.
 		/// </summary>
 		public SliverReorderableList(
-			Func<BuildContext, int, Widget> itemBuilder,
 			int itemCount,
-			Action<int, int> onReorder,
 			object itemExtentBuilder,
 			double autoScrollerVelocityScalar,
+			Func<BuildContext, int, Widget> itemBuilder = null,
 			Func<InvalidType, int?> findChildIndexCallback = null,
+			Action<int, int> onReorder = null,
 			Action<int> onReorderStart = null,
 			Action<int> onReorderEnd = null,
 			Func<Widget, int, InvalidType, Widget> proxyDecorator = null,

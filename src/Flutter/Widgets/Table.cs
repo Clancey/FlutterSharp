@@ -57,12 +57,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Table(
 			TextDirection textDirection,
-			BoxBorder border,
 			TextBaseline textBaseline,
 			List<TableRow> children = null,
 			Dictionary<object, object>? columnWidths = null,
 			object defaultColumnWidth = null,
-			AlignmentGeometry defaultVerticalAlignment = TableCellVerticalAlignment.Top
+			BoxBorder? border = null,
+			TableCellVerticalAlignment defaultVerticalAlignment = TableCellVerticalAlignment.Top
 		)
 		{
 			var s = GetBackingStruct<TableStruct>();
@@ -71,7 +71,7 @@ namespace Flutter.Widgets
 			// Complex type: object - skipped (requires marshaling)
 			s.textDirection = textDirection;
 			// Complex type: BoxBorder? - skipped (requires marshaling)
-			// Complex type: AlignmentGeometry - skipped (requires marshaling)
+			s.defaultVerticalAlignment = defaultVerticalAlignment;
 			// Complex type: TextBaseline? - skipped (requires marshaling)
 		}
 
