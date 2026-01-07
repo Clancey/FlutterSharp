@@ -231,6 +231,8 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 					Documentation = FormatDartDocumentation(p.Documentation)
 				};
 			}).ToList(),
+			// HasChildren is required by the template (Scriban converts to has_children)
+			HasChildren = enrichedWidget.HasSingleChild || enrichedWidget.HasMultipleChildren,
 			has_single_child = enrichedWidget.HasSingleChild,
 			has_multiple_children = enrichedWidget.HasMultipleChildren,
 			ChildPropertyName = enrichedWidget.ChildPropertyName != null ? ToCamelCase(enrichedWidget.ChildPropertyName) : null,

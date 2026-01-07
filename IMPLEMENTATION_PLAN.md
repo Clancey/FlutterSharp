@@ -15,13 +15,13 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 **Last checked**: 2026-01-07
 **C# compilation errors**: 0
-**Dart analysis errors**: 853 total
+**Dart analysis errors**: 1009 total
 **non_type_as_type_argument**: 0 (reduced from 119 → 100% fixed)
-**undefined_getter**: 0 (reduced from 183 → 100% fixed)
-**argument_type_not_assignable**: 92
+**undefined_getter**: 16
+**argument_type_not_assignable**: 141
 **missing_required_argument**: 411
 **undefined_named_parameter**: 156
-**undefined_method**: 136
+**undefined_method**: 4 (reduced from 136 → 97% fixed, remaining are web-only widgets)
 
 ---
 
@@ -77,7 +77,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | D007 | Fix argument_type_not_assignable errors | completed | 302→43 (86% reduction), fixed property name mapping in DartParserGenerator |
 | D008 | Fix undefined_getter errors | completed | 183→0 (100% reduction), fixed callback property naming and string type handling |
 | D009 | Fix non_type_as_type_argument errors | completed | 119→0 (100% reduction), added base structs and fixed DartStruct.scriban template |
-| D010 | Fix undefined_method errors (136) | pending | Add missing parse methods (parseTextStyle, parseCurve, etc.) |
+| D010 | Fix undefined_method errors (136) | completed | 136→4 (97% fixed), changed callback FFI types to Pointer<Utf8>, added utils.dart import |
 | D011 | Fix missing_required_argument errors (411) | pending | Widget constructor parameter issues |
 | D012 | Fix undefined_named_parameter errors (156) | pending | Incorrect parameter names in parsers |
 
@@ -171,7 +171,7 @@ When starting a new loop, work on these in order:
 8. ~~**D007** - Fix argument_type_not_assignable errors (302) - type conversions~~ ✅ DONE (302→43, 86% reduction)
 9. ~~**D008** - Fix undefined_getter errors (183) - struct field accessors~~ ✅ DONE (183→0)
 10. ~~**D009** - Fix non_type_as_type_argument errors (119) - struct imports~~ ✅ DONE (119→0, 100% fixed)
-11. **D010** - Fix undefined_method errors (136) - add missing parse methods (parseTextStyle, parseCurve, etc.)
+11. ~~**D010** - Fix undefined_method errors (136) - add missing parse methods~~ ✅ DONE (136→4, 97% fixed)
 12. **D011** - Fix missing_required_argument errors (411) - widget constructor parameters
 13. **D012** - Fix undefined_named_parameter errors (156) - incorrect parameter names
 
@@ -201,6 +201,7 @@ When starting a new loop, work on these in order:
 | D007 | 2026-01-07 | 1f8a846 | Fixed property name mapping in DartParserGenerator, added typed pointer detection |
 | D008 | 2026-01-07 | 4b508b9 | Fixed callback property naming (remove double Action suffix), added IsString property for Pointer<Utf8> handling |
 | D009 | 2026-01-07 | d13d5fc | Added SingleChildRenderObjectWidgetStruct/MultiChildRenderObjectWidgetStruct to flutter_sharp_structs.dart, fixed DartStruct.scriban to always import flutter_sharp_structs.dart |
+| D010 | 2026-01-07 | 7eedbc1 | Changed callback FFI types to Pointer<Utf8> for action strings, added utils.dart import to parser template |
 
 ---
 

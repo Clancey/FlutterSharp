@@ -44,6 +44,9 @@ namespace FlutterSharp.CodeGen.Analysis
 				.Select(p => EnrichProperty(p))
 				.ToList();
 
+			// Add inherited child/children properties if needed but not present
+			AddInheritedChildProperties(enrichedProperties, widget, baseClassInfo);
+
 			// Separate into required and optional for constructor
 			var requiredProperties = enrichedProperties.Where(p => p.IsRequired).ToList();
 			var optionalProperties = enrichedProperties.Where(p => !p.IsRequired).ToList();
@@ -51,6 +54,10 @@ namespace FlutterSharp.CodeGen.Analysis
 			// Determine which properties belong to base constructor vs derived constructor
 			var (baseConstructorProperties, derivedConstructorProperties) =
 				SeparateBaseAndDerivedProperties(enrichedProperties, baseClassInfo);
+
+			// Determine HasSingleChild/HasMultipleChildren from base class if not already set
+			var hasSingleChild = widget.HasSingleChild || IsSingleChildBaseClass(widget.BaseClass);
+			var hasMultipleChildren = widget.HasMultipleChildren || IsMultiChildBaseClass(widget.BaseClass);
 
 			return new EnrichedWidgetDefinition
 			{
@@ -77,9 +84,9 @@ namespace FlutterSharp.CodeGen.Analysis
 				// Struct naming
 				StructName = $"{widget.Name}Struct",
 
-				// Metadata
-				HasSingleChild = widget.HasSingleChild,
-				HasMultipleChildren = widget.HasMultipleChildren,
+				// Metadata - use computed values that consider base class
+				HasSingleChild = hasSingleChild,
+				HasMultipleChildren = hasMultipleChildren,
 				ChildPropertyName = widget.ChildPropertyName ?? "child",
 				ChildrenPropertyName = widget.ChildrenPropertyName ?? "children"
 			};
@@ -238,6 +245,109 @@ namespace FlutterSharp.CodeGen.Analysis
 			// TODO: Implement logic to determine which properties belong to base class constructors
 			// For now, all properties go to the derived class constructor
 			return (new List<EnrichedPropertyDefinition>(), properties);
+		}
+
+		/// <summary>
+		/// Checks if the base class is one that has a single child property.
+		/// These are Flutter base classes that have a required child parameter in their constructor.
+		/// </summary>
+		private bool IsSingleChildBaseClass(string? baseClass)
+		{
+			if (string.IsNullOrEmpty(baseClass))
+				return false;
+
+			var singleChildBaseClasses = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+			{
+				// Render object widgets with single child
+				"SingleChildRenderObjectWidget",
+				// Proxy widgets (all have required child)
+				"ProxyWidget",
+				"InheritedWidget",
+				"InheritedTheme",        // extends InheritedWidget
+				"InheritedModel",        // extends InheritedWidget
+				"InheritedNotifier",     // extends InheritedWidget
+				"ParentDataWidget"
+			};
+
+			return singleChildBaseClasses.Contains(baseClass);
+		}
+
+		/// <summary>
+		/// Checks if the base class is one that has a multiple children property.
+		/// </summary>
+		private bool IsMultiChildBaseClass(string? baseClass)
+		{
+			if (string.IsNullOrEmpty(baseClass))
+				return false;
+
+			var multiChildBaseClasses = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+			{
+				"MultiChildRenderObjectWidget"
+			};
+
+			return multiChildBaseClasses.Contains(baseClass);
+		}
+
+		/// <summary>
+		/// Adds inherited child/children properties if the widget inherits from a base class that has them
+		/// but they're not already in the properties list.
+		/// </summary>
+		private void AddInheritedChildProperties(List<EnrichedPropertyDefinition> enrichedProperties, WidgetDefinition widget, BaseClassInfo baseClassInfo)
+		{
+			// Check if child property already exists
+			var hasChildProperty = enrichedProperties.Any(p =>
+				p.Name.Equals("child", StringComparison.OrdinalIgnoreCase));
+
+			// Check if children property already exists
+			var hasChildrenProperty = enrichedProperties.Any(p =>
+				p.Name.Equals("children", StringComparison.OrdinalIgnoreCase));
+
+			// Add child property if widget has single child and property doesn't exist
+			if ((widget.HasSingleChild || IsSingleChildBaseClass(widget.BaseClass)) && !hasChildProperty)
+			{
+				var childPropertyName = widget.ChildPropertyName ?? "child";
+
+				// Determine if child is required (it usually is for these base classes)
+				var childIsRequired = IsSingleChildBaseClass(widget.BaseClass);
+
+				enrichedProperties.Insert(0, new EnrichedPropertyDefinition
+				{
+					Name = childPropertyName,
+					BackingFieldName = $"_{childPropertyName}",
+					DartType = childIsRequired ? "Widget" : "Widget?",
+					CSharpType = childIsRequired ? "Widget" : "Widget?",
+					FfiType = "Pointer<WidgetStruct>",
+					FfiAnnotation = "",
+					IsRequired = childIsRequired,
+					IsNullable = !childIsRequired,
+					IsCallback = false,
+					IsList = false,
+					IsGenericTypeParam = false,
+					Documentation = "The widget below this widget in the tree.\n\n{@macro flutter.widgets.ProxyWidget.child}"
+				});
+			}
+
+			// Add children property if widget has multiple children and property doesn't exist
+			if ((widget.HasMultipleChildren || IsMultiChildBaseClass(widget.BaseClass)) && !hasChildrenProperty)
+			{
+				var childrenPropertyName = widget.ChildrenPropertyName ?? "children";
+
+				enrichedProperties.Insert(0, new EnrichedPropertyDefinition
+				{
+					Name = childrenPropertyName,
+					BackingFieldName = $"_{childrenPropertyName}",
+					DartType = "List<Widget>",
+					CSharpType = "List<Widget>",
+					FfiType = "Pointer<ChildrenStruct>",
+					FfiAnnotation = "",
+					IsRequired = true,
+					IsNullable = false,
+					IsCallback = false,
+					IsList = true,
+					IsGenericTypeParam = false,
+					Documentation = "The widgets below this widget in the tree.\n\nIf this list is going to be mutated, it is usually wise to put a [Key] on each of the child widgets, so that the framework can match old configurations to new configurations and maintain the underlying render objects."
+				});
+			}
 		}
 
 		/// <summary>
