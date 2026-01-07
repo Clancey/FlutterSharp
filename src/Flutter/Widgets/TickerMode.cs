@@ -31,7 +31,6 @@ namespace Flutter.Widgets
 		public TickerMode(
 			bool enabled,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<TickerModeStruct>();

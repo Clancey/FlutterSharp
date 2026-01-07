@@ -64,8 +64,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ValueListenableBuilder(
 			ValueListenable<object> valueListenable,
-			Func<BuildContext, T, Widget?, Widget> builder
-,
+			Func<BuildContext, T, Widget?, Widget> builder,
 			Widget? child = null
 		)
 		{

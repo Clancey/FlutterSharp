@@ -167,7 +167,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public DefaultTextEditingShortcuts(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<DefaultTextEditingShortcutsStruct>();

@@ -79,11 +79,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedScale(
 			double scale,
-			AlignmentGeometry? alignment,
 			FilterQuality filterQuality,
-			TimeSpan duration
-,
+			TimeSpan duration,
 			Widget? child = null,
+			AlignmentGeometry? alignment = null,
 			Curve curve = null,
 			Action? onEnd = null
 		)

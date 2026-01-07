@@ -39,12 +39,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultTextStyleTransition"/> class.
 		/// </summary>
 		public DefaultTextStyleTransition(
-			TextAlign? textAlign,
-			bool softWrap,
-			TextOverflow overflow,
+			TextAlign textAlign,
 			Widget child,
-			TextStyle? style
-,
+			TextStyle style,
+			bool softWrap = true,
+			TextOverflow overflow = TextOverflow.Clip,
 			int? maxLines = null
 		)
 		{

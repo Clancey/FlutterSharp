@@ -54,20 +54,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FocusableActionDetector"/> class.
 		/// </summary>
 		public FocusableActionDetector(
-			bool enabled,
-			bool autofocus,
-			bool descendantsAreFocusable,
-			bool descendantsAreTraversable,
-			Action onShowFocusHighlight,
-			Action onShowHoverHighlight,
-			Action onFocusChange,
-			object mouseCursor,
-			bool includeFocusSemantics,
-			Widget child
-,
+			Action<bool> onShowFocusHighlight,
+			Action<bool> onShowHoverHighlight,
+			Action<bool> onFocusChange,
+			Widget child,
+			bool enabled = true,
 			FocusNode? focusNode = null,
+			bool autofocus = false,
+			bool descendantsAreFocusable = true,
+			bool descendantsAreTraversable = true,
 			Dictionary<Type, FlutterAction<Intent>>? actions = null,
-			Dictionary<ShortcutActivator, Intent>? shortcuts = null
+			Dictionary<ShortcutActivator, Intent>? shortcuts = null,
+			object mouseCursor = null,
+			bool includeFocusSemantics = true
 		)
 		{
 			var s = GetBackingStruct<FocusableActionDetectorStruct>();
@@ -78,9 +77,9 @@ namespace Flutter.Widgets
 			s.descendantsAreTraversable = descendantsAreTraversable;
 			// Complex type: Dictionary<Type, FlutterAction<Intent>>? - skipped (requires marshaling)
 			// Complex type: Dictionary<ShortcutActivator, Intent>? - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action<bool>? - skipped (requires marshaling)
+			// Complex type: Action<bool>? - skipped (requires marshaling)
+			// Complex type: Action<bool>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.includeFocusSemantics = includeFocusSemantics;
 			s.child = child;

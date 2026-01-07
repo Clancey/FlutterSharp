@@ -55,9 +55,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SlideTransition(
 			TextDirection textDirection,
-			bool transformHitTests,
-			object position
-,
+			object position,
+			bool transformHitTests = true,
 			Widget? child = null
 		)
 		{

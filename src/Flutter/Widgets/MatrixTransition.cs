@@ -42,10 +42,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public MatrixTransition(
 			Func<double, InvalidType> onTransform,
-			AlignmentGeometry? alignment,
 			FilterQuality filterQuality,
-			Animation<double> animation
-,
+			Animation<double> animation,
+			AlignmentGeometry? alignment = null,
 			Widget? child = null
 		)
 		{

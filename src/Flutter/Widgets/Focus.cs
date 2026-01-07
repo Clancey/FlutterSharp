@@ -124,16 +124,15 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Focus(
 			Widget child,
-			bool autofocus,
-			Action onFocusChange,
-			bool includeSemantics,
+			Action<bool> onFocusChange,
 			bool canRequestFocus,
 			bool skipTraversal,
 			bool descendantsAreFocusable,
-			bool descendantsAreTraversable
-,
+			bool descendantsAreTraversable,
 			FocusNode? parentNode = null,
 			FocusNode? focusNode = null,
+			bool autofocus = false,
+			bool includeSemantics = true,
 			Func<FocusNode, InvalidType, KeyEventResult> onKeyEvent = null,
 			Func<FocusNode, InvalidType, KeyEventResult> onKey = null,
 			string? debugLabel = null
@@ -144,7 +143,7 @@ namespace Flutter.Widgets
 			s.child = child;
 			// Complex type: FocusNode? - skipped (requires marshaling)
 			s.autofocus = autofocus;
-			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action<bool>? - skipped (requires marshaling)
 			s.includeSemantics = includeSemantics;
 			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
 			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)

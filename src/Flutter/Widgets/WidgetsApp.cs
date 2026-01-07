@@ -50,16 +50,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="WidgetsApp"/> class.
 		/// </summary>
 		public WidgetsApp(
-			TextStyle? textStyle,
-			Color? color,
-			Locale? locale,
-			IEnumerable<object> supportedLocales,
-			bool showPerformanceOverlay,
-			bool showSemanticsDebugger,
-			bool debugShowWidgetInspector,
-			bool debugShowCheckedModeBanner,
-			bool useInheritedMediaQuery
-,
+			TextStyle textStyle,
+			Color color,
+			Locale locale,
 			GlobalKey<NavigatorState>? navigatorKey = null,
 			Func<RouteSettings, Route<object>?> onGenerateRoute = null,
 			Func<string, List<Route<object>>> onGenerateInitialRoutes = null,
@@ -81,12 +74,18 @@ namespace Flutter.Widgets
 			IEnumerable<LocalizationsDelegate<object>>? localizationsDelegates = null,
 			Func<List<InvalidType>?, IEnumerable<InvalidType>, InvalidType> localeListResolutionCallback = null,
 			Func<InvalidType, IEnumerable<InvalidType>, InvalidType> localeResolutionCallback = null,
+			IEnumerable<object> supportedLocales = null,
+			bool showPerformanceOverlay = false,
+			bool showSemanticsDebugger = false,
+			bool debugShowWidgetInspector = false,
 			Delegate exitWidgetSelectionButtonBuilder = null,
 			Delegate moveExitWidgetSelectionButtonBuilder = null,
 			Delegate tapBehaviorButtonBuilder = null,
+			bool debugShowCheckedModeBanner = true,
 			Dictionary<ShortcutActivator, Intent>? shortcuts = null,
 			Dictionary<Type, FlutterAction<Intent>>? actions = null,
-			string? restorationScopeId = null
+			string? restorationScopeId = null,
+			bool useInheritedMediaQuery = false
 		)
 		{
 			var s = GetBackingStruct<WidgetsAppStruct>();

@@ -145,20 +145,19 @@ namespace Flutter.Widgets
 		public RichText(
 			List<Widget> children,
 			InlineSpan text,
-			TextAlign? textAlign,
 			TextDirection textDirection,
-			bool softWrap,
-			TextOverflow overflow,
-			object textScaler,
-			Locale? locale,
-			StrutStyle? strutStyle,
-			TextWidthBasis textWidthBasis,
+			Locale locale,
+			StrutStyle strutStyle,
 			TextHeightBehavior textHeightBehavior,
 			object selectionRegistrar,
-			Color? selectionColor,
-			double textScaleFactor
-,
-			int? maxLines = null
+			Color selectionColor,
+			TextAlign? textAlign = TextAlign.Start,
+			bool softWrap = true,
+			TextOverflow overflow = TextOverflow.Clip,
+			object textScaler = null,
+			int? maxLines = null,
+			TextWidthBasis textWidthBasis = TextWidthBasis.Parent,
+			double textScaleFactor = 1.0
 		)
 		{
 			if (children != null)

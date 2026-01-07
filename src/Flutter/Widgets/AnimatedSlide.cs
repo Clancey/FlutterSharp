@@ -45,8 +45,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedSlide(
 			Offset offset,
-			TimeSpan duration
-,
+			TimeSpan duration,
 			Widget? child = null,
 			Curve curve = null,
 			Action? onEnd = null

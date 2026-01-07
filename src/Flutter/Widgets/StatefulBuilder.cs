@@ -69,12 +69,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="StatefulBuilder"/> class.
 		/// </summary>
 		public StatefulBuilder(
-			WidgetBuilder? builder
-
+			Action builder
 		)
 		{
 			var s = GetBackingStruct<StatefulBuilderStruct>();
-			// Complex type: WidgetBuilder? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new StatefulBuilderStruct();

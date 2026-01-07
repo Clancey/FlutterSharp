@@ -35,8 +35,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="BlockSemantics"/> class.
 		/// </summary>
 		public BlockSemantics(
-			bool blocking
-,
+			bool blocking = true,
 			Widget? child = null
 		)
 		{

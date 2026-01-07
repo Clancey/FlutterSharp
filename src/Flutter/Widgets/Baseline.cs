@@ -41,8 +41,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Baseline(
 			double baseline,
-			TextBaseline baselineType
-,
+			TextBaseline baselineType,
 			Widget? child = null
 		)
 		{

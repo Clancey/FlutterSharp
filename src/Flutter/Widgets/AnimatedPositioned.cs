@@ -63,8 +63,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedPositioned(
 			Widget child,
-			TimeSpan duration
-,
+			TimeSpan duration,
 			double? left = null,
 			double? top = null,
 			double? right = null,

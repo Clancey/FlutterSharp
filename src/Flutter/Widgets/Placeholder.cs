@@ -34,11 +34,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Placeholder"/> class.
 		/// </summary>
 		public Placeholder(
-			Color? color,
-			double strokeWidth,
-			double fallbackWidth,
-			double fallbackHeight
-,
+			Color? color = null,
+			double strokeWidth = 2.0,
+			double fallbackWidth = 400.0,
+			double fallbackHeight = 400.0,
 			Widget? child = null
 		)
 		{

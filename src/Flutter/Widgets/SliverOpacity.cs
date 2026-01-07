@@ -59,8 +59,7 @@ namespace Flutter.Widgets
 		public SliverOpacity(
 			Widget child,
 			double opacity,
-			bool alwaysIncludeSemantics
-,
+			bool alwaysIncludeSemantics = false,
 			Widget? sliver = null
 		)
 		{

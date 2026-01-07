@@ -36,7 +36,6 @@ namespace Flutter.Widgets
 		public DefaultTextHeightBehavior(
 			TextHeightBehavior textHeightBehavior,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<DefaultTextHeightBehaviorStruct>();

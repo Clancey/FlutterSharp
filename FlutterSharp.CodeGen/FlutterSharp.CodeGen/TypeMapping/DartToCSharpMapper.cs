@@ -14,42 +14,48 @@ namespace FlutterSharp.CodeGen.TypeMapping
 		private static readonly Regex GenericTypeRegex = new(@"^(\w+)<(.+)>$", RegexOptions.Compiled);
 
 		/// <summary>
-		/// Maps parameter names to their expected types when type resolution fails.
-		/// This mirrors the Dart analyzer's _inferTypeFromParameterName function.
+		/// Maps UNAMBIGUOUS parameter names to their expected types when type resolution fails.
+		/// Only includes names that have a unique meaning across all widgets.
+		/// AMBIGUOUS names (alignment, direction, fit, crossAxisAlignment, shape) are excluded
+		/// because they can refer to different types in different widgets.
 		/// </summary>
 		private static readonly Dictionary<string, string> ParameterNameToType = new(StringComparer.OrdinalIgnoreCase)
 		{
-			// Flutter layout enums
+			// Unambiguous Flutter layout enums - these always mean the same thing
 			["mainAxisAlignment"] = "MainAxisAlignment",
-			["crossAxisAlignment"] = "CrossAxisAlignment",
 			["mainAxisSize"] = "MainAxisSize",
 			["verticalDirection"] = "VerticalDirection",
 			["textBaseline"] = "TextBaseline",
 			["flexFit"] = "FlexFit",
-			["fit"] = "BoxFit",
 			["filterQuality"] = "FilterQuality",
 			["blendMode"] = "BlendMode",
 			["stackFit"] = "StackFit",
-			["overflow"] = "TextOverflow",
 			["textOverflow"] = "TextOverflow",
 			["textAlign"] = "TextAlign",
 			["textWidthBasis"] = "TextWidthBasis",
 			["selectionHeightStyle"] = "BoxHeightStyle",
 			["selectionWidthStyle"] = "BoxWidthStyle",
-			["axis"] = "Axis",
 			["scrollDirection"] = "Axis",
 			["dragStartBehavior"] = "DragStartBehavior",
 			["keyboardDismissBehavior"] = "ScrollViewKeyboardDismissBehavior",
 			["clipBehavior"] = "Clip",
-			["shape"] = "BoxShape",
 			["textDirection"] = "TextDirection",
-			["hitTestBehavior"] = "HitTestBehavior",
 			["baselineType"] = "TextBaseline",
-			// Alignment and spacing
-			["alignment"] = "AlignmentGeometry",
+
+			// AMBIGUOUS - intentionally excluded:
+			// ["fit"] - FlexFit, BoxFit, or StackFit depending on widget
+			// ["alignment"] - AlignmentGeometry, WrapAlignment, TableCellVerticalAlignment, etc.
+			// ["crossAxisAlignment"] - CrossAxisAlignment or WrapCrossAlignment
+			// ["axis"] - Axis enum but also ScrollController.axis
+			// ["direction"] - Axis, TextDirection, or VerticalDirection
+			// ["shape"] - BoxShape, ShapeBorder, OutlinedBorder, etc.
+			// ["overflow"] - TextOverflow or Overflow (deprecated)
+			// ["hitTestBehavior"] - HitTestBehavior or PlatformViewHitTestBehavior
+			// ["behavior"] - HitTestBehavior, DragBehavior, etc.
+
+			// Unambiguous geometric types
 			["padding"] = "EdgeInsetsGeometry",
 			["margin"] = "EdgeInsetsGeometry",
-			["decoration"] = "Decoration",
 			["foregroundDecoration"] = "Decoration",
 			["constraints"] = "BoxConstraints",
 			["transform"] = "Matrix4",
@@ -59,16 +65,20 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			["gradient"] = "Gradient",
 			["curve"] = "Curve",
 			["duration"] = "TimeSpan",
-			["style"] = "TextStyle",
 			["textStyle"] = "TextStyle",
-			["offset"] = "Offset",
-			["size"] = "Size",
-			["rect"] = "Rect",
-			["image"] = "ImageProvider",
 			["focusNode"] = "FocusNode",
 			["physics"] = "ScrollPhysics",
-			["controller"] = "ScrollController",
-			// Common children
+
+			// Ambiguous - excluded:
+			// ["decoration"] - Decoration or BoxDecoration or ShapeDecoration
+			// ["style"] - TextStyle, ButtonStyle, IconButtonThemeData, etc.
+			// ["offset"] - Offset or int (for SliverList index offset)
+			// ["size"] - Size or double (for fontSize)
+			// ["rect"] - Rect or BorderRadius
+			// ["controller"] - ScrollController, TextEditingController, AnimationController, etc.
+			// ["image"] - ImageProvider, DecorationImage, AssetImage
+
+			// Common children - unambiguous
 			["child"] = "Widget",
 			["sliver"] = "Widget",
 		};
@@ -115,10 +125,10 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				var inferredType = InferTypeFromParameterName(parameterName);
 				if (inferredType != null)
 				{
-					return isNullable ? $"{inferredType}?" : inferredType;
+					return ApplyNullability(inferredType, isNullable);
 				}
 				// If inference failed, return object as a safe fallback
-				return isNullable ? "object?" : "object";
+				return ApplyNullability("object", isNullable);
 			}
 
 			// Handle Dart function signatures with named parameters (contains '{')
@@ -140,25 +150,15 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			{
 				var csharpType = mapping.CSharpType;
 
-				// If the C# type is a bare generic without type arguments, add default type arguments
-				if (csharpType == "HashSet")
+				// If the Dart type is generic but missing type arguments, apply default generic args.
+				if (mapping.IsGeneric && !cleanType.Contains("<"))
 				{
-					csharpType = "HashSet<object>";
-				}
-				else if (csharpType == "List")
-				{
-					csharpType = "List<object>";
-				}
-				else if (csharpType == "Dictionary")
-				{
-					csharpType = "Dictionary<object, object>";
-				}
-				else if (csharpType == "IEnumerable")
-				{
-					csharpType = "IEnumerable<object>";
+					csharpType = ApplyDefaultGenericArguments(cleanType, csharpType);
 				}
 
-				return isNullable && !mapping.IsNullable ? $"{csharpType}?" : csharpType;
+				return isNullable && !mapping.IsNullable
+					? ApplyNullability(csharpType, true)
+					: csharpType;
 			}
 
 			// Handle generic types
@@ -167,6 +167,16 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			{
 				var baseType = genericMatch.Groups[1].Value;
 				var typeArgs = ParseGenericArguments(genericMatch.Groups[2].Value);
+				if (typeArgs.Count == 0 || typeArgs.All(string.IsNullOrWhiteSpace))
+				{
+					typeArgs = GetDefaultGenericArgumentPlaceholders(baseType);
+				}
+				else
+				{
+					typeArgs = typeArgs
+						.Select(arg => string.IsNullOrWhiteSpace(arg) ? "Object" : arg)
+						.ToList();
+				}
 				var mappedArgs = typeArgs.Select(t => MapType(t, null)).ToList();
 
 				// Map the base type
@@ -175,16 +185,61 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				{
 					var mappedBase = baseMapping.CSharpType;
 					var result = $"{mappedBase}<{string.Join(", ", mappedArgs)}>";
-					return isNullable ? $"{result}?" : result;
+					return ApplyNullability(result, isNullable);
 				}
 
 				// Fallback for unknown generic types
 				var result2 = $"{baseType}<{string.Join(", ", mappedArgs)}>";
-				return isNullable ? $"{result2}?" : result2;
+				return ApplyNullability(result2, isNullable);
+			}
+
+			// Handle callback types - map to Action
+			if (IsCallbackType(cleanType))
+			{
+				return ApplyNullability("Action", isNullable);
 			}
 
 			// Fallback: return the type as-is (might be a custom type)
-			return isNullable ? $"{cleanType}?" : cleanType;
+			return ApplyNullability(cleanType, isNullable);
+		}
+
+		private static string ApplyDefaultGenericArguments(string dartBaseType, string csharpBaseType)
+		{
+			var arity = GetDefaultGenericArity(dartBaseType, csharpBaseType);
+			if (arity <= 0)
+			{
+				return csharpBaseType;
+			}
+
+			var args = Enumerable.Repeat("object", arity);
+			return $"{csharpBaseType}<{string.Join(", ", args)}>";
+		}
+
+		private static string ApplyNullability(string csharpType, bool isNullable)
+		{
+			if (!isNullable || csharpType.EndsWith("?"))
+			{
+				return csharpType;
+			}
+
+			return $"{csharpType}?";
+		}
+
+		private static List<string> GetDefaultGenericArgumentPlaceholders(string dartBaseType)
+		{
+			var arity = GetDefaultGenericArity(dartBaseType, dartBaseType);
+			return Enumerable.Repeat("Object", arity).ToList();
+		}
+
+		private static int GetDefaultGenericArity(string dartBaseType, string csharpBaseType)
+		{
+			if (string.Equals(csharpBaseType, "Dictionary", StringComparison.OrdinalIgnoreCase) ||
+				string.Equals(dartBaseType, "Map", StringComparison.OrdinalIgnoreCase))
+			{
+				return 2;
+			}
+
+			return 1;
 		}
 
 		/// <summary>
@@ -411,6 +466,29 @@ namespace FlutterSharp.CodeGen.TypeMapping
 		{
 			var mapping = MapTypeWithInfo(dartType);
 			return mapping?.IsEnum ?? false;
+		}
+
+		/// <summary>
+		/// Determines if a Dart type is a callback type based on naming convention.
+		/// Callback types in Dart typically end with "Callback" (e.g., GestureTapCallback, VoidCallback).
+		/// </summary>
+		/// <param name="dartType">The Dart type to check.</param>
+		/// <returns>True if the type appears to be a callback type, false otherwise.</returns>
+		private static bool IsCallbackType(string dartType)
+		{
+			if (string.IsNullOrWhiteSpace(dartType))
+			{
+				return false;
+			}
+
+			// Common Flutter callback type suffixes
+			return dartType.EndsWith("Callback") ||
+			       dartType.EndsWith("Builder") ||
+			       dartType.EndsWith("Listener") ||
+			       dartType == "VoidCallback" ||
+			       dartType == "ValueChanged" ||
+			       dartType == "ValueGetter" ||
+			       dartType == "ValueSetter";
 		}
 
 		/// <summary>

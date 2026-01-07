@@ -60,7 +60,6 @@ namespace Flutter.Widgets
 		public DisplayFeatureSubScreen(
 			object anchorPoint,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<DisplayFeatureSubScreenStruct>();

@@ -142,17 +142,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SingleChildScrollView"/> class.
 		/// </summary>
 		public SingleChildScrollView(
-			Axis scrollDirection,
-			bool reverse,
-			EdgeInsetsGeometry? padding,
-			DragStartBehavior dragStartBehavior,
-			Clip clipBehavior,
-			PlatformViewHitTestBehavior hitTestBehavior
-,
+			EdgeInsetsGeometry padding,
+			Axis scrollDirection = Axis.Vertical,
+			bool reverse = false,
 			ScrollController? controller = null,
 			bool? primary = null,
 			ScrollPhysics? physics = null,
 			Widget? child = null,
+			DragStartBehavior dragStartBehavior = DragStartBehavior.Start,
+			Clip clipBehavior = Clip.HardEdge,
+			PlatformViewHitTestBehavior hitTestBehavior = HitTestBehavior.Opaque,
 			string? restorationId = null,
 			ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior = null
 		)

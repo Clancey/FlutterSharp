@@ -54,7 +54,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public InheritedTheme(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<InheritedThemeStruct>();

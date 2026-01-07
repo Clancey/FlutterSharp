@@ -38,7 +38,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverMultiBoxAdaptorWidget(
 			SliverChildDelegate @delegate
-
 		)
 		{
 			var s = GetBackingStruct<SliverMultiBoxAdaptorWidgetStruct>();

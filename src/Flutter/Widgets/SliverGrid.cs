@@ -75,7 +75,6 @@ namespace Flutter.Widgets
 		public SliverGrid(
 			SliverGridDelegate gridDelegate,
 			SliverChildDelegate @delegate
-
 		)
 		{
 			var s = GetBackingStruct<SliverGridStruct>();

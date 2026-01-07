@@ -36,12 +36,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverLayoutBuilder"/> class.
 		/// </summary>
 		public SliverLayoutBuilder(
-			WidgetBuilder? builder
-
+			Action builder
 		)
 		{
 			var s = GetBackingStruct<SliverLayoutBuilderStruct>();
-			// Complex type: WidgetBuilder? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverLayoutBuilderStruct();

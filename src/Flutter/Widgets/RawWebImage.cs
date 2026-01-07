@@ -28,12 +28,11 @@ namespace Flutter.Widgets
 			Widget child,
 			WebImageInfo image,
 			BoxFit fit,
-			AlignmentGeometry? alignment,
-			bool matchTextDirection
-,
 			string? debugImageLabel = null,
 			double? width = null,
-			double? height = null
+			double? height = null,
+			AlignmentGeometry? alignment = null,
+			bool matchTextDirection = false
 		)
 		{
 			var s = GetBackingStruct<RawWebImageStruct>();

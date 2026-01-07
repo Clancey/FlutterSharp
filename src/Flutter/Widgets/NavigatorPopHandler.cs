@@ -53,9 +53,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public NavigatorPopHandler(
 			Widget child,
-			bool enabled,
-			Action onPop
-,
+			Action onPop,
+			bool enabled = true,
 			Action<T?> onPopWithResult = null
 		)
 		{

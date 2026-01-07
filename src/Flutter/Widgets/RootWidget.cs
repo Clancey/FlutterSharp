@@ -30,7 +30,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RootWidget"/> class.
 		/// </summary>
 		public RootWidget(
-
 			Widget? child = null,
 			string? debugShortDescription = null
 		)

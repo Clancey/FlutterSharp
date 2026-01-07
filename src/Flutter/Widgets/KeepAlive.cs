@@ -50,7 +50,6 @@ namespace Flutter.Widgets
 			Type debugTypicalAncestorWidgetClass,
 			string debugTypicalAncestorWidgetDescription,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<KeepAliveStruct>();

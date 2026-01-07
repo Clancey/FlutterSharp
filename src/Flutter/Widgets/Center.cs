@@ -42,7 +42,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Center"/> class.
 		/// </summary>
 		public Center(
-
 			double? widthFactor = null,
 			double? heightFactor = null,
 			Widget? child = null

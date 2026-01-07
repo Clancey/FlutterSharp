@@ -62,12 +62,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Transform"/> class.
 		/// </summary>
 		public Transform(
-			Matrix4? transform,
+			Matrix4 transform,
 			object origin,
-			AlignmentGeometry? alignment,
-			bool transformHitTests,
-			FilterQuality filterQuality
-,
+			AlignmentGeometry alignment,
+			FilterQuality filterQuality,
+			bool transformHitTests = true,
 			Widget? child = null
 		)
 		{

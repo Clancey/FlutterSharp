@@ -30,8 +30,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public MetaData(
 			object metaData,
-			object behavior
-,
+			object behavior = HitTestBehavior.DeferToChild,
 			Widget? child = null
 		)
 		{

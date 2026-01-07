@@ -289,16 +289,16 @@ namespace Flutter.Widgets
 		public HtmlElementView(
 			string viewType,
 			Action onPlatformViewCreated,
-			PlatformViewHitTestBehavior hitTestBehavior
-,
-			object? creationParams = null
+			object? creationParams = null,
+			PlatformViewHitTestBehavior? hitTestBehavior = null
 		)
 		{
 			var s = GetBackingStruct<HtmlElementViewStruct>();
 			s.viewType = viewType;
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: object? - skipped (requires marshaling)
-			s.hitTestBehavior = hitTestBehavior;
+			if (hitTestBehavior.HasValue)
+				s.hitTestBehavior = hitTestBehavior.Value;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new HtmlElementViewStruct();

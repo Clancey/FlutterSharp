@@ -38,8 +38,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ReorderableDelayedDragStartListener(
 			Widget child,
-			int index
-,
+			int index,
 			bool enabled = true
 		)
 		{

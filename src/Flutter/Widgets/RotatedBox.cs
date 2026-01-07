@@ -50,8 +50,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RotatedBox"/> class.
 		/// </summary>
 		public RotatedBox(
-			int quarterTurns
-,
+			int quarterTurns,
 			Widget? child = null
 		)
 		{

@@ -108,7 +108,6 @@ namespace Flutter.Widgets
 		public SliverMainAxisGroup(
 			List<Widget> children,
 			List<Widget> slivers
-
 		)
 		{
 			if (children != null)

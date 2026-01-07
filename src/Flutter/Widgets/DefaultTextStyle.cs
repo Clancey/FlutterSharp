@@ -40,15 +40,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultTextStyle"/> class.
 		/// </summary>
 		public DefaultTextStyle(
-			TextStyle? style,
-			TextAlign? textAlign,
-			bool softWrap,
-			TextOverflow overflow,
-			TextWidthBasis textWidthBasis,
+			TextStyle style,
+			TextAlign textAlign,
 			TextHeightBehavior textHeightBehavior,
-			Widget child
-,
-			int? maxLines = null
+			Widget child,
+			bool softWrap = true,
+			TextOverflow overflow = TextOverflow.Clip,
+			int? maxLines = null,
+			TextWidthBasis textWidthBasis = TextWidthBasis.Parent
 		)
 		{
 			var s = GetBackingStruct<DefaultTextStyleStruct>();

@@ -44,7 +44,6 @@ namespace Flutter.Widgets
 			Action<FlutterAction<Intent>> listener,
 			FlutterAction<Intent> action,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<ActionListenerStruct>();

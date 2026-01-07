@@ -48,11 +48,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Semantics(
 			object properties,
-			bool container,
-			bool explicitChildNodes,
-			bool excludeSemantics,
-			bool blockUserActions
-,
+			bool container = false,
+			bool explicitChildNodes = false,
+			bool excludeSemantics = false,
+			bool blockUserActions = false,
 			Widget? child = null,
 			bool? enabled = null,
 			bool? @checked = null,
@@ -99,8 +98,8 @@ namespace Flutter.Widgets
 			TextDirection? textDirection = null,
 			object sortKey = null,
 			object tagForChildren = null,
-			Action onTap = null,
-			Action onLongPress = null,
+			Action? onTap = null,
+			Action? onLongPress = null,
 			Action onScrollLeft = null,
 			Action onScrollRight = null,
 			Action onScrollUp = null,
@@ -120,7 +119,7 @@ namespace Flutter.Widgets
 			Action onFocus = null,
 			Dictionary<object, object>? customSemanticsActions = null,
 			object role = null,
-			HashSet<string>? controlsNodes = null,
+			ISet<string>? controlsNodes = null,
 			object validationResult = null,
 			object inputType = null
 		)
@@ -205,8 +204,8 @@ namespace Flutter.Widgets
 				s.textDirection = textDirection.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
@@ -226,7 +225,7 @@ namespace Flutter.Widgets
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Dictionary<object, object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: HashSet<string>? - skipped (requires marshaling)
+			// Complex type: ISet<string>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 		}

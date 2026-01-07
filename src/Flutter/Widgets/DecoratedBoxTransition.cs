@@ -42,10 +42,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DecoratedBoxTransition"/> class.
 		/// </summary>
 		public DecoratedBoxTransition(
-			Decoration? decoration,
-			object position,
-			Widget child
-
+			Decoration decoration,
+			Widget child,
+			object position = DecorationPosition.Background
 		)
 		{
 			var s = GetBackingStruct<DecoratedBoxTransitionStruct>();

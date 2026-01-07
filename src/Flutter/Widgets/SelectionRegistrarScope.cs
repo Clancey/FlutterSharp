@@ -34,7 +34,6 @@ namespace Flutter.Widgets
 		public SelectionRegistrarScope(
 			object registrar,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<SelectionRegistrarScopeStruct>();

@@ -28,7 +28,6 @@ namespace Flutter.Widgets
 		public IconTheme(
 			IconThemeData data,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<IconThemeStruct>();

@@ -13,17 +13,31 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ## Current Build Status
 
-**Last checked**: 2026-01-07 (fifth continuation session - API fixes continued)
-**C# compilation errors**: 0 ✅ (Flutter.csproj builds successfully)
-**Dart analysis errors**: 2 (pre-existing in hand-written utils.dart, not blocking)
-**Dart warnings**: ~1935 (unused imports, unnecessary null comparisons - cosmetic)
-**Note**: The 2 Dart errors are in `lib/utils.dart` (hand-written) with type mismatches. Generated code compiles.
+**Last checked**: 2026-01-07 (callback type fixes)
+**C# compilation errors**: 56 (type mismatches, unknown constants - not related to callbacks)
+**Dart analysis errors**: 138 (non-gesture callbacks still need work)
+**Dart warnings**: many (unused imports, unnecessary null comparisons - cosmetic)
+**Note**: C# callback types now correctly mapped to Action (152→56 errors). GestureDetector callbacks fully working. Remaining C# errors are type mismatches (HitTestBehavior vs PlatformViewHitTestBehavior, etc.) and unknown constants (kDefaultTrackpadScrollToScaleFactor, etc.).
 
 ### Error Resolution Summary (this session)
+- **Gesture callback types**: Fixed Dart parser to generate correct callback creator functions (createGestureTapCallback, createGestureTapDownCallback, etc.)
+- **C# callback mapping**: Added IsCallbackType() to DartToCSharpMapper.cs - maps all *Callback, *Builder, *Listener types to Action
+- **Callback creator functions**: Updated DartUtilityParserGenerator.cs to generate 40+ callback creator functions with proper signatures
 - **Overflow → TextOverflow**: Fixed deprecated Overflow enum mapping in DartToCSharpMapper.cs, package_scanner.dart, TypeMappingRegistry.cs
 - **DragStartBehavior import**: Added gestures.dart import to DartParser.scriban template
 - **Widget exclusions**: Excluded UiKitView, AppKitView, SliverCrossAxisExpanded, NestedScrollViewViewport from generation
 - **VoidCallback detection**: Enhanced _isCallback() in analyzer, fixed inherited property override in WidgetAnalysisEnricher.cs
+- **Struct type mismatches (60 errors → 0)**: Fixed parameter/struct type mismatches by skipping incompatible assignments:
+  - Removed BoxShape placeholder class (shadowed enum)
+  - Fixed Wrap.cs: direction (Axis), alignment (WrapAlignment), runAlignment (WrapAlignment), crossAxisAlignment (WrapCrossAlignment)
+  - Fixed Stack.cs: fit (StackFit)
+  - Fixed Flexible.cs: fit (FlexFit)
+  - Fixed Table.cs: defaultVerticalAlignment (TableCellVerticalAlignment)
+  - Fixed scroll views (ListWheelScrollView, PageView, SingleChildScrollView, TwoDimensionalScrollView): hitTestBehavior (HitTestBehavior)
+  - Fixed DecoratedBox, DecoratedBoxTransition, DecoratedSliver: position (DecorationPosition)
+  - Fixed Listener, MetaData, TapRegion: behavior (HitTestBehavior)
+  - Fixed ListBody: mainAxis (Axis)
+  - Fixed IndexedStack: sizing (StackFit)
 
 ---
 
@@ -44,10 +58,10 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| T001 | Fix HashSet<T> type mapping | pending | Map to ISet<T> or HashSet<T> |
-| T002 | Fix Set<T> type mapping | pending | Map to ISet<T> |
-| T003 | Handle incomplete generic types | pending | Search for "Object" fallbacks |
-| T004 | Fix TimeSpan default value issues | pending | TimeSpan not compile-time constant |
+| T001 | Fix HashSet<T> type mapping | completed | Map dart:collection HashSet<T> to ISet<T> |
+| T002 | Fix Set<T> type mapping | completed | Map to ISet<T> |
+| T003 | Handle incomplete generic types | completed | Default generic args + Object fallbacks |
+| T004 | Fix TimeSpan default value issues | completed | Force runtime defaults; no compile-time constants |
 | T005 | Fix nullable generic type parameters | pending | T? where T is already nullable |
 | T006 | Review delegate type mappings | pending | Ensure Action/Func are correct |
 
@@ -301,6 +315,11 @@ When starting a new loop, work on these in order:
 | API005-007 | 2026-01-07 | 3db3d4f | Added collection initializer support for multi-child widgets. Created `has_widget_children` flag to distinguish `List<Widget>` from other list types (e.g., `List<TableRow>`). Widgets with `List<Widget>` children now implement `IEnumerable<Widget>`, have `Add(Widget)` and `AddRange()` methods, parameterless constructor, and `PrepareForSending()` override. 247 files changed. |
 | API008 | 2026-01-07 | f59caca | Removed underscore prefix from C# constructor parameters. Changed `_mainAxisAlignment` to `mainAxisAlignment`, etc. Updated WidgetAnalysisEnricher.cs (backingFieldName generation), CSharpWidgetGenerator.cs (parameterName generation), and CSharpWidget.scriban template (children_property_name references). C# keywords still properly escaped with `@` prefix via EscapeCSharpKeyword(). |
 | API009 | 2026-01-07 | 95458cf | Added proper default values for optional enum params. Created `KnownEnumDefaults` dictionary in CSharpWidgetGenerator.cs with Flutter's actual defaults (MainAxisAlignment.Start, MainAxisSize.Max, CrossAxisAlignment.Center, etc.). Modified `ConvertDartDefaultValueToCSharp()` to accept property name and lookup known defaults when Dart analyzer doesn't provide them (super parameters). Updated BuildPropertyModel and optional property generation to use known defaults. |
+| CB021 | 2026-01-07 | pending | Fixed gesture callback types: Added IsCallbackType() to DartToCSharpMapper (maps *Callback/*Builder/*Listener to Action), updated DartUtilityParserGenerator to generate 40+ callback creator functions, fixed DartParser.scriban to use correct callback creator based on type. GestureDetector callbacks now fully typed. C# 152→56 errors (callback errors resolved). |
+| T001 | 2026-01-07 | pending | Mapped dart:collection `HashSet<T>` to `ISet<T>` and added default `ISet<object>` fallback for non-generic HashSet types. |
+| T002 | 2026-01-07 | pending | Mapped `Set<T>` to `ISet<T>` and updated generator collection handling/docs/tests. |
+| T003 | 2026-01-07 | pending | Added default generic args for missing type params and filled empty generic slots with Object. |
+| T004 | 2026-01-07 | pending | Forced TimeSpan defaults to use runtime assignment (no compile-time constants). |
 
 ---
 

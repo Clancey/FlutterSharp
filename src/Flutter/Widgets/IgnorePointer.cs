@@ -78,8 +78,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IgnorePointer"/> class.
 		/// </summary>
 		public IgnorePointer(
-			bool ignoring
-,
+			bool ignoring = true,
 			bool? ignoringSemantics = null,
 			Widget? child = null
 		)

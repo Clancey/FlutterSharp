@@ -24,10 +24,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Title"/> class.
 		/// </summary>
 		public Title(
-			string title,
-			Color? color,
-			Widget child
-
+			Color color,
+			Widget child,
+			string title = ""
 		)
 		{
 			var s = GetBackingStruct<TitleStruct>();

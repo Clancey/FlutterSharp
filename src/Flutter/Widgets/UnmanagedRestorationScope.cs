@@ -48,7 +48,6 @@ namespace Flutter.Widgets
 		public UnmanagedRestorationScope(
 			object bucket,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<UnmanagedRestorationScopeStruct>();

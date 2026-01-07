@@ -46,8 +46,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ImageFiltered(
 			object imageFilter,
-			bool enabled
-,
+			bool enabled = true,
 			Widget? child = null
 		)
 		{

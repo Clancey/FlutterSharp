@@ -30,7 +30,6 @@ namespace Flutter.Widgets
 		public LayoutId(
 			Type debugTypicalAncestorWidgetClass,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<LayoutIdStruct>();

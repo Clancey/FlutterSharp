@@ -28,8 +28,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SemanticsDebugger(
 			Widget child,
-			object labelStyle
-
+			object labelStyle = null
 		)
 		{
 			var s = GetBackingStruct<SemanticsDebuggerStruct>();

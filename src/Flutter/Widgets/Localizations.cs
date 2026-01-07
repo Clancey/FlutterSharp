@@ -134,9 +134,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Localizations"/> class.
 		/// </summary>
 		public Localizations(
-			Locale? locale,
-			List<LocalizationsDelegate<object>> delegates
-,
+			Locale locale,
+			List<LocalizationsDelegate<object>> delegates,
 			Widget? child = null
 		)
 		{

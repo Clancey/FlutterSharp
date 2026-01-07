@@ -33,8 +33,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="WillPopScope"/> class.
 		/// </summary>
 		public WillPopScope(
-			Widget child
-,
+			Widget child,
 			Func<Future<bool>> onWillPop = null
 		)
 		{

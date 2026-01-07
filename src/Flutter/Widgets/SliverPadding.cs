@@ -37,8 +37,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverPadding(
 			Widget child,
-			EdgeInsetsGeometry? padding
-,
+			EdgeInsetsGeometry padding,
 			Widget? sliver = null
 		)
 		{

@@ -31,7 +31,6 @@ namespace Flutter.Widgets
 		public BackdropGroup(
 			object backdropKey,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<BackdropGroupStruct>();

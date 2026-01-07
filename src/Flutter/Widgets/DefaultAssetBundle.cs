@@ -75,7 +75,6 @@ namespace Flutter.Widgets
 		public DefaultAssetBundle(
 			AssetBundle bundle,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<DefaultAssetBundleStruct>();

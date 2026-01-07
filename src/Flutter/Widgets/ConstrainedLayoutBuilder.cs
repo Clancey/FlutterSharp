@@ -49,7 +49,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ConstrainedLayoutBuilder(
 			Func<BuildContext, ConstraintType, Widget> builder
-
 		)
 		{
 			var s = GetBackingStruct<ConstrainedLayoutBuilderStruct>();

@@ -111,7 +111,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Builder(
 			Func<BuildContext, Widget> builder
-
 		)
 		{
 			var s = GetBackingStruct<BuilderStruct>();

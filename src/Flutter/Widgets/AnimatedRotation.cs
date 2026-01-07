@@ -76,11 +76,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedRotation(
 			double turns,
-			AlignmentGeometry? alignment,
 			FilterQuality filterQuality,
-			TimeSpan duration
-,
+			TimeSpan duration,
 			Widget? child = null,
+			AlignmentGeometry? alignment = null,
 			Curve curve = null,
 			Action? onEnd = null
 		)

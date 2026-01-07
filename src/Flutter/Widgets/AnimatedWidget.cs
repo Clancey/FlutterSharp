@@ -91,7 +91,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedWidget(
 			Listenable listenable
-
 		)
 		{
 			var s = GetBackingStruct<AnimatedWidgetStruct>();

@@ -59,8 +59,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Actions(
 			Dictionary<Type, FlutterAction<Intent>> actions,
-			Widget child
-,
+			Widget child,
 			ActionDispatcher? dispatcher = null
 		)
 		{

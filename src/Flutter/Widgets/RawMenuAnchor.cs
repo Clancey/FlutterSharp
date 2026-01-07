@@ -54,13 +54,12 @@ namespace Flutter.Widgets
 			Action onOpen,
 			Action onClose,
 			Func<BuildContext, RawMenuOverlayInfo, Widget> overlayBuilder,
-			bool useRootOverlay,
-			bool consumeOutsideTaps,
-			MenuController controller
-,
+			MenuController controller,
 			Func<BuildContext, MenuController, Widget?, Widget> builder = null,
 			Widget? child = null,
-			FocusNode? childFocusNode = null
+			bool useRootOverlay = false,
+			FocusNode? childFocusNode = null,
+			bool consumeOutsideTaps = false
 		)
 		{
 			var s = GetBackingStruct<RawMenuAnchorStruct>();

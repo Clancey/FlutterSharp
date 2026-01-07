@@ -101,8 +101,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public OverlayPortal(
 			OverlayPortalController controller,
-			Func<BuildContext, Widget> overlayChildBuilder
-,
+			Func<BuildContext, Widget> overlayChildBuilder,
 			Widget? child = null
 		)
 		{

@@ -78,10 +78,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public PopScope(
 			Widget child,
-			bool canPop
-,
 			Action<bool, T?> onPopInvokedWithResult = null,
-			Action<bool> onPopInvoked = null
+			Action<bool> onPopInvoked = null,
+			bool canPop = true
 		)
 		{
 			var s = GetBackingStruct<PopScopeStruct>();

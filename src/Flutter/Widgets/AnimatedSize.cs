@@ -36,14 +36,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedSize"/> class.
 		/// </summary>
 		public AnimatedSize(
-			AlignmentGeometry? alignment,
-			Curve curve,
 			TimeSpan duration,
-			Clip clipBehavior,
-			Action onEnd
-,
+			Action onEnd,
 			Widget? child = null,
-			TimeSpan? reverseDuration = null
+			AlignmentGeometry? alignment = null,
+			Curve curve = null,
+			TimeSpan? reverseDuration = null,
+			Clip clipBehavior = Clip.HardEdge
 		)
 		{
 			var s = GetBackingStruct<AnimatedSizeStruct>();
@@ -53,7 +52,7 @@ namespace Flutter.Widgets
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: TimeSpan? - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;
-			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedSizeStruct();

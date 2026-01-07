@@ -42,8 +42,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ClipPath(
 			object clipper,
-			Clip clipBehavior
-,
+			Clip clipBehavior = Clip.AntiAlias,
 			Widget? child = null
 		)
 		{

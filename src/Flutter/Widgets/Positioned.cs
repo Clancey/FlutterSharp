@@ -58,8 +58,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Positioned(
 			Type debugTypicalAncestorWidgetClass,
-			Widget child
-,
+			Widget child,
 			double? left = null,
 			double? top = null,
 			double? right = null,

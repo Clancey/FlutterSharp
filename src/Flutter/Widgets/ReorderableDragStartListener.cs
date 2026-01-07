@@ -39,8 +39,7 @@ namespace Flutter.Widgets
 		public ReorderableDragStartListener(
 			Widget child,
 			int index,
-			bool enabled
-
+			bool enabled = true
 		)
 		{
 			var s = GetBackingStruct<ReorderableDragStartListenerStruct>();

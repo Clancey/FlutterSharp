@@ -38,22 +38,21 @@ namespace Flutter.Widgets
 		/// </summary>
 		public RawImage(
 			ImageProvider image,
-			double scale,
-			Color? color,
+			Color color,
 			Animation<double> opacity,
-			FilterQuality filterQuality,
 			object colorBlendMode,
 			BoxFit fit,
-			AlignmentGeometry? alignment,
-			object repeat,
 			object centerSlice,
-			bool matchTextDirection,
-			bool invertColors,
-			bool isAntiAlias
-,
 			string? debugImageLabel = null,
 			double? width = null,
-			double? height = null
+			double? height = null,
+			double scale = 1.0,
+			FilterQuality filterQuality = FilterQuality.Medium,
+			AlignmentGeometry? alignment = null,
+			object repeat = null,
+			bool matchTextDirection = false,
+			bool invertColors = false,
+			bool isAntiAlias = false
 		)
 		{
 			var s = GetBackingStruct<RawImageStruct>();

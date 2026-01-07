@@ -54,7 +54,6 @@ namespace Flutter.Widgets
 		public PreferredSize(
 			Widget child,
 			object preferredSize
-
 		)
 		{
 			var s = GetBackingStruct<PreferredSizeStruct>();

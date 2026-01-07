@@ -65,9 +65,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public DecoratedSliver(
 			Widget child,
-			Decoration? decoration,
-			object position
-,
+			Decoration decoration,
+			object position = DecorationPosition.Background,
 			Widget? sliver = null
 		)
 		{

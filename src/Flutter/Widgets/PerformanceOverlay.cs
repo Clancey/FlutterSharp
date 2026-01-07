@@ -38,8 +38,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PerformanceOverlay"/> class.
 		/// </summary>
 		public PerformanceOverlay(
-			int optionsMask
-
+			int optionsMask = 0
 		)
 		{
 			var s = GetBackingStruct<PerformanceOverlayStruct>();

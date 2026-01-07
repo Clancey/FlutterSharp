@@ -114,16 +114,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Wrap"/> class.
 		/// </summary>
 		public Wrap(
-			object direction,
-			AlignmentGeometry? alignment,
-			double spacing,
-			AlignmentGeometry runAlignment,
-			double runSpacing,
-			CrossAxisAlignment crossAxisAlignment,
 			TextDirection textDirection,
-			VerticalDirection verticalDirection,
-			Clip clipBehavior
-,
+			object direction = Axis.Horizontal,
+			AlignmentGeometry? alignment = WrapAlignment.Start,
+			double spacing = 0.0,
+			AlignmentGeometry runAlignment = WrapAlignment.Start,
+			double runSpacing = 0.0,
+			CrossAxisAlignment crossAxisAlignment = WrapCrossAlignment.Start,
+			VerticalDirection verticalDirection = VerticalDirection.Down,
+			Clip clipBehavior = Clip.None,
 			List<Widget> children = null
 		)
 		{

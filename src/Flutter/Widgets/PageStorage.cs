@@ -59,7 +59,6 @@ namespace Flutter.Widgets
 		public PageStorage(
 			Widget child,
 			PageStorageBucket bucket
-
 		)
 		{
 			var s = GetBackingStruct<PageStorageStruct>();

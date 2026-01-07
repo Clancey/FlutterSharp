@@ -142,17 +142,16 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Text(
 			object textSpan,
-			TextStyle? style,
-			StrutStyle? strutStyle,
-			TextAlign? textAlign,
+			TextStyle style,
+			StrutStyle strutStyle,
+			TextAlign textAlign,
 			TextDirection textDirection,
-			Locale? locale,
+			Locale locale,
 			TextOverflow overflow,
 			object textScaler,
 			TextWidthBasis textWidthBasis,
 			TextHeightBehavior textHeightBehavior,
-			Color? selectionColor
-,
+			Color selectionColor,
 			string? data = null,
 			bool? softWrap = null,
 			double? textScaleFactor = null,

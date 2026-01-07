@@ -75,10 +75,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Icon"/> class.
 		/// </summary>
 		public Icon(
-			Color? color,
+			Color color,
 			TextDirection textDirection,
-			BlendMode blendMode
-,
+			BlendMode blendMode,
 			IconData? icon = null,
 			double? size = null,
 			double? fill = null,

@@ -78,17 +78,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DraggableScrollableSheet"/> class.
 		/// </summary>
 		public DraggableScrollableSheet(
-			double initialChildSize,
-			double minChildSize,
-			double maxChildSize,
-			bool expand,
-			bool snap,
-			bool shouldCloseOnMinExtent,
-			Func<BuildContext, ScrollController, Widget> builder
-,
+			Func<BuildContext, ScrollController, Widget> builder,
+			double initialChildSize = 0.5,
+			double minChildSize = 0.25,
+			double maxChildSize = 1.0,
+			bool expand = true,
+			bool snap = false,
 			List<double>? snapSizes = null,
 			TimeSpan? snapAnimationDuration = null,
-			DraggableScrollableController? controller = null
+			DraggableScrollableController? controller = null,
+			bool shouldCloseOnMinExtent = true
 		)
 		{
 			var s = GetBackingStruct<DraggableScrollableSheetStruct>();

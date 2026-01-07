@@ -67,8 +67,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public FadeTransition(
 			Animation<double> opacity,
-			bool alwaysIncludeSemantics
-,
+			bool alwaysIncludeSemantics = false,
 			Widget? child = null
 		)
 		{

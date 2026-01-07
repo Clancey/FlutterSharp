@@ -49,7 +49,6 @@ namespace Flutter.Widgets
 		public SliverConstrainedCrossAxis(
 			double maxExtent,
 			Widget sliver
-
 		)
 		{
 			var s = GetBackingStruct<SliverConstrainedCrossAxisStruct>();

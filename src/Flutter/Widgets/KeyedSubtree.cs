@@ -27,7 +27,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public KeyedSubtree(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<KeyedSubtreeStruct>();

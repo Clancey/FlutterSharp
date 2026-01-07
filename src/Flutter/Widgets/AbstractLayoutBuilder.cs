@@ -51,7 +51,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AbstractLayoutBuilder(
 			Func<BuildContext, LayoutInfoType, Widget> builder
-
 		)
 		{
 			var s = GetBackingStruct<AbstractLayoutBuilderStruct>();

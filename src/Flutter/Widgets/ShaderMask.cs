@@ -59,8 +59,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ShaderMask(
 			Action shaderCallback,
-			BlendMode blendMode
-,
+			BlendMode blendMode = BlendMode.Modulate,
 			Widget? child = null
 		)
 		{

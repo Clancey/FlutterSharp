@@ -111,25 +111,24 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Image(
 			ImageProvider image,
-			Color? color,
+			Color color,
 			Animation<double> opacity,
-			FilterQuality filterQuality,
 			object colorBlendMode,
 			BoxFit fit,
-			AlignmentGeometry? alignment,
-			object repeat,
 			object centerSlice,
-			bool matchTextDirection,
-			bool gaplessPlayback,
-			bool excludeFromSemantics,
-			bool isAntiAlias
-,
 			Func<BuildContext, Widget, int?, bool, Widget> frameBuilder = null,
 			Func<BuildContext, Widget, InvalidType, Widget> loadingBuilder = null,
 			Func<BuildContext, object, StackTrace?, Widget> errorBuilder = null,
 			double? width = null,
 			double? height = null,
-			string? semanticLabel = null
+			FilterQuality filterQuality = FilterQuality.Medium,
+			AlignmentGeometry? alignment = null,
+			object repeat = null,
+			bool matchTextDirection = false,
+			bool gaplessPlayback = false,
+			string? semanticLabel = null,
+			bool excludeFromSemantics = false,
+			bool isAntiAlias = false
 		)
 		{
 			var s = GetBackingStruct<ImageStruct>();

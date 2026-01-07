@@ -56,7 +56,6 @@ namespace Flutter.Widgets
 		public PositionedTransition(
 			Widget child,
 			Rect rect
-
 		)
 		{
 			var s = GetBackingStruct<PositionedTransitionStruct>();

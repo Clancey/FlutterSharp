@@ -80,8 +80,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedGrid(
 			SliverGridDelegate gridDelegate,
-			object itemBuilder
-,
+			object itemBuilder,
 			int initialItemCount = 0,
 			Axis scrollDirection = Axis.Vertical,
 			bool reverse = false,

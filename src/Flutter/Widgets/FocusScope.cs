@@ -83,12 +83,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FocusScope"/> class.
 		/// </summary>
 		public FocusScope(
-			Widget child
-,
+			Widget child,
 			FocusScopeNode? node = null,
 			FocusNode? parentNode = null,
 			bool autofocus = false,
-			Action onFocusChange = null,
+			Action<bool>? onFocusChange = null,
 			bool? canRequestFocus = null,
 			bool? skipTraversal = null,
 			Func<FocusNode, InvalidType, KeyEventResult> onKeyEvent = null,
@@ -104,7 +103,7 @@ namespace Flutter.Widgets
 			// Complex type: FocusNode? - skipped (requires marshaling)
 			s.child = child;
 			s.autofocus = autofocus;
-			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action<bool>? - skipped (requires marshaling)
 			if (canRequestFocus.HasValue)
 				s.canRequestFocus = canRequestFocus.Value;
 			if (skipTraversal.HasValue)

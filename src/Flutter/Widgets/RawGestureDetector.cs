@@ -63,11 +63,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawGestureDetector"/> class.
 		/// </summary>
 		public RawGestureDetector(
-			Dictionary<object, object> gestures,
 			object behavior,
-			bool excludeFromSemantics
-,
 			Widget? child = null,
+			Dictionary<object, object> gestures = null,
+			bool excludeFromSemantics = false,
 			SemanticsGestureDelegate? semantics = null
 		)
 		{

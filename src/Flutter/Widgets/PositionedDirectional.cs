@@ -55,8 +55,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PositionedDirectional"/> class.
 		/// </summary>
 		public PositionedDirectional(
-			Widget child
-,
+			Widget child,
 			double? start = null,
 			double? top = null,
 			double? end = null,

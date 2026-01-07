@@ -64,7 +64,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ScrollNotificationObserver(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<ScrollNotificationObserverStruct>();

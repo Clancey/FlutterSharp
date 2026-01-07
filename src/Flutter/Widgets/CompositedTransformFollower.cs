@@ -51,11 +51,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public CompositedTransformFollower(
 			LayerLink link,
-			bool showWhenUnlinked,
-			object targetAnchor,
-			object followerAnchor,
-			Offset offset
-,
+			bool showWhenUnlinked = true,
+			object targetAnchor = null,
+			object followerAnchor = null,
+			Offset offset = null,
 			Widget? child = null
 		)
 		{

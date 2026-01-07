@@ -32,7 +32,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public StatusTransitionWidget(
 			Animation<double> animation
-
 		)
 		{
 			var s = GetBackingStruct<StatusTransitionWidgetStruct>();

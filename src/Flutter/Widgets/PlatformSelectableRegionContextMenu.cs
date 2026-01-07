@@ -26,7 +26,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public PlatformSelectableRegionContextMenu(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<PlatformSelectableRegionContextMenuStruct>();

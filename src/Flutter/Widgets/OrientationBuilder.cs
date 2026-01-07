@@ -36,7 +36,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public OrientationBuilder(
 			Func<BuildContext, Orientation, Widget> builder
-
 		)
 		{
 			var s = GetBackingStruct<OrientationBuilderStruct>();

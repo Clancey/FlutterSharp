@@ -48,8 +48,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ViewAnchor"/> class.
 		/// </summary>
 		public ViewAnchor(
-			Widget child
-,
+			Widget child,
 			Widget? view = null
 		)
 		{

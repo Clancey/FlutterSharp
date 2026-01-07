@@ -34,10 +34,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public DefaultSelectionStyle(
 			Color cursorColor,
-			Color? selectionColor,
+			Color selectionColor,
 			object mouseCursor,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<DefaultSelectionStyleStruct>();

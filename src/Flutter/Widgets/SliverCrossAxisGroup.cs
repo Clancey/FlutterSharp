@@ -107,7 +107,6 @@ namespace Flutter.Widgets
 		public SliverCrossAxisGroup(
 			List<Widget> children,
 			List<Widget> slivers
-
 		)
 		{
 			if (children != null)

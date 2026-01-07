@@ -43,7 +43,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="UniqueWidget"/> class.
 		/// </summary>
 		public UniqueWidget(
-
 			T? currentState = default
 		)
 		{

@@ -46,7 +46,6 @@ namespace Flutter.Widgets
 		public Directionality(
 			TextDirection textDirection,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<DirectionalityStruct>();

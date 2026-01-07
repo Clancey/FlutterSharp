@@ -55,7 +55,6 @@ namespace Flutter.Widgets
 		public SliverEnsureSemantics(
 			Widget child,
 			Widget sliver
-
 		)
 		{
 			var s = GetBackingStruct<SliverEnsureSemanticsStruct>();

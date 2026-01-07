@@ -47,8 +47,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverAnimatedGrid(
 			SliverGridDelegate gridDelegate,
-			object itemBuilder
-,
+			object itemBuilder,
 			Func<InvalidType, int?> findChildIndexCallback = null,
 			int initialItemCount = 0
 		)

@@ -32,8 +32,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ImageIcon(
 			ImageProvider image,
-			Color? color
-,
+			Color color,
 			double? size = null,
 			string? semanticLabel = null
 		)

@@ -78,10 +78,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ConstraintsTransformBox(
 			TextDirection textDirection,
-			AlignmentGeometry? alignment,
 			Func<BoxConstraints, BoxConstraints> constraintsTransform,
-			Clip clipBehavior
-,
+			AlignmentGeometry? alignment = null,
+			Clip clipBehavior = Clip.None,
 			Widget? child = null,
 			string debugTransformType = ""
 		)

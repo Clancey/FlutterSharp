@@ -31,11 +31,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="GridPaper"/> class.
 		/// </summary>
 		public GridPaper(
-			Color? color,
-			double interval,
-			int divisions,
-			int subdivisions
-,
+			Color? color = null,
+			double interval = 100.0,
+			int divisions = 2,
+			int subdivisions = 5,
 			Widget? child = null
 		)
 		{

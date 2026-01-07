@@ -81,7 +81,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public LookupBoundary(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<LookupBoundaryStruct>();

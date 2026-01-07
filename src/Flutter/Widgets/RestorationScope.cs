@@ -61,8 +61,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RestorationScope"/> class.
 		/// </summary>
 		public RestorationScope(
-			Widget child
-,
+			Widget child,
 			string? restorationId = null
 		)
 		{

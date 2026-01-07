@@ -39,8 +39,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverOffstage(
 			Widget child,
-			bool offstage
-,
+			bool offstage = true,
 			Widget? sliver = null
 		)
 		{

@@ -63,8 +63,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ClipRect(
 			object clipper,
-			Clip clipBehavior
-,
+			Clip clipBehavior = Clip.HardEdge,
 			Widget? child = null
 		)
 		{

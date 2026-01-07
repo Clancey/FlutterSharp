@@ -55,7 +55,6 @@ namespace Flutter.Widgets
 			Size size,
 			Widget child,
 			Rect rect
-
 		)
 		{
 			var s = GetBackingStruct<RelativePositionedTransitionStruct>();

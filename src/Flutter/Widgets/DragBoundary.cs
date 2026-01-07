@@ -34,7 +34,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public DragBoundary(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<DragBoundaryStruct>();

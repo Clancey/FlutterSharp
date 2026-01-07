@@ -54,8 +54,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SelectionContainer(
 			object registrar,
-			Widget child
-,
+			Widget child,
 			SelectionContainerDelegate? @delegate = null
 		)
 		{

@@ -44,11 +44,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public PhysicalShape(
 			object clipper,
-			Clip clipBehavior,
-			double elevation,
-			Color? color,
-			Color? shadowColor
-,
+			Color color,
+			Clip clipBehavior = Clip.None,
+			double elevation = 0.0,
+			Color? shadowColor = null,
 			Widget? child = null
 		)
 		{

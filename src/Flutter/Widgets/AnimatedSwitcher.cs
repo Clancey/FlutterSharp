@@ -65,13 +65,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedSwitcher(
 			TimeSpan duration,
-			object switchInCurve,
-			object switchOutCurve,
-			Func<Widget, InvalidType, Widget> transitionBuilder,
-			Func<Widget?, List<Widget>, Widget> layoutBuilder
-,
 			Widget? child = null,
-			TimeSpan? reverseDuration = null
+			TimeSpan? reverseDuration = null,
+			object switchInCurve = null,
+			object switchOutCurve = null,
+			Func<Widget, InvalidType, Widget> transitionBuilder = null,
+			Func<Widget?, List<Widget>, Widget> layoutBuilder = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedSwitcherStruct>();

@@ -41,8 +41,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CompositedTransformTarget"/> class.
 		/// </summary>
 		public CompositedTransformTarget(
-			LayerLink link
-,
+			LayerLink link,
 			Widget? child = null
 		)
 		{

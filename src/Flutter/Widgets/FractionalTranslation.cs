@@ -41,8 +41,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public FractionalTranslation(
 			Offset translation,
-			bool transformHitTests
-,
+			bool transformHitTests = true,
 			Widget? child = null
 		)
 		{

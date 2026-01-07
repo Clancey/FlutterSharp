@@ -53,12 +53,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LayoutBuilder"/> class.
 		/// </summary>
 		public LayoutBuilder(
-			WidgetBuilder? builder
-
+			Action builder
 		)
 		{
 			var s = GetBackingStruct<LayoutBuilderStruct>();
-			// Complex type: WidgetBuilder? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new LayoutBuilderStruct();

@@ -67,21 +67,21 @@ namespace Flutter.Widgets
 		public AndroidView(
 			string viewType,
 			Action onPlatformViewCreated,
-			PlatformViewHitTestBehavior hitTestBehavior,
 			object layoutDirection,
 			object creationParams,
 			object creationParamsCodec,
-			Clip clipBehavior
-,
-			HashSet<object>? gestureRecognizers = null
+			PlatformViewHitTestBehavior? hitTestBehavior = null,
+			ISet<object>? gestureRecognizers = null,
+			Clip clipBehavior = Clip.HardEdge
 		)
 		{
 			var s = GetBackingStruct<AndroidViewStruct>();
 			s.viewType = viewType;
 			// Complex type: Action - skipped (requires marshaling)
-			s.hitTestBehavior = hitTestBehavior;
+			if (hitTestBehavior.HasValue)
+				s.hitTestBehavior = hitTestBehavior.Value;
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: HashSet<object>? - skipped (requires marshaling)
+			// Complex type: ISet<object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;

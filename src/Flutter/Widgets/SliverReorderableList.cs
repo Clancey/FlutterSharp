@@ -49,8 +49,7 @@ namespace Flutter.Widgets
 			int itemCount,
 			Action<int, int> onReorder,
 			object itemExtentBuilder,
-			double autoScrollerVelocityScalar
-,
+			double autoScrollerVelocityScalar,
 			Func<InvalidType, int?> findChildIndexCallback = null,
 			Action<int> onReorderStart = null,
 			Action<int> onReorderEnd = null,

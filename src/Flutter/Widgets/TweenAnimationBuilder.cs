@@ -112,8 +112,7 @@ namespace Flutter.Widgets
 		public TweenAnimationBuilder(
 			Tween<double> tween,
 			Func<BuildContext, T, Widget?, Widget> builder,
-			TimeSpan duration
-,
+			TimeSpan duration,
 			Widget? child = null,
 			Curve curve = null,
 			Action? onEnd = null

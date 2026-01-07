@@ -63,9 +63,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Overlay"/> class.
 		/// </summary>
 		public Overlay(
-			List<OverlayEntry> initialEntries,
-			Clip clipBehavior
-
+			List<OverlayEntry> initialEntries = null,
+			Clip clipBehavior = Clip.HardEdge
 		)
 		{
 			var s = GetBackingStruct<OverlayStruct>();

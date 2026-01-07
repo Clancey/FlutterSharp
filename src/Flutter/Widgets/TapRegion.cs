@@ -40,17 +40,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TapRegion"/> class.
 		/// </summary>
 		public TapRegion(
-			bool enabled,
-			object behavior,
-			bool consumeOutsideTaps,
-			Widget? child
-,
+			bool enabled = true,
+			object behavior = HitTestBehavior.DeferToChild,
 			Action<InvalidType> onTapOutside = null,
 			Action<InvalidType> onTapInside = null,
 			Action<InvalidType> onTapUpOutside = null,
 			Action<InvalidType> onTapUpInside = null,
 			object? groupId = null,
-			string? debugLabel = null
+			bool consumeOutsideTaps = false,
+			string? debugLabel = null,
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<TapRegionStruct>();

@@ -38,11 +38,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public KeyboardListener(
 			FocusNode focusNode,
-			bool autofocus,
-			bool includeSemantics,
 			Action onKeyEvent,
-			Widget child
-
+			Widget child,
+			bool autofocus = false,
+			bool includeSemantics = true
 		)
 		{
 			var s = GetBackingStruct<KeyboardListenerStruct>();

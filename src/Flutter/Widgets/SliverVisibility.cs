@@ -54,14 +54,13 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverVisibility(
 			Widget sliver,
-			Widget replacementSliver,
-			bool visible,
-			bool maintainState,
-			bool maintainAnimation,
-			bool maintainSize,
-			bool maintainSemantics,
-			bool maintainInteractivity
-
+			Widget replacementSliver = null,
+			bool visible = true,
+			bool maintainState = false,
+			bool maintainAnimation = false,
+			bool maintainSize = false,
+			bool maintainSemantics = false,
+			bool maintainInteractivity = false
 		)
 		{
 			var s = GetBackingStruct<SliverVisibilityStruct>();

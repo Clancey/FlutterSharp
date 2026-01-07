@@ -44,15 +44,14 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedDefaultTextStyle(
 			Widget child,
-			TextStyle? style,
-			TextAlign? textAlign,
-			bool softWrap,
-			TextOverflow overflow,
-			TextWidthBasis textWidthBasis,
+			TextStyle style,
+			TextAlign textAlign,
 			TextHeightBehavior textHeightBehavior,
-			TimeSpan duration
-,
+			TimeSpan duration,
+			bool softWrap = true,
+			TextOverflow overflow = TextOverflow.Clip,
 			int? maxLines = null,
+			TextWidthBasis textWidthBasis = TextWidthBasis.Parent,
 			Curve curve = null,
 			Action? onEnd = null
 		)

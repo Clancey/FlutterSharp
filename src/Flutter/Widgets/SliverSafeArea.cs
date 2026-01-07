@@ -43,13 +43,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverSafeArea"/> class.
 		/// </summary>
 		public SliverSafeArea(
-			bool left,
-			bool top,
-			bool right,
-			bool bottom,
-			object minimum,
-			Widget sliver
-
+			Widget sliver,
+			bool left = true,
+			bool top = true,
+			bool right = true,
+			bool bottom = true,
+			object minimum = null
 		)
 		{
 			var s = GetBackingStruct<SliverSafeAreaStruct>();

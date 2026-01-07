@@ -79,7 +79,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SharedAppData(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<SharedAppDataStruct>();

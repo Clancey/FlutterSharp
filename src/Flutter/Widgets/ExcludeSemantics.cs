@@ -36,8 +36,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ExcludeSemantics"/> class.
 		/// </summary>
 		public ExcludeSemantics(
-			bool excluding
-,
+			bool excluding = true,
 			Widget? child = null
 		)
 		{

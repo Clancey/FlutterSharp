@@ -44,8 +44,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ScaleTransition"/> class.
 		/// </summary>
 		public ScaleTransition(
-			object scale
-,
+			object scale,
 			AlignmentGeometry? alignment = null,
 			FilterQuality filterQuality = FilterQuality.Low,
 			Widget? child = null

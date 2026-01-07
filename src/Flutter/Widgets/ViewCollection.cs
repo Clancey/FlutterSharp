@@ -41,7 +41,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ViewCollection(
 			List<Widget> views
-
 		)
 		{
 			var s = GetBackingStruct<ViewCollectionStruct>();

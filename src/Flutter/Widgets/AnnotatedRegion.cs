@@ -30,9 +30,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnnotatedRegion(
 			T value,
-			bool sized,
-			Widget child
-
+			Widget child,
+			bool sized = true
 		)
 		{
 			var s = GetBackingStruct<AnnotatedRegionStruct>();

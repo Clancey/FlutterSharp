@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
-import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve;
+import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
 {{~ struct_import = string.downcase (string.replace struct_name "Struct" "") ~}}
 import '../structs/{{ struct_import }}_struct.dart';
@@ -31,7 +31,91 @@ class {{ parser_name }} extends WidgetParser {
 {{~ continue ~}}
 {{~ end ~}}
 {{~ if prop.is_callback ~}}
-      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? _create{{ string.capitalize clean_name }}Callback(map.{{ prop.struct_property_name }}.toDartString()) : null{{ if !for.last || has_children }},{{ end }}
+{{~ # Use typed callback creators based on the Dart type ~}}
+{{~ callback_base_type = string.replace prop.dart_type "?" "" ~}}
+{{~ action_id_expr = "map." + prop.struct_property_name + ".address != 0 ? map." + prop.struct_property_name + ".toDartString() : null" ~}}
+{{~ if callback_base_type == "VoidCallback" ~}}
+      {{ prop.property_name }}: createVoidCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureTapCallback" ~}}
+      {{ prop.property_name }}: createGestureTapCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureTapDownCallback" ~}}
+      {{ prop.property_name }}: createGestureTapDownCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureTapUpCallback" ~}}
+      {{ prop.property_name }}: createGestureTapUpCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureTapCancelCallback" ~}}
+      {{ prop.property_name }}: createGestureTapCancelCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureTapMoveCallback" ~}}
+      {{ prop.property_name }}: createGestureTapMoveCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureLongPressCallback" ~}}
+      {{ prop.property_name }}: createGestureLongPressCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureLongPressDownCallback" ~}}
+      {{ prop.property_name }}: createGestureLongPressDownCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureLongPressUpCallback" ~}}
+      {{ prop.property_name }}: createGestureLongPressUpCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureLongPressStartCallback" ~}}
+      {{ prop.property_name }}: createGestureLongPressStartCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureLongPressEndCallback" ~}}
+      {{ prop.property_name }}: createGestureLongPressEndCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureLongPressCancelCallback" ~}}
+      {{ prop.property_name }}: createGestureLongPressCancelCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureLongPressMoveUpdateCallback" ~}}
+      {{ prop.property_name }}: createGestureLongPressMoveUpdateCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureDragStartCallback" ~}}
+      {{ prop.property_name }}: createGestureDragStartCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureDragUpdateCallback" ~}}
+      {{ prop.property_name }}: createGestureDragUpdateCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureDragEndCallback" ~}}
+      {{ prop.property_name }}: createGestureDragEndCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureDragDownCallback" ~}}
+      {{ prop.property_name }}: createGestureDragDownCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureDragCancelCallback" ~}}
+      {{ prop.property_name }}: createGestureDragCancelCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureScaleStartCallback" ~}}
+      {{ prop.property_name }}: createGestureScaleStartCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureScaleUpdateCallback" ~}}
+      {{ prop.property_name }}: createGestureScaleUpdateCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureScaleEndCallback" ~}}
+      {{ prop.property_name }}: createGestureScaleEndCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureForcePressStartCallback" ~}}
+      {{ prop.property_name }}: createGestureForcePressStartCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureForcePressPeakCallback" ~}}
+      {{ prop.property_name }}: createGestureForcePressPeakCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureForcePressUpdateCallback" ~}}
+      {{ prop.property_name }}: createGestureForcePressUpdateCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "GestureForcePressEndCallback" ~}}
+      {{ prop.property_name }}: createGestureForcePressEndCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerDownEventListener" ~}}
+      {{ prop.property_name }}: createPointerDownEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerMoveEventListener" ~}}
+      {{ prop.property_name }}: createPointerMoveEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerUpEventListener" ~}}
+      {{ prop.property_name }}: createPointerUpEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerCancelEventListener" ~}}
+      {{ prop.property_name }}: createPointerCancelEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerEnterEventListener" ~}}
+      {{ prop.property_name }}: createPointerEnterEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerExitEventListener" ~}}
+      {{ prop.property_name }}: createPointerExitEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerHoverEventListener" ~}}
+      {{ prop.property_name }}: createPointerHoverEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerSignalEventListener" ~}}
+      {{ prop.property_name }}: createPointerSignalEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerPanZoomStartEventListener" ~}}
+      {{ prop.property_name }}: createPointerPanZoomStartEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerPanZoomUpdateEventListener" ~}}
+      {{ prop.property_name }}: createPointerPanZoomUpdateEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PointerPanZoomEndEventListener" ~}}
+      {{ prop.property_name }}: createPointerPanZoomEndEventListener({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "PlatformViewCreatedCallback" ~}}
+      {{ prop.property_name }}: createPlatformViewCreatedCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if callback_base_type == "ShaderCallback" ~}}
+      {{ prop.property_name }}: createShaderCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if string.starts_with callback_base_type "ValueChanged" ~}}
+      {{ prop.property_name }}: createValueChangedCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else ~}}
+      // TODO: Unknown callback type {{ prop.dart_type }} - using VoidCallback fallback
+      {{ prop.property_name }}: createVoidCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ end ~}}
 {{~ else if prop.is_pointer_void && prop.is_required ~}}
       // TODO: {{ prop.property_name }} is required but type '{{ prop.dart_type }}' cannot be marshaled through FFI
       // This widget needs a manual wrapper to properly handle this parameter
@@ -134,19 +218,6 @@ class {{ parser_name }} extends WidgetParser {
 
   @override
   String get widgetName => "{{ widget_name }}";
-
-  /// Handles action dispatch to C# via method channel
-  void _handleAction(String? actionId) {
-    if (actionId == null || actionId.isEmpty) return;
-
-    // Dispatch action to C# via method channel
-    methodChannel.invokeMethod('HandleAction', {
-      'actionId': actionId,
-      'widgetType': widgetName,
-    }).catchError((error) {
-      print('Error dispatching action $actionId: $error');
-    });
-  }
 {{~
   # Collect all required Pointer<Void> properties that need placeholders
   # Skip debug-only parameters (debugTypicalAncestorWidgetClass, etc.)
@@ -157,31 +228,7 @@ class {{ parser_name }} extends WidgetParser {
       required_void_props = array.add required_void_props prop
     end
   end
-
-  # Collect all callback properties
-  callback_props = []
-  for prop in properties
-    if prop.is_callback
-      callback_props = array.add callback_props prop
-    end
-  end
 ~}}
-{{~ if callback_props.size > 0 ~}}
-
-  // Callback wrapper methods that dispatch to C# via method channel
-{{~ for prop in callback_props ~}}
-{{~ clean_callback_name = string.replace prop.name "@" "" ~}}
-  dynamic _create{{ string.capitalize clean_callback_name }}Callback(String actionId) {
-    // Generic callback wrapper that handles various callback signatures
-    // Returns a closure that dispatches the action and returns a placeholder widget if needed
-    return (context, [child]) {
-      _handleAction(actionId);
-      // For builder callbacks, return the child or an empty Container
-      return child ?? Container();
-    };
-  }
-{{~ end ~}}
-{{~ end ~}}
 {{~ if required_void_props.size > 0 ~}}
 
   // Placeholder methods for required parameters that cannot be marshaled through FFI

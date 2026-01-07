@@ -38,16 +38,15 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedPhysicalModel(
 			Widget child,
-			BoxShape shape,
-			Clip clipBehavior,
-			BorderRadiusGeometry? borderRadius,
-			double elevation,
-			Color? color,
-			bool animateColor,
-			Color? shadowColor,
-			bool animateShadowColor,
-			TimeSpan duration
-,
+			BorderRadiusGeometry borderRadius,
+			Color color,
+			Color shadowColor,
+			TimeSpan duration,
+			BoxShape shape = BoxShape.Rectangle,
+			Clip clipBehavior = Clip.None,
+			double elevation = 0.0,
+			bool animateColor = true,
+			bool animateShadowColor = true,
 			Curve curve = null,
 			Action? onEnd = null
 		)

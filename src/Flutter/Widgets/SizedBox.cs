@@ -76,7 +76,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SizedBox"/> class.
 		/// </summary>
 		public SizedBox(
-
 			double? width = null,
 			double? height = null,
 			Widget? child = null

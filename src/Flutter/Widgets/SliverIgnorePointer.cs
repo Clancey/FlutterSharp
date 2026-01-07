@@ -43,8 +43,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverIgnorePointer(
 			Widget child,
-			bool ignoring
-,
+			bool ignoring = true,
 			bool? ignoringSemantics = null,
 			Widget? sliver = null
 		)

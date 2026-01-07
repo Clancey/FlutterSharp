@@ -66,10 +66,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverAnimatedOpacity(
 			double opacity,
-			bool alwaysIncludeSemantics,
-			TimeSpan duration
-,
+			TimeSpan duration,
 			Widget? sliver = null,
+			bool alwaysIncludeSemantics = false,
 			Curve curve = null,
 			Action? onEnd = null
 		)

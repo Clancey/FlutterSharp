@@ -35,7 +35,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AutomaticKeepAlive(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<AutomaticKeepAliveStruct>();

@@ -38,8 +38,7 @@ namespace Flutter.Widgets
 			object value,
 			Action<T> onTriggered,
 			FocusNode focusNode,
-			Widget child
-,
+			Widget child,
 			Func<T?, T, bool> shouldChangeUndoStack = null,
 			Func<T, T> undoStackModifier = null,
 			UndoHistoryController? controller = null

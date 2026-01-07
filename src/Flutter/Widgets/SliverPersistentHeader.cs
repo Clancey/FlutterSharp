@@ -34,9 +34,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverPersistentHeader(
 			SliverPersistentHeaderDelegate @delegate,
-			bool pinned,
-			bool floating
-
+			bool pinned = false,
+			bool floating = false
 		)
 		{
 			var s = GetBackingStruct<SliverPersistentHeaderStruct>();

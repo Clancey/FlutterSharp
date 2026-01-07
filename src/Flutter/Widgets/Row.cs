@@ -245,7 +245,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Row"/> class.
 		/// </summary>
 		public Row(
-
 			MainAxisAlignment mainAxisAlignment = MainAxisAlignment.Start,
 			MainAxisSize mainAxisSize = MainAxisSize.Max,
 			CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.Center,

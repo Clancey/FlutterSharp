@@ -38,7 +38,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public DraggableScrollableActuator(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<DraggableScrollableActuatorStruct>();

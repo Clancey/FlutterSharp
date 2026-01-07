@@ -100,10 +100,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedOpacity(
 			double opacity,
-			bool alwaysIncludeSemantics,
-			TimeSpan duration
-,
+			TimeSpan duration,
 			Widget? child = null,
+			bool alwaysIncludeSemantics = false,
 			Curve curve = null,
 			Action? onEnd = null
 		)

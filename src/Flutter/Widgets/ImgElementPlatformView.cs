@@ -24,7 +24,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ImgElementPlatformView"/> class.
 		/// </summary>
 		public ImgElementPlatformView(
-
 			string? src = null
 		)
 		{

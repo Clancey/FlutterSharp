@@ -56,17 +56,16 @@ namespace Flutter.Widgets
 			Action onEnter,
 			Action onHover,
 			Action onExit,
-			object cursor,
-			bool opaque,
-			PlatformViewHitTestBehavior hitTestBehavior
-,
+			PlatformViewHitTestBehavior hitTestBehavior,
+			object cursor = null,
+			bool opaque = true,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<MouseRegionStruct>();
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.opaque = opaque;
 			s.hitTestBehavior = hitTestBehavior;

@@ -62,18 +62,17 @@ namespace Flutter.Widgets
 		/// </summary>
 		public TreeSliver(
 			List<TreeSliverNode<T>> tree,
-			Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> treeNodeBuilder,
-			Func<TreeSliverNode<object?>, InvalidType, double> treeRowExtentBuilder,
 			object toggleAnimationStyle,
-			object indentation,
-			bool addAutomaticKeepAlives,
-			bool addRepaintBoundaries,
-			bool addSemanticIndexes,
-			Func<Widget, int, int?> semanticIndexCallback,
-			int semanticIndexOffset
-,
+			Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> treeNodeBuilder = null,
+			Func<TreeSliverNode<object?>, InvalidType, double> treeRowExtentBuilder = null,
 			TreeSliverController? controller = null,
 			Action<TreeSliverNode<object?>> onNodeToggle = null,
+			object indentation = null,
+			bool addAutomaticKeepAlives = true,
+			bool addRepaintBoundaries = true,
+			bool addSemanticIndexes = true,
+			Func<Widget, int, int?> semanticIndexCallback = _kDefaultSemanticIndexCallback,
+			int semanticIndexOffset = 0,
 			Func<InvalidType, int?> findChildIndexCallback = null
 		)
 		{

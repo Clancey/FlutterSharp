@@ -156,18 +156,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Container"/> class.
 		/// </summary>
 		public Container(
-			AlignmentGeometry? alignment,
-			EdgeInsetsGeometry? padding,
-			Color? color,
-			Decoration? decoration,
-			Decoration? foregroundDecoration,
-			BoxConstraints? constraints,
-			EdgeInsetsGeometry? margin,
-			Matrix4? transform,
-			AlignmentGeometry? transformAlignment,
-			Clip clipBehavior
-,
+			AlignmentGeometry alignment,
+			EdgeInsetsGeometry padding,
+			Color color,
+			Decoration decoration,
+			Decoration foregroundDecoration,
+			BoxConstraints constraints,
+			EdgeInsetsGeometry margin,
+			Matrix4 transform,
+			AlignmentGeometry transformAlignment,
 			Widget? child = null,
+			Clip clipBehavior = Clip.None,
 			double? width = null,
 			double? height = null
 		)

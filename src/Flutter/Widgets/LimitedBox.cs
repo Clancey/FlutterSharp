@@ -48,15 +48,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LimitedBox"/> class.
 		/// </summary>
 		public LimitedBox(
-			double maxWidth,
-			double maxHeight
-,
+			double? maxWidth = null,
+			double? maxHeight = null,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<LimitedBoxStruct>();
-			s.maxWidth = maxWidth;
-			s.maxHeight = maxHeight;
+			if (maxWidth.HasValue)
+				s.maxWidth = maxWidth.Value;
+			if (maxHeight.HasValue)
+				s.maxHeight = maxHeight.Value;
 			s.child = child;
 		}
 

@@ -177,11 +177,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Stack"/> class.
 		/// </summary>
 		public Stack(
-			AlignmentGeometry? alignment,
 			TextDirection textDirection,
-			BoxFit fit,
-			Clip clipBehavior
-,
+			AlignmentGeometry? alignment = null,
+			BoxFit fit = StackFit.Loose,
+			Clip clipBehavior = Clip.HardEdge,
 			List<Widget> children = null
 		)
 		{

@@ -60,7 +60,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverList(
 			SliverChildDelegate @delegate
-
 		)
 		{
 			var s = GetBackingStruct<SliverListStruct>();

@@ -170,10 +170,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public BackdropFilter(
 			ImageFilter filter,
-			BlendMode blendMode,
-			bool enabled,
-			object backdropGroupKey
-,
+			object backdropGroupKey,
+			BlendMode blendMode = BlendMode.SrcOver,
+			bool enabled = true,
 			Widget? child = null
 		)
 		{

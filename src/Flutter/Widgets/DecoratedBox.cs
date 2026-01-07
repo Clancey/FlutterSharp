@@ -64,9 +64,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DecoratedBox"/> class.
 		/// </summary>
 		public DecoratedBox(
-			Decoration? decoration,
-			object position
-,
+			Decoration decoration,
+			object position = DecorationPosition.Background,
 			Widget? child = null
 		)
 		{

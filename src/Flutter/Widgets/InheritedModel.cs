@@ -138,7 +138,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public InheritedModel(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<InheritedModelStruct>();

@@ -241,79 +241,78 @@ namespace Flutter.Widgets
 		public EditableText(
 			TextEditingController controller,
 			FocusNode focusNode,
-			string obscuringCharacter,
-			bool obscureText,
 			TextHeightBehavior textHeightBehavior,
-			TextWidthBasis textWidthBasis,
-			bool @readOnly,
-			bool forceLine,
 			ToolbarOptions toolbarOptions,
-			bool showSelectionHandles,
 			bool showCursor,
-			bool autocorrect,
 			object smartDashesType,
 			object smartQuotesType,
-			bool enableSuggestions,
-			TextStyle? style,
-			TextAlign? textAlign,
+			TextStyle style,
 			TextDirection textDirection,
-			object textCapitalization,
-			Locale? locale,
+			Locale locale,
 			object textScaler,
 			Color cursorColor,
 			Color autocorrectionTextRectColor,
 			Color backgroundCursorColor,
-			bool expands,
-			bool autofocus,
-			Color? selectionColor,
+			Color selectionColor,
 			object keyboardType,
 			object textInputAction,
-			Action onChanged,
+			Action<bool> onChanged,
 			Action onEditingComplete,
 			Action onSubmitted,
 			Action onSelectionHandleTapped,
-			object groupId,
 			object mouseCursor,
-			bool rendererIgnoresPointer,
-			double cursorWidth,
 			BorderRadiusGeometry cursorRadius,
-			bool cursorOpacityAnimates,
 			object cursorOffset,
-			bool paintCursorAboveText,
-			BoxHeightStyle selectionHeightStyle,
-			BoxWidthStyle selectionWidthStyle,
-			object keyboardAppearance,
-			EdgeInsetsGeometry scrollPadding,
 			bool enableInteractiveSelection,
-			DragStartBehavior dragStartBehavior,
-			bool scribbleEnabled,
-			bool stylusHandwritingEnabled,
 			object autofillClient,
-			Clip clipBehavior,
-			bool enableIMEPersonalizedLearning,
-			TextMagnifierConfiguration magnifierConfiguration,
-			StrutStyle? strutStyle,
-			bool selectionEnabled
-,
+			StrutStyle strutStyle,
+			bool selectionEnabled,
+			string obscuringCharacter = "•",
+			bool obscureText = false,
+			TextWidthBasis textWidthBasis = TextWidthBasis.Parent,
+			bool @readOnly = false,
+			bool forceLine = true,
+			bool showSelectionHandles = false,
+			bool autocorrect = true,
+			bool enableSuggestions = true,
 			UndoHistoryController? undoController = null,
+			TextAlign? textAlign = TextAlign.Start,
+			object textCapitalization = null,
 			double? textScaleFactor = null,
 			int? maxLines = 1,
 			int? minLines = null,
+			bool expands = false,
+			bool autofocus = false,
 			TextSelectionControls? selectionControls = null,
 			Action<string, Map<String, dynamic>> onAppPrivateCommand = null,
 			Action<InvalidType, InvalidType> onSelectionChanged = null,
+			object groupId = null,
 			Action<InvalidType> onTapOutside = null,
 			Action<InvalidType> onTapUpOutside = null,
 			List<object>? inputFormatters = null,
+			bool rendererIgnoresPointer = false,
+			double cursorWidth = 2.0,
 			double? cursorHeight = null,
+			bool cursorOpacityAnimates = false,
+			bool paintCursorAboveText = false,
+			BoxHeightStyle? selectionHeightStyle = null,
+			BoxWidthStyle? selectionWidthStyle = null,
+			object keyboardAppearance = null,
+			EdgeInsetsGeometry scrollPadding = null,
+			DragStartBehavior dragStartBehavior = DragStartBehavior.Start,
 			ScrollController? scrollController = null,
 			ScrollPhysics? scrollPhysics = null,
+			bool scribbleEnabled = true,
+			bool stylusHandwritingEnabled = defaultStylusHandwritingEnabled,
 			IEnumerable<string>? autofillHints = null,
+			Clip clipBehavior = Clip.HardEdge,
 			string? restorationId = null,
 			ScrollBehavior? scrollBehavior = null,
+			bool enableIMEPersonalizedLearning = true,
 			ContentInsertionConfiguration? contentInsertionConfiguration = null,
 			Func<BuildContext, EditableTextState, Widget> contextMenuBuilder = null,
-			SpellCheckConfiguration? spellCheckConfiguration = null
+			SpellCheckConfiguration? spellCheckConfiguration = null,
+			TextMagnifierConfiguration magnifierConfiguration = null
 		)
 		{
 			var s = GetBackingStruct<EditableTextStruct>();
@@ -354,7 +353,7 @@ namespace Flutter.Widgets
 			// Complex type: TextSelectionControls? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action<bool>? - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action<string, Map<String, dynamic>> - skipped (requires marshaling)
@@ -373,8 +372,10 @@ namespace Flutter.Widgets
 			s.cursorOpacityAnimates = cursorOpacityAnimates;
 			// Complex type: object - skipped (requires marshaling)
 			s.paintCursorAboveText = paintCursorAboveText;
-			s.selectionHeightStyle = selectionHeightStyle;
-			s.selectionWidthStyle = selectionWidthStyle;
+			if (selectionHeightStyle.HasValue)
+				s.selectionHeightStyle = selectionHeightStyle.Value;
+			if (selectionWidthStyle.HasValue)
+				s.selectionWidthStyle = selectionWidthStyle.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: EdgeInsetsGeometry - skipped (requires marshaling)
 			s.enableInteractiveSelection = enableInteractiveSelection;

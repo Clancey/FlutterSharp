@@ -82,13 +82,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IndexedStack"/> class.
 		/// </summary>
 		public IndexedStack(
-			AlignmentGeometry? alignment,
 			TextDirection textDirection,
-			Clip clipBehavior,
-			object sizing,
-			List<Widget> children
-,
-			int? index = 0
+			AlignmentGeometry? alignment = null,
+			Clip clipBehavior = Clip.HardEdge,
+			object sizing = StackFit.Loose,
+			int? index = 0,
+			List<Widget> children = null
 		)
 		{
 			if (children != null)

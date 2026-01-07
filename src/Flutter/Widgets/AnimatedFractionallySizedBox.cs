@@ -48,12 +48,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedFractionallySizedBox"/> class.
 		/// </summary>
 		public AnimatedFractionallySizedBox(
-			AlignmentGeometry? alignment,
-			TimeSpan duration
-,
+			TimeSpan duration,
 			Widget? child = null,
 			double? heightFactor = null,
 			double? widthFactor = null,
+			AlignmentGeometry? alignment = null,
 			Curve curve = null,
 			Action? onEnd = null
 		)

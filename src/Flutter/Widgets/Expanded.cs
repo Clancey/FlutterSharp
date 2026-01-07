@@ -61,8 +61,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Expanded"/> class.
 		/// </summary>
 		public Expanded(
-			Widget child
-,
+			Widget child,
 			int flex = 1
 		)
 		{

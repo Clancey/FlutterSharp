@@ -69,32 +69,35 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FadeInImage"/> class.
 		/// </summary>
 		public FadeInImage(
-			ImageProvider? placeholder,
+			ImageProvider placeholder,
 			ImageProvider image,
-			TimeSpan fadeOutDuration,
-			object fadeOutCurve,
-			TimeSpan fadeInDuration,
-			object fadeInCurve,
-			Color? color,
+			Color color,
 			object colorBlendMode,
 			Color placeholderColor,
 			object placeholderColorBlendMode,
 			BoxFit fit,
 			object placeholderFit,
-			FilterQuality filterQuality,
 			object placeholderFilterQuality,
-			AlignmentGeometry? alignment,
-			object repeat,
-			bool matchTextDirection,
-			bool excludeFromSemantics
-,
 			Func<BuildContext, object, StackTrace?, Widget> placeholderErrorBuilder = null,
 			Func<BuildContext, object, StackTrace?, Widget> imageErrorBuilder = null,
+			TimeSpan? fadeOutDuration = null,
+			object fadeOutCurve = null,
+			TimeSpan? fadeInDuration = null,
+			object fadeInCurve = null,
 			double? width = null,
 			double? height = null,
+			FilterQuality filterQuality = FilterQuality.Medium,
+			AlignmentGeometry? alignment = null,
+			object repeat = null,
+			bool matchTextDirection = false,
+			bool excludeFromSemantics = false,
 			string? imageSemanticLabel = null
 		)
 		{
+			if (!fadeOutDuration.HasValue)
+				fadeOutDuration = TimeSpan.FromTicks(3000000L);
+			if (!fadeInDuration.HasValue)
+				fadeInDuration = TimeSpan.FromTicks(7000000L);
 			var s = GetBackingStruct<FadeInImageStruct>();
 			// Complex type: ImageProvider? - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires marshaling)

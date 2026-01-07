@@ -51,9 +51,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Texture(
 			int textureId,
-			bool freeze,
-			FilterQuality filterQuality
-
+			bool freeze = false,
+			FilterQuality filterQuality = FilterQuality.Low
 		)
 		{
 			var s = GetBackingStruct<TextureStruct>();

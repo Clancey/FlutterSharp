@@ -35,24 +35,25 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ListWheelViewport"/> class.
 		/// </summary>
 		public ListWheelViewport(
-			double diameterRatio,
-			double perspective,
-			double offAxisFraction,
-			bool useMagnifier,
-			double magnification,
-			double overAndUnderCenterOpacity,
 			double itemExtent,
-			double squeeze,
-			bool renderChildrenOutsideViewport,
 			Offset offset,
 			ListWheelChildDelegate childDelegate,
-			Clip clipBehavior
-
+			double? diameterRatio = null,
+			double? perspective = null,
+			double offAxisFraction = 0.0,
+			bool useMagnifier = false,
+			double magnification = 1.0,
+			double overAndUnderCenterOpacity = 1.0,
+			double squeeze = 1.0,
+			bool renderChildrenOutsideViewport = false,
+			Clip clipBehavior = Clip.HardEdge
 		)
 		{
 			var s = GetBackingStruct<ListWheelViewportStruct>();
-			s.diameterRatio = diameterRatio;
-			s.perspective = perspective;
+			if (diameterRatio.HasValue)
+				s.diameterRatio = diameterRatio.Value;
+			if (perspective.HasValue)
+				s.perspective = perspective.Value;
 			s.offAxisFraction = offAxisFraction;
 			s.useMagnifier = useMagnifier;
 			s.magnification = magnification;

@@ -58,18 +58,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedContainer"/> class.
 		/// </summary>
 		public AnimatedContainer(
-			AlignmentGeometry? alignment,
-			EdgeInsetsGeometry? padding,
-			Decoration? decoration,
-			Decoration? foregroundDecoration,
-			BoxConstraints? constraints,
-			EdgeInsetsGeometry? margin,
-			Matrix4? transform,
-			AlignmentGeometry? transformAlignment,
-			Clip clipBehavior,
-			TimeSpan duration
-,
+			AlignmentGeometry alignment,
+			EdgeInsetsGeometry padding,
+			Decoration decoration,
+			Decoration foregroundDecoration,
+			BoxConstraints constraints,
+			EdgeInsetsGeometry margin,
+			Matrix4 transform,
+			AlignmentGeometry transformAlignment,
+			TimeSpan duration,
 			Widget? child = null,
+			Clip clipBehavior = Clip.None,
 			Color? color = null,
 			double? width = null,
 			double? height = null,

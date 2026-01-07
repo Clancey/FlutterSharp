@@ -38,8 +38,7 @@ namespace Flutter.Widgets
 		public DualTransitionBuilder(
 			Animation<double> animation,
 			Func<BuildContext, InvalidType, Widget?, Widget> forwardBuilder,
-			Func<BuildContext, InvalidType, Widget?, Widget> reverseBuilder
-,
+			Func<BuildContext, InvalidType, Widget?, Widget> reverseBuilder,
 			Widget? child = null
 		)
 		{

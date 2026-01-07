@@ -70,14 +70,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SafeArea"/> class.
 		/// </summary>
 		public SafeArea(
-			bool left,
-			bool top,
-			bool right,
-			bool bottom,
-			object minimum,
-			bool maintainBottomViewPadding,
-			Widget child
-
+			Widget child,
+			bool left = true,
+			bool top = true,
+			bool right = true,
+			bool bottom = true,
+			object minimum = null,
+			bool maintainBottomViewPadding = false
 		)
 		{
 			var s = GetBackingStruct<SafeAreaStruct>();

@@ -51,10 +51,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public UnconstrainedBox(
 			TextDirection textDirection,
-			AlignmentGeometry? alignment,
 			object constrainedAxis,
-			Clip clipBehavior
-,
+			AlignmentGeometry? alignment = null,
+			Clip clipBehavior = Clip.None,
 			Widget? child = null
 		)
 		{

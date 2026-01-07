@@ -57,21 +57,20 @@ namespace Flutter.Widgets
 			Action onPointerPanZoomUpdate,
 			Action onPointerPanZoomEnd,
 			Action onPointerSignal,
-			object behavior
-,
+			object behavior = HitTestBehavior.DeferToChild,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ListenerStruct>();
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.child = child;
 		}

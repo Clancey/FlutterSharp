@@ -88,11 +88,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ShrinkWrappingViewport(
 			List<Widget> children,
-			object axisDirection,
 			object crossAxisDirection,
 			Offset offset,
-			Clip clipBehavior
-,
+			object axisDirection = null,
+			Clip clipBehavior = Clip.HardEdge,
 			List<Widget> slivers = null
 		)
 		{

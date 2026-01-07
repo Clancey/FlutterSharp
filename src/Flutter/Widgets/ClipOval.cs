@@ -49,8 +49,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ClipOval(
 			object clipper,
-			Clip clipBehavior
-,
+			Clip clipBehavior = Clip.AntiAlias,
 			Widget? child = null
 		)
 		{

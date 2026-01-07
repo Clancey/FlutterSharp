@@ -79,8 +79,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AbsorbPointer"/> class.
 		/// </summary>
 		public AbsorbPointer(
-			bool absorbing
-,
+			bool absorbing = true,
 			bool? ignoringSemantics = null,
 			Widget? child = null
 		)

@@ -42,7 +42,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SizeChangedLayoutNotifier"/> class.
 		/// </summary>
 		public SizeChangedLayoutNotifier(
-
 			Widget? child = null
 		)
 		{

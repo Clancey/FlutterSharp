@@ -63,8 +63,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public RawView(
 			FlutterView view,
-			Widget child
-,
+			Widget child,
 			object deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner = null,
 			object deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView = null
 		)

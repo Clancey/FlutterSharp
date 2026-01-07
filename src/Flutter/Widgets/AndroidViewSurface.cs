@@ -39,14 +39,13 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AndroidViewSurface(
 			object controller,
-			HashSet<object> gestureRecognizers,
+			ISet<object> gestureRecognizers,
 			PlatformViewHitTestBehavior hitTestBehavior
-
 		)
 		{
 			var s = GetBackingStruct<AndroidViewSurfaceStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: HashSet<object> - skipped (requires marshaling)
+			// Complex type: ISet<object> - skipped (requires marshaling)
 			s.hitTestBehavior = hitTestBehavior;
 		}
 

@@ -54,14 +54,15 @@ namespace Flutter.Widgets
 			ExpansibleController controller,
 			Func<BuildContext, InvalidType, Widget> headerBuilder,
 			Func<BuildContext, InvalidType, Widget> bodyBuilder,
-			TimeSpan duration,
-			Curve curve,
 			object reverseCurve,
-			bool maintainState,
-			Func<BuildContext, Widget, Widget, InvalidType, Widget> expansibleBuilder
-
+			TimeSpan? duration = null,
+			Curve curve = null,
+			bool maintainState = true,
+			Func<BuildContext, Widget, Widget, InvalidType, Widget> expansibleBuilder = _defaultExpansibleBuilder
 		)
 		{
+			if (!duration.HasValue)
+				duration = TimeSpan.FromTicks(2000000L);
 			var s = GetBackingStruct<ExpansibleStruct>();
 			// Complex type: ExpansibleController - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, InvalidType, Widget> - skipped (requires marshaling)

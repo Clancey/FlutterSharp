@@ -34,7 +34,6 @@ namespace Flutter.Widgets
 		public TableCell(
 			AlignmentGeometry verticalAlignment,
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<TableCellStruct>();

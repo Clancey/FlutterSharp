@@ -686,56 +686,447 @@ DateTime {{ parser_name }}(int millisecondsSinceEpoch) {
 		#region Callback Parsers
 
 		/// <summary>
-		/// Generates callback parser functions for common Flutter callback types.
+		/// Generates callback creator functions for common Flutter callback types.
+		/// These functions take a string action ID and return the appropriate callback type
+		/// that dispatches to C# via method channel.
 		/// </summary>
 		private string GenerateCallbackParsers()
 		{
 			var sb = new StringBuilder();
 
 			sb.AppendLine("// ═══════════════════════════════════════════════════════════════");
-			sb.AppendLine("// Callback Parsers");
+			sb.AppendLine("// Callback Creator Functions");
 			sb.AppendLine("// ═══════════════════════════════════════════════════════════════");
-			sb.AppendLine();
-			sb.AppendLine("/// Parses a callback ID pointer to a VoidCallback function.");
-			sb.AppendLine("/// The callback ID is used to invoke the C# callback via method channel.");
-			sb.AppendLine("VoidCallback? parseVoidCallback(int callbackId) {");
-			sb.AppendLine("  if (callbackId == 0) return null;");
-			sb.AppendLine("  return () => invokeCallback(callbackId);");
-			sb.AppendLine("}");
+			sb.AppendLine("// These functions create Flutter callbacks that dispatch to C# via method channel.");
+			sb.AppendLine("// The actionId parameter is a string identifier for the C# action handler.");
 			sb.AppendLine();
 
-			sb.AppendLine("/// Parses a callback ID pointer to a ValueChanged<T> function.");
-			sb.AppendLine("ValueChanged<T>? parseValueChangedCallback<T>(int callbackId) {");
-			sb.AppendLine("  if (callbackId == 0) return null;");
-			sb.AppendLine("  return (T value) => invokeCallback(callbackId, args: [value]);");
-			sb.AppendLine("}");
+			// Import methodChannel (should already be imported via maui_flutter.dart)
+			sb.AppendLine("import 'package:flutter_module/mauiRenderer.dart' show methodChannel;");
+			sb.AppendLine("import 'package:flutter/gestures.dart';");
 			sb.AppendLine();
 
-			sb.AppendLine("/// Parses a callback ID to a generic callback with one parameter.");
-			sb.AppendLine("void Function(T)? parseCallback1<T>(int callbackId) {");
-			sb.AppendLine("  if (callbackId == 0) return null;");
-			sb.AppendLine("  return (T arg) => invokeCallback(callbackId, args: [arg]);");
-			sb.AppendLine("}");
-			sb.AppendLine();
-
-			sb.AppendLine("/// Parses a callback ID to a generic callback with two parameters.");
-			sb.AppendLine("void Function(T1, T2)? parseCallback2<T1, T2>(int callbackId) {");
-			sb.AppendLine("  if (callbackId == 0) return null;");
-			sb.AppendLine("  return (T1 arg1, T2 arg2) => invokeCallback(callbackId, args: [arg1, arg2]);");
-			sb.AppendLine("}");
-			sb.AppendLine();
-
-			sb.AppendLine("/// Invokes a C# callback by its ID via the method channel.");
-			sb.AppendLine("/// This communicates back to the C# side to execute the registered callback.");
-			sb.AppendLine("Future<void> invokeCallback(int callbackId, {List<dynamic>? args}) async {");
+			// Helper function to invoke action
+			sb.AppendLine("/// Invokes a C# action by its string ID via the method channel.");
+			sb.AppendLine("Future<void> _invokeAction(String? actionId, {String? widgetType, Map<String, dynamic>? args}) async {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return;");
 			sb.AppendLine("  try {");
-			sb.AppendLine("    await methodChannel.invokeMethod('InvokeCallback', {");
-			sb.AppendLine("      'callbackId': callbackId,");
-			sb.AppendLine("      'args': args ?? [],");
+			sb.AppendLine("    await methodChannel.invokeMethod('HandleAction', {");
+			sb.AppendLine("      'actionId': actionId,");
+			sb.AppendLine("      'widgetType': widgetType ?? 'Unknown',");
+			sb.AppendLine("      ...?args,");
 			sb.AppendLine("    });");
 			sb.AppendLine("  } catch (e) {");
-			sb.AppendLine("    print('Error invoking callback $callbackId: $e');");
+			sb.AppendLine("    print('Error invoking action $actionId: $e');");
 			sb.AppendLine("  }");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// VoidCallback creator
+			sb.AppendLine("/// Creates a VoidCallback that invokes the C# action.");
+			sb.AppendLine("VoidCallback? createVoidCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return () => _invokeAction(actionId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// ValueChanged<bool> creator
+			sb.AppendLine("/// Creates a ValueChanged<bool> callback that invokes the C# action.");
+			sb.AppendLine("ValueChanged<bool>? createValueChangedCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (bool value) => _invokeAction(actionId, args: {'value': value});");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureTapCallback
+			sb.AppendLine("/// Creates a GestureTapCallback that invokes the C# action.");
+			sb.AppendLine("GestureTapCallback? createGestureTapCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return () => _invokeAction(actionId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureTapDownCallback
+			sb.AppendLine("/// Creates a GestureTapDownCallback that invokes the C# action.");
+			sb.AppendLine("GestureTapDownCallback? createGestureTapDownCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (TapDownDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureTapUpCallback
+			sb.AppendLine("/// Creates a GestureTapUpCallback that invokes the C# action.");
+			sb.AppendLine("GestureTapUpCallback? createGestureTapUpCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (TapUpDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureTapCancelCallback
+			sb.AppendLine("/// Creates a GestureTapCancelCallback that invokes the C# action.");
+			sb.AppendLine("GestureTapCancelCallback? createGestureTapCancelCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return () => _invokeAction(actionId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureTapMoveCallback
+			sb.AppendLine("/// Creates a GestureTapMoveCallback that invokes the C# action.");
+			sb.AppendLine("GestureTapMoveCallback? createGestureTapMoveCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (TapDragUpdateDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureLongPressCallback
+			sb.AppendLine("/// Creates a GestureLongPressCallback that invokes the C# action.");
+			sb.AppendLine("GestureLongPressCallback? createGestureLongPressCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return () => _invokeAction(actionId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureLongPressDownCallback
+			sb.AppendLine("/// Creates a GestureLongPressDownCallback that invokes the C# action.");
+			sb.AppendLine("GestureLongPressDownCallback? createGestureLongPressDownCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (LongPressDownDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureLongPressUpCallback
+			sb.AppendLine("/// Creates a GestureLongPressUpCallback that invokes the C# action.");
+			sb.AppendLine("GestureLongPressUpCallback? createGestureLongPressUpCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return () => _invokeAction(actionId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureLongPressStartCallback
+			sb.AppendLine("/// Creates a GestureLongPressStartCallback that invokes the C# action.");
+			sb.AppendLine("GestureLongPressStartCallback? createGestureLongPressStartCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (LongPressStartDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureLongPressEndCallback
+			sb.AppendLine("/// Creates a GestureLongPressEndCallback that invokes the C# action.");
+			sb.AppendLine("GestureLongPressEndCallback? createGestureLongPressEndCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (LongPressEndDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureLongPressCancelCallback
+			sb.AppendLine("/// Creates a GestureLongPressCancelCallback that invokes the C# action.");
+			sb.AppendLine("GestureLongPressCancelCallback? createGestureLongPressCancelCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return () => _invokeAction(actionId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureLongPressMoveUpdateCallback
+			sb.AppendLine("/// Creates a GestureLongPressMoveUpdateCallback that invokes the C# action.");
+			sb.AppendLine("GestureLongPressMoveUpdateCallback? createGestureLongPressMoveUpdateCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (LongPressMoveUpdateDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureDragDownCallback
+			sb.AppendLine("/// Creates a GestureDragDownCallback that invokes the C# action.");
+			sb.AppendLine("GestureDragDownCallback? createGestureDragDownCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (DragDownDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureDragStartCallback
+			sb.AppendLine("/// Creates a GestureDragStartCallback that invokes the C# action.");
+			sb.AppendLine("GestureDragStartCallback? createGestureDragStartCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (DragStartDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureDragUpdateCallback
+			sb.AppendLine("/// Creates a GestureDragUpdateCallback that invokes the C# action.");
+			sb.AppendLine("GestureDragUpdateCallback? createGestureDragUpdateCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (DragUpdateDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("    'delta': {'x': details.delta.dx, 'y': details.delta.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureDragEndCallback
+			sb.AppendLine("/// Creates a GestureDragEndCallback that invokes the C# action.");
+			sb.AppendLine("GestureDragEndCallback? createGestureDragEndCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (DragEndDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'velocity': {'x': details.velocity.pixelsPerSecond.dx, 'y': details.velocity.pixelsPerSecond.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureDragCancelCallback
+			sb.AppendLine("/// Creates a GestureDragCancelCallback that invokes the C# action.");
+			sb.AppendLine("GestureDragCancelCallback? createGestureDragCancelCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return () => _invokeAction(actionId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureScaleStartCallback
+			sb.AppendLine("/// Creates a GestureScaleStartCallback that invokes the C# action.");
+			sb.AppendLine("GestureScaleStartCallback? createGestureScaleStartCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (ScaleStartDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'focalPoint': {'x': details.focalPoint.dx, 'y': details.focalPoint.dy},");
+			sb.AppendLine("    'localFocalPoint': {'x': details.localFocalPoint.dx, 'y': details.localFocalPoint.dy},");
+			sb.AppendLine("    'pointerCount': details.pointerCount,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureScaleUpdateCallback
+			sb.AppendLine("/// Creates a GestureScaleUpdateCallback that invokes the C# action.");
+			sb.AppendLine("GestureScaleUpdateCallback? createGestureScaleUpdateCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (ScaleUpdateDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'focalPoint': {'x': details.focalPoint.dx, 'y': details.focalPoint.dy},");
+			sb.AppendLine("    'localFocalPoint': {'x': details.localFocalPoint.dx, 'y': details.localFocalPoint.dy},");
+			sb.AppendLine("    'scale': details.scale,");
+			sb.AppendLine("    'horizontalScale': details.horizontalScale,");
+			sb.AppendLine("    'verticalScale': details.verticalScale,");
+			sb.AppendLine("    'rotation': details.rotation,");
+			sb.AppendLine("    'pointerCount': details.pointerCount,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureScaleEndCallback
+			sb.AppendLine("/// Creates a GestureScaleEndCallback that invokes the C# action.");
+			sb.AppendLine("GestureScaleEndCallback? createGestureScaleEndCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (ScaleEndDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'velocity': {'x': details.velocity.pixelsPerSecond.dx, 'y': details.velocity.pixelsPerSecond.dy},");
+			sb.AppendLine("    'pointerCount': details.pointerCount,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureForcePressStartCallback
+			sb.AppendLine("/// Creates a GestureForcePressStartCallback that invokes the C# action.");
+			sb.AppendLine("GestureForcePressStartCallback? createGestureForcePressStartCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (ForcePressDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("    'pressure': details.pressure,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureForcePressPeakCallback
+			sb.AppendLine("/// Creates a GestureForcePressPeakCallback that invokes the C# action.");
+			sb.AppendLine("GestureForcePressPeakCallback? createGestureForcePressPeakCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (ForcePressDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("    'pressure': details.pressure,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureForcePressUpdateCallback
+			sb.AppendLine("/// Creates a GestureForcePressUpdateCallback that invokes the C# action.");
+			sb.AppendLine("GestureForcePressUpdateCallback? createGestureForcePressUpdateCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (ForcePressDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("    'pressure': details.pressure,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// GestureForcePressEndCallback
+			sb.AppendLine("/// Creates a GestureForcePressEndCallback that invokes the C# action.");
+			sb.AppendLine("GestureForcePressEndCallback? createGestureForcePressEndCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (ForcePressDetails details) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'globalPosition': {'x': details.globalPosition.dx, 'y': details.globalPosition.dy},");
+			sb.AppendLine("    'localPosition': {'x': details.localPosition.dx, 'y': details.localPosition.dy},");
+			sb.AppendLine("    'pressure': details.pressure,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerDownEventListener
+			sb.AppendLine("/// Creates a PointerDownEventListener that invokes the C# action.");
+			sb.AppendLine("PointerDownEventListener? createPointerDownEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerDownEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("    'localPosition': {'x': event.localPosition.dx, 'y': event.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerMoveEventListener
+			sb.AppendLine("/// Creates a PointerMoveEventListener that invokes the C# action.");
+			sb.AppendLine("PointerMoveEventListener? createPointerMoveEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerMoveEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("    'localPosition': {'x': event.localPosition.dx, 'y': event.localPosition.dy},");
+			sb.AppendLine("    'delta': {'x': event.delta.dx, 'y': event.delta.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerUpEventListener
+			sb.AppendLine("/// Creates a PointerUpEventListener that invokes the C# action.");
+			sb.AppendLine("PointerUpEventListener? createPointerUpEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerUpEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("    'localPosition': {'x': event.localPosition.dx, 'y': event.localPosition.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerCancelEventListener
+			sb.AppendLine("/// Creates a PointerCancelEventListener that invokes the C# action.");
+			sb.AppendLine("PointerCancelEventListener? createPointerCancelEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerCancelEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerEnterEventListener
+			sb.AppendLine("/// Creates a PointerEnterEventListener that invokes the C# action.");
+			sb.AppendLine("PointerEnterEventListener? createPointerEnterEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerEnterEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerExitEventListener
+			sb.AppendLine("/// Creates a PointerExitEventListener that invokes the C# action.");
+			sb.AppendLine("PointerExitEventListener? createPointerExitEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerExitEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerHoverEventListener
+			sb.AppendLine("/// Creates a PointerHoverEventListener that invokes the C# action.");
+			sb.AppendLine("PointerHoverEventListener? createPointerHoverEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerHoverEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("    'delta': {'x': event.delta.dx, 'y': event.delta.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerSignalEventListener
+			sb.AppendLine("/// Creates a PointerSignalEventListener that invokes the C# action.");
+			sb.AppendLine("PointerSignalEventListener? createPointerSignalEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerSignalEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerPanZoomStartEventListener
+			sb.AppendLine("/// Creates a PointerPanZoomStartEventListener that invokes the C# action.");
+			sb.AppendLine("PointerPanZoomStartEventListener? createPointerPanZoomStartEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerPanZoomStartEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerPanZoomUpdateEventListener
+			sb.AppendLine("/// Creates a PointerPanZoomUpdateEventListener that invokes the C# action.");
+			sb.AppendLine("PointerPanZoomUpdateEventListener? createPointerPanZoomUpdateEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerPanZoomUpdateEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("    'pan': {'x': event.pan.dx, 'y': event.pan.dy},");
+			sb.AppendLine("    'scale': event.scale,");
+			sb.AppendLine("    'rotation': event.rotation,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PointerPanZoomEndEventListener
+			sb.AppendLine("/// Creates a PointerPanZoomEndEventListener that invokes the C# action.");
+			sb.AppendLine("PointerPanZoomEndEventListener? createPointerPanZoomEndEventListener(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (PointerPanZoomEndEvent event) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'position': {'x': event.position.dx, 'y': event.position.dy},");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// PlatformViewCreatedCallback
+			sb.AppendLine("/// Creates a PlatformViewCreatedCallback that invokes the C# action.");
+			sb.AppendLine("PlatformViewCreatedCallback? createPlatformViewCreatedCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (int id) => _invokeAction(actionId, args: {'id': id});");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// ShaderCallback - this is a special case that returns a Shader, not void
+			sb.AppendLine("/// Creates a ShaderCallback placeholder - Shader callbacks require special handling.");
+			sb.AppendLine("/// Note: ShaderCallback returns a Shader, not void, so it cannot be handled via method channel.");
+			sb.AppendLine("ShaderCallback? createShaderCallback(String? actionId) {");
+			sb.AppendLine("  // ShaderCallback cannot be properly implemented via method channel");
+			sb.AppendLine("  // as it needs to return a Shader synchronously");
+			sb.AppendLine("  return null;");
 			sb.AppendLine("}");
 			sb.AppendLine();
 

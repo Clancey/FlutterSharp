@@ -67,7 +67,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public TapRegionSurface(
 			Widget child
-
 		)
 		{
 			var s = GetBackingStruct<TapRegionSurfaceStruct>();

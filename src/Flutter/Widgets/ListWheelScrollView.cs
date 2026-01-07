@@ -75,26 +75,25 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ListWheelScrollView"/> class.
 		/// </summary>
 		public ListWheelScrollView(
-			double diameterRatio,
-			double perspective,
-			double offAxisFraction,
-			bool useMagnifier,
-			double magnification,
-			double overAndUnderCenterOpacity,
 			double itemExtent,
-			double squeeze,
 			Action onSelectedItemChanged,
-			bool renderChildrenOutsideViewport,
 			ListWheelChildDelegate childDelegate,
-			Clip clipBehavior,
-			PlatformViewHitTestBehavior hitTestBehavior,
-			DragStartBehavior dragStartBehavior,
-			List<Widget> children
-,
+			List<Widget> children,
 			ScrollController? controller = null,
 			ScrollPhysics? physics = null,
+			double? diameterRatio = null,
+			double? perspective = null,
+			double offAxisFraction = 0.0,
+			bool useMagnifier = false,
+			double magnification = 1.0,
+			double overAndUnderCenterOpacity = 1.0,
+			double squeeze = 1.0,
+			bool renderChildrenOutsideViewport = false,
+			Clip clipBehavior = Clip.HardEdge,
+			PlatformViewHitTestBehavior hitTestBehavior = HitTestBehavior.Opaque,
 			string? restorationId = null,
-			ScrollBehavior? scrollBehavior = null
+			ScrollBehavior? scrollBehavior = null,
+			DragStartBehavior dragStartBehavior = DragStartBehavior.Start
 		)
 		{
 			if (children != null)
@@ -102,8 +101,10 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<ListWheelScrollViewStruct>();
 			// Complex type: ScrollController? - skipped (requires marshaling)
 			// Complex type: ScrollPhysics? - skipped (requires marshaling)
-			s.diameterRatio = diameterRatio;
-			s.perspective = perspective;
+			if (diameterRatio.HasValue)
+				s.diameterRatio = diameterRatio.Value;
+			if (perspective.HasValue)
+				s.perspective = perspective.Value;
 			s.offAxisFraction = offAxisFraction;
 			s.useMagnifier = useMagnifier;
 			s.magnification = magnification;

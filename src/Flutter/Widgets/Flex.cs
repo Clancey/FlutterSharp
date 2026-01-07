@@ -134,15 +134,14 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Flex(
 			object direction,
-			MainAxisAlignment mainAxisAlignment,
-			MainAxisSize mainAxisSize,
-			CrossAxisAlignment crossAxisAlignment,
 			TextDirection textDirection,
-			VerticalDirection verticalDirection,
-			TextBaseline? textBaseline,
-			Clip clipBehavior,
-			double spacing
-,
+			TextBaseline textBaseline,
+			MainAxisAlignment mainAxisAlignment = MainAxisAlignment.Start,
+			MainAxisSize mainAxisSize = MainAxisSize.Max,
+			CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.Center,
+			VerticalDirection verticalDirection = VerticalDirection.Down,
+			Clip clipBehavior = Clip.None,
+			double spacing = 0.0,
 			List<Widget> children = null
 		)
 		{

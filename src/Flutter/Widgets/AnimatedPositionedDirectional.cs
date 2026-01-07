@@ -48,8 +48,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AnimatedPositionedDirectional(
 			Widget child,
-			TimeSpan duration
-,
+			TimeSpan duration,
 			double? start = null,
 			double? top = null,
 			double? end = null,

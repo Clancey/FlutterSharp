@@ -125,8 +125,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Opacity(
 			double opacity,
-			bool alwaysIncludeSemantics
-,
+			bool alwaysIncludeSemantics = false,
 			Widget? child = null
 		)
 		{

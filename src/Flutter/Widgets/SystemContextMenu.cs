@@ -63,7 +63,6 @@ namespace Flutter.Widgets
 			object anchor,
 			List<IOSSystemContextMenuItem> items,
 			Action onSystemHide
-
 		)
 		{
 			var s = GetBackingStruct<SystemContextMenuStruct>();

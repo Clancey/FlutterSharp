@@ -128,8 +128,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Flow(
 			object @delegate,
-			Clip clipBehavior
-,
+			Clip clipBehavior = Clip.HardEdge,
 			List<Widget> children = null
 		)
 		{

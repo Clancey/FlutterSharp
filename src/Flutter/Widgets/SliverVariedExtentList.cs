@@ -51,7 +51,6 @@ namespace Flutter.Widgets
 		public SliverVariedExtentList(
 			object itemExtentBuilder,
 			SliverChildDelegate @delegate
-
 		)
 		{
 			var s = GetBackingStruct<SliverVariedExtentListStruct>();

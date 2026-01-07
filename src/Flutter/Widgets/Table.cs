@@ -56,14 +56,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Table"/> class.
 		/// </summary>
 		public Table(
-			List<TableRow> children,
-			object defaultColumnWidth,
 			TextDirection textDirection,
-			BoxBorder? border,
-			AlignmentGeometry defaultVerticalAlignment,
-			TextBaseline? textBaseline
-,
-			Dictionary<object, object>? columnWidths = null
+			BoxBorder border,
+			TextBaseline textBaseline,
+			List<TableRow> children = null,
+			Dictionary<object, object>? columnWidths = null,
+			object defaultColumnWidth = null,
+			AlignmentGeometry defaultVerticalAlignment = TableCellVerticalAlignment.Top
 		)
 		{
 			var s = GetBackingStruct<TableStruct>();

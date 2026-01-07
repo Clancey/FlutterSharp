@@ -88,16 +88,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ImplicitlyAnimatedWidget"/> class.
 		/// </summary>
 		public ImplicitlyAnimatedWidget(
-			Curve curve,
 			TimeSpan duration,
-			Action onEnd
-
+			Action onEnd,
+			Curve curve = null
 		)
 		{
 			var s = GetBackingStruct<ImplicitlyAnimatedWidgetStruct>();
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Complex type: Action? - skipped (requires marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ImplicitlyAnimatedWidgetStruct();

@@ -55,17 +55,16 @@ namespace Flutter.Widgets
 		/// </summary>
 		public TwoDimensionalScrollView(
 			TwoDimensionalChildDelegate @delegate,
-			DiagonalDragBehavior diagonalDragBehavior,
-			object mainAxis,
-			ScrollableDetails verticalDetails,
-			ScrollableDetails horizontalDetails,
-			DragStartBehavior dragStartBehavior,
-			PlatformViewHitTestBehavior hitTestBehavior,
-			Clip clipBehavior
-,
 			double? cacheExtent = null,
+			DiagonalDragBehavior diagonalDragBehavior = null,
 			bool? primary = null,
-			ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior = null
+			object mainAxis = Axis.Vertical,
+			ScrollableDetails verticalDetails = null,
+			ScrollableDetails horizontalDetails = null,
+			DragStartBehavior dragStartBehavior = DragStartBehavior.Start,
+			ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior = null,
+			PlatformViewHitTestBehavior hitTestBehavior = HitTestBehavior.Opaque,
+			Clip clipBehavior = Clip.HardEdge
 		)
 		{
 			var s = GetBackingStruct<TwoDimensionalScrollViewStruct>();

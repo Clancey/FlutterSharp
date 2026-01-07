@@ -51,8 +51,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AlignTransition(
 			Widget child,
-			AlignmentGeometry? alignment
-,
+			AlignmentGeometry alignment,
 			double? widthFactor = null,
 			double? heightFactor = null
 		)

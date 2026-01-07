@@ -72,8 +72,7 @@ namespace Flutter.Widgets
 		public AnimatedBuilder(
 			Animation<double> animation,
 			Listenable listenable,
-			Func<BuildContext, Widget?, Widget> builder
-,
+			Func<BuildContext, Widget?, Widget> builder,
 			Widget? child = null
 		)
 		{
