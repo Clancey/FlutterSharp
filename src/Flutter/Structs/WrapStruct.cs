@@ -173,7 +173,7 @@ namespace Flutter.Structs
 /// [crossAxisAlignment] is either [WrapCrossAlignment.start] or
 /// [WrapCrossAlignment.end], or there's more than one child, then the
 /// [textDirection] (or the ambient [Directionality]) must not be null.
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// Determines the order to lay children out vertically and how to interpret
 /// `start` and `end` in the vertical direction.
@@ -203,6 +203,8 @@ namespace Flutter.Structs
 /// 
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
+
+		public IntPtr children { get; set; }
 
 	}
 }

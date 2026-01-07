@@ -39,13 +39,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PhysicalShape"/> class.
 		/// </summary>
 		public PhysicalShape(
-			Widget _child,
 			InvalidType _clipper,
 			Clip _clipBehavior,
 			double _elevation,
 			Color? _color,
 			Color? _shadowColor
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

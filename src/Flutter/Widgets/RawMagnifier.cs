@@ -43,7 +43,7 @@ namespace Flutter.Widgets
 			Clip _clipBehavior,
 			InvalidType _focalPointOffset,
 			double _magnificationScale,
-			InvalidType _size
+			Size _size
 ,
 			Widget? _child = null
 		)

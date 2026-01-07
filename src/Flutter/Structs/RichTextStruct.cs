@@ -116,7 +116,7 @@ namespace Flutter.Structs
 /// 
 /// Defaults to the ambient [Directionality], if any. If there is no ambient
 /// [Directionality], then this must not be null.
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// Whether the text should break at soft line breaks.
 /// 

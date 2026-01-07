@@ -47,5 +47,7 @@ namespace Flutter.Structs
 /// exists.
 		public IntPtr itemExtentBuilder { get; set; }
 
+		public IntPtr @delegate { get; set; }
+
 	}
 }

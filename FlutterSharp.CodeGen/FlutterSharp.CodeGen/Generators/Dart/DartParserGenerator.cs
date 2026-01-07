@@ -57,12 +57,36 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			var publicName = widget.Name.TrimStart('_');
 
 			// Filter out child/children properties - they're handled separately by the template
+			// Also filter out "child" and "children" which are always special-cased,
+			// as well as the widget's specific child property name (e.g., "sliver" for SliverPadding)
 			var childPropName = widget.ChildPropertyName?.ToLowerInvariant();
 			var childrenPropName = widget.ChildrenPropertyName?.ToLowerInvariant();
+
+			// For sliver widgets, detect if the actual child property is "sliver" instead of "child"
+			var hasSliver = widget.Properties.Any(p =>
+				p.Name.Equals("sliver", StringComparison.OrdinalIgnoreCase) &&
+				(p.DartType?.Contains("Widget") == true || p.CSharpType?.Contains("Widget") == true));
+			var hasSlivers = widget.Properties.Any(p =>
+				p.Name.Equals("slivers", StringComparison.OrdinalIgnoreCase) &&
+				(p.DartType?.Contains("Widget") == true || p.CSharpType?.Contains("Widget") == true || p.IsList));
+
+			// Override child property name if this is a sliver widget
+			if (hasSliver && childPropName == "child")
+				childPropName = "sliver";
+			if (hasSlivers && childrenPropName == "children")
+				childrenPropName = "slivers";
+
 			var regularProperties = widget.Properties
 				.Where(p => {
 					var propName = p.Name.ToLowerInvariant();
-					return propName != childPropName && propName != childrenPropName;
+					// Filter out the widget's specific child/children property name
+					if (propName == childPropName || propName == childrenPropName)
+						return false;
+					// Also filter out "child", "children", "sliver", "slivers" which shouldn't be regular properties
+					// They're handled by the has_children template block
+					if (propName == "child" || propName == "children" || propName == "sliver" || propName == "slivers")
+						return false;
+					return true;
 				})
 				.ToList();
 
@@ -99,12 +123,7 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 					// Determine if this is a Color stored as a primitive
 					var isColorPrimitive = baseType == "Color" && (ffiType == "Uint32" || ffiType == "Int32");
 
-					// Debug logging
-					if (widget.Name == "Container")
-					{
-						Console.WriteLine($"[{widget.Name} Property] {p.Name}: DartType={p.DartType}, IsNullable={p.IsNullable}, CSharpType={p.CSharpType}, IsPointer={isPointer}, IsPrimitive={isPrimitive}, IsEnum={isEnum}, IsColorPrimitive={isColorPrimitive}, Parser={parserFunc}");
-					}
-
+	
 					// Check if this is a string type (Pointer<Utf8> or String Dart type)
 					var isString = ffiType == "Pointer<Utf8>" || baseType == "String";
 
@@ -135,12 +154,14 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 				}).ToList(),
 				HasChildren = widget.HasSingleChild || widget.HasMultipleChildren,
 				// Only set ChildPropertyName for single-child widgets (not multi-child)
-				ChildPropertyName = widget.HasSingleChild && !widget.HasMultipleChildren && widget.ChildPropertyName != null
-					? ToCamelCase(widget.ChildPropertyName) : null,
+				// Use overridden childPropName which may be "sliver" instead of "child" for sliver widgets
+				ChildPropertyName = widget.HasSingleChild && !widget.HasMultipleChildren && childPropName != null
+					? ToCamelCase(childPropName) : null,
 				child_is_nullable = childIsNullable,
 				// Only set ChildrenPropertyName for multi-child widgets (not single-child)
-				ChildrenPropertyName = widget.HasMultipleChildren && widget.ChildrenPropertyName != null
-					? ToCamelCase(widget.ChildrenPropertyName) : null,
+				// Use overridden childrenPropName which may be "slivers" instead of "children" for viewport widgets
+				ChildrenPropertyName = widget.HasMultipleChildren && childrenPropName != null
+					? ToCamelCase(childrenPropName) : null,
 				Documentation = FormatDartDocumentation(widget.Documentation),
 				GeneratedDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC")
 			};
@@ -167,12 +188,37 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		var publicName = enrichedWidget.Name.TrimStart('_');
 
 		// Filter out child/children properties - they're handled separately by the template
+		// Also filter out "child" and "children" which are always special-cased,
+		// as well as the widget's specific child property name (e.g., "sliver" for SliverPadding)
 		var childPropName = enrichedWidget.ChildPropertyName?.ToLowerInvariant();
 		var childrenPropName = enrichedWidget.ChildrenPropertyName?.ToLowerInvariant();
+
+		// For sliver widgets, detect if the actual child property is "sliver" instead of "child"
+		// by checking for a sliver property with Widget type when childPropName is "child"
+		var hasSliver = enrichedWidget.AllProperties.Any(p =>
+			p.Name.Equals("sliver", StringComparison.OrdinalIgnoreCase) &&
+			(p.DartType?.Contains("Widget") == true || p.CSharpType?.Contains("Widget") == true));
+		var hasSlivers = enrichedWidget.AllProperties.Any(p =>
+			p.Name.Equals("slivers", StringComparison.OrdinalIgnoreCase) &&
+			(p.DartType?.Contains("Widget") == true || p.CSharpType?.Contains("Widget") == true || p.IsList));
+
+		// Override child property name if this is a sliver widget
+		if (hasSliver && childPropName == "child")
+			childPropName = "sliver";
+		if (hasSlivers && childrenPropName == "children")
+			childrenPropName = "slivers";
+
 		var regularProperties = enrichedWidget.AllProperties
 			.Where(p => {
 				var propName = p.Name.ToLowerInvariant();
-				return propName != childPropName && propName != childrenPropName;
+				// Filter out the widget's specific child/children property name
+				if (propName == childPropName || propName == childrenPropName)
+					return false;
+				// Also filter out "child", "children", "sliver", "slivers" which shouldn't be regular properties
+				// They're handled by the has_children template block
+				if (propName == "child" || propName == "children" || propName == "sliver" || propName == "slivers")
+					return false;
+				return true;
 			})
 			.ToList();
 
@@ -221,6 +267,7 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 
 				var parserFunc = GetParserFunctionFromEnriched(p);
 
+	
 				return new
 				{
 					p.Name,
@@ -239,8 +286,12 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 					IsColorPrimitive = isColorPrimitive,
 					IsBool = isBool,
 					ParserFunction = parserFunc,
+					// IsNullable is for FFI struct generation (includes all pointer types)
 					p.IsNullable,
-					IsRequired = !p.IsNullable,
+					// IsDartNullable is the original Flutter widget parameter nullability (for parser generation)
+					p.IsDartNullable,
+					// IsRequired is based on original Dart nullability, not FFI nullability
+					IsRequired = !p.IsDartNullable,
 					p.IsCallback,
 					Documentation = FormatDartDocumentation(p.Documentation)
 				};
@@ -250,12 +301,14 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			has_single_child = enrichedWidget.HasSingleChild,
 			has_multiple_children = enrichedWidget.HasMultipleChildren,
 			// Only set ChildPropertyName for single-child widgets (not multi-child)
-			ChildPropertyName = enrichedWidget.HasSingleChild && !enrichedWidget.HasMultipleChildren && enrichedWidget.ChildPropertyName != null
-				? ToCamelCase(enrichedWidget.ChildPropertyName) : null,
+			// Use overridden childPropName which may be "sliver" instead of "child" for sliver widgets
+			ChildPropertyName = enrichedWidget.HasSingleChild && !enrichedWidget.HasMultipleChildren && childPropName != null
+				? ToCamelCase(childPropName) : null,
 			child_is_nullable = childIsNullable,
 			// Only set ChildrenPropertyName for multi-child widgets (not single-child)
-			ChildrenPropertyName = enrichedWidget.HasMultipleChildren && enrichedWidget.ChildrenPropertyName != null
-				? ToCamelCase(enrichedWidget.ChildrenPropertyName) : null,
+			// Use overridden childrenPropName which may be "slivers" instead of "children" for viewport widgets
+			ChildrenPropertyName = enrichedWidget.HasMultipleChildren && childrenPropName != null
+				? ToCamelCase(childrenPropName) : null,
 			Documentation = FormatDartDocumentation(enrichedWidget.Documentation),
 			GeneratedDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC")
 		};

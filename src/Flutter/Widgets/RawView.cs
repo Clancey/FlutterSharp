@@ -58,9 +58,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawView"/> class.
 		/// </summary>
 		public RawView(
-			InvalidType _view,
+			FlutterView _view,
 			Widget _child
-
+,
+			InvalidType _deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner = null,
+			InvalidType _deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

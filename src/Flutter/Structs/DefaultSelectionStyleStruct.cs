@@ -23,7 +23,7 @@ namespace Flutter.Structs
 /// * [TextSelectionTheme]: which also creates a [DefaultSelectionStyle] for
 /// the subtree.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class DefaultSelectionStyleStruct : WidgetStruct
+	internal class DefaultSelectionStyleStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The color of the text field's cursor.
 /// 
@@ -38,6 +38,12 @@ namespace Flutter.Structs
 /// 
 /// If this property is null, [SystemMouseCursors.text] will be used.
 		public IntPtr mouseCursor { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

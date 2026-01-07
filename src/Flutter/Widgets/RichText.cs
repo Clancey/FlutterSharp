@@ -101,18 +101,18 @@ namespace Flutter.Widgets
 		/// </summary>
 		public RichText(
 			List<Widget> _children,
-			InvalidType _text,
+			InlineSpan _text,
 			InvalidType _textAlign,
-			InvalidType _textDirection,
+			TextDirection _textDirection,
 			bool _softWrap,
 			InvalidType _overflow,
 			InvalidType _textScaler,
 			InvalidType _locale,
 			InvalidType _strutStyle,
 			InvalidType _textWidthBasis,
-			InvalidType _textHeightBehavior,
+			TextHeightBehavior _textHeightBehavior,
 			InvalidType _selectionRegistrar,
-			InvalidType _selectionColor,
+			Color? _selectionColor,
 			double _textScaleFactor
 ,
 			int? _maxLines = null

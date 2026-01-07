@@ -10,7 +10,7 @@ class AspectRatioWidgetParser extends WidgetParser {
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<AspectRatioStruct>.fromAddress(fos.handle.address).ref;
     return AspectRatio(
-      aspectRatio: map.value,
+      aspectRatio: map.aspectRatio,
       child: DynamicWidgetBuilder.buildFromPointer(map.child, buildContext),
     );
   }

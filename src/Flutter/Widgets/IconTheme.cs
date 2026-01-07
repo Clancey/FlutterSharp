@@ -22,8 +22,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IconTheme"/> class.
 		/// </summary>
 		public IconTheme(
-			Widget _child,
-			IconThemeData _data
+			IconThemeData _data,
+			Widget _child
 
 		)
 		{

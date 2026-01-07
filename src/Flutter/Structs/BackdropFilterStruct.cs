@@ -185,5 +185,11 @@ namespace Flutter.Structs
 /// The default value for the backdrop key is `null`.
 		public IntPtr backdropGroupKey { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

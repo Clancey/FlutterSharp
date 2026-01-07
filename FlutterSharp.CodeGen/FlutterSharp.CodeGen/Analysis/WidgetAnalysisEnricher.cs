@@ -47,6 +47,9 @@ namespace FlutterSharp.CodeGen.Analysis
 			// Add inherited child/children properties if needed but not present
 			AddInheritedChildProperties(enrichedProperties, widget, baseClassInfo);
 
+			// Add inherited properties from base classes (duration, curve, animation, etc.)
+			AddInheritedBaseClassProperties(enrichedProperties, widget.BaseClass);
+
 			// Separate into required and optional for constructor
 			var requiredProperties = enrichedProperties.Where(p => p.IsRequired).ToList();
 			var optionalProperties = enrichedProperties.Where(p => !p.IsRequired).ToList();
@@ -130,6 +133,12 @@ namespace FlutterSharp.CodeGen.Analysis
 			var isGenericTypeParam = csharpType == "T" || csharpType == "T?" ||
 			                         csharpType == "S" || csharpType == "S?";
 
+			// Track both the original Dart nullability and the FFI representation nullability
+			// Original nullability is what the Flutter widget expects (for parser generation)
+			// FFI nullability includes pointer types (for struct generation)
+			var originalIsNullable = property.IsNullable;
+			var ffiIsNullable = property.IsNullable || ffiType.StartsWith("Pointer<");
+
 			return new EnrichedPropertyDefinition
 			{
 				Name = escapedName,
@@ -139,7 +148,9 @@ namespace FlutterSharp.CodeGen.Analysis
 				FfiType = ffiType,
 				FfiAnnotation = ffiAnnotation,
 				IsRequired = property.IsRequired,
-				IsNullable = property.IsNullable || ffiType.StartsWith("Pointer<"),
+				IsNullable = ffiIsNullable,
+				// Track original Flutter nullability separately for parser generation
+				IsDartNullable = originalIsNullable,
 				DefaultValue = ConvertDartDefaultValueToCSharp(property.DefaultValue, csharpType),
 				IsCallback = property.IsCallback,
 				IsList = property.IsList,
@@ -302,23 +313,108 @@ namespace FlutterSharp.CodeGen.Analysis
 		}
 
 		/// <summary>
+		/// Gets inherited properties for a given base class.
+		/// These are properties defined in the base class that subclasses must also pass.
+		/// </summary>
+		private List<EnrichedPropertyDefinition> GetInheritedBaseClassProperties(string? baseClass)
+		{
+			if (string.IsNullOrEmpty(baseClass))
+				return new List<EnrichedPropertyDefinition>();
+
+			var properties = new List<EnrichedPropertyDefinition>();
+
+			// Properties inherited from ImplicitlyAnimatedWidget
+			// Required: duration
+			// Optional: curve, onEnd
+			if (baseClass.Equals("ImplicitlyAnimatedWidget", StringComparison.OrdinalIgnoreCase))
+			{
+				// Duration is stored as microseconds (Int64) for simple FFI marshaling
+				// parseDurationMicroseconds will convert to Duration in Dart
+				properties.Add(new EnrichedPropertyDefinition
+				{
+					Name = "duration",
+					BackingFieldName = "_duration",
+					DartType = "Duration",
+					CSharpType = "long", // Microseconds as Int64
+					FfiType = "int",
+					FfiAnnotation = "@Int64()",
+					IsRequired = true,
+					IsNullable = false,
+					IsCallback = false,
+					IsList = false,
+					IsGenericTypeParam = false,
+					Documentation = "The duration over which to animate the parameters of this container (in microseconds)."
+				});
+
+				// Curve is optional - we skip it for now as it requires complex marshaling
+				// The generated code will use the default Curves.linear
+
+				properties.Add(new EnrichedPropertyDefinition
+				{
+					Name = "onEnd",
+					BackingFieldName = "_onEnd",
+					DartType = "VoidCallback?",
+					CSharpType = "Action?",
+					FfiType = "Pointer<Utf8>",
+					FfiAnnotation = "",
+					IsRequired = false,
+					IsNullable = true,
+					IsCallback = true,
+					IsList = false,
+					IsGenericTypeParam = false,
+					Documentation = "Called every time an animation completes."
+				});
+			}
+
+			// Note: AnimatedWidget has a `listenable` getter, NOT a constructor parameter
+			// Subclasses like FadeTransition, ScaleTransition, etc. have their own
+			// animation-related parameters (animation, scale, turns, etc.)
+			// Do NOT add listenable as an inherited property - it's an internal getter
+
+			return properties;
+		}
+
+		/// <summary>
+		/// Adds inherited properties from base classes if they're not already present.
+		/// </summary>
+		private void AddInheritedBaseClassProperties(List<EnrichedPropertyDefinition> enrichedProperties, string? baseClass)
+		{
+			var inheritedProperties = GetInheritedBaseClassProperties(baseClass);
+
+			foreach (var inheritedProp in inheritedProperties)
+			{
+				// Only add if not already present
+				if (!enrichedProperties.Any(p => p.Name.Equals(inheritedProp.Name, StringComparison.OrdinalIgnoreCase)))
+				{
+					enrichedProperties.Add(inheritedProp);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Adds inherited child/children properties if the widget inherits from a base class that has them
 		/// but they're not already in the properties list.
 		/// </summary>
 		private void AddInheritedChildProperties(List<EnrichedPropertyDefinition> enrichedProperties, WidgetDefinition widget, BaseClassInfo baseClassInfo)
 		{
-			// Check if child property already exists
-			var hasChildProperty = enrichedProperties.Any(p =>
-				p.Name.Equals("child", StringComparison.OrdinalIgnoreCase));
+			// Get the actual child/children property names for this widget
+			// Some widgets use different names (e.g., "sliver" instead of "child", "slivers" instead of "children")
+			var childPropertyName = widget.ChildPropertyName ?? "child";
+			var childrenPropertyName = widget.ChildrenPropertyName ?? "children";
 
-			// Check if children property already exists
+			// Check if child property already exists (using the widget's actual child property name)
+			var hasChildProperty = enrichedProperties.Any(p =>
+				p.Name.Equals("child", StringComparison.OrdinalIgnoreCase) ||
+				p.Name.Equals(childPropertyName, StringComparison.OrdinalIgnoreCase));
+
+			// Check if children property already exists (using the widget's actual children property name)
 			var hasChildrenProperty = enrichedProperties.Any(p =>
-				p.Name.Equals("children", StringComparison.OrdinalIgnoreCase));
+				p.Name.Equals("children", StringComparison.OrdinalIgnoreCase) ||
+				p.Name.Equals(childrenPropertyName, StringComparison.OrdinalIgnoreCase));
 
 			// Add child property if widget has single child and property doesn't exist
 			if ((widget.HasSingleChild || IsSingleChildBaseClass(widget.BaseClass)) && !hasChildProperty)
 			{
-				var childPropertyName = widget.ChildPropertyName ?? "child";
 
 				// Determine if child is required (it usually is for these base classes)
 				var childIsRequired = IsSingleChildBaseClass(widget.BaseClass);
@@ -343,8 +439,6 @@ namespace FlutterSharp.CodeGen.Analysis
 			// Add children property if widget has multiple children and property doesn't exist
 			if ((widget.HasMultipleChildren || IsMultiChildBaseClass(widget.BaseClass)) && !hasChildrenProperty)
 			{
-				var childrenPropertyName = widget.ChildrenPropertyName ?? "children";
-
 				enrichedProperties.Insert(0, new EnrichedPropertyDefinition
 				{
 					Name = childrenPropertyName,
@@ -383,9 +477,20 @@ namespace FlutterSharp.CodeGen.Analysis
 			if (dartDefaultValue.Contains("EdgeInsets"))
 				return "null";
 
-			// Handle Dart enums (e.g., Axis.horizontal)
+			// Handle Dart enums (e.g., Axis.horizontal -> Axis.Horizontal)
 			if (dartDefaultValue.Contains(".") && !dartDefaultValue.StartsWith("const"))
+			{
+				// Parse and convert enum value from camelCase to PascalCase
+				var dotIndex = dartDefaultValue.LastIndexOf('.');
+				if (dotIndex > 0 && dotIndex < dartDefaultValue.Length - 1)
+				{
+					var enumType = dartDefaultValue.Substring(0, dotIndex);
+					var enumValue = dartDefaultValue.Substring(dotIndex + 1);
+					var pascalValue = ToPascalCase(enumValue);
+					return $"{enumType}.{pascalValue}";
+				}
 				return dartDefaultValue;
+			}
 
 			// Handle common literals
 			dartDefaultValue = dartDefaultValue
@@ -420,6 +525,26 @@ namespace FlutterSharp.CodeGen.Analysis
 			};
 
 			return keywords.Contains(name.ToLowerInvariant()) ? $"@{name}" : name;
+		}
+
+		/// <summary>
+		/// Converts a camel case name to Pascal case for C# enum values.
+		/// </summary>
+		private string ToPascalCase(string camelCase)
+		{
+			if (string.IsNullOrEmpty(camelCase))
+				return camelCase;
+
+			// If already starts with uppercase, preserve as-is
+			if (char.IsUpper(camelCase[0]))
+				return camelCase;
+
+			// For single-letter or very short strings, preserve as-is
+			if (camelCase.Length <= 2 && camelCase.All(char.IsLetter))
+				return camelCase;
+
+			// Normal case: convert first character to uppercase
+			return char.ToUpperInvariant(camelCase[0]) + camelCase.Substring(1);
 		}
 
 		/// <summary>
@@ -559,6 +684,12 @@ namespace FlutterSharp.CodeGen.Analysis
 		public string? FfiAnnotation { get; set; }
 		public bool IsRequired { get; set; }
 		public bool IsNullable { get; set; }
+		/// <summary>
+		/// The original Dart nullability (from the Flutter widget parameter).
+		/// This is separate from IsNullable which includes pointer types for FFI.
+		/// Used by parser generation to determine if null is a valid value.
+		/// </summary>
+		public bool IsDartNullable { get; set; }
 		public string? DefaultValue { get; set; }
 		public bool IsCallback { get; set; }
 		public bool IsList { get; set; }

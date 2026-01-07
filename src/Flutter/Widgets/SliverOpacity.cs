@@ -56,7 +56,8 @@ namespace Flutter.Widgets
 			Widget _child,
 			double _opacity,
 			bool _alwaysIncludeSemantics
-
+,
+			Widget? _sliver = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

@@ -41,8 +41,11 @@ namespace Flutter.Widgets
 			Color? _color,
 			bool _animateColor,
 			Color? _shadowColor,
-			bool _animateShadowColor
-
+			bool _animateShadowColor,
+			TimeSpan _duration
+,
+			Curve _curve = null,
+			InvalidType _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

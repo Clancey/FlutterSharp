@@ -59,7 +59,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ValueListenableBuilder"/> class.
 		/// </summary>
 		public ValueListenableBuilder(
-			InvalidType _valueListenable,
+			ValueListenable<object> _valueListenable,
 			Func<BuildContext, T, Widget?, Widget> _builder
 ,
 			Widget? _child = null

@@ -38,8 +38,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RotationTransition"/> class.
 		/// </summary>
 		public RotationTransition(
-			InvalidType _turns
-
+			Animation<double> _turns
+,
+			AlignmentGeometry? _alignment = null,
+			InvalidType _filterQuality = null,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

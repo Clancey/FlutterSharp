@@ -52,7 +52,7 @@ namespace Flutter.Structs
 /// * [ScrollNotification] and [NotificationListener], which can be used to watch
 /// the scroll position without using a [ScrollController].
 	[StructLayout(LayoutKind.Sequential)]
-	internal class PageViewStruct : WidgetStruct
+	internal class PageViewStruct : MultiChildRenderObjectWidgetStruct
 	{
 /// Controls whether the widget's pages will respond to
 /// [RenderObject.showOnScreen], which will allow for implicit accessibility
@@ -163,6 +163,8 @@ namespace Flutter.Structs
 /// 
 /// This property defaults to true.
 		public bool padEnds { get; set; }
+
+		public IntPtr children { get; set; }
 
 	}
 }

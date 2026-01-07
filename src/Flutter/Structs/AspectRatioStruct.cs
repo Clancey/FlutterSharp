@@ -98,5 +98,11 @@ namespace Flutter.Structs
 /// a 16:9 width:height aspect ratio would have a value of 16.0/9.0.
 		public double aspectRatio { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

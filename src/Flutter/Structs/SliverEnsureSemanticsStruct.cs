@@ -45,5 +45,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverEnsureSemanticsStruct : SingleChildRenderObjectWidgetStruct
 	{
+		IntPtr _sliver;
+		public Widget sliver
+		{
+			set => SetIntPtr(ref _sliver, value);
+		}
+
 	}
 }

@@ -70,7 +70,13 @@ namespace Flutter.Structs
 /// anomalies. Those subtrees are expected to introduce their own [Material]
 /// widget that buttons there can utilize without crossing a lookup boundary.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class LookupBoundaryStruct : WidgetStruct
+	internal class LookupBoundaryStruct : SingleChildRenderObjectWidgetStruct
 	{
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

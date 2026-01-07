@@ -217,7 +217,7 @@ namespace Flutter.Structs
 /// This property has no effect if the [icon]'s [IconData.matchTextDirection]
 /// field is false, but for consistency a text direction value must always be
 /// specified, either directly using this property or using [Directionality].
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// Whether to scale the size of this widget using the ambient [MediaQuery]'s [TextScaler].
 /// 

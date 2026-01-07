@@ -55,7 +55,8 @@ namespace Flutter.Widgets
 		public SizeTransition(
 			InvalidType _axis,
 			double _axisAlignment,
-			InvalidType _sizeFactor
+			InvalidType _sizeFactor,
+			object _listenable
 ,
 			double? _fixedCrossAxisSizeFactor = null,
 			Widget? _child = null

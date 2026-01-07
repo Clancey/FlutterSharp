@@ -88,5 +88,7 @@ namespace Flutter.Structs
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
+		public IntPtr children { get; set; }
+
 	}
 }

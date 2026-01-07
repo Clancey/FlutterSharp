@@ -15,13 +15,16 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		/// Generates a complete parser registration file with imports and parser list.
 		/// </summary>
 		/// <param name="widgets">The widget definitions to generate imports and list for.</param>
+		/// <param name="skipWidgets">Optional set of widget names to skip (widgets without generated parsers).</param>
 		/// <returns>The generated Dart code as a string.</returns>
-		public string Generate(IEnumerable<WidgetDefinition> widgets)
+		public string Generate(IEnumerable<WidgetDefinition> widgets, HashSet<string>? skipWidgets = null)
 		{
 			if (widgets == null)
 			{
 				throw new ArgumentNullException(nameof(widgets));
 			}
+
+			skipWidgets ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
 			var sb = new StringBuilder();
 
@@ -66,9 +69,9 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		};
 
 		// Sort widgets by name for consistent output
-		// Filter out private widgets (starting with _) and abstract base classes
+		// Filter out private widgets (starting with _), abstract base classes, and explicitly skipped widgets
 		var sortedWidgets = widgets
-			.Where(w => !w.Name.StartsWith("_") && !abstractBaseClasses.Contains(w.Name))
+			.Where(w => !w.Name.StartsWith("_") && !abstractBaseClasses.Contains(w.Name) && !skipWidgets.Contains(w.Name))
 			.OrderBy(w => w.Name)
 			.ToList();
 

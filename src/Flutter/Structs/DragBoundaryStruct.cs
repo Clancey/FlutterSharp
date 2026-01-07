@@ -23,7 +23,13 @@ namespace Flutter.Structs
 /// ** See code in examples/api/lib/widgets/gesture_detector/gesture_detector.3.dart **
 /// {@end-tool}
 	[StructLayout(LayoutKind.Sequential)]
-	internal class DragBoundaryStruct : WidgetStruct
+	internal class DragBoundaryStruct : SingleChildRenderObjectWidgetStruct
 	{
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

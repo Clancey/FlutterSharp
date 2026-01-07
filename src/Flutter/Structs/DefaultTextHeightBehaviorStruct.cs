@@ -24,10 +24,16 @@ namespace Flutter.Structs
 /// * [DefaultTextStyle], which defines a [TextStyle] to apply to descendant
 /// [Text] widgets.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class DefaultTextHeightBehaviorStruct : WidgetStruct
+	internal class DefaultTextHeightBehaviorStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// {@macro dart.ui.textHeightBehavior}
 		public IntPtr textHeightBehavior { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

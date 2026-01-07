@@ -60,13 +60,19 @@ namespace Flutter.Structs
 /// * [TweenAnimationBuilder], which animates a property to a target value
 /// without requiring manual management of an [AnimationController].
 	[StructLayout(LayoutKind.Sequential)]
-	internal class AnimatedBuilderStruct : WidgetStruct
+	internal class AnimatedBuilderStruct : SingleChildRenderObjectWidgetStruct
 	{
 		public IntPtr animation { get; set; }
 
 		public IntPtr listenable { get; set; }
 
 		public IntPtr builder { get; set; }
+
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

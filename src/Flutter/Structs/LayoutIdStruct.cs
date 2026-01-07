@@ -18,7 +18,7 @@ namespace Flutter.Structs
 /// [MultiChildLayoutDelegate.layoutChild], and
 /// [MultiChildLayoutDelegate.positionChild] methods use these identifiers.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class LayoutIdStruct : WidgetStruct
+	internal class LayoutIdStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// An object representing the identity of this child.
 /// 
@@ -27,6 +27,12 @@ namespace Flutter.Structs
 		public IntPtr id { get; set; }
 
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

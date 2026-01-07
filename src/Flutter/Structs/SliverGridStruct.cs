@@ -68,5 +68,7 @@ namespace Flutter.Structs
 /// The delegate that controls the size and position of the children.
 		public IntPtr gridDelegate { get; set; }
 
+		public IntPtr @delegate { get; set; }
+
 	}
 }

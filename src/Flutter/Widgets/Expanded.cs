@@ -58,7 +58,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Expanded(
 			Widget _child
-
+,
+			int _flex = 1
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

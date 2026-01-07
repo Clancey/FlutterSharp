@@ -90,17 +90,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flex"/> class.
 		/// </summary>
 		public Flex(
-			List<Widget> _children,
 			InvalidType _direction,
 			InvalidType _mainAxisAlignment,
 			InvalidType _mainAxisSize,
 			InvalidType _crossAxisAlignment,
-			InvalidType _textDirection,
+			TextDirection _textDirection,
 			InvalidType _verticalDirection,
 			InvalidType _textBaseline,
 			Clip _clipBehavior,
 			double _spacing
-
+,
+			List<Widget> _children = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

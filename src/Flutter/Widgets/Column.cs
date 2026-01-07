@@ -187,6 +187,14 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Column(
 
+			InvalidType _mainAxisAlignment = null,
+			InvalidType _mainAxisSize = null,
+			InvalidType _crossAxisAlignment = null,
+			TextDirection? _textDirection = null,
+			InvalidType _verticalDirection = null,
+			InvalidType _textBaseline = null,
+			double _spacing = 0.0,
+			List<Widget> _children = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

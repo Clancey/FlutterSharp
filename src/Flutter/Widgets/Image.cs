@@ -106,9 +106,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Image"/> class.
 		/// </summary>
 		public Image(
-			InvalidType _image,
+			ImageProvider _image,
 			Color? _color,
-			InvalidType _opacity,
+			Animation<double> _opacity,
 			InvalidType _filterQuality,
 			InvalidType _colorBlendMode,
 			InvalidType _fit,

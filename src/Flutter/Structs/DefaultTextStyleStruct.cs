@@ -30,7 +30,7 @@ namespace Flutter.Structs
 /// * [DefaultTextStyleTransition], which takes a provided [Animation] to
 /// animate changes in text style smoothly over time.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class DefaultTextStyleStruct : WidgetStruct
+	internal class DefaultTextStyleStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The text style to apply.
 		public IntPtr style { get; set; }
@@ -70,6 +70,12 @@ namespace Flutter.Structs
 
 /// {@macro dart.ui.textHeightBehavior}
 		public IntPtr textHeightBehavior { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

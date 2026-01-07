@@ -130,5 +130,17 @@ namespace Flutter.Structs
 /// method throws an [UnsupportedError].)
 		public Clip clipBehavior { get; set; }
 
+		public IntPtr color { get; set; }
+
+		public NativeNullable<double> width { get; set; }
+
+		public NativeNullable<double> height { get; set; }
+
+		public IntPtr curve { get; set; }
+
+		public IntPtr duration { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

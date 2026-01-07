@@ -58,5 +58,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverCrossAxisGroupStruct : MultiChildRenderObjectWidgetStruct
 	{
+		public IntPtr slivers { get; set; }
+
 	}
 }

@@ -66,5 +66,11 @@ namespace Flutter.Structs
 /// to the child. Other blend modes can be used to create other effects.
 		public IntPtr blendMode { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

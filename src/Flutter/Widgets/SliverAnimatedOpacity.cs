@@ -62,9 +62,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverAnimatedOpacity(
 			double _opacity,
-			bool _alwaysIncludeSemantics
+			bool _alwaysIncludeSemantics,
+			TimeSpan _duration
 ,
-			Widget? _sliver = null
+			Widget? _sliver = null,
+			Curve _curve = null,
+			InvalidType _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

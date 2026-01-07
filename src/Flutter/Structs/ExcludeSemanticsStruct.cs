@@ -31,5 +31,11 @@ namespace Flutter.Structs
 /// Whether this widget is excluded in the semantics tree.
 		public bool excluding { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

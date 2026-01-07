@@ -54,9 +54,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CustomMultiChildLayout"/> class.
 		/// </summary>
 		public CustomMultiChildLayout(
-			List<Widget> _children,
-			InvalidType _delegate
-
+			object _delegate
+,
+			List<Widget> _children = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

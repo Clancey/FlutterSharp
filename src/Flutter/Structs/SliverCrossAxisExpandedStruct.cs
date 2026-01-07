@@ -30,5 +30,11 @@ namespace Flutter.Structs
 
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }
 
+		IntPtr _sliver;
+		public Widget sliver
+		{
+			set => SetIntPtr(ref _sliver, value);
+		}
+
 	}
 }

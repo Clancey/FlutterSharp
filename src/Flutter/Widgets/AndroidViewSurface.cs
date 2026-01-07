@@ -34,9 +34,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AndroidViewSurface"/> class.
 		/// </summary>
 		public AndroidViewSurface(
-			InvalidType _controller,
+			object _controller,
 			HashSet<object> _gestureRecognizers,
-			InvalidType _hitTestBehavior
+			PlatformViewHitTestBehavior _hitTestBehavior
 
 		)
 		{

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using Flutter;
 using Flutter.Internal;
 using Flutter.Structs;
+using Flutter.Widgets;
 
 namespace FlutterSample
 {

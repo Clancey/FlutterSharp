@@ -28,5 +28,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverLayoutBuilderStruct : WidgetStruct
 	{
+		public IntPtr builder { get; set; }
+
 	}
 }

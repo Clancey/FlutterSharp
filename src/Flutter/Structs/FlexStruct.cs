@@ -153,7 +153,7 @@ namespace Flutter.Structs
 /// If the [direction] is [Axis.vertical], and the [crossAxisAlignment] is
 /// either [CrossAxisAlignment.start] or [CrossAxisAlignment.end], then the
 /// [textDirection] (or the ambient [Directionality]) must not be null.
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// Determines the order to lay children out vertically and how to interpret
 /// `start` and `end` in the vertical direction.
@@ -190,6 +190,8 @@ namespace Flutter.Structs
 
 /// {@macro flutter.rendering.RenderFlex.spacing}
 		public double spacing { get; set; }
+
+		public IntPtr children { get; set; }
 
 	}
 }

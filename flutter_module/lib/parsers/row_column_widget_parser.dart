@@ -14,20 +14,9 @@ class RowWidgetParser extends WidgetParser {
       // crossAxisAlignment: map.containsKey('crossAxisAlignment')
       //     ? parseCrossAxisAlignment(map['crossAxisAlignment'])
       //     : CrossAxisAlignment.center,
-      mainAxisAlignment:
-          parseMainAxisAlignment(map.hasAlignment, map.alignment),
-      // mainAxisSize: map.containsKey('mainAxisSize')
-      //     ? parseMainAxisSize(map['mainAxisSize'])
-      //     : MainAxisSize.max,
-      // textBaseline: map.containsKey('textBaseline')
-      //     ? parseTextBaseline(map['textBaseline'])
-      //     : null,
-      // textDirection: map.containsKey('textDirection')
-      //     ? parseTextDirection(map['textDirection'])
-      //     : null,
-      // verticalDirection: map.containsKey('verticalDirection')
-      //     ? parseVerticalDirection(map['verticalDirection'])
-      //     : VerticalDirection.down,
+      // TODO: Add proper enum parsing for mainAxisAlignment when Pointer<Void> is resolved
+      // mainAxisAlignment:
+      //     parseMainAxisAlignment(map.hasMainAxisAlignment, map.mainAxisAlignment),
       children: DynamicWidgetBuilder.buildWidgets(map.children.cast<ChildrenStruct>(), buildContext),
     );
   }
@@ -42,11 +31,9 @@ class ColumnWidgetParser extends WidgetParser {
     var map = Pointer<ColumnStruct>.fromAddress(fos.handle.address).ref;
 
     return Column(
-      // crossAxisAlignment: map.containsKey('crossAxisAlignment')
-      //     ? parseCrossAxisAlignment(map['crossAxisAlignment'])
-      //     : CrossAxisAlignment.center,
-      mainAxisAlignment:
-          parseMainAxisAlignment(map.hasAlignment, map.alignment),
+      // TODO: Add proper enum parsing for mainAxisAlignment when Pointer<Void> is resolved
+      // mainAxisAlignment:
+      //     parseMainAxisAlignment(map.hasMainAxisAlignment, map.mainAxisAlignment),
       // mainAxisSize: map.containsKey('mainAxisSize')
       //     ? parseMainAxisSize(map['mainAxisSize'])
       //     : MainAxisSize.max,

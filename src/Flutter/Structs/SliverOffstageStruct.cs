@@ -39,5 +39,11 @@ namespace Flutter.Structs
 /// If false, the sliver child is included in the tree as normal.
 		public bool offstage { get; set; }
 
+		IntPtr _sliver;
+		public Widget? sliver
+		{
+			set => SetIntPtr(ref _sliver, value);
+		}
+
 	}
 }

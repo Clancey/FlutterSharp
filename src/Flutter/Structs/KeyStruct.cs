@@ -29,5 +29,12 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class KeyStruct : WidgetStruct
 	{
+		IntPtr _value;
+		public string value
+		{
+			get => GetString(_value);
+			set => SetString(ref _value, value);
+		}
+
 	}
 }

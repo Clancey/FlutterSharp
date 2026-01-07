@@ -36,7 +36,13 @@ namespace Flutter.Structs
 /// ** See code in examples/api/lib/widgets/inherited_theme/inherited_theme.0.dart **
 /// {@end-tool}
 	[StructLayout(LayoutKind.Sequential)]
-	internal class InheritedThemeStruct : WidgetStruct
+	internal class InheritedThemeStruct : SingleChildRenderObjectWidgetStruct
 	{
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

@@ -50,11 +50,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedAlign"/> class.
 		/// </summary>
 		public AnimatedAlign(
-			AlignmentGeometry? _alignment
+			AlignmentGeometry? _alignment,
+			TimeSpan _duration
 ,
 			Widget? _child = null,
 			double? _heightFactor = null,
-			double? _widthFactor = null
+			double? _widthFactor = null,
+			Curve _curve = null,
+			InvalidType _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

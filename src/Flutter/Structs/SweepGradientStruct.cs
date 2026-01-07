@@ -132,5 +132,11 @@ namespace Flutter.Structs
 
 		public int hashCode { get; set; }
 
+		public IntPtr colors { get; set; }
+
+		public IntPtr? stops { get; set; }
+
+		public IntPtr? transform { get; set; }
+
 	}
 }

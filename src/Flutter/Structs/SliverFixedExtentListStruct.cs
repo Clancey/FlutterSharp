@@ -66,5 +66,7 @@ namespace Flutter.Structs
 /// The extent the children are forced to have in the main axis.
 		public double itemExtent { get; set; }
 
+		public IntPtr @delegate { get; set; }
+
 	}
 }

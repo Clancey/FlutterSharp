@@ -46,7 +46,7 @@ namespace Flutter.Structs
 /// The text direction with which to resolve [alignment].
 /// 
 /// Defaults to the ambient [Directionality].
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// {@macro flutter.material.Material.clipBehavior}
 /// 

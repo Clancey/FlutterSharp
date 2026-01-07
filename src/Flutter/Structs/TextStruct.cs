@@ -174,7 +174,7 @@ namespace Flutter.Structs
 /// its left.
 /// 
 /// Defaults to the ambient [Directionality], if any.
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// Used to select a font when the same Unicode character can
 /// be rendered differently, depending on the locale.

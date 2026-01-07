@@ -71,5 +71,11 @@ namespace Flutter.Structs
 /// Whether the shadow color should be animated.
 		public bool animateShadowColor { get; set; }
 
+		public IntPtr curve { get; set; }
+
+		public IntPtr duration { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

@@ -20,5 +20,11 @@ namespace Flutter.Structs
 /// The color to paint the background area with.
 		public IntPtr color { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

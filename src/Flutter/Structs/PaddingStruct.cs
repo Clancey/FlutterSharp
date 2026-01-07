@@ -71,5 +71,11 @@ namespace Flutter.Structs
 /// The amount of space by which to inset the child.
 		public IntPtr padding { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

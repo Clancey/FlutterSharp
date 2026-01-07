@@ -59,11 +59,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipRRect"/> class.
 		/// </summary>
 		public ClipRRect(
-			Widget _child,
 			BorderRadiusGeometry? _borderRadius,
 			InvalidType _clipper,
 			Clip _clipBehavior
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

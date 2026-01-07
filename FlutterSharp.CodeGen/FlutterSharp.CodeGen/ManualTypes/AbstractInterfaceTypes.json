@@ -99,10 +99,69 @@
     {
       "name": "BoxConstraints",
       "namespace": "package:flutter/rendering.dart",
-      "documentation": "Immutable layout constraints for RenderBox layout. This is a Flutter SDK class that cannot be marshaled through FFI. Widgets using BoxConstraints should be implemented with manual wrappers.",
+      "documentation": "Immutable layout constraints for RenderBox layout.",
+      "properties": [
+        {
+          "name": "minWidth",
+          "dartType": "double",
+          "csharpType": "double",
+          "isRequired": false,
+          "documentation": "The minimum width that satisfies the constraints."
+        },
+        {
+          "name": "maxWidth",
+          "dartType": "double",
+          "csharpType": "double",
+          "isRequired": false,
+          "documentation": "The maximum width that satisfies the constraints."
+        },
+        {
+          "name": "minHeight",
+          "dartType": "double",
+          "csharpType": "double",
+          "isRequired": false,
+          "documentation": "The minimum height that satisfies the constraints."
+        },
+        {
+          "name": "maxHeight",
+          "dartType": "double",
+          "csharpType": "double",
+          "isRequired": false,
+          "documentation": "The maximum height that satisfies the constraints."
+        }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "package:flutter/rendering.dart"
+    },
+    {
+      "name": "TextStyle",
+      "namespace": "package:flutter/painting.dart",
+      "documentation": "An immutable style describing how to format and paint text.",
+      "properties": [
+        { "name": "inherit", "dartType": "int", "csharpType": "int", "isRequired": true, "documentation": "Whether to inherit from parent TextStyle (1 = true)." },
+        { "name": "color", "dartType": "int", "csharpType": "uint", "isRequired": true, "documentation": "The color to use when painting the text (0 means null)." },
+        { "name": "backgroundColor", "dartType": "int", "csharpType": "uint", "isRequired": true, "documentation": "The color to use as the background for the text (0 means null)." },
+        { "name": "fontFamily", "dartType": "String?", "csharpType": "string", "isRequired": false, "documentation": "The name of the font to use when painting the text." },
+        { "name": "fontSize", "dartType": "double?", "csharpType": "double", "isRequired": false, "documentation": "The size of glyphs (in logical pixels) to use when painting the text." },
+        { "name": "fontWeight", "dartType": "int?", "csharpType": "int", "isRequired": false, "documentation": "The typeface thickness to use when painting the text." },
+        { "name": "fontStyle", "dartType": "int?", "csharpType": "int", "isRequired": false, "documentation": "The typeface variant to use when drawing the letters." },
+        { "name": "letterSpacing", "dartType": "double?", "csharpType": "double", "isRequired": false, "documentation": "The amount of space to add between each letter." },
+        { "name": "wordSpacing", "dartType": "double?", "csharpType": "double", "isRequired": false, "documentation": "The amount of space to add at each sequence of white-space." },
+        { "name": "textBaseline", "dartType": "int?", "csharpType": "int", "isRequired": false, "documentation": "The common baseline that should be aligned between this text span and its parent text span." },
+        { "name": "height", "dartType": "double?", "csharpType": "double", "isRequired": false, "documentation": "The height of this text span, as a multiple of the font size." },
+        { "name": "decorationThickness", "dartType": "double?", "csharpType": "double", "isRequired": false, "documentation": "The thickness of the decoration stroke as a multiplier of the thickness defined by the font." },
+        { "name": "debugLabel", "dartType": "String?", "csharpType": "string", "isRequired": false, "documentation": "A human-readable description of this text style." }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "package:flutter/painting.dart"
+    },
+    {
+      "name": "ImageProvider",
+      "namespace": "package:flutter/painting.dart",
+      "documentation": "Identifies an image without committing to the precise final asset.",
       "properties": [],
       "isAbstract": true,
-      "sourceLibrary": "package:flutter/rendering.dart"
+      "sourceLibrary": "package:flutter/painting.dart"
     }
   ]
 }

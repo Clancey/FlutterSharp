@@ -86,5 +86,11 @@ namespace Flutter.Structs
 /// position.
 		public IntPtr offset { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

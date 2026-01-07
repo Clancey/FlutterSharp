@@ -33,7 +33,7 @@ namespace Flutter.Structs
 /// * [Spacer], a widget that takes up space proportional to its flex value.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
 	[StructLayout(LayoutKind.Sequential)]
-	internal class FlexibleStruct : WidgetStruct
+	internal class FlexibleStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The flex factor to use for this child.
 /// 
@@ -53,6 +53,12 @@ namespace Flutter.Structs
 		public IntPtr fit { get; set; }
 
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

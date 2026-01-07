@@ -57,7 +57,7 @@ namespace Flutter.Structs
 /// 
 /// If [textDirection] is [TextDirection.ltr], the x offset is applied in the
 /// reading direction such that x offsets move the child towards the right.
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// Whether hit testing should be affected by the slide animation.
 /// 

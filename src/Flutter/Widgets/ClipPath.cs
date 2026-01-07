@@ -37,10 +37,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipPath"/> class.
 		/// </summary>
 		public ClipPath(
-			Widget _child,
 			InvalidType _clipper,
 			Clip _clipBehavior
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

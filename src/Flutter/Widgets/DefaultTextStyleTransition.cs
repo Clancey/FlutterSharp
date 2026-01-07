@@ -39,7 +39,8 @@ namespace Flutter.Widgets
 			bool _softWrap,
 			InvalidType _overflow,
 			Widget _child,
-			TextStyle? _style
+			TextStyle? _style,
+			object _listenable
 ,
 			int? _maxLines = null
 		)

@@ -45,9 +45,12 @@ namespace Flutter.Widgets
 			bool _softWrap,
 			InvalidType _overflow,
 			InvalidType _textWidthBasis,
-			InvalidType _textHeightBehavior
+			TextHeightBehavior _textHeightBehavior,
+			TimeSpan _duration
 ,
-			int? _maxLines = null
+			int? _maxLines = null,
+			Curve _curve = null,
+			InvalidType _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

@@ -50,9 +50,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Offstage"/> class.
 		/// </summary>
 		public Offstage(
-			Widget _child,
 			bool _offstage
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

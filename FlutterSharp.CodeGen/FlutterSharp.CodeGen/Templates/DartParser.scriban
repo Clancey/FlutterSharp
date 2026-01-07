@@ -8,7 +8,7 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
-import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor;
+import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve;
 import 'package:flutter_module/maui_flutter.dart';
 {{~ struct_import = string.downcase (string.replace struct_name "Struct" "") ~}}
 import '../structs/{{ struct_import }}_struct.dart';
@@ -22,29 +22,38 @@ class {{ parser_name }} extends WidgetParser {
     var map = Pointer<{{ struct_name }}>.fromAddress(fos.handle.address).ref;
     return {{ widget_name }}(
 {{~ for prop in properties ~}}
+{{~ # Strip @ prefix from C# escaped keywords for valid Dart identifiers ~}}
+{{~ clean_name = string.replace prop.name "@" "" ~}}
+{{~ # Skip debug-only parameters (debugTypicalAncestorWidgetClass, debugTypicalAncestorWidgetDescription, etc.) ~}}
+{{~ # These parameters only exist in Flutter's debug mode and can't be marshaled through FFI ~}}
+{{~ if string.starts_with clean_name "debug" ~}}
+{{~ continue ~}}
+{{~ end ~}}
 {{~ if prop.is_callback ~}}
-      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? _create{{ string.capitalize prop.name }}Callback(map.{{ prop.struct_property_name }}.toDartString()) : null{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? _create{{ string.capitalize clean_name }}Callback(map.{{ prop.struct_property_name }}.toDartString()) : null{{ if !for.last || has_children }},{{ end }}
 {{~ else if prop.is_pointer_void && prop.is_required ~}}
       // TODO: {{ prop.property_name }} is required but type '{{ prop.dart_type }}' cannot be marshaled through FFI
       // This widget needs a manual wrapper to properly handle this parameter
-      {{ prop.property_name }}: _get{{ string.capitalize prop.name }}Placeholder(){{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: _get{{ string.capitalize clean_name }}Placeholder(){{ if !for.last || has_children }},{{ end }}
 {{~ else if !prop.is_pointer_void ~}}
 {{~ # Handle different property types with proper null handling ~}}
 {{~ base_type = string.replace prop.dart_type "?" "" ~}}
 {{~ if prop.is_color_primitive ~}}
-{{~ if prop.is_nullable ~}}
+{{~ if prop.is_dart_nullable ~}}
       {{ prop.property_name }}: map.{{ prop.struct_property_name }} == 0 ? null : Color(map.{{ prop.struct_property_name }}){{ if !for.last || has_children }},{{ end }}
 {{~ else ~}}
       {{ prop.property_name }}: Color(map.{{ prop.struct_property_name }}){{ if !for.last || has_children }},{{ end }}
 {{~ end ~}}
 {{~ else if prop.is_enum_type && !prop.parser_function ~}}
-{{~ if prop.is_nullable ~}}
+{{~ if prop.is_dart_nullable ~}}
       {{ prop.property_name }}: map.{{ prop.struct_property_name }} == -1 ? null : {{ base_type }}.values[map.{{ prop.struct_property_name }}]{{ if !for.last || has_children }},{{ end }}
 {{~ else ~}}
       {{ prop.property_name }}: {{ base_type }}.values[map.{{ prop.struct_property_name }}]{{ if !for.last || has_children }},{{ end }}
 {{~ end ~}}
 {{~ else if prop.is_string ~}}
-{{~ if prop.is_nullable ~}}
+{{~ # For strings: use is_dart_nullable flag from C# generator ~}}
+{{~ # IsDartNullable correctly reflects whether the Flutter parameter is nullable ~}}
+{{~ if prop.is_dart_nullable ~}}
       {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? map.{{ prop.struct_property_name }}.toDartString() : null{{ if !for.last || has_children }},{{ end }}
 {{~ else ~}}
       {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? map.{{ prop.struct_property_name }}.toDartString() : ''{{ if !for.last || has_children }},{{ end }}
@@ -52,16 +61,27 @@ class {{ parser_name }} extends WidgetParser {
 {{~ else if prop.is_pointer_type ~}}
 {{~ # For pointer types, check for known types with sensible defaults FIRST (before nullable check) ~}}
 {{~ # These types have common Flutter defaults that we should use when not set ~}}
-{{~ if base_type == "AlignmentGeometry" || base_type == "Alignment" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Alignment.center{{ if !for.last || has_children }},{{ end }}
+{{~ if base_type == "Alignment" ~}}
+{{~ # Alignment (specific type) - need to cast from AlignmentGeometry parser result ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as Alignment) : Alignment.center{{ if !for.last || has_children }},{{ end }}
+{{~ else if base_type == "AlignmentGeometry" ~}}
+{{~ # AlignmentGeometry - cast to Alignment since Alignment.center is the default and most widgets accept Alignment ~}}
+{{~ # This cast is safe because parseAlignmentGeometry typically returns an Alignment instance ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as Alignment) : Alignment.center{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Curve" ~}}
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Curves.linear{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "EdgeInsetsGeometry" || base_type == "EdgeInsets" ~}}
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : EdgeInsets.zero{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "BorderRadiusGeometry" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : BorderRadius.zero{{ if !for.last || has_children }},{{ end }}
+{{~ # BorderRadiusGeometry - cast to BorderRadius since most widgets expect the concrete type ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as BorderRadius) : BorderRadius.zero{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "BorderRadius" ~}}
-      {{ prop.property_name }}: (map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : BorderRadius.zero) as BorderRadius?{{ if !for.last || has_children }},{{ end }}
+{{~ # BorderRadius (specific type) - need to cast from BorderRadiusGeometry parser result ~}}
+{{~ if prop.is_dart_nullable ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as BorderRadius?) : null{{ if !for.last || has_children }},{{ end }}
+{{~ else ~}}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as BorderRadius) : BorderRadius.zero{{ if !for.last || has_children }},{{ end }}
+{{~ end ~}}
 {{~ else if base_type == "BoxConstraints" ~}}
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const BoxConstraints(){{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Offset" ~}}
@@ -71,19 +91,24 @@ class {{ parser_name }} extends WidgetParser {
 {{~ else if base_type == "Decoration" || base_type == "BoxDecoration" ~}}
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const BoxDecoration(){{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "TextStyle" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const TextStyle(){{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? parseTextStyleFromStruct(map.{{ prop.struct_property_name }}.ref) : const TextStyle(){{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Matrix4" ~}}
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Matrix4.identity(){{ if !for.last || has_children }},{{ end }}
-{{~ else if prop.is_nullable ~}}
-{{~ # Unknown nullable type - return null when not set ~}}
+{{~ else if base_type == "Widget" ~}}
+{{~ # Widget type properties - use DynamicWidgetBuilder for proper widget parsing ~}}
+{{~ # Most Flutter widgets require their Widget properties (child, sliver, replacement, etc.) ~}}
+{{~ # So we use buildFromPointerNotNull which provides a fallback widget ~}}
+      {{ prop.property_name }}: DynamicWidgetBuilder.buildFromPointerNotNull(map.{{ prop.struct_property_name }}, buildContext){{ if !for.last || has_children }},{{ end }}
+{{~ else if prop.is_dart_nullable ~}}
+{{~ # Original Dart type is nullable - return null when not set ~}}
       {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : null{{ if !for.last || has_children }},{{ end }}
 {{~ else ~}}
-{{~ # Unknown non-nullable type - try to call parser anyway (will fail at runtime if pointer is null) ~}}
+{{~ # Original Dart type is non-nullable - try to call parser anyway (will fail at runtime if pointer is null) ~}}
       {{ prop.property_name }}: {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref){{ if !for.last || has_children }},{{ end }}
 {{~ end ~}}
 {{~ else if prop.parser_function ~}}
       {{ prop.property_name }}: {{ prop.parser_function }}(map.{{ prop.struct_property_name }}){{ if !for.last || has_children }},{{ end }}
-{{~ else if prop.is_bool && prop.is_nullable ~}}
+{{~ else if prop.is_bool && prop.is_dart_nullable ~}}
       {{ prop.property_name }}: map.{{ prop.struct_property_name }} == 1 ? true : (map.{{ prop.struct_property_name }} == 0 ? false : null){{ if !for.last || has_children }},{{ end }}
 {{~ else if prop.is_bool ~}}
       {{ prop.property_name }}: map.{{ prop.struct_property_name }} == 1{{ if !for.last || has_children }},{{ end }}
@@ -123,9 +148,11 @@ class {{ parser_name }} extends WidgetParser {
   }
 {{~
   # Collect all required Pointer<Void> properties that need placeholders
+  # Skip debug-only parameters (debugTypicalAncestorWidgetClass, etc.)
   required_void_props = []
   for prop in properties
-    if prop.is_pointer_void && prop.is_required
+    clean_prop_name = string.replace prop.name "@" ""
+    if prop.is_pointer_void && prop.is_required && !(string.starts_with clean_prop_name "debug")
       required_void_props = array.add required_void_props prop
     end
   end
@@ -142,7 +169,8 @@ class {{ parser_name }} extends WidgetParser {
 
   // Callback wrapper methods that dispatch to C# via method channel
 {{~ for prop in callback_props ~}}
-  dynamic _create{{ string.capitalize prop.name }}Callback(String actionId) {
+{{~ clean_callback_name = string.replace prop.name "@" "" ~}}
+  dynamic _create{{ string.capitalize clean_callback_name }}Callback(String actionId) {
     // Generic callback wrapper that handles various callback signatures
     // Returns a closure that dispatches the action and returns a placeholder widget if needed
     return (context, [child]) {
@@ -158,7 +186,8 @@ class {{ parser_name }} extends WidgetParser {
   // Placeholder methods for required parameters that cannot be marshaled through FFI
   // TODO: Implement proper handling for these parameters or create a manual wrapper
 {{~ for prop in required_void_props ~}}
-  dynamic _get{{ string.capitalize prop.name }}Placeholder() {
+{{~ clean_placeholder_name = string.replace prop.name "@" "" ~}}
+  dynamic _get{{ string.capitalize clean_placeholder_name }}Placeholder() {
     // TODO: Provide proper default value for {{ prop.dart_type }}
     throw UnimplementedError('{{ widget_name }}.{{ prop.property_name }} requires manual implementation - type {{ prop.dart_type }} cannot be auto-generated');
   }

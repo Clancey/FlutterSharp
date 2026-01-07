@@ -60,9 +60,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverFadeTransition(
 			Widget _child,
-			InvalidType _opacity,
+			Animation<double> _opacity,
 			bool _alwaysIncludeSemantics
-
+,
+			Widget? _sliver = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

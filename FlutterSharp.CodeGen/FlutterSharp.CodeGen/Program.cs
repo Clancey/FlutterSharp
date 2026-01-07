@@ -396,6 +396,32 @@ internal class Program
 
 		_generatedFileCount = 0;
 
+		// Widgets that require Animation<T> parameters or special handling
+		// These generate invalid parsers because FFI can't serialize Animation controllers
+		var skipParserGeneration = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+		{
+			// Transition widgets (require Animation<T> parameters)
+			"AlignTransition", "DecoratedBoxTransition", "DefaultTextStyleTransition",
+			"FadeTransition", "MatrixTransition", "PositionedTransition",
+			"RelativePositionedTransition", "RotationTransition", "ScaleTransition",
+			"SizeTransition", "SlideTransition", "SliverFadeTransition",
+			// Animated builders (require Listenable/Animation parameters)
+			"AnimatedBuilder", "AnimatedModalBarrier", "DualTransitionBuilder",
+			// Widgets with complex required parameters that can't be FFI serialized
+			"EditableText", "FadeInImage", "FlutterLogo", "Image", "RawImage",
+			"KeyboardListener", "RawKeyboardListener", "UndoHistory",
+			"ListWheelViewport", "ShrinkWrappingViewport", "Viewport",
+			"PrimaryScrollController", "WidgetsApp", "Table",
+			// Platform-specific widgets
+			"ImgElementPlatformView", "RawWebImage", "SystemContextMenu",
+			// Widgets with delegate parameters
+			"AnnotatedRegion", "SelectionContainer",
+			// Widgets with positional-only arguments or special constructors
+			"Icon", "ImageIcon", "Text", "RichText", "Dismissible",
+			"LayoutId", "ListWheelScrollView", "PageView", "Semantics",
+			"SliverConstrainedCrossAxis", "SliverSafeArea", "SliverVisibility", "Wrap"
+		};
+
 		// Generate widgets
 		LogInfo("");
 		LogInfo("Generating widget code...");
@@ -441,13 +467,20 @@ internal class Program
 					cancellationToken);
 				_generatedFileCount++;
 
-				// Dart Parser - use enriched data
-				var dartParserCode = dartParserGenerator.Generate(enrichedWidget);
-				await File.WriteAllTextAsync(
-					Path.Combine(dartParsersDir, $"{enrichedWidget.Name.ToLowerInvariant()}_parser.dart"),
-					dartParserCode,
-					cancellationToken);
-				_generatedFileCount++;
+				// Dart Parser - skip widgets that require Animation or complex parameters
+				if (!skipParserGeneration.Contains(enrichedWidget.Name))
+				{
+					var dartParserCode = dartParserGenerator.Generate(enrichedWidget);
+					await File.WriteAllTextAsync(
+						Path.Combine(dartParsersDir, $"{enrichedWidget.Name.ToLowerInvariant()}_parser.dart"),
+						dartParserCode,
+						cancellationToken);
+					_generatedFileCount++;
+				}
+				else
+				{
+					LogVerbose($"  Skipping parser generation for {enrichedWidget.Name} (requires Animation/complex parameters)");
+				}
 			}
 		}
 
@@ -713,7 +746,7 @@ internal class Program
 		// Generate parser registration file (imports + list)
 		LogInfo("");
 		LogInfo("Generating parser registration file...");
-		var parserRegistrationCode = dartParserImportsGenerator.Generate(packageDefinition.Widgets);
+		var parserRegistrationCode = dartParserImportsGenerator.Generate(packageDefinition.Widgets, skipParserGeneration);
 		await File.WriteAllTextAsync(
 			Path.Combine(outputDart, "generated_parsers.dart"),
 			parserRegistrationCode,

@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Flutter.Animation
+namespace Flutter
 {
 /// Configures how an [AnimationController] behaves when animations are
 /// disabled.

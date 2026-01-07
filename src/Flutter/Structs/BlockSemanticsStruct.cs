@@ -31,5 +31,11 @@ namespace Flutter.Structs
 /// before it in the same semantic container.
 		public bool blocking { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

@@ -135,5 +135,11 @@ namespace Flutter.Structs
 /// would otherwise contribute relevant semantics.
 		public bool alwaysIncludeSemantics { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

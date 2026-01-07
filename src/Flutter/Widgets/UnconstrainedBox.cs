@@ -46,7 +46,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="UnconstrainedBox"/> class.
 		/// </summary>
 		public UnconstrainedBox(
-			InvalidType _textDirection,
+			TextDirection _textDirection,
 			AlignmentGeometry? _alignment,
 			InvalidType _constrainedAxis,
 			Clip _clipBehavior

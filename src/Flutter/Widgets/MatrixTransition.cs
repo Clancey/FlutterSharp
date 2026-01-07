@@ -40,7 +40,8 @@ namespace Flutter.Widgets
 			Func<double, InvalidType> _onTransform,
 			AlignmentGeometry? _alignment,
 			InvalidType _filterQuality,
-			InvalidType _animation
+			Animation<double> _animation,
+			object _listenable
 ,
 			Widget? _child = null
 		)

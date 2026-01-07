@@ -82,7 +82,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ListenableBuilder(
 			Func<BuildContext, Widget?, Widget> _builder,
-			InvalidType _listenable
+			Listenable _listenable
 ,
 			Widget? _child = null
 		)

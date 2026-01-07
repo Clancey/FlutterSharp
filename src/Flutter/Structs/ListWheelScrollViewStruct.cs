@@ -26,7 +26,7 @@ namespace Flutter.Structs
 /// The children are rendered as if rotating on a wheel instead of scrolling on
 /// a plane.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class ListWheelScrollViewStruct : WidgetStruct
+	internal class ListWheelScrollViewStruct : MultiChildRenderObjectWidgetStruct
 	{
 /// Typically a [FixedExtentScrollController] used to control the current item.
 /// 
@@ -120,6 +120,8 @@ namespace Flutter.Structs
 
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
 		public IntPtr dragStartBehavior { get; set; }
+
+		public IntPtr children { get; set; }
 
 	}
 }

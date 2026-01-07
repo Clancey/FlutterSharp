@@ -31,5 +31,11 @@ namespace Flutter.Structs
 /// The amount of space by which to inset the child sliver.
 		public IntPtr padding { get; set; }
 
+		IntPtr _sliver;
+		public Widget? sliver
+		{
+			set => SetIntPtr(ref _sliver, value);
+		}
+
 	}
 }

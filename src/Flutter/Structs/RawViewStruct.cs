@@ -67,5 +67,9 @@ namespace Flutter.Structs
 			set => SetIntPtr(ref _child, value);
 		}
 
+		public IntPtr deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner { get; set; }
+
+		public IntPtr deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView { get; set; }
+
 	}
 }

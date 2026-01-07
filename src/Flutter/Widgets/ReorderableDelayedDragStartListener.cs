@@ -33,7 +33,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ReorderableDelayedDragStartListener"/> class.
 		/// </summary>
 		public ReorderableDelayedDragStartListener(
-
+			Widget _child,
+			int _index
+,
+			bool _enabled = true
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

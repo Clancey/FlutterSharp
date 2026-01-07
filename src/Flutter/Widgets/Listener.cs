@@ -44,7 +44,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Listener"/> class.
 		/// </summary>
 		public Listener(
-			Widget _child,
 			InvalidType _onPointerDown,
 			InvalidType _onPointerMove,
 			InvalidType _onPointerUp,
@@ -55,7 +54,8 @@ namespace Flutter.Widgets
 			InvalidType _onPointerPanZoomEnd,
 			InvalidType _onPointerSignal,
 			InvalidType _behavior
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

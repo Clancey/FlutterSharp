@@ -761,5 +761,12 @@ namespace Flutter.Structs
 
 		public int hashCode { get; set; }
 
+		IntPtr _package;
+		public string? package
+		{
+			get => GetString(_package);
+			set => SetString(ref _package, value);
+		}
+
 	}
 }

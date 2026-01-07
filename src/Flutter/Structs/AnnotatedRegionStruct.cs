@@ -34,5 +34,11 @@ namespace Flutter.Structs
 /// * [AnnotatedRegionLayer], for a description of this behavior.
 		public bool sized { get; set; }
 
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

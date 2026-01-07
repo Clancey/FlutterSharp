@@ -47,7 +47,7 @@ namespace Flutter.Structs
 /// changes in the child's position over a given duration.
 /// * [PositionedDirectional], which adapts to the ambient [Directionality].
 	[StructLayout(LayoutKind.Sequential)]
-	internal class PositionedStruct : WidgetStruct
+	internal class PositionedStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The distance that the child's left edge is inset from the left of the stack.
 /// 
@@ -104,6 +104,12 @@ namespace Flutter.Structs
 		public NativeNullable<double> height { get; set; }
 
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

@@ -62,7 +62,7 @@ namespace Flutter.Structs
 /// * [InheritedModel], an inherited widget that allows clients to subscribe
 /// to changes for subparts of the value.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class InheritedNotifierStruct : WidgetStruct
+	internal class InheritedNotifierStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The [Listenable] object to which to listen.
 /// 
@@ -77,6 +77,12 @@ namespace Flutter.Structs
 /// While the [notifier] is null, no notifications are sent, since the null
 /// object cannot itself send notifications.
 		public IntPtr? notifier { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

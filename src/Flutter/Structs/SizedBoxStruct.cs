@@ -74,5 +74,11 @@ namespace Flutter.Structs
 /// If non-null, requires the child to have exactly this height.
 		public NativeNullable<double> height { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

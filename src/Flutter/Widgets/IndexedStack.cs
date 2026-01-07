@@ -40,7 +40,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public IndexedStack(
 			AlignmentGeometry? _alignment,
-			InvalidType _textDirection,
+			TextDirection _textDirection,
 			Clip _clipBehavior,
 			InvalidType _sizing,
 			List<Widget> _children

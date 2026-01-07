@@ -34,5 +34,15 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class CenterStruct : SingleChildRenderObjectWidgetStruct
 	{
+		public NativeNullable<double> widthFactor { get; set; }
+
+		public NativeNullable<double> heightFactor { get; set; }
+
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

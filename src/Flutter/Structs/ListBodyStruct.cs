@@ -51,5 +51,7 @@ namespace Flutter.Structs
 /// Defaults to false.
 		public bool reverse { get; set; }
 
+		public IntPtr children { get; set; }
+
 	}
 }

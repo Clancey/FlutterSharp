@@ -36,7 +36,7 @@ namespace Flutter.Structs
 /// [AutomaticKeepAliveClientMixin] into one's [State]. See the documentation
 /// for that mixin class for details.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class KeepAliveStruct : WidgetStruct
+	internal class KeepAliveStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// Whether to keep the child alive.
 /// 
@@ -50,6 +50,12 @@ namespace Flutter.Structs
 		{
 			get => GetString(_debugTypicalAncestorWidgetDescription);
 			set => SetString(ref _debugTypicalAncestorWidgetDescription, value);
+		}
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
 		}
 
 	}

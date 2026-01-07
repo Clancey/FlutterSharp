@@ -69,7 +69,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverGrid"/> class.
 		/// </summary>
 		public SliverGrid(
-			InvalidType _gridDelegate
+			SliverGridDelegate _gridDelegate,
+			SliverChildDelegate _delegate
 
 		)
 		{

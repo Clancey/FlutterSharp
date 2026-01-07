@@ -53,5 +53,7 @@ namespace Flutter.Structs
 			set => SetIntPtr(ref _prototypeItem, value);
 		}
 
+		public IntPtr @delegate { get; set; }
+
 	}
 }

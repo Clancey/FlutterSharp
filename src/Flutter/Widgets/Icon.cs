@@ -72,7 +72,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Icon(
 			Color? _color,
-			InvalidType _textDirection,
+			TextDirection _textDirection,
 			InvalidType _blendMode
 ,
 			IconData? _icon = null,

@@ -25,9 +25,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnnotatedRegion"/> class.
 		/// </summary>
 		public AnnotatedRegion(
-			Widget _child,
 			T _value,
-			bool _sized
+			bool _sized,
+			Widget _child
 
 		)
 		{

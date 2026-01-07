@@ -41,9 +41,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedPadding"/> class.
 		/// </summary>
 		public AnimatedPadding(
-			EdgeInsetsGeometry? _padding
+			EdgeInsetsGeometry? _padding,
+			TimeSpan _duration
 ,
-			Widget? _child = null
+			Widget? _child = null,
+			Curve _curve = null,
+			InvalidType _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

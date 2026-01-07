@@ -182,5 +182,21 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ColumnStruct : MultiChildRenderObjectWidgetStruct
 	{
+		public IntPtr mainAxisAlignment { get; set; }
+
+		public IntPtr mainAxisSize { get; set; }
+
+		public IntPtr crossAxisAlignment { get; set; }
+
+		public TextDirection textDirection { get; set; }
+
+		public IntPtr verticalDirection { get; set; }
+
+		public IntPtr textBaseline { get; set; }
+
+		public double spacing { get; set; }
+
+		public IntPtr children { get; set; }
+
 	}
 }

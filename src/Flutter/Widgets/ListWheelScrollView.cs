@@ -44,8 +44,9 @@ namespace Flutter.Widgets
 			bool _renderChildrenOutsideViewport,
 			ListWheelChildDelegate _childDelegate,
 			Clip _clipBehavior,
-			InvalidType _hitTestBehavior,
-			InvalidType _dragStartBehavior
+			PlatformViewHitTestBehavior _hitTestBehavior,
+			InvalidType _dragStartBehavior,
+			List<Widget> _children
 ,
 			ScrollController? _controller = null,
 			ScrollPhysics? _physics = null,

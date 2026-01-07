@@ -50,9 +50,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SlideTransition"/> class.
 		/// </summary>
 		public SlideTransition(
-			InvalidType _textDirection,
+			TextDirection _textDirection,
 			bool _transformHitTests,
-			InvalidType _position
+			InvalidType _position,
+			object _listenable
 ,
 			Widget? _child = null
 		)

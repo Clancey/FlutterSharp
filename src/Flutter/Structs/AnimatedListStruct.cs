@@ -69,5 +69,25 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedListStruct : WidgetStruct
 	{
+		public IntPtr itemBuilder { get; set; }
+
+		public int initialItemCount { get; set; }
+
+		public IntPtr scrollDirection { get; set; }
+
+		public bool reverse { get; set; }
+
+		public IntPtr? controller { get; set; }
+
+		public NativeNullable<bool> primary { get; set; }
+
+		public IntPtr? physics { get; set; }
+
+		public bool shrinkWrap { get; set; }
+
+		public IntPtr padding { get; set; }
+
+		public Clip clipBehavior { get; set; }
+
 	}
 }

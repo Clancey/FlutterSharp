@@ -37,9 +37,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CompositedTransformTarget"/> class.
 		/// </summary>
 		public CompositedTransformTarget(
-			Widget _child,
-			InvalidType _link
-
+			LayerLink _link
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

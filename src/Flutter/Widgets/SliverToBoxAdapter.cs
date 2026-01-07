@@ -43,8 +43,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverToBoxAdapter"/> class.
 		/// </summary>
 		public SliverToBoxAdapter(
-			Widget _child
 
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

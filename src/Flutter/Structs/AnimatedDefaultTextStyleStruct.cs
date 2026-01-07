@@ -81,5 +81,11 @@ namespace Flutter.Structs
 /// {@macro dart.ui.textHeightBehavior}
 		public IntPtr textHeightBehavior { get; set; }
 
+		public IntPtr curve { get; set; }
+
+		public IntPtr duration { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

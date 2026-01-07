@@ -87,7 +87,7 @@ namespace Flutter.Structs
 /// The direction in which the columns are ordered.
 /// 
 /// Defaults to the ambient [Directionality].
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// The style to use when painting the boundary and interior divisions of the table.
 		public IntPtr border { get; set; }

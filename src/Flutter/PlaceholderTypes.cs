@@ -11,7 +11,7 @@ namespace Flutter
 	public class InvalidType { }
 
 	// Flutter framework types
-	public class BuildContext { }
+	// Note: BuildContext is now defined in WidgetBuilder.cs
 	public class FocusNode { }
 	public class ScrollController { }
 	public class ScrollPhysics { }
@@ -106,16 +106,16 @@ namespace Flutter
 	public class _RouterState<T> { }
 	public class Map<TKey, TValue> { }
 
-	// Generic base widget types
-	public class Draggable<T> : StatefulWidget { }
-	public class ParentDataWidget<T> : ProxyWidget { }
-	public class InheritedModel<T> : InheritedWidget { }
-	public class InheritedNotifier<T> : InheritedWidget { }
-	public class AbstractLayoutBuilder<T> : RenderObjectWidget { }
-	public class ConstrainedLayoutBuilder<T> : RenderObjectWidget { }
-	public class StreamBuilderBase<T, S> : StatefulWidget { }
-	public class SlottedMultiChildRenderObjectWidget<TSlot, TChild> : RenderObjectWidget { }
-	public class _DarwinPlatformView<TController, TRender> : StatefulWidget { }
+	// Generic base widget types - using Flutter.Widgets namespace for base classes
+	public class Draggable<T> : Flutter.Widgets.StatefulWidget { }
+	public class ParentDataWidget<T> : Flutter.Widgets.ProxyWidget { }
+	public class InheritedModel<T> : Flutter.Widgets.InheritedWidget { }
+	public class InheritedNotifier<T> : Flutter.Widgets.InheritedWidget { }
+	public class AbstractLayoutBuilder<T> : Flutter.Widgets.RenderObjectWidget { }
+	public class ConstrainedLayoutBuilder<T> : Flutter.Widgets.RenderObjectWidget { }
+	public class StreamBuilderBase<T, S> : Flutter.Widgets.StatefulWidget { }
+	public class SlottedMultiChildRenderObjectWidget<TSlot, TChild> : Flutter.Widgets.RenderObjectWidget { }
+	public class _DarwinPlatformView<TController, TRender> : Flutter.Widgets.StatefulWidget { }
 
 	// Non-generic versions for generated code that doesn't specify type arguments
 	public class Draggable : Draggable<object> { }
@@ -128,24 +128,45 @@ namespace Flutter
 	public class SlottedMultiChildRenderObjectWidget : SlottedMultiChildRenderObjectWidget<object, object> { }
 	public class _DarwinPlatformView : _DarwinPlatformView<object, object> { }
 
-	// Non-Flutter widget base classes needed for compilation
-	public class StatefulWidget : Widget
-	{
-		protected override FlutterObjectStruct CreateBackingStruct() => throw new NotImplementedException("This is a placeholder type for FFI interop");
-	}
-	public class ProxyWidget : Widget
-	{
-		protected override FlutterObjectStruct CreateBackingStruct() => throw new NotImplementedException("This is a placeholder type for FFI interop");
-	}
-	public class InheritedWidget : ProxyWidget
-	{
-		protected override FlutterObjectStruct CreateBackingStruct() => throw new NotImplementedException("This is a placeholder type for FFI interop");
-	}
-	public class RenderObjectWidget : Widget
-	{
-		protected override FlutterObjectStruct CreateBackingStruct() => throw new NotImplementedException("This is a placeholder type for FFI interop");
-	}
+	// Note: StatefulWidget, ProxyWidget, InheritedWidget, RenderObjectWidget are now defined in Flutter.Widgets namespace
 
 	// System types that might be missing
 	public class StackTrace { }
+
+	// Additional missing types
+	public class Alignment
+	{
+		public static readonly Alignment TopLeft = new Alignment(-1.0, -1.0);
+		public static readonly Alignment TopCenter = new Alignment(0.0, -1.0);
+		public static readonly Alignment TopRight = new Alignment(1.0, -1.0);
+		public static readonly Alignment CenterLeft = new Alignment(-1.0, 0.0);
+		public static readonly Alignment Center = new Alignment(0.0, 0.0);
+		public static readonly Alignment CenterRight = new Alignment(1.0, 0.0);
+		public static readonly Alignment BottomLeft = new Alignment(-1.0, 1.0);
+		public static readonly Alignment BottomCenter = new Alignment(0.0, 1.0);
+		public static readonly Alignment BottomRight = new Alignment(1.0, 1.0);
+
+		public double X { get; }
+		public double Y { get; }
+
+		public Alignment(double x, double y) { X = x; Y = y; }
+	}
+
+	public class ImageFilter { }
+
+	public enum SemanticsValidationResult
+	{
+		None,
+		Valid,
+		Invalid,
+	}
+
+	// Additional missing types
+	public class PlatformViewCreationParams { }
+	public class InlineSpan { }
+	public class FocusScopeNode : FocusNode { }
+	public class ColorFilter { }
+	public delegate BoxConstraints BoxConstraintsTransform(BoxConstraints constraints);
+	public class AssetBundle { }
+
 }

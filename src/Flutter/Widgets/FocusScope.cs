@@ -79,7 +79,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FocusScope"/> class.
 		/// </summary>
 		public FocusScope(
-
+			Widget _child
+,
+			FocusScopeNode? _node = null,
+			FocusNode? _parentNode = null,
+			bool _autofocus = false,
+			InvalidType _onFocusChange = null,
+			bool? _canRequestFocus = null,
+			bool? _skipTraversal = null,
+			Func<FocusNode, InvalidType, KeyEventResult> _onKeyEvent = null,
+			Func<FocusNode, InvalidType, KeyEventResult> _onKey = null,
+			string? _debugLabel = null,
+			bool _includeSemantics = true,
+			bool? _descendantsAreFocusable = null,
+			bool? _descendantsAreTraversable = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

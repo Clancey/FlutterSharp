@@ -65,8 +65,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FadeInImage"/> class.
 		/// </summary>
 		public FadeInImage(
-			InvalidType _placeholder,
-			InvalidType _image,
+			ImageProvider? _placeholder,
+			ImageProvider _image,
 			TimeSpan _fadeOutDuration,
 			InvalidType _fadeOutCurve,
 			TimeSpan _fadeInDuration,

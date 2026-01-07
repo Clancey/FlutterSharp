@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Flutter.Animation
+namespace Flutter
 {
 /// The status of an animation.
 	public enum AnimationStatus

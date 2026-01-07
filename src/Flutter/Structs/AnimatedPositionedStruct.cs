@@ -87,5 +87,11 @@ namespace Flutter.Structs
 /// be set. The third must be null.
 		public NativeNullable<double> height { get; set; }
 
+		public IntPtr curve { get; set; }
+
+		public IntPtr duration { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

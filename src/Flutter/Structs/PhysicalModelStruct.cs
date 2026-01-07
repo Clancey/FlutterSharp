@@ -59,5 +59,11 @@ namespace Flutter.Structs
 /// The shadow color.
 		public IntPtr shadowColor { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

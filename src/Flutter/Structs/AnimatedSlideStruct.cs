@@ -49,5 +49,11 @@ namespace Flutter.Structs
 /// The child will be translated horizontally by `width * dx` and vertically by `height * dy`
 		public IntPtr offset { get; set; }
 
+		public IntPtr curve { get; set; }
+
+		public IntPtr duration { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

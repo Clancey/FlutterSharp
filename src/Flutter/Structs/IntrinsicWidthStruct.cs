@@ -70,5 +70,11 @@ namespace Flutter.Structs
 /// This value must not be negative.
 		public NativeNullable<double> stepHeight { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

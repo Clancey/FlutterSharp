@@ -58,14 +58,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedPositioned"/> class.
 		/// </summary>
 		public AnimatedPositioned(
-			Widget _child
+			Widget _child,
+			TimeSpan _duration
 ,
 			double? _left = null,
 			double? _top = null,
 			double? _right = null,
 			double? _bottom = null,
 			double? _width = null,
-			double? _height = null
+			double? _height = null,
+			Curve _curve = null,
+			InvalidType _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

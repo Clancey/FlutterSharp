@@ -141,13 +141,13 @@ namespace Flutter.Widgets
 			TextStyle? _style,
 			InvalidType _strutStyle,
 			InvalidType _textAlign,
-			InvalidType _textDirection,
+			TextDirection _textDirection,
 			InvalidType _locale,
 			InvalidType _overflow,
 			InvalidType _textScaler,
 			InvalidType _textWidthBasis,
-			InvalidType _textHeightBehavior,
-			InvalidType _selectionColor
+			TextHeightBehavior _textHeightBehavior,
+			Color? _selectionColor
 ,
 			string? _data = null,
 			bool? _softWrap = null,

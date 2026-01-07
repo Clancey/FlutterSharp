@@ -56,5 +56,11 @@ namespace Flutter.Structs
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

@@ -43,7 +43,7 @@ namespace Flutter.Structs
 /// by its descendants when invoking an [Action] via a keyboard key
 /// combination that maps to an [Intent].
 	[StructLayout(LayoutKind.Sequential)]
-	internal class PrimaryScrollControllerStruct : WidgetStruct
+	internal class PrimaryScrollControllerStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The [ScrollController] associated with the subtree.
 /// 
@@ -81,6 +81,12 @@ namespace Flutter.Structs
 /// When empty, no ScrollView in any Axis will automatically inherit this
 /// controller. Defaults to [TargetPlatformVariant.mobile].
 		public IntPtr automaticallyInheritForPlatforms { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

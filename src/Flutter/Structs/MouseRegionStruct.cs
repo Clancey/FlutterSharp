@@ -195,5 +195,11 @@ namespace Flutter.Structs
 /// This defaults to [HitTestBehavior.opaque] if null.
 		public IntPtr hitTestBehavior { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

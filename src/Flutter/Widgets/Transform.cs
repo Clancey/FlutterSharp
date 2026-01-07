@@ -58,13 +58,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Transform"/> class.
 		/// </summary>
 		public Transform(
-			Widget _child,
 			Matrix4? _transform,
 			InvalidType _origin,
 			AlignmentGeometry? _alignment,
 			bool _transformHitTests,
 			InvalidType _filterQuality
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

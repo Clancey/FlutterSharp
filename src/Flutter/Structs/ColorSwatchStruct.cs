@@ -29,5 +29,9 @@ namespace Flutter.Structs
 
 		public int hashCode { get; set; }
 
+		public IntPtr primary { get; set; }
+
+		public IntPtr _swatch { get; set; }
+
 	}
 }

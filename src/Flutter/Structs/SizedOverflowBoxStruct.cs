@@ -51,5 +51,11 @@ namespace Flutter.Structs
 /// The size this widget should attempt to be.
 		public IntPtr size { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

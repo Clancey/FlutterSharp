@@ -40,7 +40,8 @@ namespace Flutter.Widgets
 		public DecoratedBoxTransition(
 			Decoration? _decoration,
 			InvalidType _position,
-			Widget _child
+			Widget _child,
+			object _listenable
 
 		)
 		{

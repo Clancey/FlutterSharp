@@ -40,5 +40,11 @@ namespace Flutter.Structs
 /// that is also being painted.
 		public IntPtr link { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

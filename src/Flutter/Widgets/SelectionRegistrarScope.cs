@@ -28,8 +28,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SelectionRegistrarScope"/> class.
 		/// </summary>
 		public SelectionRegistrarScope(
-			Widget _child,
-			InvalidType _registrar
+			InvalidType _registrar,
+			Widget _child
 
 		)
 		{

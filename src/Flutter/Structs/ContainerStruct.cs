@@ -240,5 +240,9 @@ namespace Flutter.Structs
 /// method throws an [UnsupportedError].)
 		public Clip clipBehavior { get; set; }
 
+		public NativeNullable<double> width { get; set; }
+
+		public NativeNullable<double> height { get; set; }
+
 	}
 }

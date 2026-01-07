@@ -44,7 +44,7 @@ namespace Flutter.Structs
 	{
 /// The text direction to use when interpreting the [alignment] if it is an
 /// [AlignmentDirectional].
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// The alignment to use when laying out the child.
 /// 

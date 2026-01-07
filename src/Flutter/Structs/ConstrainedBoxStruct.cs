@@ -53,5 +53,11 @@ namespace Flutter.Structs
 /// The additional constraints to impose on the child.
 		public IntPtr constraints { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

@@ -30,8 +30,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultTextHeightBehavior"/> class.
 		/// </summary>
 		public DefaultTextHeightBehavior(
-			Widget _child,
-			InvalidType _textHeightBehavior
+			TextHeightBehavior _textHeightBehavior,
+			Widget _child
 
 		)
 		{

@@ -74,7 +74,7 @@ namespace Flutter.Structs
 /// 
 /// Defaults to null, in which case [Directionality.maybeOf] is used to determine
 /// the text direction.
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// The alignment to use when laying out the child, if it has a different size
 /// than this widget.
@@ -111,6 +111,19 @@ namespace Flutter.Structs
 /// 
 /// Defaults to [Clip.none].
 		public Clip clipBehavior { get; set; }
+
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
+		IntPtr _debugTransformType;
+		public string debugTransformType
+		{
+			get => GetString(_debugTransformType);
+			set => SetString(ref _debugTransformType, value);
+		}
 
 	}
 }

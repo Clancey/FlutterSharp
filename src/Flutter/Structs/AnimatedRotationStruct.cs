@@ -94,5 +94,11 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.Transform.optional.FilterQuality}
 		public IntPtr filterQuality { get; set; }
 
+		public IntPtr curve { get; set; }
+
+		public IntPtr duration { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

@@ -34,9 +34,19 @@ namespace Flutter.Structs
 /// * [SizeTransition], a widget that animates its own size and clips and
 /// aligns its child.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class ScaleTransitionStruct : WidgetStruct
+	internal class ScaleTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
 		public IntPtr scale { get; set; }
+
+		public IntPtr alignment { get; set; }
+
+		public IntPtr filterQuality { get; set; }
+
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

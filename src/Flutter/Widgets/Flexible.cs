@@ -39,10 +39,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flexible"/> class.
 		/// </summary>
 		public Flexible(
-			Widget _child,
 			int _flex,
 			InvalidType _fit,
-			Type _debugTypicalAncestorWidgetClass
+			Type _debugTypicalAncestorWidgetClass,
+			Widget _child
 
 		)
 		{

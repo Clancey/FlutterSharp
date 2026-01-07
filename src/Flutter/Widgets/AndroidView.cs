@@ -63,7 +63,7 @@ namespace Flutter.Widgets
 		public AndroidView(
 			string _viewType,
 			InvalidType _onPlatformViewCreated,
-			InvalidType _hitTestBehavior,
+			PlatformViewHitTestBehavior _hitTestBehavior,
 			InvalidType _layoutDirection,
 			object _creationParams,
 			InvalidType _creationParamsCodec,

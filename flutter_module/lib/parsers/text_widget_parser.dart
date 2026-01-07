@@ -12,7 +12,7 @@ class TextWidgetParser implements WidgetParser {
   @override
   Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<TextStruct>.fromAddress(fos.handle.address).ref;
-    String? data = parseString(map.value);
+    String? data = map.hasData == 1 ? map.data.toDartString() : null;
     String? textAlignString = null; //map['textAlign'];
     String? overflow = null; //map['overflow'];
     int? maxLines = null; //map['maxLines'];

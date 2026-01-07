@@ -47,9 +47,10 @@ namespace Flutter.Widgets
 			List<Widget> _children,
 			InvalidType _axisDirection,
 			InvalidType _crossAxisDirection,
-			InvalidType _offset,
+			Offset _offset,
 			Clip _clipBehavior
-
+,
+			List<Widget> _slivers = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

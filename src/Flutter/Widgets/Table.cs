@@ -54,7 +54,7 @@ namespace Flutter.Widgets
 		public Table(
 			List<TableRow> _children,
 			InvalidType _defaultColumnWidth,
-			InvalidType _textDirection,
+			TextDirection _textDirection,
 			BoxBorder? _border,
 			InvalidType _defaultVerticalAlignment,
 			InvalidType _textBaseline

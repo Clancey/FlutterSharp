@@ -41,7 +41,10 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ScaleTransition(
 			InvalidType _scale
-
+,
+			AlignmentGeometry? _alignment = null,
+			InvalidType _filterQuality = null,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

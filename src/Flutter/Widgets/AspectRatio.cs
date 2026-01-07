@@ -96,9 +96,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AspectRatio"/> class.
 		/// </summary>
 		public AspectRatio(
-			Widget _child,
 			double _aspectRatio
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

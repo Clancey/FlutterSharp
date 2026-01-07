@@ -39,5 +39,7 @@ namespace Flutter.Structs
 /// The bottom-end [Radius].
 		public IntPtr bottomEnd { get; set; }
 
+		public IntPtr radius { get; set; }
+
 	}
 }

@@ -57,5 +57,9 @@ namespace Flutter.Structs
 			set => SetString(ref _viewType, value);
 		}
 
+		public IntPtr surfaceFactory { get; set; }
+
+		public IntPtr onCreatePlatformView { get; set; }
+
 	}
 }

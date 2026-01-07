@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Flutter.UI
+namespace Flutter
 {
 /// How an embedded platform view behave during hit tests.
 	public enum PlatformViewHitTestBehavior

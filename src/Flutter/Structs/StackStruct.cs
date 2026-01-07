@@ -156,7 +156,7 @@ namespace Flutter.Structs
 /// The text direction with which to resolve [alignment].
 /// 
 /// Defaults to the ambient [Directionality].
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// How to size the non-positioned children in the stack.
 /// 
@@ -180,6 +180,8 @@ namespace Flutter.Structs
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
+
+		public IntPtr children { get; set; }
 
 	}
 }

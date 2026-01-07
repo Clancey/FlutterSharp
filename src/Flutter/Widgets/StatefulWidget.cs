@@ -222,6 +222,19 @@ namespace Flutter.Widgets
 			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
+		/// <summary>
+		/// Builds the widget tree. Override this method to provide your widget's UI.
+		/// </summary>
+		public virtual Widget Build() => throw new NotImplementedException("Override Build() in derived class");
+
+		/// <summary>
+		/// Notifies the framework that the internal state of this widget has changed.
+		/// </summary>
+		protected void SetState(Action action)
+		{
+			action?.Invoke();
+			// TODO: Notify Flutter framework of state change
+		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new StatefulWidgetStruct();
 	}

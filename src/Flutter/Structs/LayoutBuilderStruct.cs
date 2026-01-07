@@ -45,5 +45,7 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class LayoutBuilderStruct : WidgetStruct
 	{
+		public IntPtr builder { get; set; }
+
 	}
 }

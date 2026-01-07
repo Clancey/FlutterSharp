@@ -61,5 +61,11 @@ namespace Flutter.Structs
 /// If false, the child is included in the tree as normal.
 		public bool offstage { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

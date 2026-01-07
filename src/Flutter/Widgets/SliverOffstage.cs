@@ -36,7 +36,8 @@ namespace Flutter.Widgets
 		public SliverOffstage(
 			Widget _child,
 			bool _offstage
-
+,
+			Widget? _sliver = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

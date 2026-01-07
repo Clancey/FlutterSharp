@@ -45,5 +45,11 @@ namespace Flutter.Structs
 /// The number of clockwise quarter turns the child should be rotated.
 		public int quarterTurns { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

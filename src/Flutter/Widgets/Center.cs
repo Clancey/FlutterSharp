@@ -39,6 +39,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Center(
 
+			double? _widthFactor = null,
+			double? _heightFactor = null,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

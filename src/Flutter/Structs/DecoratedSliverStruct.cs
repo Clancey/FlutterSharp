@@ -64,5 +64,11 @@ namespace Flutter.Structs
 /// Whether to paint the box decoration behind or in front of the child.
 		public IntPtr position { get; set; }
 
+		IntPtr _sliver;
+		public Widget? sliver
+		{
+			set => SetIntPtr(ref _sliver, value);
+		}
+
 	}
 }

@@ -58,5 +58,11 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.basic.fractionallySizedBox.alignment}
 		public IntPtr alignment { get; set; }
 
+		public IntPtr curve { get; set; }
+
+		public IntPtr duration { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

@@ -66,13 +66,14 @@ namespace Flutter.Widgets
 			SliverChildDelegate _childrenDelegate,
 			InvalidType _dragStartBehavior,
 			Clip _clipBehavior,
-			InvalidType _hitTestBehavior,
+			PlatformViewHitTestBehavior _hitTestBehavior,
 			bool _padEnds
 ,
 			string? _restorationId = null,
 			PageController? _controller = null,
 			ScrollPhysics? _physics = null,
-			ScrollBehavior? _scrollBehavior = null
+			ScrollBehavior? _scrollBehavior = null,
+			List<Widget> _children = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

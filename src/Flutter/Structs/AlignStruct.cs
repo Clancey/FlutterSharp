@@ -179,5 +179,11 @@ namespace Flutter.Structs
 /// Can be both greater and less than 1.0 but must be non-negative.
 		public NativeNullable<double> heightFactor { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

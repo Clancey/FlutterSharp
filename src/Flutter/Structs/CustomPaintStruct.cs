@@ -110,5 +110,11 @@ namespace Flutter.Structs
 /// are null because this flag will be ignored in such case.
 		public bool willChange { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

@@ -158,5 +158,11 @@ namespace Flutter.Structs
 			set => SetIntPtr(ref _child, value);
 		}
 
+		public IntPtr duration { get; set; }
+
+		public IntPtr curve { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

@@ -42,5 +42,11 @@ namespace Flutter.Structs
 
 		public int hashCode { get; set; }
 
+		public IntPtr color { get; set; }
+
+		public IntPtr offset { get; set; }
+
+		public IntPtr blurRadius { get; set; }
+
 	}
 }

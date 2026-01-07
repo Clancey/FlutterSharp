@@ -41,10 +41,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ImageFiltered"/> class.
 		/// </summary>
 		public ImageFiltered(
-			Widget _child,
 			InvalidType _imageFilter,
 			bool _enabled
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

@@ -35,9 +35,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PlatformViewSurface"/> class.
 		/// </summary>
 		public PlatformViewSurface(
-			InvalidType _controller,
+			object _controller,
 			HashSet<object> _gestureRecognizers,
-			InvalidType _hitTestBehavior
+			PlatformViewHitTestBehavior _hitTestBehavior
 
 		)
 		{

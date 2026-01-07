@@ -19,10 +19,16 @@ namespace Flutter.Structs
 /// backdrop filters. To opt into using a shared [BackdropGroup], the special
 /// [BackdropFilter.grouped] constructor must be used.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class BackdropGroupStruct : WidgetStruct
+	internal class BackdropGroupStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The backdrop key this backdrop group will use with shared child layers.
 		public IntPtr backdropKey { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

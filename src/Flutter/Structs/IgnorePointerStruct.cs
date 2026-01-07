@@ -88,5 +88,11 @@ namespace Flutter.Structs
 /// See [SemanticsNode] for additional information about the semantics tree.
 		public NativeNullable<bool> ignoringSemantics { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

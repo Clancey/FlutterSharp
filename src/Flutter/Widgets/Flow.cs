@@ -84,10 +84,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flow"/> class.
 		/// </summary>
 		public Flow(
-			List<Widget> _children,
-			InvalidType _delegate,
+			object _delegate,
 			Clip _clipBehavior
-
+,
+			List<Widget> _children = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

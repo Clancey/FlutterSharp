@@ -73,7 +73,42 @@ namespace Flutter.Structs
 /// * [FocusTraversalGroup], a widget used to configure the focus traversal
 /// policy for a widget subtree.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class FocusScopeStruct : WidgetStruct
+	internal class FocusScopeStruct : SingleChildRenderObjectWidgetStruct
 	{
+		public IntPtr? node { get; set; }
+
+		public IntPtr? parentNode { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
+		public bool autofocus { get; set; }
+
+		public IntPtr onFocusChange { get; set; }
+
+		public NativeNullable<bool> canRequestFocus { get; set; }
+
+		public NativeNullable<bool> skipTraversal { get; set; }
+
+		public IntPtr? onKeyEvent { get; set; }
+
+		public IntPtr? onKey { get; set; }
+
+		IntPtr _debugLabel;
+		public string? debugLabel
+		{
+			get => GetString(_debugLabel);
+			set => SetString(ref _debugLabel, value);
+		}
+
+		public bool includeSemantics { get; set; }
+
+		public NativeNullable<bool> descendantsAreFocusable { get; set; }
+
+		public NativeNullable<bool> descendantsAreTraversable { get; set; }
+
 	}
 }

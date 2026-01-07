@@ -34,7 +34,8 @@ namespace Flutter.Widgets
 		public SliverPadding(
 			Widget _child,
 			EdgeInsetsGeometry? _padding
-
+,
+			Widget? _sliver = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

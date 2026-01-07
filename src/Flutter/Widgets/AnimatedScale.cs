@@ -76,9 +76,12 @@ namespace Flutter.Widgets
 		public AnimatedScale(
 			double _scale,
 			AlignmentGeometry? _alignment,
-			InvalidType _filterQuality
+			InvalidType _filterQuality,
+			TimeSpan _duration
 ,
-			Widget? _child = null
+			Widget? _child = null,
+			Curve _curve = null,
+			InvalidType _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

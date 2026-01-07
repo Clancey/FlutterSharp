@@ -49,9 +49,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PrimaryScrollController"/> class.
 		/// </summary>
 		public PrimaryScrollController(
-			Widget _child,
 			InvalidType _scrollDirection,
-			HashSet<object> _automaticallyInheritForPlatforms
+			HashSet<object> _automaticallyInheritForPlatforms,
+			Widget _child
 ,
 			ScrollController? _controller = null
 		)

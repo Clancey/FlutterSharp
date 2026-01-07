@@ -59,5 +59,11 @@ namespace Flutter.Structs
 /// When elevation is non zero the color to use for the shadow color.
 		public IntPtr shadowColor { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

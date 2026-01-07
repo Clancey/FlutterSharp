@@ -34,10 +34,16 @@ namespace Flutter.Structs
 /// ```
 /// {@end-tool}
 	[StructLayout(LayoutKind.Sequential)]
-	internal class DirectionalityStruct : WidgetStruct
+	internal class DirectionalityStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The text direction for this subtree.
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

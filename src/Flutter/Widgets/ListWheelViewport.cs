@@ -40,7 +40,7 @@ namespace Flutter.Widgets
 			double _itemExtent,
 			double _squeeze,
 			bool _renderChildrenOutsideViewport,
-			InvalidType _offset,
+			Offset _offset,
 			ListWheelChildDelegate _childDelegate,
 			Clip _clipBehavior
 

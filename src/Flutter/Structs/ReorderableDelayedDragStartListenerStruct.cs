@@ -27,7 +27,17 @@ namespace Flutter.Structs
 /// * [ReorderableListView], a Material Design list that allows the user to
 /// reorder its items.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class ReorderableDelayedDragStartListenerStruct : WidgetStruct
+	internal class ReorderableDelayedDragStartListenerStruct : SingleChildRenderObjectWidgetStruct
 	{
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
+		public int index { get; set; }
+
+		public bool enabled { get; set; }
+
 	}
 }

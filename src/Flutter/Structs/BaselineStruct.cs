@@ -37,7 +37,13 @@ namespace Flutter.Structs
 		public double baseline { get; set; }
 
 /// The type of baseline to use for positioning the child.
-		public IntPtr baselineType { get; set; }
+		public TextBaseline baselineType { get; set; }
+
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

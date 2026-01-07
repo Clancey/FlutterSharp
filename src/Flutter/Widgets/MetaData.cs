@@ -25,10 +25,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MetaData"/> class.
 		/// </summary>
 		public MetaData(
-			Widget _child,
 			object _metaData,
 			InvalidType _behavior
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

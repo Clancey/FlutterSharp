@@ -41,7 +41,8 @@ namespace Flutter.Widgets
 			Widget _child,
 			bool _ignoring
 ,
-			bool? _ignoringSemantics = null
+			bool? _ignoringSemantics = null,
+			Widget? _sliver = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

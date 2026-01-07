@@ -58,8 +58,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MergeSemantics"/> class.
 		/// </summary>
 		public MergeSemantics(
-			Widget _child
 
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

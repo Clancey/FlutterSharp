@@ -48,9 +48,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RelativePositionedTransition"/> class.
 		/// </summary>
 		public RelativePositionedTransition(
-			InvalidType _size,
+			Size _size,
 			Widget _child,
-			InvalidType _rect
+			Rect _rect,
+			object _listenable
 
 		)
 		{

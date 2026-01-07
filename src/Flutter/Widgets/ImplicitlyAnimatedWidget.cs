@@ -76,9 +76,16 @@ namespace Flutter.Widgets
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ImplicitlyAnimatedWidget"/> class.
 		/// </summary>
-		protected ImplicitlyAnimatedWidget()
+		public ImplicitlyAnimatedWidget(
+			Curve _curve = null,
+			TimeSpan _duration = default,
+			InvalidType _onEnd = null
+
+		)
 		{
-			// Parameterless constructor for abstract base class
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ImplicitlyAnimatedWidgetStruct();

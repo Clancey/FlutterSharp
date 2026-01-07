@@ -32,5 +32,24 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AppKitViewStruct : WidgetStruct
 	{
+		IntPtr _viewType;
+		public string viewType
+		{
+			get => GetString(_viewType);
+			set => SetString(ref _viewType, value);
+		}
+
+		public IntPtr onPlatformViewCreated { get; set; }
+
+		public IntPtr hitTestBehavior { get; set; }
+
+		public IntPtr layoutDirection { get; set; }
+
+		public IntPtr creationParams { get; set; }
+
+		public IntPtr creationParamsCodec { get; set; }
+
+		public IntPtr? gestureRecognizers { get; set; }
+
 	}
 }

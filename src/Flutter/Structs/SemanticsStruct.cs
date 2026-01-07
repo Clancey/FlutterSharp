@@ -114,5 +114,194 @@ namespace Flutter.Structs
 /// will be blocked.
 		public bool blockUserActions { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
+		public NativeNullable<bool> enabled { get; set; }
+
+		public NativeNullable<bool> @checked { get; set; }
+
+		public NativeNullable<bool> mixed { get; set; }
+
+		public NativeNullable<bool> selected { get; set; }
+
+		public NativeNullable<bool> toggled { get; set; }
+
+		public NativeNullable<bool> button { get; set; }
+
+		public NativeNullable<bool> slider { get; set; }
+
+		public NativeNullable<bool> keyboardKey { get; set; }
+
+		public NativeNullable<bool> link { get; set; }
+
+		public IntPtr? linkUrl { get; set; }
+
+		public NativeNullable<bool> header { get; set; }
+
+		public NativeNullable<int> headingLevel { get; set; }
+
+		public NativeNullable<bool> textField { get; set; }
+
+		public NativeNullable<bool> @readOnly { get; set; }
+
+		public NativeNullable<bool> focusable { get; set; }
+
+		public NativeNullable<bool> focused { get; set; }
+
+		public NativeNullable<bool> inMutuallyExclusiveGroup { get; set; }
+
+		public NativeNullable<bool> obscured { get; set; }
+
+		public NativeNullable<bool> multiline { get; set; }
+
+		public NativeNullable<bool> scopesRoute { get; set; }
+
+		public NativeNullable<bool> namesRoute { get; set; }
+
+		public NativeNullable<bool> hidden { get; set; }
+
+		public NativeNullable<bool> image { get; set; }
+
+		public NativeNullable<bool> liveRegion { get; set; }
+
+		public NativeNullable<bool> expanded { get; set; }
+
+		public NativeNullable<bool> isRequired { get; set; }
+
+		public NativeNullable<int> maxValueLength { get; set; }
+
+		public NativeNullable<int> currentValueLength { get; set; }
+
+		IntPtr _identifier;
+		public string? identifier
+		{
+			get => GetString(_identifier);
+			set => SetString(ref _identifier, value);
+		}
+
+		IntPtr _label;
+		public string? label
+		{
+			get => GetString(_label);
+			set => SetString(ref _label, value);
+		}
+
+		public IntPtr attributedLabel { get; set; }
+
+		IntPtr _value;
+		public string? value
+		{
+			get => GetString(_value);
+			set => SetString(ref _value, value);
+		}
+
+		public IntPtr attributedValue { get; set; }
+
+		IntPtr _increasedValue;
+		public string? increasedValue
+		{
+			get => GetString(_increasedValue);
+			set => SetString(ref _increasedValue, value);
+		}
+
+		public IntPtr attributedIncreasedValue { get; set; }
+
+		IntPtr _decreasedValue;
+		public string? decreasedValue
+		{
+			get => GetString(_decreasedValue);
+			set => SetString(ref _decreasedValue, value);
+		}
+
+		public IntPtr attributedDecreasedValue { get; set; }
+
+		IntPtr _hint;
+		public string? hint
+		{
+			get => GetString(_hint);
+			set => SetString(ref _hint, value);
+		}
+
+		public IntPtr attributedHint { get; set; }
+
+		IntPtr _tooltip;
+		public string? tooltip
+		{
+			get => GetString(_tooltip);
+			set => SetString(ref _tooltip, value);
+		}
+
+		IntPtr _onTapHint;
+		public string? onTapHint
+		{
+			get => GetString(_onTapHint);
+			set => SetString(ref _onTapHint, value);
+		}
+
+		IntPtr _onLongPressHint;
+		public string? onLongPressHint
+		{
+			get => GetString(_onLongPressHint);
+			set => SetString(ref _onLongPressHint, value);
+		}
+
+		public TextDirection textDirection { get; set; }
+
+		public IntPtr sortKey { get; set; }
+
+		public IntPtr tagForChildren { get; set; }
+
+		public IntPtr onTap { get; set; }
+
+		public IntPtr onLongPress { get; set; }
+
+		public IntPtr onScrollLeft { get; set; }
+
+		public IntPtr onScrollRight { get; set; }
+
+		public IntPtr onScrollUp { get; set; }
+
+		public IntPtr onScrollDown { get; set; }
+
+		public IntPtr onIncrease { get; set; }
+
+		public IntPtr onDecrease { get; set; }
+
+		public IntPtr onCopy { get; set; }
+
+		public IntPtr onCut { get; set; }
+
+		public IntPtr onPaste { get; set; }
+
+		public IntPtr onDismiss { get; set; }
+
+		public IntPtr onMoveCursorForwardByCharacter { get; set; }
+
+		public IntPtr onMoveCursorBackwardByCharacter { get; set; }
+
+		public IntPtr onSetSelection { get; set; }
+
+		public IntPtr onSetText { get; set; }
+
+		public IntPtr onDidGainAccessibilityFocus { get; set; }
+
+		public IntPtr onDidLoseAccessibilityFocus { get; set; }
+
+		public IntPtr onFocus { get; set; }
+
+		public IntPtr? customSemanticsActions { get; set; }
+
+		public IntPtr role { get; set; }
+
+		public IntPtr? controlsNodes { get; set; }
+
+		public IntPtr validationResult { get; set; }
+
+		public IntPtr inputType { get; set; }
+
 	}
 }

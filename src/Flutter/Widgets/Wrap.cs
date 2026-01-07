@@ -71,17 +71,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Wrap"/> class.
 		/// </summary>
 		public Wrap(
-			List<Widget> _children,
 			InvalidType _direction,
 			AlignmentGeometry? _alignment,
 			double _spacing,
 			InvalidType _runAlignment,
 			double _runSpacing,
 			InvalidType _crossAxisAlignment,
-			InvalidType _textDirection,
+			TextDirection _textDirection,
 			InvalidType _verticalDirection,
 			Clip _clipBehavior
-
+,
+			List<Widget> _children = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

@@ -67,7 +67,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverFixedExtentList"/> class.
 		/// </summary>
 		public SliverFixedExtentList(
-			double _itemExtent
+			double _itemExtent,
+			SliverChildDelegate _delegate
 
 		)
 		{

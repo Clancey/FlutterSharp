@@ -116,5 +116,11 @@ namespace Flutter.Structs
 /// would otherwise contribute relevant semantics.
 		public bool alwaysIncludeSemantics { get; set; }
 
+		public IntPtr curve { get; set; }
+
+		public IntPtr duration { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

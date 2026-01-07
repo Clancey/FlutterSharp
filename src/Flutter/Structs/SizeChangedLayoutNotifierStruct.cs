@@ -34,5 +34,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SizeChangedLayoutNotifierStruct : SingleChildRenderObjectWidgetStruct
 	{
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

@@ -83,5 +83,11 @@ namespace Flutter.Structs
 /// How to behave during hit testing.
 		public IntPtr behavior { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

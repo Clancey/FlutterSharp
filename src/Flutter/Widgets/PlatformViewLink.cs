@@ -51,7 +51,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PlatformViewLink"/> class.
 		/// </summary>
 		public PlatformViewLink(
-			string _viewType
+			string _viewType,
+			object _surfaceFactory,
+			Func<PlatformViewCreationParams, InvalidType> _onCreatePlatformView
 
 		)
 		{

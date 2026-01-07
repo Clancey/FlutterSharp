@@ -44,10 +44,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LimitedBox"/> class.
 		/// </summary>
 		public LimitedBox(
-			Widget _child,
 			double _maxWidth,
 			double _maxHeight
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

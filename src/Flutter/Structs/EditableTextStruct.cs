@@ -367,7 +367,7 @@ namespace Flutter.Structs
 /// 
 /// Defaults to the ambient [Directionality], if any.
 /// {@endtemplate}
-		public IntPtr textDirection { get; set; }
+		public TextDirection textDirection { get; set; }
 
 /// {@template flutter.widgets.editableText.textCapitalization}
 /// Configures how the platform keyboard will select an uppercase or

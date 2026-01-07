@@ -12,9 +12,9 @@ namespace FlutterSharp.Tests
 		[Test]
 		public void Test1()
 		{
+			// Basic smoke test - just verify types exist and can be instantiated
 			new FlutterObjectStruct();
-			new SingleChildRenderObjectWidgetStruct();
-			new MultiChildRenderObjectWidgetStruct();
+			// Note: SingleChildRenderObjectWidgetStruct and MultiChildRenderObjectWidgetStruct are internal
 			Assert.Pass();
 		}
 	}

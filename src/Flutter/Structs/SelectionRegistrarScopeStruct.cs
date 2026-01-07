@@ -22,10 +22,16 @@ namespace Flutter.Structs
 /// of subtree. In that case, one can wrap the subtree with
 /// [SelectionContainer.disabled].
 	[StructLayout(LayoutKind.Sequential)]
-	internal class SelectionRegistrarScopeStruct : WidgetStruct
+	internal class SelectionRegistrarScopeStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The [SelectionRegistrar] hosted by this widget.
 		public IntPtr registrar { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

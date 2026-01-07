@@ -83,5 +83,11 @@ namespace Flutter.Structs
 /// Must be greater than or equal to 0.0, defaults to null.
 		public NativeNullable<double> widthFactor { get; set; }
 
+		public IntPtr curve { get; set; }
+
+		public IntPtr duration { get; set; }
+
+		public IntPtr onEnd { get; set; }
+
 	}
 }

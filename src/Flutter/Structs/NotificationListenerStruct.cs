@@ -21,7 +21,7 @@ namespace Flutter.Structs
 /// 
 /// To dispatch notifications, use the [Notification.dispatch] method.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class NotificationListenerStruct : WidgetStruct
+	internal class NotificationListenerStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// Called when a notification of the appropriate type arrives at this
 /// location in the tree.
@@ -38,6 +38,12 @@ namespace Flutter.Structs
 /// descendant, by definition, since notifications bubble up the tree). For
 /// widgets that depend on layout, consider a [LayoutBuilder] instead.
 		public IntPtr? onNotification { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

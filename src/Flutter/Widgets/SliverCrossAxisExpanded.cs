@@ -28,7 +28,8 @@ namespace Flutter.Widgets
 		public SliverCrossAxisExpanded(
 			Widget _child,
 			int _flex,
-			Type _debugTypicalAncestorWidgetClass
+			Type _debugTypicalAncestorWidgetClass,
+			Widget _sliver
 
 		)
 		{

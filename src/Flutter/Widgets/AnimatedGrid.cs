@@ -10,6 +10,7 @@ using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
 using Flutter.Cupertino;
+using Flutter.UI;
 
 namespace Flutter.Widgets
 {
@@ -75,8 +76,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedGrid"/> class.
 		/// </summary>
 		public AnimatedGrid(
-			InvalidType _gridDelegate
-
+			SliverGridDelegate _gridDelegate,
+			object _itemBuilder
+,
+			int _initialItemCount = 0,
+			Axis _scrollDirection = Axis.Vertical,
+			bool _reverse = false,
+			ScrollController? _controller = null,
+			bool? _primary = null,
+			ScrollPhysics? _physics = null,
+			EdgeInsetsGeometry? _padding = null,
+			Clip _clipBehavior = Clip.HardEdge
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

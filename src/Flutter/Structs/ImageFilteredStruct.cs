@@ -47,5 +47,11 @@ namespace Flutter.Structs
 /// type for performance reasons.
 		public bool enabled { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

@@ -39,5 +39,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverAnimatedListStruct : WidgetStruct
 	{
+		public IntPtr itemBuilder { get; set; }
+
+		public IntPtr? findChildIndexCallback { get; set; }
+
+		public int initialItemCount { get; set; }
+
 	}
 }

@@ -82,5 +82,11 @@ namespace Flutter.Structs
 /// to be as large as the parent allows.
 		public IntPtr fit { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

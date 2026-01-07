@@ -55,6 +55,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverList"/> class.
 		/// </summary>
 		public SliverList(
+			SliverChildDelegate _delegate
 
 		)
 		{

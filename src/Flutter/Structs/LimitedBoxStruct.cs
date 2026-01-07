@@ -48,5 +48,11 @@ namespace Flutter.Structs
 /// [BoxConstraints.maxHeight] constraint.
 		public double maxHeight { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

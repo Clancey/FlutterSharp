@@ -50,5 +50,11 @@ namespace Flutter.Structs
 /// The index used to annotate the first child semantics node.
 		public int index { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

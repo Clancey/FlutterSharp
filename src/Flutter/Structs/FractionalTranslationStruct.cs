@@ -41,5 +41,11 @@ namespace Flutter.Structs
 /// Whether to apply the translation when performing hit tests.
 		public bool transformHitTests { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

@@ -36,7 +36,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AppKitView"/> class.
 		/// </summary>
 		public AppKitView(
-
+			string _viewType
+,
+			InvalidType _onPlatformViewCreated = null,
+			PlatformViewHitTestBehavior _hitTestBehavior = PlatformViewHitTestBehavior.Opaque,
+			InvalidType _layoutDirection = null,
+			object _creationParams = null,
+			InvalidType _creationParamsCodec = null,
+			HashSet<object>? _gestureRecognizers = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

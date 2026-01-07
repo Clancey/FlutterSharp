@@ -120,7 +120,13 @@ namespace Flutter.Structs
 /// [Listenable], and which will notify dependents whenever the value sends
 /// notifications.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class InheritedModelStruct : WidgetStruct
+	internal class InheritedModelStruct : SingleChildRenderObjectWidgetStruct
 	{
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

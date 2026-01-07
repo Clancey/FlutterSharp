@@ -24,8 +24,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LayoutId"/> class.
 		/// </summary>
 		public LayoutId(
-			Widget _child,
-			Type _debugTypicalAncestorWidgetClass
+			Type _debugTypicalAncestorWidgetClass,
+			Widget _child
 
 		)
 		{

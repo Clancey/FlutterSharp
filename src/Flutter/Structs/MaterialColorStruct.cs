@@ -121,5 +121,9 @@ namespace Flutter.Structs
 
 		public IntPtr shade900 { get; set; }
 
+		public IntPtr primary { get; set; }
+
+		public IntPtr swatch { get; set; }
+
 	}
 }

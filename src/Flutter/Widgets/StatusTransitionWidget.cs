@@ -20,7 +20,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="StatusTransitionWidget"/> class.
 		/// </summary>
 		public StatusTransitionWidget(
-			InvalidType _animation
+			Animation<double> _animation
 
 		)
 		{

@@ -54,5 +54,11 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class MergeSemanticsStruct : SingleChildRenderObjectWidgetStruct
 	{
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

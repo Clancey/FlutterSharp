@@ -63,7 +63,8 @@ namespace Flutter.Widgets
 			Widget _child,
 			Decoration? _decoration,
 			InvalidType _position
-
+,
+			Widget? _sliver = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

@@ -16,10 +16,16 @@ namespace Flutter.Structs
 /// 
 /// The icon theme is honored by [Icon] and [ImageIcon] widgets.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class IconThemeStruct : WidgetStruct
+	internal class IconThemeStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The set of properties to use for icons in this subtree.
 		public IntPtr data { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

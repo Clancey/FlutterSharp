@@ -36,9 +36,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CustomSingleChildLayout"/> class.
 		/// </summary>
 		public CustomSingleChildLayout(
-			Widget _child,
-			InvalidType _delegate
-
+			object _delegate
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

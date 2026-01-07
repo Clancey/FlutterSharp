@@ -39,5 +39,11 @@ namespace Flutter.Structs
 /// The color filter to apply to the child of this widget.
 		public IntPtr colorFilter { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

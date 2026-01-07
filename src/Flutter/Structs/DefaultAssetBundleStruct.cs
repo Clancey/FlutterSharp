@@ -63,10 +63,16 @@ namespace Flutter.Structs
 /// * [AssetBundle], the interface for asset bundles.
 /// * [rootBundle], the default asset bundle.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class DefaultAssetBundleStruct : WidgetStruct
+	internal class DefaultAssetBundleStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The bundle to use as a default.
 		public IntPtr bundle { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

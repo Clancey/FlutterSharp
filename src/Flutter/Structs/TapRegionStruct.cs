@@ -127,5 +127,11 @@ namespace Flutter.Structs
 			set => SetString(ref _debugLabel, value);
 		}
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

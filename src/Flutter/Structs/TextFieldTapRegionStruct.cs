@@ -41,5 +41,32 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TextFieldTapRegionStruct : SingleChildRenderObjectWidgetStruct
 	{
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
+		public bool enabled { get; set; }
+
+		public IntPtr? onTapOutside { get; set; }
+
+		public IntPtr? onTapInside { get; set; }
+
+		public IntPtr? onTapUpOutside { get; set; }
+
+		public IntPtr? onTapUpInside { get; set; }
+
+		public bool consumeOutsideTaps { get; set; }
+
+		IntPtr _debugLabel;
+		public string? debugLabel
+		{
+			get => GetString(_debugLabel);
+			set => SetString(ref _debugLabel, value);
+		}
+
+		public IntPtr? groupId { get; set; }
+
 	}
 }

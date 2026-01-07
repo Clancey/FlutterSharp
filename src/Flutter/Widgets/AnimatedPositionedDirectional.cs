@@ -43,14 +43,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedPositionedDirectional"/> class.
 		/// </summary>
 		public AnimatedPositionedDirectional(
-			Widget _child
+			Widget _child,
+			TimeSpan _duration
 ,
 			double? _start = null,
 			double? _top = null,
 			double? _end = null,
 			double? _bottom = null,
 			double? _width = null,
-			double? _height = null
+			double? _height = null,
+			Curve _curve = null,
+			InvalidType _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

@@ -143,7 +143,7 @@ namespace Flutter.Widgets
 			EdgeInsetsGeometry? _padding,
 			InvalidType _dragStartBehavior,
 			Clip _clipBehavior,
-			InvalidType _hitTestBehavior
+			PlatformViewHitTestBehavior _hitTestBehavior
 ,
 			ScrollController? _controller = null,
 			bool? _primary = null,

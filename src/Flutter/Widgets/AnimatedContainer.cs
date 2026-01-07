@@ -62,9 +62,15 @@ namespace Flutter.Widgets
 			EdgeInsetsGeometry? _margin,
 			Matrix4? _transform,
 			AlignmentGeometry? _transformAlignment,
-			Clip _clipBehavior
+			Clip _clipBehavior,
+			TimeSpan _duration
 ,
-			Widget? _child = null
+			Widget? _child = null,
+			Color? _color = null,
+			double? _width = null,
+			double? _height = null,
+			Curve _curve = null,
+			InvalidType _onEnd = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

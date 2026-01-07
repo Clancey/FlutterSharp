@@ -48,5 +48,11 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.IgnorePointer.ignoringSemantics}
 		public NativeNullable<bool> ignoringSemantics { get; set; }
 
+		IntPtr _sliver;
+		public Widget? sliver
+		{
+			set => SetIntPtr(ref _sliver, value);
+		}
+
 	}
 }

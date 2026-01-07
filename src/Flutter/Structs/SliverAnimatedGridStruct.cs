@@ -41,5 +41,11 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.AnimatedGrid.gridDelegate}
 		public IntPtr gridDelegate { get; set; }
 
+		public IntPtr itemBuilder { get; set; }
+
+		public IntPtr? findChildIndexCallback { get; set; }
+
+		public int initialItemCount { get; set; }
+
 	}
 }

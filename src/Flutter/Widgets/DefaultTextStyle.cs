@@ -36,13 +36,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultTextStyle"/> class.
 		/// </summary>
 		public DefaultTextStyle(
-			Widget _child,
 			TextStyle? _style,
 			InvalidType _textAlign,
 			bool _softWrap,
 			InvalidType _overflow,
 			InvalidType _textWidthBasis,
-			InvalidType _textHeightBehavior
+			TextHeightBehavior _textHeightBehavior,
+			Widget _child
 ,
 			int? _maxLines = null
 		)

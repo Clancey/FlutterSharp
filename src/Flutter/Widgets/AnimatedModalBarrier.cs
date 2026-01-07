@@ -38,7 +38,8 @@ namespace Flutter.Widgets
 			bool _dismissible,
 			InvalidType _onDismiss,
 			InvalidType _clipDetailsNotifier,
-			Color? _color
+			Color? _color,
+			object _listenable
 ,
 			string? _semanticsLabel = null,
 			bool? _barrierSemanticsDismissible = null,

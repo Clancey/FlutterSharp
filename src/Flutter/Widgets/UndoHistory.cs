@@ -31,7 +31,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="UndoHistory"/> class.
 		/// </summary>
 		public UndoHistory(
-			InvalidType _value,
+			object _value,
 			Action<T> _onTriggered,
 			FocusNode _focusNode,
 			Widget _child

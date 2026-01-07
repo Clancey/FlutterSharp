@@ -36,12 +36,18 @@ namespace Flutter.Structs
 /// * [RestorationManager], which describes the basic concepts of state
 /// restoration in Flutter.
 	[StructLayout(LayoutKind.Sequential)]
-	internal class UnmanagedRestorationScopeStruct : WidgetStruct
+	internal class UnmanagedRestorationScopeStruct : SingleChildRenderObjectWidgetStruct
 	{
 /// The [RestorationBucket] that this widget will insert into the widget tree.
 /// 
 /// Descendant widgets may obtain this bucket via [RestorationScope.of].
 		public IntPtr bucket { get; set; }
+
+		IntPtr _child;
+		public Widget child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
 
 	}
 }

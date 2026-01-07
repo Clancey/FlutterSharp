@@ -60,10 +60,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DecoratedBox"/> class.
 		/// </summary>
 		public DecoratedBox(
-			Widget _child,
 			Decoration? _decoration,
 			InvalidType _position
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

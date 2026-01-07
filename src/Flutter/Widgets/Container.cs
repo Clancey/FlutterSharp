@@ -163,7 +163,9 @@ namespace Flutter.Widgets
 			AlignmentGeometry? _transformAlignment,
 			Clip _clipBehavior
 ,
-			Widget? _child = null
+			Widget? _child = null,
+			double? _width = null,
+			double? _height = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

@@ -49,7 +49,7 @@ namespace Flutter.Widgets
 			ScrollableDetails _verticalDetails,
 			ScrollableDetails _horizontalDetails,
 			InvalidType _dragStartBehavior,
-			InvalidType _hitTestBehavior,
+			PlatformViewHitTestBehavior _hitTestBehavior,
 			Clip _clipBehavior
 ,
 			double? _cacheExtent = null,

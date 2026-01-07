@@ -36,10 +36,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FractionalTranslation"/> class.
 		/// </summary>
 		public FractionalTranslation(
-			Widget _child,
-			InvalidType _translation,
+			Offset _translation,
 			bool _transformHitTests
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

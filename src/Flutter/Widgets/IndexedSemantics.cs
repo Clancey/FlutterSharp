@@ -51,9 +51,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IndexedSemantics"/> class.
 		/// </summary>
 		public IndexedSemantics(
-			Widget _child,
 			int _index
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

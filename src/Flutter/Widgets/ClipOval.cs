@@ -44,10 +44,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipOval"/> class.
 		/// </summary>
 		public ClipOval(
-			Widget _child,
 			InvalidType _clipper,
 			Clip _clipBehavior
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

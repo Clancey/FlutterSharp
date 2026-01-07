@@ -35,14 +35,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PhysicalModel"/> class.
 		/// </summary>
 		public PhysicalModel(
-			Widget _child,
 			BoxShape _shape,
 			Clip _clipBehavior,
 			BorderRadiusGeometry? _borderRadius,
 			double _elevation,
 			Color? _color,
 			Color? _shadowColor
-
+,
+			Widget? _child = null
 		)
 		{
 			// TODO: Property assignments will be handled by a proper FFI marshaling layer

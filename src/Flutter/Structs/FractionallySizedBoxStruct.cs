@@ -81,5 +81,11 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr alignment { get; set; }
 
+		IntPtr _child;
+		public Widget? child
+		{
+			set => SetIntPtr(ref _child, value);
+		}
+
 	}
 }

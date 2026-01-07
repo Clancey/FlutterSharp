@@ -51,7 +51,8 @@ namespace Flutter.Widgets
 		/// </summary>
 		public PositionedTransition(
 			Widget _child,
-			InvalidType _rect
+			Rect _rect,
+			object _listenable
 
 		)
 		{

@@ -12,7 +12,7 @@ class ContainerWidgetParser extends WidgetParser {
     Alignment alignment = map.hasAlignment == 1
         ? parseAlignment(map.alignment.ref)
         : Alignment.center;
-    Color? color = map.hasColor == 1 ? parseColor(map.color.ref) : null;
+    Color? color = map.color != 0 ? Color(map.color) : null;
     //TODO: Bring back
     BoxConstraints? constraints =
         null; //parseBoxConstraints(map['constraints']);

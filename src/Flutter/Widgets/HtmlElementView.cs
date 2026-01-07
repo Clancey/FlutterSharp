@@ -285,7 +285,7 @@ namespace Flutter.Widgets
 		public HtmlElementView(
 			string _viewType,
 			InvalidType _onPlatformViewCreated,
-			InvalidType _hitTestBehavior
+			PlatformViewHitTestBehavior _hitTestBehavior
 ,
 			object? _creationParams = null
 		)
