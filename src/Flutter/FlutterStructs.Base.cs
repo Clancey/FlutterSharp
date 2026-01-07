@@ -13,6 +13,8 @@ namespace Flutter.Structs
 
 		// Track allocated string pointers for cleanup
 		private List<IntPtr> _allocatedStrings = new List<IntPtr>();
+		// Track allocated children array pointers for cleanup
+		private List<IntPtr> _allocatedChildrenArrays = new List<IntPtr>();
 		private bool _disposed = false;
 
 		public BaseStruct()
@@ -36,6 +38,16 @@ namespace Flutter.Structs
 				}
 			}
 			_allocatedStrings.Clear();
+
+			// Free all allocated children array pointers
+			foreach (var ptr in _allocatedChildrenArrays)
+			{
+				if (ptr != IntPtr.Zero)
+				{
+					Marshal.FreeHGlobal(ptr);
+				}
+			}
+			_allocatedChildrenArrays.Clear();
 
 			if (handle != IntPtr.Zero)
 			{
@@ -86,10 +98,97 @@ namespace Flutter.Structs
 			}
 		}
 
-		protected void SetIntPtr(ref IntPtr ptr, Widget flutterObject)
+		protected void SetIntPtr(ref IntPtr ptr, Flutter.Widget flutterObject)
 		{
 			flutterObject?.PrepareForSending();
 			ptr = flutterObject;
+		}
+
+		/// <summary>
+		/// Sets the children pointer field to an array of widget pointers.
+		/// The array memory is tracked and will be freed on Dispose.
+		/// </summary>
+		/// <param name="ptr">Reference to the children pointer field</param>
+		/// <param name="children">List of child widgets (can be null or empty)</param>
+		/// <param name="countField">Reference to the count field that stores the number of children</param>
+		protected void SetChildren(ref IntPtr ptr, List<Flutter.Widget> children, ref int countField)
+		{
+			// Free previous children array if it was allocated
+			if (ptr != IntPtr.Zero && _allocatedChildrenArrays.Contains(ptr))
+			{
+				Marshal.FreeHGlobal(ptr);
+				_allocatedChildrenArrays.Remove(ptr);
+			}
+
+			// Handle null or empty children list
+			if (children == null || children.Count == 0)
+			{
+				ptr = IntPtr.Zero;
+				countField = 0;
+				return;
+			}
+
+			// Prepare all children for sending and collect their pointers
+			var pointers = new IntPtr[children.Count];
+			for (int i = 0; i < children.Count; i++)
+			{
+				children[i]?.PrepareForSending();
+				pointers[i] = children[i];
+			}
+
+			// Allocate unmanaged memory for the pointer array
+			int size = IntPtr.Size * children.Count;
+			ptr = Marshal.AllocHGlobal(size);
+
+			// Copy the pointers to unmanaged memory
+			Marshal.Copy(pointers, 0, ptr, children.Count);
+
+			// Track this allocation for cleanup
+			_allocatedChildrenArrays.Add(ptr);
+			countField = children.Count;
+		}
+
+		/// <summary>
+		/// Simplified SetChildren for structs that only have a children IntPtr field
+		/// without a separate count field (count is embedded or derived).
+		/// </summary>
+		/// <param name="ptr">Reference to the children pointer field</param>
+		/// <param name="children">List of child widgets (can be null or empty)</param>
+		/// <returns>The number of children set</returns>
+		protected int SetChildren(ref IntPtr ptr, List<Flutter.Widget> children)
+		{
+			// Free previous children array if it was allocated
+			if (ptr != IntPtr.Zero && _allocatedChildrenArrays.Contains(ptr))
+			{
+				Marshal.FreeHGlobal(ptr);
+				_allocatedChildrenArrays.Remove(ptr);
+			}
+
+			// Handle null or empty children list
+			if (children == null || children.Count == 0)
+			{
+				ptr = IntPtr.Zero;
+				return 0;
+			}
+
+			// Prepare all children for sending and collect their pointers
+			var pointers = new IntPtr[children.Count];
+			for (int i = 0; i < children.Count; i++)
+			{
+				children[i]?.PrepareForSending();
+				pointers[i] = children[i];
+			}
+
+			// Allocate unmanaged memory for the pointer array
+			int size = IntPtr.Size * children.Count;
+			ptr = Marshal.AllocHGlobal(size);
+
+			// Copy the pointers to unmanaged memory
+			Marshal.Copy(pointers, 0, ptr, children.Count);
+
+			// Track this allocation for cleanup
+			_allocatedChildrenArrays.Add(ptr);
+			return children.Count;
 		}
 
 		const byte Yes = 1;
