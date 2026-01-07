@@ -110,7 +110,10 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 					return new
 					{
 						p.Name,
-						PropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
+						// PropertyName is for the Flutter widget constructor parameter (always without "Action" suffix)
+						PropertyName = ToCamelCase(p.Name),
+						// StructPropertyName is for accessing the struct field (has "Action" suffix for callbacks)
+						StructPropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
 						DartType = p.DartType,
 						CSharpType = p.CSharpType ?? "object",
 						ParserFunction = parserFunc,
@@ -130,9 +133,13 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 					};
 				}).ToList(),
 				HasChildren = widget.HasSingleChild || widget.HasMultipleChildren,
-				ChildPropertyName = widget.ChildPropertyName != null ? ToCamelCase(widget.ChildPropertyName) : null,
+				// Only set ChildPropertyName for single-child widgets (not multi-child)
+				ChildPropertyName = widget.HasSingleChild && !widget.HasMultipleChildren && widget.ChildPropertyName != null
+					? ToCamelCase(widget.ChildPropertyName) : null,
 				child_is_nullable = childIsNullable,
-				ChildrenPropertyName = widget.ChildrenPropertyName != null ? ToCamelCase(widget.ChildrenPropertyName) : null,
+				// Only set ChildrenPropertyName for multi-child widgets (not single-child)
+				ChildrenPropertyName = widget.HasMultipleChildren && widget.ChildrenPropertyName != null
+					? ToCamelCase(widget.ChildrenPropertyName) : null,
 				Documentation = FormatDartDocumentation(widget.Documentation),
 				GeneratedDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC")
 			};
@@ -213,7 +220,10 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 				return new
 				{
 					p.Name,
-					PropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
+					// PropertyName is for the Flutter widget constructor parameter (always without "Action" suffix)
+					PropertyName = ToCamelCase(p.Name),
+					// StructPropertyName is for accessing the struct field (has "Action" suffix for callbacks)
+					StructPropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
 					p.DartType,
 					FfiType = ffiType,
 					// Match template variable names (Scriban converts to snake_case)
@@ -235,9 +245,13 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			HasChildren = enrichedWidget.HasSingleChild || enrichedWidget.HasMultipleChildren,
 			has_single_child = enrichedWidget.HasSingleChild,
 			has_multiple_children = enrichedWidget.HasMultipleChildren,
-			ChildPropertyName = enrichedWidget.ChildPropertyName != null ? ToCamelCase(enrichedWidget.ChildPropertyName) : null,
+			// Only set ChildPropertyName for single-child widgets (not multi-child)
+			ChildPropertyName = enrichedWidget.HasSingleChild && !enrichedWidget.HasMultipleChildren && enrichedWidget.ChildPropertyName != null
+				? ToCamelCase(enrichedWidget.ChildPropertyName) : null,
 			child_is_nullable = childIsNullable,
-			ChildrenPropertyName = enrichedWidget.ChildrenPropertyName != null ? ToCamelCase(enrichedWidget.ChildrenPropertyName) : null,
+			// Only set ChildrenPropertyName for multi-child widgets (not single-child)
+			ChildrenPropertyName = enrichedWidget.HasMultipleChildren && enrichedWidget.ChildrenPropertyName != null
+				? ToCamelCase(enrichedWidget.ChildrenPropertyName) : null,
 			Documentation = FormatDartDocumentation(enrichedWidget.Documentation),
 			GeneratedDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC")
 		};
