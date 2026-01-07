@@ -5,13 +5,10 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-{{~ if base_struct && base_struct != "Struct" ~}}
-{{~ if base_struct == "WidgetStruct" ~}}
 import '../../flutter_sharp_structs.dart';
-{{~ else ~}}
+{{~ if base_struct && base_struct != "Struct" && base_struct != "WidgetStruct" ~}}
 {{~ base_import = string.downcase (string.replace base_struct "Struct" "") ~}}
 import '{{ base_import }}_struct.dart';
-{{~ end ~}}
 {{~ end ~}}
 {{~ for imp in imports ~}}
 {{~ if !(string.starts_with imp "dart:") && !(string.starts_with imp "package:") ~}}

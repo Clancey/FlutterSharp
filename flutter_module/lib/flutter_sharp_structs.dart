@@ -13,6 +13,15 @@ import 'maui_flutter.dart';
 
 import 'dart:convert';
 
+// Export generated structs that are referenced by hand-written parsers
+export 'generated/structs/align_struct.dart';
+export 'generated/structs/aspectratio_struct.dart';
+export 'generated/structs/column_struct.dart';
+export 'generated/structs/container_struct.dart';
+export 'generated/structs/icon_struct.dart';
+export 'generated/structs/row_struct.dart';
+export 'generated/structs/text_struct.dart';
+
 /// Abstract interface for FlutterObjectStruct to allow type-safe parsing.
 /// This is used as a parameter type in parser methods.
 abstract class IFlutterObjectStruct {
@@ -50,8 +59,27 @@ final class WidgetStruct extends Struct implements IWidgetStruct {
   external Pointer<Utf8> id;
 }
 
-// NOTE: SingleChildRenderObjectWidgetStruct is now generated
-// See: lib/generated/structs/singlechildrenderobjectwidget_struct.dart
+/// Abstract interface for SingleChildRenderObjectWidgetStruct.
+abstract class ISingleChildRenderObjectWidgetStruct extends IWidgetStruct {
+  Pointer<WidgetStruct> get child;
+}
+
+/// FFI struct for widgets with a single child.
+final class SingleChildRenderObjectWidgetStruct extends Struct implements ISingleChildRenderObjectWidgetStruct {
+  //FlutterObject Struct
+  @override
+  external Pointer handle;
+  @override
+  external Pointer managedHandle;
+  @override
+  external Pointer<Utf8> widgetType;
+  //WidgetStruct
+  @override
+  external Pointer<Utf8> id;
+  //SingleChildRenderObjectWidgetStruct
+  @override
+  external Pointer<WidgetStruct> child;
+}
 
 final class ChildrenStruct extends Struct {
   external Pointer<Uint64> children;
@@ -59,8 +87,31 @@ final class ChildrenStruct extends Struct {
   external int childrenLength;
 }
 
-// NOTE: MultiChildRenderObjectWidgetStruct is now generated
-// See: lib/generated/structs/multichildrenderobjectwidget_struct.dart
+/// Abstract interface for MultiChildRenderObjectWidgetStruct.
+abstract class IMultiChildRenderObjectWidgetStruct extends IWidgetStruct {
+  Pointer get children;
+  int get childrenLength;
+}
+
+/// FFI struct for widgets with multiple children.
+final class MultiChildRenderObjectWidgetStruct extends Struct implements IMultiChildRenderObjectWidgetStruct {
+  //FlutterObject Struct
+  @override
+  external Pointer handle;
+  @override
+  external Pointer managedHandle;
+  @override
+  external Pointer<Utf8> widgetType;
+  //WidgetStruct
+  @override
+  external Pointer<Utf8> id;
+  //MultiChildRenderObjectWidgetStruct
+  @override
+  external Pointer children;
+  @override
+  @Int32()
+  external int childrenLength;
+}
 
 final class AlignmentStruct extends Struct {
   @Double()

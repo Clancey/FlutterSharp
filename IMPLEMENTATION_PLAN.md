@@ -14,10 +14,14 @@ This is the active task list for autonomous agent execution. The agent selects O
 ## Current Build Status
 
 **Last checked**: 2026-01-07
-**C# compilation errors**: 50 (regression - needs investigation)
-**Dart analysis issues**: 3140 total (includes warnings/info)
+**C# compilation errors**: 0
+**Dart analysis errors**: 853 total
+**non_type_as_type_argument**: 0 (reduced from 119 → 100% fixed)
 **undefined_getter**: 0 (reduced from 183 → 100% fixed)
-**argument_type_not_assignable**: 86
+**argument_type_not_assignable**: 92
+**missing_required_argument**: 411
+**undefined_named_parameter**: 156
+**undefined_method**: 136
 
 ---
 
@@ -72,6 +76,10 @@ This is the active task list for autonomous agent execution. The agent selects O
 | D006 | Fix FFI struct field type annotations | completed | Changed Int8/Double to int/double with @Int8()/@Double() |
 | D007 | Fix argument_type_not_assignable errors | completed | 302→43 (86% reduction), fixed property name mapping in DartParserGenerator |
 | D008 | Fix undefined_getter errors | completed | 183→0 (100% reduction), fixed callback property naming and string type handling |
+| D009 | Fix non_type_as_type_argument errors | completed | 119→0 (100% reduction), added base structs and fixed DartStruct.scriban template |
+| D010 | Fix undefined_method errors (136) | pending | Add missing parse methods (parseTextStyle, parseCurve, etc.) |
+| D011 | Fix missing_required_argument errors (411) | pending | Widget constructor parameter issues |
+| D012 | Fix undefined_named_parameter errors (156) | pending | Incorrect parameter names in parsers |
 
 ### 1.5 Code Generator Fixes (LOW PRIORITY)
 
@@ -162,7 +170,10 @@ When starting a new loop, work on these in order:
 7. ~~**D002** - Fix undefined_method errors (370) - add missing parse methods~~ ✅ DONE (376→0)
 8. ~~**D007** - Fix argument_type_not_assignable errors (302) - type conversions~~ ✅ DONE (302→43, 86% reduction)
 9. ~~**D008** - Fix undefined_getter errors (183) - struct field accessors~~ ✅ DONE (183→0)
-10. **D009** - Fix remaining argument_type_not_assignable errors - nullable to non-nullable conversions
+10. ~~**D009** - Fix non_type_as_type_argument errors (119) - struct imports~~ ✅ DONE (119→0, 100% fixed)
+11. **D010** - Fix undefined_method errors (136) - add missing parse methods (parseTextStyle, parseCurve, etc.)
+12. **D011** - Fix missing_required_argument errors (411) - widget constructor parameters
+13. **D012** - Fix undefined_named_parameter errors (156) - incorrect parameter names
 
 ---
 
@@ -189,6 +200,7 @@ When starting a new loop, work on these in order:
 | D002 | 2026-01-07 | 4b5d8b8 | Fixed ToCamelCase in generators, added stub parsers |
 | D007 | 2026-01-07 | 1f8a846 | Fixed property name mapping in DartParserGenerator, added typed pointer detection |
 | D008 | 2026-01-07 | 4b508b9 | Fixed callback property naming (remove double Action suffix), added IsString property for Pointer<Utf8> handling |
+| D009 | 2026-01-07 | d13d5fc | Added SingleChildRenderObjectWidgetStruct/MultiChildRenderObjectWidgetStruct to flutter_sharp_structs.dart, fixed DartStruct.scriban to always import flutter_sharp_structs.dart |
 
 ---
 
@@ -244,6 +256,18 @@ Add notes here when exploring the codebase:
   3. Excluded `Pointer<Utf8>` from `IsPointerType` (it's a string, not a struct pointer)
   4. Added string handling in template: `map.propertyName.address != 0 ? map.propertyName.toDartString() : null`
 - Results: undefined_getter 183→0 (100% fixed)
+
+### D009 Fix Details (2026-01-07)
+- Root cause:
+  1. Hand-written parsers in `lib/parsers/` used `SingleChildRenderObjectWidgetStruct` and `MultiChildRenderObjectWidgetStruct` which were removed from `flutter_sharp_structs.dart`
+  2. Generated structs in `lib/structs/` use `Pointer<WidgetStruct>` for child properties but didn't import `flutter_sharp_structs.dart` where `WidgetStruct` is defined
+  3. DartStruct.scriban template only imported `flutter_sharp_structs.dart` when `base_struct == "WidgetStruct"`, not when using `WidgetStruct` in properties
+- Fixes applied:
+  1. Added `SingleChildRenderObjectWidgetStruct` and `MultiChildRenderObjectWidgetStruct` back to `flutter_sharp_structs.dart`
+  2. Added corresponding interface classes (`ISingleChildRenderObjectWidgetStruct`, `IMultiChildRenderObjectWidgetStruct`)
+  3. Modified DartStruct.scriban to always import `flutter_sharp_structs.dart` (line 8)
+  4. Regenerated all Dart structs with correct imports
+- Results: non_type_as_type_argument 119→0 (100% fixed), ambiguous_extension_member_access 43→7
 
 ---
 
