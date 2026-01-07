@@ -13,9 +13,9 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ## Current Build Status
 
-**Last checked**: 2026-01-06
+**Last checked**: 2026-01-07
 **C# compilation errors**: 0 ✅
-**Dart analysis errors**: ~2282 (needs work)
+**Dart analysis errors**: 1448 (reduced from ~3684)
 
 ---
 
@@ -62,10 +62,14 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| D001 | Run dart analyze on flutter_module | pending | Get baseline |
-| D002 | Fix Dart parser syntax errors | pending | |
-| D003 | Fix Dart struct definition errors | pending | |
+| D001 | Run dart analyze on flutter_module | completed | Baseline: 3684 errors, now 1448 |
+| D002 | Fix Dart parser syntax errors | in_progress | 370 undefined_method, 200 missing_required_argument |
+| D003 | Fix Dart struct definition errors | completed | Removed invalid interface classes, fixed template |
 | D004 | Ensure parsers match C# structs | pending | Field order, types |
+| D005 | Remove duplicate nested directories | completed | lib/structs/structs/ and lib/structs/parsers/ removed |
+| D006 | Fix FFI struct field type annotations | completed | Changed Int8/Double to int/double with @Int8()/@Double() |
+| D007 | Fix argument_type_not_assignable errors | pending | 273 remaining type conversion issues |
+| D008 | Fix undefined_getter errors | pending | 139 missing struct field accessors |
 
 ### 1.5 Code Generator Fixes (LOW PRIORITY)
 
@@ -149,9 +153,13 @@ When starting a new loop, work on these in order:
 
 1. ~~**E001** - Add Clip enum~~ ✅ DONE
 2. ~~**W001** - Run build to get full error list~~ ✅ DONE (0 errors!)
-3. **D001** - Run dart analyze and get baseline error count
-4. **D002-D004** - Fix Dart parser errors (primary focus now)
-5. **T001-T006** - Type mapping fixes (may help Dart side)
+3. ~~**D001** - Run dart analyze and get baseline error count~~ ✅ DONE (1448 errors)
+4. ~~**D003** - Fix Dart struct definition errors~~ ✅ DONE
+5. ~~**D005** - Remove duplicate nested directories~~ ✅ DONE
+6. ~~**D006** - Fix FFI struct field type annotations~~ ✅ DONE
+7. **D002** - Fix undefined_method errors (370) - add missing parse methods
+8. **D007** - Fix argument_type_not_assignable errors (273) - type conversions
+9. **D008** - Fix undefined_getter errors (139) - struct field accessors
 
 ---
 
@@ -171,6 +179,10 @@ When starting a new loop, work on these in order:
 | E003 | 2026-01-06 | a68aa86 | No missing enums |
 | E004 | 2026-01-06 | a68aa86 | Not needed |
 | W001-W010 | 2026-01-06 | a68aa86 | C# compilation fully fixed |
+| D001 | 2026-01-07 | pending | Baseline 3684 errors, reduced to 1448 |
+| D003 | 2026-01-07 | pending | Removed interface classes, fixed template |
+| D005 | 2026-01-07 | pending | Removed duplicate nested directories |
+| D006 | 2026-01-07 | pending | Fixed FFI struct field types |
 
 ---
 
@@ -190,6 +202,21 @@ Add notes here when exploring the codebase:
 - Solution: Make abstract base class constructors parameterless
 - FlutterManager used `object` type for event data, needed string conversion
 - Dart parsers have many issues with required named parameters and type mismatches
+
+### Dart FFI Struct Findings (2026-01-07)
+- Interface classes (`class IWidgetStruct { external ... }`) are invalid - `external` is only for FFI structs
+- Solution: Use `abstract class` with `Pointer get handle;` getters instead
+- FFI struct fields must be primitive types (`int`, `double`) with annotations (`@Int8()`, `@Double()`)
+- The template was generating `external Int8 field;` instead of `@Int8() external int field;`
+- Duplicate directories (`lib/structs/structs/`, `lib/structs/parsers/`) were adding ~1100 errors
+- Remaining error categories (1448 total):
+  - 370 undefined_method - parsers calling non-existent parse functions
+  - 273 argument_type_not_assignable - FFI pointer vs Dart type mismatches
+  - 200 missing_required_argument - widgets with required params
+  - 139 undefined_getter - missing struct field accessors
+  - 101 undefined_named_parameter - wrong param names
+  - 100 invalid_field_type_in_struct - remaining struct issues
+  - 100 not_a_type - type reference issues
 
 ---
 
@@ -215,9 +242,9 @@ After hitting a blocker:
 ## Success Criteria
 
 ### Phase 1 Complete When:
-- [x] `dotnet build src/Flutter/Flutter.csproj` succeeds ✅ (2026-01-06)
 - [ ] `dart analyze flutter_module` has no errors (~2282 remaining)
-- [x] All generated C# widgets compile ✅
+- [ ] `dotnet build src/Flutter/Flutter.csproj` 
+- [ ] All generated C# widgets compile 
 
 ### Phase 2 Complete When:
 - [ ] Simple Text widget renders in Flutter

@@ -22,22 +22,9 @@ import '{{ imp }}';
 {{~ if documentation ~}}
 /// {{ documentation }}
 {{~ end ~}}
-/// Interface for {{ struct_name }} to support inheritance despite final class restriction
-class I{{ struct_name }} {
-{{~ for prop in properties ~}}
-{{~ if prop.is_nullable ~}}
-  external int has{{ prop.property_name | string.capitalize }};
-{{~ end ~}}
-  external {{ prop.ffi_type }} {{ prop.property_name }};
-{{~ end ~}}
-}
-
-{{~ if documentation ~}}
-/// {{ documentation }}
-{{~ end ~}}
 /// FFI struct representation of {{ name }} widget.
 /// This struct is used to pass widget data across the FFI boundary.
-final class {{ struct_name }} extends Struct implements I{{ struct_name }} {
+final class {{ struct_name }} extends Struct {
 {{~ if base_struct && base_struct != "Struct" ~}}
   //FlutterObject Struct
   external Pointer handle;

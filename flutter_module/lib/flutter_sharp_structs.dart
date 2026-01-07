@@ -13,29 +13,40 @@ import 'maui_flutter.dart';
 
 import 'dart:convert';
 
-class IFlutterObjectStruct {
-  external Pointer handle;
-  external Pointer managedHandle;
-  external Pointer<Utf8> widgetType;
+/// Abstract interface for FlutterObjectStruct to allow type-safe parsing.
+/// This is used as a parameter type in parser methods.
+abstract class IFlutterObjectStruct {
+  Pointer get handle;
+  Pointer get managedHandle;
+  Pointer<Utf8> get widgetType;
 }
 
+/// Abstract interface for WidgetStruct to allow type-safe parsing.
+abstract class IWidgetStruct extends IFlutterObjectStruct {
+  Pointer<Utf8> get id;
+}
+
+/// Base FFI struct for all Flutter objects.
 final class FlutterObjectStruct extends Struct implements IFlutterObjectStruct {
+  @override
   external Pointer handle;
+  @override
   external Pointer managedHandle;
+  @override
   external Pointer<Utf8> widgetType;
 }
 
-class IWidgetStruct extends IFlutterObjectStruct {
-  external Pointer<Utf8> id;
-}
-
-//WidgetStruct : FlutterOBjectStruct
+/// Base FFI struct for all widgets.
 final class WidgetStruct extends Struct implements IWidgetStruct {
   //FlutterObject Struct
+  @override
   external Pointer handle;
+  @override
   external Pointer managedHandle;
+  @override
   external Pointer<Utf8> widgetType;
   //WidgetStruct
+  @override
   external Pointer<Utf8> id;
 }
 
