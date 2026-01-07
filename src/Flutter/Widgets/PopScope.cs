@@ -85,8 +85,18 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<PopScopeStruct>();
 			s.child = child;
-			// Complex type: Action<bool, T?> - skipped (requires marshaling)
-			// Complex type: Action<bool> - skipped (requires marshaling)
+			// Callback: onPopInvokedWithResult
+			if (onPopInvokedWithResult != null)
+			{
+				var actionId = CallbackRegistry.Register(onPopInvokedWithResult);
+				s.onPopInvokedWithResultAction = $"action_{actionId}";
+			}
+			// Callback: onPopInvoked
+			if (onPopInvoked != null)
+			{
+				var actionId = CallbackRegistry.Register(onPopInvoked);
+				s.onPopInvokedAction = $"action_{actionId}";
+			}
 			s.canPop = canPop;
 		}
 

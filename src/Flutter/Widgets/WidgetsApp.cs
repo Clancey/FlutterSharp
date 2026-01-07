@@ -90,9 +90,14 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<WidgetsAppStruct>();
 			// Complex type: GlobalKey<NavigatorState>? - skipped (requires marshaling)
-			// Complex type: Func<RouteSettings, Route<object>?> - skipped (requires marshaling)
-			// Complex type: Func<string, List<Route<object>>> - skipped (requires marshaling)
-			// Complex type: Delegate - skipped (requires marshaling)
+			// Complex callback type: Func<RouteSettings, Route<object>?> - skipped (requires specific marshaling)
+			// Complex callback type: Func<string, List<Route<object>>> - skipped (requires specific marshaling)
+			// Callback: pageRouteBuilder
+			if (pageRouteBuilder != null)
+			{
+				var actionId = CallbackRegistry.Register(pageRouteBuilder);
+				s.pageRouteBuilderAction = $"action_{actionId}";
+			}
 			// Complex type: RouteInformationParser<object>? - skipped (requires marshaling)
 			// Complex type: RouterDelegate<object>? - skipped (requires marshaling)
 			// Complex type: BackButtonDispatcher? - skipped (requires marshaling)
@@ -100,26 +105,41 @@ namespace Flutter.Widgets
 			// Complex type: RouterConfig<object>? - skipped (requires marshaling)
 			// Nullable reference type: Widget? - skipped
 			// Complex type: Delegate - skipped (requires marshaling)
-			// Complex type: Func<RouteSettings, Route<object>?> - skipped (requires marshaling)
-			// Complex type: Func<NavigationNotification, bool> - skipped (requires marshaling)
+			// Complex callback type: Func<RouteSettings, Route<object>?> - skipped (requires specific marshaling)
+			// Complex callback type: Func<NavigationNotification, bool> - skipped (requires specific marshaling)
 			s.initialRoute = initialRoute;
 			// Complex type: List<NavigatorObserver>? - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, Widget?, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, Widget?, Widget> - skipped (requires specific marshaling)
 			s.title = title;
-			// Complex type: Func<BuildContext, string> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, string> - skipped (requires specific marshaling)
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: Locale? - skipped (requires marshaling)
 			// Complex type: IEnumerable<LocalizationsDelegate<object>>? - skipped (requires marshaling)
-			// Complex type: Func<List<InvalidType>?, IEnumerable<InvalidType>, InvalidType> - skipped (requires marshaling)
-			// Complex type: Func<InvalidType, IEnumerable<InvalidType>, InvalidType> - skipped (requires marshaling)
+			// Complex callback type: Func<List<InvalidType>?, IEnumerable<InvalidType>, InvalidType> - skipped (requires specific marshaling)
+			// Complex callback type: Func<InvalidType, IEnumerable<InvalidType>, InvalidType> - skipped (requires specific marshaling)
 			// Complex type: IEnumerable<object> - skipped (requires marshaling)
 			s.showPerformanceOverlay = showPerformanceOverlay;
 			s.showSemanticsDebugger = showSemanticsDebugger;
 			s.debugShowWidgetInspector = debugShowWidgetInspector;
-			// Complex type: Delegate - skipped (requires marshaling)
-			// Complex type: Delegate - skipped (requires marshaling)
-			// Complex type: Delegate - skipped (requires marshaling)
+			// Callback: exitWidgetSelectionButtonBuilder
+			if (exitWidgetSelectionButtonBuilder != null)
+			{
+				var actionId = CallbackRegistry.Register(exitWidgetSelectionButtonBuilder);
+				s.exitWidgetSelectionButtonBuilderAction = $"action_{actionId}";
+			}
+			// Callback: moveExitWidgetSelectionButtonBuilder
+			if (moveExitWidgetSelectionButtonBuilder != null)
+			{
+				var actionId = CallbackRegistry.Register(moveExitWidgetSelectionButtonBuilder);
+				s.moveExitWidgetSelectionButtonBuilderAction = $"action_{actionId}";
+			}
+			// Callback: tapBehaviorButtonBuilder
+			if (tapBehaviorButtonBuilder != null)
+			{
+				var actionId = CallbackRegistry.Register(tapBehaviorButtonBuilder);
+				s.tapBehaviorButtonBuilderAction = $"action_{actionId}";
+			}
 			s.debugShowCheckedModeBanner = debugShowCheckedModeBanner;
 			// Complex type: Dictionary<ShortcutActivator, Intent>? - skipped (requires marshaling)
 			// Complex type: Dictionary<Type, FlutterAction<Intent>>? - skipped (requires marshaling)

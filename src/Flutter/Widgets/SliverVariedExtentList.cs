@@ -54,7 +54,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<SliverVariedExtentListStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			// Complex callback type: object - skipped (requires specific marshaling)
 			// Complex type: SliverChildDelegate - skipped (requires marshaling)
 		}
 

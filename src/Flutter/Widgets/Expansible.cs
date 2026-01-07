@@ -65,13 +65,13 @@ namespace Flutter.Widgets
 				duration = TimeSpan.FromTicks(2000000L);
 			var s = GetBackingStruct<ExpansibleStruct>();
 			// Complex type: ExpansibleController - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, InvalidType, Widget> - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, InvalidType, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, InvalidType, Widget> - skipped (requires specific marshaling)
+			// Complex callback type: Func<BuildContext, InvalidType, Widget> - skipped (requires specific marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.maintainState = maintainState;
-			// Complex type: Func<BuildContext, Widget, Widget, InvalidType, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, Widget, Widget, InvalidType, Widget> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ExpansibleStruct();

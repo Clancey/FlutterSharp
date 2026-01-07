@@ -91,7 +91,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<ListenableBuilderStruct>();
-			// Complex type: Func<BuildContext, Widget?, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, Widget?, Widget> - skipped (requires specific marshaling)
 			s.child = child;
 			// Complex type: Listenable - skipped (requires marshaling)
 		}

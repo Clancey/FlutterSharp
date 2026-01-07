@@ -40,7 +40,12 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<SliverLayoutBuilderStruct>();
-			// Complex type: Action? - skipped (requires marshaling)
+			// Callback: builder
+			if (builder != null)
+			{
+				var actionId = CallbackRegistry.Register(builder);
+				s.builderAction = $"action_{actionId}";
+			}
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverLayoutBuilderStruct();

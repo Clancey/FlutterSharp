@@ -107,7 +107,7 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<OverlayPortalStruct>();
 			// Complex type: OverlayPortalController - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, Widget> - skipped (requires specific marshaling)
 			s.child = child;
 		}
 

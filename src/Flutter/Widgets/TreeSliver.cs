@@ -78,18 +78,23 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<TreeSliverStruct>();
 			// Complex type: List<TreeSliverNode<T>> - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> - skipped (requires marshaling)
-			// Complex type: Func<TreeSliverNode<object?>, InvalidType, double> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> - skipped (requires specific marshaling)
+			// Complex callback type: Func<TreeSliverNode<object?>, InvalidType, double> - skipped (requires specific marshaling)
 			// Complex type: TreeSliverController? - skipped (requires marshaling)
-			// Complex type: Action<TreeSliverNode<object?>> - skipped (requires marshaling)
+			// Callback: onNodeToggle
+			if (onNodeToggle != null)
+			{
+				var actionId = CallbackRegistry.Register(onNodeToggle);
+				s.onNodeToggleAction = $"action_{actionId}";
+			}
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.addAutomaticKeepAlives = addAutomaticKeepAlives;
 			s.addRepaintBoundaries = addRepaintBoundaries;
 			s.addSemanticIndexes = addSemanticIndexes;
-			// Complex type: Func<Widget, int, int?> - skipped (requires marshaling)
+			// Complex callback type: Func<Widget, int, int?> - skipped (requires specific marshaling)
 			s.semanticIndexOffset = semanticIndexOffset;
-			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
+			// Complex callback type: Func<InvalidType, int?> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TreeSliverStruct();

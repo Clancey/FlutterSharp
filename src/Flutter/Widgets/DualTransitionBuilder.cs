@@ -44,8 +44,8 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<DualTransitionBuilderStruct>();
 			// Complex type: Animation<double> - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, InvalidType, Widget?, Widget> - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, InvalidType, Widget?, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, InvalidType, Widget?, Widget> - skipped (requires specific marshaling)
+			// Complex callback type: Func<BuildContext, InvalidType, Widget?, Widget> - skipped (requires specific marshaling)
 			s.child = child;
 		}
 

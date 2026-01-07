@@ -91,7 +91,12 @@ namespace Flutter.Widgets
 			s.filterQuality = filterQuality;
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
+			// Callback: onEnd
+			if (onEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onEnd);
+				s.onEndAction = $"action_{actionId}";
+			}
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedRotationStruct();

@@ -100,7 +100,7 @@ namespace Flutter.Widgets
 			// Complex type: TimeSpan? - skipped (requires marshaling)
 			// Complex type: DraggableScrollableController? - skipped (requires marshaling)
 			s.shouldCloseOnMinExtent = shouldCloseOnMinExtent;
-			// Complex type: Func<BuildContext, ScrollController, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, ScrollController, Widget> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DraggableScrollableSheetStruct();

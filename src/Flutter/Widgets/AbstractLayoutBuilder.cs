@@ -54,7 +54,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<AbstractLayoutBuilderStruct>();
-			// Complex type: Func<BuildContext, LayoutInfoType, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, LayoutInfoType, Widget> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AbstractLayoutBuilderStruct();

@@ -36,7 +36,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<NotificationListenerStruct>();
-			// Complex type: Func<T, bool> - skipped (requires marshaling)
+			// Complex callback type: Func<T, bool> - skipped (requires specific marshaling)
 			s.child = child;
 		}
 

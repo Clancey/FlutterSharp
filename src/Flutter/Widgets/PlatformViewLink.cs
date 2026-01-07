@@ -62,8 +62,8 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<PlatformViewLinkStruct>();
 			s.viewType = viewType;
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Func<PlatformViewCreationParams, InvalidType> - skipped (requires marshaling)
+			// Complex callback type: object - skipped (requires specific marshaling)
+			// Complex callback type: Func<PlatformViewCreationParams, InvalidType> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PlatformViewLinkStruct();

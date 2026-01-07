@@ -54,10 +54,30 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<TapRegionStruct>();
 			s.enabled = enabled;
 			s.behavior = behavior;
-			// Complex type: Action<InvalidType> - skipped (requires marshaling)
-			// Complex type: Action<InvalidType> - skipped (requires marshaling)
-			// Complex type: Action<InvalidType> - skipped (requires marshaling)
-			// Complex type: Action<InvalidType> - skipped (requires marshaling)
+			// Callback: onTapOutside
+			if (onTapOutside != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapOutside);
+				s.onTapOutsideAction = $"action_{actionId}";
+			}
+			// Callback: onTapInside
+			if (onTapInside != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapInside);
+				s.onTapInsideAction = $"action_{actionId}";
+			}
+			// Callback: onTapUpOutside
+			if (onTapUpOutside != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapUpOutside);
+				s.onTapUpOutsideAction = $"action_{actionId}";
+			}
+			// Callback: onTapUpInside
+			if (onTapUpInside != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapUpInside);
+				s.onTapUpInsideAction = $"action_{actionId}";
+			}
 			// Complex type: object? - skipped (requires marshaling)
 			s.consumeOutsideTaps = consumeOutsideTaps;
 			s.child = child;

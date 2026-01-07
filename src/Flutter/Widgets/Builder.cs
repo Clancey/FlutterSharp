@@ -114,7 +114,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<BuilderStruct>();
-			// Complex type: Func<BuildContext, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, Widget> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new BuilderStruct();

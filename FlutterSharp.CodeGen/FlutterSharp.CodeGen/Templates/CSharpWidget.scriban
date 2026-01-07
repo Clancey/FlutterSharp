@@ -115,6 +115,15 @@ namespace {{ namespace }}
 			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
 {{~ else if prop.is_string ~}}
 			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ else if prop.is_callback && prop.is_action_type ~}}
+			// Callback: {{ prop.backing_field_name }}
+			if ({{ prop.backing_field_name }} != null)
+			{
+				var actionId = CallbackRegistry.Register({{ prop.backing_field_name }});
+				s.{{ prop.struct_field_name }}Action = $"action_{actionId}";
+			}
+{{~ else if prop.is_callback ~}}
+			// Complex callback type: {{ prop.type }} - skipped (requires specific marshaling)
 {{~ else if prop.is_intptr ~}}
 			// Complex type: {{ prop.type }} - skipped (requires marshaling)
 {{~ else if prop.is_nullable_value_type ~}}
@@ -179,6 +188,15 @@ namespace {{ namespace }}
 			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
 {{~ else if prop.is_string ~}}
 			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
+{{~ else if prop.is_callback && prop.is_action_type ~}}
+			// Callback: {{ prop.backing_field_name }}
+			if ({{ prop.backing_field_name }} != null)
+			{
+				var actionId = CallbackRegistry.Register({{ prop.backing_field_name }});
+				s.{{ prop.struct_field_name }}Action = $"action_{actionId}";
+			}
+{{~ else if prop.is_callback ~}}
+			// Complex callback type: {{ prop.type }} - skipped (requires specific marshaling)
 {{~ else if prop.is_intptr ~}}
 			// Complex type: {{ prop.type }} - skipped (requires marshaling)
 {{~ else if prop.is_nullable_value_type ~}}

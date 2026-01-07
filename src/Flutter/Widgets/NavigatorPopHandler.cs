@@ -61,8 +61,18 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<NavigatorPopHandlerStruct>();
 			s.child = child;
 			s.enabled = enabled;
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action<T?> - skipped (requires marshaling)
+			// Callback: onPop
+			if (onPop != null)
+			{
+				var actionId = CallbackRegistry.Register(onPop);
+				s.onPopAction = $"action_{actionId}";
+			}
+			// Callback: onPopWithResult
+			if (onPopWithResult != null)
+			{
+				var actionId = CallbackRegistry.Register(onPopWithResult);
+				s.onPopWithResultAction = $"action_{actionId}";
+			}
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new NavigatorPopHandlerStruct();

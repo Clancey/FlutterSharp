@@ -49,7 +49,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<MatrixTransitionStruct>();
-			// Complex type: Func<double, InvalidType> - skipped (requires marshaling)
+			// Complex callback type: Func<double, InvalidType> - skipped (requires specific marshaling)
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.filterQuality = filterQuality;
 			s.child = child;

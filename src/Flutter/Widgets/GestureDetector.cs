@@ -195,64 +195,354 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<GestureDetectorStruct>();
 			s.child = child;
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
+			// Callback: onTapDown
+			if (onTapDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapDown);
+				s.onTapDownAction = $"action_{actionId}";
+			}
+			// Callback: onTapUp
+			if (onTapUp != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapUp);
+				s.onTapUpAction = $"action_{actionId}";
+			}
+			// Callback: onTap
+			if (onTap != null)
+			{
+				var actionId = CallbackRegistry.Register(onTap);
+				s.onTapAction = $"action_{actionId}";
+			}
+			// Callback: onTapMove
+			if (onTapMove != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapMove);
+				s.onTapMoveAction = $"action_{actionId}";
+			}
+			// Callback: onTapCancel
+			if (onTapCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapCancel);
+				s.onTapCancelAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryTap
+			if (onSecondaryTap != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryTap);
+				s.onSecondaryTapAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryTapDown
+			if (onSecondaryTapDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryTapDown);
+				s.onSecondaryTapDownAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryTapUp
+			if (onSecondaryTapUp != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryTapUp);
+				s.onSecondaryTapUpAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryTapCancel
+			if (onSecondaryTapCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryTapCancel);
+				s.onSecondaryTapCancelAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryTapDown
+			if (onTertiaryTapDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryTapDown);
+				s.onTertiaryTapDownAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryTapUp
+			if (onTertiaryTapUp != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryTapUp);
+				s.onTertiaryTapUpAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryTapCancel
+			if (onTertiaryTapCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryTapCancel);
+				s.onTertiaryTapCancelAction = $"action_{actionId}";
+			}
+			// Callback: onDoubleTapDown
+			if (onDoubleTapDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onDoubleTapDown);
+				s.onDoubleTapDownAction = $"action_{actionId}";
+			}
+			// Callback: onDoubleTap
+			if (onDoubleTap != null)
+			{
+				var actionId = CallbackRegistry.Register(onDoubleTap);
+				s.onDoubleTapAction = $"action_{actionId}";
+			}
+			// Callback: onDoubleTapCancel
+			if (onDoubleTapCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onDoubleTapCancel);
+				s.onDoubleTapCancelAction = $"action_{actionId}";
+			}
+			// Callback: onLongPressDown
+			if (onLongPressDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onLongPressDown);
+				s.onLongPressDownAction = $"action_{actionId}";
+			}
+			// Callback: onLongPressCancel
+			if (onLongPressCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onLongPressCancel);
+				s.onLongPressCancelAction = $"action_{actionId}";
+			}
+			// Callback: onLongPress
+			if (onLongPress != null)
+			{
+				var actionId = CallbackRegistry.Register(onLongPress);
+				s.onLongPressAction = $"action_{actionId}";
+			}
+			// Callback: onLongPressStart
+			if (onLongPressStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onLongPressStart);
+				s.onLongPressStartAction = $"action_{actionId}";
+			}
+			// Callback: onLongPressMoveUpdate
+			if (onLongPressMoveUpdate != null)
+			{
+				var actionId = CallbackRegistry.Register(onLongPressMoveUpdate);
+				s.onLongPressMoveUpdateAction = $"action_{actionId}";
+			}
+			// Callback: onLongPressUp
+			if (onLongPressUp != null)
+			{
+				var actionId = CallbackRegistry.Register(onLongPressUp);
+				s.onLongPressUpAction = $"action_{actionId}";
+			}
+			// Callback: onLongPressEnd
+			if (onLongPressEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onLongPressEnd);
+				s.onLongPressEndAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryLongPressDown
+			if (onSecondaryLongPressDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryLongPressDown);
+				s.onSecondaryLongPressDownAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryLongPressCancel
+			if (onSecondaryLongPressCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryLongPressCancel);
+				s.onSecondaryLongPressCancelAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryLongPress
+			if (onSecondaryLongPress != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryLongPress);
+				s.onSecondaryLongPressAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryLongPressStart
+			if (onSecondaryLongPressStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryLongPressStart);
+				s.onSecondaryLongPressStartAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryLongPressMoveUpdate
+			if (onSecondaryLongPressMoveUpdate != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryLongPressMoveUpdate);
+				s.onSecondaryLongPressMoveUpdateAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryLongPressUp
+			if (onSecondaryLongPressUp != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryLongPressUp);
+				s.onSecondaryLongPressUpAction = $"action_{actionId}";
+			}
+			// Callback: onSecondaryLongPressEnd
+			if (onSecondaryLongPressEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onSecondaryLongPressEnd);
+				s.onSecondaryLongPressEndAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryLongPressDown
+			if (onTertiaryLongPressDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryLongPressDown);
+				s.onTertiaryLongPressDownAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryLongPressCancel
+			if (onTertiaryLongPressCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryLongPressCancel);
+				s.onTertiaryLongPressCancelAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryLongPress
+			if (onTertiaryLongPress != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryLongPress);
+				s.onTertiaryLongPressAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryLongPressStart
+			if (onTertiaryLongPressStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryLongPressStart);
+				s.onTertiaryLongPressStartAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryLongPressMoveUpdate
+			if (onTertiaryLongPressMoveUpdate != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryLongPressMoveUpdate);
+				s.onTertiaryLongPressMoveUpdateAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryLongPressUp
+			if (onTertiaryLongPressUp != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryLongPressUp);
+				s.onTertiaryLongPressUpAction = $"action_{actionId}";
+			}
+			// Callback: onTertiaryLongPressEnd
+			if (onTertiaryLongPressEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onTertiaryLongPressEnd);
+				s.onTertiaryLongPressEndAction = $"action_{actionId}";
+			}
+			// Callback: onVerticalDragDown
+			if (onVerticalDragDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onVerticalDragDown);
+				s.onVerticalDragDownAction = $"action_{actionId}";
+			}
+			// Callback: onVerticalDragStart
+			if (onVerticalDragStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onVerticalDragStart);
+				s.onVerticalDragStartAction = $"action_{actionId}";
+			}
+			// Callback: onVerticalDragUpdate
+			if (onVerticalDragUpdate != null)
+			{
+				var actionId = CallbackRegistry.Register(onVerticalDragUpdate);
+				s.onVerticalDragUpdateAction = $"action_{actionId}";
+			}
+			// Callback: onVerticalDragEnd
+			if (onVerticalDragEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onVerticalDragEnd);
+				s.onVerticalDragEndAction = $"action_{actionId}";
+			}
+			// Callback: onVerticalDragCancel
+			if (onVerticalDragCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onVerticalDragCancel);
+				s.onVerticalDragCancelAction = $"action_{actionId}";
+			}
+			// Callback: onHorizontalDragDown
+			if (onHorizontalDragDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onHorizontalDragDown);
+				s.onHorizontalDragDownAction = $"action_{actionId}";
+			}
+			// Callback: onHorizontalDragStart
+			if (onHorizontalDragStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onHorizontalDragStart);
+				s.onHorizontalDragStartAction = $"action_{actionId}";
+			}
+			// Callback: onHorizontalDragUpdate
+			if (onHorizontalDragUpdate != null)
+			{
+				var actionId = CallbackRegistry.Register(onHorizontalDragUpdate);
+				s.onHorizontalDragUpdateAction = $"action_{actionId}";
+			}
+			// Callback: onHorizontalDragEnd
+			if (onHorizontalDragEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onHorizontalDragEnd);
+				s.onHorizontalDragEndAction = $"action_{actionId}";
+			}
+			// Callback: onHorizontalDragCancel
+			if (onHorizontalDragCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onHorizontalDragCancel);
+				s.onHorizontalDragCancelAction = $"action_{actionId}";
+			}
+			// Callback: onPanDown
+			if (onPanDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onPanDown);
+				s.onPanDownAction = $"action_{actionId}";
+			}
+			// Callback: onPanStart
+			if (onPanStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onPanStart);
+				s.onPanStartAction = $"action_{actionId}";
+			}
+			// Callback: onPanUpdate
+			if (onPanUpdate != null)
+			{
+				var actionId = CallbackRegistry.Register(onPanUpdate);
+				s.onPanUpdateAction = $"action_{actionId}";
+			}
+			// Callback: onPanEnd
+			if (onPanEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onPanEnd);
+				s.onPanEndAction = $"action_{actionId}";
+			}
+			// Callback: onPanCancel
+			if (onPanCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onPanCancel);
+				s.onPanCancelAction = $"action_{actionId}";
+			}
+			// Callback: onScaleStart
+			if (onScaleStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onScaleStart);
+				s.onScaleStartAction = $"action_{actionId}";
+			}
+			// Callback: onScaleUpdate
+			if (onScaleUpdate != null)
+			{
+				var actionId = CallbackRegistry.Register(onScaleUpdate);
+				s.onScaleUpdateAction = $"action_{actionId}";
+			}
+			// Callback: onScaleEnd
+			if (onScaleEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onScaleEnd);
+				s.onScaleEndAction = $"action_{actionId}";
+			}
+			// Callback: onForcePressStart
+			if (onForcePressStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onForcePressStart);
+				s.onForcePressStartAction = $"action_{actionId}";
+			}
+			// Callback: onForcePressPeak
+			if (onForcePressPeak != null)
+			{
+				var actionId = CallbackRegistry.Register(onForcePressPeak);
+				s.onForcePressPeakAction = $"action_{actionId}";
+			}
+			// Callback: onForcePressUpdate
+			if (onForcePressUpdate != null)
+			{
+				var actionId = CallbackRegistry.Register(onForcePressUpdate);
+				s.onForcePressUpdateAction = $"action_{actionId}";
+			}
+			// Callback: onForcePressEnd
+			if (onForcePressEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onForcePressEnd);
+				s.onForcePressEndAction = $"action_{actionId}";
+			}
 			s.behavior = behavior;
 			s.excludeFromSemantics = excludeFromSemantics;
 			s.dragStartBehavior = dragStartBehavior;

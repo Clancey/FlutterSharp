@@ -68,7 +68,12 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<SystemContextMenuStruct>();
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: List<IOSSystemContextMenuItem> - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Callback: onSystemHide
+			if (onSystemHide != null)
+			{
+				var actionId = CallbackRegistry.Register(onSystemHide);
+				s.onSystemHideAction = $"action_{actionId}";
+			}
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SystemContextMenuStruct();

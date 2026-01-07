@@ -133,9 +133,9 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<ImageStruct>();
 			// Complex type: ImageProvider - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, Widget, int?, bool, Widget> - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, Widget, InvalidType, Widget> - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, Widget, int?, bool, Widget> - skipped (requires specific marshaling)
+			// Complex callback type: Func<BuildContext, Widget, InvalidType, Widget> - skipped (requires specific marshaling)
+			// Complex callback type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires specific marshaling)
 			if (width.HasValue)
 				s.width = width.Value;
 			if (height.HasValue)

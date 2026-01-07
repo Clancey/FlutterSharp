@@ -39,7 +39,7 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<WillPopScopeStruct>();
 			s.child = child;
-			// Complex type: Func<Future<bool>> - skipped (requires marshaling)
+			// Complex callback type: Func<Future<bool>> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new WillPopScopeStruct();

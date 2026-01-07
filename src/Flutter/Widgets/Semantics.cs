@@ -204,25 +204,120 @@ namespace Flutter.Widgets
 				s.textDirection = textDirection.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Callback: onTap
+			if (onTap != null)
+			{
+				var actionId = CallbackRegistry.Register(onTap);
+				s.onTapAction = $"action_{actionId}";
+			}
+			// Callback: onLongPress
+			if (onLongPress != null)
+			{
+				var actionId = CallbackRegistry.Register(onLongPress);
+				s.onLongPressAction = $"action_{actionId}";
+			}
+			// Callback: onScrollLeft
+			if (onScrollLeft != null)
+			{
+				var actionId = CallbackRegistry.Register(onScrollLeft);
+				s.onScrollLeftAction = $"action_{actionId}";
+			}
+			// Callback: onScrollRight
+			if (onScrollRight != null)
+			{
+				var actionId = CallbackRegistry.Register(onScrollRight);
+				s.onScrollRightAction = $"action_{actionId}";
+			}
+			// Callback: onScrollUp
+			if (onScrollUp != null)
+			{
+				var actionId = CallbackRegistry.Register(onScrollUp);
+				s.onScrollUpAction = $"action_{actionId}";
+			}
+			// Callback: onScrollDown
+			if (onScrollDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onScrollDown);
+				s.onScrollDownAction = $"action_{actionId}";
+			}
+			// Callback: onIncrease
+			if (onIncrease != null)
+			{
+				var actionId = CallbackRegistry.Register(onIncrease);
+				s.onIncreaseAction = $"action_{actionId}";
+			}
+			// Callback: onDecrease
+			if (onDecrease != null)
+			{
+				var actionId = CallbackRegistry.Register(onDecrease);
+				s.onDecreaseAction = $"action_{actionId}";
+			}
+			// Callback: onCopy
+			if (onCopy != null)
+			{
+				var actionId = CallbackRegistry.Register(onCopy);
+				s.onCopyAction = $"action_{actionId}";
+			}
+			// Callback: onCut
+			if (onCut != null)
+			{
+				var actionId = CallbackRegistry.Register(onCut);
+				s.onCutAction = $"action_{actionId}";
+			}
+			// Callback: onPaste
+			if (onPaste != null)
+			{
+				var actionId = CallbackRegistry.Register(onPaste);
+				s.onPasteAction = $"action_{actionId}";
+			}
+			// Callback: onDismiss
+			if (onDismiss != null)
+			{
+				var actionId = CallbackRegistry.Register(onDismiss);
+				s.onDismissAction = $"action_{actionId}";
+			}
+			// Callback: onMoveCursorForwardByCharacter
+			if (onMoveCursorForwardByCharacter != null)
+			{
+				var actionId = CallbackRegistry.Register(onMoveCursorForwardByCharacter);
+				s.onMoveCursorForwardByCharacterAction = $"action_{actionId}";
+			}
+			// Callback: onMoveCursorBackwardByCharacter
+			if (onMoveCursorBackwardByCharacter != null)
+			{
+				var actionId = CallbackRegistry.Register(onMoveCursorBackwardByCharacter);
+				s.onMoveCursorBackwardByCharacterAction = $"action_{actionId}";
+			}
+			// Callback: onSetSelection
+			if (onSetSelection != null)
+			{
+				var actionId = CallbackRegistry.Register(onSetSelection);
+				s.onSetSelectionAction = $"action_{actionId}";
+			}
+			// Callback: onSetText
+			if (onSetText != null)
+			{
+				var actionId = CallbackRegistry.Register(onSetText);
+				s.onSetTextAction = $"action_{actionId}";
+			}
+			// Callback: onDidGainAccessibilityFocus
+			if (onDidGainAccessibilityFocus != null)
+			{
+				var actionId = CallbackRegistry.Register(onDidGainAccessibilityFocus);
+				s.onDidGainAccessibilityFocusAction = $"action_{actionId}";
+			}
+			// Callback: onDidLoseAccessibilityFocus
+			if (onDidLoseAccessibilityFocus != null)
+			{
+				var actionId = CallbackRegistry.Register(onDidLoseAccessibilityFocus);
+				s.onDidLoseAccessibilityFocusAction = $"action_{actionId}";
+			}
+			// Callback: onFocus
+			if (onFocus != null)
+			{
+				var actionId = CallbackRegistry.Register(onFocus);
+				s.onFocusAction = $"action_{actionId}";
+			}
 			// Complex type: Dictionary<object, object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: ISet<string>? - skipped (requires marshaling)

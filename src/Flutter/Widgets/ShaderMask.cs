@@ -64,7 +64,12 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<ShaderMaskStruct>();
-			// Complex type: Action - skipped (requires marshaling)
+			// Callback: shaderCallback
+			if (shaderCallback != null)
+			{
+				var actionId = CallbackRegistry.Register(shaderCallback);
+				s.shaderCallbackAction = $"action_{actionId}";
+			}
 			s.blendMode = blendMode;
 			s.child = child;
 		}

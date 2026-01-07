@@ -52,7 +52,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<ConstrainedLayoutBuilderStruct>();
-			// Complex type: Func<BuildContext, ConstraintType, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, ConstraintType, Widget> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ConstrainedLayoutBuilderStruct();

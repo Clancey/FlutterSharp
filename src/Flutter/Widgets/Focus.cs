@@ -142,10 +142,15 @@ namespace Flutter.Widgets
 			s.child = child;
 			// Complex type: FocusNode? - skipped (requires marshaling)
 			s.autofocus = autofocus;
-			// Complex type: Action<bool>? - skipped (requires marshaling)
+			// Callback: onFocusChange
+			if (onFocusChange != null)
+			{
+				var actionId = CallbackRegistry.Register(onFocusChange);
+				s.onFocusChangeAction = $"action_{actionId}";
+			}
 			s.includeSemantics = includeSemantics;
-			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
-			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
+			// Complex callback type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires specific marshaling)
+			// Complex callback type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires specific marshaling)
 			s.canRequestFocus = canRequestFocus;
 			s.skipTraversal = skipTraversal;
 			s.descendantsAreFocusable = descendantsAreFocusable;

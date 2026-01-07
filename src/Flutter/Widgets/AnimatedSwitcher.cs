@@ -79,8 +79,8 @@ namespace Flutter.Widgets
 			// Complex type: TimeSpan? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Func<Widget, InvalidType, Widget> - skipped (requires marshaling)
-			// Complex type: Func<Widget?, List<Widget>, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<Widget, InvalidType, Widget> - skipped (requires specific marshaling)
+			// Complex callback type: Func<Widget?, List<Widget>, Widget> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedSwitcherStruct();

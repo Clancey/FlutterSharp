@@ -39,7 +39,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<OrientationBuilderStruct>();
-			// Complex type: Func<BuildContext, Orientation, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, Orientation, Widget> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new OrientationBuilderStruct();

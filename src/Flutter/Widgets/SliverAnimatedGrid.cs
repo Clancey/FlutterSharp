@@ -54,8 +54,8 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<SliverAnimatedGridStruct>();
 			// Complex type: SliverGridDelegate - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
+			// Complex callback type: object - skipped (requires specific marshaling)
+			// Complex callback type: Func<InvalidType, int?> - skipped (requires specific marshaling)
 			s.initialItemCount = initialItemCount;
 		}
 

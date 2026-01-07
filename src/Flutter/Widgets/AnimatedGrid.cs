@@ -93,7 +93,7 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<AnimatedGridStruct>();
 			// Complex type: SliverGridDelegate - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Complex callback type: object - skipped (requires specific marshaling)
 			s.initialItemCount = initialItemCount;
 			s.scrollDirection = scrollDirection;
 			s.reverse = reverse;

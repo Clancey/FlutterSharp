@@ -111,7 +111,12 @@ namespace Flutter.Widgets
 			s.overAndUnderCenterOpacity = overAndUnderCenterOpacity;
 			s.itemExtent = itemExtent;
 			s.squeeze = squeeze;
-			// Complex type: Action - skipped (requires marshaling)
+			// Callback: onSelectedItemChanged
+			if (onSelectedItemChanged != null)
+			{
+				var actionId = CallbackRegistry.Register(onSelectedItemChanged);
+				s.onSelectedItemChangedAction = $"action_{actionId}";
+			}
 			s.renderChildrenOutsideViewport = renderChildrenOutsideViewport;
 			// Complex type: ListWheelChildDelegate - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;

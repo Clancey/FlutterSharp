@@ -100,9 +100,9 @@ namespace Flutter.Widgets
 				fadeInDuration = TimeSpan.FromTicks(7000000L);
 			var s = GetBackingStruct<FadeInImageStruct>();
 			// Complex type: ImageProvider? - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires specific marshaling)
 			// Complex type: ImageProvider - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires specific marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)

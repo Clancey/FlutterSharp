@@ -63,11 +63,21 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<RawMenuAnchorStruct>();
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, MenuController, Widget?, Widget> - skipped (requires marshaling)
+			// Callback: onOpen
+			if (onOpen != null)
+			{
+				var actionId = CallbackRegistry.Register(onOpen);
+				s.onOpenAction = $"action_{actionId}";
+			}
+			// Callback: onClose
+			if (onClose != null)
+			{
+				var actionId = CallbackRegistry.Register(onClose);
+				s.onCloseAction = $"action_{actionId}";
+			}
+			// Complex callback type: Func<BuildContext, MenuController, Widget?, Widget> - skipped (requires specific marshaling)
 			s.child = child;
-			// Complex type: Func<BuildContext, RawMenuOverlayInfo, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, RawMenuOverlayInfo, Widget> - skipped (requires specific marshaling)
 			s.useRootOverlay = useRootOverlay;
 			// Complex type: FocusNode? - skipped (requires marshaling)
 			s.consumeOutsideTaps = consumeOutsideTaps;

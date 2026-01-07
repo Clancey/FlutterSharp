@@ -47,7 +47,12 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<ActionListenerStruct>();
-			// Complex type: Action<FlutterAction<Intent>> - skipped (requires marshaling)
+			// Callback: listener
+			if (listener != null)
+			{
+				var actionId = CallbackRegistry.Register(listener);
+				s.listenerAction = $"action_{actionId}";
+			}
 			// Complex type: FlutterAction<Intent> - skipped (requires marshaling)
 			s.child = child;
 		}

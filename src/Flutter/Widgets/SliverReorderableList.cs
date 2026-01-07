@@ -60,19 +60,34 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<SliverReorderableListStruct>();
-			// Complex type: Func<BuildContext, int, Widget> - skipped (requires marshaling)
-			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, int, Widget> - skipped (requires specific marshaling)
+			// Complex callback type: Func<InvalidType, int?> - skipped (requires specific marshaling)
 			s.itemCount = itemCount;
-			// Complex type: Action<int, int> - skipped (requires marshaling)
-			// Complex type: Action<int> - skipped (requires marshaling)
-			// Complex type: Action<int> - skipped (requires marshaling)
-			// Complex type: Func<Widget, int, InvalidType, Widget> - skipped (requires marshaling)
+			// Callback: onReorder
+			if (onReorder != null)
+			{
+				var actionId = CallbackRegistry.Register(onReorder);
+				s.onReorderAction = $"action_{actionId}";
+			}
+			// Callback: onReorderStart
+			if (onReorderStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onReorderStart);
+				s.onReorderStartAction = $"action_{actionId}";
+			}
+			// Callback: onReorderEnd
+			if (onReorderEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onReorderEnd);
+				s.onReorderEndAction = $"action_{actionId}";
+			}
+			// Complex callback type: Func<Widget, int, InvalidType, Widget> - skipped (requires specific marshaling)
 			if (itemExtent.HasValue)
 				s.itemExtent = itemExtent.Value;
-			// Complex type: object - skipped (requires marshaling)
+			// Complex callback type: object - skipped (requires specific marshaling)
 			// Nullable reference type: Widget? - skipped
 			s.autoScrollerVelocityScalar = autoScrollerVelocityScalar;
-			// Complex type: Func<BuildContext, DragBoundaryDelegate<InvalidType>?> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, DragBoundaryDelegate<InvalidType>?> - skipped (requires specific marshaling)
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverReorderableListStruct();

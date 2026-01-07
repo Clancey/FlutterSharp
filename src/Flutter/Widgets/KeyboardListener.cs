@@ -48,7 +48,12 @@ namespace Flutter.Widgets
 			// Complex type: FocusNode - skipped (requires marshaling)
 			s.autofocus = autofocus;
 			s.includeSemantics = includeSemantics;
-			// Complex type: Action - skipped (requires marshaling)
+			// Callback: onKeyEvent
+			if (onKeyEvent != null)
+			{
+				var actionId = CallbackRegistry.Register(onKeyEvent);
+				s.onKeyEventAction = $"action_{actionId}";
+			}
 			s.child = child;
 		}
 

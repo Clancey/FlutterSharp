@@ -46,9 +46,14 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<UndoHistoryStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Func<T?, T, bool> - skipped (requires marshaling)
-			// Complex type: Func<T, T> - skipped (requires marshaling)
-			// Complex type: Action<T> - skipped (requires marshaling)
+			// Complex callback type: Func<T?, T, bool> - skipped (requires specific marshaling)
+			// Complex callback type: Func<T, T> - skipped (requires specific marshaling)
+			// Callback: onTriggered
+			if (onTriggered != null)
+			{
+				var actionId = CallbackRegistry.Register(onTriggered);
+				s.onTriggeredAction = $"action_{actionId}";
+			}
 			// Complex type: FocusNode - skipped (requires marshaling)
 			// Complex type: UndoHistoryController? - skipped (requires marshaling)
 			s.child = child;

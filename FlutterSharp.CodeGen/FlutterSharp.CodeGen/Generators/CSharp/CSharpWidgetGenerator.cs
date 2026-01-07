@@ -284,6 +284,12 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				runtimeDefaultValue = null;
 			}
 
+			// Check if this is specifically an Action type (can be registered with CallbackRegistry)
+			var baseTypeForActionCheck = csharpType.TrimEnd('?');
+			var isActionType = baseTypeForActionCheck == "Action" ||
+			                   baseTypeForActionCheck.StartsWith("Action<") ||
+			                   baseTypeForActionCheck == "Delegate";
+
 			return new Dictionary<string, object?>
 			{
 				["name"] = p.Name,
@@ -295,6 +301,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["documentation"] = FormatDocumentation(p.Documentation),
 				["is_list"] = p.IsList,
 				["is_callback"] = p.IsCallback,
+				["is_action_type"] = isActionType, // True if type is Action, Action<T>, or Delegate
 				["backing_field_name"] = p.BackingFieldName,
 				["is_generic_type_param"] = p.IsGenericTypeParam,
 				// Assignment-specific properties

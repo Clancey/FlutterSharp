@@ -90,7 +90,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<AnimatedListStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			// Complex callback type: object - skipped (requires specific marshaling)
 			s.initialItemCount = initialItemCount;
 			s.scrollDirection = scrollDirection;
 			s.reverse = reverse;

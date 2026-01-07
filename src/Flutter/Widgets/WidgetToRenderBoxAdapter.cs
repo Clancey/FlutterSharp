@@ -40,8 +40,18 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<WidgetToRenderBoxAdapterStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Callback: onBuild
+			if (onBuild != null)
+			{
+				var actionId = CallbackRegistry.Register(onBuild);
+				s.onBuildAction = $"action_{actionId}";
+			}
+			// Callback: onUnmount
+			if (onUnmount != null)
+			{
+				var actionId = CallbackRegistry.Register(onUnmount);
+				s.onUnmountAction = $"action_{actionId}";
+			}
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new WidgetToRenderBoxAdapterStruct();

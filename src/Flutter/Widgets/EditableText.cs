@@ -354,15 +354,55 @@ namespace Flutter.Widgets
 			// Complex type: TextSelectionControls? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Action<bool>? - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
-			// Complex type: Action<string, Map<String, dynamic>> - skipped (requires marshaling)
-			// Complex type: Action<InvalidType, InvalidType> - skipped (requires marshaling)
-			// Complex type: Action - skipped (requires marshaling)
+			// Callback: onChanged
+			if (onChanged != null)
+			{
+				var actionId = CallbackRegistry.Register(onChanged);
+				s.onChangedAction = $"action_{actionId}";
+			}
+			// Callback: onEditingComplete
+			if (onEditingComplete != null)
+			{
+				var actionId = CallbackRegistry.Register(onEditingComplete);
+				s.onEditingCompleteAction = $"action_{actionId}";
+			}
+			// Callback: onSubmitted
+			if (onSubmitted != null)
+			{
+				var actionId = CallbackRegistry.Register(onSubmitted);
+				s.onSubmittedAction = $"action_{actionId}";
+			}
+			// Callback: onAppPrivateCommand
+			if (onAppPrivateCommand != null)
+			{
+				var actionId = CallbackRegistry.Register(onAppPrivateCommand);
+				s.onAppPrivateCommandAction = $"action_{actionId}";
+			}
+			// Callback: onSelectionChanged
+			if (onSelectionChanged != null)
+			{
+				var actionId = CallbackRegistry.Register(onSelectionChanged);
+				s.onSelectionChangedAction = $"action_{actionId}";
+			}
+			// Callback: onSelectionHandleTapped
+			if (onSelectionHandleTapped != null)
+			{
+				var actionId = CallbackRegistry.Register(onSelectionHandleTapped);
+				s.onSelectionHandleTappedAction = $"action_{actionId}";
+			}
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: Action<InvalidType> - skipped (requires marshaling)
-			// Complex type: Action<InvalidType> - skipped (requires marshaling)
+			// Callback: onTapOutside
+			if (onTapOutside != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapOutside);
+				s.onTapOutsideAction = $"action_{actionId}";
+			}
+			// Callback: onTapUpOutside
+			if (onTapUpOutside != null)
+			{
+				var actionId = CallbackRegistry.Register(onTapUpOutside);
+				s.onTapUpOutsideAction = $"action_{actionId}";
+			}
 			// Complex type: List<object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.rendererIgnoresPointer = rendererIgnoresPointer;
@@ -393,7 +433,7 @@ namespace Flutter.Widgets
 			// Complex type: ScrollBehavior? - skipped (requires marshaling)
 			s.enableIMEPersonalizedLearning = enableIMEPersonalizedLearning;
 			// Complex type: ContentInsertionConfiguration? - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, EditableTextState, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, EditableTextState, Widget> - skipped (requires specific marshaling)
 			// Complex type: SpellCheckConfiguration? - skipped (requires marshaling)
 			// Complex type: TextMagnifierConfiguration - skipped (requires marshaling)
 			// Complex type: StrutStyle? - skipped (requires marshaling)

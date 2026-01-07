@@ -120,11 +120,16 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<TweenAnimationBuilderStruct>();
 			// Complex type: Tween<double> - skipped (requires marshaling)
-			// Complex type: Func<BuildContext, T, Widget?, Widget> - skipped (requires marshaling)
+			// Complex callback type: Func<BuildContext, T, Widget?, Widget> - skipped (requires specific marshaling)
 			s.child = child;
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
+			// Callback: onEnd
+			if (onEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onEnd);
+				s.onEndAction = $"action_{actionId}";
+			}
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TweenAnimationBuilderStruct();

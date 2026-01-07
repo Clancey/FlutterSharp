@@ -62,15 +62,60 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<ListenerStruct>();
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
-			// Complex type: Action? - skipped (requires marshaling)
+			// Callback: onPointerDown
+			if (onPointerDown != null)
+			{
+				var actionId = CallbackRegistry.Register(onPointerDown);
+				s.onPointerDownAction = $"action_{actionId}";
+			}
+			// Callback: onPointerMove
+			if (onPointerMove != null)
+			{
+				var actionId = CallbackRegistry.Register(onPointerMove);
+				s.onPointerMoveAction = $"action_{actionId}";
+			}
+			// Callback: onPointerUp
+			if (onPointerUp != null)
+			{
+				var actionId = CallbackRegistry.Register(onPointerUp);
+				s.onPointerUpAction = $"action_{actionId}";
+			}
+			// Callback: onPointerHover
+			if (onPointerHover != null)
+			{
+				var actionId = CallbackRegistry.Register(onPointerHover);
+				s.onPointerHoverAction = $"action_{actionId}";
+			}
+			// Callback: onPointerCancel
+			if (onPointerCancel != null)
+			{
+				var actionId = CallbackRegistry.Register(onPointerCancel);
+				s.onPointerCancelAction = $"action_{actionId}";
+			}
+			// Callback: onPointerPanZoomStart
+			if (onPointerPanZoomStart != null)
+			{
+				var actionId = CallbackRegistry.Register(onPointerPanZoomStart);
+				s.onPointerPanZoomStartAction = $"action_{actionId}";
+			}
+			// Callback: onPointerPanZoomUpdate
+			if (onPointerPanZoomUpdate != null)
+			{
+				var actionId = CallbackRegistry.Register(onPointerPanZoomUpdate);
+				s.onPointerPanZoomUpdateAction = $"action_{actionId}";
+			}
+			// Callback: onPointerPanZoomEnd
+			if (onPointerPanZoomEnd != null)
+			{
+				var actionId = CallbackRegistry.Register(onPointerPanZoomEnd);
+				s.onPointerPanZoomEndAction = $"action_{actionId}";
+			}
+			// Callback: onPointerSignal
+			if (onPointerSignal != null)
+			{
+				var actionId = CallbackRegistry.Register(onPointerSignal);
+				s.onPointerSignalAction = $"action_{actionId}";
+			}
 			s.behavior = behavior;
 			s.child = child;
 		}
