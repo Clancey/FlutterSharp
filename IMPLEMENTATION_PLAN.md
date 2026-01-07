@@ -15,16 +15,17 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 **Last checked**: 2026-01-07
 **C# compilation errors**: 0 ✅
-**Dart analysis errors**: 301 total (down from 1018 → 70% reduction!)
-**missing_required_argument**: 118 (down from 345 → 66% fixed)
-**argument_type_not_assignable**: 123 (down from 186 → 34% fixed)
-**undefined_named_parameter**: 17 (down from 177 → 90% fixed)
-**undefined_getter**: 14 (down from 27 → 48% fixed)
-**empty_struct**: 19
-**uri_does_not_exist**: 0 ✅ (down from 206 → 100% fixed)
-**ambiguous_import**: 0 ✅ (down from 35 → 100% fixed)
-**non_type_as_type_argument**: 0 ✅ (100% fixed)
-**undefined_method**: 2 (down from 4)
+**Dart analysis errors**: 338 total (up due to new constructor params being extracted)
+**missing_required_argument**: 64 (down from 118 → 46% fixed this run, down from 345 overall)
+**argument_type_not_assignable**: 192 (up from 123 - new params have type mismatches)
+**undefined_named_parameter**: 27 (slight increase)
+**undefined_getter**: 8
+**empty_struct**: 10
+**uri_does_not_exist**: 4
+**ambiguous_extension_member_access**: 5
+**undefined_method**: 15
+**non_type_as_type_argument**: 5
+**not_enough_positional_arguments**: 3
 
 ---
 
@@ -81,7 +82,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | D008 | Fix undefined_getter errors | completed | 183→0 (100% reduction), fixed callback property naming and string type handling |
 | D009 | Fix non_type_as_type_argument errors | completed | 119→0 (100% reduction), added base structs and fixed DartStruct.scriban template |
 | D010 | Fix undefined_method errors (136) | completed | 136→4 (97% fixed), changed callback FFI types to Pointer<Utf8>, added utils.dart import |
-| D011 | Fix missing_required_argument errors (411) | pending | Widget constructor parameter issues |
+| D011 | Fix missing_required_argument errors (411) | in_progress | Partial fix: 118→64 (46% reduction). Enhanced Dart analyzer to extract constructor params that aren't fields. Remaining 64 errors need complex type support (delegates, controllers, etc.) |
 | D012 | Fix undefined_named_parameter errors (156) | pending | Incorrect parameter names in parsers |
 
 ### 1.5 Code Generator Fixes (LOW PRIORITY)
@@ -179,8 +180,9 @@ When starting a new loop, work on these in order:
 13. ~~**D014** - Fix uri_does_not_exist errors - remove base struct imports~~ ✅ DONE (206→0, 100% fixed)
 14. ~~**D015** - Fix ambiguous_import errors - hide conflicting imports~~ ✅ DONE (35→0, 100% fixed)
 15. ~~**D016** - Fix callback parameter name mapping~~ ✅ DONE (undefined_named_parameter: 99→17, 83% fixed)
-16. **D011** - Fix missing_required_argument errors (118 remaining) - widget constructor parameters
-17. **D012** - Fix remaining undefined_named_parameter errors (17 remaining) - widget-specific quirks (sliver, text, icon)
+16. **D011** - Fix missing_required_argument errors (64 remaining after D017) - complex types like delegates/controllers
+17. **D012** - Fix remaining undefined_named_parameter errors (27 remaining) - widget-specific quirks (sliver, text, icon)
+18. **D017** - Fix argument_type_not_assignable errors (192) - nullable-to-non-nullable type conversions
 
 ---
 
@@ -213,6 +215,7 @@ When starting a new loop, work on these in order:
 | D014 | 2026-01-07 | 428397a | Fixed DartStruct.scriban to not import non-existent base struct files |
 | D015 | 2026-01-07 | 428397a | Fixed DartParser.scriban to hide conflicting imports (parseBoxConstraints, parseEdgeInsetsGeometry, parseColor) |
 | D016 | 2026-01-07 | 2bf8588 | Separated PropertyName (Flutter param) from StructPropertyName (FFI struct field) - fixes callback parameter naming. Also fixed child vs children for multi-child widgets. |
+| D017 | 2026-01-07 | (pending) | Enhanced Dart analyzer to extract constructor parameters that aren't public fields. Added 40+ common type mappings for parameter name inference. Reduced missing_required_argument from 118→64 (46%). |
 
 ---
 
@@ -305,6 +308,20 @@ Add notes here when exploring the codebase:
   1. Most errors are in `lib/parsers/` (hand-written parsers, not regenerated)
   2. Analyzer fails to extract properties for many widgets (e.g., FocusScope has empty struct)
   3. Need deeper investigation of analyzer property extraction logic
+
+### D017 Constructor Parameter Extraction Fix (2026-01-07)
+- Root cause: Dart analyzer `_extractProperties` only extracted public fields, not constructor parameters
+- Many Flutter widgets have constructor parameters passed directly to super constructors without being fields
+- Fix: Modified `package_scanner.dart` `_extractProperties` to also extract constructor parameters that aren't already fields
+- Also added 40+ type mappings to `_inferTypeFromParameterName` for common widget parameters:
+  - `gridDelegate` → `SliverGridDelegate`
+  - `itemBuilder`, `delegate`, `controller` → `dynamic` (complex types)
+  - `child` → `Widget`, `slivers` → `List<Widget>`, etc.
+- Results: missing_required_argument 118→64 (46% reduction)
+- New errors introduced: argument_type_not_assignable increased 123→192
+  - These are legitimate type mismatches (nullable → non-nullable) that need separate fix
+- Remaining 64 missing_required_argument errors are for complex types that need manual handling:
+  - `delegate` (11), `controller` (6), `gridDelegate` (3), `view` (2), `link` (2), etc.
 
 ### D016 Fix Details (2026-01-07)
 - Root cause: Callback parameter names used struct field names (`builderAction`) instead of Flutter widget parameter names (`builder`)

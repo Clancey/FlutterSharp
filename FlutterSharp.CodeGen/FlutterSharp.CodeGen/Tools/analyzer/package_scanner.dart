@@ -375,8 +375,12 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   }
 
   /// Extracts property definitions from a class element
+  /// This includes both public fields AND constructor parameters that aren't already fields.
+  /// Many Flutter widgets have constructor parameters that are passed directly to super
+  /// constructors without being stored as fields in the widget class itself.
   List<Map<String, dynamic>> _extractProperties(element) {
     final properties = <Map<String, dynamic>>[];
+    final propertyNames = <String>{};
 
     // Build a map of default values from the unnamed constructor
     final defaultValues = <String, String?>{};
@@ -424,6 +428,40 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
         'isCallback': _isCallback(field.type),
         'typeArguments': _getTypeArguments(field.type),
       });
+      propertyNames.add(field.name);
+    }
+
+    // Also extract constructor parameters that are NOT already fields
+    // Many Flutter widgets have constructor-only parameters that need to be captured
+    if (unnamedConstructor != null) {
+      for (final param in unnamedConstructor.parameters) {
+        // Skip if this parameter name already exists as a field
+        if (propertyNames.contains(param.name)) continue;
+
+        // Skip the 'key' parameter - it's handled separately by the base Widget class
+        if (param.name == 'key') continue;
+
+        var dartType = _getTypeString(param.type);
+
+        // If we got InvalidType, try to infer from parameter name
+        if (dartType == 'InvalidType' || dartType.contains('InvalidType')) {
+          dartType = _inferTypeFromParameterName(param.name, dartType);
+        }
+
+        properties.add({
+          'name': param.name,
+          'dartType': dartType,
+          'isRequired': param.isRequired,
+          'isNullable': _isNullable(param.type),
+          'isNamed': param.isNamed,
+          'defaultValue': param.defaultValueCode,
+          'documentation': _getDocumentation(param),
+          'isList': _isList(param.type),
+          'isCallback': _isCallback(param.type),
+          'typeArguments': _getTypeArguments(param.type),
+        });
+        propertyNames.add(param.name);
+      }
     }
 
     return properties;
@@ -492,6 +530,48 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       'children': 'List<Widget>',
       'actions': 'List<Widget>?',
       'tabs': 'List<Widget>',
+      // Common required parameters for specific widgets
+      'delegate': 'dynamic', // Generic delegate type - cannot be fully resolved
+      'controller': 'dynamic', // Generic controller type
+      'itemBuilder': 'dynamic', // Callback type
+      'gridDelegate': 'SliverGridDelegate',
+      'offset': 'Offset',
+      'animation': 'Animation<double>',
+      'opacity': 'Animation<double>',
+      'child': 'Widget',
+      'sliver': 'Widget',
+      'slivers': 'List<Widget>',
+      'filter': 'ImageFilter',
+      'colorFilter': 'ColorFilter',
+      'link': 'LayerLink',
+      'image': 'ImageProvider',
+      'placeholder': 'ImageProvider?',
+      'bundle': 'AssetBundle',
+      'viewType': 'String',
+      'view': 'FlutterView',
+      'views': 'List<FlutterView>',
+      'textDirection': 'TextDirection',
+      'textHeightBehavior': 'TextHeightBehavior',
+      'value': 'dynamic', // For AnnotatedRegion, etc.
+      'valueListenable': 'ValueListenable<dynamic>',
+      'text': 'InlineSpan',
+      'hitTestBehavior': 'PlatformViewHitTestBehavior',
+      'gestureRecognizers': 'Set<Factory<OneSequenceGestureRecognizer>>',
+      'translation': 'Offset',
+      'tween': 'Tween<double>',
+      'turns': 'Animation<double>',
+      'size': 'Size',
+      'rect': 'Rect',
+      'tree': 'Widget', // For TreeSliver
+      'listenable': 'Listenable',
+      'builder': 'WidgetBuilder?', // For DualTransitionBuilder etc.
+      'surfaceFactory': 'dynamic', // For PlatformViewSurface
+      'cursorColor': 'Color',
+      'backgroundCursorColor': 'Color',
+      'focusNode': 'FocusNode',
+      'selectionColor': 'Color?',
+      'baselineType': 'TextBaseline',
+      'constraintsTransform': 'BoxConstraintsTransform',
     };
 
     return nameToType[paramName] ?? fallback;
