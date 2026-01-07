@@ -192,6 +192,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | API008 | Remove underscore prefix from C# parameters | completed | _mainAxisAlignment → mainAxisAlignment |
 | API009 | Add proper default values for optional params | completed | Added KnownEnumDefaults dictionary in CSharpWidgetGenerator.cs with Flutter's actual defaults for enum properties (MainAxisAlignment.Start, etc.) |
 | API010 | Make required params actually required | completed | Complex types made optional; debug params filtered out; Expanded.child, Flexible.child now required |
+| API011 | Make enum/value type params optional with defaults | completed | ShouldBeOptionalParameter() logic, overflow=TextOverflow.Clip, textWidthBasis=TextWidthBasis.Parent |
 
 ### 2.5.4 Constructor Property Assignment (HIGH PRIORITY)
 
@@ -214,23 +215,23 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 **Goal**: Full bidirectional event handling.
 
-### 3.1 Callback Registry (BLOCKED - needs Phase 2)
+### 3.1 Callback Registry (UNBLOCKED - Phase 2 complete)
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| CB001 | Complete CallbackRegistry | pending | |
-| CB002 | Implement action registration | pending | |
-| CB003 | Implement typed callbacks | pending | |
-| CB004 | Implement callback cleanup | pending | |
+| CB001 | Complete CallbackRegistry | completed | Action callbacks now marshaled to Dart via action IDs |
+| CB002 | Implement action registration | completed | Template registers callbacks with CallbackRegistry.Register() |
+| CB003 | Implement typed callbacks | in_progress | Action/Action<T> work; complex types (builders) still skipped |
+| CB004 | Implement callback cleanup | pending | Need disposal handling |
 
-### 3.2 Event Types (BLOCKED - needs CB001)
+### 3.2 Event Types (UNBLOCKED - CB001 complete)
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| EV001 | Implement VoidCallback | pending | |
-| EV002 | Implement ValueChanged<T> | pending | |
-| EV003 | Implement complex event data | pending | |
-| EV004 | Implement event routing | pending | |
+| EV001 | Implement VoidCallback | completed | Action type callbacks now work |
+| EV002 | Implement ValueChanged<T> | pending | Need Action<T> support in Dart parser |
+| EV003 | Implement complex event data | pending | TapDownDetails, DragUpdateDetails, etc |
+| EV004 | Implement event routing | pending | FlutterManager event dispatch |
 
 ---
 
@@ -320,12 +321,14 @@ When starting a new loop, work on these in order:
 | API005-007 | 2026-01-07 | 3db3d4f | Added collection initializer support for multi-child widgets. Created `has_widget_children` flag to distinguish `List<Widget>` from other list types (e.g., `List<TableRow>`). Widgets with `List<Widget>` children now implement `IEnumerable<Widget>`, have `Add(Widget)` and `AddRange()` methods, parameterless constructor, and `PrepareForSending()` override. 247 files changed. |
 | API008 | 2026-01-07 | f59caca | Removed underscore prefix from C# constructor parameters. Changed `_mainAxisAlignment` to `mainAxisAlignment`, etc. Updated WidgetAnalysisEnricher.cs (backingFieldName generation), CSharpWidgetGenerator.cs (parameterName generation), and CSharpWidget.scriban template (children_property_name references). C# keywords still properly escaped with `@` prefix via EscapeCSharpKeyword(). |
 | API009 | 2026-01-07 | 95458cf | Added proper default values for optional enum params. Created `KnownEnumDefaults` dictionary in CSharpWidgetGenerator.cs with Flutter's actual defaults (MainAxisAlignment.Start, MainAxisSize.Max, CrossAxisAlignment.Center, etc.). Modified `ConvertDartDefaultValueToCSharp()` to accept property name and lookup known defaults when Dart analyzer doesn't provide them (super parameters). Updated BuildPropertyModel and optional property generation to use known defaults. |
+| API010-011 | 2026-01-07 | 8d42a9c | Made enum/value type params optional with sensible defaults. Added `ShouldBeOptionalParameter()` in WidgetAnalysisEnricher.cs. Added overflow=TextOverflow.Clip, textWidthBasis=TextWidthBasis.Parent defaults to KnownEnumDefaults. Sample app now builds with 0 errors. |
 | CB021 | 2026-01-07 | pending | Fixed gesture callback types: Added IsCallbackType() to DartToCSharpMapper (maps *Callback/*Builder/*Listener to Action), updated DartUtilityParserGenerator to generate 40+ callback creator functions, fixed DartParser.scriban to use correct callback creator based on type. GestureDetector callbacks now fully typed. C# 152→56 errors (callback errors resolved). |
 | T001 | 2026-01-07 | pending | Mapped dart:collection `HashSet<T>` to `ISet<T>` and added default `ISet<object>` fallback for non-generic HashSet types. |
 | T002 | 2026-01-07 | pending | Mapped `Set<T>` to `ISet<T>` and updated generator collection handling/docs/tests. |
 | T003 | 2026-01-07 | pending | Added default generic args for missing type params and filled empty generic slots with Object. |
 | T004 | 2026-01-07 | pending | Forced TimeSpan defaults to use runtime assignment (no compile-time constants). |
 | D026 | 2026-01-07 | pending | Fixed remaining 138→0 Dart errors by adding 37 widgets with complex callbacks to skipParserGeneration set: ActionListener, AnimatedGrid, AnimatedList, AnimatedSwitcher, Builder, ConstraintsTransformBox, DraggableScrollableSheet, Expansible, Focus, FocusScope, LayoutBuilder, ListenableBuilder, MouseRegion, NavigatorPopHandler, NotificationListener, OrientationBuilder, OverlayPortal, PlatformViewLink, PopScope, RawMenuAnchor, ReorderableList, ShaderMask, SliverAnimatedGrid, SliverAnimatedList, SliverLayoutBuilder, SliverReorderableList, SliverVariedExtentList, StatefulBuilder, TapRegion, TextFieldTapRegion, TreeSliver, TweenAnimationBuilder, ValueListenableBuilder, WillPopScope, AndroidView, HtmlElementView. Also fixed hand-written parsers: singlechildscrollview (HitTestBehavior enum), align_widget (pointer casting), container_widget (imports), statefullwidget (MauiComponent import), tabbar/tabbarview (children pointer casting), utils.dart (parseWidget stub). |
+| CB001-002 | 2026-01-07 | d7270b1 | Implemented callback marshaling for Action types in CSharpWidget.scriban. Added is_action_type check in CSharpWidgetGenerator.cs to only marshal Action/Action<T>/Delegate types. Complex callback types (object, builders) are skipped with informative comments. GestureDetector callbacks (onTap, onTapDown, etc) now properly registered with CallbackRegistry and action IDs stored in struct. |
 
 ---
 
