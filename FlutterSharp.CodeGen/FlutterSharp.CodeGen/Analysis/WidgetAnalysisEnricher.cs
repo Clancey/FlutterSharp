@@ -101,7 +101,8 @@ namespace FlutterSharp.CodeGen.Analysis
 
 			// Convert FFI annotation types to actual Dart field types for struct declarations
 			// In Dart FFI, struct fields use primitive types (int, double) with annotations
-			var ffiType = ConvertFfiTypeToStructFieldType(rawFfiType);
+			// Pass the Dart type so we can determine typed pointers for known struct types
+			var ffiType = ConvertFfiTypeToStructFieldType(rawFfiType, property.DartType);
 
 			// Determine backing field name
 			var backingFieldName = $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}";
@@ -294,9 +295,9 @@ namespace FlutterSharp.CodeGen.Analysis
 		/// Converts FFI type names (Int8, Int32, Double, etc.) to Dart struct field types (int, double).
 		/// In Dart FFI structs, fields use primitive types with annotations, not FFI type names directly.
 		/// </summary>
-		private string ConvertFfiTypeToStructFieldType(string ffiType)
+		private string ConvertFfiTypeToStructFieldType(string ffiType, string? dartType = null)
 		{
-			return ffiType switch
+			var result = ffiType switch
 			{
 				// Integer types -> int
 				"Int8" or "Int16" or "Int32" or "Int64" => "int",
@@ -314,6 +315,47 @@ namespace FlutterSharp.CodeGen.Analysis
 				// Pointers and other types pass through unchanged
 				_ => ffiType
 			};
+
+			// If the result is Pointer<Void>, check if this type should be a typed pointer to its own struct
+			if (result == "Pointer<Void>" && !string.IsNullOrWhiteSpace(dartType))
+			{
+				var typedPointer = GetTypedPointerForDartType(dartType);
+				if (typedPointer != null)
+				{
+					return typedPointer;
+				}
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Gets a typed pointer type for known Dart types that should have struct representations.
+		/// </summary>
+		private string? GetTypedPointerForDartType(string dartType)
+		{
+			// Remove nullable marker and generic parameters for matching
+			var baseType = dartType.TrimEnd('?').Split('<')[0].Trim();
+
+			// Check if this type should have its own struct
+			// These are Flutter/Dart types that have their own struct definitions
+			var knownStructTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+			{
+				"Widget", "Alignment", "AlignmentGeometry", "EdgeInsets", "EdgeInsetsGeometry",
+				"BorderRadius", "BorderRadiusGeometry", "BoxDecoration", "Decoration",
+				"BoxConstraints", "Constraints", "TextStyle", "Gradient", "ImageProvider", "Size", "Offset",
+				"Rect", "Radius", "Matrix4", "Key", "BuildContext", "ThemeData", "IconData",
+				"Color", "MaterialColor", "MaterialStateProperty", "Duration", "DateTime",
+				"Animation", "AnimationController", "Curve", "ParametricCurve", "FocusNode", "ScrollController",
+				"ScrollPhysics", "TextEditingController", "GlobalKey", "State", "BoxBorder", "Border"
+			};
+
+			if (knownStructTypes.Contains(baseType))
+			{
+				return $"Pointer<{baseType}Struct>";
+			}
+
+			return null;
 		}
 
 		/// <summary>

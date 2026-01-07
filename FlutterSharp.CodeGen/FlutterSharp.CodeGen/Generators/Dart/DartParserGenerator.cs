@@ -186,15 +186,24 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			StructName = enrichedWidget.StructName,
 			WidgetName = enrichedWidget.Name,
 			Properties = regularProperties.Select(p => {
-				var isPointer = p.FfiType.StartsWith("Pointer<");
+				var isPointerVoid = p.FfiType == "Pointer<Void>" || p.FfiType == "IntPtr";
+				var isPointerType = p.FfiType.StartsWith("Pointer<") && !isPointerVoid;
 				var isPrimitive = IsPrimitiveTypeFfi(p.FfiType);
-				var isEnum = p.FfiAnnotation?.Contains("Int32") == true;
-				var parserFunc = GetParserFunctionFromEnriched(p);
 				var baseType = p.DartType?.TrimEnd('?') ?? "";
 				var ffiType = p.FfiType;
 
+				// Determine if this is an enum (stored as Int32 but not a primitive Dart type)
+				var isEnumType = (p.FfiAnnotation?.Contains("Int32") == true || p.FfiAnnotation?.Contains("Int8") == true)
+					&& !IsDartPrimitiveType(baseType)
+					&& !baseType.Equals("bool", StringComparison.OrdinalIgnoreCase);
+
 				// Determine if this is a Color stored as a primitive
 				var isColorPrimitive = baseType == "Color" && (ffiType == "Uint32" || ffiType == "Int32" || ffiType == "int");
+
+				// Determine if this is a bool stored as int
+				var isBool = baseType == "bool" || baseType == "Boolean";
+
+				var parserFunc = GetParserFunctionFromEnriched(p);
 
 				return new
 				{
@@ -202,12 +211,16 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 					PropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
 					p.DartType,
 					FfiType = ffiType,
-					IsPointer = isPointer,
-					IsPrimitive = isPrimitive,
-					IsEnum = isEnum,
+					// Match template variable names (Scriban converts to snake_case)
+					IsPointerVoid = isPointerVoid,
+					IsPointerType = isPointerType,
+					IsPrimitiveType = isPrimitive,
+					IsEnumType = isEnumType,
 					IsColorPrimitive = isColorPrimitive,
+					IsBool = isBool,
 					ParserFunction = parserFunc,
 					p.IsNullable,
+					IsRequired = !p.IsNullable,
 					p.IsCallback,
 					Documentation = FormatDartDocumentation(p.Documentation)
 				};
@@ -458,6 +471,17 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		       ffiType == "Int8" || ffiType == "Int16" || ffiType == "Int32" || ffiType == "Int64" ||
 		       ffiType == "Uint8" || ffiType == "Uint16" || ffiType == "Uint32" || ffiType == "Uint64" ||
 		       ffiType == "Float" || ffiType == "Double";
+	}
+
+	/// <summary>
+	/// Determines if a Dart type name is a primitive type.
+	/// </summary>
+	private bool IsDartPrimitiveType(string dartType)
+	{
+		var baseType = dartType?.TrimEnd('?') ?? "";
+		return baseType == "String" || baseType == "int" || baseType == "double" ||
+		       baseType == "bool" || baseType == "num" || baseType == "dynamic" ||
+		       baseType == "Object" || baseType == "void";
 	}
 
 	/// <summary>
