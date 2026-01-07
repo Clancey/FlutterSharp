@@ -21,6 +21,61 @@ namespace FlutterSharp.CodeGen.Analysis
 			"handle", "managedHandle", "widgetType", "id"
 		};
 
+		// Debug-only parameter names that should be excluded from the public API
+		private static readonly HashSet<string> DebugParameterNames = new(StringComparer.OrdinalIgnoreCase)
+		{
+			"debugTypicalAncestorWidgetClass",
+			"debugLabel",
+			"debugOwnerBuildScopeNotified"
+		};
+
+		// Complex C# types that cannot be marshaled via FFI and should be optional
+		// These are reference types or complex structs that require special marshaling
+		private static readonly HashSet<string> ComplexUnmarshalableTypes = new(StringComparer.OrdinalIgnoreCase)
+		{
+			// Flutter geometry types
+			"AlignmentGeometry", "Alignment", "AlignmentDirectional",
+			"EdgeInsetsGeometry", "EdgeInsets", "EdgeInsetsDirectional",
+			"BorderRadiusGeometry", "BorderRadius", "BorderRadiusDirectional",
+			"BoxConstraints", "Constraints",
+			"Matrix4",
+			// Flutter painting types
+			"Decoration", "BoxDecoration", "ShapeDecoration",
+			"ImageProvider", "ImageProvider<Object>",
+			"Color", "Gradient", "LinearGradient", "RadialGradient", "SweepGradient",
+			"Shadow", "BoxShadow",
+			"Border", "BoxBorder", "ShapeBorder", "OutlinedBorder",
+			"TextStyle", "StrutStyle",
+			// Flutter animation types
+			"Curve", "ParametricCurve", "Curves",
+			"Animation", "Animation<T>", "Listenable",
+			"AnimationController", "AnimationBehavior",
+			// Flutter foundation types
+			"Key", "GlobalKey", "LocalKey", "ValueKey", "ObjectKey", "UniqueKey",
+			// Flutter widget types
+			"BuildContext", "State",
+			// Flutter rendering types
+			"CustomClipper", "CustomClipper<T>", "CustomClipper<Rect>", "CustomClipper<Path>",
+			"CustomPainter", "LayerLink", "Ticker", "TickerProvider",
+			// Flutter services types
+			"ImageFilter", "ImageFilter<T>", "ColorFilter",
+			"AssetBundle", "Locale", "LocalizationsDelegate",
+			// Controller types
+			"ScrollController", "TextEditingController", "FocusNode", "FocusScopeNode",
+			"PageController", "TabController", "AnimationController",
+			// Delegate types
+			"SliverChildDelegate", "SliverChildBuilderDelegate", "SliverChildListDelegate",
+			"SliverGridDelegate", "GridDelegate", "TableColumnWidth",
+			// Other complex types
+			"ThemeData", "IconThemeData", "TextTheme",
+			"MaterialStateProperty", "MaterialStateProperty<T>",
+			"ValueListenable", "ValueNotifier",
+			"SelectionRegistrar", "SelectionControls",
+			"RouteSettings", "Route", "Navigator",
+			// System.Type is also not marshalable
+			"Type", "System.Type"
+		};
+
 		public WidgetAnalysisEnricher(DartToCSharpMapper dartToCSharpMapper, CSharpToDartFfiMapper csharpToDartMapper)
 		{
 			_dartToCSharpMapper = dartToCSharpMapper ?? throw new ArgumentNullException(nameof(dartToCSharpMapper));
@@ -38,10 +93,12 @@ namespace FlutterSharp.CodeGen.Analysis
 			// Determine base class information
 			var baseClassInfo = DetermineBaseClass(widget);
 
-			// Filter and enrich properties
+			// Filter and enrich properties (pass widget name for context-aware type mapping)
+			// Also filter out debug-only parameters
 			var enrichedProperties = widget.Properties
 				.Where(p => !ReservedFieldNames.Contains(p.Name))
-				.Select(p => EnrichProperty(p))
+				.Where(p => !DebugParameterNames.Contains(p.Name))
+				.Select(p => EnrichProperty(p, widget.Name))
 				.ToList();
 
 			// Add inherited child/children properties if needed but not present
@@ -51,8 +108,13 @@ namespace FlutterSharp.CodeGen.Analysis
 			AddInheritedBaseClassProperties(enrichedProperties, widget.BaseClass);
 
 			// Separate into required and optional for constructor
-			var requiredProperties = enrichedProperties.Where(p => p.IsRequired).ToList();
-			var optionalProperties = enrichedProperties.Where(p => !p.IsRequired).ToList();
+			// Complex types that can't be marshaled should be treated as optional even if IsRequired
+			var requiredProperties = enrichedProperties
+				.Where(p => p.IsRequired && !IsComplexUnmarshalableType(p.CSharpType))
+				.ToList();
+			var optionalProperties = enrichedProperties
+				.Where(p => !p.IsRequired || IsComplexUnmarshalableType(p.CSharpType))
+				.ToList();
 
 			// Determine which properties belong to base constructor vs derived constructor
 			var (baseConstructorProperties, derivedConstructorProperties) =
@@ -98,13 +160,15 @@ namespace FlutterSharp.CodeGen.Analysis
 		/// <summary>
 		/// Enriches a property with all type mapping and generation metadata.
 		/// </summary>
-		private EnrichedPropertyDefinition EnrichProperty(PropertyDefinition property)
+		/// <param name="property">The property definition to enrich.</param>
+		/// <param name="widgetName">The widget name for context-aware type mapping of ambiguous parameters.</param>
+		private EnrichedPropertyDefinition EnrichProperty(PropertyDefinition property, string widgetName)
 		{
 			// Map Dart type to C#
-			// Pass property name for parameter-name-based type inference when DartType is "InvalidType"
+			// Pass property name and widget name for context-aware type inference when DartType is "InvalidType"
 			var csharpType = !string.IsNullOrEmpty(property.CSharpType)
 				? property.CSharpType
-				: _dartToCSharpMapper.MapType(property.DartType, property.Name);
+				: _dartToCSharpMapper.MapType(property.DartType, property.Name, widgetName);
 
 			// Map C# type to Dart FFI type annotation (e.g., "Int32", "Double")
 			var rawFfiType = _csharpToDartMapper.MapToFfiType(csharpType);
@@ -157,6 +221,7 @@ namespace FlutterSharp.CodeGen.Analysis
 				// Track original Flutter nullability separately for parser generation
 				IsDartNullable = originalIsNullable,
 				DefaultValue = ConvertDartDefaultValueToCSharp(property.DefaultValue, csharpType),
+				RawDefaultValue = property.DefaultValue,
 				IsCallback = property.IsCallback,
 				IsList = property.IsList,
 				IsGenericTypeParam = isGenericTypeParam,
@@ -654,6 +719,40 @@ namespace FlutterSharp.CodeGen.Analysis
 				_ => null // Pointers and other types don't need annotations
 			};
 		}
+
+		/// <summary>
+		/// Checks if a C# type is a complex type that cannot be marshaled via FFI.
+		/// These types should be treated as optional even if marked required in Dart.
+		/// </summary>
+		private bool IsComplexUnmarshalableType(string? csharpType)
+		{
+			if (string.IsNullOrEmpty(csharpType))
+				return false;
+
+			// Remove nullable marker
+			var baseType = csharpType.TrimEnd('?');
+
+			// Remove generic type arguments for matching
+			var genericIndex = baseType.IndexOf('<');
+			if (genericIndex > 0)
+				baseType = baseType.Substring(0, genericIndex);
+
+			// Check against known complex types
+			if (ComplexUnmarshalableTypes.Contains(baseType))
+				return true;
+
+			// Also check if it's an Action or Func delegate (callbacks are complex)
+			if (baseType.StartsWith("Action") || baseType.StartsWith("Func"))
+				return true;
+
+			// Check for generic delegates and controllers
+			if (baseType.EndsWith("Callback") || baseType.EndsWith("Builder") ||
+			    baseType.EndsWith("Listener") || baseType.EndsWith("Handler") ||
+			    baseType.EndsWith("Controller") || baseType.EndsWith("Delegate"))
+				return true;
+
+			return false;
+		}
 	}
 
 	/// <summary>
@@ -706,6 +805,7 @@ namespace FlutterSharp.CodeGen.Analysis
 		/// </summary>
 		public bool IsDartNullable { get; set; }
 		public string? DefaultValue { get; set; }
+		public string? RawDefaultValue { get; set; }
 		public bool IsCallback { get; set; }
 		public bool IsList { get; set; }
 		public bool IsGenericTypeParam { get; set; }

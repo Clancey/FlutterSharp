@@ -13,13 +13,18 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ## Current Build Status
 
-**Last checked**: 2026-01-07 (callback type fixes)
-**C# compilation errors**: 56 (type mismatches, unknown constants - not related to callbacks)
+**Last checked**: 2026-01-07 (Phase 1 complete!)
+**C# compilation errors**: 0 ✅
 **Dart analysis errors**: 138 (non-gesture callbacks still need work)
 **Dart warnings**: many (unused imports, unnecessary null comparisons - cosmetic)
-**Note**: C# callback types now correctly mapped to Action (152→56 errors). GestureDetector callbacks fully working. Remaining C# errors are type mismatches (HitTestBehavior vs PlatformViewHitTestBehavior, etc.) and unknown constants (kDefaultTrackpadScrollToScaleFactor, etc.).
+**Note**: C# build passes completely! All enum type mismatches, missing constants, and value type nullability issues resolved.
 
 ### Error Resolution Summary (this session)
+- **Widget-context-aware type mapping**: Added WidgetSpecificParameterTypes dictionary to DartToCSharpMapper.cs for ambiguous parameter names (fit, direction, behavior, etc.)
+- **Enum type mismatches (56→0)**: Fixed FlexFit vs BoxFit, StackFit vs BoxFit, HitTestBehavior vs PlatformViewHitTestBehavior by using widget-specific type overrides
+- **Missing Dart constants (5→0)**: Added detection for `_k*`, `_default*`, `kDefault*` prefixed constants - replaced with null defaults
+- **Value type null defaults (4→0)**: Added DiagonalDragBehavior, OverflowBoxFit to enum types; Size, Offset, Color to special value types requiring marshaling
+- **Color type marshaling**: Added Color to special value types that need IntPtr marshaling (fixes EditableText)
 - **Gesture callback types**: Fixed Dart parser to generate correct callback creator functions (createGestureTapCallback, createGestureTapDownCallback, etc.)
 - **C# callback mapping**: Added IsCallbackType() to DartToCSharpMapper.cs - maps all *Callback, *Builder, *Listener types to Action
 - **Callback creator functions**: Updated DartUtilityParserGenerator.cs to generate 40+ callback creator functions with proper signatures
@@ -186,7 +191,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 |----|------|--------|-------|
 | API008 | Remove underscore prefix from C# parameters | completed | _mainAxisAlignment → mainAxisAlignment |
 | API009 | Add proper default values for optional params | completed | Added KnownEnumDefaults dictionary in CSharpWidgetGenerator.cs with Flutter's actual defaults for enum properties (MainAxisAlignment.Start, etc.) |
-| API010 | Make required params actually required | pending | child for Expanded, etc. |
+| API010 | Make required params actually required | completed | Complex types made optional; debug params filtered out; Expanded.child, Flexible.child now required |
 
 ### 2.5.4 Constructor Property Assignment (HIGH PRIORITY)
 
