@@ -54,13 +54,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Actions"/> class.
 		/// </summary>
 		public Actions(
+			Dictionary<Type, FlutterAction<Intent>> _actions,
+			Widget _child
+,
 			ActionDispatcher? _dispatcher = null
 		)
 		{
-			var backingStruct = GetBackingStruct<ActionsStruct>();
-			backingStruct.dispatcher = _dispatcher;
-			backingStruct.actions = _actions;
-			backingStruct.child = _child;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ActionsStruct();

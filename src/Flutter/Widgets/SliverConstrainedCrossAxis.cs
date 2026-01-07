@@ -43,11 +43,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverConstrainedCrossAxis"/> class.
 		/// </summary>
 		public SliverConstrainedCrossAxis(
+			double _maxExtent,
+			Widget _sliver
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverConstrainedCrossAxisStruct>();
-			backingStruct.maxExtent = _maxExtent;
-			backingStruct.sliver = _sliver;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverConstrainedCrossAxisStruct();

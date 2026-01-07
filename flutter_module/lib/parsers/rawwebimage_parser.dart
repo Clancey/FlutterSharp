@@ -13,19 +13,13 @@ import '../structs/rawwebimage_struct.dart';
 
 /// A widget which displays and lays out an underlying HTML element in a
   /// platform view.
+  /// NOTE: RawWebImage is a web-only widget. This parser returns a placeholder.
 class RawWebImageParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<RawWebImageStruct>.fromAddress(fos.handle.address).ref;
-    return RawWebImage(
-      image: parseWebImageInfo(map.image),
-      debugImageLabel: map.debugImageLabel,
-      width: map.width,
-      height: map.height,
-      fit: parseInvalidType(map.fit),
-      alignment: parseAlignmentGeometry(map.alignment),
-      matchTextDirection: map.matchTextDirection
-    );
+    // RawWebImage is a web-only widget that isn't available in the standard Flutter SDK.
+    // Return a placeholder that indicates this widget type isn't supported on this platform.
+    return const SizedBox.shrink();
   }
 
   @override

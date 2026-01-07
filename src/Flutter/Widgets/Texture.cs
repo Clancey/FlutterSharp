@@ -40,18 +40,21 @@ namespace Flutter.Widgets
 /// for how to create and manage backend textures on Android.
 /// * [TextureRegistry Protocol](/ios-embedder/protocol_flutter_texture_registry-p.html)
 /// for how to create and manage backend textures on iOS.
-	public class Texture : LeafRenderObjectWidget
+	public class Texture : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Texture"/> class.
 		/// </summary>
 		public Texture(
+			int _textureId,
+			bool _freeze,
+			InvalidType _filterQuality
+
 		)
 		{
-			var backingStruct = GetBackingStruct<TextureStruct>();
-			backingStruct.textureId = _textureId;
-			backingStruct.freeze = _freeze;
-			backingStruct.filterQuality = _filterQuality;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TextureStruct();

@@ -21,6 +21,13 @@
     <PackageReference Include="YamlDotNet" Version="13.7.1" />
   </ItemGroup>
 
+  <!-- Exclude generated C# files from compilation -->
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <EmbeddedResource Remove="Generated\**" />
+    <None Remove="Generated\**" />
+  </ItemGroup>
+
   <!-- Ensure runtimeconfig.template.json is copied to output -->
   <ItemGroup>
     <None Update="FlutterSharp.CodeGen.runtimeconfig.template.json">

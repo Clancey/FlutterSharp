@@ -21,10 +21,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PlatformSelectableRegionContextMenu"/> class.
 		/// </summary>
 		public PlatformSelectableRegionContextMenu(
+			Widget _child
+
 		)
 		{
-			var backingStruct = GetBackingStruct<PlatformSelectableRegionContextMenuStruct>();
-			backingStruct.child = _child;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PlatformSelectableRegionContextMenuStruct();

@@ -109,11 +109,23 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 
 		/// <summary>
 		/// Converts a PascalCase string to camelCase.
+		/// Also strips the @ prefix that C# uses for reserved word escaping (not valid in Dart).
 		/// Special handling: Preserve format codes and short identifiers (2 chars or less with all letters)
 		/// </summary>
 		private string ToCamelCase(string value)
 		{
-			if (string.IsNullOrEmpty(value) || char.IsLower(value[0]))
+			if (string.IsNullOrEmpty(value))
+			{
+				return value;
+			}
+
+			// Strip @ prefix (C# reserved word escaping) - not valid in Dart
+			if (value.StartsWith("@"))
+			{
+				value = value.Substring(1);
+			}
+
+			if (char.IsLower(value[0]))
 			{
 				return value;
 			}

@@ -23,18 +23,21 @@ namespace Flutter.Widgets
 /// unmounted. After that point, the [renderBox] will be unusable. If any
 /// children have been added to the [renderBox], they must be disposed in the
 /// [onUnmount] callback.
-	public class WidgetToRenderBoxAdapter : LeafRenderObjectWidget
+	public class WidgetToRenderBoxAdapter : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WidgetToRenderBoxAdapter"/> class.
 		/// </summary>
 		public WidgetToRenderBoxAdapter(
+			InvalidType _renderBox,
+			InvalidType _onBuild,
+			InvalidType _onUnmount
+
 		)
 		{
-			var backingStruct = GetBackingStruct<WidgetToRenderBoxAdapterStruct>();
-			backingStruct.renderBox = _renderBox;
-			backingStruct.onBuild = _onBuild;
-			backingStruct.onUnmount = _onUnmount;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new WidgetToRenderBoxAdapterStruct();

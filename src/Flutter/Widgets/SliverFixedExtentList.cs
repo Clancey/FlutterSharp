@@ -61,16 +61,19 @@ namespace Flutter.Widgets
 /// [SliverConstraints.viewportMainAxisExtent].
 /// * [SliverList], which does not require its children to have the same
 /// extent in the main axis.
-	public class SliverFixedExtentList : SliverMultiBoxAdaptorWidget
+	public class SliverFixedExtentList : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SliverFixedExtentList"/> class.
 		/// </summary>
 		public SliverFixedExtentList(
+			double _itemExtent
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverFixedExtentListStruct>();
-			backingStruct.itemExtent = _itemExtent;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverFixedExtentListStruct();

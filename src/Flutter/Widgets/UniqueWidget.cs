@@ -32,11 +32,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="UniqueWidget"/> class.
 		/// </summary>
 		public UniqueWidget(
-			T? _currentState = null
+
+			T? _currentState = default
 		)
 		{
-			var backingStruct = GetBackingStruct<UniqueWidgetStruct>();
-			backingStruct.currentState = _currentState;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new UniqueWidgetStruct();

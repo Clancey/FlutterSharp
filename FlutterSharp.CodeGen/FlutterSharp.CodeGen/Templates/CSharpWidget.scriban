@@ -5,7 +5,11 @@
 
 using System;
 using System.Collections.Generic;
+using Flutter;
 using Flutter.Structs;
+using Flutter.Widgets;
+using Flutter.Material;
+using Flutter.Cupertino;
 
 namespace {{ namespace }}
 {
@@ -17,19 +21,6 @@ namespace {{ namespace }}
 {{~ end ~}}
 	public {{ if is_abstract }}abstract {{ end }}class {{ name }}{{~ if is_generic }}<{{ type_parameters | array.join ", " }}>{{ end }} : {{ base_class }}
 	{
-		private {{ struct_name }} _struct = new();
-
-{{~ for prop in properties ~}}
-{{~ if prop.documentation ~}}
-{{ prop.documentation }}
-{{~ end ~}}
-		public {{ prop.type }} {{ prop.name }}
-		{
-			get => _struct.{{ prop.name }};
-			set => _struct.{{ prop.name }} = value;
-		}
-
-{{~ end ~}}
 		/// <summary>
 		/// Initializes a new instance of the <see cref="{{ name }}"/> class.
 		/// </summary>
@@ -39,27 +30,15 @@ namespace {{ namespace }}
 {{~ end ~}}
 {{~ if required_properties.size > 0 && optional_properties.size > 0 }},{{ end }}
 {{~ for prop in optional_properties ~}}
-			{{ prop.type }}{{ if prop.is_nullable }}{{ else }}?{{ end }} {{ prop.backing_field_name }} = {{ prop.default_value ?? "null" }}{{ if !for.last }},{{ end }}
+			{{ prop.type }} {{ prop.backing_field_name }} = {{ if prop.is_generic_type_param }}default{{ else }}{{ prop.default_value ?? "null" }}{{ end }}{{ if !for.last }},{{ end }}
 {{~ end ~}}
 		)
 		{
-{{~ for prop in properties ~}}
-			{{ prop.name }} = {{ prop.backing_field_name }};
-{{~ end ~}}
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
-		/// <summary>
-		/// Prepares the widget for sending to the Flutter engine.
-		/// </summary>
-		protected override void PrepareForSending()
-		{
-			_struct.WidgetType = "{{ name }}";
-			base.PrepareForSending();
-		}
-
-		/// <summary>
-		/// Gets the underlying struct for FFI interop.
-		/// </summary>
-		public override IntPtr GetStructPointer() => _struct.Handle;
+		protected override FlutterObjectStruct CreateBackingStruct() => new {{ struct_name }}();
 	}
 }

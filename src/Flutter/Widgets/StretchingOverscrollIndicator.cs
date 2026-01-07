@@ -46,13 +46,11 @@ namespace Flutter.Widgets
 			Widget? _child = null
 		)
 		{
-			var backingStruct = GetBackingStruct<StretchingOverscrollIndicatorStruct>();
-			backingStruct.axisDirection = _axisDirection;
-			backingStruct.notificationPredicate = _notificationPredicate;
-			backingStruct.clipBehavior = _clipBehavior;
-			backingStruct.child = _child;
-			backingStruct.axis = _axis;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
+
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new StretchingOverscrollIndicatorStruct();
 	}

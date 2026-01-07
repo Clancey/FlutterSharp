@@ -102,6 +102,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			var structType = MapToStructType(property);
 			var isString = property.DartType == "String" || property.DartType == "String?";
 			var isWidget = _typeMapper.IsWidget(property.DartType);
+			var isCallback = property.IsCallback;
 
 			// Remove ONE trailing ? from the type if present - the template will add it based on is_nullable
 			var cleanStructType = structType.EndsWith("?") ? structType.Substring(0, structType.Length - 1) : structType;
@@ -112,6 +113,10 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			var backingFieldName = $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}";
 			backingFieldName = EscapeCSharpKeyword(backingFieldName);
 
+			// For callbacks, generate additional field names
+			var callbackIdField = isCallback ? $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}Id" : null;
+			var callbackIdProperty = isCallback ? $"{property.Name}Id" : null;
+
 			return new Dictionary<string, object?>
 			{
 				["name"] = propertyName,
@@ -120,6 +125,9 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["is_nullable"] = property.IsNullable,
 				["is_string"] = isString,
 				["is_widget"] = isWidget,
+				["is_callback"] = isCallback,
+				["callback_id_field"] = callbackIdField,
+				["callback_id_property"] = callbackIdProperty,
 				["is_primitive"] = isPrimitive,
 				["requires_native_nullable"] = property.IsNullable && (isPrimitive || cleanStructType.Contains("Struct")),
 				["documentation"] = FormatDocumentation(property.Documentation),

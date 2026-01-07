@@ -25,9 +25,11 @@ namespace Flutter.Widgets
 		public ScrollConfiguration(
 		)
 		{
-			var backingStruct = GetBackingStruct<ScrollConfigurationStruct>();
-			backingStruct.behavior = _behavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
+
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ScrollConfigurationStruct();
 	}

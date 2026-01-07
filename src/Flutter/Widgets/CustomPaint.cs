@@ -75,14 +75,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CustomPaint"/> class.
 		/// </summary>
 		public CustomPaint(
+			InvalidType _painter,
+			InvalidType _foregroundPainter,
+			InvalidType _size,
+			bool _isComplex,
+			bool _willChange
+
 		)
 		{
-			var backingStruct = GetBackingStruct<CustomPaintStruct>();
-			backingStruct.painter = _painter;
-			backingStruct.foregroundPainter = _foregroundPainter;
-			backingStruct.size = _size;
-			backingStruct.isComplex = _isComplex;
-			backingStruct.willChange = _willChange;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new CustomPaintStruct();

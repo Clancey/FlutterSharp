@@ -32,14 +32,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DualTransitionBuilder"/> class.
 		/// </summary>
 		public DualTransitionBuilder(
+			InvalidType _animation,
+			Func<BuildContext, InvalidType, Widget?, Widget> _forwardBuilder,
+			Func<BuildContext, InvalidType, Widget?, Widget> _reverseBuilder
+,
 			Widget? _child = null
 		)
 		{
-			var backingStruct = GetBackingStruct<DualTransitionBuilderStruct>();
-			backingStruct.animation = _animation;
-			backingStruct.forwardBuilder = _forwardBuilder;
-			backingStruct.reverseBuilder = _reverseBuilder;
-			backingStruct.child = _child;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DualTransitionBuilderStruct();

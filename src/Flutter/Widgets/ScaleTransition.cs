@@ -34,16 +34,19 @@ namespace Flutter.Widgets
 /// position based on the value of a rectangle relative to a bounding box.
 /// * [SizeTransition], a widget that animates its own size and clips and
 /// aligns its child.
-	public class ScaleTransition : MatrixTransition
+	public class ScaleTransition : StatefulWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ScaleTransition"/> class.
 		/// </summary>
 		public ScaleTransition(
+			InvalidType _scale
+
 		)
 		{
-			var backingStruct = GetBackingStruct<ScaleTransitionStruct>();
-			backingStruct.scale = _scale;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ScaleTransitionStruct();

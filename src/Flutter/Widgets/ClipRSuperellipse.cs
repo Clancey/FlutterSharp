@@ -40,12 +40,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipRSuperellipse"/> class.
 		/// </summary>
 		public ClipRSuperellipse(
+			BorderRadiusGeometry? _borderRadius,
+			InvalidType _clipper,
+			Clip _clipBehavior
+
 		)
 		{
-			var backingStruct = GetBackingStruct<ClipRSuperellipseStruct>();
-			backingStruct.borderRadius = _borderRadius;
-			backingStruct.clipper = _clipper;
-			backingStruct.clipBehavior = _clipBehavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ClipRSuperellipseStruct();

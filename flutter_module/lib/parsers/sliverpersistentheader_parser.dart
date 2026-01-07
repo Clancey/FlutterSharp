@@ -26,7 +26,7 @@ class SliverPersistentHeaderParser extends WidgetParser {
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<SliverPersistentHeaderStruct>.fromAddress(fos.handle.address).ref;
     return SliverPersistentHeader(
-      @delegate: parseSliverPersistentHeaderDelegate(map.@delegate),
+      delegate: parseSliverPersistentHeaderDelegate(map.delegate),
       pinned: map.pinned,
       floating: map.floating
     );

@@ -43,15 +43,18 @@ namespace Flutter.Widgets
 /// * [StatefulBuilder], which passes its `builder` function a `setState` callback.
 /// * [CustomSingleChildLayout], which positions its child during layout.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class LayoutBuilder : ConstrainedLayoutBuilder
+	public class LayoutBuilder : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="LayoutBuilder"/> class.
 		/// </summary>
 		public LayoutBuilder(
+
 		)
 		{
-			var backingStruct = GetBackingStruct<LayoutBuilderStruct>();
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new LayoutBuilderStruct();

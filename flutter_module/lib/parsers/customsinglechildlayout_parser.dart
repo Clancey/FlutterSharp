@@ -33,7 +33,7 @@ class CustomSingleChildLayoutParser extends WidgetParser {
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<CustomSingleChildLayoutStruct>.fromAddress(fos.handle.address).ref;
     return CustomSingleChildLayout(
-      @delegate: parseInvalidType(map.@delegate)
+      delegate: parseInvalidType(map.delegate)
     );
   }
 

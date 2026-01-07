@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/utils.dart';
 import 'mauiRenderer.dart';
+export 'mauiRenderer.dart' show methodChannel;
 import 'dart:convert';
 
 // Manual parser imports (legacy - kept for backwards compatibility)
@@ -169,18 +170,19 @@ class DynamicWidgetBuilder {
     return Text("Unknown widget type $widgetName");
   }
 
-  static Widget? buildMauiComponenet(
-      ISingleChildRenderObjectWidgetStruct? map, BuildContext buildContext) {
-    if (map == null) return null;
-    String? id = parseString(map.id);
-    if (id == null) return null;
-    print("Creating MauiComponent :$id");
-    var mc = new MauiComponent(componentId: id);
-    print("Setting State MauiComponent :$id");
-    if (map.child.address != 0) setMauiState(id, map.child.ref);
-    print("Setting State Set :$id");
-    return mc;
-  }
+  // TODO: Legacy method - ISingleChildRenderObjectWidgetStruct no longer exists
+  // static Widget? buildMauiComponenet(
+  //     ISingleChildRenderObjectWidgetStruct? map, BuildContext buildContext) {
+  //   if (map == null) return null;
+  //   String? id = parseString(map.id);
+  //   if (id == null) return null;
+  //   print("Creating MauiComponent :$id");
+  //   var mc = new MauiComponent(componentId: id);
+  //   print("Setting State MauiComponent :$id");
+  //   if (map.child.address != 0) setMauiState(id, map.child.ref);
+  //   print("Setting State Set :$id");
+  //   return mc;
+  // }
 
   void releaseTrackedDartObject(String id) {
     if (_trackedDartObjects.containsKey(id)) {

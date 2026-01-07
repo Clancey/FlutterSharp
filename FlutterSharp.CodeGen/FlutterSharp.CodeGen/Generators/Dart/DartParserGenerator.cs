@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FlutterSharp.CodeGen.Analysis;
 using FlutterSharp.CodeGen.Models;
 using FlutterSharp.CodeGen.TypeMapping;
 using Scriban;
@@ -115,6 +116,7 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 						p.DefaultValue,
 						HasDefaultValue = !string.IsNullOrWhiteSpace(p.DefaultValue),
 						IsBool = p.DartType?.TrimEnd('?') == "bool",
+						IsCallback = p.IsCallback,
 						IsPointerVoid = _typeMapper.MapToFfiType(p.CSharpType ?? p.DartType) is "IntPtr" or "Pointer<Void>",
 						IsPointerType = isPointer,
 						IsPrimitiveType = isPrimitive,
@@ -135,6 +137,94 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			var result = _template.Render(model);
 			return result;
 		}
+
+	/// <summary>
+	/// Generates a Dart widget parser class from an enriched widget definition (new architecture).
+	/// </summary>
+	/// <param name="enrichedWidget">The enriched widget definition to generate the parser from.</param>
+	/// <returns>The generated Dart parser code.</returns>
+	public string Generate(EnrichedWidgetDefinition enrichedWidget)
+	{
+		if (enrichedWidget == null)
+		{
+			throw new ArgumentNullException(nameof(enrichedWidget));
+		}
+
+		// Prepare the model for the template
+		// Remove leading underscore from parser name to make it public (Dart private members can't be exported)
+		var publicName = enrichedWidget.Name.TrimStart('_');
+
+		// Filter out child/children properties - they're handled separately by the template
+		var childPropName = enrichedWidget.ChildPropertyName?.ToLowerInvariant();
+		var childrenPropName = enrichedWidget.ChildrenPropertyName?.ToLowerInvariant();
+		var regularProperties = enrichedWidget.AllProperties
+			.Where(p => {
+				var propName = p.Name.ToLowerInvariant();
+				return propName != childPropName && propName != childrenPropName;
+			})
+			.ToList();
+
+		// Find the child property to check if it's nullable
+		EnrichedPropertyDefinition? childProperty = null;
+		bool childIsNullable = true; // Safe default
+		if (enrichedWidget.ChildPropertyName != null)
+		{
+			childProperty = enrichedWidget.AllProperties.FirstOrDefault(p =>
+				p.Name.Equals(enrichedWidget.ChildPropertyName, StringComparison.OrdinalIgnoreCase));
+
+			// Determine if child is nullable
+			if (childProperty != null)
+			{
+				childIsNullable = childProperty.IsNullable;
+			}
+		}
+
+		var model = new
+		{
+			enrichedWidget.Name,
+			ParserName = $"{publicName}Parser",
+			StructName = enrichedWidget.StructName,
+			WidgetName = enrichedWidget.Name,
+			Properties = regularProperties.Select(p => {
+				var isPointer = p.FfiType.StartsWith("Pointer<");
+				var isPrimitive = IsPrimitiveTypeFfi(p.FfiType);
+				var isEnum = p.FfiAnnotation?.Contains("Int32") == true;
+				var parserFunc = GetParserFunctionFromEnriched(p);
+				var baseType = p.DartType?.TrimEnd('?') ?? "";
+				var ffiType = p.FfiType;
+
+				// Determine if this is a Color stored as a primitive
+				var isColorPrimitive = baseType == "Color" && (ffiType == "Uint32" || ffiType == "Int32" || ffiType == "int");
+
+				return new
+				{
+					p.Name,
+					PropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
+					p.DartType,
+					FfiType = ffiType,
+					IsPointer = isPointer,
+					IsPrimitive = isPrimitive,
+					IsEnum = isEnum,
+					IsColorPrimitive = isColorPrimitive,
+					ParserFunction = parserFunc,
+					p.IsNullable,
+					p.IsCallback,
+					Documentation = FormatDartDocumentation(p.Documentation)
+				};
+			}).ToList(),
+			has_single_child = enrichedWidget.HasSingleChild,
+			has_multiple_children = enrichedWidget.HasMultipleChildren,
+			ChildPropertyName = enrichedWidget.ChildPropertyName != null ? ToCamelCase(enrichedWidget.ChildPropertyName) : null,
+			child_is_nullable = childIsNullable,
+			ChildrenPropertyName = enrichedWidget.ChildrenPropertyName != null ? ToCamelCase(enrichedWidget.ChildrenPropertyName) : null,
+			Documentation = FormatDartDocumentation(enrichedWidget.Documentation),
+			GeneratedDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC")
+		};
+
+		// Render the template
+		var result = _template.Render(model);
+		return result;
+	}
 
 		/// <summary>
 		/// Loads property type information from the generated struct file.
@@ -358,6 +448,60 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			return ffiType == "Int32" || ffiType == "Uint32" || ffiType == "Int8" || ffiType == "Uint8";
 		}
 
+	/// <summary>
+	/// Determines if an FFI type is a primitive type.
+	/// </summary>
+	private bool IsPrimitiveTypeFfi(string ffiType)
+	{
+		// Check if it's a basic FFI primitive type or Dart primitive
+		return ffiType == "int" || ffiType == "double" || ffiType == "bool" ||
+		       ffiType == "Int8" || ffiType == "Int16" || ffiType == "Int32" || ffiType == "Int64" ||
+		       ffiType == "Uint8" || ffiType == "Uint16" || ffiType == "Uint32" || ffiType == "Uint64" ||
+		       ffiType == "Float" || ffiType == "Double";
+	}
+
+	/// <summary>
+	/// Gets the parser function for an enriched property.
+	/// </summary>
+	private string GetParserFunctionFromEnriched(EnrichedPropertyDefinition property)
+	{
+		// Get base type without nullable suffix
+		var baseType = property.DartType?.TrimEnd('?') ?? "";
+
+		// Primitive types don't need parser functions
+		if (baseType == "String" || baseType == "int" || baseType == "double" || baseType == "bool" || baseType == "num")
+		{
+			return null;
+		}
+
+		// Callbacks don't need parser functions (they're action strings)
+		if (property.IsCallback)
+		{
+			return null;
+		}
+
+		// Enums don't need parser functions (they're int values)
+		if (property.FfiAnnotation?.Contains("Int32") == true)
+		{
+			return null;
+		}
+
+		// Color has a special parser
+		if (baseType == "Color")
+		{
+			return "parseColor";
+		}
+
+		// Default: use the type name to derive parser name
+		// e.g., "EdgeInsets" -> "parseEdgeInsets"
+		if (!string.IsNullOrEmpty(baseType))
+		{
+			return $"parse{baseType}";
+		}
+
+		return null;
+	}
+
 		/// <summary>
 		/// Gets the parser function for a property.
 		/// </summary>
@@ -496,10 +640,22 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 
 		/// <summary>
 		/// Converts a PascalCase string to camelCase.
+		/// Also strips the @ prefix that C# uses for reserved word escaping (not valid in Dart).
 		/// </summary>
 		private string ToCamelCase(string value)
 		{
-			if (string.IsNullOrEmpty(value) || char.IsLower(value[0]))
+			if (string.IsNullOrEmpty(value))
+			{
+				return value;
+			}
+
+			// Strip @ prefix (C# reserved word escaping) - not valid in Dart
+			if (value.StartsWith("@"))
+			{
+				value = value.Substring(1);
+			}
+
+			if (char.IsLower(value[0]))
 			{
 				return value;
 			}

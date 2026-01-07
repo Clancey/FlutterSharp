@@ -154,30 +154,11 @@ namespace Flutter.Widgets
 			ScrollbarOrientation? _scrollbarOrientation = null
 		)
 		{
-			var backingStruct = GetBackingStruct<RawScrollbarStruct>();
-			backingStruct.child = _child;
-			backingStruct.controller = _controller;
-			backingStruct.thumbVisibility = _thumbVisibility;
-			backingStruct.shape = _shape;
-			backingStruct.radius = _radius;
-			backingStruct.thickness = _thickness;
-			backingStruct.thumbColor = _thumbColor;
-			backingStruct.minThumbLength = _minThumbLength;
-			backingStruct.minOverscrollLength = _minOverscrollLength;
-			backingStruct.trackVisibility = _trackVisibility;
-			backingStruct.trackRadius = _trackRadius;
-			backingStruct.trackColor = _trackColor;
-			backingStruct.trackBorderColor = _trackBorderColor;
-			backingStruct.fadeDuration = _fadeDuration;
-			backingStruct.timeToFade = _timeToFade;
-			backingStruct.pressDuration = _pressDuration;
-			backingStruct.notificationPredicate = _notificationPredicate;
-			backingStruct.interactive = _interactive;
-			backingStruct.scrollbarOrientation = _scrollbarOrientation;
-			backingStruct.mainAxisMargin = _mainAxisMargin;
-			backingStruct.crossAxisMargin = _crossAxisMargin;
-			backingStruct.padding = _padding;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
+
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RawScrollbarStruct();
 	}

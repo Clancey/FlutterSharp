@@ -130,13 +130,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Localizations"/> class.
 		/// </summary>
 		public Localizations(
+			InvalidType _locale,
+			List<LocalizationsDelegate<object>> _delegates
+,
 			Widget? _child = null
 		)
 		{
-			var backingStruct = GetBackingStruct<LocalizationsStruct>();
-			backingStruct.locale = _locale;
-			backingStruct.delegates = _delegates;
-			backingStruct.child = _child;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new LocalizationsStruct();

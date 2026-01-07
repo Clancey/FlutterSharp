@@ -57,9 +57,9 @@ final class SliverFillViewportStruct extends Struct {
   external int padEnds;
 
   @Int8()
-  external int has@delegate;
+  external int hasdelegate;
 
   ///   /// {@macro flutter.widgets.SliverMultiBoxAdaptorWidget.delegate}
-  external Pointer<Void> @delegate;
+  external Pointer<Void> delegate;
 
 }

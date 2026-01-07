@@ -63,16 +63,19 @@ namespace Flutter.Widgets
 /// * [SliverPrototypeExtentList], which is similar to [SliverFixedExtentList]
 /// except that it uses a prototype list item instead of a pixel value to define
 /// the main axis extent of each item.
-	public class SliverGrid : SliverMultiBoxAdaptorWidget
+	public class SliverGrid : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SliverGrid"/> class.
 		/// </summary>
 		public SliverGrid(
+			InvalidType _gridDelegate
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverGridStruct>();
-			backingStruct.gridDelegate = _gridDelegate;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverGridStruct();

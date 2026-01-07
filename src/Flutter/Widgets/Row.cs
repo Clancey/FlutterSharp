@@ -196,15 +196,18 @@ namespace Flutter.Widgets
 /// that may by sized smaller (leaving some remaining room unused).
 /// * [Spacer], a widget that takes up space proportional to its flex value.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class Row : Flex
+	public class Row : MultiChildRenderObjectWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Row"/> class.
 		/// </summary>
 		public Row(
+
 		)
 		{
-			var backingStruct = GetBackingStruct<RowStruct>();
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RowStruct();

@@ -57,12 +57,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RestorationScope"/> class.
 		/// </summary>
 		public RestorationScope(
+			Widget _child
+,
 			string? _restorationId = null
 		)
 		{
-			var backingStruct = GetBackingStruct<RestorationScopeStruct>();
-			backingStruct.child = _child;
-			backingStruct.restorationId = _restorationId;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RestorationScopeStruct();

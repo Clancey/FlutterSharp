@@ -29,14 +29,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RenderObjectToWidgetAdapter"/> class.
 		/// </summary>
 		public RenderObjectToWidgetAdapter(
+			InvalidType _container
+,
 			Widget? _child = null,
 			string? _debugShortDescription = null
 		)
 		{
-			var backingStruct = GetBackingStruct<RenderObjectToWidgetAdapterStruct>();
-			backingStruct.child = _child;
-			backingStruct.container = _container;
-			backingStruct.debugShortDescription = _debugShortDescription;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RenderObjectToWidgetAdapterStruct();

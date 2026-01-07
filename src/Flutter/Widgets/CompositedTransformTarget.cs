@@ -37,10 +37,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CompositedTransformTarget"/> class.
 		/// </summary>
 		public CompositedTransformTarget(
+			InvalidType _link
+
 		)
 		{
-			var backingStruct = GetBackingStruct<CompositedTransformTargetStruct>();
-			backingStruct.link = _link;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new CompositedTransformTargetStruct();

@@ -32,10 +32,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ExcludeSemantics"/> class.
 		/// </summary>
 		public ExcludeSemantics(
+			bool _excluding
+
 		)
 		{
-			var backingStruct = GetBackingStruct<ExcludeSemanticsStruct>();
-			backingStruct.excluding = _excluding;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ExcludeSemanticsStruct();

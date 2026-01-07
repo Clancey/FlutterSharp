@@ -33,19 +33,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ModalBarrier"/> class.
 		/// </summary>
 		public ModalBarrier(
+			Color? _color,
+			bool _dismissible,
+			InvalidType _onDismiss,
+			InvalidType _clipDetailsNotifier
+,
 			bool? _barrierSemanticsDismissible = true,
 			string? _semanticsLabel = null,
 			string? _semanticsOnTapHint = null
 		)
 		{
-			var backingStruct = GetBackingStruct<ModalBarrierStruct>();
-			backingStruct.color = _color;
-			backingStruct.dismissible = _dismissible;
-			backingStruct.onDismiss = _onDismiss;
-			backingStruct.barrierSemanticsDismissible = _barrierSemanticsDismissible;
-			backingStruct.semanticsLabel = _semanticsLabel;
-			backingStruct.clipDetailsNotifier = _clipDetailsNotifier;
-			backingStruct.semanticsOnTapHint = _semanticsOnTapHint;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ModalBarrierStruct();

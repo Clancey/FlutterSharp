@@ -46,14 +46,11 @@ namespace Flutter.Widgets
 		public OverflowBar(
 		)
 		{
-			var backingStruct = GetBackingStruct<OverflowBarStruct>();
-			backingStruct.spacing = _spacing;
-			backingStruct.alignment = _alignment;
-			backingStruct.overflowSpacing = _overflowSpacing;
-			backingStruct.overflowAlignment = _overflowAlignment;
-			backingStruct.overflowDirection = _overflowDirection;
-			backingStruct.textDirection = _textDirection;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
+
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new OverflowBarStruct();
 	}

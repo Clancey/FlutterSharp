@@ -73,13 +73,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ConstraintsTransformBox"/> class.
 		/// </summary>
 		public ConstraintsTransformBox(
+			InvalidType _textDirection,
+			AlignmentGeometry? _alignment,
+			InvalidType _constraintsTransform,
+			Clip _clipBehavior
+
 		)
 		{
-			var backingStruct = GetBackingStruct<ConstraintsTransformBoxStruct>();
-			backingStruct.textDirection = _textDirection;
-			backingStruct.alignment = _alignment;
-			backingStruct.constraintsTransform = _constraintsTransform;
-			backingStruct.clipBehavior = _clipBehavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ConstraintsTransformBoxStruct();

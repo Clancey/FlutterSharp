@@ -31,16 +31,11 @@ namespace Flutter.Widgets
 			Widget? _child = null
 		)
 		{
-			var backingStruct = GetBackingStruct<BannerStruct>();
-			backingStruct.child = _child;
-			backingStruct.message = _message;
-			backingStruct.textDirection = _textDirection;
-			backingStruct.location = _location;
-			backingStruct.layoutDirection = _layoutDirection;
-			backingStruct.color = _color;
-			backingStruct.textStyle = _textStyle;
-			backingStruct.shadow = _shadow;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
+
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new BannerStruct();
 	}

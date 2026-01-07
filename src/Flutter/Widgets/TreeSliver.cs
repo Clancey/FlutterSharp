@@ -57,25 +57,25 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TreeSliver"/> class.
 		/// </summary>
 		public TreeSliver(
+			List<TreeSliverNode<T>> _tree,
+			Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> _treeNodeBuilder,
+			Func<TreeSliverNode<object?>, InvalidType, double> _treeRowExtentBuilder,
+			InvalidType _toggleAnimationStyle,
+			InvalidType _indentation,
+			bool _addAutomaticKeepAlives,
+			bool _addRepaintBoundaries,
+			bool _addSemanticIndexes,
+			Func<Widget, int, int?> _semanticIndexCallback,
+			int _semanticIndexOffset
+,
 			TreeSliverController? _controller = null,
 			Action<TreeSliverNode<object?>> _onNodeToggle = null,
 			Func<InvalidType, int?> _findChildIndexCallback = null
 		)
 		{
-			var backingStruct = GetBackingStruct<TreeSliverStruct>();
-			backingStruct.tree = _tree;
-			backingStruct.treeNodeBuilder = _treeNodeBuilder;
-			backingStruct.treeRowExtentBuilder = _treeRowExtentBuilder;
-			backingStruct.controller = _controller;
-			backingStruct.onNodeToggle = _onNodeToggle;
-			backingStruct.toggleAnimationStyle = _toggleAnimationStyle;
-			backingStruct.indentation = _indentation;
-			backingStruct.addAutomaticKeepAlives = _addAutomaticKeepAlives;
-			backingStruct.addRepaintBoundaries = _addRepaintBoundaries;
-			backingStruct.addSemanticIndexes = _addSemanticIndexes;
-			backingStruct.semanticIndexCallback = _semanticIndexCallback;
-			backingStruct.semanticIndexOffset = _semanticIndexOffset;
-			backingStruct.findChildIndexCallback = _findChildIndexCallback;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TreeSliverStruct();

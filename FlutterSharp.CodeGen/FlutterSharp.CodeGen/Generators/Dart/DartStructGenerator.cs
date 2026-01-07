@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FlutterSharp.CodeGen.Analysis;
 using FlutterSharp.CodeGen.Models;
 using FlutterSharp.CodeGen.TypeMapping;
 using Scriban;
@@ -67,7 +68,7 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 				.Select(p => new
 				{
 					p.Name,
-					PropertyName = ToCamelCase(p.Name),
+					PropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
 					DartType = p.DartType,
 					CSharpType = p.CSharpType ?? "object",
 					FfiType = GetFfiType(p),
@@ -93,6 +94,45 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			var result = _template.Render(model);
 			return result;
 		}
+
+	/// <summary>
+	/// Generates a Dart FFI struct definition from an enriched widget definition (new architecture).
+	/// </summary>
+	/// <param name="enrichedWidget">The enriched widget definition to generate the struct from.</param>
+	/// <returns>The generated Dart FFI struct code.</returns>
+	public string Generate(EnrichedWidgetDefinition enrichedWidget)
+	{
+		if (enrichedWidget == null)
+		{
+			throw new ArgumentNullException(nameof(enrichedWidget));
+		}
+
+		// Build model from enriched data
+		var model = new
+		{
+			enrichedWidget.Name,
+			StructName = enrichedWidget.StructName,
+			BaseStruct = enrichedWidget.DartBaseStruct,
+			Properties = enrichedWidget.AllProperties.Select(p => new
+			{
+				p.Name,
+				PropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
+				p.DartType,
+				CSharpType = p.CSharpType,
+				FfiType = p.FfiType,
+				FfiAnnotation = p.FfiAnnotation ?? "",
+				p.IsNullable,
+				Documentation = FormatDocumentation(p.Documentation, "  ")
+			}).ToList(),
+			Documentation = FormatDocumentation(enrichedWidget.Documentation),
+			GeneratedDate = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC"),
+			Imports = GetRequiredImportsFromEnriched(enrichedWidget)
+		};
+
+		// Render the template
+		var result = _template.Render(model);
+		return result;
+	}
 
 		/// <summary>
 		/// Gets the base struct class name for the widget.
@@ -161,6 +201,12 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		/// </summary>
 	private string GetFfiType(PropertyDefinition property)
 	{
+		// Handle callbacks - they use Pointer<Utf8> for action strings
+		if (property.IsCallback)
+		{
+			return "Pointer<Utf8>";
+		}
+
 		// Use DartType as the source of truth
 		var dartType = property.DartType;
 
@@ -247,6 +293,12 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 	/// </summary>
 	private string GetFfiAnnotation(PropertyDefinition property)
 	{
+		// Handle callbacks - Pointer<Utf8> doesn't need annotation
+		if (property.IsCallback)
+		{
+			return "";
+		}
+
 		// Get the actual FFI type from the mapper using the Dart type
 		var dartType = property.DartType;
 
@@ -322,6 +374,50 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		}
 
 	/// <summary>
+	/// Gets the required imports for the generated Dart struct from enriched widget data.
+	/// </summary>
+	private List<string> GetRequiredImportsFromEnriched(EnrichedWidgetDefinition widget)
+	{
+		var imports = new HashSet<string>
+		{
+			"dart:ffi",
+			"package:ffi/ffi.dart"
+		};
+
+		// Add imports based on property types
+		foreach (var property in widget.AllProperties)
+		{
+			var ffiType = property.FfiType;
+
+			// Add specific imports based on types
+			if (ffiType.Contains("Utf8"))
+			{
+				imports.Add("package:ffi/ffi.dart");
+			}
+
+			// Check if property uses a Pointer to another struct type
+			// Pattern: Pointer<SomeTypeStruct>
+			if (ffiType.StartsWith("Pointer<") && ffiType.EndsWith("Struct>"))
+			{
+				// Extract the struct type name
+				var structTypeName = ffiType.Substring(8, ffiType.Length - 9); // Remove "Pointer<" and ">"
+
+				// Don't add import for base types or WidgetStruct (it's in the base file)
+				// Object is a Dart base class that doesn't have a struct
+				if (structTypeName != "WidgetStruct" && structTypeName != "Void" && structTypeName != "ObjectStruct" && structTypeName != "ChildrenStruct")
+				{
+					// Convert SomeTypeStruct -> sometype_struct.dart
+					var typeName = structTypeName.Replace("Struct", "");
+					var importFileName = typeName.ToLowerInvariant();
+					imports.Add($"{importFileName}_struct.dart");
+				}
+			}
+		}
+
+		return imports.OrderBy(i => i).ToList();
+	}
+
+	/// <summary>
 	/// Formats documentation for Dart comments by prefixing each line with ///.
 	/// </summary>
 	private string FormatDocumentation(string documentation, string indent = "")
@@ -343,10 +439,22 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 
 		/// <summary>
 		/// Converts a PascalCase string to camelCase.
+		/// Also strips the @ prefix that C# uses for reserved word escaping (not valid in Dart).
 		/// </summary>
 		private string ToCamelCase(string value)
 		{
-			if (string.IsNullOrEmpty(value) || char.IsLower(value[0]))
+			if (string.IsNullOrEmpty(value))
+			{
+				return value;
+			}
+
+			// Strip @ prefix (C# reserved word escaping) - not valid in Dart
+			if (value.StartsWith("@"))
+			{
+				value = value.Substring(1);
+			}
+
+			if (char.IsLower(value[0]))
 			{
 				return value;
 			}

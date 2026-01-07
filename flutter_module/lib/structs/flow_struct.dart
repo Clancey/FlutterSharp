@@ -83,10 +83,10 @@ final class FlowStruct extends Struct {
   external Pointer<Utf8> id;
 
   @Int8()
-  external int has@delegate;
+  external int hasdelegate;
 
   ///   /// The delegate that controls the transformation matrices of the children.
-  external Pointer<Void> @delegate;
+  external Pointer<Void> delegate;
 
   ///   /// {@macro flutter.material.Material.clipBehavior}
   ///

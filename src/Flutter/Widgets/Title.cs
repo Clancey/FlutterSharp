@@ -20,12 +20,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Title"/> class.
 		/// </summary>
 		public Title(
+			string _title,
+			Color? _color,
+			Widget _child
+
 		)
 		{
-			var backingStruct = GetBackingStruct<TitleStruct>();
-			backingStruct.title = _title;
-			backingStruct.color = _color;
-			backingStruct.child = _child;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TitleStruct();

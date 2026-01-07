@@ -20,16 +20,19 @@ namespace Flutter.Widgets
 /// The widgets returned by the [delegate] are cached and the delegate is only
 /// consulted again if it changes and the new delegate's
 /// [SliverChildDelegate.shouldRebuild] method returns true.
-	public abstract class SliverMultiBoxAdaptorWidget : SliverWithKeepAliveWidget
+	public abstract class SliverMultiBoxAdaptorWidget : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SliverMultiBoxAdaptorWidget"/> class.
 		/// </summary>
 		public SliverMultiBoxAdaptorWidget(
+			SliverChildDelegate _delegate
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverMultiBoxAdaptorWidgetStruct>();
-			backingStruct.@delegate = _delegate;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverMultiBoxAdaptorWidgetStruct();

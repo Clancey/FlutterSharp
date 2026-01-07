@@ -12,13 +12,13 @@ import 'package:flutter_module/maui_flutter.dart';
 import '../structs/imgelementplatformview_struct.dart';
 
 /// Displays an `<img>` element with `src` set to [src].
+/// NOTE: ImgElementPlatformView is a web-only widget. This parser returns a placeholder.
 class ImgElementPlatformViewParser extends WidgetParser {
   @override
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<ImgElementPlatformViewStruct>.fromAddress(fos.handle.address).ref;
-    return ImgElementPlatformView(
-      src: map.src
-    );
+    // ImgElementPlatformView is a web-only widget that isn't available in the standard Flutter SDK.
+    // Return a placeholder that indicates this widget type isn't supported on this platform.
+    return const SizedBox.shrink();
   }
 
   @override

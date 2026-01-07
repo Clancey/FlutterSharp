@@ -49,15 +49,18 @@ namespace Flutter.Widgets
 /// * [SliverGrid], which places multiple children in a two dimensional grid.
 /// * [SliverAnimatedGrid], a sliver which animates items when they are
 /// inserted into or removed from a grid.
-	public class SliverList : SliverMultiBoxAdaptorWidget
+	public class SliverList : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SliverList"/> class.
 		/// </summary>
 		public SliverList(
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverListStruct>();
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverListStruct();

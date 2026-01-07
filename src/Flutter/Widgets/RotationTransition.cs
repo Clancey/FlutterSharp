@@ -32,16 +32,19 @@ namespace Flutter.Widgets
 /// widget.
 /// * [SizeTransition], a widget that animates its own size and clips and
 /// aligns its child.
-	public class RotationTransition : MatrixTransition
+	public class RotationTransition : StatefulWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RotationTransition"/> class.
 		/// </summary>
 		public RotationTransition(
+			InvalidType _turns
+
 		)
 		{
-			var backingStruct = GetBackingStruct<RotationTransitionStruct>();
-			backingStruct.turns = _turns;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RotationTransitionStruct();

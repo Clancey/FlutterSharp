@@ -49,15 +49,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MouseRegion"/> class.
 		/// </summary>
 		public MouseRegion(
+			InvalidType _onEnter,
+			InvalidType _onHover,
+			InvalidType _onExit,
+			InvalidType _cursor,
+			bool _opaque,
+			InvalidType _hitTestBehavior
+
 		)
 		{
-			var backingStruct = GetBackingStruct<MouseRegionStruct>();
-			backingStruct.onEnter = _onEnter;
-			backingStruct.onHover = _onHover;
-			backingStruct.onExit = _onExit;
-			backingStruct.cursor = _cursor;
-			backingStruct.opaque = _opaque;
-			backingStruct.hitTestBehavior = _hitTestBehavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new MouseRegionStruct();

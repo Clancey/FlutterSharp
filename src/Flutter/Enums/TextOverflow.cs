@@ -3,75 +3,31 @@
 // Do not modify this file directly
 // </auto-generated>
 
-using System;
-
-namespace Flutter.UI
+namespace Flutter
 {
-/// How overflowing text should be handled.
-/// 
-/// A [TextOverflow] can be passed to [Text] and [RichText] via their
-/// [Text.overflow] and [RichText.overflow] properties respectively.
+	/// <summary>
+	/// How overflowing text should be handled.
+	/// </summary>
 	public enum TextOverflow
 	{
-/// Clip the overflowing text to fix its container.
+		/// <summary>
+		/// Clip the overflowing text to fix its container.
+		/// </summary>
 		Clip,
-/// Fade the overflowing text to transparent.
+
+		/// <summary>
+		/// Fade the overflowing text to transparent.
+		/// </summary>
 		Fade,
-/// Use an ellipsis to indicate that the text has overflowed.
+
+		/// <summary>
+		/// Use an ellipsis to indicate that the text has overflowed.
+		/// </summary>
 		Ellipsis,
-/// Render overflowing text outside of its container.
-		Visible
-	}
-
-	/// <summary>
-	/// Extension methods for TextOverflow enum.
-	/// </summary>
-	public static class TextOverflowExtensions
-	{
-		/// <summary>
-		/// Converts the enum to its Dart integer representation.
-		/// </summary>
-		public static int ToDartInt(this TextOverflow value)
-		{
-			return (int)value;
-		}
 
 		/// <summary>
-		/// Converts the enum to its Dart string representation.
+		/// Render overflowing text outside of its container.
 		/// </summary>
-		public static string ToDartString(this TextOverflow value)
-		{
-			return value switch
-			{
-				TextOverflow.Clip => "clip",
-				TextOverflow.Fade => "fade",
-				TextOverflow.Ellipsis => "ellipsis",
-				TextOverflow.Visible => "visible",
-				_ => throw new ArgumentOutOfRangeException(nameof(value), value, null)
-			};
-		}
-
-		/// <summary>
-		/// Converts from a Dart integer representation to the enum.
-		/// </summary>
-		public static TextOverflow FromDartInt(int value)
-		{
-			return (TextOverflow)value;
-		}
-
-		/// <summary>
-		/// Converts from a Dart string representation to the enum.
-		/// </summary>
-		public static TextOverflow FromDartString(string value)
-		{
-			return value switch
-			{
-				"clip" => TextOverflow.Clip,
-				"fade" => TextOverflow.Fade,
-				"ellipsis" => TextOverflow.Ellipsis,
-				"visible" => TextOverflow.Visible,
-				_ => throw new ArgumentException($"Unknown TextOverflow value: {value}", nameof(value))
-			};
-		}
+		Visible,
 	}
 }

@@ -28,9 +28,11 @@ namespace Flutter.Widgets
 		public FocusTraversalOrder(
 		)
 		{
-			var backingStruct = GetBackingStruct<FocusTraversalOrderStruct>();
-			backingStruct.order = _order;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
+
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FocusTraversalOrderStruct();
 	}

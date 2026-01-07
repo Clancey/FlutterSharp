@@ -31,16 +31,19 @@ namespace Flutter.Widgets
 /// constraints become outdated, the `builder` rebuilds with the last known
 /// constraints.
 /// {@endtemplate}
-	public abstract class ConstrainedLayoutBuilder<ConstraintType> : AbstractLayoutBuilder
+	public abstract class ConstrainedLayoutBuilder<ConstraintType> : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ConstrainedLayoutBuilder"/> class.
 		/// </summary>
 		public ConstrainedLayoutBuilder(
+			Func<BuildContext, ConstraintType, Widget> _builder
+
 		)
 		{
-			var backingStruct = GetBackingStruct<ConstrainedLayoutBuilderStruct>();
-			backingStruct.builder = _builder;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ConstrainedLayoutBuilderStruct();

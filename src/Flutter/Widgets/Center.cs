@@ -32,15 +32,18 @@ namespace Flutter.Widgets
 /// * [Container], a convenience widget that combines common painting,
 /// positioning, and sizing widgets.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class Center : Align
+	public class Center : SingleChildRenderObjectWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Center"/> class.
 		/// </summary>
 		public Center(
+
 		)
 		{
-			var backingStruct = GetBackingStruct<CenterStruct>();
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new CenterStruct();

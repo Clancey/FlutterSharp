@@ -16,16 +16,19 @@ namespace Flutter.Widgets
 /// Controls the default properties of icons in a widget subtree.
 /// 
 /// The icon theme is honored by [Icon] and [ImageIcon] widgets.
-	public class IconTheme : InheritedTheme
+	public class IconTheme : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="IconTheme"/> class.
 		/// </summary>
 		public IconTheme(
+			IconThemeData _data
+
 		)
 		{
-			var backingStruct = GetBackingStruct<IconThemeStruct>();
-			backingStruct.data = _data;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new IconThemeStruct();

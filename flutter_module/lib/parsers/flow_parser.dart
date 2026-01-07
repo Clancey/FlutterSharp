@@ -81,7 +81,7 @@ class FlowParser extends WidgetParser {
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<FlowStruct>.fromAddress(fos.handle.address).ref;
     return Flow(
-      @delegate: parseInvalidType(map.@delegate),
+      delegate: parseInvalidType(map.delegate),
       clipBehavior: map.clipBehavior
     );
   }

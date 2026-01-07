@@ -39,15 +39,18 @@ namespace Flutter.Widgets
 /// 
 /// * [TapRegion], the widget that this widget uses to add widgets to the group
 /// of text fields.
-	public class TextFieldTapRegion : TapRegion
+	public class TextFieldTapRegion : SingleChildRenderObjectWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TextFieldTapRegion"/> class.
 		/// </summary>
 		public TextFieldTapRegion(
+
 		)
 		{
-			var backingStruct = GetBackingStruct<TextFieldTapRegionStruct>();
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TextFieldTapRegionStruct();

@@ -58,27 +58,26 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PageView"/> class.
 		/// </summary>
 		public PageView(
+			bool _allowImplicitScrolling,
+			InvalidType _scrollDirection,
+			bool _reverse,
+			bool _pageSnapping,
+			InvalidType _onPageChanged,
+			SliverChildDelegate _childrenDelegate,
+			InvalidType _dragStartBehavior,
+			Clip _clipBehavior,
+			InvalidType _hitTestBehavior,
+			bool _padEnds
+,
 			string? _restorationId = null,
 			PageController? _controller = null,
 			ScrollPhysics? _physics = null,
 			ScrollBehavior? _scrollBehavior = null
 		)
 		{
-			var backingStruct = GetBackingStruct<PageViewStruct>();
-			backingStruct.allowImplicitScrolling = _allowImplicitScrolling;
-			backingStruct.restorationId = _restorationId;
-			backingStruct.scrollDirection = _scrollDirection;
-			backingStruct.reverse = _reverse;
-			backingStruct.controller = _controller;
-			backingStruct.physics = _physics;
-			backingStruct.pageSnapping = _pageSnapping;
-			backingStruct.onPageChanged = _onPageChanged;
-			backingStruct.childrenDelegate = _childrenDelegate;
-			backingStruct.dragStartBehavior = _dragStartBehavior;
-			backingStruct.clipBehavior = _clipBehavior;
-			backingStruct.hitTestBehavior = _hitTestBehavior;
-			backingStruct.scrollBehavior = _scrollBehavior;
-			backingStruct.padEnds = _padEnds;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PageViewStruct();

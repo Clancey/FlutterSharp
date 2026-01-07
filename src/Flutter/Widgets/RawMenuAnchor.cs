@@ -47,21 +47,21 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawMenuAnchor"/> class.
 		/// </summary>
 		public RawMenuAnchor(
+			InvalidType _onOpen,
+			InvalidType _onClose,
+			Func<BuildContext, RawMenuOverlayInfo, Widget> _overlayBuilder,
+			bool _useRootOverlay,
+			bool _consumeOutsideTaps,
+			MenuController _controller
+,
 			Func<BuildContext, MenuController, Widget?, Widget> _builder = null,
 			Widget? _child = null,
 			FocusNode? _childFocusNode = null
 		)
 		{
-			var backingStruct = GetBackingStruct<RawMenuAnchorStruct>();
-			backingStruct.onOpen = _onOpen;
-			backingStruct.onClose = _onClose;
-			backingStruct.builder = _builder;
-			backingStruct.child = _child;
-			backingStruct.overlayBuilder = _overlayBuilder;
-			backingStruct.useRootOverlay = _useRootOverlay;
-			backingStruct.childFocusNode = _childFocusNode;
-			backingStruct.consumeOutsideTaps = _consumeOutsideTaps;
-			backingStruct.controller = _controller;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RawMenuAnchorStruct();

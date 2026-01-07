@@ -29,18 +29,21 @@ namespace Flutter.Widgets
 /// 
 /// * [AndroidView] which embeds an Android platform view in the widget hierarchy using a [TextureLayer].
 /// * [UiKitView] which embeds an iOS platform view in the widget hierarchy.
-	public class PlatformViewSurface : LeafRenderObjectWidget
+	public class PlatformViewSurface : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PlatformViewSurface"/> class.
 		/// </summary>
 		public PlatformViewSurface(
+			InvalidType _controller,
+			HashSet<object> _gestureRecognizers,
+			InvalidType _hitTestBehavior
+
 		)
 		{
-			var backingStruct = GetBackingStruct<PlatformViewSurfaceStruct>();
-			backingStruct.controller = _controller;
-			backingStruct.gestureRecognizers = _gestureRecognizers;
-			backingStruct.hitTestBehavior = _hitTestBehavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PlatformViewSurfaceStruct();

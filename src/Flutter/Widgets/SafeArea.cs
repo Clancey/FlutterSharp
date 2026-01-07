@@ -66,16 +66,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SafeArea"/> class.
 		/// </summary>
 		public SafeArea(
+			bool _left,
+			bool _top,
+			bool _right,
+			bool _bottom,
+			InvalidType _minimum,
+			bool _maintainBottomViewPadding,
+			Widget _child
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SafeAreaStruct>();
-			backingStruct.left = _left;
-			backingStruct.top = _top;
-			backingStruct.right = _right;
-			backingStruct.bottom = _bottom;
-			backingStruct.minimum = _minimum;
-			backingStruct.maintainBottomViewPadding = _maintainBottomViewPadding;
-			backingStruct.child = _child;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SafeAreaStruct();

@@ -28,7 +28,7 @@ final class SliverPersistentHeaderStruct extends Struct {
   external Pointer<Utf8> id;
 
   @Int8()
-  external int has@delegate;
+  external int hasdelegate;
 
   ///   /// Configuration for the sliver's layout.
   ///
@@ -39,7 +39,7 @@ final class SliverPersistentHeaderStruct extends Struct {
   /// * The builder for generating the widgets of the sliver.
   ///
   /// * The instructions for snapping the scroll offset, if [floating] is true.
-  external Pointer<Void> @delegate;
+  external Pointer<Void> delegate;
 
   ///   /// Whether to stick the header to the start of the viewport once it has
   /// reached its minimum size.

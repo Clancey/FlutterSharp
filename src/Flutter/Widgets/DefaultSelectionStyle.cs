@@ -23,18 +23,21 @@ namespace Flutter.Widgets
 /// See also:
 /// * [TextSelectionTheme]: which also creates a [DefaultSelectionStyle] for
 /// the subtree.
-	public class DefaultSelectionStyle : InheritedTheme
+	public class DefaultSelectionStyle : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DefaultSelectionStyle"/> class.
 		/// </summary>
 		public DefaultSelectionStyle(
+			InvalidType _cursorColor,
+			InvalidType _selectionColor,
+			InvalidType _mouseCursor
+
 		)
 		{
-			var backingStruct = GetBackingStruct<DefaultSelectionStyleStruct>();
-			backingStruct.cursorColor = _cursorColor;
-			backingStruct.selectionColor = _selectionColor;
-			backingStruct.mouseCursor = _mouseCursor;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DefaultSelectionStyleStruct();

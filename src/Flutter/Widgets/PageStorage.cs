@@ -53,11 +53,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PageStorage"/> class.
 		/// </summary>
 		public PageStorage(
+			Widget _child,
+			PageStorageBucket _bucket
+
 		)
 		{
-			var backingStruct = GetBackingStruct<PageStorageStruct>();
-			backingStruct.child = _child;
-			backingStruct.bucket = _bucket;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PageStorageStruct();

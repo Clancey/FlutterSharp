@@ -60,18 +60,21 @@ namespace Flutter.Widgets
 /// that aren't [Animation]s.
 /// * [TweenAnimationBuilder], which animates a property to a target value
 /// without requiring manual management of an [AnimationController].
-	public class AnimatedBuilder : ListenableBuilder
+	public class AnimatedBuilder : StatefulWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AnimatedBuilder"/> class.
 		/// </summary>
 		public AnimatedBuilder(
+			InvalidType _animation,
+			InvalidType _listenable,
+			Func<BuildContext, Widget?, Widget> _builder
+
 		)
 		{
-			var backingStruct = GetBackingStruct<AnimatedBuilderStruct>();
-			backingStruct.animation = _animation;
-			backingStruct.listenable = _listenable;
-			backingStruct.builder = _builder;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedBuilderStruct();

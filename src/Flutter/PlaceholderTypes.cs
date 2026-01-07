@@ -59,6 +59,34 @@ namespace Flutter
 	public class SpellCheckConfiguration { }
 	public class TextSelectionControls { }
 	public class TransformationController { }
+	public class AlignmentGeometry { }
+	public class Color { }
+	public class EdgeInsetsGeometry { }
+	public class TextStyle { }
+	public class Decoration { }
+	public class Curve { }
+	public class BorderRadiusGeometry { }
+	public class SliverChildDelegate { }
+	public class Matrix4 { }
+	public class BoxConstraints { }
+	public class TwoDimensionalChildDelegate { }
+	public class ScrollableDetails { }
+	public class ListWheelChildDelegate { }
+	public class BoxShape { }
+	public class WebImageInfo { }
+	public class ToolbarOptions { }
+	public class TextMagnifierConfiguration { }
+	public class TableRow { }
+	public class SliverPersistentHeaderDelegate { }
+	public class RawMenuOverlayInfo { }
+	public class BoxBorder { }
+	public class ExpansibleController { }
+	public class IconThemeData { }
+	public class IOSSystemContextMenuItem { }
+	public class MagnifierDecoration { }
+	public class OverlayEntry { }
+	public class OverlayPortalController { }
+	public class PageStorageBucket { }
 
 	// Generic types
 	public class Route<T> { }

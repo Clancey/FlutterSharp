@@ -33,29 +33,11 @@ namespace Flutter.Widgets
 		public TextSelectionGestureDetector(
 		)
 		{
-			var backingStruct = GetBackingStruct<TextSelectionGestureDetectorStruct>();
-			backingStruct.onTapTrackStart = _onTapTrackStart;
-			backingStruct.onTapTrackReset = _onTapTrackReset;
-			backingStruct.onTapDown = _onTapDown;
-			backingStruct.onForcePressStart = _onForcePressStart;
-			backingStruct.onForcePressEnd = _onForcePressEnd;
-			backingStruct.onSecondaryTap = _onSecondaryTap;
-			backingStruct.onSecondaryTapDown = _onSecondaryTapDown;
-			backingStruct.onSingleTapUp = _onSingleTapUp;
-			backingStruct.onSingleTapCancel = _onSingleTapCancel;
-			backingStruct.onUserTap = _onUserTap;
-			backingStruct.onSingleLongTapStart = _onSingleLongTapStart;
-			backingStruct.onSingleLongTapMoveUpdate = _onSingleLongTapMoveUpdate;
-			backingStruct.onSingleLongTapEnd = _onSingleLongTapEnd;
-			backingStruct.onDoubleTapDown = _onDoubleTapDown;
-			backingStruct.onTripleTapDown = _onTripleTapDown;
-			backingStruct.onDragSelectionStart = _onDragSelectionStart;
-			backingStruct.onDragSelectionUpdate = _onDragSelectionUpdate;
-			backingStruct.onDragSelectionEnd = _onDragSelectionEnd;
-			backingStruct.onUserTapAlwaysCalled = _onUserTapAlwaysCalled;
-			backingStruct.behavior = _behavior;
-			backingStruct.child = _child;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
+
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TextSelectionGestureDetectorStruct();
 	}

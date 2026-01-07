@@ -50,14 +50,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SlideTransition"/> class.
 		/// </summary>
 		public SlideTransition(
+			InvalidType _textDirection,
+			bool _transformHitTests,
+			InvalidType _position
+,
 			Widget? _child = null
 		)
 		{
-			var backingStruct = GetBackingStruct<SlideTransitionStruct>();
-			backingStruct.textDirection = _textDirection;
-			backingStruct.transformHitTests = _transformHitTests;
-			backingStruct.child = _child;
-			backingStruct.position = _position;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SlideTransitionStruct();

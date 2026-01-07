@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using FlutterSharp.CodeGen.Analysis;
 using FlutterSharp.CodeGen.Models;
 using FlutterSharp.CodeGen.TypeMapping;
 using Scriban;
@@ -67,6 +68,24 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		}
 
 		/// <summary>
+		/// Generates C# code for an enriched widget definition (new architecture).
+		/// </summary>
+		/// <param name="enrichedWidget">The enriched widget definition to generate code for.</param>
+		/// <returns>The generated C# code as a string.</returns>
+		public string Generate(EnrichedWidgetDefinition enrichedWidget)
+		{
+			if (enrichedWidget == null)
+			{
+				throw new ArgumentNullException(nameof(enrichedWidget));
+			}
+
+			var model = BuildTemplateModel(enrichedWidget);
+			var result = _template.Render(model);
+
+			return result;
+		}
+
+		/// <summary>
 		/// Builds the template model from a widget definition.
 		/// </summary>
 		private Dictionary<string, object?> BuildTemplateModel(WidgetDefinition widget)
@@ -99,6 +118,70 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		}
 
 		/// <summary>
+		/// Builds the template model from an enriched widget definition (new architecture).
+		/// </summary>
+		private Dictionary<string, object?> BuildTemplateModel(EnrichedWidgetDefinition enrichedWidget)
+		{
+			var csharpNamespace = MapNamespace(enrichedWidget.Namespace);
+
+			// Convert enriched properties to template model format
+			var allProperties = enrichedWidget.AllProperties.Select(p => new Dictionary<string, object?>
+			{
+				["name"] = p.Name,
+				["type"] = p.CSharpType,
+				["dart_type"] = p.DartType,
+				["is_required"] = p.IsRequired,
+				["is_nullable"] = p.IsNullable,
+				["default_value"] = p.DefaultValue,
+				["documentation"] = FormatDocumentation(p.Documentation),
+				["is_list"] = p.IsList,
+				["is_callback"] = p.IsCallback,
+				["backing_field_name"] = p.BackingFieldName,
+				["is_generic_type_param"] = p.IsGenericTypeParam
+			}).ToList();
+
+			var requiredProperties = enrichedWidget.RequiredProperties.Select(p => new Dictionary<string, object?>
+			{
+				["name"] = p.Name,
+				["type"] = p.CSharpType,
+				["backing_field_name"] = p.BackingFieldName,
+				["is_required"] = true
+			}).ToList();
+
+			var optionalProperties = enrichedWidget.OptionalProperties.Select(p => new Dictionary<string, object?>
+			{
+				["name"] = p.Name,
+				["type"] = p.CSharpType,
+				["backing_field_name"] = p.BackingFieldName,
+				["is_nullable"] = p.IsNullable,
+				["default_value"] = p.DefaultValue,
+				["is_generic_type_param"] = p.IsGenericTypeParam,
+				["is_required"] = false
+			}).ToList();
+
+			return new Dictionary<string, object?>
+			{
+				["name"] = enrichedWidget.Name,
+				["namespace"] = csharpNamespace,
+				["base_class"] = enrichedWidget.BaseClassName,
+				["properties"] = allProperties,
+				["has_single_child"] = enrichedWidget.HasSingleChild,
+				["has_multiple_children"] = enrichedWidget.HasMultipleChildren,
+				["child_property_name"] = enrichedWidget.ChildPropertyName,
+				["children_property_name"] = enrichedWidget.ChildrenPropertyName,
+				["documentation"] = FormatDocumentation(enrichedWidget.Documentation),
+				["is_abstract"] = enrichedWidget.IsAbstract,
+				["is_deprecated"] = enrichedWidget.IsDeprecated,
+				["deprecation_message"] = enrichedWidget.DeprecationMessage,
+				["required_properties"] = requiredProperties,
+				["optional_properties"] = optionalProperties,
+				["struct_name"] = enrichedWidget.StructName,
+				["type_parameters"] = enrichedWidget.TypeParameters,
+				["is_generic"] = enrichedWidget.TypeParameters?.Count > 0
+			};
+		}
+
+		/// <summary>
 		/// Maps a property definition to a template property model.
 		/// </summary>
 		private Dictionary<string, object?> MapProperty(PropertyDefinition property)
@@ -122,6 +205,9 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			var isGenericTypeParam = csharpType == "T" || csharpType == "T?" ||
 			                         csharpType == "S" || csharpType == "S?";
 
+			// Convert Dart default value to C# syntax
+			var csharpDefaultValue = ConvertDartDefaultValueToCSharp(property.DefaultValue, csharpType);
+
 			return new Dictionary<string, object?>
 			{
 				["name"] = propertyName,
@@ -129,7 +215,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["dart_type"] = property.DartType,
 				["is_required"] = property.IsRequired,
 				["is_nullable"] = property.IsNullable,
-				["default_value"] = property.DefaultValue,
+				["default_value"] = csharpDefaultValue,
 				["documentation"] = FormatDocumentation(property.Documentation),
 				["is_list"] = property.IsList,
 				["is_callback"] = property.IsCallback,
@@ -243,6 +329,63 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		}
 
 		/// <summary>
+		/// Converts a Dart default value to C# syntax.
+		/// </summary>
+		private string? ConvertDartDefaultValueToCSharp(string? dartDefaultValue, string csharpType)
+		{
+			if (string.IsNullOrEmpty(dartDefaultValue))
+			{
+				return null;
+			}
+
+			// Handle Dart collection literals (maps, lists, sets)
+			// <String, WidgetBuilder>{} -> null
+			// <NavigatorObserver>[] -> null
+			// <int>{} -> null
+			if (dartDefaultValue.Contains("<") && (dartDefaultValue.Contains("{}") || dartDefaultValue.Contains("[]")))
+			{
+				return "null";
+			}
+
+			// Handle Dart const Duration() syntax
+			// TimeSpan.FromMilliseconds/FromSeconds are not compile-time constants in C#
+			// Return null and let the parameter be nullable
+			if (dartDefaultValue.Contains("Duration("))
+			{
+				return "null";
+			}
+
+			// Handle Dart const EdgeInsets syntax
+			if (dartDefaultValue.Contains("EdgeInsets"))
+			{
+				// For now, return null for EdgeInsets - these are complex types
+				return "null";
+			}
+
+			// Handle Dart enums (e.g., Axis.horizontal)
+			if (dartDefaultValue.Contains(".") && !dartDefaultValue.StartsWith("const"))
+			{
+				// Keep enum syntax the same (Axis.horizontal works in C#)
+				return dartDefaultValue;
+			}
+
+			// Handle common Dart literals
+			dartDefaultValue = dartDefaultValue
+				.Replace("const ", "")
+				.Replace("true", "true")
+				.Replace("false", "false")
+				.Replace("null", "null");
+
+			// If it's a complex const constructor, return null
+			if (dartDefaultValue.Contains("(") && dartDefaultValue.Contains(")"))
+			{
+				return "null";
+			}
+
+			return dartDefaultValue;
+		}
+
+		/// <summary>
 		/// Checks if a C# type is a reference type.
 		/// </summary>
 		private bool IsReferenceType(string csharpType)
@@ -293,15 +436,18 @@ namespace {{ namespace }}
 		/// Initializes a new instance of the <see cref=""{{ name }}""/> class.
 		/// </summary>
 		public {{ name }}(
+{{~ for prop in required_properties ~}}
+			{{ prop.type }} {{ prop.backing_field_name }}{{ if !for.last }},{{ end }}
+{{~ end ~}}
+{{~ if required_properties.size > 0 && optional_properties.size > 0 }},{{ end }}
 {{~ for prop in optional_properties ~}}
-			{{ prop.type }} {{ prop.backing_field_name }} = {{ prop.default_value ?? ""null"" }}{{ if !for.last }},{{ end }}
+			{{ prop.type }} {{ prop.backing_field_name }} = {{ if prop.is_generic_type_param }}default{{ else }}{{ prop.default_value ?? ""null"" }}{{ end }}{{ if !for.last }},{{ end }}
 {{~ end ~}}
 		)
 		{
-			var backingStruct = GetBackingStruct<{{ struct_name }}>();
-{{~ for prop in properties ~}}
-			backingStruct.{{ prop.name }} = {{ prop.backing_field_name }};
-{{~ end ~}}
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new {{ struct_name }}();

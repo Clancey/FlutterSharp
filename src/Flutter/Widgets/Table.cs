@@ -52,17 +52,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Table"/> class.
 		/// </summary>
 		public Table(
-			Dictionary? _columnWidths = null
+			List<TableRow> _children,
+			InvalidType _defaultColumnWidth,
+			InvalidType _textDirection,
+			BoxBorder? _border,
+			InvalidType _defaultVerticalAlignment,
+			InvalidType _textBaseline
+,
+			Dictionary<object, object>? _columnWidths = null
 		)
 		{
-			var backingStruct = GetBackingStruct<TableStruct>();
-			backingStruct.children = _children;
-			backingStruct.columnWidths = _columnWidths;
-			backingStruct.defaultColumnWidth = _defaultColumnWidth;
-			backingStruct.textDirection = _textDirection;
-			backingStruct.border = _border;
-			backingStruct.defaultVerticalAlignment = _defaultVerticalAlignment;
-			backingStruct.textBaseline = _textBaseline;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TableStruct();

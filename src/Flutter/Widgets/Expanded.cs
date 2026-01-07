@@ -51,15 +51,18 @@ namespace Flutter.Widgets
 /// * [Flexible], which does not force the child to fill the available space.
 /// * [Spacer], a widget that takes up space proportional to its flex value.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class Expanded : Flexible
+	public class Expanded : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Expanded"/> class.
 		/// </summary>
 		public Expanded(
+
 		)
 		{
-			var backingStruct = GetBackingStruct<ExpandedStruct>();
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ExpandedStruct();

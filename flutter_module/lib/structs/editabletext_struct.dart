@@ -291,7 +291,7 @@ final class EditableTextStruct extends Struct {
   /// Defaults to false.
   /// {@endtemplate}
   @Int8()
-  external int @readOnly;
+  external int readOnly;
 
   ///   /// Whether the text will take the full width regardless of the text width.
   ///

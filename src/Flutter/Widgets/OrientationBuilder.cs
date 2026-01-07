@@ -31,10 +31,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="OrientationBuilder"/> class.
 		/// </summary>
 		public OrientationBuilder(
+			Func<BuildContext, Orientation, Widget> _builder
+
 		)
 		{
-			var backingStruct = GetBackingStruct<OrientationBuilderStruct>();
-			backingStruct.builder = _builder;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new OrientationBuilderStruct();

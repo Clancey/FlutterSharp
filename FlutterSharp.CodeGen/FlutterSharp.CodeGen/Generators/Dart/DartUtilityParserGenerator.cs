@@ -146,6 +146,10 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 
 		Console.WriteLine($"[DEBUG] Generated {generatedCount} new parser functions");
 		Console.WriteLine($"[DEBUG] Skipped {skippedCount} complex type parsers");
+
+		// Add callback parsing functions
+		sb.AppendLine(GenerateCallbackParsers());
+
 		return sb.ToString();
 	}
 
@@ -422,12 +426,28 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			return parsers;
 		}
 
+		/// <summary>
+		/// Converts a PascalCase string to camelCase.
+		/// Also strips the @ prefix that C# uses for reserved word escaping (not valid in Dart).
+		/// </summary>
 		private string ToCamelCase(string value)
 		{
-			if (string.IsNullOrEmpty(value) || char.IsLower(value[0]))
+			if (string.IsNullOrEmpty(value))
 			{
 				return value;
 			}
+
+			// Strip @ prefix (C# reserved word escaping) - not valid in Dart
+			if (value.StartsWith("@"))
+			{
+				value = value.Substring(1);
+			}
+
+			if (char.IsLower(value[0]))
+			{
+				return value;
+			}
+
 			return char.ToLowerInvariant(value[0]) + value.Substring(1);
 		}
 
@@ -524,6 +544,67 @@ DateTime {{ parser_name }}(int millisecondsSinceEpoch) {
   print('WARNING: {{ parser_name }} is not implemented yet');
   return null;
 }";
+		}
+
+		#endregion
+
+		#region Callback Parsers
+
+		/// <summary>
+		/// Generates callback parser functions for common Flutter callback types.
+		/// </summary>
+		private string GenerateCallbackParsers()
+		{
+			var sb = new StringBuilder();
+
+			sb.AppendLine("// ═══════════════════════════════════════════════════════════════");
+			sb.AppendLine("// Callback Parsers");
+			sb.AppendLine("// ═══════════════════════════════════════════════════════════════");
+			sb.AppendLine();
+			sb.AppendLine("/// Parses a callback ID pointer to a VoidCallback function.");
+			sb.AppendLine("/// The callback ID is used to invoke the C# callback via method channel.");
+			sb.AppendLine("VoidCallback? parseVoidCallback(int callbackId) {");
+			sb.AppendLine("  if (callbackId == 0) return null;");
+			sb.AppendLine("  return () => invokeCallback(callbackId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			sb.AppendLine("/// Parses a callback ID pointer to a ValueChanged<T> function.");
+			sb.AppendLine("ValueChanged<T>? parseValueChangedCallback<T>(int callbackId) {");
+			sb.AppendLine("  if (callbackId == 0) return null;");
+			sb.AppendLine("  return (T value) => invokeCallback(callbackId, args: [value]);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			sb.AppendLine("/// Parses a callback ID to a generic callback with one parameter.");
+			sb.AppendLine("void Function(T)? parseCallback1<T>(int callbackId) {");
+			sb.AppendLine("  if (callbackId == 0) return null;");
+			sb.AppendLine("  return (T arg) => invokeCallback(callbackId, args: [arg]);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			sb.AppendLine("/// Parses a callback ID to a generic callback with two parameters.");
+			sb.AppendLine("void Function(T1, T2)? parseCallback2<T1, T2>(int callbackId) {");
+			sb.AppendLine("  if (callbackId == 0) return null;");
+			sb.AppendLine("  return (T1 arg1, T2 arg2) => invokeCallback(callbackId, args: [arg1, arg2]);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			sb.AppendLine("/// Invokes a C# callback by its ID via the method channel.");
+			sb.AppendLine("/// This communicates back to the C# side to execute the registered callback.");
+			sb.AppendLine("Future<void> invokeCallback(int callbackId, {List<dynamic>? args}) async {");
+			sb.AppendLine("  try {");
+			sb.AppendLine("    await methodChannel.invokeMethod('InvokeCallback', {");
+			sb.AppendLine("      'callbackId': callbackId,");
+			sb.AppendLine("      'args': args ?? [],");
+			sb.AppendLine("    });");
+			sb.AppendLine("  } catch (e) {");
+			sb.AppendLine("    print('Error invoking callback $callbackId: $e');");
+			sb.AppendLine("  }");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			return sb.ToString();
 		}
 
 		#endregion

@@ -46,10 +46,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RotatedBox"/> class.
 		/// </summary>
 		public RotatedBox(
+			int _quarterTurns
+
 		)
 		{
-			var backingStruct = GetBackingStruct<RotatedBoxStruct>();
-			backingStruct.quarterTurns = _quarterTurns;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RotatedBoxStruct();

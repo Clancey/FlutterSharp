@@ -52,9 +52,11 @@ namespace Flutter.Widgets
 			Stream<T>? _stream = null
 		)
 		{
-			var backingStruct = GetBackingStruct<StreamBuilderBaseStruct>();
-			backingStruct.stream = _stream;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
+
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new StreamBuilderBaseStruct();
 	}

@@ -119,6 +119,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Focus"/> class.
 		/// </summary>
 		public Focus(
+			Widget _child,
+			bool _autofocus,
+			InvalidType _onFocusChange,
+			bool _includeSemantics,
+			bool _canRequestFocus,
+			bool _skipTraversal,
+			bool _descendantsAreFocusable,
+			bool _descendantsAreTraversable
+,
 			FocusNode? _parentNode = null,
 			FocusNode? _focusNode = null,
 			Func<FocusNode, InvalidType, KeyEventResult> _onKeyEvent = null,
@@ -126,20 +135,9 @@ namespace Flutter.Widgets
 			string? _debugLabel = null
 		)
 		{
-			var backingStruct = GetBackingStruct<FocusStruct>();
-			backingStruct.parentNode = _parentNode;
-			backingStruct.child = _child;
-			backingStruct.focusNode = _focusNode;
-			backingStruct.autofocus = _autofocus;
-			backingStruct.onFocusChange = _onFocusChange;
-			backingStruct.includeSemantics = _includeSemantics;
-			backingStruct.onKeyEvent = _onKeyEvent;
-			backingStruct.onKey = _onKey;
-			backingStruct.canRequestFocus = _canRequestFocus;
-			backingStruct.skipTraversal = _skipTraversal;
-			backingStruct.descendantsAreFocusable = _descendantsAreFocusable;
-			backingStruct.descendantsAreTraversable = _descendantsAreTraversable;
-			backingStruct.debugLabel = _debugLabel;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FocusStruct();

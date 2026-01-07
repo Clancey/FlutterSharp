@@ -33,12 +33,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ReorderableDragStartListener"/> class.
 		/// </summary>
 		public ReorderableDragStartListener(
+			Widget _child,
+			int _index,
+			bool _enabled
+
 		)
 		{
-			var backingStruct = GetBackingStruct<ReorderableDragStartListenerStruct>();
-			backingStruct.child = _child;
-			backingStruct.index = _index;
-			backingStruct.enabled = _enabled;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ReorderableDragStartListenerStruct();

@@ -27,34 +27,34 @@ namespace Flutter.Widgets
 /// {@macro flutter.painting.imageInfo.scale}
 /// 
 /// This widget is rarely used directly. Instead, consider using [Image].
-	public class RawImage : LeafRenderObjectWidget
+	public class RawImage : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RawImage"/> class.
 		/// </summary>
 		public RawImage(
+			InvalidType _image,
+			double _scale,
+			Color? _color,
+			InvalidType _opacity,
+			InvalidType _filterQuality,
+			InvalidType _colorBlendMode,
+			InvalidType _fit,
+			AlignmentGeometry? _alignment,
+			InvalidType _repeat,
+			InvalidType _centerSlice,
+			bool _matchTextDirection,
+			bool _invertColors,
+			bool _isAntiAlias
+,
 			string? _debugImageLabel = null,
 			double? _width = null,
 			double? _height = null
 		)
 		{
-			var backingStruct = GetBackingStruct<RawImageStruct>();
-			backingStruct.image = _image;
-			backingStruct.debugImageLabel = _debugImageLabel;
-			backingStruct.width = _width;
-			backingStruct.height = _height;
-			backingStruct.scale = _scale;
-			backingStruct.color = _color;
-			backingStruct.opacity = _opacity;
-			backingStruct.filterQuality = _filterQuality;
-			backingStruct.colorBlendMode = _colorBlendMode;
-			backingStruct.fit = _fit;
-			backingStruct.alignment = _alignment;
-			backingStruct.repeat = _repeat;
-			backingStruct.centerSlice = _centerSlice;
-			backingStruct.matchTextDirection = _matchTextDirection;
-			backingStruct.invertColors = _invertColors;
-			backingStruct.isAntiAlias = _isAntiAlias;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RawImageStruct();

@@ -51,7 +51,7 @@ class CustomMultiChildLayoutParser extends WidgetParser {
   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<CustomMultiChildLayoutStruct>.fromAddress(fos.handle.address).ref;
     return CustomMultiChildLayout(
-      @delegate: parseInvalidType(map.@delegate)
+      delegate: parseInvalidType(map.delegate)
     );
   }
 

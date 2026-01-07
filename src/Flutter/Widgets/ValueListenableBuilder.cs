@@ -59,13 +59,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ValueListenableBuilder"/> class.
 		/// </summary>
 		public ValueListenableBuilder(
+			InvalidType _valueListenable,
+			Func<BuildContext, T, Widget?, Widget> _builder
+,
 			Widget? _child = null
 		)
 		{
-			var backingStruct = GetBackingStruct<ValueListenableBuilderStruct>();
-			backingStruct.valueListenable = _valueListenable;
-			backingStruct.builder = _builder;
-			backingStruct.child = _child;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ValueListenableBuilderStruct();

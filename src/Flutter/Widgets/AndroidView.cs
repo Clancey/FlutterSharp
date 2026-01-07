@@ -61,18 +61,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AndroidView"/> class.
 		/// </summary>
 		public AndroidView(
-			HashSet? _gestureRecognizers = null
+			string _viewType,
+			InvalidType _onPlatformViewCreated,
+			InvalidType _hitTestBehavior,
+			InvalidType _layoutDirection,
+			object _creationParams,
+			InvalidType _creationParamsCodec,
+			Clip _clipBehavior
+,
+			HashSet<object>? _gestureRecognizers = null
 		)
 		{
-			var backingStruct = GetBackingStruct<AndroidViewStruct>();
-			backingStruct.viewType = _viewType;
-			backingStruct.onPlatformViewCreated = _onPlatformViewCreated;
-			backingStruct.hitTestBehavior = _hitTestBehavior;
-			backingStruct.layoutDirection = _layoutDirection;
-			backingStruct.gestureRecognizers = _gestureRecognizers;
-			backingStruct.creationParams = _creationParams;
-			backingStruct.creationParamsCodec = _creationParamsCodec;
-			backingStruct.clipBehavior = _clipBehavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AndroidViewStruct();

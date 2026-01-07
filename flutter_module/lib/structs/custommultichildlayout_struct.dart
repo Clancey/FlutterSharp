@@ -53,9 +53,9 @@ final class CustomMultiChildLayoutStruct extends Struct {
   external Pointer<Utf8> id;
 
   @Int8()
-  external int has@delegate;
+  external int hasdelegate;
 
   ///   /// The delegate that controls the layout of the children.
-  external Pointer<Void> @delegate;
+  external Pointer<Void> delegate;
 
 }

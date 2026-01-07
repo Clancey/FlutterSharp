@@ -48,14 +48,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="NavigatorPopHandler"/> class.
 		/// </summary>
 		public NavigatorPopHandler(
+			Widget _child,
+			bool _enabled,
+			InvalidType _onPop
+,
 			Action<T?> _onPopWithResult = null
 		)
 		{
-			var backingStruct = GetBackingStruct<NavigatorPopHandlerStruct>();
-			backingStruct.child = _child;
-			backingStruct.enabled = _enabled;
-			backingStruct.onPop = _onPop;
-			backingStruct.onPopWithResult = _onPopWithResult;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new NavigatorPopHandlerStruct();

@@ -48,12 +48,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RelativePositionedTransition"/> class.
 		/// </summary>
 		public RelativePositionedTransition(
+			InvalidType _size,
+			Widget _child,
+			InvalidType _rect
+
 		)
 		{
-			var backingStruct = GetBackingStruct<RelativePositionedTransitionStruct>();
-			backingStruct.size = _size;
-			backingStruct.child = _child;
-			backingStruct.rect = _rect;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RelativePositionedTransitionStruct();

@@ -180,15 +180,18 @@ namespace Flutter.Widgets
 /// use a [Column] inside a scrolling container.
 /// * [Spacer], a widget that takes up space proportional to its flex value.
 /// * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-	public class Column : Flex
+	public class Column : MultiChildRenderObjectWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Column"/> class.
 		/// </summary>
 		public Column(
+
 		)
 		{
-			var backingStruct = GetBackingStruct<ColumnStruct>();
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ColumnStruct();

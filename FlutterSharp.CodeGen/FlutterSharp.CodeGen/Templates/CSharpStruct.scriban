@@ -46,6 +46,26 @@ namespace Flutter.Structs
 			set => SetIntPtr(ref {{ prop.backing_field_name }}, value);
 		}
 
+{{~ else if prop.is_callback ~}}
+		// Callback field: {{ prop.name }}
+		// Using action string pattern - Dart will dispatch action to C# via method channel
+		IntPtr {{ prop.backing_field_name }};
+
+{{~ if prop.documentation ~}}
+{{ prop.documentation }}
+{{~ end ~}}
+		/// <summary>
+		/// Action identifier for {{ prop.name }} callback.
+		/// When this action is triggered in Dart, it will be dispatched to C# via method channel.
+		/// Set to a string identifier (e.g., "button_pressed_main") that your C# action handler will recognize.
+		/// </summary>
+		public string? {{ prop.name }}Action
+		{
+			get => GetString({{ prop.backing_field_name }});
+			set => SetString(ref {{ prop.backing_field_name }}, value);
+		}
+
+{{~ end ~}}
 {{~ else if prop.requires_native_nullable ~}}
 		// Nullable value type: {{ prop.name }}
 {{~ if prop.documentation ~}}

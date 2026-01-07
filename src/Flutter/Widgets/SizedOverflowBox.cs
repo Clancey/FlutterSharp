@@ -32,11 +32,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SizedOverflowBox"/> class.
 		/// </summary>
 		public SizedOverflowBox(
+			AlignmentGeometry? _alignment,
+			InvalidType _size
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SizedOverflowBoxStruct>();
-			backingStruct.alignment = _alignment;
-			backingStruct.size = _size;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SizedOverflowBoxStruct();

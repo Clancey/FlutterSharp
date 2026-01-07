@@ -60,18 +60,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedSwitcher"/> class.
 		/// </summary>
 		public AnimatedSwitcher(
+			TimeSpan _duration,
+			InvalidType _switchInCurve,
+			InvalidType _switchOutCurve,
+			Func<Widget, InvalidType, Widget> _transitionBuilder,
+			Func<Widget?, List<Widget>, Widget> _layoutBuilder
+,
 			Widget? _child = null,
 			TimeSpan? _reverseDuration = null
 		)
 		{
-			var backingStruct = GetBackingStruct<AnimatedSwitcherStruct>();
-			backingStruct.child = _child;
-			backingStruct.duration = _duration;
-			backingStruct.reverseDuration = _reverseDuration;
-			backingStruct.switchInCurve = _switchInCurve;
-			backingStruct.switchOutCurve = _switchOutCurve;
-			backingStruct.transitionBuilder = _transitionBuilder;
-			backingStruct.layoutBuilder = _layoutBuilder;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedSwitcherStruct();

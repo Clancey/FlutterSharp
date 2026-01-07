@@ -163,8 +163,11 @@ namespace Flutter.Widgets
 		public InheritedWidget(
 		)
 		{
-			var backingStruct = GetBackingStruct<InheritedWidgetStruct>();
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
+
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new InheritedWidgetStruct();
 	}

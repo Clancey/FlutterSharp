@@ -56,6 +56,25 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			if (mapping != null)
 			{
 				var csharpType = mapping.CSharpType;
+
+				// If the C# type is a bare generic without type arguments, add default type arguments
+				if (csharpType == "HashSet")
+				{
+					csharpType = "HashSet<object>";
+				}
+				else if (csharpType == "List")
+				{
+					csharpType = "List<object>";
+				}
+				else if (csharpType == "Dictionary")
+				{
+					csharpType = "Dictionary<object, object>";
+				}
+				else if (csharpType == "IEnumerable")
+				{
+					csharpType = "IEnumerable<object>";
+				}
+
 				return isNullable && !mapping.IsNullable ? $"{csharpType}?" : csharpType;
 			}
 

@@ -41,6 +41,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverReorderableList"/> class.
 		/// </summary>
 		public SliverReorderableList(
+			Func<BuildContext, int, Widget> _itemBuilder,
+			int _itemCount,
+			Action<int, int> _onReorder,
+			InvalidType _itemExtentBuilder,
+			double _autoScrollerVelocityScalar
+,
 			Func<InvalidType, int?> _findChildIndexCallback = null,
 			Action<int> _onReorderStart = null,
 			Action<int> _onReorderEnd = null,
@@ -50,19 +56,9 @@ namespace Flutter.Widgets
 			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> _dragBoundaryProvider = null
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverReorderableListStruct>();
-			backingStruct.itemBuilder = _itemBuilder;
-			backingStruct.findChildIndexCallback = _findChildIndexCallback;
-			backingStruct.itemCount = _itemCount;
-			backingStruct.onReorder = _onReorder;
-			backingStruct.onReorderStart = _onReorderStart;
-			backingStruct.onReorderEnd = _onReorderEnd;
-			backingStruct.proxyDecorator = _proxyDecorator;
-			backingStruct.itemExtent = _itemExtent;
-			backingStruct.itemExtentBuilder = _itemExtentBuilder;
-			backingStruct.prototypeItem = _prototypeItem;
-			backingStruct.autoScrollerVelocityScalar = _autoScrollerVelocityScalar;
-			backingStruct.dragBoundaryProvider = _dragBoundaryProvider;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverReorderableListStruct();

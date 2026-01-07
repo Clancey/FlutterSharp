@@ -30,23 +30,25 @@ namespace Flutter.Widgets
 /// smoothly over a given duration.
 /// * [DefaultTextStyleTransition], which takes a provided [Animation] to
 /// animate changes in text style smoothly over time.
-	public class DefaultTextStyle : InheritedTheme
+	public class DefaultTextStyle : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DefaultTextStyle"/> class.
 		/// </summary>
 		public DefaultTextStyle(
+			TextStyle? _style,
+			InvalidType _textAlign,
+			bool _softWrap,
+			InvalidType _overflow,
+			InvalidType _textWidthBasis,
+			InvalidType _textHeightBehavior
+,
 			int? _maxLines = null
 		)
 		{
-			var backingStruct = GetBackingStruct<DefaultTextStyleStruct>();
-			backingStruct.style = _style;
-			backingStruct.textAlign = _textAlign;
-			backingStruct.softWrap = _softWrap;
-			backingStruct.overflow = _overflow;
-			backingStruct.maxLines = _maxLines;
-			backingStruct.textWidthBasis = _textWidthBasis;
-			backingStruct.textHeightBehavior = _textHeightBehavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DefaultTextStyleStruct();

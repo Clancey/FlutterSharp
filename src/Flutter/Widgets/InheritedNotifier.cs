@@ -68,11 +68,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="InheritedNotifier"/> class.
 		/// </summary>
 		public InheritedNotifier(
-			T? _notifier = null
+
+			T? _notifier = default
 		)
 		{
-			var backingStruct = GetBackingStruct<InheritedNotifierStruct>();
-			backingStruct.notifier = _notifier;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new InheritedNotifierStruct();

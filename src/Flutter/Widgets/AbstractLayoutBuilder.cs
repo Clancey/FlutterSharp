@@ -39,10 +39,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AbstractLayoutBuilder"/> class.
 		/// </summary>
 		public AbstractLayoutBuilder(
+			Func<BuildContext, LayoutInfoType, Widget> _builder
+
 		)
 		{
-			var backingStruct = GetBackingStruct<AbstractLayoutBuilderStruct>();
-			backingStruct.builder = _builder;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AbstractLayoutBuilderStruct();

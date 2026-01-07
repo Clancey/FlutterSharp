@@ -61,13 +61,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverAnimatedOpacity"/> class.
 		/// </summary>
 		public SliverAnimatedOpacity(
+			double _opacity,
+			bool _alwaysIncludeSemantics
+,
 			Widget? _sliver = null
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverAnimatedOpacityStruct>();
-			backingStruct.sliver = _sliver;
-			backingStruct.opacity = _opacity;
-			backingStruct.alwaysIncludeSemantics = _alwaysIncludeSemantics;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverAnimatedOpacityStruct();

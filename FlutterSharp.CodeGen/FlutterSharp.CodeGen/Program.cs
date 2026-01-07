@@ -362,7 +362,12 @@ internal class Program
 		var dartToCSharpMapper = new DartToCSharpMapper(registry);
 		var csharpToDartMapper = new CSharpToDartFfiMapper(registry);
 
-		var csharpWidgetGenerator = new CSharpWidgetGenerator(dartToCSharpMapper);
+		// Initialize enricher (new architecture)
+		var enricher = new WidgetAnalysisEnricher(dartToCSharpMapper, csharpToDartMapper);
+
+		// Pass template paths to generators
+		var csharpWidgetTemplatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "CSharpWidget.scriban");
+		var csharpWidgetGenerator = new CSharpWidgetGenerator(dartToCSharpMapper, csharpWidgetTemplatePath);
 		var csharpStructGenerator = new CSharpStructGenerator(dartToCSharpMapper);
 		var csharpEnumGenerator = new CSharpEnumGenerator(dartToCSharpMapper);
 		var dartStructGenerator = new DartStructGenerator(csharpToDartMapper);
@@ -398,8 +403,19 @@ internal class Program
 		{
 			LogVerbose($"  Generating {widget.Name}...");
 
-			// C# Widget
-			var csharpWidgetCode = csharpWidgetGenerator.Generate(widget);
+			// Skip private/internal widgets (starting with _) - these are Flutter SDK internals
+			// that shouldn't be exposed in the public API
+			if (widget.Name.StartsWith("_"))
+			{
+				LogVerbose($"  Skipping internal widget {widget.Name}");
+				continue;
+			}
+
+			// Enrich widget with all generation metadata (new architecture)
+			var enrichedWidget = enricher.Enrich(widget);
+
+			// C# Widget - use enriched data
+			var csharpWidgetCode = csharpWidgetGenerator.Generate(enrichedWidget);
 			await File.WriteAllTextAsync(
 				Path.Combine(csharpWidgetsDir, $"{widget.Name}.cs"),
 				csharpWidgetCode,
@@ -414,21 +430,21 @@ internal class Program
 				cancellationToken);
 			_generatedFileCount++;
 
-			// Skip private widgets for Dart code (starting with _)
-			if (!widget.Name.StartsWith("_") && !widget.IsAbstract)
+			// Skip abstract widgets for Dart code
+			if (!enrichedWidget.IsAbstract)
 			{
-				// Dart Struct
-				var dartStructCode = dartStructGenerator.Generate(widget);
+				// Dart Struct - use enriched data
+				var dartStructCode = dartStructGenerator.Generate(enrichedWidget);
 				await File.WriteAllTextAsync(
-					Path.Combine(dartStructsDir, $"{widget.Name.ToLowerInvariant()}_struct.dart"),
+					Path.Combine(dartStructsDir, $"{enrichedWidget.Name.ToLowerInvariant()}_struct.dart"),
 					dartStructCode,
 					cancellationToken);
 				_generatedFileCount++;
 
-				// Dart Parser
-				var dartParserCode = dartParserGenerator.Generate(widget);
+				// Dart Parser - use enriched data
+				var dartParserCode = dartParserGenerator.Generate(enrichedWidget);
 				await File.WriteAllTextAsync(
-					Path.Combine(dartParsersDir, $"{widget.Name.ToLowerInvariant()}_parser.dart"),
+					Path.Combine(dartParsersDir, $"{enrichedWidget.Name.ToLowerInvariant()}_parser.dart"),
 					dartParserCode,
 					cancellationToken);
 				_generatedFileCount++;

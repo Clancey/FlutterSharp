@@ -4,6 +4,7 @@
 // </auto-generated>
 
 import 'dart:ffi';
+import 'package:ffi/ffi.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
@@ -20,7 +21,15 @@ class {{ parser_name }} extends WidgetParser {
     var map = Pointer<{{ struct_name }}>.fromAddress(fos.handle.address).ref;
     return {{ widget_name }}(
 {{~ for prop in properties ~}}
+{{~ if prop.is_callback ~}}
+      {{ prop.property_name }}: map.{{ prop.property_name }}Action.address != 0 ? _create{{ string.capitalize prop.name }}Callback(map.{{ prop.property_name }}Action.toDartString()) : null{{ if !for.last || has_children }},{{ end }}
+{{~ else if prop.is_pointer_void && prop.is_required ~}}
+      // TODO: {{ prop.property_name }} is required but type '{{ prop.dart_type }}' cannot be marshaled through FFI
+      // This widget needs a manual wrapper to properly handle this parameter
+      {{ prop.property_name }}: _get{{ string.capitalize prop.name }}Placeholder(){{ if !for.last || has_children }},{{ end }}
+{{~ else if !prop.is_pointer_void ~}}
       {{ prop.property_name }}: {{ if prop.is_color_primitive }}{{ if prop.is_nullable }}map.{{ prop.property_name }} == 0 ? null : Color(map.{{ prop.property_name }}){{ else }}Color(map.{{ prop.property_name }}){{ end }}{{ else if prop.is_enum_type && !prop.parser_function }}{{ if prop.is_nullable }}map.{{ prop.property_name }} == -1 ? null : {{ string.replace prop.dart_type "?" "" }}.values[map.{{ prop.property_name }}]{{ else }}{{ string.replace prop.dart_type "?" "" }}.values[map.{{ prop.property_name }}]{{ end }}{{ else if prop.is_pointer_type }}{{ if prop.is_nullable }}map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.property_name }}.ref) : null{{ else }}{{ prop.parser_function }}(map.{{ prop.property_name }}.ref){{ end }}{{ else if prop.parser_function }}{{ prop.parser_function }}(map.{{ prop.property_name }}){{ else if prop.is_bool && prop.is_nullable }}map.{{ prop.property_name }} == 1 ? true : (map.{{ prop.property_name }} == 0 ? false : null){{ else if prop.is_bool }}map.{{ prop.property_name }} == 1{{ else }}map.{{ prop.property_name }}{{ end }}{{ if !for.last || has_children }},{{ end }}
+{{~ end ~}}
 {{~ end ~}}
 {{~ if has_children ~}}
 {{~ if child_property_name ~}}
@@ -38,4 +47,60 @@ class {{ parser_name }} extends WidgetParser {
 
   @override
   String get widgetName => "{{ widget_name }}";
+
+  /// Handles action dispatch to C# via method channel
+  void _handleAction(String? actionId) {
+    if (actionId == null || actionId.isEmpty) return;
+
+    // Dispatch action to C# via method channel
+    methodChannel.invokeMethod('HandleAction', {
+      'actionId': actionId,
+      'widgetType': widgetName,
+    }).catchError((error) {
+      print('Error dispatching action $actionId: $error');
+    });
+  }
+{{~
+  # Collect all required Pointer<Void> properties that need placeholders
+  required_void_props = []
+  for prop in properties
+    if prop.is_pointer_void && prop.is_required
+      required_void_props = array.add required_void_props prop
+    end
+  end
+
+  # Collect all callback properties
+  callback_props = []
+  for prop in properties
+    if prop.is_callback
+      callback_props = array.add callback_props prop
+    end
+  end
+~}}
+{{~ if callback_props.size > 0 ~}}
+
+  // Callback wrapper methods that dispatch to C# via method channel
+{{~ for prop in callback_props ~}}
+  dynamic _create{{ string.capitalize prop.name }}Callback(String actionId) {
+    // Generic callback wrapper that handles various callback signatures
+    // Returns a closure that dispatches the action and returns a placeholder widget if needed
+    return (context, [child]) {
+      _handleAction(actionId);
+      // For builder callbacks, return the child or an empty Container
+      return child ?? Container();
+    };
+  }
+{{~ end ~}}
+{{~ end ~}}
+{{~ if required_void_props.size > 0 ~}}
+
+  // Placeholder methods for required parameters that cannot be marshaled through FFI
+  // TODO: Implement proper handling for these parameters or create a manual wrapper
+{{~ for prop in required_void_props ~}}
+  dynamic _get{{ string.capitalize prop.name }}Placeholder() {
+    // TODO: Provide proper default value for {{ prop.dart_type }}
+    throw UnimplementedError('{{ widget_name }}.{{ prop.property_name }} requires manual implementation - type {{ prop.dart_type }} cannot be auto-generated');
+  }
+{{~ end ~}}
+{{~ end ~}}
 }

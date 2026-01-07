@@ -24,16 +24,19 @@ namespace Flutter.Widgets
 /// 
 /// * [DefaultTextStyle], which defines a [TextStyle] to apply to descendant
 /// [Text] widgets.
-	public class DefaultTextHeightBehavior : InheritedTheme
+	public class DefaultTextHeightBehavior : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DefaultTextHeightBehavior"/> class.
 		/// </summary>
 		public DefaultTextHeightBehavior(
+			InvalidType _textHeightBehavior
+
 		)
 		{
-			var backingStruct = GetBackingStruct<DefaultTextHeightBehaviorStruct>();
-			backingStruct.textHeightBehavior = _textHeightBehavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DefaultTextHeightBehaviorStruct();

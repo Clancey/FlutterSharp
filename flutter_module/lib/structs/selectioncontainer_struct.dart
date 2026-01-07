@@ -63,7 +63,7 @@ final class SelectionContainerStruct extends Struct {
   external Pointer<Void> child;
 
   @Int8()
-  external int has@delegate;
+  external int hasdelegate;
 
   ///   /// The delegate for [SelectionEvent]s sent to this selection container.
   ///
@@ -72,6 +72,6 @@ final class SelectionContainerStruct extends Struct {
   ///
   /// This delegate is responsible for updating the selections for the selectables
   /// under this widget.
-  external Pointer<Void> @delegate;
+  external Pointer<Void> delegate;
 
 }

@@ -39,15 +39,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverSafeArea"/> class.
 		/// </summary>
 		public SliverSafeArea(
+			bool _left,
+			bool _top,
+			bool _right,
+			bool _bottom,
+			InvalidType _minimum,
+			Widget _sliver
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverSafeAreaStruct>();
-			backingStruct.left = _left;
-			backingStruct.top = _top;
-			backingStruct.right = _right;
-			backingStruct.bottom = _bottom;
-			backingStruct.minimum = _minimum;
-			backingStruct.sliver = _sliver;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverSafeAreaStruct();

@@ -39,16 +39,19 @@ namespace Flutter.Widgets
 /// extent in the main axis.
 /// * [SliverFillViewport], which sizes its children based on the
 /// size of the viewport, regardless of what else is in the scroll view.
-	public class SliverPrototypeExtentList : SliverMultiBoxAdaptorWidget
+	public class SliverPrototypeExtentList : Widget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SliverPrototypeExtentList"/> class.
 		/// </summary>
 		public SliverPrototypeExtentList(
+			Widget _prototypeItem
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverPrototypeExtentListStruct>();
-			backingStruct.prototypeItem = _prototypeItem;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverPrototypeExtentListStruct();

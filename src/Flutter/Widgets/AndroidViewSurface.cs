@@ -34,12 +34,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AndroidViewSurface"/> class.
 		/// </summary>
 		public AndroidViewSurface(
+			InvalidType _controller,
+			HashSet<object> _gestureRecognizers,
+			InvalidType _hitTestBehavior
+
 		)
 		{
-			var backingStruct = GetBackingStruct<AndroidViewSurfaceStruct>();
-			backingStruct.controller = _controller;
-			backingStruct.gestureRecognizers = _gestureRecognizers;
-			backingStruct.hitTestBehavior = _hitTestBehavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AndroidViewSurfaceStruct();

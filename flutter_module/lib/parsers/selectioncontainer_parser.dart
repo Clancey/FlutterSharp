@@ -47,7 +47,7 @@ class SelectionContainerParser extends WidgetParser {
     var map = Pointer<SelectionContainerStruct>.fromAddress(fos.handle.address).ref;
     return SelectionContainer(
       registrar: parseInvalidType(map.registrar),
-      @delegate: parseSelectionContainerDelegate(map.@delegate)
+      delegate: parseSelectionContainerDelegate(map.delegate)
     );
   }
 

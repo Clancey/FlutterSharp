@@ -71,30 +71,24 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Icon"/> class.
 		/// </summary>
 		public Icon(
+			Color? _color,
+			InvalidType _textDirection,
+			InvalidType _blendMode
+,
 			IconData? _icon = null,
 			double? _size = null,
 			double? _fill = null,
 			double? _weight = null,
 			double? _grade = null,
 			double? _opticalSize = null,
-			List? _shadows = null,
+			List<object>? _shadows = null,
 			string? _semanticLabel = null,
 			bool? _applyTextScaling = null
 		)
 		{
-			var backingStruct = GetBackingStruct<IconStruct>();
-			backingStruct.icon = _icon;
-			backingStruct.size = _size;
-			backingStruct.fill = _fill;
-			backingStruct.weight = _weight;
-			backingStruct.grade = _grade;
-			backingStruct.opticalSize = _opticalSize;
-			backingStruct.color = _color;
-			backingStruct.shadows = _shadows;
-			backingStruct.semanticLabel = _semanticLabel;
-			backingStruct.textDirection = _textDirection;
-			backingStruct.applyTextScaling = _applyTextScaling;
-			backingStruct.blendMode = _blendMode;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new IconStruct();

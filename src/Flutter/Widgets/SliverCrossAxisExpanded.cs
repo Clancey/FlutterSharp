@@ -26,11 +26,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverCrossAxisExpanded"/> class.
 		/// </summary>
 		public SliverCrossAxisExpanded(
+			int _flex,
+			Type _debugTypicalAncestorWidgetClass
+
 		)
 		{
-			var backingStruct = GetBackingStruct<SliverCrossAxisExpandedStruct>();
-			backingStruct.flex = _flex;
-			backingStruct.debugTypicalAncestorWidgetClass = _debugTypicalAncestorWidgetClass;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverCrossAxisExpandedStruct();

@@ -27,15 +27,18 @@ namespace Flutter.Widgets
 /// its items.
 /// * [ReorderableListView], a Material Design list that allows the user to
 /// reorder its items.
-	public class ReorderableDelayedDragStartListener : ReorderableDragStartListener
+	public class ReorderableDelayedDragStartListener : StatelessWidget
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ReorderableDelayedDragStartListener"/> class.
 		/// </summary>
 		public ReorderableDelayedDragStartListener(
+
 		)
 		{
-			var backingStruct = GetBackingStruct<ReorderableDelayedDragStartListenerStruct>();
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ReorderableDelayedDragStartListenerStruct();

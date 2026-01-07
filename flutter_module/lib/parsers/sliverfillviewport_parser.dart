@@ -35,7 +35,7 @@ class SliverFillViewportParser extends WidgetParser {
     return SliverFillViewport(
       viewportFraction: map.viewportFraction,
       padEnds: map.padEnds,
-      @delegate: parseSliverChildDelegate(map.@delegate)
+      delegate: parseSliverChildDelegate(map.delegate)
     );
   }
 

@@ -71,18 +71,21 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Wrap"/> class.
 		/// </summary>
 		public Wrap(
+			InvalidType _direction,
+			AlignmentGeometry? _alignment,
+			double _spacing,
+			InvalidType _runAlignment,
+			double _runSpacing,
+			InvalidType _crossAxisAlignment,
+			InvalidType _textDirection,
+			InvalidType _verticalDirection,
+			Clip _clipBehavior
+
 		)
 		{
-			var backingStruct = GetBackingStruct<WrapStruct>();
-			backingStruct.direction = _direction;
-			backingStruct.alignment = _alignment;
-			backingStruct.spacing = _spacing;
-			backingStruct.runAlignment = _runAlignment;
-			backingStruct.runSpacing = _runSpacing;
-			backingStruct.crossAxisAlignment = _crossAxisAlignment;
-			backingStruct.textDirection = _textDirection;
-			backingStruct.verticalDirection = _verticalDirection;
-			backingStruct.clipBehavior = _clipBehavior;
+			// TODO: Property assignments will be handled by a proper FFI marshaling layer
+			// For now, constructors accept parameters but don't assign them
+			// This avoids type mismatch errors where C# objects would be assigned to nint struct fields
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new WrapStruct();
