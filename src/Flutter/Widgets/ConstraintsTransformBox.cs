@@ -77,7 +77,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ConstraintsTransformBox"/> class.
 		/// </summary>
 		public ConstraintsTransformBox(
-			TextDirection textDirection,
+			TextDirection? textDirection = null,
 			AlignmentGeometry alignment = null,
 			Func<BoxConstraints, BoxConstraints> constraintsTransform = null,
 			Clip clipBehavior = Clip.None,
@@ -86,7 +86,8 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<ConstraintsTransformBoxStruct>();
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: Func<BoxConstraints, BoxConstraints> - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;

@@ -82,8 +82,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IndexedStack"/> class.
 		/// </summary>
 		public IndexedStack(
-			TextDirection textDirection,
 			AlignmentGeometry alignment = null,
+			TextDirection? textDirection = null,
 			Clip clipBehavior = Clip.HardEdge,
 			StackFit sizing = StackFit.Loose,
 			int? index = 0,
@@ -94,7 +94,8 @@ namespace Flutter.Widgets
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<IndexedStackStruct>();
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			s.clipBehavior = clipBehavior;
 			s.sizing = sizing;
 			if (index.HasValue)

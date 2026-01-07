@@ -97,11 +97,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Viewport(
 			List<Widget> children,
-			object crossAxisDirection,
 			Offset offset,
-			object center,
 			object axisDirection = null,
+			object crossAxisDirection = null,
 			double anchor = 0.0,
+			object center = null,
 			double? cacheExtent = null,
 			object cacheExtentStyle = null,
 			Clip clipBehavior = Clip.HardEdge,

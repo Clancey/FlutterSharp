@@ -29,7 +29,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MetaData"/> class.
 		/// </summary>
 		public MetaData(
-			object metaData,
+			object metaData = null,
 			HitTestBehavior behavior = HitTestBehavior.DeferToChild,
 			Widget? child = null
 		)

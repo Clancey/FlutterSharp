@@ -177,8 +177,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Stack"/> class.
 		/// </summary>
 		public Stack(
-			TextDirection textDirection,
 			AlignmentGeometry alignment = null,
+			TextDirection? textDirection = null,
 			StackFit fit = StackFit.Loose,
 			Clip clipBehavior = Clip.HardEdge,
 			List<Widget> children = null
@@ -188,7 +188,8 @@ namespace Flutter.Widgets
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<StackStruct>();
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			s.fit = fit;
 			s.clipBehavior = clipBehavior;
 			// Children are set in PrepareForSending to support collection initializers

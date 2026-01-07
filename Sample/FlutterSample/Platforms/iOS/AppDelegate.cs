@@ -19,7 +19,7 @@ namespace FlutterSample
 				BackgroundColor = UIColor.White,
 				RootViewController = new FlutterViewController
 				{
-					Widget = new FlutterSample(),
+					Widget = new FlutterSampleApp(),
 				}
 			};
 			window.MakeKeyAndVisible();

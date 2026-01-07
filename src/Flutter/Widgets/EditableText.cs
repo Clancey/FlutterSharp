@@ -239,36 +239,31 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="EditableText"/> class.
 		/// </summary>
 		public EditableText(
-			TextHeightBehavior textHeightBehavior,
 			ToolbarOptions toolbarOptions,
 			bool showCursor,
-			object smartDashesType,
-			object smartQuotesType,
-			TextDirection textDirection,
-			object textScaler,
-			object keyboardType,
-			object textInputAction,
-			object mouseCursor,
-			object cursorOffset,
 			bool enableInteractiveSelection,
-			object autofillClient,
 			bool selectionEnabled,
 			TextEditingController controller = null,
 			FocusNode focusNode = null,
 			string obscuringCharacter = "•",
 			bool obscureText = false,
+			TextHeightBehavior textHeightBehavior = null,
 			TextWidthBasis textWidthBasis = TextWidthBasis.Parent,
 			bool @readOnly = false,
 			bool forceLine = true,
 			bool showSelectionHandles = false,
 			bool autocorrect = true,
+			object smartDashesType = null,
+			object smartQuotesType = null,
 			bool enableSuggestions = true,
 			TextStyle? style = null,
 			UndoHistoryController? undoController = null,
 			TextAlign? textAlign = TextAlign.Start,
+			TextDirection? textDirection = null,
 			object textCapitalization = null,
 			Locale? locale = null,
 			double? textScaleFactor = null,
+			object textScaler = null,
 			Color? cursorColor = null,
 			Color? autocorrectionTextRectColor = null,
 			Color? backgroundCursorColor = null,
@@ -278,6 +273,8 @@ namespace Flutter.Widgets
 			bool autofocus = false,
 			Color? selectionColor = null,
 			TextSelectionControls? selectionControls = null,
+			object keyboardType = null,
+			object textInputAction = null,
 			Action<bool>? onChanged = null,
 			Action onEditingComplete = null,
 			Action onSubmitted = null,
@@ -288,11 +285,13 @@ namespace Flutter.Widgets
 			Action<InvalidType> onTapOutside = null,
 			Action<InvalidType> onTapUpOutside = null,
 			List<object>? inputFormatters = null,
+			object mouseCursor = null,
 			bool rendererIgnoresPointer = false,
 			double cursorWidth = 2.0,
 			double? cursorHeight = null,
 			BorderRadiusGeometry cursorRadius = null,
 			bool cursorOpacityAnimates = false,
+			object cursorOffset = null,
 			bool paintCursorAboveText = false,
 			BoxHeightStyle? selectionHeightStyle = null,
 			BoxWidthStyle? selectionWidthStyle = null,
@@ -304,6 +303,7 @@ namespace Flutter.Widgets
 			bool scribbleEnabled = true,
 			bool? stylusHandwritingEnabled = null,
 			IEnumerable<string>? autofillHints = null,
+			object autofillClient = null,
 			Clip clipBehavior = Clip.HardEdge,
 			string? restorationId = null,
 			ScrollBehavior? scrollBehavior = null,
@@ -334,7 +334,8 @@ namespace Flutter.Widgets
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: UndoHistoryController? - skipped (requires marshaling)
 			// Complex type: TextAlign? - skipped (requires marshaling)
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Locale? - skipped (requires marshaling)
 			if (textScaleFactor.HasValue)

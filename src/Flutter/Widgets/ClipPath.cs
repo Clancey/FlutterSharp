@@ -41,7 +41,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipPath"/> class.
 		/// </summary>
 		public ClipPath(
-			object clipper,
+			object clipper = null,
 			Clip clipBehavior = Clip.AntiAlias,
 			Widget? child = null
 		)

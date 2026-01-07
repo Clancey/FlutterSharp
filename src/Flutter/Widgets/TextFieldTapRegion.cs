@@ -49,14 +49,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TextFieldTapRegion"/> class.
 		/// </summary>
 		public TextFieldTapRegion(
+			Widget? child = null,
 			bool enabled = true,
 			Action<InvalidType> onTapOutside = null,
 			Action<InvalidType> onTapInside = null,
 			Action<InvalidType> onTapUpOutside = null,
 			Action<InvalidType> onTapUpInside = null,
 			bool consumeOutsideTaps = false,
-			object? groupId = null,
-			Widget? child = null
+			object? groupId = null
 		)
 		{
 			var s = GetBackingStruct<TextFieldTapRegionStruct>();

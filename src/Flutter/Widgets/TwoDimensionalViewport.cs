@@ -100,11 +100,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TwoDimensionalViewport"/> class.
 		/// </summary>
 		public TwoDimensionalViewport(
-			object verticalOffset,
-			object verticalAxisDirection,
-			object horizontalOffset,
-			object horizontalAxisDirection,
-			object mainAxis,
+			object verticalOffset = null,
+			object verticalAxisDirection = null,
+			object horizontalOffset = null,
+			object horizontalAxisDirection = null,
+			object mainAxis = null,
 			double? cacheExtent = null,
 			Clip clipBehavior = Clip.HardEdge,
 			TwoDimensionalChildDelegate @delegate = null

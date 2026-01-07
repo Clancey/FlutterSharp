@@ -40,7 +40,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CustomSingleChildLayout"/> class.
 		/// </summary>
 		public CustomSingleChildLayout(
-			object @delegate,
+			object @delegate = null,
 			Widget? child = null
 		)
 		{

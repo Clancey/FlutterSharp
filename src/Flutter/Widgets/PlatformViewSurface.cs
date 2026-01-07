@@ -39,15 +39,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PlatformViewSurface"/> class.
 		/// </summary>
 		public PlatformViewSurface(
-			object controller,
 			ISet<object> gestureRecognizers,
-			PlatformViewHitTestBehavior hitTestBehavior
+			object controller = null,
+			PlatformViewHitTestBehavior? hitTestBehavior = null
 		)
 		{
 			var s = GetBackingStruct<PlatformViewSurfaceStruct>();
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: ISet<object> - skipped (requires marshaling)
-			s.hitTestBehavior = hitTestBehavior;
+			if (hitTestBehavior.HasValue)
+				s.hitTestBehavior = hitTestBehavior.Value;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PlatformViewSurfaceStruct();

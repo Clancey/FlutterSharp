@@ -50,7 +50,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ReorderableList(
 			int itemCount,
-			object itemExtentBuilder,
 			Func<BuildContext, int, Widget> itemBuilder = null,
 			Action<int, int> onReorder = null,
 			Action<int> onReorderStart = null,
@@ -70,6 +69,7 @@ namespace Flutter.Widgets
 			string? restorationId = null,
 			Clip clipBehavior = Clip.HardEdge,
 			double? itemExtent = null,
+			object itemExtentBuilder = null,
 			Widget? prototypeItem = null,
 			double? autoScrollerVelocityScalar = null,
 			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> dragBoundaryProvider = null

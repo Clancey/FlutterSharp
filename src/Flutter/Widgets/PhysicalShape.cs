@@ -43,7 +43,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PhysicalShape"/> class.
 		/// </summary>
 		public PhysicalShape(
-			object clipper,
+			object clipper = null,
 			Clip clipBehavior = Clip.None,
 			double elevation = 0.0,
 			Color? color = null,

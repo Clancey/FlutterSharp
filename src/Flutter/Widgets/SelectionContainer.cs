@@ -53,8 +53,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SelectionContainer"/> class.
 		/// </summary>
 		public SelectionContainer(
-			object registrar,
 			Widget child,
+			object registrar = null,
 			SelectionContainerDelegate? @delegate = null
 		)
 		{

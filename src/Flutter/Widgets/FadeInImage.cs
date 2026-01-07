@@ -69,11 +69,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FadeInImage"/> class.
 		/// </summary>
 		public FadeInImage(
-			object colorBlendMode,
-			object placeholderColorBlendMode,
-			BoxFit fit,
-			object placeholderFit,
-			object placeholderFilterQuality,
 			ImageProvider? placeholder = null,
 			Func<BuildContext, object, StackTrace?, Widget> placeholderErrorBuilder = null,
 			ImageProvider image = null,
@@ -84,9 +79,14 @@ namespace Flutter.Widgets
 			object fadeInCurve = null,
 			double? width = null,
 			Color? color = null,
+			object colorBlendMode = null,
 			Color? placeholderColor = null,
+			object placeholderColorBlendMode = null,
 			double? height = null,
+			BoxFit? fit = null,
+			object placeholderFit = null,
 			FilterQuality filterQuality = FilterQuality.Medium,
+			object placeholderFilterQuality = null,
 			AlignmentGeometry alignment = null,
 			object repeat = null,
 			bool matchTextDirection = false,
@@ -115,7 +115,7 @@ namespace Flutter.Widgets
 			// Complex type: object - skipped (requires marshaling)
 			if (height.HasValue)
 				s.height = height.Value;
-			s.fit = fit;
+			// Nullable reference type: BoxFit - skipped
 			// Complex type: object - skipped (requires marshaling)
 			s.filterQuality = filterQuality;
 			// Complex type: object - skipped (requires marshaling)

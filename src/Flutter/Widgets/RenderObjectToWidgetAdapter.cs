@@ -33,8 +33,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RenderObjectToWidgetAdapter"/> class.
 		/// </summary>
 		public RenderObjectToWidgetAdapter(
-			object container,
 			Widget? child = null,
+			object container = null,
 			string? debugShortDescription = null
 		)
 		{

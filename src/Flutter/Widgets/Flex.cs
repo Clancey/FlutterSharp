@@ -133,13 +133,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flex"/> class.
 		/// </summary>
 		public Flex(
-			Axis direction,
-			TextDirection textDirection,
-			TextBaseline textBaseline,
+			Axis? direction = null,
 			MainAxisAlignment mainAxisAlignment = MainAxisAlignment.Start,
 			MainAxisSize mainAxisSize = MainAxisSize.Max,
 			CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.Center,
+			TextDirection? textDirection = null,
 			VerticalDirection verticalDirection = VerticalDirection.Down,
+			TextBaseline? textBaseline = null,
 			Clip clipBehavior = Clip.None,
 			double spacing = 0.0,
 			List<Widget> children = null
@@ -148,11 +148,12 @@ namespace Flutter.Widgets
 			if (children != null)
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<FlexStruct>();
-			s.direction = direction;
+			// Nullable reference type: Axis - skipped
 			s.mainAxisAlignment = mainAxisAlignment;
 			s.mainAxisSize = mainAxisSize;
 			s.crossAxisAlignment = crossAxisAlignment;
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			s.verticalDirection = verticalDirection;
 			// Complex type: TextBaseline? - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;

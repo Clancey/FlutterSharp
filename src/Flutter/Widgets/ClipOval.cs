@@ -48,7 +48,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipOval"/> class.
 		/// </summary>
 		public ClipOval(
-			object clipper,
+			object clipper = null,
 			Clip clipBehavior = Clip.AntiAlias,
 			Widget? child = null
 		)

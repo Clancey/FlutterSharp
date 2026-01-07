@@ -75,8 +75,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Icon"/> class.
 		/// </summary>
 		public Icon(
-			TextDirection textDirection,
-			BlendMode blendMode,
 			IconData? icon = null,
 			double? size = null,
 			double? fill = null,
@@ -86,7 +84,9 @@ namespace Flutter.Widgets
 			Color? color = null,
 			List<object>? shadows = null,
 			string? semanticLabel = null,
-			bool? applyTextScaling = null
+			TextDirection? textDirection = null,
+			bool? applyTextScaling = null,
+			BlendMode? blendMode = null
 		)
 		{
 			var s = GetBackingStruct<IconStruct>();
@@ -104,10 +104,12 @@ namespace Flutter.Widgets
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: List<object>? - skipped (requires marshaling)
 			s.semanticLabel = semanticLabel;
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			if (applyTextScaling.HasValue)
 				s.applyTextScaling = applyTextScaling.Value;
-			s.blendMode = blendMode;
+			if (blendMode.HasValue)
+				s.blendMode = blendMode.Value;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new IconStruct();

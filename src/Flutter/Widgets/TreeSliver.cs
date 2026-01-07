@@ -62,11 +62,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public TreeSliver(
 			List<TreeSliverNode<T>> tree,
-			object toggleAnimationStyle,
 			Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> treeNodeBuilder = null,
 			Func<TreeSliverNode<object?>, InvalidType, double> treeRowExtentBuilder = null,
 			TreeSliverController? controller = null,
 			Action<TreeSliverNode<object?>> onNodeToggle = null,
+			object toggleAnimationStyle = null,
 			object indentation = null,
 			bool addAutomaticKeepAlives = true,
 			bool addRepaintBoundaries = true,

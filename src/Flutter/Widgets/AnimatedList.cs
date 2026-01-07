@@ -77,7 +77,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedList"/> class.
 		/// </summary>
 		public AnimatedList(
-			object itemBuilder,
+			object itemBuilder = null,
 			int initialItemCount = 0,
 			Axis scrollDirection = Axis.Vertical,
 			bool reverse = false,

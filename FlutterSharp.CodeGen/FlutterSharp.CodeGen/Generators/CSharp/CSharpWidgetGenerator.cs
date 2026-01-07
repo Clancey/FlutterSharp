@@ -630,6 +630,10 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			// HitTestBehavior defaults
 			["behavior"] = "HitTestBehavior.DeferToChild",
 			["hitTestBehavior"] = "HitTestBehavior.DeferToChild",
+			// TextOverflow defaults (from Text widget)
+			["overflow"] = "TextOverflow.Clip",
+			// TextWidthBasis defaults (from Text widget)
+			["textWidthBasis"] = "TextWidthBasis.Parent",
 		};
 
 		/// <summary>

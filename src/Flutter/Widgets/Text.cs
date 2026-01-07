@@ -141,22 +141,22 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Text"/> class.
 		/// </summary>
 		public Text(
-			object textSpan,
-			TextAlign textAlign,
-			TextDirection textDirection,
-			TextOverflow overflow,
-			object textScaler,
-			TextWidthBasis textWidthBasis,
-			TextHeightBehavior textHeightBehavior,
 			string? data = null,
+			object textSpan = null,
 			TextStyle? style = null,
 			StrutStyle? strutStyle = null,
+			TextAlign? textAlign = TextAlign.Start,
+			TextDirection? textDirection = null,
 			Locale? locale = null,
 			bool? softWrap = null,
+			TextOverflow overflow = TextOverflow.Clip,
 			double? textScaleFactor = null,
+			object textScaler = null,
 			int? maxLines = null,
 			string? semanticsLabel = null,
 			string? semanticsIdentifier = null,
+			TextWidthBasis textWidthBasis = TextWidthBasis.Parent,
+			TextHeightBehavior textHeightBehavior = null,
 			Color? selectionColor = null
 		)
 		{
@@ -166,7 +166,8 @@ namespace Flutter.Widgets
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: StrutStyle? - skipped (requires marshaling)
 			// Complex type: TextAlign? - skipped (requires marshaling)
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			// Complex type: Locale? - skipped (requires marshaling)
 			if (softWrap.HasValue)
 				s.softWrap = softWrap.Value;

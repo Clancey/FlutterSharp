@@ -29,8 +29,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="BackdropGroup"/> class.
 		/// </summary>
 		public BackdropGroup(
-			object backdropKey,
-			Widget child
+			Widget child,
+			object backdropKey = null
 		)
 		{
 			var s = GetBackingStruct<BackdropGroupStruct>();

@@ -44,8 +44,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipRSuperellipse"/> class.
 		/// </summary>
 		public ClipRSuperellipse(
-			object clipper,
 			BorderRadiusGeometry? borderRadius = null,
+			object clipper = null,
 			Clip clipBehavior = Clip.AntiAlias,
 			Widget? child = null
 		)

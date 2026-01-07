@@ -54,14 +54,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SlideTransition"/> class.
 		/// </summary>
 		public SlideTransition(
-			TextDirection textDirection,
-			object position,
+			TextDirection? textDirection = null,
 			bool transformHitTests = true,
-			Widget? child = null
+			Widget? child = null,
+			object position = null
 		)
 		{
 			var s = GetBackingStruct<SlideTransitionStruct>();
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			s.transformHitTests = transformHitTests;
 			s.child = child;
 			// Complex type: object - skipped (requires marshaling)

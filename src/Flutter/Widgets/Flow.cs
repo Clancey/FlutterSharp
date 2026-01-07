@@ -127,7 +127,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flow"/> class.
 		/// </summary>
 		public Flow(
-			object @delegate,
+			object @delegate = null,
 			Clip clipBehavior = Clip.HardEdge,
 			List<Widget> children = null
 		)

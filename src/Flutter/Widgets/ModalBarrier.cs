@@ -37,12 +37,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ModalBarrier"/> class.
 		/// </summary>
 		public ModalBarrier(
-			object clipDetailsNotifier,
 			Color? color = null,
 			bool dismissible = true,
 			Action onDismiss = null,
 			bool? barrierSemanticsDismissible = true,
 			string? semanticsLabel = null,
+			object clipDetailsNotifier = null,
 			string? semanticsOnTapHint = null
 		)
 		{

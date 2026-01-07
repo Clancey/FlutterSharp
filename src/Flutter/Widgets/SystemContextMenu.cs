@@ -60,8 +60,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SystemContextMenu"/> class.
 		/// </summary>
 		public SystemContextMenu(
-			object anchor,
 			List<IOSSystemContextMenuItem> items,
+			object anchor = null,
 			Action onSystemHide = null
 		)
 		{

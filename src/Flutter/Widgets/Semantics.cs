@@ -47,7 +47,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Semantics"/> class.
 		/// </summary>
 		public Semantics(
-			object properties,
+			object properties = null,
 			bool container = false,
 			bool explicitChildNodes = false,
 			bool excludeSemantics = false,

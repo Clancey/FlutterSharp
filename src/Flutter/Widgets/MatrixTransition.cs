@@ -41,9 +41,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MatrixTransition"/> class.
 		/// </summary>
 		public MatrixTransition(
-			FilterQuality filterQuality,
 			Func<double, InvalidType> onTransform = null,
 			AlignmentGeometry alignment = null,
+			FilterQuality filterQuality = FilterQuality.Low,
 			Widget? child = null,
 			Animation<double> animation = null
 		)

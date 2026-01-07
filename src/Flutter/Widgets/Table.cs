@@ -56,20 +56,21 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Table"/> class.
 		/// </summary>
 		public Table(
-			TextDirection textDirection,
-			TextBaseline textBaseline,
 			List<TableRow> children = null,
 			Dictionary<object, object>? columnWidths = null,
 			object defaultColumnWidth = null,
+			TextDirection? textDirection = null,
 			BoxBorder? border = null,
-			TableCellVerticalAlignment defaultVerticalAlignment = TableCellVerticalAlignment.Top
+			TableCellVerticalAlignment defaultVerticalAlignment = TableCellVerticalAlignment.Top,
+			TextBaseline? textBaseline = null
 		)
 		{
 			var s = GetBackingStruct<TableStruct>();
 			// Complex type: List<TableRow> - skipped (requires marshaling)
 			// Complex type: Dictionary<object, object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			// Complex type: BoxBorder? - skipped (requires marshaling)
 			s.defaultVerticalAlignment = defaultVerticalAlignment;
 			// Complex type: TextBaseline? - skipped (requires marshaling)

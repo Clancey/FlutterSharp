@@ -5,88 +5,67 @@ using Flutter;
 using Flutter.Internal;
 using Flutter.Structs;
 using Flutter.Widgets;
+using Flutter.Enums;
+using Flutter.UI;
 
 namespace FlutterSample
 {
+	/// <summary>
+	/// A counter page that demonstrates state management with StatefulWidget
+	/// </summary>
+	public class CounterPage : StatefulWidget
+	{
+		private int _count = 0;
+
+		public override Widget Build() =>
+			new Center(child: new Column
+			{
+				new Text($"You have pressed the button {_count} times"),
+				new SizedBox(height: 20),
+				new Text("Press + to increment"),
+			});
+
+		// TODO: Add FloatingActionButton when button callbacks are implemented
+	}
+
+	/// <summary>
+	/// A simple list page that demonstrates basic layout
+	/// </summary>
 	public class ListPage : StatefulWidget
 	{
-		List<string> items = new List<string>();
-		string? itemText;
+		private List<string> _items = new List<string> { "Item 1", "Item 2", "Item 3" };
+
 		public override Widget Build() =>
-			new Column(MainAxisAlignment.Start) {
-				new Row (MainAxisAlignment.Start) {
-					new Flexible {
-						new Container(padding: new EdgeInsetsGeometry(8)) {
-							new TextField(hint:"What's to be done?") {
-								OnSubmitted = (s) => {
-									SetState (() => {
-										items.Add(s);
-									});
-								},
-								OnChange = (s) => {
-									itemText = s;
-								}
-							}
-						}
-					},
-					new Container(padding: new EdgeInsetsGeometry (left: 8)) {
-						new FloatingActionButton(onPressed: ()=>{
-							if(!string.IsNullOrWhiteSpace(itemText))
-								SetState(()=>{
-									items.Add(itemText);
-									itemText = null;
-								});
-						}){
-							new Icon (
-								codePoint: "58824",
-								fontFamily : "MaterialIcons"),
-						}
-					}
-				},
-				new Flexible {
-					new ListViewBuilder(
-						count: items.Count,
-						itemBuilder: (row) =>  new Text(items[(int)row])
-					),
-				}
-			};
-	}
-	public class ClickedPage : StatefulWidget
-	{
-		int clicked = 0;
-		public override Widget Build() =>
-			new Center {
-				new Column(MainAxisAlignment.SpaceAround) {
-					new Text($"You have pressed {clicked} times"),
-					new FloatingActionButton (onPressed:() => {
-							SetState (() => {
-								//Communicator.SendCommand(("intptr",handle.ToString()));
-								clicked++;
-							});
-						}){
-						new Icon(codePoint: "57669",fontFamily:"MaterialIcons")
-					}
-				}
+			new Column
+			{
+				new Text("Todo List", style: null),
+				new Expanded(child: new Column
+				{
+					new Text(_items.Count > 0 ? _items[0] : "No items"),
+					new Text(_items.Count > 1 ? _items[1] : ""),
+					new Text(_items.Count > 2 ? _items[2] : ""),
+				}),
 			};
 	}
 
-	public class FlutterSample : StatelessWidget
+	/// <summary>
+	/// Main app entry point - demonstrates basic widget composition
+	/// </summary>
+	public class FlutterSampleApp : StatelessWidget
 	{
-		public override Widget Build() => new DefaultTabController(2) {
-				new Scaffold (appbar:new AppBar (
-						title:new Text("Hello from Maui!"),
-						bottom: new Flutter.TabBar {
-							new Flutter.Tab{new Text("Counter")},
-							new Flutter.Tab{new Text("Todo List")}
-						}),
-					drawer: new Drawer {
-						new Text("Add Navigation items!")
-					},
-					body: new Flutter.TabBarView {
-						new ClickedPage(),
-						new ListPage(),
-					}
-			)
-		};
+		public override Widget Build() =>
+			new Center(child: new Column
+			{
+				new Text("Hello from FlutterSharp!"),
+				new SizedBox(height: 20),
+				new Text("This is a .NET MAUI to Flutter interop demo"),
+				new SizedBox(height: 20),
+				new Row
+				{
+					new Text("Row item 1"),
+					new SizedBox(width: 10),
+					new Text("Row item 2"),
+				},
+			});
 	}
 }

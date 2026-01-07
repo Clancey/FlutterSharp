@@ -33,7 +33,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="WidgetToRenderBoxAdapter"/> class.
 		/// </summary>
 		public WidgetToRenderBoxAdapter(
-			object renderBox,
+			object renderBox = null,
 			Action onBuild = null,
 			Action onUnmount = null
 		)

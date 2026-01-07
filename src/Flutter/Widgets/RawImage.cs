@@ -37,9 +37,6 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawImage"/> class.
 		/// </summary>
 		public RawImage(
-			object colorBlendMode,
-			BoxFit fit,
-			object centerSlice,
 			ImageProvider image = null,
 			string? debugImageLabel = null,
 			double? width = null,
@@ -48,8 +45,11 @@ namespace Flutter.Widgets
 			Color? color = null,
 			Animation<double> opacity = null,
 			FilterQuality filterQuality = FilterQuality.Medium,
+			object colorBlendMode = null,
+			BoxFit? fit = null,
 			AlignmentGeometry alignment = null,
 			object repeat = null,
+			object centerSlice = null,
 			bool matchTextDirection = false,
 			bool invertColors = false,
 			bool isAntiAlias = false
@@ -67,7 +67,7 @@ namespace Flutter.Widgets
 			// Complex type: Animation<double> - skipped (requires marshaling)
 			s.filterQuality = filterQuality;
 			// Complex type: object - skipped (requires marshaling)
-			s.fit = fit;
+			// Nullable reference type: BoxFit - skipped
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)

@@ -41,13 +41,14 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Baseline(
 			double baseline,
-			TextBaseline baselineType,
+			TextBaseline? baselineType = null,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<BaselineStruct>();
 			s.baseline = baseline;
-			s.baselineType = baselineType;
+			if (baselineType.HasValue)
+				s.baselineType = baselineType.Value;
 			s.child = child;
 		}
 

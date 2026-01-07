@@ -33,10 +33,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultSelectionStyle"/> class.
 		/// </summary>
 		public DefaultSelectionStyle(
-			object mouseCursor,
 			Widget child,
 			Color? cursorColor = null,
-			Color? selectionColor = null
+			Color? selectionColor = null,
+			object mouseCursor = null
 		)
 		{
 			var s = GetBackingStruct<DefaultSelectionStyleStruct>();

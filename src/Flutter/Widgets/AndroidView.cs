@@ -66,12 +66,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AndroidView(
 			string viewType,
-			object layoutDirection,
-			object creationParams,
-			object creationParamsCodec,
 			Action onPlatformViewCreated = null,
 			PlatformViewHitTestBehavior? hitTestBehavior = null,
+			object layoutDirection = null,
 			ISet<object>? gestureRecognizers = null,
+			object creationParams = null,
+			object creationParamsCodec = null,
 			Clip clipBehavior = Clip.HardEdge
 		)
 		{

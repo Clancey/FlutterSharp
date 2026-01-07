@@ -145,10 +145,8 @@ namespace Flutter.Widgets
 		public RichText(
 			List<Widget> children,
 			InlineSpan text,
-			TextDirection textDirection,
-			TextHeightBehavior textHeightBehavior,
-			object selectionRegistrar,
 			TextAlign? textAlign = TextAlign.Start,
+			TextDirection? textDirection = null,
 			bool softWrap = true,
 			TextOverflow overflow = TextOverflow.Clip,
 			object textScaler = null,
@@ -156,6 +154,8 @@ namespace Flutter.Widgets
 			Locale? locale = null,
 			StrutStyle? strutStyle = null,
 			TextWidthBasis textWidthBasis = TextWidthBasis.Parent,
+			TextHeightBehavior textHeightBehavior = null,
+			object selectionRegistrar = null,
 			Color? selectionColor = null,
 			double textScaleFactor = 1.0
 		)
@@ -166,7 +166,8 @@ namespace Flutter.Widgets
 			// Children are set in PrepareForSending to support collection initializers
 			// Complex type: InlineSpan - skipped (requires marshaling)
 			// Complex type: TextAlign? - skipped (requires marshaling)
-			s.textDirection = textDirection;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			s.softWrap = softWrap;
 			s.overflow = overflow;
 			// Complex type: object - skipped (requires marshaling)

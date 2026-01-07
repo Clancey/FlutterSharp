@@ -107,13 +107,27 @@ namespace FlutterSharp.CodeGen.Analysis
 			// Add inherited properties from base classes (duration, curve, animation, etc.)
 			AddInheritedBaseClassProperties(enrichedProperties, widget.BaseClass);
 
+			// Update IsRequired flag for properties that should be optional
+			// This is important because the flag is used later during code generation
+			foreach (var p in enrichedProperties)
+			{
+				if (p.IsRequired && ShouldBeOptionalParameter(p))
+				{
+					p.IsRequired = false;
+				}
+			}
+
 			// Separate into required and optional for constructor
-			// Complex types that can't be marshaled should be treated as optional even if IsRequired
+			// Properties should be optional if:
+			// - Complex types that can't be marshaled
+			// - Enum types (can use defaults)
+			// - Types with known default values
+			// - Dart nullable types
 			var requiredProperties = enrichedProperties
-				.Where(p => p.IsRequired && !IsComplexUnmarshalableType(p.CSharpType))
+				.Where(p => p.IsRequired)
 				.ToList();
 			var optionalProperties = enrichedProperties
-				.Where(p => !p.IsRequired || IsComplexUnmarshalableType(p.CSharpType))
+				.Where(p => !p.IsRequired)
 				.ToList();
 
 			// Determine which properties belong to base constructor vs derived constructor
@@ -718,6 +732,58 @@ namespace FlutterSharp.CodeGen.Analysis
 				"Bool" => "@Int8()", // Bool is represented as Int8 in FFI
 				_ => null // Pointers and other types don't need annotations
 			};
+		}
+
+		/// <summary>
+		/// Determines if a property should be optional in the C# constructor even if marked required in Dart.
+		/// This provides a better developer experience by allowing sensible defaults.
+		/// </summary>
+		private bool ShouldBeOptionalParameter(EnrichedPropertyDefinition property)
+		{
+			// Complex unmarshalable types should always be optional
+			if (IsComplexUnmarshalableType(property.CSharpType))
+				return true;
+
+			// Enum types should be optional - they can use default enum values
+			if (property.IsEnum)
+				return true;
+
+			// If it has a known default value (from Dart or our mappings), it's optional
+			if (!string.IsNullOrEmpty(property.DefaultValue))
+				return true;
+
+			// Dart nullable types should be optional
+			if (property.IsDartNullable)
+				return true;
+
+			// Types that are "object" should be optional (can't have proper defaults)
+			if (property.CSharpType == "object" || property.CSharpType == "Object")
+				return true;
+
+			// Specific parameter names that are known to have sane defaults or be optional
+			// These are parameters where Flutter uses sensible defaults even if marked required
+			var optionalByName = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+			{
+				"textSpan", "textScaler", "textHeightBehavior",
+				"key", "semanticsLabel", "semanticsIdentifier",
+				"overflow" // TextOverflow - defaults to Clip
+			};
+			if (optionalByName.Contains(property.Name))
+				return true;
+
+			// Also check C# type directly for known enum types
+			// (some enum types may not be detected via Dart type analysis)
+			var knownEnumTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+			{
+				"TextOverflow", "TextAlign", "TextDirection", "TextWidthBasis",
+				"MainAxisAlignment", "CrossAxisAlignment", "MainAxisSize",
+				"VerticalDirection", "Axis", "Clip", "StackFit", "BoxFit"
+			};
+			var baseType = property.CSharpType?.TrimEnd('?') ?? "";
+			if (knownEnumTypes.Contains(baseType))
+				return true;
+
+			return false;
 		}
 
 		/// <summary>

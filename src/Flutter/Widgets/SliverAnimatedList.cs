@@ -47,7 +47,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverAnimatedList"/> class.
 		/// </summary>
 		public SliverAnimatedList(
-			object itemBuilder,
+			object itemBuilder = null,
 			Func<InvalidType, int?> findChildIndexCallback = null,
 			int initialItemCount = 0
 		)

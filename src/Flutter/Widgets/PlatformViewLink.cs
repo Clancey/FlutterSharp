@@ -56,7 +56,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public PlatformViewLink(
 			string viewType,
-			object surfaceFactory,
+			object surfaceFactory = null,
 			Func<PlatformViewCreationParams, InvalidType> onCreatePlatformView = null
 		)
 		{

@@ -45,7 +45,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ImageFiltered"/> class.
 		/// </summary>
 		public ImageFiltered(
-			object imageFilter,
+			object imageFilter = null,
 			bool enabled = true,
 			Widget? child = null
 		)

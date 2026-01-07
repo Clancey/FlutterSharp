@@ -79,8 +79,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CustomPaint"/> class.
 		/// </summary>
 		public CustomPaint(
-			object painter,
-			object foregroundPainter,
+			object painter = null,
+			object foregroundPainter = null,
 			Size? size = null,
 			bool isComplex = false,
 			bool willChange = false,

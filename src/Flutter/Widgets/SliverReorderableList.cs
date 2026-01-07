@@ -46,7 +46,6 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverReorderableList(
 			int itemCount,
-			object itemExtentBuilder,
 			double autoScrollerVelocityScalar,
 			Func<BuildContext, int, Widget> itemBuilder = null,
 			Func<InvalidType, int?> findChildIndexCallback = null,
@@ -55,6 +54,7 @@ namespace Flutter.Widgets
 			Action<int> onReorderEnd = null,
 			Func<Widget, int, InvalidType, Widget> proxyDecorator = null,
 			double? itemExtent = null,
+			object itemExtentBuilder = null,
 			Widget? prototypeItem = null,
 			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> dragBoundaryProvider = null
 		)

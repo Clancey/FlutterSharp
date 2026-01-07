@@ -27,10 +27,10 @@ namespace Flutter.Widgets
 		public RawWebImage(
 			Widget child,
 			WebImageInfo image,
-			object fit,
 			string? debugImageLabel = null,
 			double? width = null,
 			double? height = null,
+			object fit = null,
 			AlignmentGeometry alignment = null,
 			bool matchTextDirection = false
 		)
