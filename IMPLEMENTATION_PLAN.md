@@ -133,7 +133,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 |----|------|--------|-------|
 | M001 | Implement GCHandle lifecycle | completed | GCHandle pinning in BaseStruct, proper cleanup on dispose |
 | M002 | Implement string pointer cleanup | completed | Track allocated strings, free on SetString and Dispose |
-| M003 | Implement children array cleanup | pending | Need to free children array memory |
+| M003 | Implement children array cleanup | completed | Track allocated arrays, SetChildren method, free on Dispose |
 | M004 | Add memory leak detection | pending | Add tracking/debugging for leaks |
 
 ---
@@ -240,6 +240,7 @@ When starting a new loop, work on these in order:
 | DR001-DR004 | 2026-01-07 | pre-existing | Dart runtime already implemented: DynamicWidgetBuilder, MauiRootRenderer, MauiComponent, error widgets |
 | M001 | 2026-01-07 | df9933c | GCHandle lifecycle: BaseStruct pins itself, proper cleanup on dispose with IsAllocated check |
 | M002 | 2026-01-07 | df9933c | String pointer cleanup: Track allocated strings in List<IntPtr>, free on SetString and Dispose. Also fixed NativeNullable<T>.Value logic bug and 'manahedHandle' typo. |
+| M003 | 2026-01-07 | c5218c0 | Children array cleanup: Added _allocatedChildrenArrays list, SetChildren() methods for allocation/tracking, Dispose() frees arrays with FreeHGlobal. |
 
 ---
 
@@ -409,6 +410,22 @@ Add notes here when exploring the codebase:
   - BorderRadiusGeometry → BorderRadius? (abstract → concrete type)
   - AlignmentGeometry → Alignment (abstract → concrete type)
   - Various controller types (nullable → non-nullable)
+
+### M003 Children Array Cleanup Details (2026-01-07)
+- **Location**: `src/Flutter/FlutterStructs.Base.cs`
+- **Pattern**: Following same pattern as M002 string cleanup
+- **Changes**:
+  1. Added `_allocatedChildrenArrays = new List<IntPtr>()` to track allocated children array pointers
+  2. Added `SetChildren(ref IntPtr ptr, List<Flutter.Widget> children, ref int countField)` method:
+     - Frees previous array if allocated
+     - Prepares child widgets for sending
+     - Allocates unmanaged memory with `Marshal.AllocHGlobal(IntPtr.Size * count)`
+     - Copies IntPtr array to unmanaged memory
+     - Tracks allocation for cleanup
+  3. Added overload `SetChildren(ref IntPtr ptr, List<Flutter.Widget> children)` for structs without count field
+  4. Extended `Dispose()` to iterate and free all tracked children arrays with `Marshal.FreeHGlobal()`
+- **Memory pattern**: Parent widgets now properly clean up children array allocations when disposed
+- **Note**: Child widgets themselves are tracked separately via FlutterManager.AliveWidgets
 
 ### M001/M002 Memory Management Fix Details (2026-01-07)
 - **Location**: `src/Flutter/FlutterStructs.Base.cs`
