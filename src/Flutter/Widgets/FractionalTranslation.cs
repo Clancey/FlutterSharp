@@ -40,16 +40,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FractionalTranslation"/> class.
 		/// </summary>
 		public FractionalTranslation(
-			Offset _translation,
-			bool _transformHitTests
+			Offset translation,
+			bool transformHitTests
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<FractionalTranslationStruct>();
 			// Complex type: Offset - skipped (requires marshaling)
-			s.transformHitTests = _transformHitTests;
-			s.child = _child;
+			s.transformHitTests = transformHitTests;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FractionalTranslationStruct();

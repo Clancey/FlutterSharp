@@ -63,18 +63,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverFadeTransition"/> class.
 		/// </summary>
 		public SliverFadeTransition(
-			Widget _child,
-			Animation<double> _opacity,
-			bool _alwaysIncludeSemantics
+			Widget child,
+			Animation<double> opacity,
+			bool alwaysIncludeSemantics
 ,
-			Widget? _sliver = null
+			Widget? sliver = null
 		)
 		{
 			var s = GetBackingStruct<SliverFadeTransitionStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: Animation<double> - skipped (requires marshaling)
-			s.alwaysIncludeSemantics = _alwaysIncludeSemantics;
-			s.sliver = _sliver;
+			s.alwaysIncludeSemantics = alwaysIncludeSemantics;
+			s.sliver = sliver;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverFadeTransitionStruct();

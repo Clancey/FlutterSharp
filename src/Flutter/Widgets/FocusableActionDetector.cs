@@ -54,36 +54,36 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FocusableActionDetector"/> class.
 		/// </summary>
 		public FocusableActionDetector(
-			bool _enabled,
-			bool _autofocus,
-			bool _descendantsAreFocusable,
-			bool _descendantsAreTraversable,
-			Action _onShowFocusHighlight,
-			Action _onShowHoverHighlight,
-			Action _onFocusChange,
-			object _mouseCursor,
-			bool _includeFocusSemantics,
-			Widget _child
+			bool enabled,
+			bool autofocus,
+			bool descendantsAreFocusable,
+			bool descendantsAreTraversable,
+			Action onShowFocusHighlight,
+			Action onShowHoverHighlight,
+			Action onFocusChange,
+			object mouseCursor,
+			bool includeFocusSemantics,
+			Widget child
 ,
-			FocusNode? _focusNode = null,
-			Dictionary<Type, FlutterAction<Intent>>? _actions = null,
-			Dictionary<ShortcutActivator, Intent>? _shortcuts = null
+			FocusNode? focusNode = null,
+			Dictionary<Type, FlutterAction<Intent>>? actions = null,
+			Dictionary<ShortcutActivator, Intent>? shortcuts = null
 		)
 		{
 			var s = GetBackingStruct<FocusableActionDetectorStruct>();
-			s.enabled = _enabled;
+			s.enabled = enabled;
 			// Complex type: FocusNode? - skipped (requires marshaling)
-			s.autofocus = _autofocus;
-			s.descendantsAreFocusable = _descendantsAreFocusable;
-			s.descendantsAreTraversable = _descendantsAreTraversable;
+			s.autofocus = autofocus;
+			s.descendantsAreFocusable = descendantsAreFocusable;
+			s.descendantsAreTraversable = descendantsAreTraversable;
 			// Complex type: Dictionary<Type, FlutterAction<Intent>>? - skipped (requires marshaling)
 			// Complex type: Dictionary<ShortcutActivator, Intent>? - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.includeFocusSemantics = _includeFocusSemantics;
-			s.child = _child;
+			s.includeFocusSemantics = includeFocusSemantics;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FocusableActionDetectorStruct();

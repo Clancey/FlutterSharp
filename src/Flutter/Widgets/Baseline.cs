@@ -40,16 +40,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Baseline"/> class.
 		/// </summary>
 		public Baseline(
-			double _baseline,
-			TextBaseline _baselineType
+			double baseline,
+			TextBaseline baselineType
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<BaselineStruct>();
-			s.baseline = _baseline;
-			s.baselineType = _baselineType;
-			s.child = _child;
+			s.baseline = baseline;
+			s.baselineType = baselineType;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new BaselineStruct();

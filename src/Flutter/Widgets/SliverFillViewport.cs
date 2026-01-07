@@ -40,15 +40,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverFillViewport"/> class.
 		/// </summary>
 		public SliverFillViewport(
-			double _viewportFraction,
-			bool _padEnds,
-			SliverChildDelegate _delegate
+			double viewportFraction,
+			bool padEnds,
+			SliverChildDelegate @delegate
 
 		)
 		{
 			var s = GetBackingStruct<SliverFillViewportStruct>();
-			s.viewportFraction = _viewportFraction;
-			s.padEnds = _padEnds;
+			s.viewportFraction = viewportFraction;
+			s.padEnds = padEnds;
 			// Complex type: SliverChildDelegate - skipped (requires marshaling)
 		}
 

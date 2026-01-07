@@ -58,27 +58,27 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedContainer"/> class.
 		/// </summary>
 		public AnimatedContainer(
-			AlignmentGeometry? _alignment,
-			EdgeInsetsGeometry? _padding,
-			Decoration? _decoration,
-			Decoration? _foregroundDecoration,
-			BoxConstraints? _constraints,
-			EdgeInsetsGeometry? _margin,
-			Matrix4? _transform,
-			AlignmentGeometry? _transformAlignment,
-			Clip _clipBehavior,
-			TimeSpan _duration
+			AlignmentGeometry? alignment,
+			EdgeInsetsGeometry? padding,
+			Decoration? decoration,
+			Decoration? foregroundDecoration,
+			BoxConstraints? constraints,
+			EdgeInsetsGeometry? margin,
+			Matrix4? transform,
+			AlignmentGeometry? transformAlignment,
+			Clip clipBehavior,
+			TimeSpan duration
 ,
-			Widget? _child = null,
-			Color? _color = null,
-			double? _width = null,
-			double? _height = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			Widget? child = null,
+			Color? color = null,
+			double? width = null,
+			double? height = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedContainerStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
 			// Complex type: Decoration? - skipped (requires marshaling)
@@ -87,12 +87,12 @@ namespace Flutter.Widgets
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
 			// Complex type: Matrix4? - skipped (requires marshaling)
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 			// Complex type: Color? - skipped (requires marshaling)
-			if (_width.HasValue)
-				s.width = _width.Value;
-			if (_height.HasValue)
-				s.height = _height.Value;
+			if (width.HasValue)
+				s.width = width.Value;
+			if (height.HasValue)
+				s.height = height.Value;
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)

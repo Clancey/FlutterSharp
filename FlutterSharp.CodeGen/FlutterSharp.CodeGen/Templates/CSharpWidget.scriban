@@ -97,8 +97,8 @@ namespace {{ namespace }}
 		)
 		{
 {{~ if has_widget_children ~}}
-			if (_{{ children_property_name }} != null)
-				_childrenList.AddRange(_{{ children_property_name }});
+			if ({{ children_property_name }} != null)
+				_childrenList.AddRange({{ children_property_name }});
 {{~ end ~}}
 			var s = GetBackingStruct<{{ struct_name }}>();
 {{~ for prop in all_properties ~}}
@@ -156,8 +156,8 @@ namespace {{ namespace }}
 		)
 		{
 {{~ if has_widget_children ~}}
-			if (_{{ children_property_name }} != null)
-				_childrenList.AddRange(_{{ children_property_name }});
+			if ({{ children_property_name }} != null)
+				_childrenList.AddRange({{ children_property_name }});
 {{~ end ~}}
 			var s = GetBackingStruct<{{ struct_name }}>();
 {{~ for prop in all_properties ~}}

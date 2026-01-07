@@ -53,26 +53,26 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverVisibility"/> class.
 		/// </summary>
 		public SliverVisibility(
-			Widget _sliver,
-			Widget _replacementSliver,
-			bool _visible,
-			bool _maintainState,
-			bool _maintainAnimation,
-			bool _maintainSize,
-			bool _maintainSemantics,
-			bool _maintainInteractivity
+			Widget sliver,
+			Widget replacementSliver,
+			bool visible,
+			bool maintainState,
+			bool maintainAnimation,
+			bool maintainSize,
+			bool maintainSemantics,
+			bool maintainInteractivity
 
 		)
 		{
 			var s = GetBackingStruct<SliverVisibilityStruct>();
-			s.sliver = _sliver;
-			s.replacementSliver = _replacementSliver;
-			s.visible = _visible;
-			s.maintainState = _maintainState;
-			s.maintainAnimation = _maintainAnimation;
-			s.maintainSize = _maintainSize;
-			s.maintainSemantics = _maintainSemantics;
-			s.maintainInteractivity = _maintainInteractivity;
+			s.sliver = sliver;
+			s.replacementSliver = replacementSliver;
+			s.visible = visible;
+			s.maintainState = maintainState;
+			s.maintainAnimation = maintainAnimation;
+			s.maintainSize = maintainSize;
+			s.maintainSemantics = maintainSemantics;
+			s.maintainInteractivity = maintainInteractivity;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverVisibilityStruct();

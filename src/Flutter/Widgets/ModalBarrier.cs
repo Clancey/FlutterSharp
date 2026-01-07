@@ -37,25 +37,25 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ModalBarrier"/> class.
 		/// </summary>
 		public ModalBarrier(
-			Color? _color,
-			bool _dismissible,
-			Action _onDismiss,
-			object _clipDetailsNotifier
+			Color? color,
+			bool dismissible,
+			Action onDismiss,
+			object clipDetailsNotifier
 ,
-			bool? _barrierSemanticsDismissible = true,
-			string? _semanticsLabel = null,
-			string? _semanticsOnTapHint = null
+			bool? barrierSemanticsDismissible = true,
+			string? semanticsLabel = null,
+			string? semanticsOnTapHint = null
 		)
 		{
 			var s = GetBackingStruct<ModalBarrierStruct>();
 			// Complex type: Color? - skipped (requires marshaling)
-			s.dismissible = _dismissible;
+			s.dismissible = dismissible;
 			// Complex type: Action - skipped (requires marshaling)
-			if (_barrierSemanticsDismissible.HasValue)
-				s.barrierSemanticsDismissible = _barrierSemanticsDismissible.Value;
-			s.semanticsLabel = _semanticsLabel;
+			if (barrierSemanticsDismissible.HasValue)
+				s.barrierSemanticsDismissible = barrierSemanticsDismissible.Value;
+			s.semanticsLabel = semanticsLabel;
 			// Complex type: object - skipped (requires marshaling)
-			s.semanticsOnTapHint = _semanticsOnTapHint;
+			s.semanticsOnTapHint = semanticsOnTapHint;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ModalBarrierStruct();

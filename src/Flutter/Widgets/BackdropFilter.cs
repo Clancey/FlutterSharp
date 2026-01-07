@@ -169,20 +169,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="BackdropFilter"/> class.
 		/// </summary>
 		public BackdropFilter(
-			ImageFilter _filter,
-			BlendMode _blendMode,
-			bool _enabled,
-			object _backdropGroupKey
+			ImageFilter filter,
+			BlendMode blendMode,
+			bool enabled,
+			object backdropGroupKey
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<BackdropFilterStruct>();
 			// Complex type: ImageFilter - skipped (requires marshaling)
-			s.blendMode = _blendMode;
-			s.enabled = _enabled;
+			s.blendMode = blendMode;
+			s.enabled = enabled;
 			// Complex type: object - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new BackdropFilterStruct();

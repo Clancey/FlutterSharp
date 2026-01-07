@@ -42,19 +42,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverIgnorePointer"/> class.
 		/// </summary>
 		public SliverIgnorePointer(
-			Widget _child,
-			bool _ignoring
+			Widget child,
+			bool ignoring
 ,
-			bool? _ignoringSemantics = null,
-			Widget? _sliver = null
+			bool? ignoringSemantics = null,
+			Widget? sliver = null
 		)
 		{
 			var s = GetBackingStruct<SliverIgnorePointerStruct>();
-			s.child = _child;
-			s.ignoring = _ignoring;
-			if (_ignoringSemantics.HasValue)
-				s.ignoringSemantics = _ignoringSemantics.Value;
-			s.sliver = _sliver;
+			s.child = child;
+			s.ignoring = ignoring;
+			if (ignoringSemantics.HasValue)
+				s.ignoringSemantics = ignoringSemantics.Value;
+			s.sliver = sliver;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverIgnorePointerStruct();

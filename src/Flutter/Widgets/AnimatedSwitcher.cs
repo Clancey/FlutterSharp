@@ -64,18 +64,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedSwitcher"/> class.
 		/// </summary>
 		public AnimatedSwitcher(
-			TimeSpan _duration,
-			object _switchInCurve,
-			object _switchOutCurve,
-			Func<Widget, InvalidType, Widget> _transitionBuilder,
-			Func<Widget?, List<Widget>, Widget> _layoutBuilder
+			TimeSpan duration,
+			object switchInCurve,
+			object switchOutCurve,
+			Func<Widget, InvalidType, Widget> transitionBuilder,
+			Func<Widget?, List<Widget>, Widget> layoutBuilder
 ,
-			Widget? _child = null,
-			TimeSpan? _reverseDuration = null
+			Widget? child = null,
+			TimeSpan? reverseDuration = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedSwitcherStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: TimeSpan? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)

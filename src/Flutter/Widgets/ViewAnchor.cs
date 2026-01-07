@@ -48,14 +48,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ViewAnchor"/> class.
 		/// </summary>
 		public ViewAnchor(
-			Widget _child
+			Widget child
 ,
-			Widget? _view = null
+			Widget? view = null
 		)
 		{
 			var s = GetBackingStruct<ViewAnchorStruct>();
 			// Nullable reference type: Widget? - skipped
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ViewAnchorStruct();

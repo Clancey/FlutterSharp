@@ -63,16 +63,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ValueListenableBuilder"/> class.
 		/// </summary>
 		public ValueListenableBuilder(
-			ValueListenable<object> _valueListenable,
-			Func<BuildContext, T, Widget?, Widget> _builder
+			ValueListenable<object> valueListenable,
+			Func<BuildContext, T, Widget?, Widget> builder
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ValueListenableBuilderStruct>();
 			// Complex type: ValueListenable<object> - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, T, Widget?, Widget> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ValueListenableBuilderStruct();

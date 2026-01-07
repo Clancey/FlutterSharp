@@ -33,17 +33,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FlutterLogo"/> class.
 		/// </summary>
 		public FlutterLogo(
-			Color _textColor,
-			TextStyle? _style,
-			TimeSpan _duration,
-			Curve _curve
+			Color textColor,
+			TextStyle? style,
+			TimeSpan duration,
+			Curve curve
 ,
-			double? _size = null
+			double? size = null
 		)
 		{
 			var s = GetBackingStruct<FlutterLogoStruct>();
-			if (_size.HasValue)
-				s.size = _size.Value;
+			if (size.HasValue)
+				s.size = size.Value;
 			// Complex type: Color - skipped (requires marshaling)
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)

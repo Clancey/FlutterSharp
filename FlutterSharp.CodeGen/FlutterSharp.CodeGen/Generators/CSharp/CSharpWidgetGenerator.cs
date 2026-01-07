@@ -425,8 +425,9 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 
 			// Escape C# keywords in property names
 			var propertyName = EscapeCSharpKeyword(property.Name);
-			var backingFieldName = $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}";
-			backingFieldName = EscapeCSharpKeyword(backingFieldName);
+			// Parameter name is camelCase without underscore prefix (cleaner API)
+			var parameterName = $"{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}";
+			parameterName = EscapeCSharpKeyword(parameterName);
 
 			// Check if this is a generic type parameter (T, T?, etc.)
 			var isGenericTypeParam = csharpType == "T" || csharpType == "T?" ||
@@ -446,7 +447,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["documentation"] = FormatDocumentation(property.Documentation),
 				["is_list"] = property.IsList,
 				["is_callback"] = property.IsCallback,
-				["backing_field_name"] = backingFieldName,
+				["backing_field_name"] = parameterName,
 				["is_generic_type_param"] = isGenericTypeParam
 			};
 		}

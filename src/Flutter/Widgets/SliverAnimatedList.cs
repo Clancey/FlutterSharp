@@ -47,16 +47,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverAnimatedList"/> class.
 		/// </summary>
 		public SliverAnimatedList(
-			object _itemBuilder
+			object itemBuilder
 ,
-			Func<InvalidType, int?> _findChildIndexCallback = null,
-			int _initialItemCount = 0
+			Func<InvalidType, int?> findChildIndexCallback = null,
+			int initialItemCount = 0
 		)
 		{
 			var s = GetBackingStruct<SliverAnimatedListStruct>();
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
-			s.initialItemCount = _initialItemCount;
+			s.initialItemCount = initialItemCount;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverAnimatedListStruct();

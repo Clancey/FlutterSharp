@@ -41,16 +41,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ActionListener"/> class.
 		/// </summary>
 		public ActionListener(
-			Action<FlutterAction<Intent>> _listener,
-			FlutterAction<Intent> _action,
-			Widget _child
+			Action<FlutterAction<Intent>> listener,
+			FlutterAction<Intent> action,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<ActionListenerStruct>();
 			// Complex type: Action<FlutterAction<Intent>> - skipped (requires marshaling)
 			// Complex type: FlutterAction<Intent> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ActionListenerStruct();

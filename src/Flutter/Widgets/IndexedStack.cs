@@ -82,24 +82,24 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IndexedStack"/> class.
 		/// </summary>
 		public IndexedStack(
-			AlignmentGeometry? _alignment,
-			TextDirection _textDirection,
-			Clip _clipBehavior,
-			object _sizing,
-			List<Widget> _children
+			AlignmentGeometry? alignment,
+			TextDirection textDirection,
+			Clip clipBehavior,
+			object sizing,
+			List<Widget> children
 ,
-			int? _index = 0
+			int? index = 0
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<IndexedStackStruct>();
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			s.textDirection = _textDirection;
-			s.clipBehavior = _clipBehavior;
+			s.textDirection = textDirection;
+			s.clipBehavior = clipBehavior;
 			// Complex type: object - skipped (requires marshaling)
-			if (_index.HasValue)
-				s.index = _index.Value;
+			if (index.HasValue)
+				s.index = index.Value;
 			// Children are set in PrepareForSending to support collection initializers
 		}
 

@@ -31,19 +31,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ImageIcon"/> class.
 		/// </summary>
 		public ImageIcon(
-			ImageProvider _image,
-			Color? _color
+			ImageProvider image,
+			Color? color
 ,
-			double? _size = null,
-			string? _semanticLabel = null
+			double? size = null,
+			string? semanticLabel = null
 		)
 		{
 			var s = GetBackingStruct<ImageIconStruct>();
 			// Complex type: ImageProvider - skipped (requires marshaling)
-			if (_size.HasValue)
-				s.size = _size.Value;
+			if (size.HasValue)
+				s.size = size.Value;
 			// Complex type: Color? - skipped (requires marshaling)
-			s.semanticLabel = _semanticLabel;
+			s.semanticLabel = semanticLabel;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ImageIconStruct();

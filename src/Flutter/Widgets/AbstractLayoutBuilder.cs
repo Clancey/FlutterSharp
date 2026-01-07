@@ -50,7 +50,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AbstractLayoutBuilder"/> class.
 		/// </summary>
 		public AbstractLayoutBuilder(
-			Func<BuildContext, LayoutInfoType, Widget> _builder
+			Func<BuildContext, LayoutInfoType, Widget> builder
 
 		)
 		{

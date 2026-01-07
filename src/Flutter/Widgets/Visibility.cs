@@ -53,26 +53,26 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Visibility"/> class.
 		/// </summary>
 		public Visibility(
-			Widget _child,
-			Widget _replacement,
-			bool _visible,
-			bool _maintainState,
-			bool _maintainAnimation,
-			bool _maintainSize,
-			bool _maintainSemantics,
-			bool _maintainInteractivity
+			Widget child,
+			Widget replacement,
+			bool visible,
+			bool maintainState,
+			bool maintainAnimation,
+			bool maintainSize,
+			bool maintainSemantics,
+			bool maintainInteractivity
 
 		)
 		{
 			var s = GetBackingStruct<VisibilityStruct>();
-			s.child = _child;
-			s.replacement = _replacement;
-			s.visible = _visible;
-			s.maintainState = _maintainState;
-			s.maintainAnimation = _maintainAnimation;
-			s.maintainSize = _maintainSize;
-			s.maintainSemantics = _maintainSemantics;
-			s.maintainInteractivity = _maintainInteractivity;
+			s.child = child;
+			s.replacement = replacement;
+			s.visible = visible;
+			s.maintainState = maintainState;
+			s.maintainAnimation = maintainAnimation;
+			s.maintainSize = maintainSize;
+			s.maintainSemantics = maintainSemantics;
+			s.maintainInteractivity = maintainInteractivity;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new VisibilityStruct();

@@ -45,17 +45,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedPadding"/> class.
 		/// </summary>
 		public AnimatedPadding(
-			EdgeInsetsGeometry? _padding,
-			TimeSpan _duration
+			EdgeInsetsGeometry? padding,
+			TimeSpan duration
 ,
-			Widget? _child = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			Widget? child = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedPaddingStruct>();
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)

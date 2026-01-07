@@ -287,18 +287,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="HtmlElementView"/> class.
 		/// </summary>
 		public HtmlElementView(
-			string _viewType,
-			Action _onPlatformViewCreated,
-			PlatformViewHitTestBehavior _hitTestBehavior
+			string viewType,
+			Action onPlatformViewCreated,
+			PlatformViewHitTestBehavior hitTestBehavior
 ,
-			object? _creationParams = null
+			object? creationParams = null
 		)
 		{
 			var s = GetBackingStruct<HtmlElementViewStruct>();
-			s.viewType = _viewType;
+			s.viewType = viewType;
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: object? - skipped (requires marshaling)
-			s.hitTestBehavior = _hitTestBehavior;
+			s.hitTestBehavior = hitTestBehavior;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new HtmlElementViewStruct();

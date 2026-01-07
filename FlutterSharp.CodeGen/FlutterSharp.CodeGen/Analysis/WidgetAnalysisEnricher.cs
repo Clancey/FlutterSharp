@@ -123,12 +123,13 @@ namespace FlutterSharp.CodeGen.Analysis
 				ffiAnnotation = ""; // No annotation needed for Pointer<Utf8>
 			}
 
-			// Determine backing field name
-			var backingFieldName = $"_{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}";
+			// Determine constructor parameter name (camelCase, no underscore prefix)
+			// This was previously a backing field name with underscore, but we now use clean parameter names
+			var parameterName = $"{char.ToLowerInvariant(property.Name[0])}{property.Name.Substring(1)}";
 
-			// Escape C# keywords
+			// Escape C# keywords with @ prefix
 			var escapedName = EscapeCSharpKeyword(property.Name);
-			var escapedBackingField = EscapeCSharpKeyword(backingFieldName);
+			var escapedParameter = EscapeCSharpKeyword(parameterName);
 
 			// Check if this is a generic type parameter
 			var isGenericTypeParam = csharpType == "T" || csharpType == "T?" ||
@@ -146,7 +147,7 @@ namespace FlutterSharp.CodeGen.Analysis
 			return new EnrichedPropertyDefinition
 			{
 				Name = escapedName,
-				BackingFieldName = escapedBackingField,
+				BackingFieldName = escapedParameter,
 				DartType = property.DartType,
 				CSharpType = csharpType,
 				FfiType = ffiType,
@@ -338,7 +339,7 @@ namespace FlutterSharp.CodeGen.Analysis
 				properties.Add(new EnrichedPropertyDefinition
 				{
 					Name = "duration",
-					BackingFieldName = "_duration",
+					BackingFieldName = "duration",
 					DartType = "Duration",
 					CSharpType = "long", // Microseconds as Int64
 					FfiType = "int",
@@ -357,7 +358,7 @@ namespace FlutterSharp.CodeGen.Analysis
 				properties.Add(new EnrichedPropertyDefinition
 				{
 					Name = "onEnd",
-					BackingFieldName = "_onEnd",
+					BackingFieldName = "onEnd",
 					DartType = "VoidCallback?",
 					CSharpType = "Action?",
 					FfiType = "Pointer<Utf8>",
@@ -436,7 +437,7 @@ namespace FlutterSharp.CodeGen.Analysis
 				enrichedProperties.Insert(0, new EnrichedPropertyDefinition
 				{
 					Name = childPropertyName,
-					BackingFieldName = $"_{childPropertyName}",
+					BackingFieldName = childPropertyName,
 					DartType = childIsRequired ? "Widget" : "Widget?",
 					CSharpType = childIsRequired ? "Widget" : "Widget?",
 					FfiType = "Pointer<WidgetStruct>",
@@ -456,7 +457,7 @@ namespace FlutterSharp.CodeGen.Analysis
 				enrichedProperties.Insert(0, new EnrichedPropertyDefinition
 				{
 					Name = childrenPropertyName,
-					BackingFieldName = $"_{childrenPropertyName}",
+					BackingFieldName = childrenPropertyName,
 					DartType = "List<Widget>",
 					CSharpType = "List<Widget>",
 					FfiType = "Pointer<ChildrenStruct>",

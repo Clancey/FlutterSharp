@@ -35,34 +35,34 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ListWheelViewport"/> class.
 		/// </summary>
 		public ListWheelViewport(
-			double _diameterRatio,
-			double _perspective,
-			double _offAxisFraction,
-			bool _useMagnifier,
-			double _magnification,
-			double _overAndUnderCenterOpacity,
-			double _itemExtent,
-			double _squeeze,
-			bool _renderChildrenOutsideViewport,
-			Offset _offset,
-			ListWheelChildDelegate _childDelegate,
-			Clip _clipBehavior
+			double diameterRatio,
+			double perspective,
+			double offAxisFraction,
+			bool useMagnifier,
+			double magnification,
+			double overAndUnderCenterOpacity,
+			double itemExtent,
+			double squeeze,
+			bool renderChildrenOutsideViewport,
+			Offset offset,
+			ListWheelChildDelegate childDelegate,
+			Clip clipBehavior
 
 		)
 		{
 			var s = GetBackingStruct<ListWheelViewportStruct>();
-			s.diameterRatio = _diameterRatio;
-			s.perspective = _perspective;
-			s.offAxisFraction = _offAxisFraction;
-			s.useMagnifier = _useMagnifier;
-			s.magnification = _magnification;
-			s.overAndUnderCenterOpacity = _overAndUnderCenterOpacity;
-			s.itemExtent = _itemExtent;
-			s.squeeze = _squeeze;
-			s.renderChildrenOutsideViewport = _renderChildrenOutsideViewport;
+			s.diameterRatio = diameterRatio;
+			s.perspective = perspective;
+			s.offAxisFraction = offAxisFraction;
+			s.useMagnifier = useMagnifier;
+			s.magnification = magnification;
+			s.overAndUnderCenterOpacity = overAndUnderCenterOpacity;
+			s.itemExtent = itemExtent;
+			s.squeeze = squeeze;
+			s.renderChildrenOutsideViewport = renderChildrenOutsideViewport;
 			// Complex type: Offset - skipped (requires marshaling)
 			// Complex type: ListWheelChildDelegate - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ListWheelViewportStruct();

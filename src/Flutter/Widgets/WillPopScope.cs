@@ -33,13 +33,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="WillPopScope"/> class.
 		/// </summary>
 		public WillPopScope(
-			Widget _child
+			Widget child
 ,
-			Func<Future<bool>> _onWillPop = null
+			Func<Future<bool>> onWillPop = null
 		)
 		{
 			var s = GetBackingStruct<WillPopScopeStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: Func<Future<bool>> - skipped (requires marshaling)
 		}
 

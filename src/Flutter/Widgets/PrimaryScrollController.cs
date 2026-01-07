@@ -53,18 +53,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PrimaryScrollController"/> class.
 		/// </summary>
 		public PrimaryScrollController(
-			Axis _scrollDirection,
-			HashSet<object> _automaticallyInheritForPlatforms,
-			Widget _child
+			Axis scrollDirection,
+			HashSet<object> automaticallyInheritForPlatforms,
+			Widget child
 ,
-			ScrollController? _controller = null
+			ScrollController? controller = null
 		)
 		{
 			var s = GetBackingStruct<PrimaryScrollControllerStruct>();
 			// Complex type: ScrollController? - skipped (requires marshaling)
-			s.scrollDirection = _scrollDirection;
+			s.scrollDirection = scrollDirection;
 			// Complex type: HashSet<object> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PrimaryScrollControllerStruct();

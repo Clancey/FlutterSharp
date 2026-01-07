@@ -50,22 +50,22 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CompositedTransformFollower"/> class.
 		/// </summary>
 		public CompositedTransformFollower(
-			LayerLink _link,
-			bool _showWhenUnlinked,
-			object _targetAnchor,
-			object _followerAnchor,
-			Offset _offset
+			LayerLink link,
+			bool showWhenUnlinked,
+			object targetAnchor,
+			object followerAnchor,
+			Offset offset
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<CompositedTransformFollowerStruct>();
 			// Complex type: LayerLink - skipped (requires marshaling)
-			s.showWhenUnlinked = _showWhenUnlinked;
+			s.showWhenUnlinked = showWhenUnlinked;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Offset - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new CompositedTransformFollowerStruct();

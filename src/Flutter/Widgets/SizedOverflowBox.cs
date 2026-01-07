@@ -36,16 +36,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SizedOverflowBox"/> class.
 		/// </summary>
 		public SizedOverflowBox(
-			AlignmentGeometry? _alignment,
-			Size _size
+			AlignmentGeometry? alignment,
+			Size size
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<SizedOverflowBoxStruct>();
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: Size - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SizedOverflowBoxStruct();

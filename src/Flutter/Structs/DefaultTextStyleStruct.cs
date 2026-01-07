@@ -54,7 +54,7 @@ namespace Flutter.Structs
 /// 
 /// If [softWrap] is true or null, the glyph causing overflow, and those that follow,
 /// will not be rendered. Otherwise, it will be shown with the given overflow option.
-		public Overflow overflow { get; set; }
+		public TextOverflow overflow { get; set; }
 
 		// Has flag for nullable property: maxLines
 		public byte HasmaxLines { get; set; }

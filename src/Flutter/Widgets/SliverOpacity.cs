@@ -57,18 +57,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverOpacity"/> class.
 		/// </summary>
 		public SliverOpacity(
-			Widget _child,
-			double _opacity,
-			bool _alwaysIncludeSemantics
+			Widget child,
+			double opacity,
+			bool alwaysIncludeSemantics
 ,
-			Widget? _sliver = null
+			Widget? sliver = null
 		)
 		{
 			var s = GetBackingStruct<SliverOpacityStruct>();
-			s.child = _child;
-			s.opacity = _opacity;
-			s.alwaysIncludeSemantics = _alwaysIncludeSemantics;
-			s.sliver = _sliver;
+			s.child = child;
+			s.opacity = opacity;
+			s.alwaysIncludeSemantics = alwaysIncludeSemantics;
+			s.sliver = sliver;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverOpacityStruct();

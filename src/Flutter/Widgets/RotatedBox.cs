@@ -50,14 +50,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RotatedBox"/> class.
 		/// </summary>
 		public RotatedBox(
-			int _quarterTurns
+			int quarterTurns
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<RotatedBoxStruct>();
-			s.quarterTurns = _quarterTurns;
-			s.child = _child;
+			s.quarterTurns = quarterTurns;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RotatedBoxStruct();

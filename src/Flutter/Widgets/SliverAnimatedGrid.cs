@@ -46,18 +46,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverAnimatedGrid"/> class.
 		/// </summary>
 		public SliverAnimatedGrid(
-			SliverGridDelegate _gridDelegate,
-			object _itemBuilder
+			SliverGridDelegate gridDelegate,
+			object itemBuilder
 ,
-			Func<InvalidType, int?> _findChildIndexCallback = null,
-			int _initialItemCount = 0
+			Func<InvalidType, int?> findChildIndexCallback = null,
+			int initialItemCount = 0
 		)
 		{
 			var s = GetBackingStruct<SliverAnimatedGridStruct>();
 			// Complex type: SliverGridDelegate - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
-			s.initialItemCount = _initialItemCount;
+			s.initialItemCount = initialItemCount;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverAnimatedGridStruct();

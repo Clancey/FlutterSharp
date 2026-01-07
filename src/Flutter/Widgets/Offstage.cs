@@ -54,14 +54,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Offstage"/> class.
 		/// </summary>
 		public Offstage(
-			bool _offstage
+			bool offstage
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<OffstageStruct>();
-			s.offstage = _offstage;
-			s.child = _child;
+			s.offstage = offstage;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new OffstageStruct();

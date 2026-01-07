@@ -110,26 +110,26 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Image"/> class.
 		/// </summary>
 		public Image(
-			ImageProvider _image,
-			Color? _color,
-			Animation<double> _opacity,
-			FilterQuality _filterQuality,
-			object _colorBlendMode,
-			BoxFit _fit,
-			AlignmentGeometry? _alignment,
-			object _repeat,
-			object _centerSlice,
-			bool _matchTextDirection,
-			bool _gaplessPlayback,
-			bool _excludeFromSemantics,
-			bool _isAntiAlias
+			ImageProvider image,
+			Color? color,
+			Animation<double> opacity,
+			FilterQuality filterQuality,
+			object colorBlendMode,
+			BoxFit fit,
+			AlignmentGeometry? alignment,
+			object repeat,
+			object centerSlice,
+			bool matchTextDirection,
+			bool gaplessPlayback,
+			bool excludeFromSemantics,
+			bool isAntiAlias
 ,
-			Func<BuildContext, Widget, int?, bool, Widget> _frameBuilder = null,
-			Func<BuildContext, Widget, InvalidType, Widget> _loadingBuilder = null,
-			Func<BuildContext, object, StackTrace?, Widget> _errorBuilder = null,
-			double? _width = null,
-			double? _height = null,
-			string? _semanticLabel = null
+			Func<BuildContext, Widget, int?, bool, Widget> frameBuilder = null,
+			Func<BuildContext, Widget, InvalidType, Widget> loadingBuilder = null,
+			Func<BuildContext, object, StackTrace?, Widget> errorBuilder = null,
+			double? width = null,
+			double? height = null,
+			string? semanticLabel = null
 		)
 		{
 			var s = GetBackingStruct<ImageStruct>();
@@ -137,23 +137,23 @@ namespace Flutter.Widgets
 			// Complex type: Func<BuildContext, Widget, int?, bool, Widget> - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, Widget, InvalidType, Widget> - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires marshaling)
-			if (_width.HasValue)
-				s.width = _width.Value;
-			if (_height.HasValue)
-				s.height = _height.Value;
+			if (width.HasValue)
+				s.width = width.Value;
+			if (height.HasValue)
+				s.height = height.Value;
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: Animation<double> - skipped (requires marshaling)
-			s.filterQuality = _filterQuality;
+			s.filterQuality = filterQuality;
 			// Complex type: object - skipped (requires marshaling)
-			s.fit = _fit;
+			s.fit = fit;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.matchTextDirection = _matchTextDirection;
-			s.gaplessPlayback = _gaplessPlayback;
-			s.semanticLabel = _semanticLabel;
-			s.excludeFromSemantics = _excludeFromSemantics;
-			s.isAntiAlias = _isAntiAlias;
+			s.matchTextDirection = matchTextDirection;
+			s.gaplessPlayback = gaplessPlayback;
+			s.semanticLabel = semanticLabel;
+			s.excludeFromSemantics = excludeFromSemantics;
+			s.isAntiAlias = isAntiAlias;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ImageStruct();

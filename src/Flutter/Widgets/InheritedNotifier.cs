@@ -79,14 +79,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="InheritedNotifier"/> class.
 		/// </summary>
 		public InheritedNotifier(
-			Widget _child
+			Widget child
 ,
-			T? _notifier = default
+			T? notifier = default
 		)
 		{
 			var s = GetBackingStruct<InheritedNotifierStruct>();
 			// Complex type: T? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new InheritedNotifierStruct();

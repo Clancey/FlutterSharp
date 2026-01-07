@@ -78,29 +78,29 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DraggableScrollableSheet"/> class.
 		/// </summary>
 		public DraggableScrollableSheet(
-			double _initialChildSize,
-			double _minChildSize,
-			double _maxChildSize,
-			bool _expand,
-			bool _snap,
-			bool _shouldCloseOnMinExtent,
-			Func<BuildContext, ScrollController, Widget> _builder
+			double initialChildSize,
+			double minChildSize,
+			double maxChildSize,
+			bool expand,
+			bool snap,
+			bool shouldCloseOnMinExtent,
+			Func<BuildContext, ScrollController, Widget> builder
 ,
-			List<double>? _snapSizes = null,
-			TimeSpan? _snapAnimationDuration = null,
-			DraggableScrollableController? _controller = null
+			List<double>? snapSizes = null,
+			TimeSpan? snapAnimationDuration = null,
+			DraggableScrollableController? controller = null
 		)
 		{
 			var s = GetBackingStruct<DraggableScrollableSheetStruct>();
-			s.initialChildSize = _initialChildSize;
-			s.minChildSize = _minChildSize;
-			s.maxChildSize = _maxChildSize;
-			s.expand = _expand;
-			s.snap = _snap;
+			s.initialChildSize = initialChildSize;
+			s.minChildSize = minChildSize;
+			s.maxChildSize = maxChildSize;
+			s.expand = expand;
+			s.snap = snap;
 			// Complex type: List<double>? - skipped (requires marshaling)
 			// Complex type: TimeSpan? - skipped (requires marshaling)
 			// Complex type: DraggableScrollableController? - skipped (requires marshaling)
-			s.shouldCloseOnMinExtent = _shouldCloseOnMinExtent;
+			s.shouldCloseOnMinExtent = shouldCloseOnMinExtent;
 			// Complex type: Func<BuildContext, ScrollController, Widget> - skipped (requires marshaling)
 		}
 

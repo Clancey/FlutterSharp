@@ -69,30 +69,30 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FadeInImage"/> class.
 		/// </summary>
 		public FadeInImage(
-			ImageProvider? _placeholder,
-			ImageProvider _image,
-			TimeSpan _fadeOutDuration,
-			object _fadeOutCurve,
-			TimeSpan _fadeInDuration,
-			object _fadeInCurve,
-			Color? _color,
-			object _colorBlendMode,
-			Color _placeholderColor,
-			object _placeholderColorBlendMode,
-			BoxFit _fit,
-			object _placeholderFit,
-			FilterQuality _filterQuality,
-			object _placeholderFilterQuality,
-			AlignmentGeometry? _alignment,
-			object _repeat,
-			bool _matchTextDirection,
-			bool _excludeFromSemantics
+			ImageProvider? placeholder,
+			ImageProvider image,
+			TimeSpan fadeOutDuration,
+			object fadeOutCurve,
+			TimeSpan fadeInDuration,
+			object fadeInCurve,
+			Color? color,
+			object colorBlendMode,
+			Color placeholderColor,
+			object placeholderColorBlendMode,
+			BoxFit fit,
+			object placeholderFit,
+			FilterQuality filterQuality,
+			object placeholderFilterQuality,
+			AlignmentGeometry? alignment,
+			object repeat,
+			bool matchTextDirection,
+			bool excludeFromSemantics
 ,
-			Func<BuildContext, object, StackTrace?, Widget> _placeholderErrorBuilder = null,
-			Func<BuildContext, object, StackTrace?, Widget> _imageErrorBuilder = null,
-			double? _width = null,
-			double? _height = null,
-			string? _imageSemanticLabel = null
+			Func<BuildContext, object, StackTrace?, Widget> placeholderErrorBuilder = null,
+			Func<BuildContext, object, StackTrace?, Widget> imageErrorBuilder = null,
+			double? width = null,
+			double? height = null,
+			string? imageSemanticLabel = null
 		)
 		{
 			var s = GetBackingStruct<FadeInImageStruct>();
@@ -104,23 +104,23 @@ namespace Flutter.Widgets
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			if (_width.HasValue)
-				s.width = _width.Value;
+			if (width.HasValue)
+				s.width = width.Value;
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Color - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			if (_height.HasValue)
-				s.height = _height.Value;
-			s.fit = _fit;
+			if (height.HasValue)
+				s.height = height.Value;
+			s.fit = fit;
 			// Complex type: object - skipped (requires marshaling)
-			s.filterQuality = _filterQuality;
+			s.filterQuality = filterQuality;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.matchTextDirection = _matchTextDirection;
-			s.excludeFromSemantics = _excludeFromSemantics;
-			s.imageSemanticLabel = _imageSemanticLabel;
+			s.matchTextDirection = matchTextDirection;
+			s.excludeFromSemantics = excludeFromSemantics;
+			s.imageSemanticLabel = imageSemanticLabel;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FadeInImageStruct();

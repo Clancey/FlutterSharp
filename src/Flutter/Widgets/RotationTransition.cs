@@ -42,19 +42,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RotationTransition"/> class.
 		/// </summary>
 		public RotationTransition(
-			Animation<double> _turns
+			Animation<double> turns
 ,
-			AlignmentGeometry? _alignment = null,
-			FilterQuality? _filterQuality = null,
-			Widget? _child = null
+			AlignmentGeometry? alignment = null,
+			FilterQuality? filterQuality = null,
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<RotationTransitionStruct>();
 			// Complex type: Animation<double> - skipped (requires marshaling)
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			if (_filterQuality.HasValue)
-				s.filterQuality = _filterQuality.Value;
-			s.child = _child;
+			if (filterQuality.HasValue)
+				s.filterQuality = filterQuality.Value;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RotationTransitionStruct();

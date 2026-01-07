@@ -39,22 +39,22 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultTextStyleTransition"/> class.
 		/// </summary>
 		public DefaultTextStyleTransition(
-			TextAlign? _textAlign,
-			bool _softWrap,
-			TextOverflow _overflow,
-			Widget _child,
-			TextStyle? _style
+			TextAlign? textAlign,
+			bool softWrap,
+			TextOverflow overflow,
+			Widget child,
+			TextStyle? style
 ,
-			int? _maxLines = null
+			int? maxLines = null
 		)
 		{
 			var s = GetBackingStruct<DefaultTextStyleTransitionStruct>();
 			// Complex type: TextAlign? - skipped (requires marshaling)
-			s.softWrap = _softWrap;
-			s.overflow = _overflow;
-			if (_maxLines.HasValue)
-				s.maxLines = _maxLines.Value;
-			s.child = _child;
+			s.softWrap = softWrap;
+			s.overflow = overflow;
+			if (maxLines.HasValue)
+				s.maxLines = maxLines.Value;
+			s.child = child;
 			// Complex type: TextStyle? - skipped (requires marshaling)
 		}
 

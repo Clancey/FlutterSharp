@@ -36,18 +36,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DualTransitionBuilder"/> class.
 		/// </summary>
 		public DualTransitionBuilder(
-			Animation<double> _animation,
-			Func<BuildContext, InvalidType, Widget?, Widget> _forwardBuilder,
-			Func<BuildContext, InvalidType, Widget?, Widget> _reverseBuilder
+			Animation<double> animation,
+			Func<BuildContext, InvalidType, Widget?, Widget> forwardBuilder,
+			Func<BuildContext, InvalidType, Widget?, Widget> reverseBuilder
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<DualTransitionBuilderStruct>();
 			// Complex type: Animation<double> - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, InvalidType, Widget?, Widget> - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, InvalidType, Widget?, Widget> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DualTransitionBuilderStruct();

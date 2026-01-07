@@ -49,13 +49,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverPrototypeExtentList"/> class.
 		/// </summary>
 		public SliverPrototypeExtentList(
-			Widget _prototypeItem,
-			SliverChildDelegate _delegate
+			Widget prototypeItem,
+			SliverChildDelegate @delegate
 
 		)
 		{
 			var s = GetBackingStruct<SliverPrototypeExtentListStruct>();
-			s.prototypeItem = _prototypeItem;
+			s.prototypeItem = prototypeItem;
 			// Complex type: SliverChildDelegate - skipped (requires marshaling)
 		}
 

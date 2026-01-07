@@ -83,40 +83,40 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FocusScope"/> class.
 		/// </summary>
 		public FocusScope(
-			Widget _child
+			Widget child
 ,
-			FocusScopeNode? _node = null,
-			FocusNode? _parentNode = null,
-			bool _autofocus = false,
-			Action _onFocusChange = null,
-			bool? _canRequestFocus = null,
-			bool? _skipTraversal = null,
-			Func<FocusNode, InvalidType, KeyEventResult> _onKeyEvent = null,
-			Func<FocusNode, InvalidType, KeyEventResult> _onKey = null,
-			string? _debugLabel = null,
-			bool _includeSemantics = true,
-			bool? _descendantsAreFocusable = null,
-			bool? _descendantsAreTraversable = null
+			FocusScopeNode? node = null,
+			FocusNode? parentNode = null,
+			bool autofocus = false,
+			Action onFocusChange = null,
+			bool? canRequestFocus = null,
+			bool? skipTraversal = null,
+			Func<FocusNode, InvalidType, KeyEventResult> onKeyEvent = null,
+			Func<FocusNode, InvalidType, KeyEventResult> onKey = null,
+			string? debugLabel = null,
+			bool includeSemantics = true,
+			bool? descendantsAreFocusable = null,
+			bool? descendantsAreTraversable = null
 		)
 		{
 			var s = GetBackingStruct<FocusScopeStruct>();
 			// Complex type: FocusScopeNode? - skipped (requires marshaling)
 			// Complex type: FocusNode? - skipped (requires marshaling)
-			s.child = _child;
-			s.autofocus = _autofocus;
+			s.child = child;
+			s.autofocus = autofocus;
 			// Complex type: Action - skipped (requires marshaling)
-			if (_canRequestFocus.HasValue)
-				s.canRequestFocus = _canRequestFocus.Value;
-			if (_skipTraversal.HasValue)
-				s.skipTraversal = _skipTraversal.Value;
+			if (canRequestFocus.HasValue)
+				s.canRequestFocus = canRequestFocus.Value;
+			if (skipTraversal.HasValue)
+				s.skipTraversal = skipTraversal.Value;
 			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
 			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
-			s.debugLabel = _debugLabel;
-			s.includeSemantics = _includeSemantics;
-			if (_descendantsAreFocusable.HasValue)
-				s.descendantsAreFocusable = _descendantsAreFocusable.Value;
-			if (_descendantsAreTraversable.HasValue)
-				s.descendantsAreTraversable = _descendantsAreTraversable.Value;
+			s.debugLabel = debugLabel;
+			s.includeSemantics = includeSemantics;
+			if (descendantsAreFocusable.HasValue)
+				s.descendantsAreFocusable = descendantsAreFocusable.Value;
+			if (descendantsAreTraversable.HasValue)
+				s.descendantsAreTraversable = descendantsAreTraversable.Value;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FocusScopeStruct();

@@ -58,16 +58,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Actions"/> class.
 		/// </summary>
 		public Actions(
-			Dictionary<Type, FlutterAction<Intent>> _actions,
-			Widget _child
+			Dictionary<Type, FlutterAction<Intent>> actions,
+			Widget child
 ,
-			ActionDispatcher? _dispatcher = null
+			ActionDispatcher? dispatcher = null
 		)
 		{
 			var s = GetBackingStruct<ActionsStruct>();
 			// Complex type: ActionDispatcher? - skipped (requires marshaling)
 			// Complex type: Dictionary<Type, FlutterAction<Intent>> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ActionsStruct();

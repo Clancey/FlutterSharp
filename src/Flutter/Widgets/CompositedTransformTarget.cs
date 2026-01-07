@@ -41,14 +41,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CompositedTransformTarget"/> class.
 		/// </summary>
 		public CompositedTransformTarget(
-			LayerLink _link
+			LayerLink link
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<CompositedTransformTargetStruct>();
 			// Complex type: LayerLink - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new CompositedTransformTargetStruct();

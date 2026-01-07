@@ -210,7 +210,7 @@ namespace Flutter.Structs
 /// 
 /// If this is null [TextStyle.overflow] will be used, otherwise the value
 /// from the nearest [DefaultTextStyle] ancestor will be used.
-		public Overflow overflow { get; set; }
+		public TextOverflow overflow { get; set; }
 
 		// Has flag for nullable property: textScaleFactor
 		public byte HastextScaleFactor { get; set; }

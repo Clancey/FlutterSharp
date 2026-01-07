@@ -34,12 +34,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AutomaticKeepAlive"/> class.
 		/// </summary>
 		public AutomaticKeepAlive(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<AutomaticKeepAliveStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AutomaticKeepAliveStruct();

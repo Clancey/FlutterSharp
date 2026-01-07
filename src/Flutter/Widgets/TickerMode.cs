@@ -29,14 +29,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TickerMode"/> class.
 		/// </summary>
 		public TickerMode(
-			bool _enabled,
-			Widget _child
+			bool enabled,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<TickerModeStruct>();
-			s.enabled = _enabled;
-			s.child = _child;
+			s.enabled = enabled;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TickerModeStruct();

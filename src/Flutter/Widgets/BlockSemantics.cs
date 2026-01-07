@@ -35,14 +35,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="BlockSemantics"/> class.
 		/// </summary>
 		public BlockSemantics(
-			bool _blocking
+			bool blocking
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<BlockSemanticsStruct>();
-			s.blocking = _blocking;
-			s.child = _child;
+			s.blocking = blocking;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new BlockSemanticsStruct();

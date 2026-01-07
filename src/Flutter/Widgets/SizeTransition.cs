@@ -57,20 +57,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SizeTransition"/> class.
 		/// </summary>
 		public SizeTransition(
-			Axis _axis,
-			double _axisAlignment,
-			object _sizeFactor
+			Axis axis,
+			double axisAlignment,
+			object sizeFactor
 ,
-			double? _fixedCrossAxisSizeFactor = null,
-			Widget? _child = null
+			double? fixedCrossAxisSizeFactor = null,
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<SizeTransitionStruct>();
-			s.axis = _axis;
-			s.axisAlignment = _axisAlignment;
-			if (_fixedCrossAxisSizeFactor.HasValue)
-				s.fixedCrossAxisSizeFactor = _fixedCrossAxisSizeFactor.Value;
-			s.child = _child;
+			s.axis = axis;
+			s.axisAlignment = axisAlignment;
+			if (fixedCrossAxisSizeFactor.HasValue)
+				s.fixedCrossAxisSizeFactor = fixedCrossAxisSizeFactor.Value;
+			s.child = child;
 			// Complex type: object - skipped (requires marshaling)
 		}
 

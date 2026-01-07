@@ -36,14 +36,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ExcludeSemantics"/> class.
 		/// </summary>
 		public ExcludeSemantics(
-			bool _excluding
+			bool excluding
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ExcludeSemanticsStruct>();
-			s.excluding = _excluding;
-			s.child = _child;
+			s.excluding = excluding;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ExcludeSemanticsStruct();

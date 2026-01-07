@@ -43,21 +43,21 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawMagnifier"/> class.
 		/// </summary>
 		public RawMagnifier(
-			MagnifierDecoration _decoration,
-			Clip _clipBehavior,
-			object _focalPointOffset,
-			double _magnificationScale,
-			Size _size
+			MagnifierDecoration decoration,
+			Clip clipBehavior,
+			object focalPointOffset,
+			double magnificationScale,
+			Size size
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<RawMagnifierStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: MagnifierDecoration - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 			// Complex type: object - skipped (requires marshaling)
-			s.magnificationScale = _magnificationScale;
+			s.magnificationScale = magnificationScale;
 			// Complex type: Size - skipped (requires marshaling)
 		}
 

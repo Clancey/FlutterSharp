@@ -57,32 +57,32 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Positioned"/> class.
 		/// </summary>
 		public Positioned(
-			Type _debugTypicalAncestorWidgetClass,
-			Widget _child
+			Type debugTypicalAncestorWidgetClass,
+			Widget child
 ,
-			double? _left = null,
-			double? _top = null,
-			double? _right = null,
-			double? _bottom = null,
-			double? _width = null,
-			double? _height = null
+			double? left = null,
+			double? top = null,
+			double? right = null,
+			double? bottom = null,
+			double? width = null,
+			double? height = null
 		)
 		{
 			var s = GetBackingStruct<PositionedStruct>();
-			if (_left.HasValue)
-				s.left = _left.Value;
-			if (_top.HasValue)
-				s.top = _top.Value;
-			if (_right.HasValue)
-				s.right = _right.Value;
-			if (_bottom.HasValue)
-				s.bottom = _bottom.Value;
-			if (_width.HasValue)
-				s.width = _width.Value;
-			if (_height.HasValue)
-				s.height = _height.Value;
+			if (left.HasValue)
+				s.left = left.Value;
+			if (top.HasValue)
+				s.top = top.Value;
+			if (right.HasValue)
+				s.right = right.Value;
+			if (bottom.HasValue)
+				s.bottom = bottom.Value;
+			if (width.HasValue)
+				s.width = width.Value;
+			if (height.HasValue)
+				s.height = height.Value;
 			// Complex type: Type - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PositionedStruct();

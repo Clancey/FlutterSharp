@@ -75,40 +75,40 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Icon"/> class.
 		/// </summary>
 		public Icon(
-			Color? _color,
-			TextDirection _textDirection,
-			BlendMode _blendMode
+			Color? color,
+			TextDirection textDirection,
+			BlendMode blendMode
 ,
-			IconData? _icon = null,
-			double? _size = null,
-			double? _fill = null,
-			double? _weight = null,
-			double? _grade = null,
-			double? _opticalSize = null,
-			List<object>? _shadows = null,
-			string? _semanticLabel = null,
-			bool? _applyTextScaling = null
+			IconData? icon = null,
+			double? size = null,
+			double? fill = null,
+			double? weight = null,
+			double? grade = null,
+			double? opticalSize = null,
+			List<object>? shadows = null,
+			string? semanticLabel = null,
+			bool? applyTextScaling = null
 		)
 		{
 			var s = GetBackingStruct<IconStruct>();
 			// Complex type: IconData? - skipped (requires marshaling)
-			if (_size.HasValue)
-				s.size = _size.Value;
-			if (_fill.HasValue)
-				s.fill = _fill.Value;
-			if (_weight.HasValue)
-				s.weight = _weight.Value;
-			if (_grade.HasValue)
-				s.grade = _grade.Value;
-			if (_opticalSize.HasValue)
-				s.opticalSize = _opticalSize.Value;
+			if (size.HasValue)
+				s.size = size.Value;
+			if (fill.HasValue)
+				s.fill = fill.Value;
+			if (weight.HasValue)
+				s.weight = weight.Value;
+			if (grade.HasValue)
+				s.grade = grade.Value;
+			if (opticalSize.HasValue)
+				s.opticalSize = opticalSize.Value;
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: List<object>? - skipped (requires marshaling)
-			s.semanticLabel = _semanticLabel;
-			s.textDirection = _textDirection;
-			if (_applyTextScaling.HasValue)
-				s.applyTextScaling = _applyTextScaling.Value;
-			s.blendMode = _blendMode;
+			s.semanticLabel = semanticLabel;
+			s.textDirection = textDirection;
+			if (applyTextScaling.HasValue)
+				s.applyTextScaling = applyTextScaling.Value;
+			s.blendMode = blendMode;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new IconStruct();

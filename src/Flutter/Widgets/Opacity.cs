@@ -124,16 +124,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Opacity"/> class.
 		/// </summary>
 		public Opacity(
-			double _opacity,
-			bool _alwaysIncludeSemantics
+			double opacity,
+			bool alwaysIncludeSemantics
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<OpacityStruct>();
-			s.opacity = _opacity;
-			s.alwaysIncludeSemantics = _alwaysIncludeSemantics;
-			s.child = _child;
+			s.opacity = opacity;
+			s.alwaysIncludeSemantics = alwaysIncludeSemantics;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new OpacityStruct();

@@ -61,20 +61,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TreeSliver"/> class.
 		/// </summary>
 		public TreeSliver(
-			List<TreeSliverNode<T>> _tree,
-			Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> _treeNodeBuilder,
-			Func<TreeSliverNode<object?>, InvalidType, double> _treeRowExtentBuilder,
-			object _toggleAnimationStyle,
-			object _indentation,
-			bool _addAutomaticKeepAlives,
-			bool _addRepaintBoundaries,
-			bool _addSemanticIndexes,
-			Func<Widget, int, int?> _semanticIndexCallback,
-			int _semanticIndexOffset
+			List<TreeSliverNode<T>> tree,
+			Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> treeNodeBuilder,
+			Func<TreeSliverNode<object?>, InvalidType, double> treeRowExtentBuilder,
+			object toggleAnimationStyle,
+			object indentation,
+			bool addAutomaticKeepAlives,
+			bool addRepaintBoundaries,
+			bool addSemanticIndexes,
+			Func<Widget, int, int?> semanticIndexCallback,
+			int semanticIndexOffset
 ,
-			TreeSliverController? _controller = null,
-			Action<TreeSliverNode<object?>> _onNodeToggle = null,
-			Func<InvalidType, int?> _findChildIndexCallback = null
+			TreeSliverController? controller = null,
+			Action<TreeSliverNode<object?>> onNodeToggle = null,
+			Func<InvalidType, int?> findChildIndexCallback = null
 		)
 		{
 			var s = GetBackingStruct<TreeSliverStruct>();
@@ -85,11 +85,11 @@ namespace Flutter.Widgets
 			// Complex type: Action<TreeSliverNode<object?>> - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.addAutomaticKeepAlives = _addAutomaticKeepAlives;
-			s.addRepaintBoundaries = _addRepaintBoundaries;
-			s.addSemanticIndexes = _addSemanticIndexes;
+			s.addAutomaticKeepAlives = addAutomaticKeepAlives;
+			s.addRepaintBoundaries = addRepaintBoundaries;
+			s.addSemanticIndexes = addSemanticIndexes;
 			// Complex type: Func<Widget, int, int?> - skipped (requires marshaling)
-			s.semanticIndexOffset = _semanticIndexOffset;
+			s.semanticIndexOffset = semanticIndexOffset;
 			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
 		}
 

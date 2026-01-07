@@ -25,14 +25,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ColoredBox"/> class.
 		/// </summary>
 		public ColoredBox(
-			Color? _color
+			Color? color
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ColoredBoxStruct>();
 			// Complex type: Color? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ColoredBoxStruct();

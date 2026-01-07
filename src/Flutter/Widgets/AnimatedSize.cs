@@ -36,23 +36,23 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedSize"/> class.
 		/// </summary>
 		public AnimatedSize(
-			AlignmentGeometry? _alignment,
-			Curve _curve,
-			TimeSpan _duration,
-			Clip _clipBehavior,
-			Action _onEnd
+			AlignmentGeometry? alignment,
+			Curve curve,
+			TimeSpan duration,
+			Clip clipBehavior,
+			Action onEnd
 ,
-			Widget? _child = null,
-			TimeSpan? _reverseDuration = null
+			Widget? child = null,
+			TimeSpan? reverseDuration = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedSizeStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: TimeSpan? - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 			// Complex type: Action - skipped (requires marshaling)
 		}
 

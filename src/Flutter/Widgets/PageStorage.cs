@@ -57,13 +57,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PageStorage"/> class.
 		/// </summary>
 		public PageStorage(
-			Widget _child,
-			PageStorageBucket _bucket
+			Widget child,
+			PageStorageBucket bucket
 
 		)
 		{
 			var s = GetBackingStruct<PageStorageStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: PageStorageBucket - skipped (requires marshaling)
 		}
 

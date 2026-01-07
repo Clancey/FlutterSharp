@@ -51,27 +51,27 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawMenuAnchor"/> class.
 		/// </summary>
 		public RawMenuAnchor(
-			Action _onOpen,
-			Action _onClose,
-			Func<BuildContext, RawMenuOverlayInfo, Widget> _overlayBuilder,
-			bool _useRootOverlay,
-			bool _consumeOutsideTaps,
-			MenuController _controller
+			Action onOpen,
+			Action onClose,
+			Func<BuildContext, RawMenuOverlayInfo, Widget> overlayBuilder,
+			bool useRootOverlay,
+			bool consumeOutsideTaps,
+			MenuController controller
 ,
-			Func<BuildContext, MenuController, Widget?, Widget> _builder = null,
-			Widget? _child = null,
-			FocusNode? _childFocusNode = null
+			Func<BuildContext, MenuController, Widget?, Widget> builder = null,
+			Widget? child = null,
+			FocusNode? childFocusNode = null
 		)
 		{
 			var s = GetBackingStruct<RawMenuAnchorStruct>();
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, MenuController, Widget?, Widget> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 			// Complex type: Func<BuildContext, RawMenuOverlayInfo, Widget> - skipped (requires marshaling)
-			s.useRootOverlay = _useRootOverlay;
+			s.useRootOverlay = useRootOverlay;
 			// Complex type: FocusNode? - skipped (requires marshaling)
-			s.consumeOutsideTaps = _consumeOutsideTaps;
+			s.consumeOutsideTaps = consumeOutsideTaps;
 			// Complex type: MenuController - skipped (requires marshaling)
 		}
 

@@ -76,14 +76,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Padding"/> class.
 		/// </summary>
 		public Padding(
-			EdgeInsetsGeometry? _padding
+			EdgeInsetsGeometry? padding
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<PaddingStruct>();
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PaddingStruct();

@@ -85,15 +85,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ListenableBuilder"/> class.
 		/// </summary>
 		public ListenableBuilder(
-			Func<BuildContext, Widget?, Widget> _builder,
-			Listenable _listenable
+			Func<BuildContext, Widget?, Widget> builder,
+			Listenable listenable
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ListenableBuilderStruct>();
 			// Complex type: Func<BuildContext, Widget?, Widget> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 			// Complex type: Listenable - skipped (requires marshaling)
 		}
 

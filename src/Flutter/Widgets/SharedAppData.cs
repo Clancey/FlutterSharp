@@ -78,12 +78,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SharedAppData"/> class.
 		/// </summary>
 		public SharedAppData(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<SharedAppDataStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SharedAppDataStruct();

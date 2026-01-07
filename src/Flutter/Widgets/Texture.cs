@@ -50,16 +50,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Texture"/> class.
 		/// </summary>
 		public Texture(
-			int _textureId,
-			bool _freeze,
-			FilterQuality _filterQuality
+			int textureId,
+			bool freeze,
+			FilterQuality filterQuality
 
 		)
 		{
 			var s = GetBackingStruct<TextureStruct>();
-			s.textureId = _textureId;
-			s.freeze = _freeze;
-			s.filterQuality = _filterQuality;
+			s.textureId = textureId;
+			s.freeze = freeze;
+			s.filterQuality = filterQuality;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TextureStruct();

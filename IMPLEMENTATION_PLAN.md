@@ -36,7 +36,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
 | E001 | Add `Clip` enum to src/Flutter/Enums/ | completed | Already existed, verified working |
-| E002 | Verify TextOverflow enum has correct values | pending | Check against Flutter source |
+| E002 | Verify TextOverflow enum has correct values | completed | Verified: Clip, Fade, Ellipsis, Visible - matches Flutter |
 | E003 | Audit all enums for missing values | completed | No missing enums blocking C# build |
 | E004 | Add any other missing enums from build errors | completed | Not needed - build passes |
 
@@ -162,15 +162,15 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| API005 | Add IEnumerable<Widget> to multi-child widgets | pending | Row, Column, Stack, Wrap, ListView |
-| API006 | Implement Add(Widget) method for initializers | pending | C# collection initializer pattern |
-| API007 | Update Row/Column templates for collection support | pending | Widget.scriban or new template |
+| API005 | Add IEnumerable<Widget> to multi-child widgets | completed | Row, Column, Stack, Wrap, etc. now implement IEnumerable<Widget> |
+| API006 | Implement Add(Widget) method for initializers | completed | Added Add(Widget) and AddRange() for collection initializer syntax |
+| API007 | Update Row/Column templates for collection support | completed | CSharpWidget.scriban updated with has_widget_children logic |
 
 ### 2.5.3 Named Parameters with Defaults (MEDIUM PRIORITY)
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| API008 | Remove underscore prefix from C# parameters | pending | _mainAxisAlignment → mainAxisAlignment |
+| API008 | Remove underscore prefix from C# parameters | completed | _mainAxisAlignment → mainAxisAlignment |
 | API009 | Add proper default values for optional params | pending | MainAxisAlignment.start, etc. |
 | API010 | Make required params actually required | pending | child for Expanded, etc. |
 
@@ -297,6 +297,9 @@ When starting a new loop, work on these in order:
 | API001-003 | 2026-01-07 | d479921 | Fixed InvalidType enum resolution: Added 40+ parameter→type mappings in DartToCSharpMapper.ParameterNameToType, InferTypeFromParameterName() method, MapType() overload with parameterName. Added 17 missing types to TypeMappingRegistry (FlexFit, BoxHeightStyle, BoxWidthStyle, BoxShape, etc.). |
 | API004 | 2026-01-07 | a4b961b | Regenerated widgets with correct enum types. Fixed WidgetAnalysisEnricher to pass property name for type inference. Fixed IsReferenceType to recognize enum types as value types. Fixed nullable_type for optional enum parameters. Reduced InvalidType from 292→36 (88% reduction). |
 | API018-020 | 2026-01-07 | 7d6d58a | Fixed: Overflow→TextOverflow mapping (deprecated enum), DragStartBehavior import, VoidCallback callback detection for inherited properties. Generator and Flutter library build with 0 errors. |
+| E002 | 2026-01-07 | 3db3d4f | Verified TextOverflow enum has correct values: Clip, Fade, Ellipsis, Visible - matches Flutter exactly |
+| API005-007 | 2026-01-07 | 3db3d4f | Added collection initializer support for multi-child widgets. Created `has_widget_children` flag to distinguish `List<Widget>` from other list types (e.g., `List<TableRow>`). Widgets with `List<Widget>` children now implement `IEnumerable<Widget>`, have `Add(Widget)` and `AddRange()` methods, parameterless constructor, and `PrepareForSending()` override. 247 files changed. |
+| API008 | 2026-01-07 | pending | Removed underscore prefix from C# constructor parameters. Changed `_mainAxisAlignment` to `mainAxisAlignment`, etc. Updated WidgetAnalysisEnricher.cs (backingFieldName generation), CSharpWidgetGenerator.cs (parameterName generation), and CSharpWidget.scriban template (children_property_name references). C# keywords still properly escaped with `@` prefix via EscapeCSharpKeyword(). |
 
 ---
 

@@ -110,19 +110,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TweenAnimationBuilder"/> class.
 		/// </summary>
 		public TweenAnimationBuilder(
-			Tween<double> _tween,
-			Func<BuildContext, T, Widget?, Widget> _builder,
-			TimeSpan _duration
+			Tween<double> tween,
+			Func<BuildContext, T, Widget?, Widget> builder,
+			TimeSpan duration
 ,
-			Widget? _child = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			Widget? child = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<TweenAnimationBuilderStruct>();
 			// Complex type: Tween<double> - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, T, Widget?, Widget> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)

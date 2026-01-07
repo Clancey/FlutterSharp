@@ -33,10 +33,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultSelectionStyle"/> class.
 		/// </summary>
 		public DefaultSelectionStyle(
-			Color _cursorColor,
-			Color? _selectionColor,
-			object _mouseCursor,
-			Widget _child
+			Color cursorColor,
+			Color? selectionColor,
+			object mouseCursor,
+			Widget child
 
 		)
 		{
@@ -44,7 +44,7 @@ namespace Flutter.Widgets
 			// Complex type: Color - skipped (requires marshaling)
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DefaultSelectionStyleStruct();

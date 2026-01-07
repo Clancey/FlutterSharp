@@ -50,43 +50,43 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="WidgetsApp"/> class.
 		/// </summary>
 		public WidgetsApp(
-			TextStyle? _textStyle,
-			Color? _color,
-			Locale? _locale,
-			IEnumerable<object> _supportedLocales,
-			bool _showPerformanceOverlay,
-			bool _showSemanticsDebugger,
-			bool _debugShowWidgetInspector,
-			bool _debugShowCheckedModeBanner,
-			bool _useInheritedMediaQuery
+			TextStyle? textStyle,
+			Color? color,
+			Locale? locale,
+			IEnumerable<object> supportedLocales,
+			bool showPerformanceOverlay,
+			bool showSemanticsDebugger,
+			bool debugShowWidgetInspector,
+			bool debugShowCheckedModeBanner,
+			bool useInheritedMediaQuery
 ,
-			GlobalKey<NavigatorState>? _navigatorKey = null,
-			Func<RouteSettings, Route<object>?> _onGenerateRoute = null,
-			Func<string, List<Route<object>>> _onGenerateInitialRoutes = null,
-			Delegate _pageRouteBuilder = null,
-			RouteInformationParser<object>? _routeInformationParser = null,
-			RouterDelegate<object>? _routerDelegate = null,
-			BackButtonDispatcher? _backButtonDispatcher = null,
-			RouteInformationProvider? _routeInformationProvider = null,
-			RouterConfig<object>? _routerConfig = null,
-			Widget? _home = null,
-			Delegate _routes = null,
-			Func<RouteSettings, Route<object>?> _onUnknownRoute = null,
-			Func<NavigationNotification, bool> _onNavigationNotification = null,
-			string? _initialRoute = null,
-			List<NavigatorObserver>? _navigatorObservers = null,
-			Func<BuildContext, Widget?, Widget> _builder = null,
-			string? _title = null,
-			Func<BuildContext, string> _onGenerateTitle = null,
-			IEnumerable<LocalizationsDelegate<object>>? _localizationsDelegates = null,
-			Func<List<InvalidType>?, IEnumerable<InvalidType>, InvalidType> _localeListResolutionCallback = null,
-			Func<InvalidType, IEnumerable<InvalidType>, InvalidType> _localeResolutionCallback = null,
-			Delegate _exitWidgetSelectionButtonBuilder = null,
-			Delegate _moveExitWidgetSelectionButtonBuilder = null,
-			Delegate _tapBehaviorButtonBuilder = null,
-			Dictionary<ShortcutActivator, Intent>? _shortcuts = null,
-			Dictionary<Type, FlutterAction<Intent>>? _actions = null,
-			string? _restorationScopeId = null
+			GlobalKey<NavigatorState>? navigatorKey = null,
+			Func<RouteSettings, Route<object>?> onGenerateRoute = null,
+			Func<string, List<Route<object>>> onGenerateInitialRoutes = null,
+			Delegate pageRouteBuilder = null,
+			RouteInformationParser<object>? routeInformationParser = null,
+			RouterDelegate<object>? routerDelegate = null,
+			BackButtonDispatcher? backButtonDispatcher = null,
+			RouteInformationProvider? routeInformationProvider = null,
+			RouterConfig<object>? routerConfig = null,
+			Widget? home = null,
+			Delegate routes = null,
+			Func<RouteSettings, Route<object>?> onUnknownRoute = null,
+			Func<NavigationNotification, bool> onNavigationNotification = null,
+			string? initialRoute = null,
+			List<NavigatorObserver>? navigatorObservers = null,
+			Func<BuildContext, Widget?, Widget> builder = null,
+			string? title = null,
+			Func<BuildContext, string> onGenerateTitle = null,
+			IEnumerable<LocalizationsDelegate<object>>? localizationsDelegates = null,
+			Func<List<InvalidType>?, IEnumerable<InvalidType>, InvalidType> localeListResolutionCallback = null,
+			Func<InvalidType, IEnumerable<InvalidType>, InvalidType> localeResolutionCallback = null,
+			Delegate exitWidgetSelectionButtonBuilder = null,
+			Delegate moveExitWidgetSelectionButtonBuilder = null,
+			Delegate tapBehaviorButtonBuilder = null,
+			Dictionary<ShortcutActivator, Intent>? shortcuts = null,
+			Dictionary<Type, FlutterAction<Intent>>? actions = null,
+			string? restorationScopeId = null
 		)
 		{
 			var s = GetBackingStruct<WidgetsAppStruct>();
@@ -103,10 +103,10 @@ namespace Flutter.Widgets
 			// Complex type: Delegate - skipped (requires marshaling)
 			// Complex type: Func<RouteSettings, Route<object>?> - skipped (requires marshaling)
 			// Complex type: Func<NavigationNotification, bool> - skipped (requires marshaling)
-			s.initialRoute = _initialRoute;
+			s.initialRoute = initialRoute;
 			// Complex type: List<NavigatorObserver>? - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, Widget?, Widget> - skipped (requires marshaling)
-			s.title = _title;
+			s.title = title;
 			// Complex type: Func<BuildContext, string> - skipped (requires marshaling)
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: Color? - skipped (requires marshaling)
@@ -115,17 +115,17 @@ namespace Flutter.Widgets
 			// Complex type: Func<List<InvalidType>?, IEnumerable<InvalidType>, InvalidType> - skipped (requires marshaling)
 			// Complex type: Func<InvalidType, IEnumerable<InvalidType>, InvalidType> - skipped (requires marshaling)
 			// Complex type: IEnumerable<object> - skipped (requires marshaling)
-			s.showPerformanceOverlay = _showPerformanceOverlay;
-			s.showSemanticsDebugger = _showSemanticsDebugger;
-			s.debugShowWidgetInspector = _debugShowWidgetInspector;
+			s.showPerformanceOverlay = showPerformanceOverlay;
+			s.showSemanticsDebugger = showSemanticsDebugger;
+			s.debugShowWidgetInspector = debugShowWidgetInspector;
 			// Complex type: Delegate - skipped (requires marshaling)
 			// Complex type: Delegate - skipped (requires marshaling)
 			// Complex type: Delegate - skipped (requires marshaling)
-			s.debugShowCheckedModeBanner = _debugShowCheckedModeBanner;
+			s.debugShowCheckedModeBanner = debugShowCheckedModeBanner;
 			// Complex type: Dictionary<ShortcutActivator, Intent>? - skipped (requires marshaling)
 			// Complex type: Dictionary<Type, FlutterAction<Intent>>? - skipped (requires marshaling)
-			s.restorationScopeId = _restorationScopeId;
-			s.useInheritedMediaQuery = _useInheritedMediaQuery;
+			s.restorationScopeId = restorationScopeId;
+			s.useInheritedMediaQuery = useInheritedMediaQuery;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new WidgetsAppStruct();

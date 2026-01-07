@@ -97,13 +97,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CustomMultiChildLayout"/> class.
 		/// </summary>
 		public CustomMultiChildLayout(
-			object _delegate
+			object @delegate
 ,
-			List<Widget> _children = null
+			List<Widget> children = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<CustomMultiChildLayoutStruct>();
 			// Complex type: object - skipped (requires marshaling)
 			// Children are set in PrepareForSending to support collection initializers

@@ -62,22 +62,22 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Transform"/> class.
 		/// </summary>
 		public Transform(
-			Matrix4? _transform,
-			object _origin,
-			AlignmentGeometry? _alignment,
-			bool _transformHitTests,
-			FilterQuality _filterQuality
+			Matrix4? transform,
+			object origin,
+			AlignmentGeometry? alignment,
+			bool transformHitTests,
+			FilterQuality filterQuality
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<TransformStruct>();
 			// Complex type: Matrix4? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			s.transformHitTests = _transformHitTests;
-			s.filterQuality = _filterQuality;
-			s.child = _child;
+			s.transformHitTests = transformHitTests;
+			s.filterQuality = filterQuality;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TransformStruct();

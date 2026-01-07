@@ -43,7 +43,7 @@ namespace Flutter.Structs
 
 		// Simple field: overflow
 /// How visual overflow should be handled.
-		public Overflow overflow { get; set; }
+		public TextOverflow overflow { get; set; }
 
 		// Has flag for nullable property: maxLines
 		public byte HasmaxLines { get; set; }

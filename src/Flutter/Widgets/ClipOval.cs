@@ -48,16 +48,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipOval"/> class.
 		/// </summary>
 		public ClipOval(
-			object _clipper,
-			Clip _clipBehavior
+			object clipper,
+			Clip clipBehavior
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ClipOvalStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
-			s.child = _child;
+			s.clipBehavior = clipBehavior;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ClipOvalStruct();

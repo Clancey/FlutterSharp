@@ -133,31 +133,31 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flex"/> class.
 		/// </summary>
 		public Flex(
-			object _direction,
-			MainAxisAlignment _mainAxisAlignment,
-			MainAxisSize _mainAxisSize,
-			CrossAxisAlignment _crossAxisAlignment,
-			TextDirection _textDirection,
-			VerticalDirection _verticalDirection,
-			TextBaseline? _textBaseline,
-			Clip _clipBehavior,
-			double _spacing
+			object direction,
+			MainAxisAlignment mainAxisAlignment,
+			MainAxisSize mainAxisSize,
+			CrossAxisAlignment crossAxisAlignment,
+			TextDirection textDirection,
+			VerticalDirection verticalDirection,
+			TextBaseline? textBaseline,
+			Clip clipBehavior,
+			double spacing
 ,
-			List<Widget> _children = null
+			List<Widget> children = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<FlexStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.mainAxisAlignment = _mainAxisAlignment;
-			s.mainAxisSize = _mainAxisSize;
-			s.crossAxisAlignment = _crossAxisAlignment;
-			s.textDirection = _textDirection;
-			s.verticalDirection = _verticalDirection;
+			s.mainAxisAlignment = mainAxisAlignment;
+			s.mainAxisSize = mainAxisSize;
+			s.crossAxisAlignment = crossAxisAlignment;
+			s.textDirection = textDirection;
+			s.verticalDirection = verticalDirection;
 			// Complex type: TextBaseline? - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
-			s.spacing = _spacing;
+			s.clipBehavior = clipBehavior;
+			s.spacing = spacing;
 			// Children are set in PrepareForSending to support collection initializers
 		}
 

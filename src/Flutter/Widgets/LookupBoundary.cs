@@ -80,12 +80,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LookupBoundary"/> class.
 		/// </summary>
 		public LookupBoundary(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<LookupBoundaryStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new LookupBoundaryStruct();

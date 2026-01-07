@@ -43,29 +43,29 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedDefaultTextStyle"/> class.
 		/// </summary>
 		public AnimatedDefaultTextStyle(
-			Widget _child,
-			TextStyle? _style,
-			TextAlign? _textAlign,
-			bool _softWrap,
-			TextOverflow _overflow,
-			TextWidthBasis _textWidthBasis,
-			TextHeightBehavior _textHeightBehavior,
-			TimeSpan _duration
+			Widget child,
+			TextStyle? style,
+			TextAlign? textAlign,
+			bool softWrap,
+			TextOverflow overflow,
+			TextWidthBasis textWidthBasis,
+			TextHeightBehavior textHeightBehavior,
+			TimeSpan duration
 ,
-			int? _maxLines = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			int? maxLines = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedDefaultTextStyleStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: TextAlign? - skipped (requires marshaling)
-			s.softWrap = _softWrap;
-			s.overflow = _overflow;
-			if (_maxLines.HasValue)
-				s.maxLines = _maxLines.Value;
-			s.textWidthBasis = _textWidthBasis;
+			s.softWrap = softWrap;
+			s.overflow = overflow;
+			if (maxLines.HasValue)
+				s.maxLines = maxLines.Value;
+			s.textWidthBasis = textWidthBasis;
 			// Complex type: TextHeightBehavior - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)

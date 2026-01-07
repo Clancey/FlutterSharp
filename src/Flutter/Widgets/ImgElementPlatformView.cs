@@ -25,11 +25,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ImgElementPlatformView(
 
-			string? _src = null
+			string? src = null
 		)
 		{
 			var s = GetBackingStruct<ImgElementPlatformViewStruct>();
-			s.src = _src;
+			s.src = src;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ImgElementPlatformViewStruct();

@@ -50,20 +50,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="UnconstrainedBox"/> class.
 		/// </summary>
 		public UnconstrainedBox(
-			TextDirection _textDirection,
-			AlignmentGeometry? _alignment,
-			object _constrainedAxis,
-			Clip _clipBehavior
+			TextDirection textDirection,
+			AlignmentGeometry? alignment,
+			object constrainedAxis,
+			Clip clipBehavior
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<UnconstrainedBoxStruct>();
-			s.textDirection = _textDirection;
+			s.textDirection = textDirection;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
-			s.child = _child;
+			s.clipBehavior = clipBehavior;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new UnconstrainedBoxStruct();

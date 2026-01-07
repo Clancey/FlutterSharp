@@ -39,24 +39,24 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedModalBarrier"/> class.
 		/// </summary>
 		public AnimatedModalBarrier(
-			bool _dismissible,
-			Action _onDismiss,
-			object _clipDetailsNotifier,
-			Color? _color
+			bool dismissible,
+			Action onDismiss,
+			object clipDetailsNotifier,
+			Color? color
 ,
-			string? _semanticsLabel = null,
-			bool? _barrierSemanticsDismissible = null,
-			string? _semanticsOnTapHint = null
+			string? semanticsLabel = null,
+			bool? barrierSemanticsDismissible = null,
+			string? semanticsOnTapHint = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedModalBarrierStruct>();
-			s.dismissible = _dismissible;
-			s.semanticsLabel = _semanticsLabel;
-			if (_barrierSemanticsDismissible.HasValue)
-				s.barrierSemanticsDismissible = _barrierSemanticsDismissible.Value;
+			s.dismissible = dismissible;
+			s.semanticsLabel = semanticsLabel;
+			if (barrierSemanticsDismissible.HasValue)
+				s.barrierSemanticsDismissible = barrierSemanticsDismissible.Value;
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.semanticsOnTapHint = _semanticsOnTapHint;
+			s.semanticsOnTapHint = semanticsOnTapHint;
 			// Complex type: Color? - skipped (requires marshaling)
 		}
 

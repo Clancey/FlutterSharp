@@ -37,16 +37,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ReorderableDelayedDragStartListener"/> class.
 		/// </summary>
 		public ReorderableDelayedDragStartListener(
-			Widget _child,
-			int _index
+			Widget child,
+			int index
 ,
-			bool _enabled = true
+			bool enabled = true
 		)
 		{
 			var s = GetBackingStruct<ReorderableDelayedDragStartListenerStruct>();
-			s.child = _child;
-			s.index = _index;
-			s.enabled = _enabled;
+			s.child = child;
+			s.index = index;
+			s.enabled = enabled;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ReorderableDelayedDragStartListenerStruct();

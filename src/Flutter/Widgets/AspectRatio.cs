@@ -100,14 +100,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AspectRatio"/> class.
 		/// </summary>
 		public AspectRatio(
-			double _aspectRatio
+			double aspectRatio
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<AspectRatioStruct>();
-			s.aspectRatio = _aspectRatio;
-			s.child = _child;
+			s.aspectRatio = aspectRatio;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AspectRatioStruct();

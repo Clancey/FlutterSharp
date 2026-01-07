@@ -34,20 +34,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Placeholder"/> class.
 		/// </summary>
 		public Placeholder(
-			Color? _color,
-			double _strokeWidth,
-			double _fallbackWidth,
-			double _fallbackHeight
+			Color? color,
+			double strokeWidth,
+			double fallbackWidth,
+			double fallbackHeight
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<PlaceholderStruct>();
 			// Complex type: Color? - skipped (requires marshaling)
-			s.strokeWidth = _strokeWidth;
-			s.fallbackWidth = _fallbackWidth;
-			s.fallbackHeight = _fallbackHeight;
-			s.child = _child;
+			s.strokeWidth = strokeWidth;
+			s.fallbackWidth = fallbackWidth;
+			s.fallbackHeight = fallbackHeight;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PlaceholderStruct();

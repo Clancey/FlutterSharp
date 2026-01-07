@@ -58,14 +58,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ConstrainedBox"/> class.
 		/// </summary>
 		public ConstrainedBox(
-			BoxConstraints? _constraints
+			BoxConstraints? constraints
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ConstrainedBoxStruct>();
 			// Complex type: BoxConstraints? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ConstrainedBoxStruct();

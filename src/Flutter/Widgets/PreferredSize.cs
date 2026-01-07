@@ -52,13 +52,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PreferredSize"/> class.
 		/// </summary>
 		public PreferredSize(
-			Widget _child,
-			object _preferredSize
+			Widget child,
+			object preferredSize
 
 		)
 		{
 			var s = GetBackingStruct<PreferredSizeStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: object - skipped (requires marshaling)
 		}
 

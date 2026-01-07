@@ -114,31 +114,31 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Wrap"/> class.
 		/// </summary>
 		public Wrap(
-			object _direction,
-			AlignmentGeometry? _alignment,
-			double _spacing,
-			AlignmentGeometry _runAlignment,
-			double _runSpacing,
-			CrossAxisAlignment _crossAxisAlignment,
-			TextDirection _textDirection,
-			VerticalDirection _verticalDirection,
-			Clip _clipBehavior
+			object direction,
+			AlignmentGeometry? alignment,
+			double spacing,
+			AlignmentGeometry runAlignment,
+			double runSpacing,
+			CrossAxisAlignment crossAxisAlignment,
+			TextDirection textDirection,
+			VerticalDirection verticalDirection,
+			Clip clipBehavior
 ,
-			List<Widget> _children = null
+			List<Widget> children = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<WrapStruct>();
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			s.spacing = _spacing;
+			s.spacing = spacing;
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
-			s.runSpacing = _runSpacing;
-			s.crossAxisAlignment = _crossAxisAlignment;
-			s.textDirection = _textDirection;
-			s.verticalDirection = _verticalDirection;
-			s.clipBehavior = _clipBehavior;
+			s.runSpacing = runSpacing;
+			s.crossAxisAlignment = crossAxisAlignment;
+			s.textDirection = textDirection;
+			s.verticalDirection = verticalDirection;
+			s.clipBehavior = clipBehavior;
 			// Children are set in PrepareForSending to support collection initializers
 		}
 

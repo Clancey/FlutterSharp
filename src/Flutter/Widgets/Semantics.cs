@@ -47,162 +47,162 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Semantics"/> class.
 		/// </summary>
 		public Semantics(
-			object _properties,
-			bool _container,
-			bool _explicitChildNodes,
-			bool _excludeSemantics,
-			bool _blockUserActions
+			object properties,
+			bool container,
+			bool explicitChildNodes,
+			bool excludeSemantics,
+			bool blockUserActions
 ,
-			Widget? _child = null,
-			bool? _enabled = null,
-			bool? _checked = null,
-			bool? _mixed = null,
-			bool? _selected = null,
-			bool? _toggled = null,
-			bool? _button = null,
-			bool? _slider = null,
-			bool? _keyboardKey = null,
-			bool? _link = null,
-			Uri? _linkUrl = null,
-			bool? _header = null,
-			int? _headingLevel = null,
-			bool? _textField = null,
-			bool? _readOnly = null,
-			bool? _focusable = null,
-			bool? _focused = null,
-			bool? _inMutuallyExclusiveGroup = null,
-			bool? _obscured = null,
-			bool? _multiline = null,
-			bool? _scopesRoute = null,
-			bool? _namesRoute = null,
-			bool? _hidden = null,
-			bool? _image = null,
-			bool? _liveRegion = null,
-			bool? _expanded = null,
-			bool? _isRequired = null,
-			int? _maxValueLength = null,
-			int? _currentValueLength = null,
-			string? _identifier = null,
-			string? _label = null,
-			object _attributedLabel = null,
-			string? _value = null,
-			object _attributedValue = null,
-			string? _increasedValue = null,
-			object _attributedIncreasedValue = null,
-			string? _decreasedValue = null,
-			object _attributedDecreasedValue = null,
-			string? _hint = null,
-			object _attributedHint = null,
-			string? _tooltip = null,
-			string? _onTapHint = null,
-			string? _onLongPressHint = null,
-			TextDirection? _textDirection = null,
-			object _sortKey = null,
-			object _tagForChildren = null,
-			Action _onTap = null,
-			Action _onLongPress = null,
-			Action _onScrollLeft = null,
-			Action _onScrollRight = null,
-			Action _onScrollUp = null,
-			Action _onScrollDown = null,
-			Action _onIncrease = null,
-			Action _onDecrease = null,
-			Action _onCopy = null,
-			Action _onCut = null,
-			Action _onPaste = null,
-			Action _onDismiss = null,
-			Action _onMoveCursorForwardByCharacter = null,
-			Action _onMoveCursorBackwardByCharacter = null,
-			Action _onSetSelection = null,
-			Action _onSetText = null,
-			Action _onDidGainAccessibilityFocus = null,
-			Action _onDidLoseAccessibilityFocus = null,
-			Action _onFocus = null,
-			Dictionary<object, object>? _customSemanticsActions = null,
-			object _role = null,
-			HashSet<string>? _controlsNodes = null,
-			object _validationResult = null,
-			object _inputType = null
+			Widget? child = null,
+			bool? enabled = null,
+			bool? @checked = null,
+			bool? mixed = null,
+			bool? selected = null,
+			bool? toggled = null,
+			bool? button = null,
+			bool? slider = null,
+			bool? keyboardKey = null,
+			bool? link = null,
+			Uri? linkUrl = null,
+			bool? header = null,
+			int? headingLevel = null,
+			bool? textField = null,
+			bool? @readOnly = null,
+			bool? focusable = null,
+			bool? focused = null,
+			bool? inMutuallyExclusiveGroup = null,
+			bool? obscured = null,
+			bool? multiline = null,
+			bool? scopesRoute = null,
+			bool? namesRoute = null,
+			bool? hidden = null,
+			bool? image = null,
+			bool? liveRegion = null,
+			bool? expanded = null,
+			bool? isRequired = null,
+			int? maxValueLength = null,
+			int? currentValueLength = null,
+			string? identifier = null,
+			string? label = null,
+			object attributedLabel = null,
+			string? value = null,
+			object attributedValue = null,
+			string? increasedValue = null,
+			object attributedIncreasedValue = null,
+			string? decreasedValue = null,
+			object attributedDecreasedValue = null,
+			string? hint = null,
+			object attributedHint = null,
+			string? tooltip = null,
+			string? onTapHint = null,
+			string? onLongPressHint = null,
+			TextDirection? textDirection = null,
+			object sortKey = null,
+			object tagForChildren = null,
+			Action onTap = null,
+			Action onLongPress = null,
+			Action onScrollLeft = null,
+			Action onScrollRight = null,
+			Action onScrollUp = null,
+			Action onScrollDown = null,
+			Action onIncrease = null,
+			Action onDecrease = null,
+			Action onCopy = null,
+			Action onCut = null,
+			Action onPaste = null,
+			Action onDismiss = null,
+			Action onMoveCursorForwardByCharacter = null,
+			Action onMoveCursorBackwardByCharacter = null,
+			Action onSetSelection = null,
+			Action onSetText = null,
+			Action onDidGainAccessibilityFocus = null,
+			Action onDidLoseAccessibilityFocus = null,
+			Action onFocus = null,
+			Dictionary<object, object>? customSemanticsActions = null,
+			object role = null,
+			HashSet<string>? controlsNodes = null,
+			object validationResult = null,
+			object inputType = null
 		)
 		{
 			var s = GetBackingStruct<SemanticsStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.container = _container;
-			s.explicitChildNodes = _explicitChildNodes;
-			s.excludeSemantics = _excludeSemantics;
-			s.blockUserActions = _blockUserActions;
-			s.child = _child;
-			if (_enabled.HasValue)
-				s.enabled = _enabled.Value;
-			if (_checked.HasValue)
-				s.@checked = _checked.Value;
-			if (_mixed.HasValue)
-				s.mixed = _mixed.Value;
-			if (_selected.HasValue)
-				s.selected = _selected.Value;
-			if (_toggled.HasValue)
-				s.toggled = _toggled.Value;
-			if (_button.HasValue)
-				s.button = _button.Value;
-			if (_slider.HasValue)
-				s.slider = _slider.Value;
-			if (_keyboardKey.HasValue)
-				s.keyboardKey = _keyboardKey.Value;
-			if (_link.HasValue)
-				s.link = _link.Value;
+			s.container = container;
+			s.explicitChildNodes = explicitChildNodes;
+			s.excludeSemantics = excludeSemantics;
+			s.blockUserActions = blockUserActions;
+			s.child = child;
+			if (enabled.HasValue)
+				s.enabled = enabled.Value;
+			if (@checked.HasValue)
+				s.@checked = @checked.Value;
+			if (mixed.HasValue)
+				s.mixed = mixed.Value;
+			if (selected.HasValue)
+				s.selected = selected.Value;
+			if (toggled.HasValue)
+				s.toggled = toggled.Value;
+			if (button.HasValue)
+				s.button = button.Value;
+			if (slider.HasValue)
+				s.slider = slider.Value;
+			if (keyboardKey.HasValue)
+				s.keyboardKey = keyboardKey.Value;
+			if (link.HasValue)
+				s.link = link.Value;
 			// Complex type: Uri? - skipped (requires marshaling)
-			if (_header.HasValue)
-				s.header = _header.Value;
-			if (_headingLevel.HasValue)
-				s.headingLevel = _headingLevel.Value;
-			if (_textField.HasValue)
-				s.textField = _textField.Value;
-			if (_readOnly.HasValue)
-				s.@readOnly = _readOnly.Value;
-			if (_focusable.HasValue)
-				s.focusable = _focusable.Value;
-			if (_focused.HasValue)
-				s.focused = _focused.Value;
-			if (_inMutuallyExclusiveGroup.HasValue)
-				s.inMutuallyExclusiveGroup = _inMutuallyExclusiveGroup.Value;
-			if (_obscured.HasValue)
-				s.obscured = _obscured.Value;
-			if (_multiline.HasValue)
-				s.multiline = _multiline.Value;
-			if (_scopesRoute.HasValue)
-				s.scopesRoute = _scopesRoute.Value;
-			if (_namesRoute.HasValue)
-				s.namesRoute = _namesRoute.Value;
-			if (_hidden.HasValue)
-				s.hidden = _hidden.Value;
-			if (_image.HasValue)
-				s.image = _image.Value;
-			if (_liveRegion.HasValue)
-				s.liveRegion = _liveRegion.Value;
-			if (_expanded.HasValue)
-				s.expanded = _expanded.Value;
-			if (_isRequired.HasValue)
-				s.isRequired = _isRequired.Value;
-			if (_maxValueLength.HasValue)
-				s.maxValueLength = _maxValueLength.Value;
-			if (_currentValueLength.HasValue)
-				s.currentValueLength = _currentValueLength.Value;
-			s.identifier = _identifier;
-			s.label = _label;
+			if (header.HasValue)
+				s.header = header.Value;
+			if (headingLevel.HasValue)
+				s.headingLevel = headingLevel.Value;
+			if (textField.HasValue)
+				s.textField = textField.Value;
+			if (@readOnly.HasValue)
+				s.@readOnly = @readOnly.Value;
+			if (focusable.HasValue)
+				s.focusable = focusable.Value;
+			if (focused.HasValue)
+				s.focused = focused.Value;
+			if (inMutuallyExclusiveGroup.HasValue)
+				s.inMutuallyExclusiveGroup = inMutuallyExclusiveGroup.Value;
+			if (obscured.HasValue)
+				s.obscured = obscured.Value;
+			if (multiline.HasValue)
+				s.multiline = multiline.Value;
+			if (scopesRoute.HasValue)
+				s.scopesRoute = scopesRoute.Value;
+			if (namesRoute.HasValue)
+				s.namesRoute = namesRoute.Value;
+			if (hidden.HasValue)
+				s.hidden = hidden.Value;
+			if (image.HasValue)
+				s.image = image.Value;
+			if (liveRegion.HasValue)
+				s.liveRegion = liveRegion.Value;
+			if (expanded.HasValue)
+				s.expanded = expanded.Value;
+			if (isRequired.HasValue)
+				s.isRequired = isRequired.Value;
+			if (maxValueLength.HasValue)
+				s.maxValueLength = maxValueLength.Value;
+			if (currentValueLength.HasValue)
+				s.currentValueLength = currentValueLength.Value;
+			s.identifier = identifier;
+			s.label = label;
 			// Complex type: object - skipped (requires marshaling)
-			s.value = _value;
+			s.value = value;
 			// Complex type: object - skipped (requires marshaling)
-			s.increasedValue = _increasedValue;
+			s.increasedValue = increasedValue;
 			// Complex type: object - skipped (requires marshaling)
-			s.decreasedValue = _decreasedValue;
+			s.decreasedValue = decreasedValue;
 			// Complex type: object - skipped (requires marshaling)
-			s.hint = _hint;
+			s.hint = hint;
 			// Complex type: object - skipped (requires marshaling)
-			s.tooltip = _tooltip;
-			s.onTapHint = _onTapHint;
-			s.onLongPressHint = _onLongPressHint;
-			if (_textDirection.HasValue)
-				s.textDirection = _textDirection.Value;
+			s.tooltip = tooltip;
+			s.onTapHint = onTapHint;
+			s.onLongPressHint = onLongPressHint;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)

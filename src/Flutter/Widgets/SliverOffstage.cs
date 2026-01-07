@@ -38,16 +38,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverOffstage"/> class.
 		/// </summary>
 		public SliverOffstage(
-			Widget _child,
-			bool _offstage
+			Widget child,
+			bool offstage
 ,
-			Widget? _sliver = null
+			Widget? sliver = null
 		)
 		{
 			var s = GetBackingStruct<SliverOffstageStruct>();
-			s.child = _child;
-			s.offstage = _offstage;
-			s.sliver = _sliver;
+			s.child = child;
+			s.offstage = offstage;
+			s.sliver = sliver;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverOffstageStruct();

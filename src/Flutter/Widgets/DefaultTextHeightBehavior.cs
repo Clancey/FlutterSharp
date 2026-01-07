@@ -34,14 +34,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultTextHeightBehavior"/> class.
 		/// </summary>
 		public DefaultTextHeightBehavior(
-			TextHeightBehavior _textHeightBehavior,
-			Widget _child
+			TextHeightBehavior textHeightBehavior,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<DefaultTextHeightBehaviorStruct>();
 			// Complex type: TextHeightBehavior - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DefaultTextHeightBehaviorStruct();

@@ -65,26 +65,26 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AndroidView"/> class.
 		/// </summary>
 		public AndroidView(
-			string _viewType,
-			Action _onPlatformViewCreated,
-			PlatformViewHitTestBehavior _hitTestBehavior,
-			object _layoutDirection,
-			object _creationParams,
-			object _creationParamsCodec,
-			Clip _clipBehavior
+			string viewType,
+			Action onPlatformViewCreated,
+			PlatformViewHitTestBehavior hitTestBehavior,
+			object layoutDirection,
+			object creationParams,
+			object creationParamsCodec,
+			Clip clipBehavior
 ,
-			HashSet<object>? _gestureRecognizers = null
+			HashSet<object>? gestureRecognizers = null
 		)
 		{
 			var s = GetBackingStruct<AndroidViewStruct>();
-			s.viewType = _viewType;
+			s.viewType = viewType;
 			// Complex type: Action - skipped (requires marshaling)
-			s.hitTestBehavior = _hitTestBehavior;
+			s.hitTestBehavior = hitTestBehavior;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: HashSet<object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AndroidViewStruct();

@@ -69,7 +69,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="StatefulBuilder"/> class.
 		/// </summary>
 		public StatefulBuilder(
-			WidgetBuilder? _builder
+			WidgetBuilder? builder
 
 		)
 		{

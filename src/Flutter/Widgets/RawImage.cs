@@ -37,44 +37,44 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawImage"/> class.
 		/// </summary>
 		public RawImage(
-			ImageProvider _image,
-			double _scale,
-			Color? _color,
-			Animation<double> _opacity,
-			FilterQuality _filterQuality,
-			object _colorBlendMode,
-			BoxFit _fit,
-			AlignmentGeometry? _alignment,
-			object _repeat,
-			object _centerSlice,
-			bool _matchTextDirection,
-			bool _invertColors,
-			bool _isAntiAlias
+			ImageProvider image,
+			double scale,
+			Color? color,
+			Animation<double> opacity,
+			FilterQuality filterQuality,
+			object colorBlendMode,
+			BoxFit fit,
+			AlignmentGeometry? alignment,
+			object repeat,
+			object centerSlice,
+			bool matchTextDirection,
+			bool invertColors,
+			bool isAntiAlias
 ,
-			string? _debugImageLabel = null,
-			double? _width = null,
-			double? _height = null
+			string? debugImageLabel = null,
+			double? width = null,
+			double? height = null
 		)
 		{
 			var s = GetBackingStruct<RawImageStruct>();
 			// Complex type: ImageProvider - skipped (requires marshaling)
-			s.debugImageLabel = _debugImageLabel;
-			if (_width.HasValue)
-				s.width = _width.Value;
-			if (_height.HasValue)
-				s.height = _height.Value;
-			s.scale = _scale;
+			s.debugImageLabel = debugImageLabel;
+			if (width.HasValue)
+				s.width = width.Value;
+			if (height.HasValue)
+				s.height = height.Value;
+			s.scale = scale;
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: Animation<double> - skipped (requires marshaling)
-			s.filterQuality = _filterQuality;
+			s.filterQuality = filterQuality;
 			// Complex type: object - skipped (requires marshaling)
-			s.fit = _fit;
+			s.fit = fit;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.matchTextDirection = _matchTextDirection;
-			s.invertColors = _invertColors;
-			s.isAntiAlias = _isAntiAlias;
+			s.matchTextDirection = matchTextDirection;
+			s.invertColors = invertColors;
+			s.isAntiAlias = isAntiAlias;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RawImageStruct();

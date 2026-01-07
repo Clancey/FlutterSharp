@@ -25,28 +25,28 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawWebImage"/> class.
 		/// </summary>
 		public RawWebImage(
-			Widget _child,
-			WebImageInfo _image,
-			BoxFit _fit,
-			AlignmentGeometry? _alignment,
-			bool _matchTextDirection
+			Widget child,
+			WebImageInfo image,
+			BoxFit fit,
+			AlignmentGeometry? alignment,
+			bool matchTextDirection
 ,
-			string? _debugImageLabel = null,
-			double? _width = null,
-			double? _height = null
+			string? debugImageLabel = null,
+			double? width = null,
+			double? height = null
 		)
 		{
 			var s = GetBackingStruct<RawWebImageStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: WebImageInfo - skipped (requires marshaling)
-			s.debugImageLabel = _debugImageLabel;
-			if (_width.HasValue)
-				s.width = _width.Value;
-			if (_height.HasValue)
-				s.height = _height.Value;
-			s.fit = _fit;
+			s.debugImageLabel = debugImageLabel;
+			if (width.HasValue)
+				s.width = width.Value;
+			if (height.HasValue)
+				s.height = height.Value;
+			s.fit = fit;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			s.matchTextDirection = _matchTextDirection;
+			s.matchTextDirection = matchTextDirection;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RawWebImageStruct();

@@ -70,18 +70,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedBuilder"/> class.
 		/// </summary>
 		public AnimatedBuilder(
-			Animation<double> _animation,
-			Listenable _listenable,
-			Func<BuildContext, Widget?, Widget> _builder
+			Animation<double> animation,
+			Listenable listenable,
+			Func<BuildContext, Widget?, Widget> builder
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedBuilderStruct>();
 			// Complex type: Animation<double> - skipped (requires marshaling)
 			// Complex type: Listenable - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, Widget?, Widget> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedBuilderStruct();

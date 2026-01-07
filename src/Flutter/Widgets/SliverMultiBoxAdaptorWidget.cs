@@ -37,7 +37,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverMultiBoxAdaptorWidget"/> class.
 		/// </summary>
 		public SliverMultiBoxAdaptorWidget(
-			SliverChildDelegate _delegate
+			SliverChildDelegate @delegate
 
 		)
 		{

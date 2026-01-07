@@ -43,18 +43,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flexible"/> class.
 		/// </summary>
 		public Flexible(
-			int _flex,
-			BoxFit _fit,
-			Type _debugTypicalAncestorWidgetClass,
-			Widget _child
+			int flex,
+			BoxFit fit,
+			Type debugTypicalAncestorWidgetClass,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<FlexibleStruct>();
-			s.flex = _flex;
-			s.fit = _fit;
+			s.flex = flex;
+			s.fit = fit;
 			// Complex type: Type - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FlexibleStruct();

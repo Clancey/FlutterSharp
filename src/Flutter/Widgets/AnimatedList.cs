@@ -77,31 +77,31 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedList"/> class.
 		/// </summary>
 		public AnimatedList(
-			object _itemBuilder
+			object itemBuilder
 ,
-			int _initialItemCount = 0,
-			Axis _scrollDirection = Axis.Vertical,
-			bool _reverse = false,
-			ScrollController? _controller = null,
-			bool? _primary = null,
-			ScrollPhysics? _physics = null,
-			bool _shrinkWrap = false,
-			EdgeInsetsGeometry? _padding = null,
-			Clip _clipBehavior = Clip.HardEdge
+			int initialItemCount = 0,
+			Axis scrollDirection = Axis.Vertical,
+			bool reverse = false,
+			ScrollController? controller = null,
+			bool? primary = null,
+			ScrollPhysics? physics = null,
+			bool shrinkWrap = false,
+			EdgeInsetsGeometry? padding = null,
+			Clip clipBehavior = Clip.HardEdge
 		)
 		{
 			var s = GetBackingStruct<AnimatedListStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.initialItemCount = _initialItemCount;
-			s.scrollDirection = _scrollDirection;
-			s.reverse = _reverse;
+			s.initialItemCount = initialItemCount;
+			s.scrollDirection = scrollDirection;
+			s.reverse = reverse;
 			// Complex type: ScrollController? - skipped (requires marshaling)
-			if (_primary.HasValue)
-				s.primary = _primary.Value;
+			if (primary.HasValue)
+				s.primary = primary.Value;
 			// Complex type: ScrollPhysics? - skipped (requires marshaling)
-			s.shrinkWrap = _shrinkWrap;
+			s.shrinkWrap = shrinkWrap;
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnimatedListStruct();

@@ -64,18 +64,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DecoratedSliver"/> class.
 		/// </summary>
 		public DecoratedSliver(
-			Widget _child,
-			Decoration? _decoration,
-			object _position
+			Widget child,
+			Decoration? decoration,
+			object position
 ,
-			Widget? _sliver = null
+			Widget? sliver = null
 		)
 		{
 			var s = GetBackingStruct<DecoratedSliverStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: Decoration? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.sliver = _sliver;
+			s.sliver = sliver;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DecoratedSliverStruct();

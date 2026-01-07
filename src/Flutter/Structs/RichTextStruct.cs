@@ -129,7 +129,7 @@ namespace Flutter.Structs
 
 		// Simple field: overflow
 /// How visual overflow should be handled.
-		public Overflow overflow { get; set; }
+		public TextOverflow overflow { get; set; }
 
 		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}

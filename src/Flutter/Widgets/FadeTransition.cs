@@ -66,16 +66,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FadeTransition"/> class.
 		/// </summary>
 		public FadeTransition(
-			Animation<double> _opacity,
-			bool _alwaysIncludeSemantics
+			Animation<double> opacity,
+			bool alwaysIncludeSemantics
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<FadeTransitionStruct>();
 			// Complex type: Animation<double> - skipped (requires marshaling)
-			s.alwaysIncludeSemantics = _alwaysIncludeSemantics;
-			s.child = _child;
+			s.alwaysIncludeSemantics = alwaysIncludeSemantics;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FadeTransitionStruct();

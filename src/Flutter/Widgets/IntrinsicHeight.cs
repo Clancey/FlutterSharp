@@ -55,11 +55,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public IntrinsicHeight(
 
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<IntrinsicHeightStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new IntrinsicHeightStruct();

@@ -35,14 +35,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="UndoHistory"/> class.
 		/// </summary>
 		public UndoHistory(
-			object _value,
-			Action<T> _onTriggered,
-			FocusNode _focusNode,
-			Widget _child
+			object value,
+			Action<T> onTriggered,
+			FocusNode focusNode,
+			Widget child
 ,
-			Func<T?, T, bool> _shouldChangeUndoStack = null,
-			Func<T, T> _undoStackModifier = null,
-			UndoHistoryController? _controller = null
+			Func<T?, T, bool> shouldChangeUndoStack = null,
+			Func<T, T> undoStackModifier = null,
+			UndoHistoryController? controller = null
 		)
 		{
 			var s = GetBackingStruct<UndoHistoryStruct>();
@@ -52,7 +52,7 @@ namespace Flutter.Widgets
 			// Complex type: Action<T> - skipped (requires marshaling)
 			// Complex type: FocusNode - skipped (requires marshaling)
 			// Complex type: UndoHistoryController? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new UndoHistoryStruct();

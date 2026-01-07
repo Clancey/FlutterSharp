@@ -53,14 +53,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverEnsureSemantics"/> class.
 		/// </summary>
 		public SliverEnsureSemantics(
-			Widget _child,
-			Widget _sliver
+			Widget child,
+			Widget sliver
 
 		)
 		{
 			var s = GetBackingStruct<SliverEnsureSemanticsStruct>();
-			s.child = _child;
-			s.sliver = _sliver;
+			s.child = child;
+			s.sliver = sliver;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverEnsureSemanticsStruct();

@@ -27,13 +27,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SemanticsDebugger"/> class.
 		/// </summary>
 		public SemanticsDebugger(
-			Widget _child,
-			object _labelStyle
+			Widget child,
+			object labelStyle
 
 		)
 		{
 			var s = GetBackingStruct<SemanticsDebuggerStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: object - skipped (requires marshaling)
 		}
 

@@ -66,12 +66,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TapRegionSurface"/> class.
 		/// </summary>
 		public TapRegionSurface(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<TapRegionSurfaceStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TapRegionSurfaceStruct();

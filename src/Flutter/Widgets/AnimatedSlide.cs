@@ -44,16 +44,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedSlide"/> class.
 		/// </summary>
 		public AnimatedSlide(
-			Offset _offset,
-			TimeSpan _duration
+			Offset offset,
+			TimeSpan duration
 ,
-			Widget? _child = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			Widget? child = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedSlideStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: Offset - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)

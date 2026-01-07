@@ -56,12 +56,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Spacer"/> class.
 		/// </summary>
 		public Spacer(
-			int _flex
+			int flex
 
 		)
 		{
 			var s = GetBackingStruct<SpacerStruct>();
-			s.flex = _flex;
+			s.flex = flex;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SpacerStruct();

@@ -71,7 +71,7 @@ namespace Flutter.Structs
 /// How visual overflow should be handled.
 /// 
 /// This property takes effect immediately when changed, it is not animated.
-		public Overflow overflow { get; set; }
+		public TextOverflow overflow { get; set; }
 
 		// Has flag for nullable property: maxLines
 		public byte HasmaxLines { get; set; }

@@ -61,14 +61,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RestorationScope"/> class.
 		/// </summary>
 		public RestorationScope(
-			Widget _child
+			Widget child
 ,
-			string? _restorationId = null
+			string? restorationId = null
 		)
 		{
 			var s = GetBackingStruct<RestorationScopeStruct>();
-			s.child = _child;
-			s.restorationId = _restorationId;
+			s.child = child;
+			s.restorationId = restorationId;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RestorationScopeStruct();

@@ -33,12 +33,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DragBoundary"/> class.
 		/// </summary>
 		public DragBoundary(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<DragBoundaryStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DragBoundaryStruct();

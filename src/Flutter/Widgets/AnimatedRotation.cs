@@ -75,21 +75,21 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedRotation"/> class.
 		/// </summary>
 		public AnimatedRotation(
-			double _turns,
-			AlignmentGeometry? _alignment,
-			FilterQuality _filterQuality,
-			TimeSpan _duration
+			double turns,
+			AlignmentGeometry? alignment,
+			FilterQuality filterQuality,
+			TimeSpan duration
 ,
-			Widget? _child = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			Widget? child = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedRotationStruct>();
-			s.child = _child;
-			s.turns = _turns;
+			s.child = child;
+			s.turns = turns;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			s.filterQuality = _filterQuality;
+			s.filterQuality = filterQuality;
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)

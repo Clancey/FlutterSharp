@@ -142,34 +142,34 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SingleChildScrollView"/> class.
 		/// </summary>
 		public SingleChildScrollView(
-			Axis _scrollDirection,
-			bool _reverse,
-			EdgeInsetsGeometry? _padding,
-			DragStartBehavior _dragStartBehavior,
-			Clip _clipBehavior,
-			PlatformViewHitTestBehavior _hitTestBehavior
+			Axis scrollDirection,
+			bool reverse,
+			EdgeInsetsGeometry? padding,
+			DragStartBehavior dragStartBehavior,
+			Clip clipBehavior,
+			PlatformViewHitTestBehavior hitTestBehavior
 ,
-			ScrollController? _controller = null,
-			bool? _primary = null,
-			ScrollPhysics? _physics = null,
-			Widget? _child = null,
-			string? _restorationId = null,
-			ScrollViewKeyboardDismissBehavior? _keyboardDismissBehavior = null
+			ScrollController? controller = null,
+			bool? primary = null,
+			ScrollPhysics? physics = null,
+			Widget? child = null,
+			string? restorationId = null,
+			ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior = null
 		)
 		{
 			var s = GetBackingStruct<SingleChildScrollViewStruct>();
-			s.scrollDirection = _scrollDirection;
-			s.reverse = _reverse;
+			s.scrollDirection = scrollDirection;
+			s.reverse = reverse;
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
 			// Complex type: ScrollController? - skipped (requires marshaling)
-			if (_primary.HasValue)
-				s.primary = _primary.Value;
+			if (primary.HasValue)
+				s.primary = primary.Value;
 			// Complex type: ScrollPhysics? - skipped (requires marshaling)
-			s.child = _child;
-			s.dragStartBehavior = _dragStartBehavior;
-			s.clipBehavior = _clipBehavior;
-			s.hitTestBehavior = _hitTestBehavior;
-			s.restorationId = _restorationId;
+			s.child = child;
+			s.dragStartBehavior = dragStartBehavior;
+			s.clipBehavior = clipBehavior;
+			s.hitTestBehavior = hitTestBehavior;
+			s.restorationId = restorationId;
 			// Complex type: ScrollViewKeyboardDismissBehavior? - skipped (requires marshaling)
 		}
 

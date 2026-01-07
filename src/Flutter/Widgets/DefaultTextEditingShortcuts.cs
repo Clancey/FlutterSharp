@@ -166,12 +166,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DefaultTextEditingShortcuts"/> class.
 		/// </summary>
 		public DefaultTextEditingShortcuts(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<DefaultTextEditingShortcutsStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DefaultTextEditingShortcutsStruct();

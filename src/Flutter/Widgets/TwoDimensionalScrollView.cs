@@ -54,34 +54,34 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TwoDimensionalScrollView"/> class.
 		/// </summary>
 		public TwoDimensionalScrollView(
-			TwoDimensionalChildDelegate _delegate,
-			DiagonalDragBehavior _diagonalDragBehavior,
-			object _mainAxis,
-			ScrollableDetails _verticalDetails,
-			ScrollableDetails _horizontalDetails,
-			DragStartBehavior _dragStartBehavior,
-			PlatformViewHitTestBehavior _hitTestBehavior,
-			Clip _clipBehavior
+			TwoDimensionalChildDelegate @delegate,
+			DiagonalDragBehavior diagonalDragBehavior,
+			object mainAxis,
+			ScrollableDetails verticalDetails,
+			ScrollableDetails horizontalDetails,
+			DragStartBehavior dragStartBehavior,
+			PlatformViewHitTestBehavior hitTestBehavior,
+			Clip clipBehavior
 ,
-			double? _cacheExtent = null,
-			bool? _primary = null,
-			ScrollViewKeyboardDismissBehavior? _keyboardDismissBehavior = null
+			double? cacheExtent = null,
+			bool? primary = null,
+			ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior = null
 		)
 		{
 			var s = GetBackingStruct<TwoDimensionalScrollViewStruct>();
 			// Complex type: TwoDimensionalChildDelegate - skipped (requires marshaling)
-			if (_cacheExtent.HasValue)
-				s.cacheExtent = _cacheExtent.Value;
+			if (cacheExtent.HasValue)
+				s.cacheExtent = cacheExtent.Value;
 			// Complex type: DiagonalDragBehavior - skipped (requires marshaling)
-			if (_primary.HasValue)
-				s.primary = _primary.Value;
+			if (primary.HasValue)
+				s.primary = primary.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: ScrollableDetails - skipped (requires marshaling)
 			// Complex type: ScrollableDetails - skipped (requires marshaling)
-			s.dragStartBehavior = _dragStartBehavior;
+			s.dragStartBehavior = dragStartBehavior;
 			// Complex type: ScrollViewKeyboardDismissBehavior? - skipped (requires marshaling)
-			s.hitTestBehavior = _hitTestBehavior;
-			s.clipBehavior = _clipBehavior;
+			s.hitTestBehavior = hitTestBehavior;
+			s.clipBehavior = clipBehavior;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TwoDimensionalScrollViewStruct();

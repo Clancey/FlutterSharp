@@ -34,14 +34,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ExcludeFocus"/> class.
 		/// </summary>
 		public ExcludeFocus(
-			bool _excluding,
-			Widget _child
+			bool excluding,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<ExcludeFocusStruct>();
-			s.excluding = _excluding;
-			s.child = _child;
+			s.excluding = excluding;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ExcludeFocusStruct();

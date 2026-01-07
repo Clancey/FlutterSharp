@@ -75,49 +75,49 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ListWheelScrollView"/> class.
 		/// </summary>
 		public ListWheelScrollView(
-			double _diameterRatio,
-			double _perspective,
-			double _offAxisFraction,
-			bool _useMagnifier,
-			double _magnification,
-			double _overAndUnderCenterOpacity,
-			double _itemExtent,
-			double _squeeze,
-			Action _onSelectedItemChanged,
-			bool _renderChildrenOutsideViewport,
-			ListWheelChildDelegate _childDelegate,
-			Clip _clipBehavior,
-			PlatformViewHitTestBehavior _hitTestBehavior,
-			DragStartBehavior _dragStartBehavior,
-			List<Widget> _children
+			double diameterRatio,
+			double perspective,
+			double offAxisFraction,
+			bool useMagnifier,
+			double magnification,
+			double overAndUnderCenterOpacity,
+			double itemExtent,
+			double squeeze,
+			Action onSelectedItemChanged,
+			bool renderChildrenOutsideViewport,
+			ListWheelChildDelegate childDelegate,
+			Clip clipBehavior,
+			PlatformViewHitTestBehavior hitTestBehavior,
+			DragStartBehavior dragStartBehavior,
+			List<Widget> children
 ,
-			ScrollController? _controller = null,
-			ScrollPhysics? _physics = null,
-			string? _restorationId = null,
-			ScrollBehavior? _scrollBehavior = null
+			ScrollController? controller = null,
+			ScrollPhysics? physics = null,
+			string? restorationId = null,
+			ScrollBehavior? scrollBehavior = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<ListWheelScrollViewStruct>();
 			// Complex type: ScrollController? - skipped (requires marshaling)
 			// Complex type: ScrollPhysics? - skipped (requires marshaling)
-			s.diameterRatio = _diameterRatio;
-			s.perspective = _perspective;
-			s.offAxisFraction = _offAxisFraction;
-			s.useMagnifier = _useMagnifier;
-			s.magnification = _magnification;
-			s.overAndUnderCenterOpacity = _overAndUnderCenterOpacity;
-			s.itemExtent = _itemExtent;
-			s.squeeze = _squeeze;
+			s.diameterRatio = diameterRatio;
+			s.perspective = perspective;
+			s.offAxisFraction = offAxisFraction;
+			s.useMagnifier = useMagnifier;
+			s.magnification = magnification;
+			s.overAndUnderCenterOpacity = overAndUnderCenterOpacity;
+			s.itemExtent = itemExtent;
+			s.squeeze = squeeze;
 			// Complex type: Action - skipped (requires marshaling)
-			s.renderChildrenOutsideViewport = _renderChildrenOutsideViewport;
+			s.renderChildrenOutsideViewport = renderChildrenOutsideViewport;
 			// Complex type: ListWheelChildDelegate - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
-			s.hitTestBehavior = _hitTestBehavior;
-			s.restorationId = _restorationId;
+			s.clipBehavior = clipBehavior;
+			s.hitTestBehavior = hitTestBehavior;
+			s.restorationId = restorationId;
 			// Complex type: ScrollBehavior? - skipped (requires marshaling)
-			s.dragStartBehavior = _dragStartBehavior;
+			s.dragStartBehavior = dragStartBehavior;
 			// Children are set in PrepareForSending to support collection initializers
 		}
 

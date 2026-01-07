@@ -49,61 +49,61 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ReorderableList"/> class.
 		/// </summary>
 		public ReorderableList(
-			Func<BuildContext, int, Widget> _itemBuilder,
-			int _itemCount,
-			Action<int, int> _onReorder,
-			EdgeInsetsGeometry? _padding,
-			Axis _scrollDirection,
-			bool _reverse,
-			bool _shrinkWrap,
-			double _anchor,
-			DragStartBehavior _dragStartBehavior,
-			Clip _clipBehavior,
-			object _itemExtentBuilder
+			Func<BuildContext, int, Widget> itemBuilder,
+			int itemCount,
+			Action<int, int> onReorder,
+			EdgeInsetsGeometry? padding,
+			Axis scrollDirection,
+			bool reverse,
+			bool shrinkWrap,
+			double anchor,
+			DragStartBehavior dragStartBehavior,
+			Clip clipBehavior,
+			object itemExtentBuilder
 ,
-			Action<int> _onReorderStart = null,
-			Action<int> _onReorderEnd = null,
-			Func<Widget, int, InvalidType, Widget> _proxyDecorator = null,
-			ScrollController? _controller = null,
-			bool? _primary = null,
-			ScrollPhysics? _physics = null,
-			double? _cacheExtent = null,
-			ScrollViewKeyboardDismissBehavior? _keyboardDismissBehavior = null,
-			string? _restorationId = null,
-			double? _itemExtent = null,
-			Widget? _prototypeItem = null,
-			double? _autoScrollerVelocityScalar = null,
-			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> _dragBoundaryProvider = null
+			Action<int> onReorderStart = null,
+			Action<int> onReorderEnd = null,
+			Func<Widget, int, InvalidType, Widget> proxyDecorator = null,
+			ScrollController? controller = null,
+			bool? primary = null,
+			ScrollPhysics? physics = null,
+			double? cacheExtent = null,
+			ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior = null,
+			string? restorationId = null,
+			double? itemExtent = null,
+			Widget? prototypeItem = null,
+			double? autoScrollerVelocityScalar = null,
+			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> dragBoundaryProvider = null
 		)
 		{
 			var s = GetBackingStruct<ReorderableListStruct>();
 			// Complex type: Func<BuildContext, int, Widget> - skipped (requires marshaling)
-			s.itemCount = _itemCount;
+			s.itemCount = itemCount;
 			// Complex type: Action<int, int> - skipped (requires marshaling)
 			// Complex type: Action<int> - skipped (requires marshaling)
 			// Complex type: Action<int> - skipped (requires marshaling)
 			// Complex type: Func<Widget, int, InvalidType, Widget> - skipped (requires marshaling)
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
-			s.scrollDirection = _scrollDirection;
-			s.reverse = _reverse;
+			s.scrollDirection = scrollDirection;
+			s.reverse = reverse;
 			// Complex type: ScrollController? - skipped (requires marshaling)
-			if (_primary.HasValue)
-				s.primary = _primary.Value;
+			if (primary.HasValue)
+				s.primary = primary.Value;
 			// Complex type: ScrollPhysics? - skipped (requires marshaling)
-			s.shrinkWrap = _shrinkWrap;
-			s.anchor = _anchor;
-			if (_cacheExtent.HasValue)
-				s.cacheExtent = _cacheExtent.Value;
-			s.dragStartBehavior = _dragStartBehavior;
+			s.shrinkWrap = shrinkWrap;
+			s.anchor = anchor;
+			if (cacheExtent.HasValue)
+				s.cacheExtent = cacheExtent.Value;
+			s.dragStartBehavior = dragStartBehavior;
 			// Complex type: ScrollViewKeyboardDismissBehavior? - skipped (requires marshaling)
-			s.restorationId = _restorationId;
-			s.clipBehavior = _clipBehavior;
-			if (_itemExtent.HasValue)
-				s.itemExtent = _itemExtent.Value;
+			s.restorationId = restorationId;
+			s.clipBehavior = clipBehavior;
+			if (itemExtent.HasValue)
+				s.itemExtent = itemExtent.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Nullable reference type: Widget? - skipped
-			if (_autoScrollerVelocityScalar.HasValue)
-				s.autoScrollerVelocityScalar = _autoScrollerVelocityScalar.Value;
+			if (autoScrollerVelocityScalar.HasValue)
+				s.autoScrollerVelocityScalar = autoScrollerVelocityScalar.Value;
 			// Complex type: Func<BuildContext, DragBoundaryDelegate<InvalidType>?> - skipped (requires marshaling)
 		}
 

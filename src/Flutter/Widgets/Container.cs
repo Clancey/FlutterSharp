@@ -156,24 +156,24 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Container"/> class.
 		/// </summary>
 		public Container(
-			AlignmentGeometry? _alignment,
-			EdgeInsetsGeometry? _padding,
-			Color? _color,
-			Decoration? _decoration,
-			Decoration? _foregroundDecoration,
-			BoxConstraints? _constraints,
-			EdgeInsetsGeometry? _margin,
-			Matrix4? _transform,
-			AlignmentGeometry? _transformAlignment,
-			Clip _clipBehavior
+			AlignmentGeometry? alignment,
+			EdgeInsetsGeometry? padding,
+			Color? color,
+			Decoration? decoration,
+			Decoration? foregroundDecoration,
+			BoxConstraints? constraints,
+			EdgeInsetsGeometry? margin,
+			Matrix4? transform,
+			AlignmentGeometry? transformAlignment,
+			Clip clipBehavior
 ,
-			Widget? _child = null,
-			double? _width = null,
-			double? _height = null
+			Widget? child = null,
+			double? width = null,
+			double? height = null
 		)
 		{
 			var s = GetBackingStruct<ContainerStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
 			// Complex type: Color? - skipped (requires marshaling)
@@ -183,11 +183,11 @@ namespace Flutter.Widgets
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
 			// Complex type: Matrix4? - skipped (requires marshaling)
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
-			if (_width.HasValue)
-				s.width = _width.Value;
-			if (_height.HasValue)
-				s.height = _height.Value;
+			s.clipBehavior = clipBehavior;
+			if (width.HasValue)
+				s.width = width.Value;
+			if (height.HasValue)
+				s.height = height.Value;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ContainerStruct();

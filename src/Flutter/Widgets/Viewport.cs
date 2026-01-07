@@ -96,32 +96,32 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Viewport"/> class.
 		/// </summary>
 		public Viewport(
-			List<Widget> _children,
-			object _axisDirection,
-			object _crossAxisDirection,
-			double _anchor,
-			Offset _offset,
-			object _center,
-			object _cacheExtentStyle,
-			Clip _clipBehavior
+			List<Widget> children,
+			object axisDirection,
+			object crossAxisDirection,
+			double anchor,
+			Offset offset,
+			object center,
+			object cacheExtentStyle,
+			Clip clipBehavior
 ,
-			double? _cacheExtent = null,
-			List<Widget> _slivers = null
+			double? cacheExtent = null,
+			List<Widget> slivers = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<ViewportStruct>();
 			// Children are set in PrepareForSending to support collection initializers
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.anchor = _anchor;
+			s.anchor = anchor;
 			// Complex type: Offset - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			if (_cacheExtent.HasValue)
-				s.cacheExtent = _cacheExtent.Value;
+			if (cacheExtent.HasValue)
+				s.cacheExtent = cacheExtent.Value;
 			// Complex type: object - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 			// Children are set in PrepareForSending to support collection initializers
 		}
 

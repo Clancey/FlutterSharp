@@ -54,13 +54,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PositionedTransition"/> class.
 		/// </summary>
 		public PositionedTransition(
-			Widget _child,
-			Rect _rect
+			Widget child,
+			Rect rect
 
 		)
 		{
 			var s = GetBackingStruct<PositionedTransitionStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: Rect - skipped (requires marshaling)
 		}
 

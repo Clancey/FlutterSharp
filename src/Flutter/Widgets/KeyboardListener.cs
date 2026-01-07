@@ -37,20 +37,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="KeyboardListener"/> class.
 		/// </summary>
 		public KeyboardListener(
-			FocusNode _focusNode,
-			bool _autofocus,
-			bool _includeSemantics,
-			Action _onKeyEvent,
-			Widget _child
+			FocusNode focusNode,
+			bool autofocus,
+			bool includeSemantics,
+			Action onKeyEvent,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<KeyboardListenerStruct>();
 			// Complex type: FocusNode - skipped (requires marshaling)
-			s.autofocus = _autofocus;
-			s.includeSemantics = _includeSemantics;
+			s.autofocus = autofocus;
+			s.includeSemantics = includeSemantics;
 			// Complex type: Action - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new KeyboardListenerStruct();

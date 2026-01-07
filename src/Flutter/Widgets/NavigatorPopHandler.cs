@@ -52,16 +52,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="NavigatorPopHandler"/> class.
 		/// </summary>
 		public NavigatorPopHandler(
-			Widget _child,
-			bool _enabled,
-			Action _onPop
+			Widget child,
+			bool enabled,
+			Action onPop
 ,
-			Action<T?> _onPopWithResult = null
+			Action<T?> onPopWithResult = null
 		)
 		{
 			var s = GetBackingStruct<NavigatorPopHandlerStruct>();
-			s.child = _child;
-			s.enabled = _enabled;
+			s.child = child;
+			s.enabled = enabled;
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action<T?> - skipped (requires marshaling)
 		}

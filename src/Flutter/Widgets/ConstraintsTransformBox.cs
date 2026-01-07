@@ -77,22 +77,22 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ConstraintsTransformBox"/> class.
 		/// </summary>
 		public ConstraintsTransformBox(
-			TextDirection _textDirection,
-			AlignmentGeometry? _alignment,
-			Func<BoxConstraints, BoxConstraints> _constraintsTransform,
-			Clip _clipBehavior
+			TextDirection textDirection,
+			AlignmentGeometry? alignment,
+			Func<BoxConstraints, BoxConstraints> constraintsTransform,
+			Clip clipBehavior
 ,
-			Widget? _child = null,
-			string _debugTransformType = ""
+			Widget? child = null,
+			string debugTransformType = ""
 		)
 		{
 			var s = GetBackingStruct<ConstraintsTransformBoxStruct>();
-			s.textDirection = _textDirection;
+			s.textDirection = textDirection;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: Func<BoxConstraints, BoxConstraints> - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
-			s.child = _child;
-			s.debugTransformType = _debugTransformType;
+			s.clipBehavior = clipBehavior;
+			s.child = child;
+			s.debugTransformType = debugTransformType;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ConstraintsTransformBoxStruct();

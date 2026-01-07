@@ -37,31 +37,31 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedPhysicalModel"/> class.
 		/// </summary>
 		public AnimatedPhysicalModel(
-			Widget _child,
-			BoxShape _shape,
-			Clip _clipBehavior,
-			BorderRadiusGeometry? _borderRadius,
-			double _elevation,
-			Color? _color,
-			bool _animateColor,
-			Color? _shadowColor,
-			bool _animateShadowColor,
-			TimeSpan _duration
+			Widget child,
+			BoxShape shape,
+			Clip clipBehavior,
+			BorderRadiusGeometry? borderRadius,
+			double elevation,
+			Color? color,
+			bool animateColor,
+			Color? shadowColor,
+			bool animateShadowColor,
+			TimeSpan duration
 ,
-			Curve _curve = null,
-			Action? _onEnd = null
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedPhysicalModelStruct>();
-			s.child = _child;
-			s.shape = _shape;
-			s.clipBehavior = _clipBehavior;
+			s.child = child;
+			s.shape = shape;
+			s.clipBehavior = clipBehavior;
 			// Complex type: BorderRadiusGeometry? - skipped (requires marshaling)
-			s.elevation = _elevation;
+			s.elevation = elevation;
 			// Complex type: Color? - skipped (requires marshaling)
-			s.animateColor = _animateColor;
+			s.animateColor = animateColor;
 			// Complex type: Color? - skipped (requires marshaling)
-			s.animateShadowColor = _animateShadowColor;
+			s.animateShadowColor = animateShadowColor;
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)

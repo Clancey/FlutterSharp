@@ -53,13 +53,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RawMenuAnchorGroup"/> class.
 		/// </summary>
 		public RawMenuAnchorGroup(
-			Widget _child,
-			MenuController _controller
+			Widget child,
+			MenuController controller
 
 		)
 		{
 			var s = GetBackingStruct<RawMenuAnchorGroupStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: MenuController - skipped (requires marshaling)
 		}
 

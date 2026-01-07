@@ -40,30 +40,30 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TapRegion"/> class.
 		/// </summary>
 		public TapRegion(
-			bool _enabled,
-			object _behavior,
-			bool _consumeOutsideTaps,
-			Widget? _child
+			bool enabled,
+			object behavior,
+			bool consumeOutsideTaps,
+			Widget? child
 ,
-			Action<InvalidType> _onTapOutside = null,
-			Action<InvalidType> _onTapInside = null,
-			Action<InvalidType> _onTapUpOutside = null,
-			Action<InvalidType> _onTapUpInside = null,
-			object? _groupId = null,
-			string? _debugLabel = null
+			Action<InvalidType> onTapOutside = null,
+			Action<InvalidType> onTapInside = null,
+			Action<InvalidType> onTapUpOutside = null,
+			Action<InvalidType> onTapUpInside = null,
+			object? groupId = null,
+			string? debugLabel = null
 		)
 		{
 			var s = GetBackingStruct<TapRegionStruct>();
-			s.enabled = _enabled;
+			s.enabled = enabled;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: object? - skipped (requires marshaling)
-			s.consumeOutsideTaps = _consumeOutsideTaps;
-			s.debugLabel = _debugLabel;
-			s.child = _child;
+			s.consumeOutsideTaps = consumeOutsideTaps;
+			s.debugLabel = debugLabel;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TapRegionStruct();

@@ -46,14 +46,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="UnmanagedRestorationScope"/> class.
 		/// </summary>
 		public UnmanagedRestorationScope(
-			object _bucket,
-			Widget _child
+			object bucket,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<UnmanagedRestorationScopeStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new UnmanagedRestorationScopeStruct();

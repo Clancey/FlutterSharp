@@ -48,22 +48,22 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedFractionallySizedBox"/> class.
 		/// </summary>
 		public AnimatedFractionallySizedBox(
-			AlignmentGeometry? _alignment,
-			TimeSpan _duration
+			AlignmentGeometry? alignment,
+			TimeSpan duration
 ,
-			Widget? _child = null,
-			double? _heightFactor = null,
-			double? _widthFactor = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			Widget? child = null,
+			double? heightFactor = null,
+			double? widthFactor = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedFractionallySizedBoxStruct>();
-			s.child = _child;
-			if (_heightFactor.HasValue)
-				s.heightFactor = _heightFactor.Value;
-			if (_widthFactor.HasValue)
-				s.widthFactor = _widthFactor.Value;
+			s.child = child;
+			if (heightFactor.HasValue)
+				s.heightFactor = heightFactor.Value;
+			if (widthFactor.HasValue)
+				s.widthFactor = widthFactor.Value;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)

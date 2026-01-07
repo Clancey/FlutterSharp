@@ -33,16 +33,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RenderObjectToWidgetAdapter"/> class.
 		/// </summary>
 		public RenderObjectToWidgetAdapter(
-			object _container
+			object container
 ,
-			Widget? _child = null,
-			string? _debugShortDescription = null
+			Widget? child = null,
+			string? debugShortDescription = null
 		)
 		{
 			var s = GetBackingStruct<RenderObjectToWidgetAdapterStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: object - skipped (requires marshaling)
-			s.debugShortDescription = _debugShortDescription;
+			s.debugShortDescription = debugShortDescription;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RenderObjectToWidgetAdapterStruct();

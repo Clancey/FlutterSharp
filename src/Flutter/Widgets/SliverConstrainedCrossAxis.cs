@@ -47,14 +47,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverConstrainedCrossAxis"/> class.
 		/// </summary>
 		public SliverConstrainedCrossAxis(
-			double _maxExtent,
-			Widget _sliver
+			double maxExtent,
+			Widget sliver
 
 		)
 		{
 			var s = GetBackingStruct<SliverConstrainedCrossAxisStruct>();
-			s.maxExtent = _maxExtent;
-			s.sliver = _sliver;
+			s.maxExtent = maxExtent;
+			s.sliver = sliver;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverConstrainedCrossAxisStruct();

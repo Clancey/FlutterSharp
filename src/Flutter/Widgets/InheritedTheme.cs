@@ -53,12 +53,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="InheritedTheme"/> class.
 		/// </summary>
 		public InheritedTheme(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<InheritedThemeStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new InheritedThemeStruct();

@@ -73,16 +73,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="View"/> class.
 		/// </summary>
 		public View(
-			FlutterView _view,
-			Widget _child
+			FlutterView view,
+			Widget child
 ,
-			object _deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner = null,
-			object _deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView = null
+			object deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner = null,
+			object deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView = null
 		)
 		{
 			var s = GetBackingStruct<ViewStruct>();
 			// Complex type: FlutterView - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 		}

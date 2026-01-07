@@ -36,7 +36,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverLayoutBuilder"/> class.
 		/// </summary>
 		public SliverLayoutBuilder(
-			WidgetBuilder? _builder
+			WidgetBuilder? builder
 
 		)
 		{

@@ -49,27 +49,27 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TextFieldTapRegion"/> class.
 		/// </summary>
 		public TextFieldTapRegion(
-			Widget? _child
+			Widget? child
 ,
-			bool _enabled = true,
-			Action<InvalidType> _onTapOutside = null,
-			Action<InvalidType> _onTapInside = null,
-			Action<InvalidType> _onTapUpOutside = null,
-			Action<InvalidType> _onTapUpInside = null,
-			bool _consumeOutsideTaps = false,
-			string? _debugLabel = null,
-			object? _groupId = null
+			bool enabled = true,
+			Action<InvalidType> onTapOutside = null,
+			Action<InvalidType> onTapInside = null,
+			Action<InvalidType> onTapUpOutside = null,
+			Action<InvalidType> onTapUpInside = null,
+			bool consumeOutsideTaps = false,
+			string? debugLabel = null,
+			object? groupId = null
 		)
 		{
 			var s = GetBackingStruct<TextFieldTapRegionStruct>();
-			s.child = _child;
-			s.enabled = _enabled;
+			s.child = child;
+			s.enabled = enabled;
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
-			s.consumeOutsideTaps = _consumeOutsideTaps;
-			s.debugLabel = _debugLabel;
+			s.consumeOutsideTaps = consumeOutsideTaps;
+			s.debugLabel = debugLabel;
 			// Complex type: object? - skipped (requires marshaling)
 		}
 

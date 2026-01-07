@@ -48,18 +48,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Listener"/> class.
 		/// </summary>
 		public Listener(
-			Action _onPointerDown,
-			Action _onPointerMove,
-			Action _onPointerUp,
-			Action _onPointerHover,
-			Action _onPointerCancel,
-			Action _onPointerPanZoomStart,
-			Action _onPointerPanZoomUpdate,
-			Action _onPointerPanZoomEnd,
-			Action _onPointerSignal,
-			object _behavior
+			Action onPointerDown,
+			Action onPointerMove,
+			Action onPointerUp,
+			Action onPointerHover,
+			Action onPointerCancel,
+			Action onPointerPanZoomStart,
+			Action onPointerPanZoomUpdate,
+			Action onPointerPanZoomEnd,
+			Action onPointerSignal,
+			object behavior
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ListenerStruct>();
@@ -73,7 +73,7 @@ namespace Flutter.Widgets
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ListenerStruct();

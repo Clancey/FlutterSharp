@@ -26,12 +26,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="KeyedSubtree"/> class.
 		/// </summary>
 		public KeyedSubtree(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<KeyedSubtreeStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new KeyedSubtreeStruct();

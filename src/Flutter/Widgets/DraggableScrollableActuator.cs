@@ -37,12 +37,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DraggableScrollableActuator"/> class.
 		/// </summary>
 		public DraggableScrollableActuator(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<DraggableScrollableActuatorStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DraggableScrollableActuatorStruct();

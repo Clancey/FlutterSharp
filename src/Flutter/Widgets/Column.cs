@@ -230,31 +230,31 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Column(
 
-			MainAxisAlignment? _mainAxisAlignment = null,
-			MainAxisSize? _mainAxisSize = null,
-			CrossAxisAlignment? _crossAxisAlignment = null,
-			TextDirection? _textDirection = null,
-			VerticalDirection? _verticalDirection = null,
-			TextBaseline? _textBaseline = null,
-			double _spacing = 0.0,
-			List<Widget> _children = null
+			MainAxisAlignment? mainAxisAlignment = null,
+			MainAxisSize? mainAxisSize = null,
+			CrossAxisAlignment? crossAxisAlignment = null,
+			TextDirection? textDirection = null,
+			VerticalDirection? verticalDirection = null,
+			TextBaseline? textBaseline = null,
+			double spacing = 0.0,
+			List<Widget> children = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<ColumnStruct>();
-			if (_mainAxisAlignment.HasValue)
-				s.mainAxisAlignment = _mainAxisAlignment.Value;
-			if (_mainAxisSize.HasValue)
-				s.mainAxisSize = _mainAxisSize.Value;
-			if (_crossAxisAlignment.HasValue)
-				s.crossAxisAlignment = _crossAxisAlignment.Value;
-			if (_textDirection.HasValue)
-				s.textDirection = _textDirection.Value;
-			if (_verticalDirection.HasValue)
-				s.verticalDirection = _verticalDirection.Value;
+			if (mainAxisAlignment.HasValue)
+				s.mainAxisAlignment = mainAxisAlignment.Value;
+			if (mainAxisSize.HasValue)
+				s.mainAxisSize = mainAxisSize.Value;
+			if (crossAxisAlignment.HasValue)
+				s.crossAxisAlignment = crossAxisAlignment.Value;
+			if (textDirection.HasValue)
+				s.textDirection = textDirection.Value;
+			if (verticalDirection.HasValue)
+				s.verticalDirection = verticalDirection.Value;
 			// Complex type: TextBaseline? - skipped (requires marshaling)
-			s.spacing = _spacing;
+			s.spacing = spacing;
 			// Children are set in PrepareForSending to support collection initializers
 		}
 

@@ -65,19 +65,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverAnimatedOpacity"/> class.
 		/// </summary>
 		public SliverAnimatedOpacity(
-			double _opacity,
-			bool _alwaysIncludeSemantics,
-			TimeSpan _duration
+			double opacity,
+			bool alwaysIncludeSemantics,
+			TimeSpan duration
 ,
-			Widget? _sliver = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			Widget? sliver = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<SliverAnimatedOpacityStruct>();
-			s.sliver = _sliver;
-			s.opacity = _opacity;
-			s.alwaysIncludeSemantics = _alwaysIncludeSemantics;
+			s.sliver = sliver;
+			s.opacity = opacity;
+			s.alwaysIncludeSemantics = alwaysIncludeSemantics;
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)

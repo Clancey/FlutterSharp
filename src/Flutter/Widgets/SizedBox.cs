@@ -77,17 +77,17 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SizedBox(
 
-			double? _width = null,
-			double? _height = null,
-			Widget? _child = null
+			double? width = null,
+			double? height = null,
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<SizedBoxStruct>();
-			if (_width.HasValue)
-				s.width = _width.Value;
-			if (_height.HasValue)
-				s.height = _height.Value;
-			s.child = _child;
+			if (width.HasValue)
+				s.width = width.Value;
+			if (height.HasValue)
+				s.height = height.Value;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SizedBoxStruct();

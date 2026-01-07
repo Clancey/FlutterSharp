@@ -36,16 +36,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverPadding"/> class.
 		/// </summary>
 		public SliverPadding(
-			Widget _child,
-			EdgeInsetsGeometry? _padding
+			Widget child,
+			EdgeInsetsGeometry? padding
 ,
-			Widget? _sliver = null
+			Widget? sliver = null
 		)
 		{
 			var s = GetBackingStruct<SliverPaddingStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
-			s.sliver = _sliver;
+			s.sliver = sliver;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverPaddingStruct();

@@ -105,13 +105,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverCrossAxisGroup"/> class.
 		/// </summary>
 		public SliverCrossAxisGroup(
-			List<Widget> _children,
-			List<Widget> _slivers
+			List<Widget> children,
+			List<Widget> slivers
 
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<SliverCrossAxisGroupStruct>();
 			// Children are set in PrepareForSending to support collection initializers
 			// Children are set in PrepareForSending to support collection initializers

@@ -25,12 +25,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PlatformSelectableRegionContextMenu"/> class.
 		/// </summary>
 		public PlatformSelectableRegionContextMenu(
-			Widget _child
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<PlatformSelectableRegionContextMenuStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PlatformSelectableRegionContextMenuStruct();

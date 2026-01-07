@@ -40,12 +40,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ViewCollection"/> class.
 		/// </summary>
 		public ViewCollection(
-			List<Widget> _views
+			List<Widget> views
 
 		)
 		{
 			var s = GetBackingStruct<ViewCollectionStruct>();
-			s.views = SetChildrenAndGetPointer(_views);
+			s.views = SetChildrenAndGetPointer(views);
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ViewCollectionStruct();

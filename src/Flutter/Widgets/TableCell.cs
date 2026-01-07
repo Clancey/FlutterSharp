@@ -32,14 +32,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TableCell"/> class.
 		/// </summary>
 		public TableCell(
-			AlignmentGeometry _verticalAlignment,
-			Widget _child
+			AlignmentGeometry verticalAlignment,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<TableCellStruct>();
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TableCellStruct();

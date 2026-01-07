@@ -61,14 +61,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Expanded"/> class.
 		/// </summary>
 		public Expanded(
-			Widget _child
+			Widget child
 ,
-			int _flex = 1
+			int flex = 1
 		)
 		{
 			var s = GetBackingStruct<ExpandedStruct>();
-			s.flex = _flex;
-			s.child = _child;
+			s.flex = flex;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ExpandedStruct();

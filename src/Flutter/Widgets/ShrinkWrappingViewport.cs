@@ -87,23 +87,23 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ShrinkWrappingViewport"/> class.
 		/// </summary>
 		public ShrinkWrappingViewport(
-			List<Widget> _children,
-			object _axisDirection,
-			object _crossAxisDirection,
-			Offset _offset,
-			Clip _clipBehavior
+			List<Widget> children,
+			object axisDirection,
+			object crossAxisDirection,
+			Offset offset,
+			Clip clipBehavior
 ,
-			List<Widget> _slivers = null
+			List<Widget> slivers = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<ShrinkWrappingViewportStruct>();
 			// Children are set in PrepareForSending to support collection initializers
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Offset - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 			// Children are set in PrepareForSending to support collection initializers
 		}
 

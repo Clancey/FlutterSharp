@@ -44,7 +44,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public UniqueWidget(
 
-			T? _currentState = default
+			T? currentState = default
 		)
 		{
 			var s = GetBackingStruct<UniqueWidgetStruct>();

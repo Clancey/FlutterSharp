@@ -58,14 +58,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DisplayFeatureSubScreen"/> class.
 		/// </summary>
 		public DisplayFeatureSubScreen(
-			object _anchorPoint,
-			Widget _child
+			object anchorPoint,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<DisplayFeatureSubScreenStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DisplayFeatureSubScreenStruct();

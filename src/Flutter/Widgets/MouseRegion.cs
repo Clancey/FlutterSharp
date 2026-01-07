@@ -53,14 +53,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MouseRegion"/> class.
 		/// </summary>
 		public MouseRegion(
-			Action _onEnter,
-			Action _onHover,
-			Action _onExit,
-			object _cursor,
-			bool _opaque,
-			PlatformViewHitTestBehavior _hitTestBehavior
+			Action onEnter,
+			Action onHover,
+			Action onExit,
+			object cursor,
+			bool opaque,
+			PlatformViewHitTestBehavior hitTestBehavior
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<MouseRegionStruct>();
@@ -68,9 +68,9 @@ namespace Flutter.Widgets
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.opaque = _opaque;
-			s.hitTestBehavior = _hitTestBehavior;
-			s.child = _child;
+			s.opaque = opaque;
+			s.hitTestBehavior = hitTestBehavior;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new MouseRegionStruct();

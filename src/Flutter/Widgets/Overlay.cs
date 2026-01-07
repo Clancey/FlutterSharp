@@ -63,14 +63,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Overlay"/> class.
 		/// </summary>
 		public Overlay(
-			List<OverlayEntry> _initialEntries,
-			Clip _clipBehavior
+			List<OverlayEntry> initialEntries,
+			Clip clipBehavior
 
 		)
 		{
 			var s = GetBackingStruct<OverlayStruct>();
 			// Complex type: List<OverlayEntry> - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new OverlayStruct();

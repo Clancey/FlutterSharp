@@ -88,9 +88,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ImplicitlyAnimatedWidget"/> class.
 		/// </summary>
 		public ImplicitlyAnimatedWidget(
-			Curve _curve,
-			TimeSpan _duration,
-			Action _onEnd
+			Curve curve,
+			TimeSpan duration,
+			Action onEnd
 
 		)
 		{

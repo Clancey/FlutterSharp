@@ -33,16 +33,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverPersistentHeader"/> class.
 		/// </summary>
 		public SliverPersistentHeader(
-			SliverPersistentHeaderDelegate _delegate,
-			bool _pinned,
-			bool _floating
+			SliverPersistentHeaderDelegate @delegate,
+			bool pinned,
+			bool floating
 
 		)
 		{
 			var s = GetBackingStruct<SliverPersistentHeaderStruct>();
 			// Complex type: SliverPersistentHeaderDelegate - skipped (requires marshaling)
-			s.pinned = _pinned;
-			s.floating = _floating;
+			s.pinned = pinned;
+			s.floating = floating;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverPersistentHeaderStruct();

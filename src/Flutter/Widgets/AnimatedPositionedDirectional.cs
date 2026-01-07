@@ -47,33 +47,33 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedPositionedDirectional"/> class.
 		/// </summary>
 		public AnimatedPositionedDirectional(
-			Widget _child,
-			TimeSpan _duration
+			Widget child,
+			TimeSpan duration
 ,
-			double? _start = null,
-			double? _top = null,
-			double? _end = null,
-			double? _bottom = null,
-			double? _width = null,
-			double? _height = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			double? start = null,
+			double? top = null,
+			double? end = null,
+			double? bottom = null,
+			double? width = null,
+			double? height = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedPositionedDirectionalStruct>();
-			s.child = _child;
-			if (_start.HasValue)
-				s.start = _start.Value;
-			if (_top.HasValue)
-				s.top = _top.Value;
-			if (_end.HasValue)
-				s.end = _end.Value;
-			if (_bottom.HasValue)
-				s.bottom = _bottom.Value;
-			if (_width.HasValue)
-				s.width = _width.Value;
-			if (_height.HasValue)
-				s.height = _height.Value;
+			s.child = child;
+			if (start.HasValue)
+				s.start = start.Value;
+			if (top.HasValue)
+				s.top = top.Value;
+			if (end.HasValue)
+				s.end = end.Value;
+			if (bottom.HasValue)
+				s.bottom = bottom.Value;
+			if (width.HasValue)
+				s.width = width.Value;
+			if (height.HasValue)
+				s.height = height.Value;
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)

@@ -53,7 +53,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="LayoutBuilder"/> class.
 		/// </summary>
 		public LayoutBuilder(
-			WidgetBuilder? _builder
+			WidgetBuilder? builder
 
 		)
 		{

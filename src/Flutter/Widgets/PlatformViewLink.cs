@@ -55,14 +55,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PlatformViewLink"/> class.
 		/// </summary>
 		public PlatformViewLink(
-			string _viewType,
-			object _surfaceFactory,
-			Func<PlatformViewCreationParams, InvalidType> _onCreatePlatformView
+			string viewType,
+			object surfaceFactory,
+			Func<PlatformViewCreationParams, InvalidType> onCreatePlatformView
 
 		)
 		{
 			var s = GetBackingStruct<PlatformViewLinkStruct>();
-			s.viewType = _viewType;
+			s.viewType = viewType;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Func<PlatformViewCreationParams, InvalidType> - skipped (requires marshaling)
 		}

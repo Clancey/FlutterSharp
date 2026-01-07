@@ -101,41 +101,41 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PageView"/> class.
 		/// </summary>
 		public PageView(
-			bool _allowImplicitScrolling,
-			Axis _scrollDirection,
-			bool _reverse,
-			bool _pageSnapping,
-			Action _onPageChanged,
-			SliverChildDelegate _childrenDelegate,
-			DragStartBehavior _dragStartBehavior,
-			Clip _clipBehavior,
-			PlatformViewHitTestBehavior _hitTestBehavior,
-			bool _padEnds
+			bool allowImplicitScrolling,
+			Axis scrollDirection,
+			bool reverse,
+			bool pageSnapping,
+			Action onPageChanged,
+			SliverChildDelegate childrenDelegate,
+			DragStartBehavior dragStartBehavior,
+			Clip clipBehavior,
+			PlatformViewHitTestBehavior hitTestBehavior,
+			bool padEnds
 ,
-			string? _restorationId = null,
-			PageController? _controller = null,
-			ScrollPhysics? _physics = null,
-			ScrollBehavior? _scrollBehavior = null,
-			List<Widget> _children = null
+			string? restorationId = null,
+			PageController? controller = null,
+			ScrollPhysics? physics = null,
+			ScrollBehavior? scrollBehavior = null,
+			List<Widget> children = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<PageViewStruct>();
-			s.allowImplicitScrolling = _allowImplicitScrolling;
-			s.restorationId = _restorationId;
-			s.scrollDirection = _scrollDirection;
-			s.reverse = _reverse;
+			s.allowImplicitScrolling = allowImplicitScrolling;
+			s.restorationId = restorationId;
+			s.scrollDirection = scrollDirection;
+			s.reverse = reverse;
 			// Complex type: PageController? - skipped (requires marshaling)
 			// Complex type: ScrollPhysics? - skipped (requires marshaling)
-			s.pageSnapping = _pageSnapping;
+			s.pageSnapping = pageSnapping;
 			// Complex type: Action - skipped (requires marshaling)
 			// Complex type: SliverChildDelegate - skipped (requires marshaling)
-			s.dragStartBehavior = _dragStartBehavior;
-			s.clipBehavior = _clipBehavior;
-			s.hitTestBehavior = _hitTestBehavior;
+			s.dragStartBehavior = dragStartBehavior;
+			s.clipBehavior = clipBehavior;
+			s.hitTestBehavior = hitTestBehavior;
 			// Complex type: ScrollBehavior? - skipped (requires marshaling)
-			s.padEnds = _padEnds;
+			s.padEnds = padEnds;
 			// Children are set in PrepareForSending to support collection initializers
 		}
 

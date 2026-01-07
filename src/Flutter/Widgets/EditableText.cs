@@ -239,117 +239,117 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="EditableText"/> class.
 		/// </summary>
 		public EditableText(
-			TextEditingController _controller,
-			FocusNode _focusNode,
-			string _obscuringCharacter,
-			bool _obscureText,
-			TextHeightBehavior _textHeightBehavior,
-			TextWidthBasis _textWidthBasis,
-			bool _readOnly,
-			bool _forceLine,
-			ToolbarOptions _toolbarOptions,
-			bool _showSelectionHandles,
-			bool _showCursor,
-			bool _autocorrect,
-			object _smartDashesType,
-			object _smartQuotesType,
-			bool _enableSuggestions,
-			TextStyle? _style,
-			TextAlign? _textAlign,
-			TextDirection _textDirection,
-			object _textCapitalization,
-			Locale? _locale,
-			object _textScaler,
-			Color _cursorColor,
-			Color _autocorrectionTextRectColor,
-			Color _backgroundCursorColor,
-			bool _expands,
-			bool _autofocus,
-			Color? _selectionColor,
-			object _keyboardType,
-			object _textInputAction,
-			Action _onChanged,
-			Action _onEditingComplete,
-			Action _onSubmitted,
-			Action _onSelectionHandleTapped,
-			object _groupId,
-			object _mouseCursor,
-			bool _rendererIgnoresPointer,
-			double _cursorWidth,
-			BorderRadiusGeometry _cursorRadius,
-			bool _cursorOpacityAnimates,
-			object _cursorOffset,
-			bool _paintCursorAboveText,
-			BoxHeightStyle _selectionHeightStyle,
-			BoxWidthStyle _selectionWidthStyle,
-			object _keyboardAppearance,
-			EdgeInsetsGeometry _scrollPadding,
-			bool _enableInteractiveSelection,
-			DragStartBehavior _dragStartBehavior,
-			bool _scribbleEnabled,
-			bool _stylusHandwritingEnabled,
-			object _autofillClient,
-			Clip _clipBehavior,
-			bool _enableIMEPersonalizedLearning,
-			TextMagnifierConfiguration _magnifierConfiguration,
-			StrutStyle? _strutStyle,
-			bool _selectionEnabled
+			TextEditingController controller,
+			FocusNode focusNode,
+			string obscuringCharacter,
+			bool obscureText,
+			TextHeightBehavior textHeightBehavior,
+			TextWidthBasis textWidthBasis,
+			bool @readOnly,
+			bool forceLine,
+			ToolbarOptions toolbarOptions,
+			bool showSelectionHandles,
+			bool showCursor,
+			bool autocorrect,
+			object smartDashesType,
+			object smartQuotesType,
+			bool enableSuggestions,
+			TextStyle? style,
+			TextAlign? textAlign,
+			TextDirection textDirection,
+			object textCapitalization,
+			Locale? locale,
+			object textScaler,
+			Color cursorColor,
+			Color autocorrectionTextRectColor,
+			Color backgroundCursorColor,
+			bool expands,
+			bool autofocus,
+			Color? selectionColor,
+			object keyboardType,
+			object textInputAction,
+			Action onChanged,
+			Action onEditingComplete,
+			Action onSubmitted,
+			Action onSelectionHandleTapped,
+			object groupId,
+			object mouseCursor,
+			bool rendererIgnoresPointer,
+			double cursorWidth,
+			BorderRadiusGeometry cursorRadius,
+			bool cursorOpacityAnimates,
+			object cursorOffset,
+			bool paintCursorAboveText,
+			BoxHeightStyle selectionHeightStyle,
+			BoxWidthStyle selectionWidthStyle,
+			object keyboardAppearance,
+			EdgeInsetsGeometry scrollPadding,
+			bool enableInteractiveSelection,
+			DragStartBehavior dragStartBehavior,
+			bool scribbleEnabled,
+			bool stylusHandwritingEnabled,
+			object autofillClient,
+			Clip clipBehavior,
+			bool enableIMEPersonalizedLearning,
+			TextMagnifierConfiguration magnifierConfiguration,
+			StrutStyle? strutStyle,
+			bool selectionEnabled
 ,
-			UndoHistoryController? _undoController = null,
-			double? _textScaleFactor = null,
-			int? _maxLines = 1,
-			int? _minLines = null,
-			TextSelectionControls? _selectionControls = null,
-			Action<string, Map<String, dynamic>> _onAppPrivateCommand = null,
-			Action<InvalidType, InvalidType> _onSelectionChanged = null,
-			Action<InvalidType> _onTapOutside = null,
-			Action<InvalidType> _onTapUpOutside = null,
-			List<object>? _inputFormatters = null,
-			double? _cursorHeight = null,
-			ScrollController? _scrollController = null,
-			ScrollPhysics? _scrollPhysics = null,
-			IEnumerable<string>? _autofillHints = null,
-			string? _restorationId = null,
-			ScrollBehavior? _scrollBehavior = null,
-			ContentInsertionConfiguration? _contentInsertionConfiguration = null,
-			Func<BuildContext, EditableTextState, Widget> _contextMenuBuilder = null,
-			SpellCheckConfiguration? _spellCheckConfiguration = null
+			UndoHistoryController? undoController = null,
+			double? textScaleFactor = null,
+			int? maxLines = 1,
+			int? minLines = null,
+			TextSelectionControls? selectionControls = null,
+			Action<string, Map<String, dynamic>> onAppPrivateCommand = null,
+			Action<InvalidType, InvalidType> onSelectionChanged = null,
+			Action<InvalidType> onTapOutside = null,
+			Action<InvalidType> onTapUpOutside = null,
+			List<object>? inputFormatters = null,
+			double? cursorHeight = null,
+			ScrollController? scrollController = null,
+			ScrollPhysics? scrollPhysics = null,
+			IEnumerable<string>? autofillHints = null,
+			string? restorationId = null,
+			ScrollBehavior? scrollBehavior = null,
+			ContentInsertionConfiguration? contentInsertionConfiguration = null,
+			Func<BuildContext, EditableTextState, Widget> contextMenuBuilder = null,
+			SpellCheckConfiguration? spellCheckConfiguration = null
 		)
 		{
 			var s = GetBackingStruct<EditableTextStruct>();
 			// Complex type: TextEditingController - skipped (requires marshaling)
 			// Complex type: FocusNode - skipped (requires marshaling)
-			s.obscuringCharacter = _obscuringCharacter;
-			s.obscureText = _obscureText;
+			s.obscuringCharacter = obscuringCharacter;
+			s.obscureText = obscureText;
 			// Complex type: TextHeightBehavior - skipped (requires marshaling)
-			s.textWidthBasis = _textWidthBasis;
-			s.@readOnly = _readOnly;
-			s.forceLine = _forceLine;
+			s.textWidthBasis = textWidthBasis;
+			s.@readOnly = @readOnly;
+			s.forceLine = forceLine;
 			// Complex type: ToolbarOptions - skipped (requires marshaling)
-			s.showSelectionHandles = _showSelectionHandles;
-			s.showCursor = _showCursor;
-			s.autocorrect = _autocorrect;
+			s.showSelectionHandles = showSelectionHandles;
+			s.showCursor = showCursor;
+			s.autocorrect = autocorrect;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.enableSuggestions = _enableSuggestions;
+			s.enableSuggestions = enableSuggestions;
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: UndoHistoryController? - skipped (requires marshaling)
 			// Complex type: TextAlign? - skipped (requires marshaling)
-			s.textDirection = _textDirection;
+			s.textDirection = textDirection;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Locale? - skipped (requires marshaling)
-			if (_textScaleFactor.HasValue)
-				s.textScaleFactor = _textScaleFactor.Value;
+			if (textScaleFactor.HasValue)
+				s.textScaleFactor = textScaleFactor.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Color - skipped (requires marshaling)
 			// Complex type: Color - skipped (requires marshaling)
 			// Complex type: Color - skipped (requires marshaling)
-			if (_maxLines.HasValue)
-				s.maxLines = _maxLines.Value;
-			if (_minLines.HasValue)
-				s.minLines = _minLines.Value;
-			s.expands = _expands;
-			s.autofocus = _autofocus;
+			if (maxLines.HasValue)
+				s.maxLines = maxLines.Value;
+			if (minLines.HasValue)
+				s.minLines = minLines.Value;
+			s.expands = expands;
+			s.autofocus = autofocus;
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: TextSelectionControls? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
@@ -365,36 +365,36 @@ namespace Flutter.Widgets
 			// Complex type: Action<InvalidType> - skipped (requires marshaling)
 			// Complex type: List<object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.rendererIgnoresPointer = _rendererIgnoresPointer;
-			s.cursorWidth = _cursorWidth;
-			if (_cursorHeight.HasValue)
-				s.cursorHeight = _cursorHeight.Value;
+			s.rendererIgnoresPointer = rendererIgnoresPointer;
+			s.cursorWidth = cursorWidth;
+			if (cursorHeight.HasValue)
+				s.cursorHeight = cursorHeight.Value;
 			// Complex type: BorderRadiusGeometry - skipped (requires marshaling)
-			s.cursorOpacityAnimates = _cursorOpacityAnimates;
+			s.cursorOpacityAnimates = cursorOpacityAnimates;
 			// Complex type: object - skipped (requires marshaling)
-			s.paintCursorAboveText = _paintCursorAboveText;
-			s.selectionHeightStyle = _selectionHeightStyle;
-			s.selectionWidthStyle = _selectionWidthStyle;
+			s.paintCursorAboveText = paintCursorAboveText;
+			s.selectionHeightStyle = selectionHeightStyle;
+			s.selectionWidthStyle = selectionWidthStyle;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: EdgeInsetsGeometry - skipped (requires marshaling)
-			s.enableInteractiveSelection = _enableInteractiveSelection;
-			s.dragStartBehavior = _dragStartBehavior;
+			s.enableInteractiveSelection = enableInteractiveSelection;
+			s.dragStartBehavior = dragStartBehavior;
 			// Complex type: ScrollController? - skipped (requires marshaling)
 			// Complex type: ScrollPhysics? - skipped (requires marshaling)
-			s.scribbleEnabled = _scribbleEnabled;
-			s.stylusHandwritingEnabled = _stylusHandwritingEnabled;
+			s.scribbleEnabled = scribbleEnabled;
+			s.stylusHandwritingEnabled = stylusHandwritingEnabled;
 			// Complex type: IEnumerable<string>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
-			s.restorationId = _restorationId;
+			s.clipBehavior = clipBehavior;
+			s.restorationId = restorationId;
 			// Complex type: ScrollBehavior? - skipped (requires marshaling)
-			s.enableIMEPersonalizedLearning = _enableIMEPersonalizedLearning;
+			s.enableIMEPersonalizedLearning = enableIMEPersonalizedLearning;
 			// Complex type: ContentInsertionConfiguration? - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, EditableTextState, Widget> - skipped (requires marshaling)
 			// Complex type: SpellCheckConfiguration? - skipped (requires marshaling)
 			// Complex type: TextMagnifierConfiguration - skipped (requires marshaling)
 			// Complex type: StrutStyle? - skipped (requires marshaling)
-			s.selectionEnabled = _selectionEnabled;
+			s.selectionEnabled = selectionEnabled;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new EditableTextStruct();

@@ -55,30 +55,30 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PositionedDirectional"/> class.
 		/// </summary>
 		public PositionedDirectional(
-			Widget _child
+			Widget child
 ,
-			double? _start = null,
-			double? _top = null,
-			double? _end = null,
-			double? _bottom = null,
-			double? _width = null,
-			double? _height = null
+			double? start = null,
+			double? top = null,
+			double? end = null,
+			double? bottom = null,
+			double? width = null,
+			double? height = null
 		)
 		{
 			var s = GetBackingStruct<PositionedDirectionalStruct>();
-			if (_start.HasValue)
-				s.start = _start.Value;
-			if (_top.HasValue)
-				s.top = _top.Value;
-			if (_end.HasValue)
-				s.end = _end.Value;
-			if (_bottom.HasValue)
-				s.bottom = _bottom.Value;
-			if (_width.HasValue)
-				s.width = _width.Value;
-			if (_height.HasValue)
-				s.height = _height.Value;
-			s.child = _child;
+			if (start.HasValue)
+				s.start = start.Value;
+			if (top.HasValue)
+				s.top = top.Value;
+			if (end.HasValue)
+				s.end = end.Value;
+			if (bottom.HasValue)
+				s.bottom = bottom.Value;
+			if (width.HasValue)
+				s.width = width.Value;
+			if (height.HasValue)
+				s.height = height.Value;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PositionedDirectionalStruct();

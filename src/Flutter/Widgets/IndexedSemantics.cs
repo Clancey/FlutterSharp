@@ -55,14 +55,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="IndexedSemantics"/> class.
 		/// </summary>
 		public IndexedSemantics(
-			int _index
+			int index
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<IndexedSemanticsStruct>();
-			s.index = _index;
-			s.child = _child;
+			s.index = index;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new IndexedSemanticsStruct();

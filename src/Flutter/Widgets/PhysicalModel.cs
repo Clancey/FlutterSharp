@@ -39,24 +39,24 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PhysicalModel"/> class.
 		/// </summary>
 		public PhysicalModel(
-			BoxShape _shape,
-			Clip _clipBehavior,
-			BorderRadiusGeometry? _borderRadius,
-			double _elevation,
-			Color? _color,
-			Color? _shadowColor
+			BoxShape shape,
+			Clip clipBehavior,
+			BorderRadiusGeometry? borderRadius,
+			double elevation,
+			Color? color,
+			Color? shadowColor
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<PhysicalModelStruct>();
-			s.shape = _shape;
-			s.clipBehavior = _clipBehavior;
+			s.shape = shape;
+			s.clipBehavior = clipBehavior;
 			// Complex type: BorderRadiusGeometry? - skipped (requires marshaling)
-			s.elevation = _elevation;
+			s.elevation = elevation;
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: Color? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PhysicalModelStruct();

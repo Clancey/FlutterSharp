@@ -115,16 +115,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverFillRemaining"/> class.
 		/// </summary>
 		public SliverFillRemaining(
-			bool _hasScrollBody,
-			bool _fillOverscroll
+			bool hasScrollBody,
+			bool fillOverscroll
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<SliverFillRemainingStruct>();
-			s.child = _child;
-			s.hasScrollBody = _hasScrollBody;
-			s.fillOverscroll = _fillOverscroll;
+			s.child = child;
+			s.hasScrollBody = hasScrollBody;
+			s.fillOverscroll = fillOverscroll;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverFillRemainingStruct();

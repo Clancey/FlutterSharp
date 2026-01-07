@@ -79,17 +79,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AbsorbPointer"/> class.
 		/// </summary>
 		public AbsorbPointer(
-			bool _absorbing
+			bool absorbing
 ,
-			bool? _ignoringSemantics = null,
-			Widget? _child = null
+			bool? ignoringSemantics = null,
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<AbsorbPointerStruct>();
-			s.absorbing = _absorbing;
-			if (_ignoringSemantics.HasValue)
-				s.ignoringSemantics = _ignoringSemantics.Value;
-			s.child = _child;
+			s.absorbing = absorbing;
+			if (ignoringSemantics.HasValue)
+				s.ignoringSemantics = ignoringSemantics.Value;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AbsorbPointerStruct();

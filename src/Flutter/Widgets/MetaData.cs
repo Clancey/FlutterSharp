@@ -29,16 +29,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="MetaData"/> class.
 		/// </summary>
 		public MetaData(
-			object _metaData,
-			object _behavior
+			object metaData,
+			object behavior
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<MetaDataStruct>();
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new MetaDataStruct();

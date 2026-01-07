@@ -30,11 +30,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public IgnoreBaseline(
 
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<IgnoreBaselineStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new IgnoreBaselineStruct();

@@ -46,18 +46,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="KeepAlive"/> class.
 		/// </summary>
 		public KeepAlive(
-			bool _keepAlive,
-			Type _debugTypicalAncestorWidgetClass,
-			string _debugTypicalAncestorWidgetDescription,
-			Widget _child
+			bool keepAlive,
+			Type debugTypicalAncestorWidgetClass,
+			string debugTypicalAncestorWidgetDescription,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<KeepAliveStruct>();
-			s.keepAlive = _keepAlive;
+			s.keepAlive = keepAlive;
 			// Complex type: Type - skipped (requires marshaling)
-			s.debugTypicalAncestorWidgetDescription = _debugTypicalAncestorWidgetDescription;
-			s.child = _child;
+			s.debugTypicalAncestorWidgetDescription = debugTypicalAncestorWidgetDescription;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new KeepAliveStruct();

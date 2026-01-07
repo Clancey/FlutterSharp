@@ -143,43 +143,43 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RichText"/> class.
 		/// </summary>
 		public RichText(
-			List<Widget> _children,
-			InlineSpan _text,
-			TextAlign? _textAlign,
-			TextDirection _textDirection,
-			bool _softWrap,
-			TextOverflow _overflow,
-			object _textScaler,
-			Locale? _locale,
-			StrutStyle? _strutStyle,
-			TextWidthBasis _textWidthBasis,
-			TextHeightBehavior _textHeightBehavior,
-			object _selectionRegistrar,
-			Color? _selectionColor,
-			double _textScaleFactor
+			List<Widget> children,
+			InlineSpan text,
+			TextAlign? textAlign,
+			TextDirection textDirection,
+			bool softWrap,
+			TextOverflow overflow,
+			object textScaler,
+			Locale? locale,
+			StrutStyle? strutStyle,
+			TextWidthBasis textWidthBasis,
+			TextHeightBehavior textHeightBehavior,
+			object selectionRegistrar,
+			Color? selectionColor,
+			double textScaleFactor
 ,
-			int? _maxLines = null
+			int? maxLines = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<RichTextStruct>();
 			// Children are set in PrepareForSending to support collection initializers
 			// Complex type: InlineSpan - skipped (requires marshaling)
 			// Complex type: TextAlign? - skipped (requires marshaling)
-			s.textDirection = _textDirection;
-			s.softWrap = _softWrap;
-			s.overflow = _overflow;
+			s.textDirection = textDirection;
+			s.softWrap = softWrap;
+			s.overflow = overflow;
 			// Complex type: object - skipped (requires marshaling)
-			if (_maxLines.HasValue)
-				s.maxLines = _maxLines.Value;
+			if (maxLines.HasValue)
+				s.maxLines = maxLines.Value;
 			// Complex type: Locale? - skipped (requires marshaling)
 			// Complex type: StrutStyle? - skipped (requires marshaling)
-			s.textWidthBasis = _textWidthBasis;
+			s.textWidthBasis = textWidthBasis;
 			// Complex type: TextHeightBehavior - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: Color? - skipped (requires marshaling)
-			s.textScaleFactor = _textScaleFactor;
+			s.textScaleFactor = textScaleFactor;
 		}
 
 		/// <summary>

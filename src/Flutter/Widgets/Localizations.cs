@@ -134,16 +134,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Localizations"/> class.
 		/// </summary>
 		public Localizations(
-			Locale? _locale,
-			List<LocalizationsDelegate<object>> _delegates
+			Locale? locale,
+			List<LocalizationsDelegate<object>> delegates
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<LocalizationsStruct>();
 			// Complex type: Locale? - skipped (requires marshaling)
 			// Complex type: List<LocalizationsDelegate<object>> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new LocalizationsStruct();

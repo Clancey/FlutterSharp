@@ -45,20 +45,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FractionallySizedBox"/> class.
 		/// </summary>
 		public FractionallySizedBox(
-			AlignmentGeometry? _alignment
+			AlignmentGeometry? alignment
 ,
-			double? _widthFactor = null,
-			double? _heightFactor = null,
-			Widget? _child = null
+			double? widthFactor = null,
+			double? heightFactor = null,
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<FractionallySizedBoxStruct>();
-			if (_widthFactor.HasValue)
-				s.widthFactor = _widthFactor.Value;
-			if (_heightFactor.HasValue)
-				s.heightFactor = _heightFactor.Value;
+			if (widthFactor.HasValue)
+				s.widthFactor = widthFactor.Value;
+			if (heightFactor.HasValue)
+				s.heightFactor = heightFactor.Value;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FractionallySizedBoxStruct();

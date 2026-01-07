@@ -58,16 +58,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ShaderMask"/> class.
 		/// </summary>
 		public ShaderMask(
-			Action _shaderCallback,
-			BlendMode _blendMode
+			Action shaderCallback,
+			BlendMode blendMode
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ShaderMaskStruct>();
 			// Complex type: Action - skipped (requires marshaling)
-			s.blendMode = _blendMode;
-			s.child = _child;
+			s.blendMode = blendMode;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ShaderMaskStruct();

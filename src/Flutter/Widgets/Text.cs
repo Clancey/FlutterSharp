@@ -141,45 +141,45 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Text"/> class.
 		/// </summary>
 		public Text(
-			object _textSpan,
-			TextStyle? _style,
-			StrutStyle? _strutStyle,
-			TextAlign? _textAlign,
-			TextDirection _textDirection,
-			Locale? _locale,
-			TextOverflow _overflow,
-			object _textScaler,
-			TextWidthBasis _textWidthBasis,
-			TextHeightBehavior _textHeightBehavior,
-			Color? _selectionColor
+			object textSpan,
+			TextStyle? style,
+			StrutStyle? strutStyle,
+			TextAlign? textAlign,
+			TextDirection textDirection,
+			Locale? locale,
+			TextOverflow overflow,
+			object textScaler,
+			TextWidthBasis textWidthBasis,
+			TextHeightBehavior textHeightBehavior,
+			Color? selectionColor
 ,
-			string? _data = null,
-			bool? _softWrap = null,
-			double? _textScaleFactor = null,
-			int? _maxLines = null,
-			string? _semanticsLabel = null,
-			string? _semanticsIdentifier = null
+			string? data = null,
+			bool? softWrap = null,
+			double? textScaleFactor = null,
+			int? maxLines = null,
+			string? semanticsLabel = null,
+			string? semanticsIdentifier = null
 		)
 		{
 			var s = GetBackingStruct<TextStruct>();
-			s.data = _data;
+			s.data = data;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: StrutStyle? - skipped (requires marshaling)
 			// Complex type: TextAlign? - skipped (requires marshaling)
-			s.textDirection = _textDirection;
+			s.textDirection = textDirection;
 			// Complex type: Locale? - skipped (requires marshaling)
-			if (_softWrap.HasValue)
-				s.softWrap = _softWrap.Value;
-			s.overflow = _overflow;
-			if (_textScaleFactor.HasValue)
-				s.textScaleFactor = _textScaleFactor.Value;
+			if (softWrap.HasValue)
+				s.softWrap = softWrap.Value;
+			s.overflow = overflow;
+			if (textScaleFactor.HasValue)
+				s.textScaleFactor = textScaleFactor.Value;
 			// Complex type: object - skipped (requires marshaling)
-			if (_maxLines.HasValue)
-				s.maxLines = _maxLines.Value;
-			s.semanticsLabel = _semanticsLabel;
-			s.semanticsIdentifier = _semanticsIdentifier;
-			s.textWidthBasis = _textWidthBasis;
+			if (maxLines.HasValue)
+				s.maxLines = maxLines.Value;
+			s.semanticsLabel = semanticsLabel;
+			s.semanticsIdentifier = semanticsIdentifier;
+			s.textWidthBasis = textWidthBasis;
 			// Complex type: TextHeightBehavior - skipped (requires marshaling)
 			// Complex type: Color? - skipped (requires marshaling)
 		}

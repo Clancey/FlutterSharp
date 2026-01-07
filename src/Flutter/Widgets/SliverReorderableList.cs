@@ -45,34 +45,34 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverReorderableList"/> class.
 		/// </summary>
 		public SliverReorderableList(
-			Func<BuildContext, int, Widget> _itemBuilder,
-			int _itemCount,
-			Action<int, int> _onReorder,
-			object _itemExtentBuilder,
-			double _autoScrollerVelocityScalar
+			Func<BuildContext, int, Widget> itemBuilder,
+			int itemCount,
+			Action<int, int> onReorder,
+			object itemExtentBuilder,
+			double autoScrollerVelocityScalar
 ,
-			Func<InvalidType, int?> _findChildIndexCallback = null,
-			Action<int> _onReorderStart = null,
-			Action<int> _onReorderEnd = null,
-			Func<Widget, int, InvalidType, Widget> _proxyDecorator = null,
-			double? _itemExtent = null,
-			Widget? _prototypeItem = null,
-			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> _dragBoundaryProvider = null
+			Func<InvalidType, int?> findChildIndexCallback = null,
+			Action<int> onReorderStart = null,
+			Action<int> onReorderEnd = null,
+			Func<Widget, int, InvalidType, Widget> proxyDecorator = null,
+			double? itemExtent = null,
+			Widget? prototypeItem = null,
+			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> dragBoundaryProvider = null
 		)
 		{
 			var s = GetBackingStruct<SliverReorderableListStruct>();
 			// Complex type: Func<BuildContext, int, Widget> - skipped (requires marshaling)
 			// Complex type: Func<InvalidType, int?> - skipped (requires marshaling)
-			s.itemCount = _itemCount;
+			s.itemCount = itemCount;
 			// Complex type: Action<int, int> - skipped (requires marshaling)
 			// Complex type: Action<int> - skipped (requires marshaling)
 			// Complex type: Action<int> - skipped (requires marshaling)
 			// Complex type: Func<Widget, int, InvalidType, Widget> - skipped (requires marshaling)
-			if (_itemExtent.HasValue)
-				s.itemExtent = _itemExtent.Value;
+			if (itemExtent.HasValue)
+				s.itemExtent = itemExtent.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Nullable reference type: Widget? - skipped
-			s.autoScrollerVelocityScalar = _autoScrollerVelocityScalar;
+			s.autoScrollerVelocityScalar = autoScrollerVelocityScalar;
 			// Complex type: Func<BuildContext, DragBoundaryDelegate<InvalidType>?> - skipped (requires marshaling)
 		}
 

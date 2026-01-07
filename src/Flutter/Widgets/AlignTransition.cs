@@ -50,19 +50,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AlignTransition"/> class.
 		/// </summary>
 		public AlignTransition(
-			Widget _child,
-			AlignmentGeometry? _alignment
+			Widget child,
+			AlignmentGeometry? alignment
 ,
-			double? _widthFactor = null,
-			double? _heightFactor = null
+			double? widthFactor = null,
+			double? heightFactor = null
 		)
 		{
 			var s = GetBackingStruct<AlignTransitionStruct>();
-			if (_widthFactor.HasValue)
-				s.widthFactor = _widthFactor.Value;
-			if (_heightFactor.HasValue)
-				s.heightFactor = _heightFactor.Value;
-			s.child = _child;
+			if (widthFactor.HasValue)
+				s.widthFactor = widthFactor.Value;
+			if (heightFactor.HasValue)
+				s.heightFactor = heightFactor.Value;
+			s.child = child;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 		}
 

@@ -100,16 +100,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="OverlayPortal"/> class.
 		/// </summary>
 		public OverlayPortal(
-			OverlayPortalController _controller,
-			Func<BuildContext, Widget> _overlayChildBuilder
+			OverlayPortalController controller,
+			Func<BuildContext, Widget> overlayChildBuilder
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<OverlayPortalStruct>();
 			// Complex type: OverlayPortalController - skipped (requires marshaling)
 			// Complex type: Func<BuildContext, Widget> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new OverlayPortalStruct();

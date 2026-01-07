@@ -77,18 +77,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PopScope"/> class.
 		/// </summary>
 		public PopScope(
-			Widget _child,
-			bool _canPop
+			Widget child,
+			bool canPop
 ,
-			Action<bool, T?> _onPopInvokedWithResult = null,
-			Action<bool> _onPopInvoked = null
+			Action<bool, T?> onPopInvokedWithResult = null,
+			Action<bool> onPopInvoked = null
 		)
 		{
 			var s = GetBackingStruct<PopScopeStruct>();
-			s.child = _child;
+			s.child = child;
 			// Complex type: Action<bool, T?> - skipped (requires marshaling)
 			// Complex type: Action<bool> - skipped (requires marshaling)
-			s.canPop = _canPop;
+			s.canPop = canPop;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PopScopeStruct();

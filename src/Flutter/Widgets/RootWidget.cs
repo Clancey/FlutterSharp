@@ -31,13 +31,13 @@ namespace Flutter.Widgets
 		/// </summary>
 		public RootWidget(
 
-			Widget? _child = null,
-			string? _debugShortDescription = null
+			Widget? child = null,
+			string? debugShortDescription = null
 		)
 		{
 			var s = GetBackingStruct<RootWidgetStruct>();
-			s.child = _child;
-			s.debugShortDescription = _debugShortDescription;
+			s.child = child;
+			s.debugShortDescription = debugShortDescription;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RootWidgetStruct();

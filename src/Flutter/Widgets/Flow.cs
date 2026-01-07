@@ -127,17 +127,17 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Flow"/> class.
 		/// </summary>
 		public Flow(
-			object _delegate,
-			Clip _clipBehavior
+			object @delegate,
+			Clip clipBehavior
 ,
-			List<Widget> _children = null
+			List<Widget> children = null
 		)
 		{
-			if (_children != null)
-				_childrenList.AddRange(_children);
+			if (children != null)
+				_childrenList.AddRange(children);
 			var s = GetBackingStruct<FlowStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
+			s.clipBehavior = clipBehavior;
 			// Children are set in PrepareForSending to support collection initializers
 		}
 

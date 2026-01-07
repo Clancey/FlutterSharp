@@ -64,16 +64,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="DecoratedBox"/> class.
 		/// </summary>
 		public DecoratedBox(
-			Decoration? _decoration,
-			object _position
+			Decoration? decoration,
+			object position
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<DecoratedBoxStruct>();
 			// Complex type: Decoration? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DecoratedBoxStruct();

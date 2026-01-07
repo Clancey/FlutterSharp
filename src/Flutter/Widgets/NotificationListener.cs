@@ -31,14 +31,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="NotificationListener"/> class.
 		/// </summary>
 		public NotificationListener(
-			Widget _child
+			Widget child
 ,
-			Func<T, bool> _onNotification = null
+			Func<T, bool> onNotification = null
 		)
 		{
 			var s = GetBackingStruct<NotificationListenerStruct>();
 			// Complex type: Func<T, bool> - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new NotificationListenerStruct();

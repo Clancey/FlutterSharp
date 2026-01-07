@@ -29,16 +29,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnnotatedRegion"/> class.
 		/// </summary>
 		public AnnotatedRegion(
-			T _value,
-			bool _sized,
-			Widget _child
+			T value,
+			bool sized,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<AnnotatedRegionStruct>();
 			// Complex type: T - skipped (requires marshaling)
-			s.sized = _sized;
-			s.child = _child;
+			s.sized = sized;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new AnnotatedRegionStruct();

@@ -43,11 +43,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SizeChangedLayoutNotifier(
 
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<SizeChangedLayoutNotifierStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SizeChangedLayoutNotifierStruct();

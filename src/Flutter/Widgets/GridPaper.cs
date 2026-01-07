@@ -31,20 +31,20 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="GridPaper"/> class.
 		/// </summary>
 		public GridPaper(
-			Color? _color,
-			double _interval,
-			int _divisions,
-			int _subdivisions
+			Color? color,
+			double interval,
+			int divisions,
+			int subdivisions
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<GridPaperStruct>();
 			// Complex type: Color? - skipped (requires marshaling)
-			s.interval = _interval;
-			s.divisions = _divisions;
-			s.subdivisions = _subdivisions;
-			s.child = _child;
+			s.interval = interval;
+			s.divisions = divisions;
+			s.subdivisions = subdivisions;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new GridPaperStruct();

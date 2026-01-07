@@ -44,14 +44,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Directionality"/> class.
 		/// </summary>
 		public Directionality(
-			TextDirection _textDirection,
-			Widget _child
+			TextDirection textDirection,
+			Widget child
 
 		)
 		{
 			var s = GetBackingStruct<DirectionalityStruct>();
-			s.textDirection = _textDirection;
-			s.child = _child;
+			s.textDirection = textDirection;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new DirectionalityStruct();

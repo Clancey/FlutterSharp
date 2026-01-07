@@ -99,19 +99,19 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedOpacity"/> class.
 		/// </summary>
 		public AnimatedOpacity(
-			double _opacity,
-			bool _alwaysIncludeSemantics,
-			TimeSpan _duration
+			double opacity,
+			bool alwaysIncludeSemantics,
+			TimeSpan duration
 ,
-			Widget? _child = null,
-			Curve _curve = null,
-			Action? _onEnd = null
+			Widget? child = null,
+			Curve curve = null,
+			Action? onEnd = null
 		)
 		{
 			var s = GetBackingStruct<AnimatedOpacityStruct>();
-			s.child = _child;
-			s.opacity = _opacity;
-			s.alwaysIncludeSemantics = _alwaysIncludeSemantics;
+			s.child = child;
+			s.opacity = opacity;
+			s.alwaysIncludeSemantics = alwaysIncludeSemantics;
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Action? - skipped (requires marshaling)

@@ -48,11 +48,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverToBoxAdapter(
 
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<SliverToBoxAdapterStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SliverToBoxAdapterStruct();

@@ -123,36 +123,36 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Focus"/> class.
 		/// </summary>
 		public Focus(
-			Widget _child,
-			bool _autofocus,
-			Action _onFocusChange,
-			bool _includeSemantics,
-			bool _canRequestFocus,
-			bool _skipTraversal,
-			bool _descendantsAreFocusable,
-			bool _descendantsAreTraversable
+			Widget child,
+			bool autofocus,
+			Action onFocusChange,
+			bool includeSemantics,
+			bool canRequestFocus,
+			bool skipTraversal,
+			bool descendantsAreFocusable,
+			bool descendantsAreTraversable
 ,
-			FocusNode? _parentNode = null,
-			FocusNode? _focusNode = null,
-			Func<FocusNode, InvalidType, KeyEventResult> _onKeyEvent = null,
-			Func<FocusNode, InvalidType, KeyEventResult> _onKey = null,
-			string? _debugLabel = null
+			FocusNode? parentNode = null,
+			FocusNode? focusNode = null,
+			Func<FocusNode, InvalidType, KeyEventResult> onKeyEvent = null,
+			Func<FocusNode, InvalidType, KeyEventResult> onKey = null,
+			string? debugLabel = null
 		)
 		{
 			var s = GetBackingStruct<FocusStruct>();
 			// Complex type: FocusNode? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 			// Complex type: FocusNode? - skipped (requires marshaling)
-			s.autofocus = _autofocus;
+			s.autofocus = autofocus;
 			// Complex type: Action - skipped (requires marshaling)
-			s.includeSemantics = _includeSemantics;
+			s.includeSemantics = includeSemantics;
 			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
 			// Complex type: Func<FocusNode, InvalidType, KeyEventResult> - skipped (requires marshaling)
-			s.canRequestFocus = _canRequestFocus;
-			s.skipTraversal = _skipTraversal;
-			s.descendantsAreFocusable = _descendantsAreFocusable;
-			s.descendantsAreTraversable = _descendantsAreTraversable;
-			s.debugLabel = _debugLabel;
+			s.canRequestFocus = canRequestFocus;
+			s.skipTraversal = skipTraversal;
+			s.descendantsAreFocusable = descendantsAreFocusable;
+			s.descendantsAreTraversable = descendantsAreTraversable;
+			s.debugLabel = debugLabel;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FocusStruct();

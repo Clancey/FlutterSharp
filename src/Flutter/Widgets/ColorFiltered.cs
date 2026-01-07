@@ -44,14 +44,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ColorFiltered"/> class.
 		/// </summary>
 		public ColorFiltered(
-			ColorFilter _colorFilter
+			ColorFilter colorFilter
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ColorFilteredStruct>();
 			// Complex type: ColorFilter - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ColorFilteredStruct();

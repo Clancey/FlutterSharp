@@ -59,17 +59,17 @@ namespace Flutter.Widgets
 		/// </summary>
 		public IntrinsicWidth(
 
-			double? _stepWidth = null,
-			double? _stepHeight = null,
-			Widget? _child = null
+			double? stepWidth = null,
+			double? stepHeight = null,
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<IntrinsicWidthStruct>();
-			if (_stepWidth.HasValue)
-				s.stepWidth = _stepWidth.Value;
-			if (_stepHeight.HasValue)
-				s.stepHeight = _stepHeight.Value;
-			s.child = _child;
+			if (stepWidth.HasValue)
+				s.stepWidth = stepWidth.Value;
+			if (stepHeight.HasValue)
+				s.stepHeight = stepHeight.Value;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new IntrinsicWidthStruct();

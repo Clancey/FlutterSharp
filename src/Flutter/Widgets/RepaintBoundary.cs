@@ -77,11 +77,11 @@ namespace Flutter.Widgets
 		/// </summary>
 		public RepaintBoundary(
 
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<RepaintBoundaryStruct>();
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new RepaintBoundaryStruct();

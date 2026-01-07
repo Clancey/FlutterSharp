@@ -40,18 +40,18 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FittedBox"/> class.
 		/// </summary>
 		public FittedBox(
-			BoxFit _fit,
-			AlignmentGeometry? _alignment,
-			Clip _clipBehavior
+			BoxFit fit,
+			AlignmentGeometry? alignment,
+			Clip clipBehavior
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<FittedBoxStruct>();
-			s.fit = _fit;
+			s.fit = fit;
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
-			s.child = _child;
+			s.clipBehavior = clipBehavior;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new FittedBoxStruct();

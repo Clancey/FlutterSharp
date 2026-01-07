@@ -43,22 +43,22 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PhysicalShape"/> class.
 		/// </summary>
 		public PhysicalShape(
-			object _clipper,
-			Clip _clipBehavior,
-			double _elevation,
-			Color? _color,
-			Color? _shadowColor
+			object clipper,
+			Clip clipBehavior,
+			double elevation,
+			Color? color,
+			Color? shadowColor
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<PhysicalShapeStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.clipBehavior = _clipBehavior;
-			s.elevation = _elevation;
+			s.clipBehavior = clipBehavior;
+			s.elevation = elevation;
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: Color? - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PhysicalShapeStruct();

@@ -45,16 +45,16 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ImageFiltered"/> class.
 		/// </summary>
 		public ImageFiltered(
-			object _imageFilter,
-			bool _enabled
+			object imageFilter,
+			bool enabled
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ImageFilteredStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.enabled = _enabled;
-			s.child = _child;
+			s.enabled = enabled;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ImageFilteredStruct();

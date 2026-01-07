@@ -40,14 +40,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CustomSingleChildLayout"/> class.
 		/// </summary>
 		public CustomSingleChildLayout(
-			object _delegate
+			object @delegate
 ,
-			Widget? _child = null
+			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<CustomSingleChildLayoutStruct>();
 			// Complex type: object - skipped (requires marshaling)
-			s.child = _child;
+			s.child = child;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new CustomSingleChildLayoutStruct();
