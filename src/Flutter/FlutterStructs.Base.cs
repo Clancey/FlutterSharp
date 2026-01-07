@@ -8,49 +8,90 @@ namespace Flutter.Structs
 	public unsafe class BaseStruct : IDisposable
 	{
 		private IntPtr handle;
-		private IntPtr manahedHandle;
+		private IntPtr managedHandle;
 		public IntPtr Handle => handle;
+
+		// Track allocated string pointers for cleanup
+		private List<IntPtr> _allocatedStrings = new List<IntPtr>();
+		private bool _disposed = false;
 
 		public BaseStruct()
 		{
 			var gchandle = GCHandle.Alloc(this, GCHandleType.Pinned);
-			manahedHandle = (IntPtr)gchandle;
+			managedHandle = (IntPtr)gchandle;
 			handle = gchandle.AddrOfPinnedObject();
 		}
 
 		protected virtual void Dispose(bool disposing)
 		{
-			if (handle == IntPtr.Zero)
+			if (_disposed)
 				return;
-			if (disposing)
+
+			// Free all allocated string pointers
+			foreach (var ptr in _allocatedStrings)
 			{
-				// TODO: dispose managed state (managed objects)
+				if (ptr != IntPtr.Zero)
+				{
+					Marshal.FreeCoTaskMem(ptr);
+				}
 			}
-			var gchandle = GCHandle.FromIntPtr(manahedHandle);
-			gchandle.Free();
-			handle = IntPtr.Zero;
+			_allocatedStrings.Clear();
+
+			if (handle != IntPtr.Zero)
+			{
+				var gchandle = GCHandle.FromIntPtr(managedHandle);
+				if (gchandle.IsAllocated)
+				{
+					gchandle.Free();
+				}
+				handle = IntPtr.Zero;
+				managedHandle = IntPtr.Zero;
+			}
+
+			_disposed = true;
 		}
+
 		~BaseStruct()
 		{
-			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
 			Dispose(disposing: false);
 		}
 
 		public void Dispose()
 		{
-			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
 			Dispose(disposing: true);
 			GC.SuppressFinalize(this);
 		}
 
 
-		protected string GetString(IntPtr ptr) => Marshal.PtrToStringUTF8(ptr);
-		protected void SetString(ref IntPtr ptr, string value) => ptr = Marshal.StringToCoTaskMemUTF8(value);
+		protected string GetString(IntPtr ptr) => ptr == IntPtr.Zero ? null : Marshal.PtrToStringUTF8(ptr);
+
+		protected void SetString(ref IntPtr ptr, string value)
+		{
+			// Free previous string if it was allocated
+			if (ptr != IntPtr.Zero && _allocatedStrings.Contains(ptr))
+			{
+				Marshal.FreeCoTaskMem(ptr);
+				_allocatedStrings.Remove(ptr);
+			}
+
+			// Allocate new string
+			if (value != null)
+			{
+				ptr = Marshal.StringToCoTaskMemUTF8(value);
+				_allocatedStrings.Add(ptr);
+			}
+			else
+			{
+				ptr = IntPtr.Zero;
+			}
+		}
+
 		protected void SetIntPtr(ref IntPtr ptr, Widget flutterObject)
 		{
 			flutterObject?.PrepareForSending();
 			ptr = flutterObject;
 		}
+
 		const byte Yes = 1;
 		const byte No = 0;
 		protected bool GetValue(byte value) => value == Yes;
@@ -170,8 +211,8 @@ namespace Flutter.Structs
 		{
 			get
 			{
-				if (HasValue)
-					throw new NullReferenceException();
+				if (!HasValue)
+					throw new InvalidOperationException("Nullable value does not have a value.");
 				return value;
 			}
 		}
