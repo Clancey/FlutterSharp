@@ -1411,16 +1411,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			});
 
 			// Overflow/Clipping types
-			RegisterMapping(new TypeMapping
-			{
-				DartType = "Overflow",
-				CSharpType = "Overflow",
-				DartStructType = "Int32",
-				DartParserFunction = "parseOverflow",
-				IsEnum = true,
-				Package = "flutter/rendering"
-			});
-
+			// Note: "Overflow" is deprecated in Flutter, use TextOverflow instead
 			RegisterMapping(new TypeMapping
 			{
 				DartType = "TextOverflow",

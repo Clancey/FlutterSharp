@@ -124,21 +124,8 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		{
 			var csharpNamespace = MapNamespace(enrichedWidget.Namespace);
 
-			// Convert enriched properties to template model format
-			var allProperties = enrichedWidget.AllProperties.Select(p => new Dictionary<string, object?>
-			{
-				["name"] = p.Name,
-				["type"] = p.CSharpType,
-				["dart_type"] = p.DartType,
-				["is_required"] = p.IsRequired,
-				["is_nullable"] = p.IsNullable,
-				["default_value"] = p.DefaultValue,
-				["documentation"] = FormatDocumentation(p.Documentation),
-				["is_list"] = p.IsList,
-				["is_callback"] = p.IsCallback,
-				["backing_field_name"] = p.BackingFieldName,
-				["is_generic_type_param"] = p.IsGenericTypeParam
-			}).ToList();
+			// Convert enriched properties to template model format with assignment metadata
+			var allProperties = enrichedWidget.AllProperties.Select(p => BuildPropertyModel(p, enrichedWidget)).ToList();
 
 			var requiredProperties = enrichedWidget.RequiredProperties.Select(p => new Dictionary<string, object?>
 			{
@@ -180,6 +167,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["namespace"] = csharpNamespace,
 				["base_class"] = enrichedWidget.BaseClassName,
 				["properties"] = allProperties,
+				["all_properties"] = allProperties,
 				["has_single_child"] = enrichedWidget.HasSingleChild,
 				["has_multiple_children"] = enrichedWidget.HasMultipleChildren,
 				["child_property_name"] = enrichedWidget.ChildPropertyName,
@@ -194,6 +182,224 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				["type_parameters"] = enrichedWidget.TypeParameters,
 				["is_generic"] = enrichedWidget.TypeParameters?.Count > 0
 			};
+		}
+
+		/// <summary>
+		/// Builds the property model with all metadata needed for property assignment in constructor.
+		/// </summary>
+		private Dictionary<string, object?> BuildPropertyModel(EnrichedPropertyDefinition p, EnrichedWidgetDefinition widget)
+		{
+			var csharpType = p.CSharpType ?? "object";
+			var baseType = csharpType.TrimEnd('?');
+
+			// For optional parameters, value types get a nullable wrapper (e.g., "MainAxisAlignment" becomes "MainAxisAlignment?")
+			// This affects how we need to generate the assignment code
+			var isNullableCSharpType = csharpType.EndsWith("?");
+
+			// Optional value types become nullable in the constructor ONLY IF they have no default value
+			// If they have a default value like "0", "false", or an enum value, they stay non-nullable
+			var hasNonNullDefault = !string.IsNullOrEmpty(p.DefaultValue) &&
+			                        p.DefaultValue != "null" &&
+			                        p.DefaultValue != "default";
+			var willBeNullableInConstructor = !p.IsRequired && !IsReferenceType(csharpType) && !isNullableCSharpType && !hasNonNullDefault;
+
+			// Determine property assignment category
+			var isChild = !p.IsList && IsWidgetType(csharpType) &&
+			              (p.Name.Equals("child", StringComparison.OrdinalIgnoreCase) ||
+			               p.Name.Equals("sliver", StringComparison.OrdinalIgnoreCase) ||
+			               p.Name.Equals(widget.ChildPropertyName, StringComparison.OrdinalIgnoreCase));
+
+			// Children can be named "children", "slivers", "views", etc.
+			var childrenPropertyNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+			{
+				"children", "slivers", "views", "overlays", "tabs", "actions", "buttons"
+			};
+			if (!string.IsNullOrEmpty(widget.ChildrenPropertyName))
+				childrenPropertyNames.Add(widget.ChildrenPropertyName);
+
+			var isChildren = p.IsList && IsWidgetListType(csharpType) && childrenPropertyNames.Contains(p.Name);
+			var isString = csharpType == "string" || csharpType == "string?";
+
+			// Nullable value types must be primitive types (int, double, bool, etc.)
+			// that are either already nullable OR will become nullable in the constructor (optional params)
+			var isEffectivelyNullable = isNullableCSharpType || willBeNullableInConstructor;
+			var isNullableValueType = isEffectivelyNullable && IsPrimitiveValueType(baseType) && !p.IsEnum;
+
+			// Complex types, callbacks, and action types all map to IntPtr
+			var isIntPtr = (IsComplexType(csharpType) || p.IsCallback || IsActionOrDelegateType(csharpType))
+			               && !isChild && !isChildren && !isString;
+
+			// Get struct field name (camelCase without underscore prefix)
+			var structFieldName = p.Name.TrimStart('@');
+			if (structFieldName.StartsWith("_"))
+				structFieldName = structFieldName.Substring(1);
+			// Ensure first character is lowercase for struct field
+			if (structFieldName.Length > 0)
+				structFieldName = char.ToLowerInvariant(structFieldName[0]) + structFieldName.Substring(1);
+			// Escape C# keywords for struct field access
+			structFieldName = EscapeCSharpKeyword(structFieldName);
+
+			// Get the Has flag field name for nullable value types
+			// The field name is like "Hasdata", "Hasenabled", etc.
+			// We need to get the raw name (without @ prefix)
+			var rawFieldName = structFieldName.TrimStart('@');
+			var hasFieldName = "Has" + rawFieldName;
+
+			// The actual nullability for assignment purposes is whether the type ends with ?
+			// OR whether it will be made nullable for optional parameters
+			var effectivelyNullable = isNullableCSharpType || willBeNullableInConstructor;
+
+			return new Dictionary<string, object?>
+			{
+				["name"] = p.Name,
+				["type"] = csharpType,
+				["dart_type"] = p.DartType,
+				["is_required"] = p.IsRequired,
+				["is_nullable"] = effectivelyNullable, // True if type ends with ? or will be nullable in constructor
+				["default_value"] = p.DefaultValue,
+				["documentation"] = FormatDocumentation(p.Documentation),
+				["is_list"] = p.IsList,
+				["is_callback"] = p.IsCallback,
+				["backing_field_name"] = p.BackingFieldName,
+				["is_generic_type_param"] = p.IsGenericTypeParam,
+				// Assignment-specific properties
+				["struct_field_name"] = structFieldName,
+				["has_field_name"] = hasFieldName,
+				["is_child"] = isChild,
+				["is_children"] = isChildren,
+				["is_string"] = isString,
+				["is_enum"] = p.IsEnum,
+				["is_nullable_value_type"] = isNullableValueType,
+				["is_intptr"] = isIntPtr,
+				["underlying_type"] = baseType
+			};
+		}
+
+		/// <summary>
+		/// Checks if a C# type is a Widget type.
+		/// </summary>
+		private bool IsWidgetType(string csharpType)
+		{
+			var baseType = csharpType.TrimEnd('?');
+			return baseType == "Widget" || baseType == "Flutter.Widget";
+		}
+
+		/// <summary>
+		/// Checks if a C# type is a Widget list type.
+		/// </summary>
+		private bool IsWidgetListType(string csharpType)
+		{
+			return csharpType.StartsWith("List<Widget>") ||
+			       csharpType.StartsWith("IEnumerable<Widget>") ||
+			       csharpType.StartsWith("IList<Widget>");
+		}
+
+		/// <summary>
+		/// Checks if a C# type is a value type (struct, enum, primitive).
+		/// </summary>
+		private bool IsValueType(string csharpType)
+		{
+			var baseType = csharpType.TrimEnd('?');
+			return !IsReferenceType(baseType);
+		}
+
+		/// <summary>
+		/// Checks if a C# type is a primitive value type that can be used with NativeNullable.
+		/// This is a subset of value types - only primitives and simple structs.
+		/// </summary>
+		private bool IsPrimitiveValueType(string baseType)
+		{
+			// Primitive numeric types and bool
+			var primitiveTypes = new HashSet<string>
+			{
+				"bool", "byte", "sbyte", "short", "ushort", "int", "uint",
+				"long", "ulong", "float", "double", "decimal", "char",
+				"Int32", "Int64", "Boolean", "Single", "Double"
+			};
+			return primitiveTypes.Contains(baseType);
+		}
+
+		/// <summary>
+		/// Checks if a C# type is a complex type that maps to IntPtr.
+		/// Uses an inverse approach: anything that's NOT a known simple type is complex.
+		/// </summary>
+		private bool IsComplexType(string csharpType)
+		{
+			var baseType = csharpType.TrimEnd('?');
+
+			// Primitives and simple value types are NOT complex
+			if (IsPrimitiveValueType(baseType))
+				return false;
+
+			// String is NOT complex (handled directly)
+			if (baseType == "string")
+				return false;
+
+			// Widget and Widget lists are NOT complex (handled specially)
+			if (baseType == "Widget" || baseType == "Flutter.Widget")
+				return false;
+			if (baseType.StartsWith("List<Widget") || baseType.StartsWith("IEnumerable<Widget") || baseType.StartsWith("IList<Widget"))
+				return false;
+
+			// Special value types that need marshaling (not blittable to IntPtr)
+			var specialValueTypes = new HashSet<string>
+			{
+				"TimeSpan", "DateTime", "Guid", "Offset", "Size", "Rect"
+			};
+			if (specialValueTypes.Contains(baseType))
+				return true;
+
+			// Check for enums - they are NOT complex, they are handled specially
+			if (!IsReferenceType(csharpType))
+				return false;
+
+			// Generic type parameters (T, S, etc.) are complex
+			if (baseType == "T" || baseType == "S")
+				return true;
+
+			// Type is complex (System.Type)
+			if (baseType == "Type" || baseType == "System.Type")
+				return true;
+
+			// Check for generic types - these are always complex
+			if (baseType.Contains("<"))
+				return true;
+
+			// Check for IEnumerable types that aren't Widget lists
+			if (baseType.StartsWith("IEnumerable<") || baseType.StartsWith("IList<") || baseType.StartsWith("HashSet<"))
+				return true;
+
+			// Everything else that is a reference type (class) is complex
+			// This includes: Listenable, ImageFilter, ColorFilter, LayerLink,
+			// IconThemeData, AssetBundle, controllers, delegates, etc.
+			if (IsReferenceType(csharpType))
+				return true;
+
+			// Simple value types/structs that aren't primitives - check against a known list
+			// These are blittable structs that CAN be assigned directly
+			var simpleValueStructs = new HashSet<string>
+			{
+				// Enums are handled separately, but for safety include common enum-like types
+			};
+			if (simpleValueStructs.Contains(baseType))
+				return false;
+
+			// Default: if we get here, it's likely a custom struct/class, treat as complex
+			return true;
+		}
+
+		/// <summary>
+		/// Checks if a C# type is an Action, Func, or Delegate type.
+		/// </summary>
+		private bool IsActionOrDelegateType(string csharpType)
+		{
+			var baseType = csharpType.TrimEnd('?');
+			return baseType.StartsWith("Action") ||
+			       baseType.StartsWith("Func<") ||
+			       baseType == "Delegate" ||
+			       baseType.EndsWith("Callback") ||
+			       baseType.EndsWith("Handler") ||
+			       baseType.EndsWith("Delegate");
 		}
 
 		/// <summary>
@@ -397,7 +603,9 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 			// Handle Dart enums (e.g., Axis.horizontal)
 			// Only preserve defaults for actual C# enums which are compile-time constants
 			// Types like Alignment.Center are NOT enums - they're static properties and not compile-time constants
-			if (dartDefaultValue.Contains(".") && !dartDefaultValue.StartsWith("const"))
+			// Skip numeric literals like "0.0", "1.5", etc. which also contain "."
+			var isNumericLiteral = double.TryParse(dartDefaultValue, out _);
+			if (dartDefaultValue.Contains(".") && !dartDefaultValue.StartsWith("const") && !isNumericLiteral)
 			{
 				// Check if the type is a known enum type (value types that can be compile-time constant defaults)
 				var enumTypes = new HashSet<string>
@@ -405,7 +613,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 					"Axis", "Clip", "MainAxisAlignment", "CrossAxisAlignment", "MainAxisSize",
 					"VerticalDirection", "TextDirection", "TextAlign", "TextBaseline",
 					"TextOverflow", "TextWidthBasis", "FlexFit", "BoxFit", "FilterQuality",
-					"BlendMode", "StackFit", "Overflow", "DragStartBehavior", "HitTestBehavior",
+					"BlendMode", "StackFit", "DragStartBehavior", "HitTestBehavior",
 					"ScrollViewKeyboardDismissBehavior", "BoxShape", "BoxHeightStyle", "BoxWidthStyle",
 					"StrokeCap", "StrokeJoin", "PaintingStyle", "TileMode", "WrapAlignment",
 					"WrapCrossAlignment", "DecorationPosition", "ShapeBorder", "FontWeight",
@@ -465,7 +673,7 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				"Axis", "Clip", "MainAxisAlignment", "CrossAxisAlignment", "MainAxisSize",
 				"VerticalDirection", "TextDirection", "TextAlign", "TextBaseline",
 				"TextOverflow", "TextWidthBasis", "FlexFit", "BoxFit", "FilterQuality",
-				"BlendMode", "StackFit", "Overflow", "DragStartBehavior", "HitTestBehavior",
+				"BlendMode", "StackFit", "DragStartBehavior", "HitTestBehavior",
 				"ScrollViewKeyboardDismissBehavior", "BoxShape", "BoxHeightStyle", "BoxWidthStyle",
 				"StrokeCap", "StrokeJoin", "PaintingStyle", "TileMode", "WrapAlignment",
 				"WrapCrossAlignment", "DecorationPosition", "ShapeBorder", "FontWeight",

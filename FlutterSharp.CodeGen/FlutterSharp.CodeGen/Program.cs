@@ -426,6 +426,16 @@ internal class Program
 		// Generate widgets
 		LogInfo("");
 		LogInfo("Generating widget code...");
+		// Widgets that should be completely excluded from generation
+		// (platform-specific, problematic struct mappings, or edge-case widgets)
+		var excludeWidgets = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+		{
+			// Platform-specific widgets that don't exist on all platforms
+			"UiKitView", "AppKitView",
+			// Widgets with struct mapping issues (child property not matching)
+			"SliverCrossAxisExpanded", "NestedScrollViewViewport"
+		};
+
 		foreach (var widget in packageDefinition.Widgets)
 		{
 			LogVerbose($"  Generating {widget.Name}...");
@@ -435,6 +445,13 @@ internal class Program
 			if (widget.Name.StartsWith("_"))
 			{
 				LogVerbose($"  Skipping internal widget {widget.Name}");
+				continue;
+			}
+
+			// Skip completely excluded widgets
+			if (excludeWidgets.Contains(widget.Name))
+			{
+				LogVerbose($"  Skipping excluded widget {widget.Name}");
 				continue;
 			}
 
@@ -747,7 +764,13 @@ internal class Program
 		// Generate parser registration file (imports + list)
 		LogInfo("");
 		LogInfo("Generating parser registration file...");
-		var parserRegistrationCode = dartParserImportsGenerator.Generate(packageDefinition.Widgets, skipParserGeneration);
+		// Combine excluded widgets and skip parser generation sets for parser registration
+		var allExcludedParsers = new HashSet<string>(skipParserGeneration, StringComparer.OrdinalIgnoreCase);
+		foreach (var excluded in excludeWidgets)
+		{
+			allExcludedParsers.Add(excluded);
+		}
+		var parserRegistrationCode = dartParserImportsGenerator.Generate(packageDefinition.Widgets, allExcludedParsers);
 		await File.WriteAllTextAsync(
 			Path.Combine(outputDart, "generated_parsers.dart"),
 			parserRegistrationCode,

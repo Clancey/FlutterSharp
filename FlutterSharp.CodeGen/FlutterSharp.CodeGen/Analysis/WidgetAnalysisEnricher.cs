@@ -388,9 +388,18 @@ namespace FlutterSharp.CodeGen.Analysis
 
 			foreach (var inheritedProp in inheritedProperties)
 			{
-				// Only add if not already present
-				if (!enrichedProperties.Any(p => p.Name.Equals(inheritedProp.Name, StringComparison.OrdinalIgnoreCase)))
+				// Check if already present
+				var existingProp = enrichedProperties.FirstOrDefault(p => p.Name.Equals(inheritedProp.Name, StringComparison.OrdinalIgnoreCase));
+				if (existingProp == null)
 				{
+					// Add if not present
+					enrichedProperties.Add(inheritedProp);
+				}
+				else if (inheritedProp.IsCallback && !existingProp.IsCallback)
+				{
+					// Replace with inherited version if it has correct callback flag
+					// The analyzer may not correctly identify callback typedefs like VoidCallback
+					enrichedProperties.Remove(existingProp);
 					enrichedProperties.Add(inheritedProp);
 				}
 			}

@@ -510,7 +510,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       'filterQuality': 'FilterQuality',
       'blendMode': 'BlendMode',
       'stackFit': 'StackFit',
-      'overflow': 'Overflow',
+      'overflow': 'TextOverflow',
       'textOverflow': 'TextOverflow',
       'softWrap': 'bool',
       'maxLines': 'int?',
@@ -709,7 +709,33 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
 
   /// Checks if a type is a callback/function
   bool _isCallback(type) {
-    return type.runtimeType.toString().contains('FunctionType');
+    // Check if it's a direct FunctionType
+    if (type.runtimeType.toString().contains('FunctionType')) {
+      return true;
+    }
+
+    // Check for callback typedef names (e.g., VoidCallback, ValueChanged)
+    final typeString = _getTypeString(type);
+    final callbackTypeNames = [
+      'VoidCallback', 'ValueChanged', 'GestureTapCallback', 'GestureTapDownCallback',
+      'GestureTapUpCallback', 'GestureLongPressCallback', 'GestureDragStartCallback',
+      'GestureDragUpdateCallback', 'GestureDragEndCallback', 'GestureScaleStartCallback',
+      'GestureScaleUpdateCallback', 'GestureScaleEndCallback', 'PointerDownEventListener',
+      'PointerMoveEventListener', 'PointerUpEventListener', 'PointerCancelEventListener',
+      'DismissedCallback', 'TransitionBuilder', 'AnimatedWidgetBuilder', 'IndexedWidgetBuilder',
+      'WidgetBuilder', 'NullableIndexedWidgetBuilder', 'DragTargetAccept', 'DragTargetAcceptWithDetails',
+      'DragTargetBuilder', 'DragTargetLeave', 'DragTargetMove', 'DragTargetWillAccept',
+      'ReorderCallback', 'FormFieldBuilder', 'FormFieldSetter', 'FormFieldValidator',
+      'GenerateAppTitle', 'InitialRouteListFactory', 'LocaleListResolutionCallback',
+      'LocaleResolutionCallback', 'NotificationListenerCallback', 'PageRouteFactory',
+      'RouteFactory', 'SelectionChangedCallback', 'ValueWidgetBuilder',
+    ];
+    for (final name in callbackTypeNames) {
+      if (typeString.startsWith(name)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /// Gets type arguments for generic types

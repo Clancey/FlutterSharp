@@ -30,7 +30,7 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			["filterQuality"] = "FilterQuality",
 			["blendMode"] = "BlendMode",
 			["stackFit"] = "StackFit",
-			["overflow"] = "Overflow",
+			["overflow"] = "TextOverflow",
 			["textOverflow"] = "TextOverflow",
 			["textAlign"] = "TextAlign",
 			["textWidthBasis"] = "TextWidthBasis",
