@@ -104,10 +104,13 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 						Console.WriteLine($"[{widget.Name} Property] {p.Name}: DartType={p.DartType}, IsNullable={p.IsNullable}, CSharpType={p.CSharpType}, IsPointer={isPointer}, IsPrimitive={isPrimitive}, IsEnum={isEnum}, IsColorPrimitive={isColorPrimitive}, Parser={parserFunc}");
 					}
 
+					// Check if this is a string type (Pointer<Utf8> or String Dart type)
+					var isString = ffiType == "Pointer<Utf8>" || baseType == "String";
+
 					return new
 					{
 						p.Name,
-						PropertyName = ToCamelCase(p.Name),
+						PropertyName = p.IsCallback ? ToCamelCase(p.Name) + "Action" : ToCamelCase(p.Name),
 						DartType = p.DartType,
 						CSharpType = p.CSharpType ?? "object",
 						ParserFunction = parserFunc,
@@ -118,7 +121,8 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 						IsBool = p.DartType?.TrimEnd('?') == "bool",
 						IsCallback = p.IsCallback,
 						IsPointerVoid = _typeMapper.MapToFfiType(p.CSharpType ?? p.DartType) is "IntPtr" or "Pointer<Void>",
-						IsPointerType = isPointer,
+						IsPointerType = isPointer && !isString,
+						IsString = isString,
 						IsPrimitiveType = isPrimitive,
 						IsEnumType = isEnum,
 						IsColorPrimitive = isColorPrimitive,
@@ -187,7 +191,8 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			WidgetName = enrichedWidget.Name,
 			Properties = regularProperties.Select(p => {
 				var isPointerVoid = p.FfiType == "Pointer<Void>" || p.FfiType == "IntPtr";
-				var isPointerType = p.FfiType.StartsWith("Pointer<") && !isPointerVoid;
+				var isPointerUtf8 = p.FfiType == "Pointer<Utf8>";
+				var isPointerType = p.FfiType.StartsWith("Pointer<") && !isPointerVoid && !isPointerUtf8;
 				var isPrimitive = IsPrimitiveTypeFfi(p.FfiType);
 				var baseType = p.DartType?.TrimEnd('?') ?? "";
 				var ffiType = p.FfiType;
@@ -214,6 +219,7 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 					// Match template variable names (Scriban converts to snake_case)
 					IsPointerVoid = isPointerVoid,
 					IsPointerType = isPointerType,
+					IsString = isPointerUtf8 || baseType == "String",
 					IsPrimitiveType = isPrimitive,
 					IsEnumType = isEnumType,
 					IsColorPrimitive = isColorPrimitive,
