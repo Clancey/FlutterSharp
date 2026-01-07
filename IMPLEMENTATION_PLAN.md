@@ -131,8 +131,8 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| M001 | Implement GCHandle lifecycle | pending | Need to implement pinning for FFI structs |
-| M002 | Implement string pointer cleanup | pending | Need to free allocated Utf8 strings |
+| M001 | Implement GCHandle lifecycle | completed | GCHandle pinning in BaseStruct, proper cleanup on dispose |
+| M002 | Implement string pointer cleanup | completed | Track allocated strings, free on SetString and Dispose |
 | M003 | Implement children array cleanup | pending | Need to free children array memory |
 | M004 | Add memory leak detection | pending | Add tracking/debugging for leaks |
 
@@ -238,6 +238,8 @@ When starting a new loop, work on these in order:
 | C002 | 2026-01-07 | c9d3d94 | JSON serialization in FlutterManager, Communicator, and DisposedMessage |
 | C003 | 2026-01-07 | c9d3d94 | Basic error handling with try-catch and console logging |
 | DR001-DR004 | 2026-01-07 | pre-existing | Dart runtime already implemented: DynamicWidgetBuilder, MauiRootRenderer, MauiComponent, error widgets |
+| M001 | 2026-01-07 | df9933c | GCHandle lifecycle: BaseStruct pins itself, proper cleanup on dispose with IsAllocated check |
+| M002 | 2026-01-07 | df9933c | String pointer cleanup: Track allocated strings in List<IntPtr>, free on SetString and Dispose. Also fixed NativeNullable<T>.Value logic bug and 'manahedHandle' typo. |
 
 ---
 
@@ -407,6 +409,24 @@ Add notes here when exploring the codebase:
   - BorderRadiusGeometry → BorderRadius? (abstract → concrete type)
   - AlignmentGeometry → Alignment (abstract → concrete type)
   - Various controller types (nullable → non-nullable)
+
+### M001/M002 Memory Management Fix Details (2026-01-07)
+- **Location**: `src/Flutter/FlutterStructs.Base.cs`
+- **Pre-existing GCHandle**: BaseStruct already pinned itself on construction, but had issues:
+  1. Typo: `manahedHandle` → `managedHandle`
+  2. No string memory tracking/cleanup
+  3. No double-disposal protection
+  4. Logic bug in `NativeNullable<T>.Value` (threw when HasValue was true)
+- **Fixes applied**:
+  1. Added `_allocatedStrings = new List<IntPtr>()` to track all allocated string pointers
+  2. Modified `SetString()` to free previous string before allocating new one
+  3. Modified `Dispose()` to iterate and free all tracked strings before freeing GCHandle
+  4. Added `gchandle.IsAllocated` check before calling `Free()`
+  5. Added `_disposed` flag for double-disposal protection
+  6. Fixed `GetString()` to return null for IntPtr.Zero instead of crashing
+  7. Fixed `NativeNullable<T>.Value` to throw when `!HasValue` (was inverted)
+- **Memory pattern**: Each struct now properly cleans up all its string allocations when disposed
+- **Note**: Children arrays (M003) still need similar tracking - they use `NativeArray<T>` which does have proper disposal
 
 ---
 
