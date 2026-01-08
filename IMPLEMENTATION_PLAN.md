@@ -587,6 +587,7 @@ When starting a new loop, work on these in order:
 | SCR004 | 2026-01-08 | 2f5d92c | Implemented RefreshIndicator pull-to-refresh with async callback pattern. RefreshIndicator.cs accepts Func<Task> onRefresh. RefreshIndicatorStruct with displacement, edgeOffset, color, backgroundColor, strokeWidth, triggerMode. refreshindicator_parser.dart uses Completer<void> to convert C# async callback to Dart Future. FlutterManager.SendAsyncCallbackComplete signals completion. mauiRenderer handles AsyncCallbackComplete message to complete the Future. |
 | SCR005 | 2026-01-08 | pending | Implemented infinite scrolling pattern. ScrollController extended with LoadMoreThreshold (default 200px), OnLoadMore async callback, IsLoadingMore state, LoadMoreRequested event, TriggerLoadMore() method, ResetLoadingState(). Created InfiniteListView and InfiniteGridView convenience widgets that combine builder pattern with automatic load-more detection. When scroll position within threshold of maxScrollExtent, async OnLoadMore is triggered. InfiniteListViewStruct and InfiniteGridViewStruct for FFI. Dart parsers infinitelistview_parser.dart and infinitegridview_parser.dart with FutureBuilder pattern and automatic CircularProgressIndicator at end. |
 | CUP001 | 2026-01-08 | a7d15d0 | Implemented CupertinoButton iOS-style button. C# widget (CupertinoButton.cs) with normal and Filled variants. CupertinoButtonStruct.cs for FFI. Dart parser (cupertinobutton_parser.dart) supporting onPressed, onLongPress, onFocusChange callbacks; padding, color, disabledColor, pressedOpacity, minimumSize, borderRadius, alignment, sizeStyle properties. Added EdgeInsets and Color value types to PlaceholderTypes.cs for C# struct support. |
+| CUP003 | 2026-01-08 | pending | Implemented CupertinoNavigationBar iOS-style navigation bar. C# widget (CupertinoNavigationBar.cs) with leading, middle, trailing widget slots. CupertinoNavigationBarStruct.cs for FFI with HasLeading/HasMiddle/HasTrailing flags, previousPageTitle string, backgroundColor (uint), brightness (int), padding (EdgeInsetsDirectional as 4 doubles), and boolean properties (automaticallyImplyLeading, automaticallyImplyMiddle, transitionBetweenRoutes, automaticBackgroundVisibility, enableBackgroundFilterBlur). Dart struct (cupertinonavigationbar_struct.dart) and parser (cupertinonavigationbar_parser.dart) registered in maui_flutter.dart. |
 
 ---
 
@@ -970,7 +971,7 @@ After hitting a blocker:
 |----|------|--------|-------|
 | CUP001 | Implement CupertinoButton | completed | iOS-style button with filled variant, padding, colors, sizeStyle |
 | CUP002 | Implement CupertinoTextField | completed | iOS-style text field with onChanged, onSubmitted, placeholder, styling, cursor customization |
-| CUP003 | Implement CupertinoNavigationBar | pending | iOS-style nav bar |
+| CUP003 | Implement CupertinoNavigationBar | completed | iOS-style nav bar with leading, middle, trailing widgets, backgroundColor, brightness, padding, and boolean settings |
 | CUP004 | Implement CupertinoTabBar | pending | iOS-style tab bar |
 | CUP005 | Implement CupertinoSwitch | pending | iOS-style switch |
 
