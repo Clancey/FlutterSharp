@@ -27,6 +27,7 @@ import 'parsers/dropcaptext_widget_parser.dart';
 import 'parsers/expanded_widget_parser.dart';
 import 'parsers/fittedbox_widget_parser.dart';
 import 'parsers/flexible_parser.dart';
+import 'parsers/elevatedbutton_parser.dart';
 import 'parsers/floatingactionbutton_parser.dart';
 import 'parsers/gridview_widget_parser.dart';
 import 'parsers/icon_widget_parser.dart';
@@ -82,6 +83,7 @@ class DynamicWidgetBuilder {
     ExpandedWidgetParser(),
     FittedBoxWidgetParser(),
     FlexibleParser(),
+    ElevatedButtonParser(),
     FloatingActionButtonParser(),
     GridViewWidgetParser(),
     IconWidgetParser(),

@@ -21,6 +21,7 @@ export 'generated/structs/container_struct.dart';
 export 'generated/structs/icon_struct.dart';
 export 'generated/structs/row_struct.dart';
 export 'generated/structs/text_struct.dart';
+export 'generated/structs/elevatedbutton_struct.dart';
 
 /// Abstract interface for FlutterObjectStruct to allow type-safe parsing.
 /// This is used as a parameter type in parser methods.
