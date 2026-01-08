@@ -118,21 +118,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class GestureDetectorStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Callback field: onTapDown
 		// Using action string pattern - Dart will dispatch action to C# via method channel
 		IntPtr _onTapDown;
@@ -1600,7 +1585,7 @@ namespace Flutter.Structs
 
 		// Simple field: trackpadScrollToScaleFactor
 /// {@macro flutter.gestures.scale.trackpadScrollToScaleFactor}
-		public object trackpadScrollToScaleFactor { get; set; }
+		public IntPtr trackpadScrollToScaleFactor { get; set; }
 
 	}
 }

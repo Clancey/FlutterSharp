@@ -135,18 +135,6 @@ namespace Flutter.Structs
 /// Defaults to null.
 		public IntPtr? parentNode { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-/// The child widget of this [Focus].
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Has flag for nullable property: focusNode
 		public byte HasfocusNode { get; set; }
 
@@ -275,7 +263,7 @@ namespace Flutter.Structs
 		public string? debugLabel
 		{
 			get => GetString(_debugLabel);
-			set => SetString(ref _debugLabel, value);
+			set { SetString(ref _debugLabel, value); HasdebugLabel = (byte)(value != null ? 1 : 0); }
 		}
 
 	}

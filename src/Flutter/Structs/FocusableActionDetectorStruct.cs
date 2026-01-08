@@ -150,25 +150,13 @@ namespace Flutter.Structs
 /// 
 /// The [mouseCursor] defaults to [MouseCursor.defer], deferring the choice of
 /// cursor to the next region behind it in hit-test order.
-		public object mouseCursor { get; set; }
+		public IntPtr mouseCursor { get; set; }
 
 		// Simple field: includeFocusSemantics
 /// Whether to include semantics from [Focus].
 /// 
 /// Defaults to true.
 		public bool includeFocusSemantics { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The child widget for this [FocusableActionDetector] widget.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

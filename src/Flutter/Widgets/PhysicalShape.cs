@@ -43,7 +43,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="PhysicalShape"/> class.
 		/// </summary>
 		public PhysicalShape(
-			object clipper = null,
+			IntPtr clipper,
 			Clip clipBehavior = Clip.None,
 			double elevation = 0.0,
 			Color? color = null,
@@ -52,7 +52,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<PhysicalShapeStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			s.clipper = clipper;
 			s.clipBehavior = clipBehavior;
 			s.elevation = elevation;
 			// Complex type: Color? - skipped (requires marshaling)

@@ -53,12 +53,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public PreferredSize(
 			Widget child,
-			object preferredSize = null
+			IntPtr preferredSize
 		)
 		{
 			var s = GetBackingStruct<PreferredSizeStruct>();
 			s.child = child;
-			// Complex type: object - skipped (requires marshaling)
+			s.preferredSize = preferredSize;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new PreferredSizeStruct();

@@ -47,7 +47,7 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Semantics"/> class.
 		/// </summary>
 		public Semantics(
-			object properties = null,
+			IntPtr properties,
 			bool container = false,
 			bool explicitChildNodes = false,
 			bool excludeSemantics = false,
@@ -83,21 +83,21 @@ namespace Flutter.Widgets
 			int? currentValueLength = null,
 			string? identifier = null,
 			string? label = null,
-			object attributedLabel = null,
+			IntPtr? attributedLabel = null,
 			string? value = null,
-			object attributedValue = null,
+			IntPtr? attributedValue = null,
 			string? increasedValue = null,
-			object attributedIncreasedValue = null,
+			IntPtr? attributedIncreasedValue = null,
 			string? decreasedValue = null,
-			object attributedDecreasedValue = null,
+			IntPtr? attributedDecreasedValue = null,
 			string? hint = null,
-			object attributedHint = null,
+			IntPtr? attributedHint = null,
 			string? tooltip = null,
 			string? onTapHint = null,
 			string? onLongPressHint = null,
 			TextDirection? textDirection = null,
-			object sortKey = null,
-			object tagForChildren = null,
+			IntPtr? sortKey = null,
+			IntPtr? tagForChildren = null,
 			Action? onTap = null,
 			Action? onLongPress = null,
 			Action onScrollLeft = null,
@@ -118,14 +118,14 @@ namespace Flutter.Widgets
 			Action onDidLoseAccessibilityFocus = null,
 			Action onFocus = null,
 			Dictionary<object, object>? customSemanticsActions = null,
-			object role = null,
+			IntPtr? role = null,
 			ISet<string>? controlsNodes = null,
-			object validationResult = null,
-			object inputType = null
+			IntPtr? validationResult = null,
+			IntPtr? inputType = null
 		)
 		{
 			var s = GetBackingStruct<SemanticsStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			s.properties = properties;
 			s.container = container;
 			s.explicitChildNodes = explicitChildNodes;
 			s.excludeSemantics = excludeSemantics;
@@ -188,22 +188,22 @@ namespace Flutter.Widgets
 				s.currentValueLength = currentValueLength.Value;
 			s.identifier = identifier;
 			s.label = label;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.value = value;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.increasedValue = increasedValue;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.decreasedValue = decreasedValue;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.hint = hint;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.tooltip = tooltip;
 			s.onTapHint = onTapHint;
 			s.onLongPressHint = onLongPressHint;
 			if (textDirection.HasValue)
 				s.textDirection = textDirection.Value;
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
+			// Nullable reference type: IntPtr - skipped
 			// Callback: onTap - registered with cleanup tracking
 			s.onTapAction = RegisterCallback(onTap);
 			// Callback: onLongPress - registered with cleanup tracking
@@ -243,10 +243,10 @@ namespace Flutter.Widgets
 			// Callback: onFocus - registered with cleanup tracking
 			s.onFocusAction = RegisterCallback(onFocus);
 			// Complex type: Dictionary<object, object>? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			// Complex type: ISet<string>? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
+			// Nullable reference type: IntPtr - skipped
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SemanticsStruct();

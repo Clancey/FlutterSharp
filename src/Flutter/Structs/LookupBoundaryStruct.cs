@@ -72,14 +72,5 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class LookupBoundaryStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

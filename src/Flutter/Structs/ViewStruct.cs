@@ -69,24 +69,11 @@ namespace Flutter.Structs
 /// The [FlutterView] into which [child] is drawn.
 		public IntPtr view { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree, which will be drawn into the
-/// [view].
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner
-		public object deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner { get; set; }
+		public IntPtr deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner { get; set; }
 
 		// Simple field: deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView
-		public object deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView { get; set; }
+		public IntPtr deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView { get; set; }
 
 	}
 }

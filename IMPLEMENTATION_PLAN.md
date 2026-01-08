@@ -90,7 +90,40 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ---
 
-**Last checked**: 2026-01-08
+### ~~Struct Field Shadowing - Inherited child/children Fields Duplicated~~ (FIXED 2026-01-07)
+
+**Problem**: When the Dart parser read the `child` property from widgets like Center, it got a null pointer even though the widget had a child set. The Text widget wasn't rendering because Center's child was appearing as null.
+
+**Root Cause**: Generated C# structs like `CenterStruct` were defining their own `_child` field even though they inherit from `SingleChildRenderObjectWidgetStruct` which already has `_child`. This caused field shadowing:
+- C# widget constructor: `s.child = child;` - set the shadowing field at the wrong offset
+- Dart parser: reads from inherited field at correct offset - got null/0
+
+The struct layout looked like:
+```
+CenterStruct layout:
+- handle (inherited)
+- managedHandle (inherited)
+- widgetType (inherited)
+- id (inherited)
+- child (inherited from SingleChildRenderObjectWidgetStruct) <- Dart reads here
+- HaswidthFactor
+- widthFactor
+- HasheightFactor
+- heightFactor
+- Haschild (shadowing)
+- _child (shadowing) <- C# writes here
+```
+
+**Solution**: Added `GetInheritedPropertyNames()` method to `CSharpStructGenerator.cs` that returns properties defined in base structs. Modified `BuildTemplateModel()` to filter out inherited properties before generating struct fields.
+
+**Files Changed**:
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/Generators/CSharp/CSharpStructGenerator.cs`
+
+**Regenerated**: All C# structs via code generator
+
+---
+
+**Last checked**: 2026-01-07
 **C# compilation errors**: 0 ✅
 **Dart analysis errors**: 0 ✅
 **Dart warnings**: ~2050 (unused imports, unnecessary null comparisons - cosmetic)

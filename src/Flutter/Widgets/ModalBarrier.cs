@@ -37,12 +37,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ModalBarrier"/> class.
 		/// </summary>
 		public ModalBarrier(
+			IntPtr clipDetailsNotifier,
 			Color? color = null,
 			bool dismissible = true,
 			Action onDismiss = null,
 			bool? barrierSemanticsDismissible = true,
 			string? semanticsLabel = null,
-			object clipDetailsNotifier = null,
 			string? semanticsOnTapHint = null
 		)
 		{
@@ -54,7 +54,7 @@ namespace Flutter.Widgets
 			if (barrierSemanticsDismissible.HasValue)
 				s.barrierSemanticsDismissible = barrierSemanticsDismissible.Value;
 			s.semanticsLabel = semanticsLabel;
-			// Complex type: object - skipped (requires marshaling)
+			s.clipDetailsNotifier = clipDetailsNotifier;
 			s.semanticsOnTapHint = semanticsOnTapHint;
 		}
 

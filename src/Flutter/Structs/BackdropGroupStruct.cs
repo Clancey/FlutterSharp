@@ -23,16 +23,7 @@ namespace Flutter.Structs
 	{
 		// Simple field: backdropKey
 /// The backdrop key this backdrop group will use with shared child layers.
-		public object backdropKey { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
+		public IntPtr backdropKey { get; set; }
 
 	}
 }

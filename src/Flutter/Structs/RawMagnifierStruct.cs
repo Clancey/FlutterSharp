@@ -35,22 +35,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RawMagnifierStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// An optional widget to position inside the len of the [RawMagnifier].
-/// 
-/// This is positioned over the [RawMagnifier] - it may be useful for tinting the
-/// [RawMagnifier], or drawing a crosshair-like UI.
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: decoration
 /// This magnifier's decoration.
 /// 
@@ -85,7 +69,7 @@ namespace Flutter.Structs
 /// If left as [Offset.zero], the [RawMagnifier] will show the content that
 /// is directly below it.
 /// {@endtemplate}
-		public object focalPointOffset { get; set; }
+		public IntPtr focalPointOffset { get; set; }
 
 		// Simple field: magnificationScale
 /// How "zoomed in" the magnification subject is in the lens.

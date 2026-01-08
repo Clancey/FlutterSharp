@@ -41,18 +41,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TextFieldTapRegionStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: enabled
 		public bool enabled { get; set; }
 
@@ -140,7 +128,7 @@ namespace Flutter.Structs
 		public string? debugLabel
 		{
 			get => GetString(_debugLabel);
-			set => SetString(ref _debugLabel, value);
+			set { SetString(ref _debugLabel, value); HasdebugLabel = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: groupId

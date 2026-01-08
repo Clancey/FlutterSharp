@@ -210,7 +210,7 @@ namespace Flutter.Structs
 /// 
 /// The [cursor] defaults to [MouseCursor.defer], deferring the choice of
 /// cursor to the next region behind it in hit-test order.
-		public object cursor { get; set; }
+		public IntPtr cursor { get; set; }
 
 		// Simple field: opaque
 /// Whether this widget should prevent other [MouseRegion]s visually behind it
@@ -236,18 +236,6 @@ namespace Flutter.Structs
 /// 
 /// This defaults to [HitTestBehavior.opaque] if null.
 		public HitTestBehavior hitTestBehavior { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

@@ -28,15 +28,5 @@ namespace Flutter.Structs
 /// How this cell is aligned vertically.
 		public IntPtr verticalAlignment { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-/// The child of this cell.
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

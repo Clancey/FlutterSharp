@@ -100,17 +100,5 @@ namespace Flutter.Structs
 /// to be as large as the parent allows.
 		public OverflowBoxFit fit { get; set; }
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

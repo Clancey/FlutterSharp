@@ -32,12 +32,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SelectionRegistrarScope"/> class.
 		/// </summary>
 		public SelectionRegistrarScope(
-			Widget child,
-			object registrar = null
+			IntPtr registrar,
+			Widget child
 		)
 		{
 			var s = GetBackingStruct<SelectionRegistrarScopeStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			s.registrar = registrar;
 			s.child = child;
 		}
 

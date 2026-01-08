@@ -40,16 +40,7 @@ namespace Flutter.Structs
 /// The [MouseCursor] for mouse pointers hovering over selectable Text widgets.
 /// 
 /// If this property is null, [SystemMouseCursors.text] will be used.
-		public object mouseCursor { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
+		public IntPtr mouseCursor { get; set; }
 
 	}
 }

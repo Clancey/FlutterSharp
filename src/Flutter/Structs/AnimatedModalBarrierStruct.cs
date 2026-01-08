@@ -57,7 +57,7 @@ namespace Flutter.Structs
 		public string? semanticsLabel
 		{
 			get => GetString(_semanticsLabel);
-			set => SetString(ref _semanticsLabel, value);
+			set { SetString(ref _semanticsLabel, value); HassemanticsLabel = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: barrierSemanticsDismissible
@@ -90,7 +90,7 @@ namespace Flutter.Structs
 
 		// Simple field: clipDetailsNotifier
 /// {@macro flutter.widgets.ModalBarrier.clipDetailsNotifier}
-		public object clipDetailsNotifier { get; set; }
+		public IntPtr clipDetailsNotifier { get; set; }
 
 		// Has flag for nullable property: semanticsOnTapHint
 		public byte HassemanticsOnTapHint { get; set; }
@@ -109,7 +109,7 @@ namespace Flutter.Structs
 		public string? semanticsOnTapHint
 		{
 			get => GetString(_semanticsOnTapHint);
-			set => SetString(ref _semanticsOnTapHint, value);
+			set { SetString(ref _semanticsOnTapHint, value); HassemanticsOnTapHint = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: color

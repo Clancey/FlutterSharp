@@ -53,8 +53,5 @@ namespace Flutter.Structs
 /// Defaults to false.
 		public bool reverse { get; set; }
 
-		// Simple field: children
-		public IntPtr children { get; set; }
-
 	}
 }

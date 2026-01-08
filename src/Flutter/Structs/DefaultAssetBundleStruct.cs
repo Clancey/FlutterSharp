@@ -69,14 +69,5 @@ namespace Flutter.Structs
 /// The bundle to use as a default.
 		public IntPtr bundle { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

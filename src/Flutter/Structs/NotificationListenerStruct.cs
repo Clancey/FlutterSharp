@@ -55,14 +55,5 @@ namespace Flutter.Structs
 			set => SetString(ref _onNotification, value);
 		}
 
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

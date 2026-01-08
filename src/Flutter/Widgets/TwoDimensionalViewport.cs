@@ -100,22 +100,22 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="TwoDimensionalViewport"/> class.
 		/// </summary>
 		public TwoDimensionalViewport(
-			object verticalOffset = null,
-			object verticalAxisDirection = null,
-			object horizontalOffset = null,
-			object horizontalAxisDirection = null,
-			object mainAxis = null,
+			IntPtr verticalOffset,
+			IntPtr verticalAxisDirection,
+			IntPtr horizontalOffset,
+			IntPtr horizontalAxisDirection,
+			IntPtr mainAxis,
 			double? cacheExtent = null,
 			Clip clipBehavior = Clip.HardEdge,
 			TwoDimensionalChildDelegate @delegate = null
 		)
 		{
 			var s = GetBackingStruct<TwoDimensionalViewportStruct>();
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.verticalOffset = verticalOffset;
+			s.verticalAxisDirection = verticalAxisDirection;
+			s.horizontalOffset = horizontalOffset;
+			s.horizontalAxisDirection = horizontalAxisDirection;
+			s.mainAxis = mainAxis;
 			if (cacheExtent.HasValue)
 				s.cacheExtent = cacheExtent.Value;
 			s.clipBehavior = clipBehavior;

@@ -343,11 +343,11 @@ namespace Flutter.Structs
 
 		// Simple field: smartDashesType
 /// {@macro flutter.services.TextInputConfiguration.smartDashesType}
-		public object smartDashesType { get; set; }
+		public IntPtr smartDashesType { get; set; }
 
 		// Simple field: smartQuotesType
 /// {@macro flutter.services.TextInputConfiguration.smartQuotesType}
-		public object smartQuotesType { get; set; }
+		public IntPtr smartQuotesType { get; set; }
 
 		// Simple field: enableSuggestions
 /// {@macro flutter.services.TextInputConfiguration.enableSuggestions}
@@ -407,7 +407,7 @@ namespace Flutter.Structs
 /// * [TextCapitalization], for a description of each capitalization behavior.
 /// 
 /// {@endtemplate}
-		public object textCapitalization { get; set; }
+		public IntPtr textCapitalization { get; set; }
 
 		// Simple field: locale
 /// Used to select a font when the same Unicode character can
@@ -439,7 +439,7 @@ namespace Flutter.Structs
 
 		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}
-		public object textScaler { get; set; }
+		public IntPtr textScaler { get; set; }
 
 		// Simple field: cursorColor
 /// The color to use when painting the cursor.
@@ -659,11 +659,11 @@ namespace Flutter.Structs
 /// Defaults to [TextInputType.text] if [maxLines] is one and
 /// [TextInputType.multiline] otherwise.
 /// {@endtemplate}
-		public object keyboardType { get; set; }
+		public IntPtr keyboardType { get; set; }
 
 		// Simple field: textInputAction
 /// The type of action button to use with the soft keyboard.
-		public object textInputAction { get; set; }
+		public IntPtr textInputAction { get; set; }
 
 		// Callback field: onChanged
 		// Using action string pattern - Dart will dispatch action to C# via method channel
@@ -1012,7 +1012,7 @@ namespace Flutter.Structs
 /// appearance of the mouse pointer. All other properties related to "cursor"
 /// stands for the text cursor, which is usually a blinking vertical line at
 /// the editing position.
-		public object mouseCursor { get; set; }
+		public IntPtr mouseCursor { get; set; }
 
 		// Simple field: rendererIgnoresPointer
 /// Whether the caller will provide gesture handling (true), or if the
@@ -1084,7 +1084,7 @@ namespace Flutter.Structs
 
 		// Simple field: cursorOffset
 /// {@macro flutter.rendering.RenderEditable.cursorOffset}
-		public object cursorOffset { get; set; }
+		public IntPtr cursorOffset { get; set; }
 
 		// Simple field: paintCursorAboveText
 /// {@macro flutter.rendering.RenderEditable.paintCursorAboveText}
@@ -1108,7 +1108,7 @@ namespace Flutter.Structs
 /// This setting is only honored on iOS devices.
 /// 
 /// Defaults to [Brightness.light].
-		public object keyboardAppearance { get; set; }
+		public IntPtr keyboardAppearance { get; set; }
 
 		// Simple field: scrollPadding
 /// {@template flutter.widgets.editableText.scrollPadding}
@@ -1293,7 +1293,7 @@ namespace Flutter.Structs
 /// 
 /// When null, this widget's [EditableTextState] will be used as the
 /// [AutofillClient]. This property may override [autofillHints].
-		public object autofillClient { get; set; }
+		public IntPtr autofillClient { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
@@ -1327,7 +1327,7 @@ namespace Flutter.Structs
 		public string? restorationId
 		{
 			get => GetString(_restorationId);
-			set => SetString(ref _restorationId, value);
+			set { SetString(ref _restorationId, value); HasrestorationId = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: scrollBehavior

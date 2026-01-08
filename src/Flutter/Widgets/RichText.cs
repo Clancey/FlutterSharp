@@ -145,17 +145,17 @@ namespace Flutter.Widgets
 		public RichText(
 			List<Widget> children,
 			InlineSpan text,
+			IntPtr selectionRegistrar,
 			TextAlign? textAlign = TextAlign.Start,
 			TextDirection? textDirection = null,
 			bool softWrap = true,
 			TextOverflow overflow = TextOverflow.Clip,
-			object textScaler = null,
+			IntPtr? textScaler = null,
 			int? maxLines = null,
 			Locale? locale = null,
 			StrutStyle? strutStyle = null,
 			TextWidthBasis textWidthBasis = TextWidthBasis.Parent,
 			TextHeightBehavior textHeightBehavior = null,
-			object selectionRegistrar = null,
 			Color? selectionColor = null,
 			double textScaleFactor = 1.0
 		)
@@ -170,14 +170,14 @@ namespace Flutter.Widgets
 				s.textDirection = textDirection.Value;
 			s.softWrap = softWrap;
 			s.overflow = overflow;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			if (maxLines.HasValue)
 				s.maxLines = maxLines.Value;
 			// Complex type: Locale? - skipped (requires marshaling)
 			// Complex type: StrutStyle? - skipped (requires marshaling)
 			s.textWidthBasis = textWidthBasis;
 			// Complex type: TextHeightBehavior - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.selectionRegistrar = selectionRegistrar;
 			// Complex type: Color? - skipped (requires marshaling)
 			s.textScaleFactor = textScaleFactor;
 		}

@@ -56,14 +56,5 @@ namespace Flutter.Structs
 		// Simple field: flex
 		public int flex { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

@@ -42,7 +42,7 @@ namespace Flutter.Structs
 		// Simple field: properties
 /// Contains properties used by assistive technologies to make the application
 /// more accessible.
-		public object properties { get; set; }
+		public IntPtr properties { get; set; }
 
 		// Simple field: container
 /// If [container] is true, this widget will introduce a new
@@ -118,18 +118,6 @@ namespace Flutter.Structs
 /// The result semantics node will still have `_myTap`, but the `_myLongPress`
 /// will be blocked.
 		public bool blockUserActions { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 		// Has flag for nullable property: enabled
 		public byte Hasenabled { get; set; }
@@ -308,7 +296,7 @@ namespace Flutter.Structs
 		public string? identifier
 		{
 			get => GetString(_identifier);
-			set => SetString(ref _identifier, value);
+			set { SetString(ref _identifier, value); Hasidentifier = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: label
@@ -320,11 +308,11 @@ namespace Flutter.Structs
 		public string? label
 		{
 			get => GetString(_label);
-			set => SetString(ref _label, value);
+			set { SetString(ref _label, value); Haslabel = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: attributedLabel
-		public object attributedLabel { get; set; }
+		public IntPtr attributedLabel { get; set; }
 
 		// Has flag for nullable property: value
 		public byte Hasvalue { get; set; }
@@ -335,11 +323,11 @@ namespace Flutter.Structs
 		public string? value
 		{
 			get => GetString(_value);
-			set => SetString(ref _value, value);
+			set { SetString(ref _value, value); Hasvalue = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: attributedValue
-		public object attributedValue { get; set; }
+		public IntPtr attributedValue { get; set; }
 
 		// Has flag for nullable property: increasedValue
 		public byte HasincreasedValue { get; set; }
@@ -350,11 +338,11 @@ namespace Flutter.Structs
 		public string? increasedValue
 		{
 			get => GetString(_increasedValue);
-			set => SetString(ref _increasedValue, value);
+			set { SetString(ref _increasedValue, value); HasincreasedValue = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: attributedIncreasedValue
-		public object attributedIncreasedValue { get; set; }
+		public IntPtr attributedIncreasedValue { get; set; }
 
 		// Has flag for nullable property: decreasedValue
 		public byte HasdecreasedValue { get; set; }
@@ -365,11 +353,11 @@ namespace Flutter.Structs
 		public string? decreasedValue
 		{
 			get => GetString(_decreasedValue);
-			set => SetString(ref _decreasedValue, value);
+			set { SetString(ref _decreasedValue, value); HasdecreasedValue = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: attributedDecreasedValue
-		public object attributedDecreasedValue { get; set; }
+		public IntPtr attributedDecreasedValue { get; set; }
 
 		// Has flag for nullable property: hint
 		public byte Hashint { get; set; }
@@ -380,11 +368,11 @@ namespace Flutter.Structs
 		public string? hint
 		{
 			get => GetString(_hint);
-			set => SetString(ref _hint, value);
+			set { SetString(ref _hint, value); Hashint = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: attributedHint
-		public object attributedHint { get; set; }
+		public IntPtr attributedHint { get; set; }
 
 		// Has flag for nullable property: tooltip
 		public byte Hastooltip { get; set; }
@@ -395,7 +383,7 @@ namespace Flutter.Structs
 		public string? tooltip
 		{
 			get => GetString(_tooltip);
-			set => SetString(ref _tooltip, value);
+			set { SetString(ref _tooltip, value); Hastooltip = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: onTapHint
@@ -407,7 +395,7 @@ namespace Flutter.Structs
 		public string? onTapHint
 		{
 			get => GetString(_onTapHint);
-			set => SetString(ref _onTapHint, value);
+			set { SetString(ref _onTapHint, value); HasonTapHint = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: onLongPressHint
@@ -419,17 +407,17 @@ namespace Flutter.Structs
 		public string? onLongPressHint
 		{
 			get => GetString(_onLongPressHint);
-			set => SetString(ref _onLongPressHint, value);
+			set { SetString(ref _onLongPressHint, value); HasonLongPressHint = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: textDirection
 		public TextDirection textDirection { get; set; }
 
 		// Simple field: sortKey
-		public object sortKey { get; set; }
+		public IntPtr sortKey { get; set; }
 
 		// Simple field: tagForChildren
-		public object tagForChildren { get; set; }
+		public IntPtr tagForChildren { get; set; }
 
 		// Callback field: onTap
 		// Using action string pattern - Dart will dispatch action to C# via method channel
@@ -723,7 +711,7 @@ namespace Flutter.Structs
 		public IntPtr? customSemanticsActions { get; set; }
 
 		// Simple field: role
-		public object role { get; set; }
+		public IntPtr role { get; set; }
 
 		// Has flag for nullable property: controlsNodes
 		public byte HascontrolsNodes { get; set; }
@@ -732,10 +720,10 @@ namespace Flutter.Structs
 		public IntPtr? controlsNodes { get; set; }
 
 		// Simple field: validationResult
-		public object validationResult { get; set; }
+		public IntPtr validationResult { get; set; }
 
 		// Simple field: inputType
-		public object inputType { get; set; }
+		public IntPtr inputType { get; set; }
 
 	}
 }

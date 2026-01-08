@@ -69,7 +69,7 @@ namespace Flutter.Structs
 		public string? semanticLabel
 		{
 			get => GetString(_semanticLabel);
-			set => SetString(ref _semanticLabel, value);
+			set { SetString(ref _semanticLabel, value); HassemanticLabel = (byte)(value != null ? 1 : 0); }
 		}
 
 	}

@@ -107,21 +107,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SliverFillRemainingStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// Box child widget that fills the remaining space in the viewport.
-/// 
-/// The main [SliverFillRemaining] documentation contains more details.
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: hasScrollBody
 /// Indicates whether the child has a scrollable body, this value cannot be
 /// null.

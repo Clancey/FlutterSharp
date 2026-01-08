@@ -28,12 +28,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SemanticsDebugger(
 			Widget child,
-			object labelStyle = null
+			IntPtr? labelStyle = null
 		)
 		{
 			var s = GetBackingStruct<SemanticsDebuggerStruct>();
 			s.child = child;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SemanticsDebuggerStruct();

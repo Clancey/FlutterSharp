@@ -188,17 +188,5 @@ namespace Flutter.Structs
 /// Can be both greater and less than 1.0 but must be non-negative.
 		public NativeNullable<double> heightFactor { get; set; }
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

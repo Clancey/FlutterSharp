@@ -63,15 +63,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipRRect"/> class.
 		/// </summary>
 		public ClipRRect(
+			IntPtr clipper,
 			BorderRadiusGeometry? borderRadius = null,
-			object clipper = null,
 			Clip clipBehavior = Clip.AntiAlias,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ClipRRectStruct>();
 			// Complex type: BorderRadiusGeometry? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.clipper = clipper;
 			s.clipBehavior = clipBehavior;
 			s.child = child;
 		}

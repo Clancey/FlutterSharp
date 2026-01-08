@@ -32,17 +32,5 @@ namespace Flutter.Structs
 /// null.
 		public IntPtr color { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

@@ -95,7 +95,7 @@ namespace Flutter.Structs
 /// content that is displayed.
 /// 
 /// Typically a [ScrollPosition].
-		public object verticalOffset { get; set; }
+		public IntPtr verticalOffset { get; set; }
 
 		// Simple field: verticalAxisDirection
 /// The direction in which the [verticalOffset]'s [ViewportOffset.pixels]
@@ -107,7 +107,7 @@ namespace Flutter.Structs
 /// 
 /// Must be either [AxisDirection.down] or [AxisDirection.up] in correlation
 /// with an [Axis.vertical].
-		public object verticalAxisDirection { get; set; }
+		public IntPtr verticalAxisDirection { get; set; }
 
 		// Simple field: horizontalOffset
 /// Which part of the content inside the viewport should be visible in the
@@ -119,7 +119,7 @@ namespace Flutter.Structs
 /// content that is displayed.
 /// 
 /// Typically a [ScrollPosition].
-		public object horizontalOffset { get; set; }
+		public IntPtr horizontalOffset { get; set; }
 
 		// Simple field: horizontalAxisDirection
 /// The direction in which the [horizontalOffset]'s [ViewportOffset.pixels]
@@ -131,7 +131,7 @@ namespace Flutter.Structs
 /// 
 /// Must be either [AxisDirection.left] or [AxisDirection.right] in correlation
 /// with an [Axis.horizontal].
-		public object horizontalAxisDirection { get; set; }
+		public IntPtr horizontalAxisDirection { get; set; }
 
 		// Simple field: mainAxis
 /// The main axis of the two.
@@ -140,7 +140,7 @@ namespace Flutter.Structs
 /// the main axis is [Axis.vertical], children will be painted in row major
 /// order, according to their associated [ChildVicinity]. When the main axis
 /// is [Axis.horizontal], the children will be painted in column major order.
-		public object mainAxis { get; set; }
+		public IntPtr mainAxis { get; set; }
 
 		// Has flag for nullable property: cacheExtent
 		public byte HascacheExtent { get; set; }

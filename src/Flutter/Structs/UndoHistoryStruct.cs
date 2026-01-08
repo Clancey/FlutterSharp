@@ -116,15 +116,5 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr? controller { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-/// The child widget of [UndoHistory].
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

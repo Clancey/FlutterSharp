@@ -55,15 +55,5 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ScrollNotificationObserverStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-/// The subtree below this widget.
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

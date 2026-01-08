@@ -65,7 +65,7 @@ namespace Flutter.Widgets
 			Action<bool>? onShowFocusHighlight = null,
 			Action<bool>? onShowHoverHighlight = null,
 			Action<bool>? onFocusChange = null,
-			object mouseCursor = null,
+			IntPtr? mouseCursor = null,
 			bool includeFocusSemantics = true
 		)
 		{
@@ -83,7 +83,7 @@ namespace Flutter.Widgets
 			s.onShowHoverHighlightAction = RegisterCallback(onShowHoverHighlight);
 			// Callback: onFocusChange - registered with cleanup tracking
 			s.onFocusChangeAction = RegisterCallback(onFocusChange);
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.includeFocusSemantics = includeFocusSemantics;
 			s.child = child;
 		}

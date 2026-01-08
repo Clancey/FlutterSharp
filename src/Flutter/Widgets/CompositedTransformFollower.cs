@@ -52,8 +52,8 @@ namespace Flutter.Widgets
 		public CompositedTransformFollower(
 			LayerLink link = null,
 			bool showWhenUnlinked = true,
-			object targetAnchor = null,
-			object followerAnchor = null,
+			IntPtr? targetAnchor = null,
+			IntPtr? followerAnchor = null,
 			Offset? offset = null,
 			Widget? child = null
 		)
@@ -61,8 +61,8 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<CompositedTransformFollowerStruct>();
 			// Complex type: LayerLink - skipped (requires marshaling)
 			s.showWhenUnlinked = showWhenUnlinked;
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
+			// Nullable reference type: IntPtr - skipped
 			// Complex type: Offset - skipped (requires marshaling)
 			s.child = child;
 		}

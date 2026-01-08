@@ -58,20 +58,5 @@ namespace Flutter.Structs
 			set => SetIntPtr(ref _view, value);
 		}
 
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// It is rendered into the surrounding view, not in the view defined by
-/// [view].
-/// 
-/// {@macro flutter.widgets.ViewAnchor}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

@@ -22,21 +22,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RootWidgetStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Has flag for nullable property: debugShortDescription
 		public byte HasdebugShortDescription { get; set; }
 
@@ -47,7 +32,7 @@ namespace Flutter.Structs
 		public string? debugShortDescription
 		{
 			get => GetString(_debugShortDescription);
-			set => SetString(ref _debugShortDescription, value);
+			set { SetString(ref _debugShortDescription, value); HasdebugShortDescription = (byte)(value != null ? 1 : 0); }
 		}
 
 	}

@@ -100,24 +100,6 @@ namespace Flutter.Structs
 			set => SetString(ref _builder, value);
 		}
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The optional child to be passed to the [builder].
-/// 
-/// Supply this child if there is a portion of the widget tree built in
-/// [builder] that doesn't depend on the `controller` or `context` supplied to
-/// the [builder]. It will be more efficient, since Flutter doesn't then need
-/// to rebuild this child when those change.
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Callback field: overlayBuilder
 		// Using action string pattern - Dart will dispatch action to C# via method channel
 		IntPtr _overlayBuilder;

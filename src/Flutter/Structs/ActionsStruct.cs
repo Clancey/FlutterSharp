@@ -75,15 +75,5 @@ namespace Flutter.Structs
 /// {@endtemplate}
 		public IntPtr actions { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

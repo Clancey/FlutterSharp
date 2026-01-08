@@ -355,7 +355,7 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [BlendMode], which includes an illustration of the effect of each blend mode.
-		public object colorBlendMode { get; set; }
+		public IntPtr colorBlendMode { get; set; }
 
 		// Simple field: fit
 /// How to inscribe the image into the space allocated during layout.
@@ -394,7 +394,7 @@ namespace Flutter.Structs
 
 		// Simple field: repeat
 /// How to paint any portions of the layout bounds not covered by the image.
-		public object repeat { get; set; }
+		public IntPtr repeat { get; set; }
 
 		// Simple field: centerSlice
 /// The center slice for a nine-patch image.
@@ -404,7 +404,7 @@ namespace Flutter.Structs
 /// region of the image above and below the center slice will be stretched
 /// only horizontally and the region of the image to the left and right of
 /// the center slice will be stretched only vertically.
-		public object centerSlice { get; set; }
+		public IntPtr centerSlice { get; set; }
 
 		// Simple field: matchTextDirection
 /// Whether to paint the image in the direction of the [TextDirection].
@@ -468,7 +468,7 @@ namespace Flutter.Structs
 		public string? semanticLabel
 		{
 			get => GetString(_semanticLabel);
-			set => SetString(ref _semanticLabel, value);
+			set { SetString(ref _semanticLabel, value); HassemanticLabel = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: excludeFromSemantics

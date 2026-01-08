@@ -69,23 +69,8 @@ namespace Flutter.Structs
 /// location and you want the user to benefit from "muscle memory".
 		public bool transformHitTests { get; set; }
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: position
-		public object position { get; set; }
+		public IntPtr position { get; set; }
 
 	}
 }

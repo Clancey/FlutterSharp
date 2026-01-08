@@ -41,7 +41,7 @@ namespace Flutter.Structs
 /// If the path in question is expressed as a [ShapeBorder] subclass,
 /// consider using the [ShapeBorderClipper] delegate class to adapt the
 /// shape for use with this widget.
-		public object clipper { get; set; }
+		public IntPtr clipper { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}
@@ -63,18 +63,6 @@ namespace Flutter.Structs
 		// Simple field: shadowColor
 /// When elevation is non zero the color to use for the shadow color.
 		public IntPtr shadowColor { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

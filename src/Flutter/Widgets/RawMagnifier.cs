@@ -47,7 +47,7 @@ namespace Flutter.Widgets
 			Widget? child = null,
 			MagnifierDecoration decoration = null,
 			Clip clipBehavior = Clip.None,
-			object focalPointOffset = null,
+			IntPtr? focalPointOffset = null,
 			double magnificationScale = 1
 		)
 		{
@@ -55,7 +55,7 @@ namespace Flutter.Widgets
 			s.child = child;
 			// Complex type: MagnifierDecoration - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.magnificationScale = magnificationScale;
 			// Complex type: Size - skipped (requires marshaling)
 		}

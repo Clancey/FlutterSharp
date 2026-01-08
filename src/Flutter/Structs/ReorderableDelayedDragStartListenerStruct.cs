@@ -29,15 +29,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ReorderableDelayedDragStartListenerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: index
 		public int index { get; set; }
 

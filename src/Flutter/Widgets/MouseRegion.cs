@@ -56,7 +56,7 @@ namespace Flutter.Widgets
 			Action? onEnter = null,
 			Action? onHover = null,
 			Action? onExit = null,
-			object cursor = null,
+			IntPtr? cursor = null,
 			bool opaque = true,
 			HitTestBehavior hitTestBehavior = HitTestBehavior.DeferToChild,
 			Widget? child = null
@@ -69,7 +69,7 @@ namespace Flutter.Widgets
 			s.onHoverAction = RegisterCallback(onHover);
 			// Callback: onExit - registered with cleanup tracking
 			s.onExitAction = RegisterCallback(onExit);
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.opaque = opaque;
 			s.hitTestBehavior = hitTestBehavior;
 			s.child = child;

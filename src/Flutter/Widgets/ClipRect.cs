@@ -62,13 +62,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipRect"/> class.
 		/// </summary>
 		public ClipRect(
-			object clipper = null,
+			IntPtr clipper,
 			Clip clipBehavior = Clip.HardEdge,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ClipRectStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			s.clipper = clipper;
 			s.clipBehavior = clipBehavior;
 			s.child = child;
 		}

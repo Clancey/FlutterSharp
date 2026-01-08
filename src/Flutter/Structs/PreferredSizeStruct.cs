@@ -44,20 +44,8 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PreferredSizeStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: preferredSize
-		public object preferredSize { get; set; }
+		public IntPtr preferredSize { get; set; }
 
 	}
 }

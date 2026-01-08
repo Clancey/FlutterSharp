@@ -200,19 +200,7 @@ namespace Flutter.Structs
 		public string? debugLabel
 		{
 			get => GetString(_debugLabel);
-			set => SetString(ref _debugLabel, value);
-		}
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
+			set { SetString(ref _debugLabel, value); HasdebugLabel = (byte)(value != null ? 1 : 0); }
 		}
 
 	}

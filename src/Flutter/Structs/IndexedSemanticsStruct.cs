@@ -51,17 +51,5 @@ namespace Flutter.Structs
 /// The index used to annotate the first child semantics node.
 		public int index { get; set; }
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

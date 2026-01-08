@@ -154,30 +154,6 @@ namespace Flutter.Structs
 			set => SetString(ref _builder, value);
 		}
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The child widget to pass to the builder.
-/// 
-/// If a builder callback's return value contains a subtree that does not
-/// depend on the animation, it's more efficient to build that subtree once
-/// instead of rebuilding it on every animation tick.
-/// 
-/// If the pre-built subtree is passed as the child parameter, the
-/// [TweenAnimationBuilder] will pass it back to the [builder] function so
-/// that it can be incorporated into the build.
-/// 
-/// Using this pre-built child is entirely optional, but can improve
-/// performance significantly in some cases and is therefore a good practice.
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: duration
 		public IntPtr duration { get; set; }
 

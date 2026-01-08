@@ -30,7 +30,7 @@ namespace Flutter.Structs
 /// 
 /// This widget takes ownership of the render object. When it is unmounted,
 /// it also calls [RenderObject.dispose].
-		public object renderBox { get; set; }
+		public IntPtr renderBox { get; set; }
 
 		// Callback field: onBuild
 		// Using action string pattern - Dart will dispatch action to C# via method channel

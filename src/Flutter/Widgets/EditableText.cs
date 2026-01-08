@@ -241,7 +241,14 @@ namespace Flutter.Widgets
 		public EditableText(
 			ToolbarOptions toolbarOptions,
 			bool showCursor,
+			IntPtr smartDashesType,
+			IntPtr smartQuotesType,
+			IntPtr keyboardType,
+			IntPtr textInputAction,
+			IntPtr mouseCursor,
+			IntPtr cursorOffset,
 			bool enableInteractiveSelection,
+			IntPtr autofillClient,
 			bool selectionEnabled,
 			TextEditingController controller = null,
 			FocusNode focusNode = null,
@@ -253,17 +260,15 @@ namespace Flutter.Widgets
 			bool forceLine = true,
 			bool showSelectionHandles = false,
 			bool autocorrect = true,
-			object smartDashesType = null,
-			object smartQuotesType = null,
 			bool enableSuggestions = true,
 			TextStyle? style = null,
 			UndoHistoryController? undoController = null,
 			TextAlign? textAlign = TextAlign.Start,
 			TextDirection? textDirection = null,
-			object textCapitalization = null,
+			IntPtr? textCapitalization = null,
 			Locale? locale = null,
 			double? textScaleFactor = null,
-			object textScaler = null,
+			IntPtr? textScaler = null,
 			Color? cursorColor = null,
 			Color? autocorrectionTextRectColor = null,
 			Color? backgroundCursorColor = null,
@@ -273,8 +278,6 @@ namespace Flutter.Widgets
 			bool autofocus = false,
 			Color? selectionColor = null,
 			TextSelectionControls? selectionControls = null,
-			object keyboardType = null,
-			object textInputAction = null,
 			Action<bool>? onChanged = null,
 			Action onEditingComplete = null,
 			Action onSubmitted = null,
@@ -285,17 +288,15 @@ namespace Flutter.Widgets
 			Action<InvalidType> onTapOutside = null,
 			Action<InvalidType> onTapUpOutside = null,
 			List<object>? inputFormatters = null,
-			object mouseCursor = null,
 			bool rendererIgnoresPointer = false,
 			double cursorWidth = 2.0,
 			double? cursorHeight = null,
 			BorderRadiusGeometry cursorRadius = null,
 			bool cursorOpacityAnimates = false,
-			object cursorOffset = null,
 			bool paintCursorAboveText = false,
 			BoxHeightStyle? selectionHeightStyle = null,
 			BoxWidthStyle? selectionWidthStyle = null,
-			object keyboardAppearance = null,
+			IntPtr? keyboardAppearance = null,
 			EdgeInsetsGeometry scrollPadding = null,
 			DragStartBehavior dragStartBehavior = DragStartBehavior.Start,
 			ScrollController? scrollController = null,
@@ -303,7 +304,6 @@ namespace Flutter.Widgets
 			bool scribbleEnabled = true,
 			bool? stylusHandwritingEnabled = null,
 			IEnumerable<string>? autofillHints = null,
-			object autofillClient = null,
 			Clip clipBehavior = Clip.HardEdge,
 			string? restorationId = null,
 			ScrollBehavior? scrollBehavior = null,
@@ -328,19 +328,19 @@ namespace Flutter.Widgets
 			s.showSelectionHandles = showSelectionHandles;
 			s.showCursor = showCursor;
 			s.autocorrect = autocorrect;
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.smartDashesType = smartDashesType;
+			s.smartQuotesType = smartQuotesType;
 			s.enableSuggestions = enableSuggestions;
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: UndoHistoryController? - skipped (requires marshaling)
 			// Complex type: TextAlign? - skipped (requires marshaling)
 			if (textDirection.HasValue)
 				s.textDirection = textDirection.Value;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			// Complex type: Locale? - skipped (requires marshaling)
 			if (textScaleFactor.HasValue)
 				s.textScaleFactor = textScaleFactor.Value;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			// Complex type: Color - skipped (requires marshaling)
 			// Complex type: Color - skipped (requires marshaling)
 			// Complex type: Color - skipped (requires marshaling)
@@ -352,8 +352,8 @@ namespace Flutter.Widgets
 			s.autofocus = autofocus;
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: TextSelectionControls? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.keyboardType = keyboardType;
+			s.textInputAction = textInputAction;
 			// Callback: onChanged - registered with cleanup tracking
 			s.onChangedAction = RegisterCallback(onChanged);
 			// Callback: onEditingComplete - registered with cleanup tracking
@@ -372,20 +372,20 @@ namespace Flutter.Widgets
 			// Callback: onTapUpOutside - registered with cleanup tracking
 			s.onTapUpOutsideAction = RegisterCallback(onTapUpOutside);
 			// Complex type: List<object>? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.mouseCursor = mouseCursor;
 			s.rendererIgnoresPointer = rendererIgnoresPointer;
 			s.cursorWidth = cursorWidth;
 			if (cursorHeight.HasValue)
 				s.cursorHeight = cursorHeight.Value;
 			// Complex type: BorderRadiusGeometry - skipped (requires marshaling)
 			s.cursorOpacityAnimates = cursorOpacityAnimates;
-			// Complex type: object - skipped (requires marshaling)
+			s.cursorOffset = cursorOffset;
 			s.paintCursorAboveText = paintCursorAboveText;
 			if (selectionHeightStyle.HasValue)
 				s.selectionHeightStyle = selectionHeightStyle.Value;
 			if (selectionWidthStyle.HasValue)
 				s.selectionWidthStyle = selectionWidthStyle.Value;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			// Complex type: EdgeInsetsGeometry - skipped (requires marshaling)
 			s.enableInteractiveSelection = enableInteractiveSelection;
 			s.dragStartBehavior = dragStartBehavior;
@@ -395,7 +395,7 @@ namespace Flutter.Widgets
 			if (stylusHandwritingEnabled.HasValue)
 				s.stylusHandwritingEnabled = stylusHandwritingEnabled.Value;
 			// Complex type: IEnumerable<string>? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.autofillClient = autofillClient;
 			s.clipBehavior = clipBehavior;
 			s.restorationId = restorationId;
 			// Complex type: ScrollBehavior? - skipped (requires marshaling)

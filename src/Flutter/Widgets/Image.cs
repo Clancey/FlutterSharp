@@ -110,6 +110,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Image"/> class.
 		/// </summary>
 		public Image(
+			IntPtr colorBlendMode,
+			IntPtr centerSlice,
 			ImageProvider image = null,
 			Func<BuildContext, Widget, int?, bool, Widget> frameBuilder = null,
 			Func<BuildContext, Widget, InvalidType, Widget> loadingBuilder = null,
@@ -119,11 +121,9 @@ namespace Flutter.Widgets
 			Color? color = null,
 			Animation<double> opacity = null,
 			FilterQuality filterQuality = FilterQuality.Medium,
-			object colorBlendMode = null,
 			BoxFit? fit = null,
 			AlignmentGeometry alignment = null,
-			object repeat = null,
-			object centerSlice = null,
+			IntPtr? repeat = null,
 			bool matchTextDirection = false,
 			bool gaplessPlayback = false,
 			string? semanticLabel = null,
@@ -143,11 +143,11 @@ namespace Flutter.Widgets
 			// Complex type: Color? - skipped (requires marshaling)
 			// Complex type: Animation<double> - skipped (requires marshaling)
 			s.filterQuality = filterQuality;
-			// Complex type: object - skipped (requires marshaling)
+			s.colorBlendMode = colorBlendMode;
 			// Nullable reference type: BoxFit - skipped
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
+			s.centerSlice = centerSlice;
 			s.matchTextDirection = matchTextDirection;
 			s.gaplessPlayback = gaplessPlayback;
 			s.semanticLabel = semanticLabel;

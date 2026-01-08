@@ -154,7 +154,7 @@ namespace Flutter.Structs
 /// mode is used.
 /// 
 /// If no [color] or [gradient] is provided then the blend mode has no impact.
-		public object backgroundBlendMode { get; set; }
+		public IntPtr backgroundBlendMode { get; set; }
 
 		// Simple field: shape
 /// The shape to fill the background [color], [gradient], and [image] into and

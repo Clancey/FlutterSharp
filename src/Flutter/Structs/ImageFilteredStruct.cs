@@ -39,7 +39,7 @@ namespace Flutter.Structs
 	{
 		// Simple field: imageFilter
 /// The image filter to apply to the child of this widget.
-		public object imageFilter { get; set; }
+		public IntPtr imageFilter { get; set; }
 
 		// Simple field: enabled
 /// Whether or not to apply the image filter operation to the child of this
@@ -48,18 +48,6 @@ namespace Flutter.Structs
 /// Prefer setting enabled to `false` instead of creating a "no-op" filter
 /// type for performance reasons.
 		public bool enabled { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

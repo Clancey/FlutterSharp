@@ -37,7 +37,7 @@ namespace Flutter.Structs
 		public string? fontFamily
 		{
 			get => GetString(_fontFamily);
-			set => SetString(ref _fontFamily, value);
+			set { SetString(ref _fontFamily, value); HasfontFamily = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: fontPackage
@@ -57,7 +57,7 @@ namespace Flutter.Structs
 		public string? fontPackage
 		{
 			get => GetString(_fontPackage);
-			set => SetString(ref _fontPackage, value);
+			set { SetString(ref _fontPackage, value); HasfontPackage = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: matchTextDirection

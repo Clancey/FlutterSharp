@@ -51,12 +51,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="Expansible"/> class.
 		/// </summary>
 		public Expansible(
+			IntPtr reverseCurve,
 			ExpansibleController controller = null,
 			Func<BuildContext, InvalidType, Widget> headerBuilder = null,
 			Func<BuildContext, InvalidType, Widget> bodyBuilder = null,
 			TimeSpan? duration = null,
 			Curve curve = null,
-			object reverseCurve = null,
 			bool maintainState = true,
 			Func<BuildContext, Widget, Widget, InvalidType, Widget> expansibleBuilder = null
 		)
@@ -69,7 +69,7 @@ namespace Flutter.Widgets
 			// Complex callback type: Func<BuildContext, InvalidType, Widget> - skipped (requires specific marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: Curve - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.reverseCurve = reverseCurve;
 			s.maintainState = maintainState;
 			// Complex callback type: Func<BuildContext, Widget, Widget, InvalidType, Widget> - skipped (requires specific marshaling)
 		}

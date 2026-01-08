@@ -80,23 +80,8 @@ namespace Flutter.Structs
 /// If `null` (the default), the cross axis size is as large as the parent.
 		public NativeNullable<double> fixedCrossAxisSizeFactor { get; set; }
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: sizeFactor
-		public object sizeFactor { get; set; }
+		public IntPtr sizeFactor { get; set; }
 
 	}
 }

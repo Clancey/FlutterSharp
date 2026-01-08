@@ -50,25 +50,13 @@ namespace Flutter.Structs
 /// If the [clipper] delegate is null, then the oval uses the
 /// widget's bounding box (the layout dimensions of the render
 /// object) instead.
-		public object clipper { get; set; }
+		public IntPtr clipper { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.rendering.ClipRectLayer.clipBehavior}
 /// 
 /// Defaults to [Clip.antiAlias].
 		public Clip clipBehavior { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

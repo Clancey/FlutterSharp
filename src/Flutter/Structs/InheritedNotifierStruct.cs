@@ -82,14 +82,5 @@ namespace Flutter.Structs
 /// object cannot itself send notifications.
 		public IntPtr? notifier { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

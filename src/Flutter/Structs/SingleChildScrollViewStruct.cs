@@ -194,21 +194,6 @@ namespace Flutter.Structs
 /// Defaults to matching platform conventions.
 		public IntPtr? physics { get; set; }
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget that scrolls.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: dragStartBehavior
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
 		public DragStartBehavior dragStartBehavior { get; set; }
@@ -235,7 +220,7 @@ namespace Flutter.Structs
 		public string? restorationId
 		{
 			get => GetString(_restorationId);
-			set => SetString(ref _restorationId, value);
+			set { SetString(ref _restorationId, value); HasrestorationId = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: keyboardDismissBehavior

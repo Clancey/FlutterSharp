@@ -49,12 +49,12 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SliverVariedExtentList"/> class.
 		/// </summary>
 		public SliverVariedExtentList(
-			object itemExtentBuilder = null,
+			IntPtr itemExtentBuilder,
 			SliverChildDelegate @delegate = null
 		)
 		{
 			var s = GetBackingStruct<SliverVariedExtentListStruct>();
-			// Complex callback type: object - skipped (requires specific marshaling)
+			// Complex callback type: IntPtr - skipped (requires specific marshaling)
 			// Complex type: SliverChildDelegate - skipped (requires marshaling)
 		}
 

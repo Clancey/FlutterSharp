@@ -46,6 +46,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public SliverReorderableList(
 			int itemCount,
+			IntPtr itemExtentBuilder,
 			double autoScrollerVelocityScalar,
 			Func<BuildContext, int, Widget> itemBuilder = null,
 			Func<InvalidType, int?> findChildIndexCallback = null,
@@ -54,7 +55,6 @@ namespace Flutter.Widgets
 			Action<int> onReorderEnd = null,
 			Func<Widget, int, InvalidType, Widget> proxyDecorator = null,
 			double? itemExtent = null,
-			object itemExtentBuilder = null,
 			Widget? prototypeItem = null,
 			Func<BuildContext, DragBoundaryDelegate<InvalidType>?> dragBoundaryProvider = null
 		)
@@ -72,7 +72,7 @@ namespace Flutter.Widgets
 			// Complex callback type: Func<Widget, int, InvalidType, Widget> - skipped (requires specific marshaling)
 			if (itemExtent.HasValue)
 				s.itemExtent = itemExtent.Value;
-			// Complex callback type: object - skipped (requires specific marshaling)
+			// Complex callback type: IntPtr - skipped (requires specific marshaling)
 			// Nullable reference type: Widget? - skipped
 			s.autoScrollerVelocityScalar = autoScrollerVelocityScalar;
 			// Complex callback type: Func<BuildContext, DragBoundaryDelegate<InvalidType>?> - skipped (requires specific marshaling)

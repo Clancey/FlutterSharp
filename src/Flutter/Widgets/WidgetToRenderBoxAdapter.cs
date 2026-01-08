@@ -33,13 +33,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="WidgetToRenderBoxAdapter"/> class.
 		/// </summary>
 		public WidgetToRenderBoxAdapter(
-			object renderBox = null,
+			IntPtr renderBox,
 			Action onBuild = null,
 			Action onUnmount = null
 		)
 		{
 			var s = GetBackingStruct<WidgetToRenderBoxAdapterStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			s.renderBox = renderBox;
 			// Callback: onBuild - registered with cleanup tracking
 			s.onBuildAction = RegisterCallback(onBuild);
 			// Callback: onUnmount - registered with cleanup tracking

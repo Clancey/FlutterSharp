@@ -200,8 +200,5 @@ namespace Flutter.Structs
 /// {@macro flutter.rendering.RenderFlex.spacing}
 		public double spacing { get; set; }
 
-		// Simple field: children
-		public IntPtr children { get; set; }
-
 	}
 }

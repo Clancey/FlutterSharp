@@ -127,18 +127,5 @@ namespace Flutter.Structs
 			set => SetString(ref _overlayChildBuilder, value);
 		}
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// A widget below this widget in the tree.
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

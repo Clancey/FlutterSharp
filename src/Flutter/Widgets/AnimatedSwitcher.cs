@@ -67,8 +67,8 @@ namespace Flutter.Widgets
 			TimeSpan duration,
 			Widget? child = null,
 			TimeSpan? reverseDuration = null,
-			object switchInCurve = null,
-			object switchOutCurve = null,
+			IntPtr? switchInCurve = null,
+			IntPtr? switchOutCurve = null,
 			Func<Widget, InvalidType, Widget> transitionBuilder = null,
 			Func<Widget?, List<Widget>, Widget> layoutBuilder = null
 		)
@@ -77,8 +77,8 @@ namespace Flutter.Widgets
 			s.child = child;
 			// Complex type: TimeSpan - skipped (requires marshaling)
 			// Complex type: TimeSpan? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
+			// Nullable reference type: IntPtr - skipped
 			// Complex callback type: Func<Widget, InvalidType, Widget> - skipped (requires specific marshaling)
 			// Complex callback type: Func<Widget?, List<Widget>, Widget> - skipped (requires specific marshaling)
 		}

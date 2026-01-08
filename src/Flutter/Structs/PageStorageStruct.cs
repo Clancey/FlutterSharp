@@ -49,18 +49,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PageStorageStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: bucket
 /// The page storage bucket to use for this subtree.
 		public IntPtr bucket { get; set; }

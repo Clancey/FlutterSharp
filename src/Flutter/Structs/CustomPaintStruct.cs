@@ -73,11 +73,11 @@ namespace Flutter.Structs
 	{
 		// Simple field: painter
 /// The painter that paints before the children.
-		public object painter { get; set; }
+		public IntPtr painter { get; set; }
 
 		// Simple field: foregroundPainter
 /// The painter that paints after the children.
-		public object foregroundPainter { get; set; }
+		public IntPtr foregroundPainter { get; set; }
 
 		// Simple field: size
 /// The size that this [CustomPaint] should aim for, given the layout
@@ -114,18 +114,6 @@ namespace Flutter.Structs
 /// This flag can't be set to true if both [painter] and [foregroundPainter]
 /// are null because this flag will be ignored in such case.
 		public bool willChange { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

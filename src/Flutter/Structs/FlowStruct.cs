@@ -90,8 +90,5 @@ namespace Flutter.Structs
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
 
-		// Simple field: children
-		public IntPtr children { get; set; }
-
 	}
 }

@@ -44,14 +44,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ScaleTransition"/> class.
 		/// </summary>
 		public ScaleTransition(
-			object scale = null,
+			IntPtr scale,
 			AlignmentGeometry alignment = null,
 			FilterQuality filterQuality = FilterQuality.Low,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ScaleTransitionStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			s.scale = scale;
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.filterQuality = filterQuality;
 			s.child = child;

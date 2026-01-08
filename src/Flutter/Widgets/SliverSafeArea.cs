@@ -48,7 +48,7 @@ namespace Flutter.Widgets
 			bool top = true,
 			bool right = true,
 			bool bottom = true,
-			object minimum = null
+			IntPtr? minimum = null
 		)
 		{
 			var s = GetBackingStruct<SliverSafeAreaStruct>();
@@ -56,7 +56,7 @@ namespace Flutter.Widgets
 			s.top = top;
 			s.right = right;
 			s.bottom = bottom;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.sliver = sliver;
 		}
 

@@ -219,8 +219,5 @@ namespace Flutter.Structs
 		// Simple field: spacing
 		public double spacing { get; set; }
 
-		// Simple field: children
-		public IntPtr children { get; set; }
-
 	}
 }

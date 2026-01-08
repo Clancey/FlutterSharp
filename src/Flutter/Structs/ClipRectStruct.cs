@@ -56,25 +56,13 @@ namespace Flutter.Structs
 	{
 		// Simple field: clipper
 /// If non-null, determines which clip to use.
-		public object clipper { get; set; }
+		public IntPtr clipper { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.rendering.ClipRectLayer.clipBehavior}
 /// 
 /// Defaults to [Clip.hardEdge].
 		public Clip clipBehavior { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

@@ -87,15 +87,6 @@ namespace Flutter.Structs
 		// Simple field: parentNode
 		public IntPtr? parentNode { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: autofocus
 		public bool autofocus { get; set; }
 
@@ -171,7 +162,7 @@ namespace Flutter.Structs
 		public string? debugLabel
 		{
 			get => GetString(_debugLabel);
-			set => SetString(ref _debugLabel, value);
+			set { SetString(ref _debugLabel, value); HasdebugLabel = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: includeSemantics

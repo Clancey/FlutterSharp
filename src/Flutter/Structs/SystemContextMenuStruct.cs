@@ -54,7 +54,7 @@ namespace Flutter.Structs
 	{
 		// Simple field: anchor
 /// The [Rect] that the context menu should point to.
-		public object anchor { get; set; }
+		public IntPtr anchor { get; set; }
 
 		// Simple field: items
 /// A list of the items to be displayed in the system context menu.

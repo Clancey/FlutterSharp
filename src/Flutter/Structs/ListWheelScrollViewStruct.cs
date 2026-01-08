@@ -147,7 +147,7 @@ namespace Flutter.Structs
 		public string? restorationId
 		{
 			get => GetString(_restorationId);
-			set => SetString(ref _restorationId, value);
+			set { SetString(ref _restorationId, value); HasrestorationId = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: scrollBehavior
@@ -163,9 +163,6 @@ namespace Flutter.Structs
 		// Simple field: dragStartBehavior
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
 		public DragStartBehavior dragStartBehavior { get; set; }
-
-		// Simple field: children
-		public IntPtr children { get; set; }
 
 	}
 }

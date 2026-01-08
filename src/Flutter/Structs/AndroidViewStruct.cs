@@ -108,7 +108,7 @@ namespace Flutter.Structs
 /// 
 /// If this is null, the ambient [Directionality] is used instead.
 /// {@endtemplate}
-		public object layoutDirection { get; set; }
+		public IntPtr layoutDirection { get; set; }
 
 		// Has flag for nullable property: gestureRecognizers
 		public byte HasgestureRecognizers { get; set; }
@@ -186,7 +186,7 @@ namespace Flutter.Structs
 /// This is typically one of: [StandardMessageCodec], [JSONMessageCodec], [StringCodec], or [BinaryCodec].
 /// 
 /// This must not be null if [creationParams] is not null.
-		public object creationParamsCodec { get; set; }
+		public IntPtr creationParamsCodec { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}

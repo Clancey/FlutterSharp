@@ -78,7 +78,7 @@ namespace Flutter.Structs
 		public string? restorationId
 		{
 			get => GetString(_restorationId);
-			set => SetString(ref _restorationId, value);
+			set { SetString(ref _restorationId, value); HasrestorationId = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: scrollDirection
@@ -202,9 +202,6 @@ namespace Flutter.Structs
 /// 
 /// This property defaults to true.
 		public bool padEnds { get; set; }
-
-		// Simple field: children
-		public IntPtr children { get; set; }
 
 	}
 }

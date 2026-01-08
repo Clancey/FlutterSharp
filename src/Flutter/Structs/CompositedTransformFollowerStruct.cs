@@ -74,7 +74,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 /// 
 /// Defaults to [Alignment.topLeft].
-		public object targetAnchor { get; set; }
+		public IntPtr targetAnchor { get; set; }
 
 		// Simple field: followerAnchor
 /// The anchor point on this widget that will line up with [targetAnchor] on
@@ -83,25 +83,13 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.CompositedTransformFollower.targetAnchor}
 /// 
 /// Defaults to [Alignment.topLeft].
-		public object followerAnchor { get; set; }
+		public IntPtr followerAnchor { get; set; }
 
 		// Simple field: offset
 /// The additional offset to apply to the [targetAnchor] of the linked
 /// [CompositedTransformTarget] to obtain this widget's [followerAnchor]
 /// position.
 		public IntPtr offset { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

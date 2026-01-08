@@ -27,10 +27,10 @@ namespace Flutter.Widgets
 		public RawWebImage(
 			Widget child,
 			WebImageInfo image,
+			IntPtr fit,
 			string? debugImageLabel = null,
 			double? width = null,
 			double? height = null,
-			object fit = null,
 			AlignmentGeometry alignment = null,
 			bool matchTextDirection = false
 		)
@@ -43,7 +43,7 @@ namespace Flutter.Widgets
 				s.width = width.Value;
 			if (height.HasValue)
 				s.height = height.Value;
-			// Complex type: object - skipped (requires marshaling)
+			s.fit = fit;
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.matchTextDirection = matchTextDirection;
 		}

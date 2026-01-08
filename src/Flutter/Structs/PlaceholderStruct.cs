@@ -52,20 +52,5 @@ namespace Flutter.Structs
 /// * [fallbackWidth], the same but horizontally.
 		public double fallbackHeight { get; set; }
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The [child] contained by the placeholder box.
-/// 
-/// Defaults to null.
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

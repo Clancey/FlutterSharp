@@ -37,25 +37,13 @@ namespace Flutter.Structs
 	internal class ScaleTransitionStruct : SingleChildRenderObjectWidgetStruct
 	{
 		// Simple field: scale
-		public object scale { get; set; }
+		public IntPtr scale { get; set; }
 
 		// Simple field: alignment
 		public IntPtr alignment { get; set; }
 
 		// Simple field: filterQuality
 		public FilterQuality filterQuality { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

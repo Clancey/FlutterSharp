@@ -75,15 +75,15 @@ namespace Flutter.Widgets
 		public View(
 			FlutterView view,
 			Widget child,
-			object deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner = null,
-			object deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView = null
+			IntPtr? deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner = null,
+			IntPtr? deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView = null
 		)
 		{
 			var s = GetBackingStruct<ViewStruct>();
 			// Complex type: FlutterView - skipped (requires marshaling)
 			s.child = child;
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
+			// Nullable reference type: IntPtr - skipped
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ViewStruct();

@@ -53,13 +53,13 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="SelectionContainer"/> class.
 		/// </summary>
 		public SelectionContainer(
+			IntPtr registrar,
 			Widget child,
-			object registrar = null,
 			SelectionContainerDelegate? @delegate = null
 		)
 		{
 			var s = GetBackingStruct<SelectionContainerStruct>();
-			// Complex type: object - skipped (requires marshaling)
+			s.registrar = registrar;
 			s.child = child;
 			// Complex type: SelectionContainerDelegate? - skipped (requires marshaling)
 		}

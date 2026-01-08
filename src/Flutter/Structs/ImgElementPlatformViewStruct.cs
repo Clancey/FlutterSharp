@@ -26,7 +26,7 @@ namespace Flutter.Structs
 		public string? src
 		{
 			get => GetString(_src);
-			set => SetString(ref _src, value);
+			set { SetString(ref _src, value); Hassrc = (byte)(value != null ? 1 : 0); }
 		}
 
 	}

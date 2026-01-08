@@ -83,7 +83,7 @@ namespace Flutter.Structs
 /// This minimum padding to apply.
 /// 
 /// The greater of the minimum insets and the media padding will be applied.
-		public object minimum { get; set; }
+		public IntPtr minimum { get; set; }
 
 		// Simple field: maintainBottomViewPadding
 /// Specifies whether the [SafeArea] should maintain the bottom
@@ -97,21 +97,6 @@ namespace Flutter.Structs
 /// keyboard due to the change in the padding value. Setting this to true will
 /// avoid the UI shift.
 		public bool maintainBottomViewPadding { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// The padding on the [MediaQuery] for the [child] will be suitably adjusted
-/// to zero out any sides that were avoided by this widget.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

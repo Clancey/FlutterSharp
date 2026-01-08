@@ -66,12 +66,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public AndroidView(
 			string viewType,
+			IntPtr layoutDirection,
+			IntPtr creationParamsCodec,
 			Action onPlatformViewCreated = null,
 			PlatformViewHitTestBehavior? hitTestBehavior = null,
-			object layoutDirection = null,
 			ISet<object>? gestureRecognizers = null,
 			object creationParams = null,
-			object creationParamsCodec = null,
 			Clip clipBehavior = Clip.HardEdge
 		)
 		{
@@ -81,10 +81,10 @@ namespace Flutter.Widgets
 			s.onPlatformViewCreatedAction = RegisterCallback(onPlatformViewCreated);
 			if (hitTestBehavior.HasValue)
 				s.hitTestBehavior = hitTestBehavior.Value;
-			// Complex type: object - skipped (requires marshaling)
+			s.layoutDirection = layoutDirection;
 			// Complex type: ISet<object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.creationParamsCodec = creationParamsCodec;
 			s.clipBehavior = clipBehavior;
 		}
 

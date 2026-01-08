@@ -62,12 +62,12 @@ namespace Flutter.Widgets
 		/// </summary>
 		public TreeSliver(
 			List<TreeSliverNode<T>> tree,
+			IntPtr toggleAnimationStyle,
 			Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> treeNodeBuilder = null,
 			Func<TreeSliverNode<object?>, InvalidType, double> treeRowExtentBuilder = null,
 			TreeSliverController? controller = null,
 			Action<TreeSliverNode<object?>> onNodeToggle = null,
-			object toggleAnimationStyle = null,
-			object indentation = null,
+			IntPtr? indentation = null,
 			bool addAutomaticKeepAlives = true,
 			bool addRepaintBoundaries = true,
 			bool addSemanticIndexes = true,
@@ -83,8 +83,8 @@ namespace Flutter.Widgets
 			// Complex type: TreeSliverController? - skipped (requires marshaling)
 			// Callback: onNodeToggle - registered with cleanup tracking
 			s.onNodeToggleAction = RegisterCallback(onNodeToggle);
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.toggleAnimationStyle = toggleAnimationStyle;
+			// Nullable reference type: IntPtr - skipped
 			s.addAutomaticKeepAlives = addAutomaticKeepAlives;
 			s.addRepaintBoundaries = addRepaintBoundaries;
 			s.addSemanticIndexes = addSemanticIndexes;

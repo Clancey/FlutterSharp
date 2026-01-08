@@ -82,24 +82,5 @@ namespace Flutter.Structs
 			set => SetString(ref _builder, value);
 		}
 
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// A [valueListenable]-independent widget which is passed back to the [builder].
-/// 
-/// This argument is optional and can be null if the entire widget subtree the
-/// [builder] builds depends on the value of the [valueListenable]. For
-/// example, in the case where the [valueListenable] is a [String] and the
-/// [builder] returns a [Text] widget with the current [String] value, there
-/// would be no useful [child].
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

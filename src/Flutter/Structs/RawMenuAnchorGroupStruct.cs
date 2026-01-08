@@ -45,19 +45,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RawMenuAnchorGroupStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-/// The child displayed by the [RawMenuAnchorGroup].
-/// 
-/// To access the [MenuController] from the [child], place the child in a
-/// builder and call [MenuController.maybeOf].
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: controller
 /// An [MenuController] that allows the closing of the menu from other
 /// widgets.

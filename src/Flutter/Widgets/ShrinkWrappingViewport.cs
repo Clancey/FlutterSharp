@@ -88,9 +88,9 @@ namespace Flutter.Widgets
 		/// </summary>
 		public ShrinkWrappingViewport(
 			List<Widget> children,
+			IntPtr crossAxisDirection,
 			Offset offset,
-			object axisDirection = null,
-			object crossAxisDirection = null,
+			IntPtr? axisDirection = null,
 			Clip clipBehavior = Clip.HardEdge,
 			List<Widget> slivers = null
 		)
@@ -99,8 +99,8 @@ namespace Flutter.Widgets
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<ShrinkWrappingViewportStruct>();
 			// Children are set in PrepareForSending to support collection initializers
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
+			s.crossAxisDirection = crossAxisDirection;
 			// Complex type: Offset - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;
 			// Children are set in PrepareForSending to support collection initializers

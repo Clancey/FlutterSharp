@@ -79,8 +79,8 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="CustomPaint"/> class.
 		/// </summary>
 		public CustomPaint(
-			object painter = null,
-			object foregroundPainter = null,
+			IntPtr painter,
+			IntPtr foregroundPainter,
 			Size? size = null,
 			bool isComplex = false,
 			bool willChange = false,
@@ -88,8 +88,8 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<CustomPaintStruct>();
-			// Complex type: object - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.painter = painter;
+			s.foregroundPainter = foregroundPainter;
 			// Complex type: Size - skipped (requires marshaling)
 			s.isComplex = isComplex;
 			s.willChange = willChange;

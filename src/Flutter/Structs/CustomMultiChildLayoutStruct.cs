@@ -54,8 +54,5 @@ namespace Flutter.Structs
 /// The delegate that controls the layout of the children.
 		public IntPtr @delegate { get; set; }
 
-		// Simple field: children
-		public IntPtr children { get; set; }
-
 	}
 }

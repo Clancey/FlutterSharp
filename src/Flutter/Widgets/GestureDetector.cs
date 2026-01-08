@@ -190,7 +190,7 @@ namespace Flutter.Widgets
 			DragStartBehavior dragStartBehavior = DragStartBehavior.Start,
 			ISet<object>? supportedDevices = null,
 			bool trackpadScrollCausesScale = false,
-			object trackpadScrollToScaleFactor = null
+			IntPtr? trackpadScrollToScaleFactor = null
 		)
 		{
 			var s = GetBackingStruct<GestureDetectorStruct>();
@@ -316,7 +316,7 @@ namespace Flutter.Widgets
 			s.dragStartBehavior = dragStartBehavior;
 			// Complex type: ISet<object>? - skipped (requires marshaling)
 			s.trackpadScrollCausesScale = trackpadScrollCausesScale;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new GestureDetectorStruct();

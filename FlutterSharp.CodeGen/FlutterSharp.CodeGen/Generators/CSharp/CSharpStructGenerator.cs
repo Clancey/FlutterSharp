@@ -72,7 +72,15 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		private Dictionary<string, object?> BuildTemplateModel(WidgetDefinition widget)
 		{
 			var baseStruct = MapBaseStruct(widget.Type, widget.HasSingleChild, widget.HasMultipleChildren);
-			var properties = widget.Properties.Select(p => MapStructProperty(p, widget.Name)).ToList();
+
+			// Filter out properties that are already defined in the base struct
+			// to prevent field shadowing and duplicate fields
+			var inheritedProperties = GetInheritedPropertyNames(baseStruct);
+			var filteredProperties = widget.Properties
+				.Where(p => !inheritedProperties.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
+				.ToList();
+
+			var properties = filteredProperties.Select(p => MapStructProperty(p, widget.Name)).ToList();
 			var structName = $"{widget.Name}Struct";
 
 			// Prevent circular inheritance: if the struct would inherit from itself, use WidgetStruct instead
@@ -284,6 +292,30 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				WidgetType.LeafRenderObject => "WidgetStruct",
 				WidgetType.Proxy => "WidgetStruct",
 				_ => "WidgetStruct"
+			};
+		}
+
+		/// <summary>
+		/// Gets the property names that are already defined in the base struct.
+		/// These should be skipped when generating derived struct fields to prevent field shadowing.
+		/// </summary>
+		private static HashSet<string> GetInheritedPropertyNames(string baseStruct)
+		{
+			// Map base struct types to the properties they define
+			// These properties should NOT be re-generated in derived structs
+			return baseStruct switch
+			{
+				"SingleChildRenderObjectWidgetStruct" => new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+				{
+					"child"
+				},
+				"MultiChildRenderObjectWidgetStruct" => new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+				{
+					"children"
+				},
+				// WidgetStruct defines id (but that's handled in FlutterObjectStruct base)
+				// FlutterObjectStruct defines handle, managedHandle, widgetType (but these aren't widget properties)
+				_ => new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 			};
 		}
 

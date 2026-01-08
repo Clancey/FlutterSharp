@@ -65,18 +65,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class RootRestorationScopeStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Has flag for nullable property: restorationId
 		public byte HasrestorationId { get; set; }
 
@@ -91,7 +79,7 @@ namespace Flutter.Structs
 		public string? restorationId
 		{
 			get => GetString(_restorationId);
-			set => SetString(ref _restorationId, value);
+			set { SetString(ref _restorationId, value); HasrestorationId = (byte)(value != null ? 1 : 0); }
 		}
 
 	}

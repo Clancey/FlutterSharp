@@ -22,14 +22,5 @@ namespace Flutter.Structs
 /// The set of properties to use for icons in this subtree.
 		public IntPtr data { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

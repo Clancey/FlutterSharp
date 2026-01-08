@@ -44,19 +44,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class NavigatorPopHandlerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget to place below this in the widget tree.
-/// 
-/// Typically this is a [Navigator] that will handle the pop when [onPop] is
-/// called.
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: enabled
 /// Whether this widget's ability to handle system back gestures is enabled or
 /// disabled.

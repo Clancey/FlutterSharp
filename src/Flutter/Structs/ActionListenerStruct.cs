@@ -53,15 +53,5 @@ namespace Flutter.Structs
 /// The [Action] that the callback will be registered with.
 		public IntPtr action { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

@@ -70,24 +70,7 @@ namespace Flutter.Structs
 /// `Offset(double.maxFinite, 0)`, which will cause the top-right
 /// sub-screen to be picked.
 /// {@endtemplate}
-		public object anchorPoint { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// The padding on the [MediaQuery] for the [child] will be suitably adjusted
-/// to zero out any sides that were avoided by this widget. The [MediaQuery]
-/// for the [child] will no longer contain any display features that split the
-/// screen into sub-screens.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
+		public IntPtr anchorPoint { get; set; }
 
 	}
 }

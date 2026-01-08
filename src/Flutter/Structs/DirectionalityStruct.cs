@@ -40,14 +40,5 @@ namespace Flutter.Structs
 /// The text direction for this subtree.
 		public TextDirection textDirection { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 	}
 }

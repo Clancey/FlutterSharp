@@ -50,9 +50,9 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="UnconstrainedBox"/> class.
 		/// </summary>
 		public UnconstrainedBox(
+			IntPtr constrainedAxis,
 			TextDirection? textDirection = null,
 			AlignmentGeometry alignment = null,
-			object constrainedAxis = null,
 			Clip clipBehavior = Clip.None,
 			Widget? child = null
 		)
@@ -61,7 +61,7 @@ namespace Flutter.Widgets
 			if (textDirection.HasValue)
 				s.textDirection = textDirection.Value;
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.constrainedAxis = constrainedAxis;
 			s.clipBehavior = clipBehavior;
 			s.child = child;
 		}

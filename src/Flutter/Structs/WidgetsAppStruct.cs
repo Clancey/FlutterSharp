@@ -448,7 +448,7 @@ namespace Flutter.Structs
 		public string? initialRoute
 		{
 			get => GetString(_initialRoute);
-			set => SetString(ref _initialRoute, value);
+			set { SetString(ref _initialRoute, value); HasinitialRoute = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: navigatorObservers
@@ -552,7 +552,7 @@ namespace Flutter.Structs
 		public string? title
 		{
 			get => GetString(_title);
-			set => SetString(ref _title, value);
+			set { SetString(ref _title, value); Hastitle = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: onGenerateTitle
@@ -1032,7 +1032,7 @@ namespace Flutter.Structs
 		public string? restorationScopeId
 		{
 			get => GetString(_restorationScopeId);
-			set => SetString(ref _restorationScopeId, value);
+			set { SetString(ref _restorationScopeId, value); HasrestorationScopeId = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: useInheritedMediaQuery

@@ -31,7 +31,7 @@ namespace Flutter.Structs
 		public string? debugImageLabel
 		{
 			get => GetString(_debugImageLabel);
-			set => SetString(ref _debugImageLabel, value);
+			set { SetString(ref _debugImageLabel, value); HasdebugImageLabel = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: width
@@ -50,7 +50,7 @@ namespace Flutter.Structs
 
 		// Simple field: fit
 /// How the HTML element should be inscribed in the box constraining it.
-		public object fit { get; set; }
+		public IntPtr fit { get; set; }
 
 		// Simple field: alignment
 /// How the image should be aligned in the box constraining it.

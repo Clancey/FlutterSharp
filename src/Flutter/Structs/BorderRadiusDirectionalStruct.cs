@@ -29,19 +29,19 @@ namespace Flutter.Structs
 	{
 		// Simple field: topStart
 /// The top-start [Radius].
-		public object topStart { get; set; }
+		public IntPtr topStart { get; set; }
 
 		// Simple field: topEnd
 /// The top-end [Radius].
-		public object topEnd { get; set; }
+		public IntPtr topEnd { get; set; }
 
 		// Simple field: bottomStart
 /// The bottom-start [Radius].
-		public object bottomStart { get; set; }
+		public IntPtr bottomStart { get; set; }
 
 		// Simple field: bottomEnd
 /// The bottom-end [Radius].
-		public object bottomEnd { get; set; }
+		public IntPtr bottomEnd { get; set; }
 
 		// Simple field: radius
 		public IntPtr radius { get; set; }

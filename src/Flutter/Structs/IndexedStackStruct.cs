@@ -73,13 +73,5 @@ namespace Flutter.Structs
 /// If this is null, none of the children will be shown.
 		public NativeNullable<int> index { get; set; }
 
-		// Simple field: children
-/// The child widgets of the stack.
-/// 
-/// Only the child at index [index] will be shown.
-/// 
-/// See [Stack.children] for more information.
-		public IntPtr children { get; set; }
-
 	}
 }

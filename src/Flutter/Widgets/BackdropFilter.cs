@@ -169,10 +169,10 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="BackdropFilter"/> class.
 		/// </summary>
 		public BackdropFilter(
+			IntPtr backdropGroupKey,
 			ImageFilter filter = null,
 			BlendMode blendMode = BlendMode.SrcOver,
 			bool enabled = true,
-			object backdropGroupKey = null,
 			Widget? child = null
 		)
 		{
@@ -180,7 +180,7 @@ namespace Flutter.Widgets
 			// Complex type: ImageFilter - skipped (requires marshaling)
 			s.blendMode = blendMode;
 			s.enabled = enabled;
-			// Complex type: object - skipped (requires marshaling)
+			s.backdropGroupKey = backdropGroupKey;
 			s.child = child;
 		}
 

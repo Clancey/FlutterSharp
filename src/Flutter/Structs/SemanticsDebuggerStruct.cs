@@ -19,21 +19,9 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class SemanticsDebuggerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: labelStyle
 /// The [TextStyle] to use when rendering semantics labels.
-		public object labelStyle { get; set; }
+		public IntPtr labelStyle { get; set; }
 
 	}
 }

@@ -64,7 +64,7 @@ namespace Flutter.Structs
 /// 
 /// Setting an origin is equivalent to conjugating the transform matrix by a
 /// translation. This property is provided just for convenience.
-		public object origin { get; set; }
+		public IntPtr origin { get; set; }
 
 		// Simple field: alignment
 /// The alignment of the origin, relative to the size of the box.
@@ -94,18 +94,6 @@ namespace Flutter.Structs
 /// rendering of the child.
 /// {@endtemplate}
 		public FilterQuality filterQuality { get; set; }
-
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
 
 	}
 }

@@ -50,26 +50,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedContainerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The [child] contained by the container.
-/// 
-/// If null, and if the [constraints] are unbounded or also null, the
-/// container will expand to fill all available space in its parent, unless
-/// the parent provides unbounded constraints, in which case the container
-/// will attempt to be as small as possible.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: alignment
 /// Align the [child] within the container.
 /// 

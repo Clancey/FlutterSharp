@@ -142,7 +142,7 @@ namespace Flutter.Widgets
 		/// </summary>
 		public Text(
 			string? data = null,
-			object textSpan = null,
+			IntPtr? textSpan = null,
 			TextStyle? style = null,
 			StrutStyle? strutStyle = null,
 			TextAlign? textAlign = TextAlign.Start,
@@ -151,7 +151,7 @@ namespace Flutter.Widgets
 			bool? softWrap = null,
 			TextOverflow overflow = TextOverflow.Clip,
 			double? textScaleFactor = null,
-			object textScaler = null,
+			IntPtr? textScaler = null,
 			int? maxLines = null,
 			string? semanticsLabel = null,
 			string? semanticsIdentifier = null,
@@ -162,11 +162,10 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<TextStruct>();
 			s.data = data;
-			// Complex type: object - skipped (requires marshaling)
-			// TODO: style - requires TextStyle struct marshaling
+			// Nullable reference type: IntPtr - skipped
+			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: StrutStyle? - skipped (requires marshaling)
-			if (textAlign.HasValue)
-				s.textAlign = textAlign.Value;
+			// Complex type: TextAlign? - skipped (requires marshaling)
 			if (textDirection.HasValue)
 				s.textDirection = textDirection.Value;
 			// Complex type: Locale? - skipped (requires marshaling)
@@ -175,7 +174,7 @@ namespace Flutter.Widgets
 			s.overflow = overflow;
 			if (textScaleFactor.HasValue)
 				s.textScaleFactor = textScaleFactor.Value;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			if (maxLines.HasValue)
 				s.maxLines = maxLines.Value;
 			s.semanticsLabel = semanticsLabel;

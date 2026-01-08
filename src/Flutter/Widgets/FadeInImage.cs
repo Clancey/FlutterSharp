@@ -69,26 +69,26 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="FadeInImage"/> class.
 		/// </summary>
 		public FadeInImage(
+			IntPtr colorBlendMode,
+			IntPtr placeholderColorBlendMode,
+			IntPtr placeholderFit,
+			IntPtr placeholderFilterQuality,
 			ImageProvider? placeholder = null,
 			Func<BuildContext, object, StackTrace?, Widget> placeholderErrorBuilder = null,
 			ImageProvider image = null,
 			Func<BuildContext, object, StackTrace?, Widget> imageErrorBuilder = null,
 			TimeSpan? fadeOutDuration = null,
-			object fadeOutCurve = null,
+			IntPtr? fadeOutCurve = null,
 			TimeSpan? fadeInDuration = null,
-			object fadeInCurve = null,
+			IntPtr? fadeInCurve = null,
 			double? width = null,
 			Color? color = null,
-			object colorBlendMode = null,
 			Color? placeholderColor = null,
-			object placeholderColorBlendMode = null,
 			double? height = null,
 			BoxFit? fit = null,
-			object placeholderFit = null,
 			FilterQuality filterQuality = FilterQuality.Medium,
-			object placeholderFilterQuality = null,
 			AlignmentGeometry alignment = null,
-			object repeat = null,
+			IntPtr? repeat = null,
 			bool matchTextDirection = false,
 			bool excludeFromSemantics = false,
 			string? imageSemanticLabel = null
@@ -104,23 +104,23 @@ namespace Flutter.Widgets
 			// Complex type: ImageProvider - skipped (requires marshaling)
 			// Complex callback type: Func<BuildContext, object, StackTrace?, Widget> - skipped (requires specific marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			// Complex type: TimeSpan - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			if (width.HasValue)
 				s.width = width.Value;
 			// Complex type: Color? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.colorBlendMode = colorBlendMode;
 			// Complex type: Color - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.placeholderColorBlendMode = placeholderColorBlendMode;
 			if (height.HasValue)
 				s.height = height.Value;
 			// Nullable reference type: BoxFit - skipped
-			// Complex type: object - skipped (requires marshaling)
+			s.placeholderFit = placeholderFit;
 			s.filterQuality = filterQuality;
-			// Complex type: object - skipped (requires marshaling)
+			s.placeholderFilterQuality = placeholderFilterQuality;
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.matchTextDirection = matchTextDirection;
 			s.excludeFromSemantics = excludeFromSemantics;
 			s.imageSemanticLabel = imageSemanticLabel;

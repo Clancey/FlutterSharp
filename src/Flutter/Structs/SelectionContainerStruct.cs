@@ -50,17 +50,7 @@ namespace Flutter.Structs
 /// 
 /// If null, this widget gets the [SelectionRegistrar] from the current
 /// context.
-		public object registrar { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
+		public IntPtr registrar { get; set; }
 
 		// Has flag for nullable property: @delegate
 		public byte Hasdelegate { get; set; }

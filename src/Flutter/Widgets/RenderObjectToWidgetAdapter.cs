@@ -33,14 +33,14 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="RenderObjectToWidgetAdapter"/> class.
 		/// </summary>
 		public RenderObjectToWidgetAdapter(
+			IntPtr container,
 			Widget? child = null,
-			object container = null,
 			string? debugShortDescription = null
 		)
 		{
 			var s = GetBackingStruct<RenderObjectToWidgetAdapterStruct>();
 			s.child = child;
-			// Complex type: object - skipped (requires marshaling)
+			s.container = container;
 			s.debugShortDescription = debugShortDescription;
 		}
 

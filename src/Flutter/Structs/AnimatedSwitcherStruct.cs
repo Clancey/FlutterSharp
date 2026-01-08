@@ -56,29 +56,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class AnimatedSwitcherStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Has flag for nullable property: child
-		public byte Haschild { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-/// The current child widget to display. If there was a previous child, then
-/// that child will be faded out using the [switchOutCurve], while the new
-/// child is faded in with the [switchInCurve], over the [duration].
-/// 
-/// If there was no previous child, then this child will fade in using the
-/// [switchInCurve] over the [duration].
-/// 
-/// The child is considered to be "new" if it has a different type or [Key]
-/// (see [Widget.canUpdate]).
-/// 
-/// To change the kind of transition used, see [transitionBuilder].
-		public IntPtr? child
-		{
-			get => _child != IntPtr.Zero ? (IntPtr)_child : null;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: duration
 /// The duration of the transition from the old [child] value to the new one.
 /// 
@@ -112,7 +89,7 @@ namespace Flutter.Structs
 /// changed while the current child is in the middle of fading in,
 /// [switchInCurve] will be run in reverse from that point instead of jumping
 /// to the corresponding point on [switchOutCurve].
-		public object switchInCurve { get; set; }
+		public IntPtr switchInCurve { get; set; }
 
 		// Simple field: switchOutCurve
 /// The animation curve to use when transitioning a previous [child] out.
@@ -125,7 +102,7 @@ namespace Flutter.Structs
 /// If [child] is changed while the current child is in the middle of fading
 /// in, [switchInCurve] will be run in reverse from that point instead of
 /// jumping to the corresponding point on [switchOutCurve].
-		public object switchOutCurve { get; set; }
+		public IntPtr switchOutCurve { get; set; }
 
 		// Callback field: transitionBuilder
 		// Using action string pattern - Dart will dispatch action to C# via method channel

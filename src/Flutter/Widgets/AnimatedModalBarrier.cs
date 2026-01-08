@@ -39,11 +39,11 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="AnimatedModalBarrier"/> class.
 		/// </summary>
 		public AnimatedModalBarrier(
+			IntPtr clipDetailsNotifier,
 			bool dismissible = true,
 			string? semanticsLabel = null,
 			bool? barrierSemanticsDismissible = null,
 			Action onDismiss = null,
-			object clipDetailsNotifier = null,
 			string? semanticsOnTapHint = null,
 			Color? color = null
 		)
@@ -55,7 +55,7 @@ namespace Flutter.Widgets
 				s.barrierSemanticsDismissible = barrierSemanticsDismissible.Value;
 			// Callback: onDismiss - registered with cleanup tracking
 			s.onDismissAction = RegisterCallback(onDismiss);
-			// Complex type: object - skipped (requires marshaling)
+			s.clipDetailsNotifier = clipDetailsNotifier;
 			s.semanticsOnTapHint = semanticsOnTapHint;
 			// Complex type: Color? - skipped (requires marshaling)
 		}

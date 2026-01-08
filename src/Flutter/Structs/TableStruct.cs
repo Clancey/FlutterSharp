@@ -48,12 +48,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class TableStruct : MultiChildRenderObjectWidgetStruct
 	{
-		// Simple field: children
-/// The rows of the table.
-/// 
-/// Every row in a table must have the same number of children.
-		public IntPtr children { get; set; }
-
 		// Has flag for nullable property: columnWidths
 		public byte HascolumnWidths { get; set; }
 
@@ -88,7 +82,7 @@ namespace Flutter.Structs
 /// 
 /// A [Table] in a horizontal [ScrollView] must use a [FixedColumnWidth], or
 /// an [IntrinsicColumnWidth] as the horizontal space is infinite.
-		public object defaultColumnWidth { get; set; }
+		public IntPtr defaultColumnWidth { get; set; }
 
 		// Simple field: textDirection
 /// The direction in which the columns are ordered.

@@ -99,7 +99,7 @@ namespace Flutter.Structs
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/dart-ui/tile_mode_decal_linear.png)
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/dart-ui/tile_mode_mirror_linear.png)
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/dart-ui/tile_mode_repeated_linear.png)
-		public object tileMode { get; set; }
+		public IntPtr tileMode { get; set; }
 
 		// Simple field: hashCode
 		public int hashCode { get; set; }

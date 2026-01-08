@@ -44,15 +44,15 @@ namespace Flutter.Widgets
 		/// Initializes a new instance of the <see cref="ClipRSuperellipse"/> class.
 		/// </summary>
 		public ClipRSuperellipse(
+			IntPtr clipper,
 			BorderRadiusGeometry? borderRadius = null,
-			object clipper = null,
 			Clip clipBehavior = Clip.AntiAlias,
 			Widget? child = null
 		)
 		{
 			var s = GetBackingStruct<ClipRSuperellipseStruct>();
 			// Complex type: BorderRadiusGeometry? - skipped (requires marshaling)
-			// Complex type: object - skipped (requires marshaling)
+			s.clipper = clipper;
 			s.clipBehavior = clipBehavior;
 			s.child = child;
 		}

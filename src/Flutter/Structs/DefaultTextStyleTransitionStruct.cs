@@ -54,18 +54,6 @@ namespace Flutter.Structs
 /// See [DefaultTextStyle.maxLines] for more details.
 		public NativeNullable<int> maxLines { get; set; }
 
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget below this widget in the tree.
-/// 
-/// {@macro flutter.widgets.ProxyWidget.child}
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: style
 		public IntPtr style { get; set; }
 

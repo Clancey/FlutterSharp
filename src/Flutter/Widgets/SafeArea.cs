@@ -75,7 +75,7 @@ namespace Flutter.Widgets
 			bool top = true,
 			bool right = true,
 			bool bottom = true,
-			object minimum = null,
+			IntPtr? minimum = null,
 			bool maintainBottomViewPadding = false
 		)
 		{
@@ -84,7 +84,7 @@ namespace Flutter.Widgets
 			s.top = top;
 			s.right = right;
 			s.bottom = bottom;
-			// Complex type: object - skipped (requires marshaling)
+			// Nullable reference type: IntPtr - skipped
 			s.maintainBottomViewPadding = maintainBottomViewPadding;
 			s.child = child;
 		}

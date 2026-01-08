@@ -26,16 +26,7 @@ namespace Flutter.Structs
 	{
 		// Simple field: registrar
 /// The [SelectionRegistrar] hosted by this widget.
-		public object registrar { get; set; }
-
-		// Widget field: child
-		private IntPtr _child;
-
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
+		public IntPtr registrar { get; set; }
 
 	}
 }

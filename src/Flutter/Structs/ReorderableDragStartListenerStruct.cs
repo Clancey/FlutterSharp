@@ -29,17 +29,6 @@ namespace Flutter.Structs
 	[StructLayout(LayoutKind.Sequential)]
 	internal class ReorderableDragStartListenerStruct : SingleChildRenderObjectWidgetStruct
 	{
-		// Widget field: child
-		private IntPtr _child;
-
-/// The widget for which the application would like to respond to a tap and
-/// drag gesture by starting a reordering drag on a reorderable list.
-		public IntPtr child
-		{
-			get => (IntPtr)_child;
-			set => SetIntPtr(ref _child, value);
-		}
-
 		// Simple field: index
 /// The index of the associated item that will be dragged in the list.
 		public int index { get; set; }

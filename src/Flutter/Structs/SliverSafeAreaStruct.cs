@@ -56,7 +56,7 @@ namespace Flutter.Structs
 /// This minimum padding to apply.
 /// 
 /// The greater of the minimum padding and the media padding is be applied.
-		public object minimum { get; set; }
+		public IntPtr minimum { get; set; }
 
 		// Widget field: sliver
 		private IntPtr _sliver;
