@@ -33,6 +33,7 @@ import 'parsers/outlinedbutton_parser.dart';
 import 'parsers/iconbutton_parser.dart';
 import 'parsers/floatingactionbutton_parser.dart';
 import 'parsers/checkbox_parser.dart';
+import 'parsers/radio_parser.dart';
 import 'parsers/gridview_widget_parser.dart';
 import 'parsers/icon_widget_parser.dart';
 import 'parsers/image_widget_parser.dart';
@@ -93,6 +94,7 @@ class DynamicWidgetBuilder {
     IconButtonParser(),
     FloatingActionButtonParser(),
     CheckboxParser(),
+    RadioParser(),
     GridViewWidgetParser(),
     IconWidgetParser(),
     IndexedStackWidgetParser(),
