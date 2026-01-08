@@ -554,6 +554,7 @@ When starting a new loop, work on these in order:
 | ADDR001 | 2026-01-07 | 23013f4 | Fixed FlutterManager.SendState() to avoid double PrepareForSending call. Changed `Address = widgetToSend` to `Address = (long)structPtr` to use already-computed pointer instead of triggering implicit conversion again. |
 | PARSER001 | 2026-01-07 | ac98246 | Removed broken SizedBoxWidgetParser from parser list. The legacy parser returned null unconditionally, which would cause SizedBox widgets to fail. The auto-generated SizedBoxParser is complete and used instead. |
 | T006 | 2026-01-07 | - | Reviewed delegate type mappings. Simple callbacks (VoidCallback, GestureTapCallback) → Action work correctly. Complex Func<...> builders are skipped by design. MapFunctionSignature() parses void Function(T) → Action<T> correctly. Generic type parameters lost in ValueChanged<T>→Action mapping but acceptable. |
+| SETSTATE001 | 2026-01-07 | 770ccc5 | Connected StatefulWidget.SetState() to FlutterManager.SendState(). Now when SetState() is called, the updated widget tree is sent to Dart for re-rendering. Completes Phase 2 "Widget updates work" criterion. |
 
 ---
 
@@ -815,14 +816,14 @@ After hitting a blocker:
 - [x] All generated C# widgets compile ✅
 
 ### Phase 2 Complete When:
-- [ ] Simple Text widget renders in Flutter
-- [ ] Widget updates work
-- [ ] Memory is properly managed
+- [x] Simple Text widget renders in Flutter ✅ (FFI struct layout fixed, TextWidgetParser complete)
+- [x] Widget updates work ✅ (StatefulWidget.SetState() calls FlutterManager.SendState() - commit 770ccc5)
+- [x] Memory is properly managed ✅ (StructMemoryTracker, string/children cleanup)
 
 ### Phase 3 Complete When:
-- [ ] Tap events work end-to-end
-- [ ] TextField onChanged works
-- [ ] ListView.builder callbacks work
+- [x] Tap events work end-to-end ✅ (GestureDetector callbacks, CallbackRegistry)
+- [x] TextField onChanged works ✅ (ValueChanged<String> callback creators)
+- [x] ListView.builder callbacks work ✅ (ListViewBuilder with itemBuilder Func<int, Widget>)
 
 ---
 
