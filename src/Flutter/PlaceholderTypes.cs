@@ -13,7 +13,7 @@ namespace Flutter
 	// Flutter framework types
 	// Note: BuildContext is now defined in WidgetBuilder.cs
 	public class FocusNode { }
-	public class ScrollController { }
+	// Note: ScrollController is now defined in Flutter.Widgets namespace
 	public class ScrollPhysics { }
 	public class ScrollBehavior { }
 	// RouteSettings is now defined in Flutter.Navigation namespace
@@ -60,7 +60,30 @@ namespace Flutter
 	public class TextSelectionControls { }
 	public class TransformationController { }
 	public class AlignmentGeometry { }
-	public class Color { }
+	/// <summary>
+	/// An immutable 32-bit color value in ARGB format.
+	/// </summary>
+	public struct Color
+	{
+		/// <summary>
+		/// The 32-bit ARGB value of this color.
+		/// </summary>
+		public uint Value { get; }
+
+		public Color(uint value) { Value = value; }
+
+		/// <summary>
+		/// Creates a Color from ARGB components (0-255 each).
+		/// </summary>
+		public static Color FromARGB(byte a, byte r, byte g, byte b)
+			=> new Color((uint)((a << 24) | (r << 16) | (g << 8) | b));
+
+		/// <summary>
+		/// Creates a Color from RGB components (0-255 each), with full opacity.
+		/// </summary>
+		public static Color FromRGB(byte r, byte g, byte b)
+			=> new Color((uint)((255 << 24) | (r << 16) | (g << 8) | b));
+	}
 	public class EdgeInsetsGeometry { }
 	public class TextStyle { }
 	public class Decoration { }
@@ -150,6 +173,51 @@ namespace Flutter
 		public double Y { get; }
 
 		public Alignment(double x, double y) { X = x; Y = y; }
+	}
+
+	/// <summary>
+	/// An immutable set of offsets in each of the four cardinal directions.
+	/// Typically used for an offset from each of the four sides of a box (e.g., padding).
+	/// </summary>
+	public struct EdgeInsets
+	{
+		public static readonly EdgeInsets Zero = new EdgeInsets(0, 0, 0, 0);
+
+		public double Left { get; }
+		public double Top { get; }
+		public double Right { get; }
+		public double Bottom { get; }
+
+		public EdgeInsets(double left, double top, double right, double bottom)
+		{
+			Left = left;
+			Top = top;
+			Right = right;
+			Bottom = bottom;
+		}
+
+		/// <summary>
+		/// Creates EdgeInsets with the same value for all four sides.
+		/// </summary>
+		public static EdgeInsets All(double value) => new EdgeInsets(value, value, value, value);
+
+		/// <summary>
+		/// Creates EdgeInsets with symmetric horizontal and vertical values.
+		/// </summary>
+		public static EdgeInsets Symmetric(double horizontal = 0, double vertical = 0)
+			=> new EdgeInsets(horizontal, vertical, horizontal, vertical);
+
+		/// <summary>
+		/// Creates EdgeInsets with only the specified sides.
+		/// </summary>
+		public static EdgeInsets Only(double left = 0, double top = 0, double right = 0, double bottom = 0)
+			=> new EdgeInsets(left, top, right, bottom);
+
+		/// <summary>
+		/// Creates EdgeInsets from LTRB values.
+		/// </summary>
+		public static EdgeInsets FromLTRB(double left, double top, double right, double bottom)
+			=> new EdgeInsets(left, top, right, bottom);
 	}
 
 	public class ImageFilter { }
