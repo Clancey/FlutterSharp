@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Flutter;
+using Flutter.Navigation;
 using Flutter.Structs;
 
 namespace Flutter.Widgets
@@ -40,8 +42,13 @@ namespace Flutter.Widgets
     {
         private readonly Dictionary<string, Func<Widget>> _routes = new();
         private readonly Stack<string> _routeStack = new();
+        private readonly Stack<Route> _routeObjectStack = new();
         private string? _currentRoute;
         private Widget? _currentChildWidget;
+        private Widget? _previousChildWidget;
+        private Route? _currentRouteObject;
+        private bool _isTransitioning;
+        private bool _isPopping;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Navigator"/> class.
@@ -165,7 +172,89 @@ namespace Flutter.Widgets
             _routeStack.Push(routeName);
             _currentRoute = routeName;
             OnRouteChanged?.Invoke(routeName);
+            SetState(() => { });
             return true;
+        }
+
+        /// <summary>
+        /// Pushes a Route object onto the navigation stack.
+        /// This method supports MaterialPageRoute, CupertinoPageRoute, and other Route types.
+        /// </summary>
+        /// <param name="route">The Route to push.</param>
+        /// <returns>True if the route was pushed successfully.</returns>
+        public bool Push(Route route)
+        {
+            if (route == null)
+            {
+                return false;
+            }
+
+            // Store previous widget for transition
+            _previousChildWidget = _currentChildWidget;
+            _isTransitioning = true;
+            _isPopping = false;
+
+            // Set up the route
+            route.Navigator = this;
+            route.IsActive = true;
+            route.IsCurrent = true;
+            route.IsFirst = _routeObjectStack.Count == 0;
+
+            // Mark previous route as no longer current
+            if (_currentRouteObject != null)
+            {
+                _currentRouteObject.IsCurrent = false;
+                _currentRouteObject.DidPushNext();
+            }
+
+            // Push the route
+            _routeObjectStack.Push(route);
+            _currentRouteObject = route;
+
+            // Build the widget
+            _currentChildWidget = route.BuildPage(null);
+
+            // Update route name tracking
+            var routeName = route.Settings.Name ?? $"/route_{_routeObjectStack.Count}";
+            _routeStack.Push(routeName);
+            _currentRoute = routeName;
+
+            // Notify about route change
+            route.DidPush();
+            OnRouteChanged?.Invoke(routeName);
+            SetState(() => { });
+
+            return true;
+        }
+
+        /// <summary>
+        /// Pushes a new MaterialPageRoute with the given builder.
+        /// </summary>
+        /// <param name="builder">A function that creates the widget content.</param>
+        /// <param name="routeName">Optional route name.</param>
+        /// <param name="arguments">Optional route arguments.</param>
+        /// <returns>True if pushed successfully.</returns>
+        public bool PushMaterial(Func<Widget> builder, string? routeName = null, object? arguments = null)
+        {
+            return Push(new MaterialPageRoute(
+                builder: builder,
+                settings: new RouteSettings(routeName, arguments)
+            ));
+        }
+
+        /// <summary>
+        /// Pushes a new CupertinoPageRoute with the given builder.
+        /// </summary>
+        /// <param name="builder">A function that creates the widget content.</param>
+        /// <param name="routeName">Optional route name.</param>
+        /// <param name="arguments">Optional route arguments.</param>
+        /// <returns>True if pushed successfully.</returns>
+        public bool PushCupertino(Func<Widget> builder, string? routeName = null, object? arguments = null)
+        {
+            return Push(new CupertinoPageRoute(
+                builder: builder,
+                settings: new RouteSettings(routeName, arguments)
+            ));
         }
 
         /// <summary>
@@ -219,18 +308,60 @@ namespace Flutter.Widgets
         /// <summary>
         /// Pops the current route from the navigation stack.
         /// </summary>
+        /// <param name="result">Optional result to return to the previous route.</param>
         /// <returns>True if a route was popped, false if the stack only has one route.</returns>
-        public bool Pop()
+        public bool Pop(object? result = null)
         {
             if (_routeStack.Count <= 1)
             {
                 return false;
             }
 
-            var poppedRoute = _routeStack.Pop();
+            // Store current widget for transition
+            _previousChildWidget = _currentChildWidget;
+            _isTransitioning = true;
+            _isPopping = true;
+
+            var poppedRouteName = _routeStack.Pop();
             _currentRoute = _routeStack.Peek();
-            OnPop?.Invoke(poppedRoute);
+
+            // Handle Route objects if present
+            if (_routeObjectStack.Count > 0)
+            {
+                var poppedRouteObject = _routeObjectStack.Pop();
+                poppedRouteObject.DidPop(result);
+                poppedRouteObject.IsActive = false;
+                poppedRouteObject.IsCurrent = false;
+
+                if (_routeObjectStack.Count > 0)
+                {
+                    _currentRouteObject = _routeObjectStack.Peek();
+                    _currentRouteObject.IsCurrent = true;
+                    _currentRouteObject.DidPopNext();
+                    _currentChildWidget = _currentRouteObject.BuildPage(null);
+                }
+                else
+                {
+                    _currentRouteObject = null;
+                    // Fall back to named routes
+                    if (_routes.TryGetValue(_currentRoute, out var builder))
+                    {
+                        _currentChildWidget = builder();
+                    }
+                }
+            }
+            else
+            {
+                // Named routes only
+                if (_routes.TryGetValue(_currentRoute, out var builder))
+                {
+                    _currentChildWidget = builder();
+                }
+            }
+
+            OnPop?.Invoke(poppedRouteName);
             OnRouteChanged?.Invoke(_currentRoute);
+            SetState(() => { });
             return true;
         }
 
@@ -293,14 +424,67 @@ namespace Flutter.Widgets
             nav.onRouteChangedAction = RegisterCallback(OnRouteChanged);
             nav.onPopAction = RegisterCallback(OnPop);
 
-            // Build the current route's widget
-            if (_currentRoute != null && _routes.TryGetValue(_currentRoute, out var builder))
+            // Set transition information from current route object
+            if (_currentRouteObject != null)
             {
+                nav.transitionType = (int)_currentRouteObject.TransitionType;
+                nav.transitionDurationMs = _currentRouteObject.TransitionDurationMs;
+                nav.reverseTransitionDurationMs = _currentRouteObject.ReverseTransitionDurationMs;
+                nav.fullscreenDialog = _currentRouteObject.FullscreenDialog ? (byte)1 : (byte)0;
+                nav.opaque = _currentRouteObject.Opaque ? (byte)1 : (byte)0;
+
+                // Serialize route arguments if present
+                if (_currentRouteObject.Settings.Arguments != null)
+                {
+                    try
+                    {
+                        nav.routeArguments = JsonSerializer.Serialize(_currentRouteObject.Settings.Arguments);
+                    }
+                    catch
+                    {
+                        // If serialization fails, ignore arguments
+                    }
+                }
+
+                // Build the current widget from the route
+                _currentChildWidget = _currentRouteObject.BuildPage(null);
+            }
+            else if (_currentRoute != null && _routes.TryGetValue(_currentRoute, out var builder))
+            {
+                // Fall back to named route builder
                 _currentChildWidget = builder();
+                nav.transitionType = 0; // No transition for named routes
+            }
+
+            // Set transition state
+            nav.isTransitioning = _isTransitioning ? (byte)1 : (byte)0;
+            nav.isPopping = _isPopping ? (byte)1 : (byte)0;
+
+            // Set current child widget pointer
+            if (_currentChildWidget != null)
+            {
                 nav.currentChild = (IntPtr)_currentChildWidget;
             }
 
+            // Set previous child for transition animation
+            if (_previousChildWidget != null && _isTransitioning)
+            {
+                nav.previousChild = (IntPtr)_previousChildWidget;
+            }
+
+            // Clear transition state after sending
+            _isTransitioning = false;
+
             return nav;
+        }
+
+        /// <summary>
+        /// Marks a transition as complete (called by Dart after animation finishes).
+        /// </summary>
+        internal void OnTransitionComplete()
+        {
+            _previousChildWidget = null;
+            _isPopping = false;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Flutter
 	public class ScrollController { }
 	public class ScrollPhysics { }
 	public class ScrollBehavior { }
-	public class RouteSettings { }
+	// RouteSettings is now defined in Flutter.Navigation namespace
 	public class Intent { }
 	public class BackButtonDispatcher { }
 	public class UndoHistoryController { }

@@ -113,5 +113,59 @@ namespace Flutter.Structs
             }
         }
         public byte HasonPopAction { get; set; }
+
+        // Route transition fields (for MaterialPageRoute, CupertinoPageRoute, etc.)
+
+        /// <summary>
+        /// The type of transition animation to use.
+        /// 0 = None, 1 = Material, 2 = Cupertino, 3 = Fade, 4 = SlideBottom, 5 = SlideRight, 6 = Zoom
+        /// </summary>
+        public int transitionType { get; set; }
+
+        /// <summary>
+        /// The duration of the push transition in milliseconds.
+        /// </summary>
+        public int transitionDurationMs { get; set; }
+
+        /// <summary>
+        /// The duration of the pop (reverse) transition in milliseconds.
+        /// </summary>
+        public int reverseTransitionDurationMs { get; set; }
+
+        /// <summary>
+        /// Whether this route is a full-screen dialog.
+        /// </summary>
+        public byte fullscreenDialog { get; set; }
+
+        /// <summary>
+        /// Whether this route is opaque (covers the entire navigator area).
+        /// </summary>
+        public byte opaque { get; set; }
+
+        /// <summary>
+        /// Whether a push transition is currently in progress.
+        /// </summary>
+        public byte isTransitioning { get; set; }
+
+        /// <summary>
+        /// Whether this is a pop operation (reverse transition).
+        /// </summary>
+        public byte isPopping { get; set; }
+
+        // Previous route child widget pointer (for transition animations)
+        public IntPtr previousChild { get; set; }
+
+        // Route arguments (JSON-serialized)
+        private IntPtr _routeArguments;
+        public string? routeArguments
+        {
+            get => GetString(_routeArguments);
+            set
+            {
+                SetString(ref _routeArguments, value);
+                HasrouteArguments = value != null ? (byte)1 : (byte)0;
+            }
+        }
+        public byte HasrouteArguments { get; set; }
     }
 }

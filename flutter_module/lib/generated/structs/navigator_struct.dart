@@ -58,4 +58,43 @@ final class NavigatorStruct extends Struct {
   external Pointer<Utf8> onPopAction;
   @Int8()
   external int hasOnPopAction;
+
+  // Route transition fields (for MaterialPageRoute, CupertinoPageRoute, etc.)
+
+  /// The type of transition animation to use.
+  /// 0 = None, 1 = Material, 2 = Cupertino, 3 = Fade, 4 = SlideBottom, 5 = SlideRight, 6 = Zoom
+  @Int32()
+  external int transitionType;
+
+  /// The duration of the push transition in milliseconds.
+  @Int32()
+  external int transitionDurationMs;
+
+  /// The duration of the pop (reverse) transition in milliseconds.
+  @Int32()
+  external int reverseTransitionDurationMs;
+
+  /// Whether this route is a full-screen dialog.
+  @Int8()
+  external int fullscreenDialog;
+
+  /// Whether this route is opaque (covers the entire navigator area).
+  @Int8()
+  external int opaque;
+
+  /// Whether a push transition is currently in progress.
+  @Int8()
+  external int isTransitioning;
+
+  /// Whether this is a pop operation (reverse transition).
+  @Int8()
+  external int isPopping;
+
+  /// Previous route child widget pointer (for transition animations).
+  external Pointer<WidgetStruct> previousChild;
+
+  /// Route arguments (JSON-serialized).
+  external Pointer<Utf8> routeArguments;
+  @Int8()
+  external int hasRouteArguments;
 }
