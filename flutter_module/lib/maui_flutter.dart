@@ -47,6 +47,11 @@ import 'parsers/listview_widget_parser.dart';
 import 'parsers/listviewbuilder_parser.dart';
 import 'parsers/listenablebuilder_parser.dart';
 import 'parsers/gridviewbuilder_parser.dart';
+import 'parsers/provider_parser.dart';
+import 'parsers/changenotifierprovider_parser.dart';
+import 'parsers/consumer_parser.dart';
+import 'parsers/selector_parser.dart';
+import 'parsers/multiprovider_parser.dart';
 import 'parsers/opacity_widget_parser.dart';
 import 'parsers/padding_widget_parser.dart';
 import 'parsers/pageview_widget_parser.dart';
@@ -112,6 +117,11 @@ class DynamicWidgetBuilder {
     ListViewBuilderParser(),
     ListenableBuilderParser(),
     GridViewBuilderParser(),
+    ProviderParser(),
+    ChangeNotifierProviderParser(),
+    ConsumerParser(),
+    SelectorParser(),
+    MultiProviderParser(),
     NetworkImageWidgetParser(),
     OpacityWidgetParser(),
     PaddingWidgetParser(),
