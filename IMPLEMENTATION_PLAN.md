@@ -13,7 +13,21 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ## Current Build Status
 
-**Last checked**: 2026-01-07 (Phase 1 fully complete!)
+## Bugs
+
+### ~~GCHandle Pinning Error~~ (FIXED 2026-01-08)
+
+**Problem**: iOS app crashed with `System.ArgumentException: Object contains references` when trying to pin a struct for FFI.
+
+**Root Cause**: `BaseStruct` class contained `List<IntPtr>` fields for tracking string and children array allocations. `GCHandle.Alloc(this, GCHandleType.Pinned)` cannot pin objects containing reference types.
+
+**Solution**: Created `StructMemoryTracker` static class that uses a `ConcurrentDictionary<IntPtr, AllocationInfo>` to track allocations externally. This keeps the struct classes blittable and pinnable for FFI.
+
+**Files Changed**: `src/Flutter/FlutterStructs.Base.cs`
+
+---
+
+**Last checked**: 2026-01-08 (Phase 1 fully complete!)
 **C# compilation errors**: 0 ✅
 **Dart analysis errors**: 0 ✅
 **Dart warnings**: many (unused imports, unnecessary null comparisons - cosmetic)
@@ -344,6 +358,7 @@ When starting a new loop, work on these in order:
 | EV004 | 2026-01-07 | pending | Implemented complete event routing in FlutterManager. Enhanced CallbackRegistry with: type-safe `Invoke<T>()` and `InvokeVoid()` methods, `OnCallbackError` event for error handling, `TotalInvocations`/`FailedInvocations` statistics. Added FlutterManager `InvokeCallbackTyped()` for type-specific dispatch (supports all 20+ gesture types). Added `OnActionInvoking`/`OnActionInvoked` events for middleware/interception pattern. Added `GetEventStats()` API for diagnostics. Phase 3 callback system complete! |
 | BLD001-003 | 2026-01-07 | dfa1ca4 | Implemented builder callback widgets (ListViewBuilder, GridViewBuilder). Created C# widgets with itemBuilder: Func<int, Widget> callback, Dart parsers using FutureBuilder + requestMauiData for async item building. Flow: Dart calls requestMauiData → C# HandleEvent → widget.SendEvent → callback returns widget pointer → Dart builds from pointer. |
 | BLD004 | 2026-01-07 | f7f907e | Implemented comprehensive unit tests for builder callback round-trip. 25 tests covering: CallbackRegistry, FlutterManager event handlers, Event message parsing, ItemBuilder callback pattern, Action handling, full round-trip simulation. Updated test project to NUnit 4.2.2, fixed FFI pinning issues in tests. |
+| RT001 | 2026-01-08 | pending | Fixed GCHandle pinning crash: "Object contains references" error in BaseStruct. Created StructMemoryTracker static class to externally track string/children allocations, keeping struct classes blittable for GCHandle.Alloc with GCHandleType.Pinned. |
 
 ---
 

@@ -1,20 +1,117 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 
 namespace Flutter.Structs
 {
+	/// <summary>
+	/// Tracks memory allocations for struct instances.
+	/// We use a static dictionary instead of instance fields to keep the struct classes blittable for FFI pinning.
+	/// </summary>
+	internal static class StructMemoryTracker
+	{
+		// Key: GCHandle IntPtr value, Value: tracking info
+		private static readonly ConcurrentDictionary<IntPtr, AllocationInfo> _allocations = new();
+
+		internal class AllocationInfo
+		{
+			public List<IntPtr> AllocatedStrings { get; } = new();
+			public List<IntPtr> AllocatedChildrenArrays { get; } = new();
+		}
+
+		public static AllocationInfo GetOrCreate(IntPtr handle)
+		{
+			return _allocations.GetOrAdd(handle, _ => new AllocationInfo());
+		}
+
+		public static bool TryGet(IntPtr handle, out AllocationInfo info)
+		{
+			return _allocations.TryGetValue(handle, out info);
+		}
+
+		public static void Remove(IntPtr handle)
+		{
+			_allocations.TryRemove(handle, out _);
+		}
+
+		public static void TrackString(IntPtr handle, IntPtr stringPtr)
+		{
+			if (stringPtr != IntPtr.Zero)
+			{
+				GetOrCreate(handle).AllocatedStrings.Add(stringPtr);
+			}
+		}
+
+		public static void UntrackString(IntPtr handle, IntPtr stringPtr)
+		{
+			if (TryGet(handle, out var info))
+			{
+				info.AllocatedStrings.Remove(stringPtr);
+			}
+		}
+
+		public static void TrackChildrenArray(IntPtr handle, IntPtr arrayPtr)
+		{
+			if (arrayPtr != IntPtr.Zero)
+			{
+				GetOrCreate(handle).AllocatedChildrenArrays.Add(arrayPtr);
+			}
+		}
+
+		public static void UntrackChildrenArray(IntPtr handle, IntPtr arrayPtr)
+		{
+			if (TryGet(handle, out var info))
+			{
+				info.AllocatedChildrenArrays.Remove(arrayPtr);
+			}
+		}
+
+		public static void FreeAllAllocations(IntPtr handle)
+		{
+			if (!TryGet(handle, out var info))
+				return;
+
+			// Free all string allocations
+			foreach (var ptr in info.AllocatedStrings)
+			{
+				if (ptr != IntPtr.Zero)
+				{
+					Marshal.FreeCoTaskMem(ptr);
+				}
+			}
+			info.AllocatedStrings.Clear();
+
+			// Free all children array allocations
+			foreach (var ptr in info.AllocatedChildrenArrays)
+			{
+				if (ptr != IntPtr.Zero)
+				{
+					Marshal.FreeHGlobal(ptr);
+				}
+			}
+			info.AllocatedChildrenArrays.Clear();
+
+			Remove(handle);
+		}
+	}
+
+	/// <summary>
+	/// Base class for all Flutter struct types.
+	///
+	/// This class uses a blittable layout for FFI interop. Memory tracking for strings
+	/// and children arrays is handled externally by StructMemoryTracker to keep this
+	/// class pinnable.
+	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe class BaseStruct : IDisposable
 	{
+		// These are the first two fields expected by Dart FFI
 		private IntPtr handle;
 		private IntPtr managedHandle;
+
 		public IntPtr Handle => handle;
 
-		// Track allocated string pointers for cleanup
-		private List<IntPtr> _allocatedStrings = new List<IntPtr>();
-		// Track allocated children array pointers for cleanup
-		private List<IntPtr> _allocatedChildrenArrays = new List<IntPtr>();
 		private bool _disposed = false;
 
 		public BaseStruct()
@@ -29,27 +126,10 @@ namespace Flutter.Structs
 			if (_disposed)
 				return;
 
-			// Free all allocated string pointers
-			foreach (var ptr in _allocatedStrings)
-			{
-				if (ptr != IntPtr.Zero)
-				{
-					Marshal.FreeCoTaskMem(ptr);
-				}
-			}
-			_allocatedStrings.Clear();
+			// Free all tracked allocations
+			StructMemoryTracker.FreeAllAllocations(managedHandle);
 
-			// Free all allocated children array pointers
-			foreach (var ptr in _allocatedChildrenArrays)
-			{
-				if (ptr != IntPtr.Zero)
-				{
-					Marshal.FreeHGlobal(ptr);
-				}
-			}
-			_allocatedChildrenArrays.Clear();
-
-			if (handle != IntPtr.Zero)
+			if (managedHandle != IntPtr.Zero)
 			{
 				var gchandle = GCHandle.FromIntPtr(managedHandle);
 				if (gchandle.IsAllocated)
@@ -80,17 +160,17 @@ namespace Flutter.Structs
 		protected void SetString(ref IntPtr ptr, string value)
 		{
 			// Free previous string if it was allocated
-			if (ptr != IntPtr.Zero && _allocatedStrings.Contains(ptr))
+			if (ptr != IntPtr.Zero)
 			{
+				StructMemoryTracker.UntrackString(managedHandle, ptr);
 				Marshal.FreeCoTaskMem(ptr);
-				_allocatedStrings.Remove(ptr);
 			}
 
 			// Allocate new string
 			if (value != null)
 			{
 				ptr = Marshal.StringToCoTaskMemUTF8(value);
-				_allocatedStrings.Add(ptr);
+				StructMemoryTracker.TrackString(managedHandle, ptr);
 			}
 			else
 			{
@@ -130,10 +210,10 @@ namespace Flutter.Structs
 		protected void SetChildren(ref IntPtr ptr, List<Flutter.Widget> children, ref int countField)
 		{
 			// Free previous children array if it was allocated
-			if (ptr != IntPtr.Zero && _allocatedChildrenArrays.Contains(ptr))
+			if (ptr != IntPtr.Zero)
 			{
+				StructMemoryTracker.UntrackChildrenArray(managedHandle, ptr);
 				Marshal.FreeHGlobal(ptr);
-				_allocatedChildrenArrays.Remove(ptr);
 			}
 
 			// Handle null or empty children list
@@ -160,7 +240,7 @@ namespace Flutter.Structs
 			Marshal.Copy(pointers, 0, ptr, children.Count);
 
 			// Track this allocation for cleanup
-			_allocatedChildrenArrays.Add(ptr);
+			StructMemoryTracker.TrackChildrenArray(managedHandle, ptr);
 			countField = children.Count;
 		}
 
@@ -174,10 +254,10 @@ namespace Flutter.Structs
 		protected int SetChildren(ref IntPtr ptr, List<Flutter.Widget> children)
 		{
 			// Free previous children array if it was allocated
-			if (ptr != IntPtr.Zero && _allocatedChildrenArrays.Contains(ptr))
+			if (ptr != IntPtr.Zero)
 			{
+				StructMemoryTracker.UntrackChildrenArray(managedHandle, ptr);
 				Marshal.FreeHGlobal(ptr);
-				_allocatedChildrenArrays.Remove(ptr);
 			}
 
 			// Handle null or empty children list
@@ -203,7 +283,7 @@ namespace Flutter.Structs
 			Marshal.Copy(pointers, 0, ptr, children.Count);
 
 			// Track this allocation for cleanup
-			_allocatedChildrenArrays.Add(ptr);
+			StructMemoryTracker.TrackChildrenArray(managedHandle, ptr);
 			return children.Count;
 		}
 
