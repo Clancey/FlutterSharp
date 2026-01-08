@@ -357,9 +357,56 @@ internal class Program
 		LogInfo($"  Types: {packageDefinition.Types.Count}");
 		LogInfo($"  Enums: {packageDefinition.Enums.Count}");
 
-		// Initialize generators
+		// Initialize type mappers early for validation
 		var registry = new TypeMappingRegistry();
 		var dartToCSharpMapper = new DartToCSharpMapper(registry);
+
+		// Validate package before generation
+		LogInfo("");
+		LogInfo("Validating package data...");
+		var validationService = new ValidationService(dartToCSharpMapper, LogWarning, LogVerbose);
+
+		// Validate output paths are writable
+		var pathValidation = validationService.ValidateOutputPaths(outputCSharp, outputDart);
+		if (!pathValidation.IsValid)
+		{
+			foreach (var error in pathValidation.Errors)
+			{
+				LogError(error.ToString());
+			}
+			throw new ValidationException("Output path validation failed", pathValidation);
+		}
+
+		// Validate package definition
+		var packageValidation = validationService.ValidatePackage(packageDefinition);
+
+		// Log warnings
+		if (packageValidation.HasWarnings)
+		{
+			LogWarning($"Validation completed with {packageValidation.Warnings.Count} warning(s):");
+			foreach (var warning in packageValidation.Warnings.Take(20))
+			{
+				LogVerbose($"  {warning}");
+			}
+			if (packageValidation.Warnings.Count > 20)
+			{
+				LogVerbose($"  ... and {packageValidation.Warnings.Count - 20} more warnings");
+			}
+		}
+
+		// Check for blocking errors
+		if (!packageValidation.IsValid)
+		{
+			foreach (var error in packageValidation.Errors)
+			{
+				LogError(error.ToString());
+			}
+			throw new ValidationException($"Package validation failed with {packageValidation.Errors.Count} error(s)", packageValidation);
+		}
+
+		LogSuccess($"Validation passed ({packageValidation.Warnings.Count} warnings)");
+
+		// Initialize remaining mappers (registry and dartToCSharpMapper already created for validation)
 		var csharpToDartMapper = new CSharpToDartFfiMapper(registry);
 
 		// Initialize enricher (new architecture)
@@ -1137,6 +1184,20 @@ internal class Program
 			var oldColor = Console.ForegroundColor;
 			Console.ForegroundColor = ConsoleColor.Gray;
 			Console.WriteLine(message);
+			Console.ForegroundColor = oldColor;
+		}
+	}
+
+	/// <summary>
+	/// Logs a warning message.
+	/// </summary>
+	private static void LogWarning(string message)
+	{
+		lock (_consoleLock)
+		{
+			var oldColor = Console.ForegroundColor;
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine($"WARNING: {message}");
 			Console.ForegroundColor = oldColor;
 		}
 	}

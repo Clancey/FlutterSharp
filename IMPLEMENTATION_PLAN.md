@@ -310,7 +310,7 @@ CenterStruct layout:
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| G001 | Add validation before generation | pending | Catch issues earlier |
+| G001 | Add validation before generation | completed | Created ValidationService.cs with widget/type/enum/property validation, output path checks, C# identifier validation, reserved keyword detection. Integrated into Program.cs after package analysis. |
 | G002 | Improve error reporting for unmapped types | pending | Better messages |
 | G003 | Add Clip enum to manual types | pending | If not auto-generated |
 
@@ -571,6 +571,7 @@ When starting a new loop, work on these in order:
 | LST003 | 2026-01-08 | f8e143a | Implemented ListTile: C# widget/struct (ListTile.cs, ListTileStruct.cs) + Dart struct/parser (listtile_struct.dart, listtile_widget_parser.dart). Supports leading/title/subtitle/trailing widgets, callbacks (onTap, onLongPress, onFocusChange), colors (tileColor, selectedTileColor, iconColor, textColor, focusColor, hoverColor, splashColor), booleans (isThreeLine, dense, enabled, selected, autofocus, enableFeedback), numerics (horizontalTitleGap, minVerticalPadding, minLeadingWidth, minTileHeight), enums (titleAlignment, style). First list widget complete for Phase 4.4. |
 | LST001 | 2026-01-08 | a8893d1 | Fixed ListView widget implementation: Rewrote ListViewStruct.cs (removed NativeNullable, added Has* flags), rewrote ListView.cs (IEnumerable<Widget>, collection initializers, property assignments), created listview_struct.dart FFI struct, implemented listview_widget_parser.dart with full property parsing. |
 | LST002 | 2026-01-08 | e5ecae2 | Fixed GridView widget implementation: Rewrote GridViewStruct.cs (proper Has* flags, removed complex IntPtr types), rewrote GridView.cs (IEnumerable<Widget>, collection initializers, full property support), created gridview_struct.dart FFI struct, fixed gridview_widget_parser.dart to parse FFI struct and build Flutter GridView.count. Phase 4.4 List Widgets COMPLETE. |
+| G001 | 2026-01-08 | pending | Added pre-generation validation: Created ValidationService.cs with comprehensive validation for widget/type/enum definitions, property type mapping, C# identifier validity, reserved keyword detection, and output path writability. Integrated into Program.cs GenerateCodeAsync() after package analysis, before generation begins. |
 
 ---
 
