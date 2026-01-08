@@ -12,8 +12,11 @@ namespace Flutter
 		FlutterMethodChannel MethodChannel;
 		static FlutterEngine CreateDefaultEngine()
 		{
+			Console.WriteLine("[FlutterViewController] Creating FlutterEngine...");
 			var engine = new FlutterEngine("io.flutter",null);
-			engine.Run(null);
+			Console.WriteLine($"[FlutterViewController] Engine created: {engine.Handle}");
+			var result = engine.Run(null);
+			Console.WriteLine($"[FlutterViewController] Engine.Run result: {result}");
 			return engine;
 		}
 		public FlutterViewController() : base(CreateDefaultEngine(), null, null)
@@ -34,11 +37,17 @@ namespace Flutter
 			Flutter.Internal.Communicator.SendCommand = (x) => MethodChannel.InvokeMethod(x.Method, (NSString)x.Arguments);
 			MethodChannel.SetMethodCaller((call, result) =>
 			{
-
-				if (call.Method == "ready" && Widget != null)
+				Console.WriteLine($"[FlutterViewController] Received method call: {call.Method}");
+				if (call.Method == "ready")
 				{
+					Console.WriteLine($"[FlutterViewController] Ready received! Widget is null: {Widget == null}");
 					isReady = true;
-					FlutterManager.SendState(Widget);
+					// Send widget state if widget is already set (handles race condition)
+					if (Widget != null)
+					{
+						Console.WriteLine($"[FlutterViewController] Sending widget state from ready handler");
+						FlutterManager.SendState(Widget);
+					}
 				}
 				Flutter.Internal.Communicator.OnCommandReceived?.Invoke((call.Method, call.Arguments.ToString(), (x) =>
 				{
@@ -65,6 +74,7 @@ namespace Flutter
 			get => widget;
 			set
 			{
+				Console.WriteLine($"[FlutterViewController] Widget setter called. isReady: {isReady}");
 				if (widget != null && widget != value)
 				{
 					FlutterManager.UntrackWidget(widget);
@@ -72,7 +82,10 @@ namespace Flutter
 				}
 				widget = value;
 				if (isReady)
+				{
+					Console.WriteLine($"[FlutterViewController] Sending widget state from Widget setter");
 					FlutterManager.SendState(widget);
+				}
 			}
 		}
 	}

@@ -14,7 +14,7 @@ namespace FlutterSample
 		UIWindow window;
 		public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
 		{
-			window = new UIWindow
+			window = new UIWindow(UIScreen.MainScreen.Bounds)
 			{
 				BackgroundColor = UIColor.White,
 				RootViewController = new FlutterViewController
