@@ -526,6 +526,7 @@ When starting a new loop, work on these in order:
 | R005 | 2026-01-07 | ce875ab | Fixed FlutterManager.SendState() to call Build() on StatelessWidget/StatefulWidget. Custom widget classes (e.g., FlutterSampleApp) don't have Dart parsers - their Build() must be called to get the actual widget tree (Center, Column, Text) which Dart can parse. Without this, Dart showed "Unknown widget type FlutterSampleApp". |
 | RACE001 | 2026-01-07 | fe52302 | Fixed isReady race condition in FlutterViewController. Bug: isReady was only set to true when Widget != null at "ready" time, causing Widget assigned later to never send state. Fix: Separate isReady assignment from Widget null check. Also added UIScreen.MainScreen.Bounds to UIWindow in sample app. |
 | ADDR001 | 2026-01-07 | 23013f4 | Fixed FlutterManager.SendState() to avoid double PrepareForSending call. Changed `Address = widgetToSend` to `Address = (long)structPtr` to use already-computed pointer instead of triggering implicit conversion again. |
+| PARSER001 | 2026-01-07 | ac98246 | Removed broken SizedBoxWidgetParser from parser list. The legacy parser returned null unconditionally, which would cause SizedBox widgets to fail. The auto-generated SizedBoxParser is complete and used instead. |
 
 ---
 
