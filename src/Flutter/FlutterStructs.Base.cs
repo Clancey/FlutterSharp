@@ -314,13 +314,8 @@ namespace Flutter.Structs
 			get => GetString(id);
 			set => SetString(ref id, value);
 		}
-
-		private IntPtr key;
-		public string? Key
-		{
-			get => GetString(key);
-			set => SetString(ref key, value);
-		}
+		// Note: 'key' field was removed to match Dart FFI struct layout.
+		// Widget keys should be handled at the Flutter framework level, not in FFI structs.
 	}
 
 
