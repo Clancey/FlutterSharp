@@ -13,6 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'maui_flutter.dart';
 import 'state_notifier.dart';
 import 'scroll_controller_manager.dart';
+import 'parsers/refreshindicator_parser.dart' show completeAsyncCallback;
 
 import 'dart:convert';
 
@@ -153,6 +154,9 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
         case 'ScrollCommand':
           _handleScrollCommand(message);
           break;
+        case 'AsyncCallbackComplete':
+          _handleAsyncCallbackComplete(message);
+          break;
       default:
         print('Warning: Unknown message type: ${message['messageType']}');
     }
@@ -195,6 +199,15 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
   /// Handles a scroll command from C#
   void _handleScrollCommand(Map<String, dynamic> message) {
     scrollControllerManager.handleScrollCommand(message);
+  }
+
+  /// Handles an async callback completion from C#
+  void _handleAsyncCallbackComplete(Map<String, dynamic> message) {
+    final widgetId = message['widgetId'] as String?;
+    if (widgetId != null) {
+      completeAsyncCallback(widgetId);
+      debugPrint('Async callback completed for widget: $widgetId');
+    }
   }
 
   @override

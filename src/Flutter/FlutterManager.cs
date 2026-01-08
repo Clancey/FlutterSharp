@@ -1120,6 +1120,36 @@ namespace Flutter.Internal
 			}
 		}
 
+		/// <summary>
+		/// Sends a notification to Dart that an async callback has completed.
+		/// This is used by RefreshIndicator and similar widgets with Future callbacks.
+		/// </summary>
+		/// <param name="widgetId">The ID of the widget whose callback completed.</param>
+		internal static void SendAsyncCallbackComplete(string widgetId)
+		{
+			if (Communicator.SendCommand == null)
+			{
+				Console.WriteLine("FlutterManager: Cannot send async callback complete - SendCommand not configured");
+				return;
+			}
+
+			try
+			{
+				var message = new Dictionary<string, object>
+				{
+					["widgetId"] = widgetId,
+					["type"] = "AsyncCallbackComplete"
+				};
+
+				var json = JsonSerializer.Serialize(message, serializeOptions);
+				Communicator.SendCommand.Invoke(("AsyncCallbackComplete", json));
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"FlutterManager: Error sending async callback complete: {ex}");
+			}
+		}
+
 		#endregion
 	}
 
