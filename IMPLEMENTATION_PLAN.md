@@ -562,6 +562,7 @@ When starting a new loop, work on these in order:
 | INP002 | 2026-01-07 | f0a4140 | Implemented Radio: C# widget/struct + Dart struct/parser. Supports value, groupValue (for selection state), onChanged callback, toggleable mode, colors (activeColor, focusColor, hoverColor), splashRadius, materialTapTargetSize, autofocus. Second input widget complete for Phase 4.2. |
 | INP003 | 2026-01-07 | 50223c6 | Implemented Switch: C# widget/struct + Dart struct/parser. Supports value, onChanged callback, colors (activeColor, activeTrackColor, inactiveThumbColor, inactiveTrackColor, focusColor, hoverColor), splashRadius, materialTapTargetSize, autofocus. Third input widget complete for Phase 4.2. |
 | INP004 | 2026-01-07 | 52061df | Implemented Slider: C# widget/struct + Dart struct/parser. Supports value, min, max (range values), onChanged, onChangeStart, onChangeEnd callbacks, divisions (discrete slider), label (tooltip), colors (activeColor, inactiveColor, thumbColor, secondaryActiveColor), secondaryTrackValue, autofocus, allowedInteraction (SliderInteraction enum). Fourth input widget complete for Phase 4.2. |
+| MAT001 | 2026-01-07 | pending | Implemented Scaffold: C# widget/struct (ScaffoldStruct.cs, Scaffold.cs) matching existing Dart parser (scaffold_parser.dart). Supports appBar, body, floatingActionButton, drawer. First material widget for Phase 4.3. |
 
 ---
 
@@ -862,7 +863,7 @@ After hitting a blocker:
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| MAT001 | Implement Scaffold C# widget | pending | Has Dart parser, needs C# widget/struct |
+| MAT001 | Implement Scaffold C# widget | completed | C# widget/struct + matches existing Dart parser |
 | MAT002 | Implement AppBar C# widget | pending | Has Dart parser, needs C# widget/struct |
 | MAT003 | Implement Card widget | pending | Needs full implementation |
 | MAT004 | Implement BottomNavigationBar | pending | Needs full implementation |
