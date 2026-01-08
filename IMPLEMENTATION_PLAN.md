@@ -919,8 +919,8 @@ After hitting a blocker:
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
 | NAV001 | Implement Navigator C# widget | completed | Navigation stack management with Routes dictionary, Push/Pop/PushReplacement methods, callbacks |
-| NAV002 | Implement MaterialPageRoute | pending | Standard page transition |
-| NAV003 | Implement Navigator.push/pop methods | pending | Programmatic navigation |
+| NAV002 | Implement MaterialPageRoute | completed | Standard page transition with Route classes, transition animations, Push(Route) method |
+| NAV003 | Implement Navigator.push/pop methods | completed | Push(Route), PushMaterial(), PushCupertino() with transition support (merged into NAV002) |
 | NAV004 | Implement named routes | pending | Route names and arguments |
 | NAV005 | Implement Navigator callbacks | pending | onGenerateRoute, onUnknownRoute |
 
