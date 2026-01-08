@@ -34,7 +34,7 @@ namespace Flutter.Structs
 		public string{{ if prop.is_nullable }}?{{ end }} {{ prop.name }}
 		{
 			get => GetString({{ prop.backing_field_name }});
-			set => SetString(ref {{ prop.backing_field_name }}, value);
+			set { SetString(ref {{ prop.backing_field_name }}, value); Has{{ prop.raw_name }} = (byte)(value != null ? 1 : 0); }
 		}
 
 {{~ else if prop.is_widget ~}}

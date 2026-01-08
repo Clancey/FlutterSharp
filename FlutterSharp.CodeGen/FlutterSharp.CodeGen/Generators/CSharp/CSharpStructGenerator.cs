@@ -354,15 +354,22 @@ namespace Flutter.Structs
 	internal {{ if is_partial }}partial {{ end }}class {{ name }} : {{ base_struct }}
 	{
 {{~ for prop in properties ~}}
+{{~ if prop.is_nullable ~}}
+		// Has flag for nullable property: {{ prop.name }}
+		public byte Has{{ prop.raw_name }} { get; set; }
+
+{{~ end ~}}
 {{~ if prop.is_string ~}}
-		IntPtr {{ prop.backing_field_name }};
+		// String field: {{ prop.name }}
+		private IntPtr {{ prop.backing_field_name }};
+
 {{~ if prop.documentation ~}}
 {{ prop.documentation }}
 {{~ end ~}}
 		public string{{ if prop.is_nullable }}?{{ end }} {{ prop.name }}
 		{
 			get => GetString({{ prop.backing_field_name }});
-			set => SetString(ref {{ prop.backing_field_name }}, value);
+			set { SetString(ref {{ prop.backing_field_name }}, value); Has{{ prop.raw_name }} = (byte)(value != null ? 1 : 0); }
 		}
 
 {{~ else if prop.is_widget ~}}

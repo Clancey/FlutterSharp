@@ -145,7 +145,7 @@ namespace Flutter.Structs
 		public string? data
 		{
 			get => GetString(_data);
-			set => SetString(ref _data, value);
+			set { SetString(ref _data, value); Hasdata = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: textSpan
@@ -273,7 +273,7 @@ namespace Flutter.Structs
 		public string? semanticsLabel
 		{
 			get => GetString(_semanticsLabel);
-			set => SetString(ref _semanticsLabel, value);
+			set { SetString(ref _semanticsLabel, value); HassemanticsLabel = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Has flag for nullable property: semanticsIdentifier
@@ -291,7 +291,7 @@ namespace Flutter.Structs
 		public string? semanticsIdentifier
 		{
 			get => GetString(_semanticsIdentifier);
-			set => SetString(ref _semanticsIdentifier, value);
+			set { SetString(ref _semanticsIdentifier, value); HassemanticsIdentifier = (byte)(value != null ? 1 : 0); }
 		}
 
 		// Simple field: textWidthBasis

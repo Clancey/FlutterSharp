@@ -27,6 +27,21 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ---
 
+### ~~String Properties Has* Flag Not Set~~ (FIXED 2026-01-08)
+
+**Problem**: Text widget rendered empty even though `Text("Hello World")` was passed. Dart parser returned null for data string.
+
+**Root Cause**: Generated struct string property setters only called `SetString()` but never set the corresponding `Has{property}` flag (e.g., `Hasdata`). The Dart parser checked `map.hasData == 1` before reading the string pointer, so it returned null when the flag was 0.
+
+**Solution**: Updated Scriban templates (`CSharpStruct.scriban` and embedded template in `CSharpStructGenerator.cs`) to set the Has* flag in the string setter. Also manually fixed `TextStruct.cs` string property setters.
+
+**Files Changed**:
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/Templates/CSharpStruct.scriban`
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/Generators/CSharp/CSharpStructGenerator.cs`
+- `src/Flutter/Structs/TextStruct.cs`
+
+---
+
 **Last checked**: 2026-01-08 (Phase 1 fully complete!)
 **C# compilation errors**: 0 ✅
 **Dart analysis errors**: 0 ✅
@@ -363,6 +378,7 @@ When starting a new loop, work on these in order:
 | D004 | 2026-01-08 | a9dd4d7 | Fixed FFI struct layout mismatch: Removed Pointer-based IsNullable logic from DartStructGenerator and WidgetAnalysisEnricher. Changed Dart parsers to use .address != 0 for pointer null checks instead of hasXxx flags. Fixed hand-written parsers (align_widget_parser, container_widget_parser). Cleaned up duplicate generated/ directory. |
 | DR005 | 2026-01-08 | d0d6e54 | Complete TextWidgetParser to read all struct properties: textAlign, overflow, textDirection, textWidthBasis, maxLines, softWrap, textScaleFactor, semanticsLabel, style. Added integer-based enum parsing functions (parseTextAlignFromInt, etc). Fixed Text.cs to set textAlign on backing struct. |
 | FFI001 | 2026-01-08 | ef35b2d | Fixed FFI struct layout mismatch: C# WidgetStruct had unused 'key' field that Dart WidgetStruct didn't have, causing 8-byte offset for all derived struct fields. Removed the 'key' field (never used). This fix enables correct Text widget rendering. |
+| STR001 | 2026-01-08 | 9ad523f | Fixed string property Has* flag not being set. Scriban templates and generated TextStruct.cs string setters now set Has{property} = 1 when value assigned, enabling Dart parser to correctly read strings. Root cause: Dart checked `hasData == 1` but C# setter only called `SetString()` without updating the flag. |
 
 ---
 
