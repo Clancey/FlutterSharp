@@ -555,6 +555,8 @@ When starting a new loop, work on these in order:
 | PARSER001 | 2026-01-07 | ac98246 | Removed broken SizedBoxWidgetParser from parser list. The legacy parser returned null unconditionally, which would cause SizedBox widgets to fail. The auto-generated SizedBoxParser is complete and used instead. |
 | T006 | 2026-01-07 | - | Reviewed delegate type mappings. Simple callbacks (VoidCallback, GestureTapCallback) → Action work correctly. Complex Func<...> builders are skipped by design. MapFunctionSignature() parses void Function(T) → Action<T> correctly. Generic type parameters lost in ValueChanged<T>→Action mapping but acceptable. |
 | SETSTATE001 | 2026-01-07 | 770ccc5 | Connected StatefulWidget.SetState() to FlutterManager.SendState(). Now when SetState() is called, the updated widget tree is sent to Dart for re-rendering. Completes Phase 2 "Widget updates work" criterion. |
+| BTN001 | 2026-01-07 | 99c1f23 | Implemented ElevatedButton: C# widget/struct (ElevatedButton.cs, ElevatedButtonStruct.cs), Dart struct/parser (elevatedbutton_struct.dart, elevatedbutton_parser.dart). Manual implementation due to button_style_button.dart Dart analyzer type casting error. Supports onPressed, onLongPress, onHover, onFocusChange callbacks. |
+| BTN002-004 | 2026-01-07 | f6ad8ef | Implemented TextButton, OutlinedButton, IconButton following same pattern. TextButton/OutlinedButton extend StatefulWidget with ButtonStyleButton callbacks. IconButton extends StatelessWidget with icon, iconSize, tooltip properties. All 4 button widgets complete for Phase 4.1. |
 
 ---
 
@@ -824,6 +826,56 @@ After hitting a blocker:
 - [x] Tap events work end-to-end ✅ (GestureDetector callbacks, CallbackRegistry)
 - [x] TextField onChanged works ✅ (ValueChanged<String> callback creators)
 - [x] ListView.builder callbacks work ✅ (ListViewBuilder with itemBuilder Func<int, Widget>)
+
+---
+
+## Phase 4: Widget Coverage
+
+**Goal**: Implement commonly-used widgets that weren't auto-generated due to Dart analyzer limitations.
+
+### 4.1 Button Widgets (HIGH PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| BTN001 | Implement ElevatedButton | completed | C# widget/struct + Dart parser - manual impl (button_style_button.dart analyzer error) |
+| BTN002 | Implement TextButton | completed | C# widget/struct + Dart parser - same pattern as ElevatedButton |
+| BTN003 | Implement OutlinedButton | completed | C# widget/struct + Dart parser - medium-emphasis button with border |
+| BTN004 | Implement IconButton | completed | C# widget/struct + Dart parser - StatelessWidget with icon property |
+| BTN005 | Update FloatingActionButton | pending | Review existing FAB parser, ensure it has all callbacks |
+
+### 4.2 Input Widgets (MEDIUM PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| INP001 | Implement Checkbox C# widget | pending | Has Dart parser, needs C# widget/struct |
+| INP002 | Implement Radio C# widget | pending | Needs full implementation |
+| INP003 | Implement Switch C# widget | pending | Needs full implementation |
+| INP004 | Implement Slider C# widget | pending | Needs full implementation |
+| INP005 | Implement DropdownButton | pending | Complex - needs menu support |
+
+### 4.3 Material Widgets (MEDIUM PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| MAT001 | Implement Scaffold C# widget | pending | Has Dart parser, needs C# widget/struct |
+| MAT002 | Implement AppBar C# widget | pending | Has Dart parser, needs C# widget/struct |
+| MAT003 | Implement Card widget | pending | Needs full implementation |
+| MAT004 | Implement BottomNavigationBar | pending | Needs full implementation |
+| MAT005 | Implement Drawer C# widget | pending | Has Dart parser, needs C# widget/struct |
+
+### 4.4 List Widgets (LOW PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| LST001 | Ensure ListView works | pending | Has struct, verify end-to-end |
+| LST002 | Ensure GridView works | pending | Has struct, verify end-to-end |
+| LST003 | Implement ListTile C# widget | pending | Has Dart parser, needs C# widget/struct |
+
+### Phase 4 Complete When:
+- [ ] All button widgets work (ElevatedButton, TextButton, OutlinedButton, IconButton)
+- [ ] Basic form widgets work (Checkbox, Radio, Switch)
+- [ ] Scaffold/AppBar application structure works
+- [ ] List widgets work with items
 
 ---
 
