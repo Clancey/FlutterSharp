@@ -160,6 +160,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | DR002 | Implement MauiRenderer | completed | MauiRootRenderer handles MethodChannel messages |
 | DR003 | Implement MauiComponent | completed | MauiComponent stateful widget with setState updates |
 | DR004 | Add error widget for failures | completed | Returns Text('Error: $e') on parse failure |
+| DR005 | Complete TextWidgetParser struct reading | completed | Reads textAlign, overflow, style, maxLines, etc. from struct (commit d0d6e54) |
 
 ### 2.4 Memory Management
 
@@ -360,6 +361,7 @@ When starting a new loop, work on these in order:
 | BLD004 | 2026-01-07 | f7f907e | Implemented comprehensive unit tests for builder callback round-trip. 25 tests covering: CallbackRegistry, FlutterManager event handlers, Event message parsing, ItemBuilder callback pattern, Action handling, full round-trip simulation. Updated test project to NUnit 4.2.2, fixed FFI pinning issues in tests. |
 | RT001 | 2026-01-08 | dfe033e | Fixed GCHandle pinning crash: "Object contains references" error in BaseStruct. Created StructMemoryTracker static class to externally track string/children allocations, keeping struct classes blittable for GCHandle.Alloc with GCHandleType.Pinned. |
 | D004 | 2026-01-08 | a9dd4d7 | Fixed FFI struct layout mismatch: Removed Pointer-based IsNullable logic from DartStructGenerator and WidgetAnalysisEnricher. Changed Dart parsers to use .address != 0 for pointer null checks instead of hasXxx flags. Fixed hand-written parsers (align_widget_parser, container_widget_parser). Cleaned up duplicate generated/ directory. |
+| DR005 | 2026-01-08 | d0d6e54 | Complete TextWidgetParser to read all struct properties: textAlign, overflow, textDirection, textWidthBasis, maxLines, softWrap, textScaleFactor, semanticsLabel, style. Added integer-based enum parsing functions (parseTextAlignFromInt, etc). Fixed Text.cs to set textAlign on backing struct. |
 
 ---
 
