@@ -28,6 +28,9 @@ import 'parsers/expanded_widget_parser.dart';
 import 'parsers/fittedbox_widget_parser.dart';
 import 'parsers/flexible_parser.dart';
 import 'parsers/elevatedbutton_parser.dart';
+import 'parsers/textbutton_parser.dart';
+import 'parsers/outlinedbutton_parser.dart';
+import 'parsers/iconbutton_parser.dart';
 import 'parsers/floatingactionbutton_parser.dart';
 import 'parsers/gridview_widget_parser.dart';
 import 'parsers/icon_widget_parser.dart';
@@ -84,6 +87,9 @@ class DynamicWidgetBuilder {
     FittedBoxWidgetParser(),
     FlexibleParser(),
     ElevatedButtonParser(),
+    TextButtonParser(),
+    OutlinedButtonParser(),
+    IconButtonParser(),
     FloatingActionButtonParser(),
     GridViewWidgetParser(),
     IconWidgetParser(),
