@@ -891,6 +891,26 @@ internal class Program
 		LogInfo($"  - Parsers: {packageDefinition.Widgets.Count} files");
 		LogInfo($"  - Enums: {packageDefinition.Enums.Count} files");
 		LogInfo("=".PadRight(80, '='));
+
+		// Report unmapped types if any
+		var unmappedReport = dartToCSharpMapper.GetUnmappedTypesReport();
+		if (unmappedReport.TotalCount > 0)
+		{
+			LogInfo("");
+			LogWarning($"Type Mapping Summary: {unmappedReport.TotalCount} type(s) required fallback handling");
+			LogInfo($"  - Inferred from parameter names: {unmappedReport.InferredCount}");
+			LogInfo($"  - Failed (IntPtr fallback): {unmappedReport.FailedCount}");
+
+			if (unmappedReport.FailedCount > 0 && _verbose)
+			{
+				LogInfo("");
+				LogInfo(unmappedReport.ToString());
+			}
+			else if (unmappedReport.FailedCount > 0)
+			{
+				LogInfo("  Run with --verbose for detailed unmapped type report");
+			}
+		}
 	}
 
 	/// <summary>

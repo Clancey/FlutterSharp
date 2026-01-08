@@ -311,7 +311,7 @@ CenterStruct layout:
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
 | G001 | Add validation before generation | completed | Created ValidationService.cs with widget/type/enum/property validation, output path checks, C# identifier validation, reserved keyword detection. Integrated into Program.cs after package analysis. |
-| G002 | Improve error reporting for unmapped types | pending | Better messages |
+| G002 | Improve error reporting for unmapped types | completed | Added UnmappedTypeInfo and UnmappedTypesReport classes to DartToCSharpMapper. Tracks all type mapping fallbacks with context (widget, parameter, dart type, reason, suggestion). Outputs summary in generation report with --verbose option for full details. |
 | G003 | Add Clip enum to manual types | pending | If not auto-generated |
 
 ---
@@ -572,6 +572,7 @@ When starting a new loop, work on these in order:
 | LST001 | 2026-01-08 | a8893d1 | Fixed ListView widget implementation: Rewrote ListViewStruct.cs (removed NativeNullable, added Has* flags), rewrote ListView.cs (IEnumerable<Widget>, collection initializers, property assignments), created listview_struct.dart FFI struct, implemented listview_widget_parser.dart with full property parsing. |
 | LST002 | 2026-01-08 | e5ecae2 | Fixed GridView widget implementation: Rewrote GridViewStruct.cs (proper Has* flags, removed complex IntPtr types), rewrote GridView.cs (IEnumerable<Widget>, collection initializers, full property support), created gridview_struct.dart FFI struct, fixed gridview_widget_parser.dart to parse FFI struct and build Flutter GridView.count. Phase 4.4 List Widgets COMPLETE. |
 | G001 | 2026-01-08 | pending | Added pre-generation validation: Created ValidationService.cs with comprehensive validation for widget/type/enum definitions, property type mapping, C# identifier validity, reserved keyword detection, and output path writability. Integrated into Program.cs GenerateCodeAsync() after package analysis, before generation begins. |
+| G002 | 2026-01-08 | pending | Improved unmapped type reporting: Added UnmappedTypeInfo record and UnmappedTypesReport class to DartToCSharpMapper. Now tracks all InvalidType encounters with full context (widget name, parameter name, fallback type, reason, suggestions). Added report output to generation summary showing inferred vs failed mappings. Full details available with --verbose flag. |
 
 ---
 

@@ -6,12 +6,55 @@ using System.Text.RegularExpressions;
 namespace FlutterSharp.CodeGen.TypeMapping
 {
 	/// <summary>
+	/// Represents detailed information about an unmapped type encounter.
+	/// </summary>
+	public record UnmappedTypeInfo
+	{
+		/// <summary>Gets the original Dart type that could not be mapped.</summary>
+		public string DartType { get; init; } = string.Empty;
+
+		/// <summary>Gets the parameter name where this type was encountered, if any.</summary>
+		public string? ParameterName { get; init; }
+
+		/// <summary>Gets the widget name where this type was encountered, if any.</summary>
+		public string? WidgetName { get; init; }
+
+		/// <summary>Gets the C# type that was returned as fallback.</summary>
+		public string FallbackType { get; init; } = string.Empty;
+
+		/// <summary>Gets the reason why mapping failed.</summary>
+		public string Reason { get; init; } = string.Empty;
+
+		/// <summary>Gets a suggested solution for mapping this type.</summary>
+		public string? Suggestion { get; init; }
+
+		public override string ToString()
+		{
+			var context = !string.IsNullOrEmpty(WidgetName)
+				? $"{WidgetName}.{ParameterName}"
+				: ParameterName ?? "(unknown context)";
+			return $"'{DartType}' in {context} -> {FallbackType}: {Reason}";
+		}
+	}
+
+	/// <summary>
 	/// Maps Dart types to their corresponding C# types.
 	/// </summary>
 	public class DartToCSharpMapper
 	{
 		private readonly TypeMappingRegistry _registry;
 		private static readonly Regex GenericTypeRegex = new(@"^(\w+)<(.+)>$", RegexOptions.Compiled);
+
+		/// <summary>
+		/// Gets the collection of unmapped types encountered during mapping.
+		/// Call ClearUnmappedTypes() to reset this collection.
+		/// </summary>
+		public List<UnmappedTypeInfo> UnmappedTypes { get; } = new();
+
+		/// <summary>
+		/// Gets or sets whether to track unmapped types. Defaults to true.
+		/// </summary>
+		public bool TrackUnmappedTypes { get; set; } = true;
 
 		/// <summary>
 		/// Maps (WidgetName, ParameterName) to their expected types for AMBIGUOUS parameters.
@@ -171,6 +214,22 @@ namespace FlutterSharp.CodeGen.TypeMapping
 		}
 
 		/// <summary>
+		/// Clears the collection of unmapped types.
+		/// </summary>
+		public void ClearUnmappedTypes()
+		{
+			UnmappedTypes.Clear();
+		}
+
+		/// <summary>
+		/// Gets a summary report of unmapped types grouped by category.
+		/// </summary>
+		public UnmappedTypesReport GetUnmappedTypesReport()
+		{
+			return new UnmappedTypesReport(UnmappedTypes);
+		}
+
+		/// <summary>
 		/// Maps a Dart type string to its corresponding C# type.
 		/// </summary>
 		/// <param name="dartType">The Dart type string (e.g., "String", "int?", "List&lt;Widget&gt;").</param>
@@ -222,15 +281,46 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			}
 
 			// Handle InvalidType - try to infer from parameter name (with widget context if available)
-			if (cleanType == "InvalidType" && !string.IsNullOrEmpty(parameterName))
+			if (cleanType == "InvalidType")
 			{
-				var inferredType = InferTypeFromParameterName(parameterName, widgetName);
-				if (inferredType != null)
+				if (!string.IsNullOrEmpty(parameterName))
 				{
-					return ApplyNullability(inferredType, isNullable);
+					var inferredType = InferTypeFromParameterName(parameterName, widgetName);
+					if (inferredType != null)
+					{
+						// Track successful inference from InvalidType
+						if (TrackUnmappedTypes)
+						{
+							UnmappedTypes.Add(new UnmappedTypeInfo
+							{
+								DartType = dartType,
+								ParameterName = parameterName,
+								WidgetName = widgetName,
+								FallbackType = inferredType,
+								Reason = "Dart analyzer returned InvalidType; type inferred from parameter name",
+								Suggestion = $"Consider adding explicit mapping for '{parameterName}' pattern"
+							});
+						}
+						return ApplyNullability(inferredType, isNullable);
+					}
 				}
+
 				// If inference failed, return IntPtr as a safe fallback for FFI compatibility
 				// Using IntPtr instead of 'object' because structs must be blittable for FFI pinning
+				if (TrackUnmappedTypes)
+				{
+					UnmappedTypes.Add(new UnmappedTypeInfo
+					{
+						DartType = dartType,
+						ParameterName = parameterName,
+						WidgetName = widgetName,
+						FallbackType = "IntPtr",
+						Reason = "Dart analyzer returned InvalidType and no parameter name inference was possible",
+						Suggestion = !string.IsNullOrEmpty(parameterName)
+							? $"Add '{parameterName}' to ParameterNameToType dictionary or add widget-specific mapping '{widgetName}.{parameterName}'"
+							: "Provide parameter name for type inference"
+					});
+				}
 				return "IntPtr";
 			}
 
@@ -655,6 +745,158 @@ namespace FlutterSharp.CodeGen.TypeMapping
 			}
 
 			return result;
+		}
+	}
+
+	/// <summary>
+	/// Provides a summary report of unmapped types grouped by category.
+	/// </summary>
+	public class UnmappedTypesReport
+	{
+		/// <summary>
+		/// Gets all unmapped type entries.
+		/// </summary>
+		public IReadOnlyList<UnmappedTypeInfo> AllEntries { get; }
+
+		/// <summary>
+		/// Gets entries where types were inferred from parameter names.
+		/// </summary>
+		public IReadOnlyList<UnmappedTypeInfo> InferredTypes { get; }
+
+		/// <summary>
+		/// Gets entries where types could not be mapped and fell back to IntPtr.
+		/// </summary>
+		public IReadOnlyList<UnmappedTypeInfo> FailedMappings { get; }
+
+		/// <summary>
+		/// Gets entries grouped by widget name.
+		/// </summary>
+		public IReadOnlyDictionary<string, List<UnmappedTypeInfo>> ByWidget { get; }
+
+		/// <summary>
+		/// Gets entries grouped by the original Dart type.
+		/// </summary>
+		public IReadOnlyDictionary<string, List<UnmappedTypeInfo>> ByDartType { get; }
+
+		/// <summary>
+		/// Gets entries grouped by the parameter name.
+		/// </summary>
+		public IReadOnlyDictionary<string, List<UnmappedTypeInfo>> ByParameterName { get; }
+
+		/// <summary>
+		/// Gets the total count of unmapped types.
+		/// </summary>
+		public int TotalCount => AllEntries.Count;
+
+		/// <summary>
+		/// Gets the count of types that were successfully inferred.
+		/// </summary>
+		public int InferredCount => InferredTypes.Count;
+
+		/// <summary>
+		/// Gets the count of types that failed to map (returned IntPtr).
+		/// </summary>
+		public int FailedCount => FailedMappings.Count;
+
+		public UnmappedTypesReport(IEnumerable<UnmappedTypeInfo> entries)
+		{
+			var allEntries = entries.ToList();
+			AllEntries = allEntries;
+
+			InferredTypes = allEntries
+				.Where(e => e.FallbackType != "IntPtr")
+				.ToList();
+
+			FailedMappings = allEntries
+				.Where(e => e.FallbackType == "IntPtr")
+				.ToList();
+
+			ByWidget = allEntries
+				.Where(e => !string.IsNullOrEmpty(e.WidgetName))
+				.GroupBy(e => e.WidgetName!)
+				.ToDictionary(g => g.Key, g => g.ToList());
+
+			ByDartType = allEntries
+				.GroupBy(e => e.DartType)
+				.ToDictionary(g => g.Key, g => g.ToList());
+
+			ByParameterName = allEntries
+				.Where(e => !string.IsNullOrEmpty(e.ParameterName))
+				.GroupBy(e => e.ParameterName!)
+				.ToDictionary(g => g.Key, g => g.ToList());
+		}
+
+		/// <summary>
+		/// Gets suggestions for improving type mappings based on the patterns found.
+		/// </summary>
+		public IEnumerable<string> GetSuggestions()
+		{
+			var suggestions = new List<string>();
+
+			// Find most common unmapped parameter names
+			var frequentParams = ByParameterName
+				.Where(kvp => kvp.Value.Count >= 3 && kvp.Value.All(v => v.FallbackType == "IntPtr"))
+				.OrderByDescending(kvp => kvp.Value.Count)
+				.Take(10);
+
+			foreach (var param in frequentParams)
+			{
+				suggestions.Add($"Add parameter name mapping: '{param.Key}' (appears {param.Value.Count} times). " +
+					$"Widgets: {string.Join(", ", param.Value.Select(v => v.WidgetName).Distinct().Take(5))}");
+			}
+
+			// Find widgets with many unmapped types
+			var problematicWidgets = ByWidget
+				.Where(kvp => kvp.Value.Count >= 5)
+				.OrderByDescending(kvp => kvp.Value.Count)
+				.Take(5);
+
+			foreach (var widget in problematicWidgets)
+			{
+				suggestions.Add($"Consider excluding widget '{widget.Key}' from generation ({widget.Value.Count} unmapped types)");
+			}
+
+			return suggestions;
+		}
+
+		/// <summary>
+		/// Returns a formatted string summary of the report.
+		/// </summary>
+		public override string ToString()
+		{
+			var sb = new System.Text.StringBuilder();
+			sb.AppendLine($"Unmapped Types Report: {TotalCount} total ({InferredCount} inferred, {FailedCount} failed)");
+
+			if (FailedCount > 0)
+			{
+				sb.AppendLine();
+				sb.AppendLine("=== Failed Mappings (IntPtr fallback) ===");
+				foreach (var entry in FailedMappings.Take(20))
+				{
+					sb.AppendLine($"  - {entry}");
+					if (!string.IsNullOrEmpty(entry.Suggestion))
+					{
+						sb.AppendLine($"    Suggestion: {entry.Suggestion}");
+					}
+				}
+				if (FailedCount > 20)
+				{
+					sb.AppendLine($"  ... and {FailedCount - 20} more");
+				}
+			}
+
+			var suggestions = GetSuggestions().ToList();
+			if (suggestions.Any())
+			{
+				sb.AppendLine();
+				sb.AppendLine("=== Suggestions ===");
+				foreach (var suggestion in suggestions)
+				{
+					sb.AppendLine($"  * {suggestion}");
+				}
+			}
+
+			return sb.ToString();
 		}
 	}
 }
