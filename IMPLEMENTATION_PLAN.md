@@ -90,6 +90,38 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ---
 
+### ~~isReady Race Condition in FlutterViewController~~ (FIXED 2026-01-07)
+
+**Problem**: Widgets were not rendering in some scenarios. When the "ready" message from Dart arrived before the Widget property was set, isReady was never set to true, causing SendState to never be called when the Widget was later assigned.
+
+**Root Cause**: The original code combined two conditions incorrectly:
+```csharp
+if (call.Method == "ready" && Widget != null)
+{
+    isReady = true;  // BUG: Only set if Widget already exists
+    FlutterManager.SendState(Widget);
+}
+```
+If Widget was null when "ready" arrived, isReady remained false forever.
+
+**Solution**: Separated the isReady assignment from the Widget null check:
+```csharp
+if (call.Method == "ready")
+{
+    isReady = true;  // Always set this
+    if (Widget != null)
+    {
+        FlutterManager.SendState(Widget);
+    }
+}
+```
+
+**Files Changed**:
+- `src/Flutter/Platforms/iOS/FlutterViewController.cs`
+- `Sample/FlutterSample/Platforms/iOS/AppDelegate.cs` (added UIScreen.MainScreen.Bounds)
+
+---
+
 ### ~~Struct Field Shadowing - Inherited child/children Fields Duplicated~~ (FIXED 2026-01-07)
 
 **Problem**: When the Dart parser read the `child` property from widgets like Center, it got a null pointer even though the widget had a child set. The Text widget wasn't rendering because Center's child was appearing as null.
@@ -461,7 +493,8 @@ When starting a new loop, work on these in order:
 | DR005 | 2026-01-08 | d0d6e54 | Complete TextWidgetParser to read all struct properties: textAlign, overflow, textDirection, textWidthBasis, maxLines, softWrap, textScaleFactor, semanticsLabel, style. Added integer-based enum parsing functions (parseTextAlignFromInt, etc). Fixed Text.cs to set textAlign on backing struct. |
 | FFI001 | 2026-01-08 | ef35b2d | Fixed FFI struct layout mismatch: C# WidgetStruct had unused 'key' field that Dart WidgetStruct didn't have, causing 8-byte offset for all derived struct fields. Removed the 'key' field (never used). This fix enables correct Text widget rendering. |
 | STR001 | 2026-01-08 | 9ad523f | Fixed string property Has* flag not being set. Scriban templates and generated TextStruct.cs string setters now set Has{property} = 1 when value assigned, enabling Dart parser to correctly read strings. Root cause: Dart checked `hasData == 1` but C# setter only called `SetString()` without updating the flag. |
-| R005 | 2026-01-07 | pending | Fixed FlutterManager.SendState() to call Build() on StatelessWidget/StatefulWidget. Custom widget classes (e.g., FlutterSampleApp) don't have Dart parsers - their Build() must be called to get the actual widget tree (Center, Column, Text) which Dart can parse. Without this, Dart showed "Unknown widget type FlutterSampleApp". |
+| R005 | 2026-01-07 | ce875ab | Fixed FlutterManager.SendState() to call Build() on StatelessWidget/StatefulWidget. Custom widget classes (e.g., FlutterSampleApp) don't have Dart parsers - their Build() must be called to get the actual widget tree (Center, Column, Text) which Dart can parse. Without this, Dart showed "Unknown widget type FlutterSampleApp". |
+| RACE001 | 2026-01-07 | fe52302 | Fixed isReady race condition in FlutterViewController. Bug: isReady was only set to true when Widget != null at "ready" time, causing Widget assigned later to never send state. Fix: Separate isReady assignment from Widget null check. Also added UIScreen.MainScreen.Bounds to UIWindow in sample app. |
 
 ---
 
