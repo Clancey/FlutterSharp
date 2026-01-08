@@ -116,12 +116,8 @@ namespace {{ namespace }}
 {{~ else if prop.is_string ~}}
 			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
 {{~ else if prop.is_callback && prop.is_action_type ~}}
-			// Callback: {{ prop.backing_field_name }}
-			if ({{ prop.backing_field_name }} != null)
-			{
-				var actionId = CallbackRegistry.Register({{ prop.backing_field_name }});
-				s.{{ prop.struct_field_name }}Action = $"action_{actionId}";
-			}
+			// Callback: {{ prop.backing_field_name }} - registered with cleanup tracking
+			s.{{ prop.struct_field_name }}Action = RegisterCallback({{ prop.backing_field_name }});
 {{~ else if prop.is_callback ~}}
 			// Complex callback type: {{ prop.type }} - skipped (requires specific marshaling)
 {{~ else if prop.is_intptr ~}}
@@ -189,12 +185,8 @@ namespace {{ namespace }}
 {{~ else if prop.is_string ~}}
 			s.{{ prop.struct_field_name }} = {{ prop.backing_field_name }};
 {{~ else if prop.is_callback && prop.is_action_type ~}}
-			// Callback: {{ prop.backing_field_name }}
-			if ({{ prop.backing_field_name }} != null)
-			{
-				var actionId = CallbackRegistry.Register({{ prop.backing_field_name }});
-				s.{{ prop.struct_field_name }}Action = $"action_{actionId}";
-			}
+			// Callback: {{ prop.backing_field_name }} - registered with cleanup tracking
+			s.{{ prop.struct_field_name }}Action = RegisterCallback({{ prop.backing_field_name }});
 {{~ else if prop.is_callback ~}}
 			// Complex callback type: {{ prop.type }} - skipped (requires specific marshaling)
 {{~ else if prop.is_intptr ~}}

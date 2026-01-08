@@ -16,6 +16,9 @@ namespace Flutter
 		// Track allocated children arrays for cleanup
 		private List<IntPtr> _allocatedChildrenArrays = new List<IntPtr>();
 
+		// Track registered callback IDs for cleanup on disposal
+		private List<long> _registeredCallbackIds = new List<long>();
+
 		/// <summary>
 		/// Unique identifier for this widget instance
 		/// </summary>
@@ -70,6 +73,22 @@ namespace Flutter
 
 			widget.PrepareForSending();
 			return widget.backingStruct?.Handle ?? IntPtr.Zero;
+		}
+
+		/// <summary>
+		/// Registers a callback with the CallbackRegistry and tracks the ID for cleanup on disposal.
+		/// Returns the action ID string (e.g., "action_123") to be stored in the struct.
+		/// </summary>
+		/// <param name="callback">The callback delegate to register</param>
+		/// <returns>The action ID string, or null if callback is null</returns>
+		protected string? RegisterCallback(Delegate? callback)
+		{
+			if (callback == null)
+				return null;
+
+			var actionId = CallbackRegistry.Register(callback);
+			_registeredCallbackIds.Add(actionId);
+			return $"action_{actionId}";
 		}
 
 		/// <summary>
@@ -153,6 +172,13 @@ namespace Flutter
 					}
 				}
 				_allocatedChildrenArrays.Clear();
+
+				// Unregister all callbacks to prevent memory leaks
+				foreach (var callbackId in _registeredCallbackIds)
+				{
+					CallbackRegistry.Unregister(callbackId);
+				}
+				_registeredCallbackIds.Clear();
 
 				if (disposing)
 				{
