@@ -37,6 +37,7 @@ import 'parsers/radio_parser.dart';
 import 'parsers/switch_parser.dart';
 import 'parsers/slider_parser.dart';
 import 'parsers/card_parser.dart';
+import 'parsers/bottomnavigationbar_parser.dart';
 import 'parsers/gridview_widget_parser.dart';
 import 'parsers/icon_widget_parser.dart';
 import 'parsers/image_widget_parser.dart';
@@ -101,6 +102,7 @@ class DynamicWidgetBuilder {
     SwitchParser(),
     SliderParser(),
     CardParser(),
+    BottomNavigationBarParser(),
     GridViewWidgetParser(),
     IconWidgetParser(),
     IndexedStackWidgetParser(),
