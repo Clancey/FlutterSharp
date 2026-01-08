@@ -586,6 +586,7 @@ When starting a new loop, work on these in order:
 | SCR001-003 | 2026-01-08 | 061d181 | Implemented ScrollController binding with two-way communication. C# ScrollController extends ChangeNotifier with JumpTo, AnimateTo, scroll events (OnScrollStart/Update/End), Offset/MaxScrollExtent/ViewportDimension properties. Added ScrollControllerManager.dart on Dart side. Added Controller property to ListView, GridView, SingleChildScrollView. FlutterManager handles scroll commands and updates via method channel. |
 | SCR004 | 2026-01-08 | 2f5d92c | Implemented RefreshIndicator pull-to-refresh with async callback pattern. RefreshIndicator.cs accepts Func<Task> onRefresh. RefreshIndicatorStruct with displacement, edgeOffset, color, backgroundColor, strokeWidth, triggerMode. refreshindicator_parser.dart uses Completer<void> to convert C# async callback to Dart Future. FlutterManager.SendAsyncCallbackComplete signals completion. mauiRenderer handles AsyncCallbackComplete message to complete the Future. |
 | SCR005 | 2026-01-08 | pending | Implemented infinite scrolling pattern. ScrollController extended with LoadMoreThreshold (default 200px), OnLoadMore async callback, IsLoadingMore state, LoadMoreRequested event, TriggerLoadMore() method, ResetLoadingState(). Created InfiniteListView and InfiniteGridView convenience widgets that combine builder pattern with automatic load-more detection. When scroll position within threshold of maxScrollExtent, async OnLoadMore is triggered. InfiniteListViewStruct and InfiniteGridViewStruct for FFI. Dart parsers infinitelistview_parser.dart and infinitegridview_parser.dart with FutureBuilder pattern and automatic CircularProgressIndicator at end. |
+| CUP001 | 2026-01-08 | a7d15d0 | Implemented CupertinoButton iOS-style button. C# widget (CupertinoButton.cs) with normal and Filled variants. CupertinoButtonStruct.cs for FFI. Dart parser (cupertinobutton_parser.dart) supporting onPressed, onLongPress, onFocusChange callbacks; padding, color, disabledColor, pressedOpacity, minimumSize, borderRadius, alignment, sizeStyle properties. Added EdgeInsets and Color value types to PlaceholderTypes.cs for C# struct support. |
 
 ---
 
@@ -967,7 +968,7 @@ After hitting a blocker:
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| CUP001 | Implement CupertinoButton | pending | iOS-style button |
+| CUP001 | Implement CupertinoButton | completed | iOS-style button with filled variant, padding, colors, sizeStyle |
 | CUP002 | Implement CupertinoTextField | pending | iOS-style text field |
 | CUP003 | Implement CupertinoNavigationBar | pending | iOS-style nav bar |
 | CUP004 | Implement CupertinoTabBar | pending | iOS-style tab bar |
