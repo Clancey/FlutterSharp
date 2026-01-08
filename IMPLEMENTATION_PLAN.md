@@ -181,7 +181,15 @@ CenterStruct layout:
 **C# compilation errors**: 0 ✅
 **Dart analysis errors**: 0 ✅
 **Dart warnings**: ~2050 (unused imports, unnecessary null comparisons - cosmetic)
+**Sample app builds**: ✅ FlutterSample.csproj compiles with 0 errors
 **Note**: Both C# and Dart builds pass completely! Widgets with complex callback types are skipped from parser generation.
+
+### Runtime Status (2026-01-07)
+- **FlutterManager.SendState()**: Complete - calls Build() on StatelessWidget/StatefulWidget, serializes widget address to JSON, sends via Communicator
+- **Dart MauiRenderer**: Complete - receives JSON, parses address, builds widget via DynamicWidgetBuilder
+- **TextWidgetParser**: Complete - parses all Text properties (data, style, textAlign, overflow, maxLines, etc.)
+- **Sample App**: FlutterSampleApp with Center → Column → multiple Text widgets ready for testing
+- **Ready for runtime testing**: All compile-time issues resolved, FFI struct layout verified correct
 
 ### Error Resolution Summary (this session)
 - **Widget-context-aware type mapping**: Added WidgetSpecificParameterTypes dictionary to DartToCSharpMapper.cs for ambiguous parameter names (fit, direction, behavior, etc.)
@@ -517,6 +525,7 @@ When starting a new loop, work on these in order:
 | STR001 | 2026-01-08 | 9ad523f | Fixed string property Has* flag not being set. Scriban templates and generated TextStruct.cs string setters now set Has{property} = 1 when value assigned, enabling Dart parser to correctly read strings. Root cause: Dart checked `hasData == 1` but C# setter only called `SetString()` without updating the flag. |
 | R005 | 2026-01-07 | ce875ab | Fixed FlutterManager.SendState() to call Build() on StatelessWidget/StatefulWidget. Custom widget classes (e.g., FlutterSampleApp) don't have Dart parsers - their Build() must be called to get the actual widget tree (Center, Column, Text) which Dart can parse. Without this, Dart showed "Unknown widget type FlutterSampleApp". |
 | RACE001 | 2026-01-07 | fe52302 | Fixed isReady race condition in FlutterViewController. Bug: isReady was only set to true when Widget != null at "ready" time, causing Widget assigned later to never send state. Fix: Separate isReady assignment from Widget null check. Also added UIScreen.MainScreen.Bounds to UIWindow in sample app. |
+| ADDR001 | 2026-01-07 | 23013f4 | Fixed FlutterManager.SendState() to avoid double PrepareForSending call. Changed `Address = widgetToSend` to `Address = (long)structPtr` to use already-computed pointer instead of triggering implicit conversion again. |
 
 ---
 
