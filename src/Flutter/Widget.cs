@@ -25,6 +25,14 @@ namespace Flutter
 		public string Id { get; } = Guid.NewGuid().ToString();
 
 		/// <summary>
+		/// Protected constructor that tracks widget creation for memory diagnostics.
+		/// </summary>
+		protected Widget()
+		{
+			MemoryDiagnostics.TrackWidgetCreation(this);
+		}
+
+		/// <summary>
 		/// Sends an event to this widget
 		/// </summary>
 		/// <param name="eventName">The name of the event</param>
@@ -88,6 +96,7 @@ namespace Flutter
 
 			var actionId = CallbackRegistry.Register(callback);
 			_registeredCallbackIds.Add(actionId);
+			MemoryDiagnostics.TrackCallbackRegistration();
 			return $"action_{actionId}";
 		}
 
@@ -163,6 +172,9 @@ namespace Flutter
 		{
 			if (!disposed)
 			{
+				// Track disposal for memory diagnostics
+				MemoryDiagnostics.TrackWidgetDisposal(this);
+
 				// Free all allocated children array pointers
 				foreach (var ptr in _allocatedChildrenArrays)
 				{
@@ -177,6 +189,7 @@ namespace Flutter
 				foreach (var callbackId in _registeredCallbackIds)
 				{
 					CallbackRegistry.Unregister(callbackId);
+					MemoryDiagnostics.TrackCallbackUnregistration();
 				}
 				_registeredCallbackIds.Clear();
 

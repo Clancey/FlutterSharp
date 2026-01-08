@@ -119,12 +119,18 @@ namespace Flutter.Structs
 			var gchandle = GCHandle.Alloc(this, GCHandleType.Pinned);
 			managedHandle = (IntPtr)gchandle;
 			handle = gchandle.AddrOfPinnedObject();
+
+			// Track struct creation for memory diagnostics
+			Flutter.MemoryDiagnostics.TrackStructCreation(managedHandle, GetType().Name);
 		}
 
 		protected virtual void Dispose(bool disposing)
 		{
 			if (_disposed)
 				return;
+
+			// Track struct disposal for memory diagnostics
+			Flutter.MemoryDiagnostics.TrackStructDisposal(managedHandle);
 
 			// Free all tracked allocations
 			StructMemoryTracker.FreeAllAllocations(managedHandle);

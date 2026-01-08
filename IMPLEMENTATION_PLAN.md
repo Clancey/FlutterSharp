@@ -356,7 +356,7 @@ CenterStruct layout:
 | M001 | Implement GCHandle lifecycle | completed | GCHandle pinning in BaseStruct, proper cleanup on dispose |
 | M002 | Implement string pointer cleanup | completed | Track allocated strings, free on SetString and Dispose |
 | M003 | Implement children array cleanup | completed | Track allocated arrays, SetChildren method, free on Dispose |
-| M004 | Add memory leak detection | pending | Add tracking/debugging for leaks |
+| M004 | Add memory leak detection | completed | MemoryDiagnostics class with widget/struct/callback tracking, leak reports, and events |
 
 ---
 
@@ -573,6 +573,7 @@ When starting a new loop, work on these in order:
 | LST002 | 2026-01-08 | e5ecae2 | Fixed GridView widget implementation: Rewrote GridViewStruct.cs (proper Has* flags, removed complex IntPtr types), rewrote GridView.cs (IEnumerable<Widget>, collection initializers, full property support), created gridview_struct.dart FFI struct, fixed gridview_widget_parser.dart to parse FFI struct and build Flutter GridView.count. Phase 4.4 List Widgets COMPLETE. |
 | G001 | 2026-01-08 | pending | Added pre-generation validation: Created ValidationService.cs with comprehensive validation for widget/type/enum definitions, property type mapping, C# identifier validity, reserved keyword detection, and output path writability. Integrated into Program.cs GenerateCodeAsync() after package analysis, before generation begins. |
 | G002 | 2026-01-08 | pending | Improved unmapped type reporting: Added UnmappedTypeInfo record and UnmappedTypesReport class to DartToCSharpMapper. Now tracks all InvalidType encounters with full context (widget name, parameter name, fallback type, reason, suggestions). Added report output to generation summary showing inferred vs failed mappings. Full details available with --verbose flag. |
+| M004 | 2026-01-08 | pending | Added memory leak detection: Created MemoryDiagnostics.cs with comprehensive tracking for widget lifecycle (creation/disposal), struct allocations (GCHandle tracking), and callback registrations. Provides GetStats(), GetPotentialWidgetLeaks(), GetPotentialStructLeaks(), GenerateReport(), CheckForLeaks() methods. OnLeakDetected event for automated monitoring. Integrated into Widget.cs constructor/Dispose() and BaseStruct constructor/Dispose(). |
 
 ---
 
