@@ -574,6 +574,8 @@ When starting a new loop, work on these in order:
 | G001 | 2026-01-08 | pending | Added pre-generation validation: Created ValidationService.cs with comprehensive validation for widget/type/enum definitions, property type mapping, C# identifier validity, reserved keyword detection, and output path writability. Integrated into Program.cs GenerateCodeAsync() after package analysis, before generation begins. |
 | G002 | 2026-01-08 | pending | Improved unmapped type reporting: Added UnmappedTypeInfo record and UnmappedTypesReport class to DartToCSharpMapper. Now tracks all InvalidType encounters with full context (widget name, parameter name, fallback type, reason, suggestions). Added report output to generation summary showing inferred vs failed mappings. Full details available with --verbose flag. |
 | M004 | 2026-01-08 | pending | Added memory leak detection: Created MemoryDiagnostics.cs with comprehensive tracking for widget lifecycle (creation/disposal), struct allocations (GCHandle tracking), and callback registrations. Provides GetStats(), GetPotentialWidgetLeaks(), GetPotentialStructLeaks(), GenerateReport(), CheckForLeaks() methods. OnLeakDetected event for automated monitoring. Integrated into Widget.cs constructor/Dispose() and BaseStruct constructor/Dispose(). |
+| SM001 | 2026-01-08 | bbef11f | Implemented ChangeNotifier base class: Thread-safe listener management with reentrant notification support, proper disposal handling, exception catching during notification. Foundation for observable state management. |
+| SM002 | 2026-01-08 | bbef11f | Implemented ValueNotifier<T>: Generic observable value wrapper extending ChangeNotifier, implements ValueListenable<T>, notifies only when value changes using EqualityComparer<T>. |
 
 ---
 
@@ -904,8 +906,8 @@ After hitting a blocker:
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| SM001 | Implement ChangeNotifier base class | pending | C# base class for observable state objects |
-| SM002 | Implement ValueNotifier<T> | pending | Generic observable value wrapper |
+| SM001 | Implement ChangeNotifier base class | completed | C# base class with thread-safe listener management, reentrant notification support, proper disposal |
+| SM002 | Implement ValueNotifier<T> | completed | Generic observable value wrapper, extends ChangeNotifier, implements ValueListenable<T> |
 | SM003 | Implement ListenableBuilder widget | pending | Rebuilds when Listenable changes |
 | SM004 | Implement Consumer/Provider pattern | pending | Dependency injection for state |
 | SM005 | Add state synchronization | pending | Two-way data binding between C# and Dart |
