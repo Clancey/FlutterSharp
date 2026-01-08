@@ -567,6 +567,7 @@ When starting a new loop, work on these in order:
 | MAT001 | 2026-01-07 | pending | Implemented Scaffold: C# widget/struct (ScaffoldStruct.cs, Scaffold.cs) matching existing Dart parser (scaffold_parser.dart). Supports appBar, body, floatingActionButton, drawer. First material widget for Phase 4.3. |
 | MAT002 | 2026-01-07 | pending | Implemented AppBar: C# widget/struct (AppBarStruct.cs, AppBar.cs) matching existing Dart parser (appbar_parser.dart). Supports title and bottom properties. Second material widget for Phase 4.3. |
 | MAT005 | 2026-01-07 | d03827a | Verified Drawer implementation: C# widget/struct (Drawer.cs, DrawerStruct.cs) already existed using SingleChildRenderObjectWidgetStruct. Dart parser (drawer_parser.dart) supports child property. All three layout widgets (Scaffold/AppBar/Drawer) complete for Phase 4.3. |
+| MAT003 | 2026-01-07 | 48c37c1 | Implemented Card: C# widget/struct (Card.cs, CardStruct.cs) + Dart struct/parser (card_struct.dart, card_parser.dart). Supports child, color, shadowColor, surfaceTintColor, elevation, borderOnForeground, clipBehavior, semanticContainer. Complex types (shape, margin) declared but pending marshaling support. |
 
 ---
 
@@ -869,7 +870,7 @@ After hitting a blocker:
 |----|------|--------|-------|
 | MAT001 | Implement Scaffold C# widget | completed | C# widget/struct + matches existing Dart parser |
 | MAT002 | Implement AppBar C# widget | completed | C# widget/struct + matches existing Dart parser |
-| MAT003 | Implement Card widget | pending | Needs full implementation |
+| MAT003 | Implement Card widget | completed | C# widget/struct + Dart struct/parser with child, color, elevation, clipBehavior, semanticContainer |
 | MAT004 | Implement BottomNavigationBar | pending | Needs full implementation |
 | MAT005 | Implement Drawer C# widget | completed | C# widget/struct + Dart parser all working |
 
