@@ -24,6 +24,25 @@ class MaterialAppParser extends WidgetParser {
     // Build ThemeData from struct values
     ThemeData? theme = _buildThemeData(map);
 
+    // Build dark ThemeData from struct values
+    ThemeData? darkTheme = _buildDarkThemeData(map);
+
+    // Parse theme mode
+    ThemeMode themeMode = ThemeMode.system;
+    if (map.hasThemeMode == 1) {
+      switch (map.themeMode) {
+        case 0:
+          themeMode = ThemeMode.system;
+          break;
+        case 1:
+          themeMode = ThemeMode.light;
+          break;
+        case 2:
+          themeMode = ThemeMode.dark;
+          break;
+      }
+    }
+
     // Parse debug banner setting
     final bool debugShowCheckedModeBanner =
         map.hasDebugShowCheckedModeBanner == 1 && map.debugShowCheckedModeBanner == 1;
@@ -37,6 +56,8 @@ class MaterialAppParser extends WidgetParser {
       title: title,
       home: home,
       theme: theme,
+      darkTheme: darkTheme,
+      themeMode: themeMode,
       debugShowCheckedModeBanner: debugShowCheckedModeBanner,
       initialRoute: initialRoute,
     );
@@ -307,6 +328,110 @@ class MaterialAppParser extends WidgetParser {
       foregroundColor: map.hasAppBarForegroundColor == 1
           ? Color(map.appBarForegroundColor)
           : null,
+    );
+  }
+
+  /// Build dark AppBarTheme from struct values
+  AppBarTheme? _buildDarkAppBarTheme(MaterialAppStruct map) {
+    if (map.hasDarkAppBarBackgroundColor != 1 && map.hasDarkAppBarForegroundColor != 1) {
+      return null;
+    }
+
+    return AppBarTheme(
+      backgroundColor: map.hasDarkAppBarBackgroundColor == 1
+          ? Color(map.darkAppBarBackgroundColor)
+          : null,
+      foregroundColor: map.hasDarkAppBarForegroundColor == 1
+          ? Color(map.darkAppBarForegroundColor)
+          : null,
+    );
+  }
+
+  /// Build dark ThemeData from struct values.
+  /// Returns null if no dark theme is defined.
+  ThemeData? _buildDarkThemeData(MaterialAppStruct map) {
+    // Check if any dark theme property is set
+    final bool hasDarkTheme = map.hasDarkBrightness == 1 ||
+        map.hasDarkUseMaterial3 == 1 ||
+        map.hasDarkColorSchemeSeed == 1 ||
+        map.hasDarkPrimaryColor == 1 ||
+        map.hasDarkScaffoldBackgroundColor == 1 ||
+        map.hasDarkCardColor == 1 ||
+        map.hasDarkDividerColor == 1 ||
+        map.hasDarkErrorColor == 1 ||
+        map.hasDarkAppBarBackgroundColor == 1 ||
+        map.hasDarkAppBarForegroundColor == 1 ||
+        map.hasDarkFontFamily == 1;
+
+    if (!hasDarkTheme) {
+      return null;
+    }
+
+    // Dark theme always uses dark brightness
+    const Brightness brightness = Brightness.dark;
+
+    // Determine if using Material 3
+    bool useMaterial3 = true;
+    if (map.hasDarkUseMaterial3 == 1) {
+      useMaterial3 = map.darkUseMaterial3 == 1;
+    }
+
+    // Parse font family
+    final String? fontFamily = map.hasDarkFontFamily == 1 && map.darkFontFamily.address != 0
+        ? map.darkFontFamily.toDartString()
+        : null;
+
+    // If we have a color scheme seed, use ColorScheme.fromSeed
+    if (map.hasDarkColorSchemeSeed == 1 && map.darkColorSchemeSeed != 0) {
+      final Color seedColor = Color(map.darkColorSchemeSeed);
+      return ThemeData(
+        useMaterial3: useMaterial3,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: seedColor,
+          brightness: brightness,
+        ),
+        fontFamily: fontFamily,
+        scaffoldBackgroundColor: map.hasDarkScaffoldBackgroundColor == 1
+            ? Color(map.darkScaffoldBackgroundColor)
+            : null,
+        cardColor: map.hasDarkCardColor == 1 ? Color(map.darkCardColor) : null,
+        dividerColor: map.hasDarkDividerColor == 1 ? Color(map.darkDividerColor) : null,
+        appBarTheme: _buildDarkAppBarTheme(map),
+      );
+    }
+
+    // If we have primary color, use that
+    if (map.hasDarkPrimaryColor == 1 && map.darkPrimaryColor != 0) {
+      final Color primaryColor = Color(map.darkPrimaryColor);
+      return ThemeData(
+        useMaterial3: useMaterial3,
+        brightness: brightness,
+        primaryColor: primaryColor,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: primaryColor,
+          brightness: brightness,
+        ),
+        fontFamily: fontFamily,
+        scaffoldBackgroundColor: map.hasDarkScaffoldBackgroundColor == 1
+            ? Color(map.darkScaffoldBackgroundColor)
+            : null,
+        cardColor: map.hasDarkCardColor == 1 ? Color(map.darkCardColor) : null,
+        dividerColor: map.hasDarkDividerColor == 1 ? Color(map.darkDividerColor) : null,
+        appBarTheme: _buildDarkAppBarTheme(map),
+      );
+    }
+
+    // Default dark theme with brightness
+    return ThemeData(
+      useMaterial3: useMaterial3,
+      brightness: brightness,
+      fontFamily: fontFamily,
+      scaffoldBackgroundColor: map.hasDarkScaffoldBackgroundColor == 1
+          ? Color(map.darkScaffoldBackgroundColor)
+          : null,
+      cardColor: map.hasDarkCardColor == 1 ? Color(map.darkCardColor) : null,
+      dividerColor: map.hasDarkDividerColor == 1 ? Color(map.darkDividerColor) : null,
+      appBarTheme: _buildDarkAppBarTheme(map),
     );
   }
 

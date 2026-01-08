@@ -582,6 +582,7 @@ When starting a new loop, work on these in order:
 | NAV005 | 2026-01-08 | pending | Implemented Navigator callbacks (OnGenerateRoute, OnUnknownRoute) for dynamic route resolution: Added HasStaticRoute() and ResolveRoute() helper methods to try static routes first, then OnGenerateRoute callback, then OnUnknownRoute as fallback. Updated PushNamed, PushReplacementNamed, PushAndRemoveUntil, PopAndPushNamed, PopAllAndPush to support dynamic route generation. Added hasOnGenerateRoute/hasOnUnknownRoute flags to NavigatorStruct.cs and navigator_struct.dart. Updated navigator_parser.dart to parse and pass the new flags to _NavigatorWrapper. |
 | ANI001-006 | 2026-01-08 | - | All 6 implicit animation widgets (AnimatedOpacity, AnimatedContainer, AnimatedPositioned, AnimatedScale, AnimatedRotation, AnimatedCrossFade) verified as implemented via code generator. C# widgets/structs in src/Flutter/Widgets/ and src/Flutter/Structs/. Dart parsers in flutter_module/lib/generated/parsers/. All build successfully. |
 | THM001-003 | 2026-01-08 | pending | Implemented ThemeData class and MaterialApp widget with theme support. Created: src/Flutter/Material/ThemeData.cs (with Brightness, UseMaterial3, ColorSchemeSeed, PrimaryColor, ScaffoldBackgroundColor, CardColor, DividerColor, AppBar colors, FontFamily). src/Flutter/Material/MaterialApp.cs (StatefulWidget with title, home, theme configuration). src/Flutter/Structs/MaterialAppStruct.cs (FFI struct). src/Flutter/Enums/Brightness.cs (Light/Dark enum). Dart side: MaterialAppStruct in flutter_sharp_structs.dart, materialapp_parser.dart with ColorScheme.fromSeed() support for Material 3 theming. |
+| THM005 | 2026-01-08 | pending | Implemented dynamic theme switching: Added ThemeMode support (System/Light/Dark) to MaterialApp. Extended MaterialAppStruct with darkTheme fields (darkColorSchemeSeed, darkPrimaryColor, darkScaffoldBackgroundColor, darkAppBarBackgroundColor, darkAppBarForegroundColor, darkCardColor, darkDividerColor, darkErrorColor, darkFontFamily) plus themeMode field. Updated MaterialApp.cs to serialize both themes. Updated Dart MaterialAppStruct and materialapp_parser.dart to parse darkTheme and apply themeMode to Flutter MaterialApp. |
 
 ---
 
@@ -947,7 +948,7 @@ After hitting a blocker:
 | THM002 | Implement MaterialApp with theme | completed | MaterialApp widget with title, home, theme (ThemeData), debugShowCheckedModeBanner, initialRoute. Parser generates Flutter ThemeData from seed color or primary color. |
 | THM003 | Implement ColorScheme | completed | ColorScheme generation via ColorScheme.fromSeed() in materialapp_parser.dart - uses colorSchemeSeed from struct |
 | THM004 | Implement TextTheme | completed | TextTheme class with 15 Material 3 text styles (displayLarge/Medium/Small, headlineLarge/Medium/Small, titleLarge/Medium/Small, bodyLarge/Medium/Small, labelLarge/Medium/Small). TextStyleConfig for each style with fontSize, fontWeight, color, letterSpacing, height. FFI serialization in MaterialAppStruct, Dart parser in materialapp_parser.dart |
-| THM005 | Implement dynamic theme switching | pending | Light/dark mode toggle |
+| THM005 | Implement dynamic theme switching | completed | Full light/dark mode support: ThemeMode enum (System/Light/Dark), darkTheme parameter in MaterialApp, FFI struct fields for dark theme colors, Dart parser generates both themes and passes themeMode to MaterialApp widget |
 
 ### 5.5 Scrolling (LOW PRIORITY)
 
@@ -973,7 +974,7 @@ After hitting a blocker:
 - [x] State management pattern works (ChangeNotifier, ValueNotifier) ✅ (SM001-SM003 complete)
 - [x] Basic navigation works (push/pop) ✅ (NAV001-NAV005 complete)
 - [x] At least 3 implicit animation widgets work ✅ (ANI001-ANI006 all implemented via code generator)
-- [ ] Theme switching works
+- [x] Theme switching works ✅ (THM005 complete - ThemeMode.System/Light/Dark, darkTheme support)
 - [ ] ScrollController bindings work
 
 ---

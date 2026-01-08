@@ -91,6 +91,65 @@ namespace Flutter.Structs
         }
         public byte HasinitialRoute { get; set; }
 
+        // ========== Theme Mode ==========
+        // 0 = System (follow device setting)
+        // 1 = Light (always light)
+        // 2 = Dark (always dark)
+        public byte HasThemeMode { get; set; }
+        public int themeMode { get; set; }
+
+        // ========== Dark Theme properties ==========
+        // These mirror the light theme properties but for dark mode
+
+        // Dark theme brightness (for override purposes)
+        public byte HasDarkBrightness { get; set; }
+        public int darkBrightness { get; set; }
+
+        // Dark theme use Material 3
+        public byte HasDarkUseMaterial3 { get; set; }
+        public byte darkUseMaterial3 { get; set; }
+
+        // Dark theme color scheme seed (ARGB uint for M3 color scheme generation)
+        public byte HasDarkColorSchemeSeed { get; set; }
+        public uint darkColorSchemeSeed { get; set; }
+
+        // Dark theme primary color (ARGB uint)
+        public byte HasDarkPrimaryColor { get; set; }
+        public uint darkPrimaryColor { get; set; }
+
+        // Dark theme scaffold background color
+        public byte HasDarkScaffoldBackgroundColor { get; set; }
+        public uint darkScaffoldBackgroundColor { get; set; }
+
+        // Dark theme AppBar background color
+        public byte HasDarkAppBarBackgroundColor { get; set; }
+        public uint darkAppBarBackgroundColor { get; set; }
+
+        // Dark theme AppBar foreground color
+        public byte HasDarkAppBarForegroundColor { get; set; }
+        public uint darkAppBarForegroundColor { get; set; }
+
+        // Dark theme card color
+        public byte HasDarkCardColor { get; set; }
+        public uint darkCardColor { get; set; }
+
+        // Dark theme divider color
+        public byte HasDarkDividerColor { get; set; }
+        public uint darkDividerColor { get; set; }
+
+        // Dark theme error color
+        public byte HasDarkErrorColor { get; set; }
+        public uint darkErrorColor { get; set; }
+
+        // Dark theme font family
+        IntPtr _darkFontFamily;
+        public string? darkFontFamily
+        {
+            get => GetString(_darkFontFamily);
+            set { SetString(ref _darkFontFamily, value); HasdarkFontFamily = 1; }
+        }
+        public byte HasdarkFontFamily { get; set; }
+
         // ========== TextTheme properties ==========
         // Each text style has: Has flag, fontSize (double), fontWeight (int), color (uint), letterSpacing (double), height (double)
         // Font family is inherited from theme-level fontFamily

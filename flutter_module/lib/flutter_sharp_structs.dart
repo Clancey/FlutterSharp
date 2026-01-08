@@ -378,6 +378,83 @@ final class MaterialAppStruct extends Struct {
   @Int8()
   external int hasInitialRoute;
 
+  // ========== Theme Mode ==========
+  // 0 = System (follow device setting)
+  // 1 = Light (always light)
+  // 2 = Dark (always dark)
+  @Int8()
+  external int hasThemeMode;
+  @Int32()
+  external int themeMode;
+
+  // ========== Dark Theme properties ==========
+  // These mirror the light theme properties but for dark mode
+
+  // Dark theme brightness (for override purposes)
+  @Int8()
+  external int hasDarkBrightness;
+  @Int32()
+  external int darkBrightness;
+
+  // Dark theme use Material 3
+  @Int8()
+  external int hasDarkUseMaterial3;
+  @Int8()
+  external int darkUseMaterial3;
+
+  // Dark theme color scheme seed (ARGB uint)
+  @Int8()
+  external int hasDarkColorSchemeSeed;
+  @Uint32()
+  external int darkColorSchemeSeed;
+
+  // Dark theme primary color (ARGB uint)
+  @Int8()
+  external int hasDarkPrimaryColor;
+  @Uint32()
+  external int darkPrimaryColor;
+
+  // Dark theme scaffold background color
+  @Int8()
+  external int hasDarkScaffoldBackgroundColor;
+  @Uint32()
+  external int darkScaffoldBackgroundColor;
+
+  // Dark theme AppBar background color
+  @Int8()
+  external int hasDarkAppBarBackgroundColor;
+  @Uint32()
+  external int darkAppBarBackgroundColor;
+
+  // Dark theme AppBar foreground color
+  @Int8()
+  external int hasDarkAppBarForegroundColor;
+  @Uint32()
+  external int darkAppBarForegroundColor;
+
+  // Dark theme card color
+  @Int8()
+  external int hasDarkCardColor;
+  @Uint32()
+  external int darkCardColor;
+
+  // Dark theme divider color
+  @Int8()
+  external int hasDarkDividerColor;
+  @Uint32()
+  external int darkDividerColor;
+
+  // Dark theme error color
+  @Int8()
+  external int hasDarkErrorColor;
+  @Uint32()
+  external int darkErrorColor;
+
+  // Dark theme font family
+  external Pointer<Utf8> darkFontFamily;
+  @Int8()
+  external int hasDarkFontFamily;
+
   // ========== TextTheme properties ==========
   // Each text style has: Has flag, fontSize (double), fontWeight (int), color (uint), letterSpacing (double), height (double)
 

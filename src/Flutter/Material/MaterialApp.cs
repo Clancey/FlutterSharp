@@ -176,6 +176,82 @@ namespace Flutter.Material
             {
                 s.initialRoute = initialRoute;
             }
+
+            // Theme mode
+            s.themeMode = (int)themeMode;
+            s.HasThemeMode = 1;
+
+            // Dark theme configuration
+            if (darkTheme != null)
+            {
+                SerializeDarkTheme(s, darkTheme);
+            }
+        }
+
+        /// <summary>
+        /// Serializes dark theme settings to the struct.
+        /// </summary>
+        private static void SerializeDarkTheme(MaterialAppStruct s, ThemeData darkTheme)
+        {
+            // Dark theme always has brightness = dark
+            s.darkBrightness = 0; // 0 = dark
+            s.HasDarkBrightness = 1;
+
+            s.darkUseMaterial3 = darkTheme.UseMaterial3 ? (byte)1 : (byte)0;
+            s.HasDarkUseMaterial3 = 1;
+
+            if (darkTheme.ColorSchemeSeed.HasValue)
+            {
+                s.darkColorSchemeSeed = darkTheme.ColorSchemeSeed.Value;
+                s.HasDarkColorSchemeSeed = 1;
+            }
+
+            if (darkTheme.PrimaryColor.HasValue)
+            {
+                s.darkPrimaryColor = darkTheme.PrimaryColor.Value;
+                s.HasDarkPrimaryColor = 1;
+            }
+
+            if (darkTheme.ScaffoldBackgroundColor.HasValue)
+            {
+                s.darkScaffoldBackgroundColor = darkTheme.ScaffoldBackgroundColor.Value;
+                s.HasDarkScaffoldBackgroundColor = 1;
+            }
+
+            if (darkTheme.AppBarBackgroundColor.HasValue)
+            {
+                s.darkAppBarBackgroundColor = darkTheme.AppBarBackgroundColor.Value;
+                s.HasDarkAppBarBackgroundColor = 1;
+            }
+
+            if (darkTheme.AppBarForegroundColor.HasValue)
+            {
+                s.darkAppBarForegroundColor = darkTheme.AppBarForegroundColor.Value;
+                s.HasDarkAppBarForegroundColor = 1;
+            }
+
+            if (darkTheme.CardColor.HasValue)
+            {
+                s.darkCardColor = darkTheme.CardColor.Value;
+                s.HasDarkCardColor = 1;
+            }
+
+            if (darkTheme.DividerColor.HasValue)
+            {
+                s.darkDividerColor = darkTheme.DividerColor.Value;
+                s.HasDarkDividerColor = 1;
+            }
+
+            if (darkTheme.ErrorColor.HasValue)
+            {
+                s.darkErrorColor = darkTheme.ErrorColor.Value;
+                s.HasDarkErrorColor = 1;
+            }
+
+            if (darkTheme.FontFamily != null)
+            {
+                s.darkFontFamily = darkTheme.FontFamily;
+            }
         }
 
         /// <inheritdoc/>
