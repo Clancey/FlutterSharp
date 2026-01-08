@@ -577,6 +577,7 @@ When starting a new loop, work on these in order:
 | SM001 | 2026-01-08 | bbef11f | Implemented ChangeNotifier base class: Thread-safe listener management with reentrant notification support, proper disposal handling, exception catching during notification. Foundation for observable state management. |
 | SM002 | 2026-01-08 | bbef11f | Implemented ValueNotifier<T>: Generic observable value wrapper extending ChangeNotifier, implements ValueListenable<T>, notifies only when value changes using EqualityComparer<T>. |
 | SM003 | 2026-01-08 | 3969057 | Implemented ListenableBuilder widget: Full C# widget + Dart parser. Subscribes to Listenable, calls builder callback on notification, sends updates via FlutterManager.SendState(). Created listenablebuilder_parser.dart and simplified ListenableBuilderStruct.cs. |
+| NAV001 | 2026-01-08 | 51502dc | Implemented Navigator widget with named routes (Routes dictionary), Push/Pop/PushReplacement/PushAndRemoveUntil/PopUntil/PopAllAndPush methods, OnRouteChanged/OnPop callbacks, ClipBehavior, RestorationScopeId. Created C# Navigator.cs + NavigatorStruct.cs, Dart navigator_struct.dart + navigator_parser.dart with PopScope integration. |
 
 ---
 
@@ -917,7 +918,7 @@ After hitting a blocker:
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| NAV001 | Implement Navigator C# widget | pending | Navigation stack management |
+| NAV001 | Implement Navigator C# widget | completed | Navigation stack management with Routes dictionary, Push/Pop/PushReplacement methods, callbacks |
 | NAV002 | Implement MaterialPageRoute | pending | Standard page transition |
 | NAV003 | Implement Navigator.push/pop methods | pending | Programmatic navigation |
 | NAV004 | Implement named routes | pending | Route names and arguments |
