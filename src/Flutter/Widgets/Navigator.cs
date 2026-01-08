@@ -19,20 +19,31 @@ namespace Flutter.Widgets
     /// </summary>
     /// <example>
     /// <code>
+    /// // Basic named routes (no arguments)
     /// var nav = new Navigator
     /// {
     ///     InitialRoute = "/",
     ///     Routes = new Dictionary&lt;string, Func&lt;Widget&gt;&gt;
     ///     {
     ///         { "/", () => new HomePage() },
-    ///         { "/details", () => new DetailsPage() },
     ///         { "/settings", () => new SettingsPage() }
-    ///     },
-    ///     OnRouteChanged = (routeName) => Console.WriteLine($"Navigated to {routeName}")
+    ///     }
     /// };
     ///
-    /// // Push a new route
-    /// nav.Push("/details");
+    /// // Named routes with arguments
+    /// var navWithArgs = new Navigator
+    /// {
+    ///     InitialRoute = "/",
+    ///     RoutesWithArguments = new Dictionary&lt;string, Func&lt;object?, Widget&gt;&gt;
+    ///     {
+    ///         { "/", (args) => new HomePage() },
+    ///         { "/details", (args) => new DetailsPage((args as DetailsArgs)?.Id) },
+    ///         { "/profile", (args) => new ProfilePage { UserId = args as string } }
+    ///     }
+    /// };
+    ///
+    /// // Push with arguments
+    /// navWithArgs.PushNamed("/details", new DetailsArgs { Id = 42 });
     ///
     /// // Pop the current route
     /// nav.Pop();
@@ -41,9 +52,12 @@ namespace Flutter.Widgets
     public class Navigator : StatefulWidget
     {
         private readonly Dictionary<string, Func<Widget>> _routes = new();
+        private readonly Dictionary<string, Func<object?, Widget>> _routesWithArgs = new();
         private readonly Stack<string> _routeStack = new();
         private readonly Stack<Route> _routeObjectStack = new();
+        private readonly Dictionary<int, object?> _routeArguments = new(); // Map stack index to arguments
         private string? _currentRoute;
+        private object? _currentArguments;
         private Widget? _currentChildWidget;
         private Widget? _previousChildWidget;
         private Route? _currentRouteObject;
@@ -73,7 +87,7 @@ namespace Flutter.Widgets
         }
 
         /// <summary>
-        /// The dictionary of named routes.
+        /// The dictionary of named routes (without arguments).
         /// Keys are route names (e.g., "/", "/home", "/settings").
         /// Values are functions that return the Widget to display for that route.
         /// </summary>
@@ -91,7 +105,39 @@ namespace Flutter.Widgets
         }
 
         /// <summary>
-        /// Adds a route to the Navigator.
+        /// The dictionary of named routes that receive arguments.
+        /// Keys are route names (e.g., "/", "/home", "/details").
+        /// Values are functions that receive arguments and return the Widget to display.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// RoutesWithArguments = new Dictionary&lt;string, Func&lt;object?, Widget&gt;&gt;
+        /// {
+        ///     { "/details", (args) => new DetailsPage(args as DetailsArgs) },
+        ///     { "/profile", (args) => new ProfilePage { UserId = (int)args! } }
+        /// }
+        /// </code>
+        /// </example>
+        public Dictionary<string, Func<object?, Widget>> RoutesWithArguments
+        {
+            get => _routesWithArgs;
+            init
+            {
+                _routesWithArgs.Clear();
+                foreach (var kvp in value)
+                {
+                    _routesWithArgs[kvp.Key] = kvp.Value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the arguments for the current route (if any).
+        /// </summary>
+        public object? CurrentArguments => _currentArguments;
+
+        /// <summary>
+        /// Adds a route to the Navigator (without arguments).
         /// </summary>
         /// <param name="routeName">The name of the route (e.g., "/settings").</param>
         /// <param name="builder">A function that builds the widget for this route.</param>
@@ -101,14 +147,36 @@ namespace Flutter.Widgets
         }
 
         /// <summary>
+        /// Adds a route to the Navigator that receives arguments.
+        /// </summary>
+        /// <param name="routeName">The name of the route (e.g., "/details").</param>
+        /// <param name="builder">A function that receives arguments and builds the widget.</param>
+        public void AddRoute(string routeName, Func<object?, Widget> builder)
+        {
+            _routesWithArgs[routeName] = builder;
+        }
+
+        /// <summary>
         /// Removes a route from the Navigator.
         /// </summary>
         /// <param name="routeName">The name of the route to remove.</param>
         /// <returns>True if the route was removed, false if it wasn't found.</returns>
         public bool RemoveRoute(string routeName)
         {
-            return _routes.Remove(routeName);
+            return _routes.Remove(routeName) || _routesWithArgs.Remove(routeName);
         }
+
+        /// <summary>
+        /// Checks if a route exists (with or without arguments).
+        /// </summary>
+        private bool HasRoute(string routeName) =>
+            _routes.ContainsKey(routeName) || _routesWithArgs.ContainsKey(routeName);
+
+        /// <summary>
+        /// Gets all registered route names.
+        /// </summary>
+        public IReadOnlyCollection<string> RouteNames =>
+            _routes.Keys.Concat(_routesWithArgs.Keys).Distinct().ToList();
 
         /// <summary>
         /// Gets or sets the initial route name.
@@ -164,13 +232,45 @@ namespace Flutter.Widgets
         /// <returns>True if the route was pushed, false if the route doesn't exist.</returns>
         public bool Push(string routeName)
         {
-            if (!_routes.ContainsKey(routeName))
+            return PushNamed(routeName, null);
+        }
+
+        /// <summary>
+        /// Pushes a named route onto the navigation stack with optional arguments.
+        /// This is the standard Flutter-style method for named route navigation.
+        /// </summary>
+        /// <param name="routeName">The name of the route to push (e.g., "/details").</param>
+        /// <param name="arguments">Optional arguments to pass to the route builder.</param>
+        /// <returns>True if the route was pushed, false if the route doesn't exist.</returns>
+        /// <example>
+        /// <code>
+        /// // Push without arguments
+        /// navigator.PushNamed("/settings");
+        ///
+        /// // Push with arguments
+        /// navigator.PushNamed("/details", new { Id = 42, Title = "Item Details" });
+        ///
+        /// // Push with typed arguments
+        /// navigator.PushNamed("/profile", new ProfileArgs { UserId = userId });
+        /// </code>
+        /// </example>
+        public bool PushNamed(string routeName, object? arguments = null)
+        {
+            if (!HasRoute(routeName))
             {
                 return false;
             }
 
+            // Store arguments for this route (by stack index)
+            var stackIndex = _routeStack.Count;
+            if (arguments != null)
+            {
+                _routeArguments[stackIndex] = arguments;
+            }
+
             _routeStack.Push(routeName);
             _currentRoute = routeName;
+            _currentArguments = arguments;
             OnRouteChanged?.Invoke(routeName);
             SetState(() => { });
             return true;
@@ -262,10 +362,11 @@ namespace Flutter.Widgets
         /// </summary>
         /// <param name="routeName">The name of the route to push.</param>
         /// <param name="predicate">A function that returns true for routes to keep.</param>
+        /// <param name="arguments">Optional arguments to pass to the new route.</param>
         /// <returns>True if the operation succeeded.</returns>
-        public bool PushAndRemoveUntil(string routeName, Func<string, bool> predicate)
+        public bool PushAndRemoveUntil(string routeName, Func<string, bool> predicate, object? arguments = null)
         {
-            if (!_routes.ContainsKey(routeName))
+            if (!HasRoute(routeName))
             {
                 return false;
             }
@@ -273,12 +374,23 @@ namespace Flutter.Widgets
             // Remove routes until predicate is true
             while (_routeStack.Count > 0 && !predicate(_routeStack.Peek()))
             {
+                var poppedIndex = _routeStack.Count - 1;
+                _routeArguments.Remove(poppedIndex);
                 _routeStack.Pop();
+            }
+
+            // Push new route with arguments
+            var stackIndex = _routeStack.Count;
+            if (arguments != null)
+            {
+                _routeArguments[stackIndex] = arguments;
             }
 
             _routeStack.Push(routeName);
             _currentRoute = routeName;
+            _currentArguments = arguments;
             OnRouteChanged?.Invoke(routeName);
+            SetState(() => { });
             return true;
         }
 
@@ -289,19 +401,84 @@ namespace Flutter.Widgets
         /// <returns>True if the route was replaced, false if the route doesn't exist.</returns>
         public bool PushReplacement(string routeName)
         {
-            if (!_routes.ContainsKey(routeName))
+            return PushReplacementNamed(routeName, null);
+        }
+
+        /// <summary>
+        /// Replaces the current route with a new named route, with optional arguments.
+        /// </summary>
+        /// <param name="routeName">The name of the route to push.</param>
+        /// <param name="arguments">Optional arguments to pass to the route builder.</param>
+        /// <returns>True if the route was replaced, false if the route doesn't exist.</returns>
+        public bool PushReplacementNamed(string routeName, object? arguments = null)
+        {
+            if (!HasRoute(routeName))
             {
                 return false;
             }
 
+            // Remove arguments for the current route
             if (_routeStack.Count > 0)
             {
+                var oldIndex = _routeStack.Count - 1;
+                _routeArguments.Remove(oldIndex);
                 _routeStack.Pop();
+            }
+
+            // Push new route with arguments
+            var stackIndex = _routeStack.Count;
+            if (arguments != null)
+            {
+                _routeArguments[stackIndex] = arguments;
             }
 
             _routeStack.Push(routeName);
             _currentRoute = routeName;
+            _currentArguments = arguments;
             OnRouteChanged?.Invoke(routeName);
+            SetState(() => { });
+            return true;
+        }
+
+        /// <summary>
+        /// Pops the current route and immediately pushes a new named route.
+        /// Equivalent to calling Pop() followed by PushNamed().
+        /// </summary>
+        /// <param name="routeName">The name of the route to push after popping.</param>
+        /// <param name="arguments">Optional arguments to pass to the new route.</param>
+        /// <param name="result">Optional result to pass to the previous route.</param>
+        /// <returns>True if successful, false if the route doesn't exist or cannot pop.</returns>
+        public bool PopAndPushNamed(string routeName, object? arguments = null, object? result = null)
+        {
+            if (!HasRoute(routeName))
+            {
+                return false;
+            }
+
+            if (_routeStack.Count <= 1)
+            {
+                // Can't pop, but can still push replacement
+                return PushReplacementNamed(routeName, arguments);
+            }
+
+            // Pop the current route
+            var poppedIndex = _routeStack.Count - 1;
+            _routeArguments.Remove(poppedIndex);
+            var poppedRouteName = _routeStack.Pop();
+            OnPop?.Invoke(poppedRouteName);
+
+            // Push new route with arguments
+            var stackIndex = _routeStack.Count;
+            if (arguments != null)
+            {
+                _routeArguments[stackIndex] = arguments;
+            }
+
+            _routeStack.Push(routeName);
+            _currentRoute = routeName;
+            _currentArguments = arguments;
+            OnRouteChanged?.Invoke(routeName);
+            SetState(() => { });
             return true;
         }
 
@@ -322,8 +499,16 @@ namespace Flutter.Widgets
             _isTransitioning = true;
             _isPopping = true;
 
+            // Remove arguments for the popped route
+            var poppedIndex = _routeStack.Count - 1;
+            _routeArguments.Remove(poppedIndex);
+
             var poppedRouteName = _routeStack.Pop();
             _currentRoute = _routeStack.Peek();
+
+            // Restore arguments for the current route
+            var currentIndex = _routeStack.Count - 1;
+            _currentArguments = _routeArguments.TryGetValue(currentIndex, out var args) ? args : null;
 
             // Handle Route objects if present
             if (_routeObjectStack.Count > 0)
@@ -344,25 +529,39 @@ namespace Flutter.Widgets
                 {
                     _currentRouteObject = null;
                     // Fall back to named routes
-                    if (_routes.TryGetValue(_currentRoute, out var builder))
-                    {
-                        _currentChildWidget = builder();
-                    }
+                    _currentChildWidget = BuildWidgetForRoute(_currentRoute, _currentArguments);
                 }
             }
             else
             {
                 // Named routes only
-                if (_routes.TryGetValue(_currentRoute, out var builder))
-                {
-                    _currentChildWidget = builder();
-                }
+                _currentChildWidget = BuildWidgetForRoute(_currentRoute, _currentArguments);
             }
 
             OnPop?.Invoke(poppedRouteName);
             OnRouteChanged?.Invoke(_currentRoute);
             SetState(() => { });
             return true;
+        }
+
+        /// <summary>
+        /// Builds the widget for a named route, with or without arguments.
+        /// </summary>
+        private Widget? BuildWidgetForRoute(string routeName, object? arguments)
+        {
+            // First check for argument-receiving routes
+            if (_routesWithArgs.TryGetValue(routeName, out var builderWithArgs))
+            {
+                return builderWithArgs(arguments);
+            }
+
+            // Fall back to no-args routes
+            if (_routes.TryGetValue(routeName, out var builder))
+            {
+                return builder();
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -385,23 +584,35 @@ namespace Flutter.Widgets
         /// Pops all routes and pushes the specified route (resets to a single route).
         /// </summary>
         /// <param name="routeName">The name of the route to navigate to.</param>
+        /// <param name="arguments">Optional arguments to pass to the new route.</param>
         /// <returns>True if successful, false if the route doesn't exist.</returns>
-        public bool PopAllAndPush(string routeName)
+        public bool PopAllAndPush(string routeName, object? arguments = null)
         {
-            if (!_routes.ContainsKey(routeName))
+            if (!HasRoute(routeName))
             {
                 return false;
             }
 
+            // Pop all routes and clear arguments
             while (_routeStack.Count > 0)
             {
+                var poppedIndex = _routeStack.Count - 1;
+                _routeArguments.Remove(poppedIndex);
                 var poppedRoute = _routeStack.Pop();
                 OnPop?.Invoke(poppedRoute);
             }
 
+            // Push new route with arguments
+            if (arguments != null)
+            {
+                _routeArguments[0] = arguments;
+            }
+
             _routeStack.Push(routeName);
             _currentRoute = routeName;
+            _currentArguments = arguments;
             OnRouteChanged?.Invoke(routeName);
+            SetState(() => { });
             return true;
         }
 
@@ -414,7 +625,8 @@ namespace Flutter.Widgets
 
             nav.initialRoute = InitialRoute;
             nav.currentRoute = _currentRoute;
-            nav.routeNames = string.Join("|", _routes.Keys);
+            // Include all route names from both dictionaries
+            nav.routeNames = string.Join("|", RouteNames);
             nav.maintainState = MaintainState ? (byte)1 : (byte)0;
             nav.restorationScopeId = RestorationScopeId;
             nav.clipBehavior = ClipBehavior;
@@ -449,11 +661,24 @@ namespace Flutter.Widgets
                 // Build the current widget from the route
                 _currentChildWidget = _currentRouteObject.BuildPage(null);
             }
-            else if (_currentRoute != null && _routes.TryGetValue(_currentRoute, out var builder))
+            else if (_currentRoute != null)
             {
-                // Fall back to named route builder
-                _currentChildWidget = builder();
+                // Use named route builder (with or without arguments)
+                _currentChildWidget = BuildWidgetForRoute(_currentRoute, _currentArguments);
                 nav.transitionType = 0; // No transition for named routes
+
+                // Serialize current arguments for named routes
+                if (_currentArguments != null)
+                {
+                    try
+                    {
+                        nav.routeArguments = JsonSerializer.Serialize(_currentArguments);
+                    }
+                    catch
+                    {
+                        // If serialization fails, ignore arguments
+                    }
+                }
             }
 
             // Set transition state
