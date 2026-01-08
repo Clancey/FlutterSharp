@@ -163,9 +163,10 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<TextStruct>();
 			s.data = data;
 			// Complex type: object - skipped (requires marshaling)
-			// Complex type: TextStyle? - skipped (requires marshaling)
+			// TODO: style - requires TextStyle struct marshaling
 			// Complex type: StrutStyle? - skipped (requires marshaling)
-			// Complex type: TextAlign? - skipped (requires marshaling)
+			if (textAlign.HasValue)
+				s.textAlign = textAlign.Value;
 			if (textDirection.HasValue)
 				s.textDirection = textDirection.Value;
 			// Complex type: Locale? - skipped (requires marshaling)

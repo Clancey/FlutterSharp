@@ -90,6 +90,38 @@ TextDirection parseTextDirection(String? textDirectionString) {
   return textDirection;
 }
 
+// ============================================================================
+// Integer-based enum parsing functions for FFI struct values
+// ============================================================================
+
+/// Parse TextAlign from integer value (matches C# TextAlign enum)
+/// 0=Left, 1=Right, 2=Center, 3=Justify, 4=Start, 5=End
+TextAlign? parseTextAlignFromInt(int? value) {
+  if (value == null || value < 0 || value > 5) return null;
+  return TextAlign.values[value];
+}
+
+/// Parse TextOverflow from integer value (matches C# TextOverflow enum)
+/// 0=Clip, 1=Fade, 2=Ellipsis, 3=Visible
+TextOverflow? parseTextOverflowFromInt(int? value) {
+  if (value == null || value < 0 || value > 3) return null;
+  return TextOverflow.values[value];
+}
+
+/// Parse TextDirection from integer value
+/// 0=rtl, 1=ltr
+TextDirection? parseTextDirectionFromInt(int? value) {
+  if (value == null || value < 0 || value > 1) return null;
+  return TextDirection.values[value];
+}
+
+/// Parse TextWidthBasis from integer value
+/// 0=parent, 1=longestLine
+TextWidthBasis? parseTextWidthBasisFromInt(int? value) {
+  if (value == null || value < 0 || value > 1) return null;
+  return TextWidthBasis.values[value];
+}
+
 FontWeight parseFontWeight(String textFontWeight) {
   FontWeight fontWeight = FontWeight.normal;
   switch (textFontWeight) {

@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
+import 'package:flutter_module/generated_utility_parsers.dart';
 
 import '../utils.dart';
 import '../maui_flutter.dart';
@@ -12,45 +13,48 @@ class TextWidgetParser implements WidgetParser {
   @override
   Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     var map = Pointer<TextStruct>.fromAddress(fos.handle.address).ref;
-    String? data = map.hasData == 1 ? map.data.toDartString() : null;
-    String? textAlignString = null; //map['textAlign'];
-    String? overflow = null; //map['overflow'];
-    int? maxLines = null; //map['maxLines'];
-    String? semanticsLabel = null; // map['semanticsLabel'];
-    bool? softWrap = null; //map['softWrap'];
-    String? textDirectionString = null; //map['textDirection'];
-    double? textScaleFactor = null; // map['textScaleFactor'];
-    var textSpan;
-    var textSpanParser = TextSpanParser();
-    // if (map.containsKey("textSpan")) {
-    //   textSpan = textSpanParser.parse(map['textSpan']);
-    // }
 
-    if (textSpan == null) {
-      return Text(
-        data ?? "",
-        textAlign: parseTextAlign(textAlignString),
-        overflow: parseTextOverflow(overflow),
-        maxLines: maxLines,
-        semanticsLabel: semanticsLabel,
-        softWrap: softWrap,
-        textDirection: parseTextDirection(textDirectionString),
-        // style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
-        textScaleFactor: textScaleFactor,
-      );
-    } else {
-      return Text.rich(
-        textSpan,
-        textAlign: parseTextAlign(textAlignString),
-        overflow: parseTextOverflow(overflow),
-        maxLines: maxLines,
-        semanticsLabel: semanticsLabel,
-        softWrap: softWrap,
-        textDirection: parseTextDirection(textDirectionString),
-        // style: map.containsKey('style') ? parseTextStyle(map['style']) : null,
-        textScaleFactor: textScaleFactor,
-      );
-    }
+    // Extract text data (required)
+    String? data = map.hasData == 1 && map.data.address != 0
+        ? map.data.toDartString()
+        : null;
+
+    // Extract optional properties from struct
+    TextAlign? textAlign = parseTextAlignFromInt(map.textAlign);
+    TextOverflow? overflow = parseTextOverflowFromInt(map.overflow);
+    TextDirection? textDirection = parseTextDirectionFromInt(map.textDirection);
+    TextWidthBasis? textWidthBasis = parseTextWidthBasisFromInt(map.textWidthBasis);
+
+    int? maxLines = map.hasMaxLines == 1 ? map.maxLines : null;
+    bool? softWrap = map.hasSoftWrap == 1 ? (map.softWrap == 1) : null;
+    double? textScaleFactor = map.hasTextScaleFactor == 1 ? map.textScaleFactor : null;
+
+    String? semanticsLabel = map.hasSemanticsLabel == 1 && map.semanticsLabel.address != 0
+        ? map.semanticsLabel.toDartString()
+        : null;
+
+    // Parse TextStyle if provided
+    TextStyle? textStyle = map.style.address != 0
+        ? parseTextStyleFromStruct(map.style.ref)
+        : null;
+
+    // Note: textSpan (rich text) support would require additional struct/parser work
+    // For now, we use simple Text widget
+
+    return Text(
+      data ?? "",
+      textAlign: textAlign,
+      overflow: overflow,
+      maxLines: maxLines,
+      semanticsLabel: semanticsLabel,
+      softWrap: softWrap,
+      textDirection: textDirection,
+      style: textStyle,
+      textWidthBasis: textWidthBasis,
+      // textScaleFactor is deprecated in favor of textScaler, but keep for compatibility
+      // ignore: deprecated_member_use
+      textScaleFactor: textScaleFactor,
+    );
   }
 
   @override
