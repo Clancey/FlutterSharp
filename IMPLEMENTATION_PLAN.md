@@ -570,6 +570,7 @@ When starting a new loop, work on these in order:
 | MAT003 | 2026-01-07 | 48c37c1 | Implemented Card: C# widget/struct (Card.cs, CardStruct.cs) + Dart struct/parser (card_struct.dart, card_parser.dart). Supports child, color, shadowColor, surfaceTintColor, elevation, borderOnForeground, clipBehavior, semanticContainer. Complex types (shape, margin) declared but pending marshaling support. |
 | LST003 | 2026-01-08 | f8e143a | Implemented ListTile: C# widget/struct (ListTile.cs, ListTileStruct.cs) + Dart struct/parser (listtile_struct.dart, listtile_widget_parser.dart). Supports leading/title/subtitle/trailing widgets, callbacks (onTap, onLongPress, onFocusChange), colors (tileColor, selectedTileColor, iconColor, textColor, focusColor, hoverColor, splashColor), booleans (isThreeLine, dense, enabled, selected, autofocus, enableFeedback), numerics (horizontalTitleGap, minVerticalPadding, minLeadingWidth, minTileHeight), enums (titleAlignment, style). First list widget complete for Phase 4.4. |
 | LST001 | 2026-01-08 | a8893d1 | Fixed ListView widget implementation: Rewrote ListViewStruct.cs (removed NativeNullable, added Has* flags), rewrote ListView.cs (IEnumerable<Widget>, collection initializers, property assignments), created listview_struct.dart FFI struct, implemented listview_widget_parser.dart with full property parsing. |
+| LST002 | 2026-01-08 | e5ecae2 | Fixed GridView widget implementation: Rewrote GridViewStruct.cs (proper Has* flags, removed complex IntPtr types), rewrote GridView.cs (IEnumerable<Widget>, collection initializers, full property support), created gridview_struct.dart FFI struct, fixed gridview_widget_parser.dart to parse FFI struct and build Flutter GridView.count. Phase 4.4 List Widgets COMPLETE. |
 
 ---
 
@@ -881,14 +882,14 @@ After hitting a blocker:
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
 | LST001 | Ensure ListView works | completed | Fixed ListViewStruct (removed NativeNullable), ListView.cs (proper property assignment), created Dart struct/parser |
-| LST002 | Ensure GridView works | pending | Has struct, verify end-to-end |
+| LST002 | Ensure GridView works | completed | Rewrote GridViewStruct.cs (proper Has* flags), GridView.cs (collection initializers, properties), created gridview_struct.dart FFI struct, fixed gridview_widget_parser.dart |
 | LST003 | Implement ListTile C# widget | completed | Full C# widget/struct + Dart struct/parser with leading/title/subtitle/trailing widgets, callbacks (onTap, onLongPress, onFocusChange), colors, and numeric properties |
 
 ### Phase 4 Complete When:
 - [x] All button widgets work (ElevatedButton, TextButton, OutlinedButton, IconButton, FloatingActionButton) ✅
 - [x] Basic form widgets work (Checkbox, Radio, Switch, Slider) ✅
 - [x] Scaffold/AppBar/Drawer application structure works ✅
-- [ ] List widgets work with items
+- [x] List widgets work with items (ListView, GridView, ListTile) ✅
 
 ---
 
