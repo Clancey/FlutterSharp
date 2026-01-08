@@ -240,7 +240,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | BLD001 | Create ListViewBuilder C# widget | completed | Created ListViewBuilderStruct.cs and ListViewBuilder.cs with itemCount, itemBuilder, and SendEvent handler |
 | BLD002 | Handle ItemBuilder response in FlutterManager | completed | Already handled by existing HandleEvent → widget.SendEvent → callback flow via platform MethodCaller |
 | BLD003 | Create GridViewBuilder C# widget | completed | Created GridViewBuilderStruct.cs, GridViewBuilder.cs, gridviewbuilder_parser.dart with itemCount, crossAxisCount, spacing, aspect ratio |
-| BLD004 | Test builder callback round-trip | pending | Verify async item building works |
+| BLD004 | Test builder callback round-trip | completed | 25 unit tests pass: CallbackRegistry, FlutterManager event routing, ItemBuilder pattern simulation |
 
 ---
 
@@ -343,6 +343,7 @@ When starting a new loop, work on these in order:
 | EV003 | 2026-01-07 | pending | Implemented complex gesture event data types. Created GestureEventData.cs with Velocity struct and 20+ event classes (TapDownDetails, TapUpDetails, DragStartDetails, DragUpdateDetails, DragEndDetails, LongPressStartDetails, LongPressMoveUpdateDetails, LongPressEndDetails, ScaleStartDetails, ScaleUpdateDetails, ScaleEndDetails, ForcePressDetails, PointerDownEvent, PointerMoveEvent, PointerUpEvent, PointerCancelEvent, PointerHoverEvent, PointerScrollEvent). Enhanced FlutterManager.ExtractCallbackArguments() with CreateGestureEventFromType() and TryCreateGestureEvent() for typed JSON→C# conversion. Updated Dart callback creators to include 'eventType' field for all gesture callbacks. |
 | EV004 | 2026-01-07 | pending | Implemented complete event routing in FlutterManager. Enhanced CallbackRegistry with: type-safe `Invoke<T>()` and `InvokeVoid()` methods, `OnCallbackError` event for error handling, `TotalInvocations`/`FailedInvocations` statistics. Added FlutterManager `InvokeCallbackTyped()` for type-specific dispatch (supports all 20+ gesture types). Added `OnActionInvoking`/`OnActionInvoked` events for middleware/interception pattern. Added `GetEventStats()` API for diagnostics. Phase 3 callback system complete! |
 | BLD001-003 | 2026-01-07 | dfa1ca4 | Implemented builder callback widgets (ListViewBuilder, GridViewBuilder). Created C# widgets with itemBuilder: Func<int, Widget> callback, Dart parsers using FutureBuilder + requestMauiData for async item building. Flow: Dart calls requestMauiData → C# HandleEvent → widget.SendEvent → callback returns widget pointer → Dart builds from pointer. |
+| BLD004 | 2026-01-07 | f7f907e | Implemented comprehensive unit tests for builder callback round-trip. 25 tests covering: CallbackRegistry, FlutterManager event handlers, Event message parsing, ItemBuilder callback pattern, Action handling, full round-trip simulation. Updated test project to NUnit 4.2.2, fixed FFI pinning issues in tests. |
 
 ---
 
