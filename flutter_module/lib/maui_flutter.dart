@@ -101,7 +101,7 @@ class DynamicWidgetBuilder {
     SafeAreaWidgetParser(),
     ScaffoldParser(),
     SelectableTextWidgetParser(),
-    SizedBoxWidgetParser(),
+    // SizedBoxWidgetParser() - removed: legacy parser returned null, generated SizedBoxParser is used instead
     StackWidgetParser(),
     StatefulWidgetParser(),
     TabParser(),
