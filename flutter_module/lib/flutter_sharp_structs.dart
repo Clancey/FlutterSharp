@@ -33,6 +33,7 @@ export 'generated/structs/bottomnavigationbaritem_struct.dart';
 export 'generated/structs/navigator_struct.dart';
 export 'generated/structs/cupertinobutton_struct.dart';
 export 'generated/structs/cupertinotextfield_struct.dart';
+export 'generated/structs/cupertinoswitch_struct.dart';
 
 /// Abstract interface for FlutterObjectStruct to allow type-safe parsing.
 /// This is used as a parameter type in parser methods.

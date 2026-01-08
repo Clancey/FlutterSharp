@@ -78,6 +78,7 @@ import 'parsers/cupertinobutton_parser.dart';
 import 'parsers/cupertinotextfield_parser.dart';
 import 'parsers/cupertinonavigationbar_parser.dart';
 import 'parsers/cupertinotabbar_parser.dart';
+import 'parsers/cupertinoswitch_parser.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
@@ -160,6 +161,7 @@ class DynamicWidgetBuilder {
     CupertinoTextFieldParser(),
     CupertinoNavigationBarParser(),
     CupertinoTabBarParser(),
+    CupertinoSwitchParser(),
 
     // Add all generated parsers (418 parsers from Flutter SDK)
     ...generatedParsers,
