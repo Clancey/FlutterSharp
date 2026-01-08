@@ -42,10 +42,58 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ---
 
-**Last checked**: 2026-01-08 (Phase 1 fully complete!)
+### ~~FFI Struct Blittability Issues~~ (FIXED 2026-01-08, commit ec0fb21)
+
+**Problem**: Code generator produced non-blittable C# struct fields that caused compilation errors:
+1. `object` type used for unmapped Dart types (breaks `GCHandle.Alloc` with `Pinned`)
+2. `IntPtr = null` for optional parameters (IntPtr is a value type, can't be null)
+3. Non-nullable string setters referenced `Has{prop}` flags that weren't generated
+
+**Root Cause**: Three issues in the code generator:
+- `DartToCSharpMapper.MapType()` returned `object` as fallback for unknown types
+- `CSharpWidgetGenerator.IsReferenceType()` didn't recognize `IntPtr` as a value type
+- `CSharpStruct.scriban` template unconditionally generated `Has{prop}` reference in string setters
+
+**Solution**:
+1. Changed fallback type from `object` to `IntPtr` in DartToCSharpMapper.cs line 233
+2. Added `IntPtr`, `nint`, `UIntPtr`, `nuint` to valueTypes set in CSharpWidgetGenerator.cs
+3. Made string setter Has flag conditional on `is_nullable` in CSharpStruct.scriban
+
+**Files Changed**:
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/TypeMapping/DartToCSharpMapper.cs`
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/Generators/CSharp/CSharpWidgetGenerator.cs`
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/Generators/CSharp/CSharpStructGenerator.cs`
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/Templates/CSharpStruct.scriban`
+
+---
+
+### ~~Dart Import Path Mismatch~~ (FIXED 2026-01-08, commit 74a3e49)
+
+**Problem**: Dart analyzer reported 472+ errors for missing struct files. Import paths pointed to `lib/structs/` but generated structs were in `lib/generated/structs/`.
+
+**Root Cause**: Project restructuring moved generated files to `lib/generated/` subdirectories but import statements weren't updated:
+- `flutter_sharp_structs.dart` exported from `structs/` instead of `generated/structs/`
+- `generated_utility_parsers.dart` imported from `structs/` instead of `generated/structs/`
+- `generated_parsers.dart` imported from `parsers/` instead of `generated/parsers/`
+- Manual parsers in `lib/parsers/` imported from `../structs/` instead of `../generated/structs/`
+
+**Solution**:
+1. Updated all export/import paths to use `generated/` prefix
+2. Removed deleted parser imports (modalbarrier_parser.dart was among skipped parsers)
+3. Fixed 155 files with import path issues
+
+**Files Changed**:
+- `flutter_module/lib/flutter_sharp_structs.dart`
+- `flutter_module/lib/generated_utility_parsers.dart`
+- `flutter_module/lib/generated_parsers.dart`
+- All 145+ parser files in `flutter_module/lib/parsers/`
+
+---
+
+**Last checked**: 2026-01-08
 **C# compilation errors**: 0 ✅
 **Dart analysis errors**: 0 ✅
-**Dart warnings**: many (unused imports, unnecessary null comparisons - cosmetic)
+**Dart warnings**: ~2050 (unused imports, unnecessary null comparisons - cosmetic)
 **Note**: Both C# and Dart builds pass completely! Widgets with complex callback types are skipped from parser generation.
 
 ### Error Resolution Summary (this session)
