@@ -231,7 +231,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | EV001 | Implement VoidCallback | completed | Action type callbacks now work |
 | EV002 | Implement ValueChanged<T> | completed | Added typed callback creators for String, int, double, bool, DateTime, TimeOfDay, Color, RangeValues. HandleAction handler in FlutterManager receives and routes callbacks from Dart. |
 | EV003 | Implement complex event data | completed | TapDownDetails, DragUpdateDetails, ScaleUpdateDetails, ForcePressDetails, PointerEvents - all 20+ gesture event types |
-| EV004 | Implement event routing | pending | FlutterManager event dispatch |
+| EV004 | Implement event routing | completed | Type-safe callback invocation, OnActionInvoking/OnActionInvoked events, CallbackErrorEventArgs, EventRoutingStats diagnostic API |
 
 ---
 
@@ -332,6 +332,7 @@ When starting a new loop, work on these in order:
 | CB004 | 2026-01-07 | pending | Implemented callback cleanup on widget disposal: Added `_registeredCallbackIds` list to Widget.cs, created `RegisterCallback()` helper method that tracks IDs, updated `Dispose()` to unregister all tracked callbacks. Updated CSharpWidget.scriban template to use `RegisterCallback()` instead of direct CallbackRegistry.Register(). Prevents memory leaks from orphaned callbacks. |
 | EV002 | 2026-01-07 | 21e0a8a | Implemented typed callback support for Action<T> and ValueChanged<T>. Added HandleAction handler in FlutterManager to receive callback invocations from Dart. Added ExtractCallbackArguments and ConvertJsonElement helpers for typed JSON→C# conversion. Generated typed ValueChanged<T> creators in DartUtilityParserGenerator for String, int, double, bool, DateTime, TimeOfDay, Color, RangeValues. Updated DartParser.scriban to use type-specific callbacks. Added SingleChildScrollView to skipParserGeneration. Added FormFieldValidator support. |
 | EV003 | 2026-01-07 | pending | Implemented complex gesture event data types. Created GestureEventData.cs with Velocity struct and 20+ event classes (TapDownDetails, TapUpDetails, DragStartDetails, DragUpdateDetails, DragEndDetails, LongPressStartDetails, LongPressMoveUpdateDetails, LongPressEndDetails, ScaleStartDetails, ScaleUpdateDetails, ScaleEndDetails, ForcePressDetails, PointerDownEvent, PointerMoveEvent, PointerUpEvent, PointerCancelEvent, PointerHoverEvent, PointerScrollEvent). Enhanced FlutterManager.ExtractCallbackArguments() with CreateGestureEventFromType() and TryCreateGestureEvent() for typed JSON→C# conversion. Updated Dart callback creators to include 'eventType' field for all gesture callbacks. |
+| EV004 | 2026-01-07 | pending | Implemented complete event routing in FlutterManager. Enhanced CallbackRegistry with: type-safe `Invoke<T>()` and `InvokeVoid()` methods, `OnCallbackError` event for error handling, `TotalInvocations`/`FailedInvocations` statistics. Added FlutterManager `InvokeCallbackTyped()` for type-specific dispatch (supports all 20+ gesture types). Added `OnActionInvoking`/`OnActionInvoked` events for middleware/interception pattern. Added `GetEventStats()` API for diagnostics. Phase 3 callback system complete! |
 
 ---
 

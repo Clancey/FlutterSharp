@@ -134,6 +134,17 @@ namespace Flutter.Internal
 		}
 
 		/// <summary>
+		/// Event raised before an action callback is invoked.
+		/// Set Cancel = true in EventArgs to prevent invocation.
+		/// </summary>
+		public static event EventHandler<ActionInvokingEventArgs> OnActionInvoking;
+
+		/// <summary>
+		/// Event raised after an action callback is invoked successfully.
+		/// </summary>
+		public static event EventHandler<ActionInvokedEventArgs> OnActionInvoked;
+
+		/// <summary>
 		/// Handles action callbacks from Dart side.
 		/// When a user interacts with a Flutter widget (e.g., taps a button),
 		/// the Dart side sends an action message with the callback ID.
@@ -182,8 +193,24 @@ namespace Flutter.Internal
 				// Extract typed arguments if present
 				var args = ExtractCallbackArguments(message);
 
-				// Invoke the callback
-				CallbackRegistry.Invoke(actionId, args);
+				// Extract widget type hint if available
+				var widgetType = message.TryGetValue("widgetType", out var wtElem) ? wtElem.GetString() : null;
+
+				// Raise pre-invoke event for filtering/interception
+				var invokingArgs = new ActionInvokingEventArgs(actionId, args, widgetType);
+				OnActionInvoking?.Invoke(null, invokingArgs);
+
+				if (invokingArgs.Cancel)
+				{
+					callback?.Invoke("{\"success\": true, \"cancelled\": true}");
+					return;
+				}
+
+				// Use typed invocation when possible for better performance
+				InvokeCallbackTyped(actionId, args);
+
+				// Raise post-invoke event for logging/debugging
+				OnActionInvoked?.Invoke(null, new ActionInvokedEventArgs(actionId, args, widgetType));
 
 				// Send success response if callback provided
 				callback?.Invoke("{\"success\": true}");
@@ -193,6 +220,111 @@ namespace Flutter.Internal
 				Console.WriteLine($"FlutterManager: Error handling action: {ex}");
 				callback?.Invoke($"{{\"success\": false, \"error\": \"{ex.Message}\"}}");
 			}
+		}
+
+		/// <summary>
+		/// Invokes a callback using typed methods when possible for better performance.
+		/// Falls back to DynamicInvoke for unknown types.
+		/// </summary>
+		private static void InvokeCallbackTyped(long actionId, object[] args)
+		{
+			// No arguments - use void callback
+			if (args == null || args.Length == 0)
+			{
+				CallbackRegistry.InvokeVoid(actionId);
+				return;
+			}
+
+			// Single argument - try typed invocation
+			if (args.Length == 1)
+			{
+				var arg = args[0];
+				if (arg == null)
+				{
+					CallbackRegistry.Invoke(actionId, args);
+					return;
+				}
+
+				// Route to type-specific invoke method
+				switch (arg)
+				{
+					case bool boolVal:
+						CallbackRegistry.Invoke(actionId, boolVal);
+						break;
+					case int intVal:
+						CallbackRegistry.Invoke(actionId, intVal);
+						break;
+					case double doubleVal:
+						CallbackRegistry.Invoke(actionId, doubleVal);
+						break;
+					case string strVal:
+						CallbackRegistry.Invoke(actionId, strVal);
+						break;
+					// Gesture event types
+					case TapDownDetails tapDown:
+						CallbackRegistry.Invoke(actionId, tapDown);
+						break;
+					case TapUpDetails tapUp:
+						CallbackRegistry.Invoke(actionId, tapUp);
+						break;
+					case DragUpdateDetails dragUpdate:
+						CallbackRegistry.Invoke(actionId, dragUpdate);
+						break;
+					case DragEndDetails dragEnd:
+						CallbackRegistry.Invoke(actionId, dragEnd);
+						break;
+					case DragStartDetails dragStart:
+						CallbackRegistry.Invoke(actionId, dragStart);
+						break;
+					case ScaleUpdateDetails scaleUpdate:
+						CallbackRegistry.Invoke(actionId, scaleUpdate);
+						break;
+					case ScaleStartDetails scaleStart:
+						CallbackRegistry.Invoke(actionId, scaleStart);
+						break;
+					case ScaleEndDetails scaleEnd:
+						CallbackRegistry.Invoke(actionId, scaleEnd);
+						break;
+					case LongPressStartDetails lpStart:
+						CallbackRegistry.Invoke(actionId, lpStart);
+						break;
+					case LongPressMoveUpdateDetails lpMove:
+						CallbackRegistry.Invoke(actionId, lpMove);
+						break;
+					case LongPressEndDetails lpEnd:
+						CallbackRegistry.Invoke(actionId, lpEnd);
+						break;
+					case ForcePressDetails forcePress:
+						CallbackRegistry.Invoke(actionId, forcePress);
+						break;
+					case PointerDownEvent ptrDown:
+						CallbackRegistry.Invoke(actionId, ptrDown);
+						break;
+					case PointerMoveEvent ptrMove:
+						CallbackRegistry.Invoke(actionId, ptrMove);
+						break;
+					case PointerUpEvent ptrUp:
+						CallbackRegistry.Invoke(actionId, ptrUp);
+						break;
+					case PointerCancelEvent ptrCancel:
+						CallbackRegistry.Invoke(actionId, ptrCancel);
+						break;
+					case PointerHoverEvent ptrHover:
+						CallbackRegistry.Invoke(actionId, ptrHover);
+						break;
+					case PointerScrollEvent ptrScroll:
+						CallbackRegistry.Invoke(actionId, ptrScroll);
+						break;
+					default:
+						// Fall back to dynamic invoke for unknown types
+						CallbackRegistry.Invoke(actionId, args);
+						break;
+				}
+				return;
+			}
+
+			// Multiple arguments - use dynamic invoke
+			CallbackRegistry.Invoke(actionId, args);
 		}
 
 		/// <summary>
@@ -712,6 +844,119 @@ namespace Flutter.Internal
 				EventHandlers.Clear();
 				_isReady = false;
 			}
+		}
+
+		/// <summary>
+		/// Gets diagnostic information about event routing.
+		/// </summary>
+		public static EventRoutingStats GetEventStats()
+		{
+			return new EventRoutingStats
+			{
+				TotalCallbackInvocations = CallbackRegistry.TotalInvocations,
+				FailedCallbackInvocations = CallbackRegistry.FailedInvocations,
+				RegisteredCallbacks = CallbackRegistry.Count,
+				TrackedWidgets = AliveWidgets.Count,
+				RegisteredEventHandlers = EventHandlers.Count
+			};
+		}
+	}
+
+	/// <summary>
+	/// Event args for action invocation pre-event.
+	/// </summary>
+	public class ActionInvokingEventArgs : EventArgs
+	{
+		/// <summary>
+		/// The callback ID being invoked.
+		/// </summary>
+		public long ActionId { get; }
+
+		/// <summary>
+		/// The arguments to be passed to the callback.
+		/// </summary>
+		public object[] Arguments { get; }
+
+		/// <summary>
+		/// The widget type that raised the event, if known.
+		/// </summary>
+		public string WidgetType { get; }
+
+		/// <summary>
+		/// Set to true to cancel the callback invocation.
+		/// </summary>
+		public bool Cancel { get; set; }
+
+		public ActionInvokingEventArgs(long actionId, object[] arguments, string widgetType)
+		{
+			ActionId = actionId;
+			Arguments = arguments;
+			WidgetType = widgetType;
+			Cancel = false;
+		}
+	}
+
+	/// <summary>
+	/// Event args for action invocation post-event.
+	/// </summary>
+	public class ActionInvokedEventArgs : EventArgs
+	{
+		/// <summary>
+		/// The callback ID that was invoked.
+		/// </summary>
+		public long ActionId { get; }
+
+		/// <summary>
+		/// The arguments that were passed to the callback.
+		/// </summary>
+		public object[] Arguments { get; }
+
+		/// <summary>
+		/// The widget type that raised the event, if known.
+		/// </summary>
+		public string WidgetType { get; }
+
+		public ActionInvokedEventArgs(long actionId, object[] arguments, string widgetType)
+		{
+			ActionId = actionId;
+			Arguments = arguments;
+			WidgetType = widgetType;
+		}
+	}
+
+	/// <summary>
+	/// Diagnostic information about event routing.
+	/// </summary>
+	public class EventRoutingStats
+	{
+		/// <summary>
+		/// Total number of callback invocations since startup.
+		/// </summary>
+		public long TotalCallbackInvocations { get; set; }
+
+		/// <summary>
+		/// Total number of failed callback invocations since startup.
+		/// </summary>
+		public long FailedCallbackInvocations { get; set; }
+
+		/// <summary>
+		/// Number of currently registered callbacks.
+		/// </summary>
+		public int RegisteredCallbacks { get; set; }
+
+		/// <summary>
+		/// Number of currently tracked widgets.
+		/// </summary>
+		public int TrackedWidgets { get; set; }
+
+		/// <summary>
+		/// Number of registered event handlers.
+		/// </summary>
+		public int RegisteredEventHandlers { get; set; }
+
+		public override string ToString()
+		{
+			return $"EventRoutingStats {{ Invocations: {TotalCallbackInvocations}, Failed: {FailedCallbackInvocations}, Callbacks: {RegisteredCallbacks}, Widgets: {TrackedWidgets}, Handlers: {RegisteredEventHandlers} }}";
 		}
 	}
 }
