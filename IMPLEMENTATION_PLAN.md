@@ -362,6 +362,7 @@ When starting a new loop, work on these in order:
 | RT001 | 2026-01-08 | dfe033e | Fixed GCHandle pinning crash: "Object contains references" error in BaseStruct. Created StructMemoryTracker static class to externally track string/children allocations, keeping struct classes blittable for GCHandle.Alloc with GCHandleType.Pinned. |
 | D004 | 2026-01-08 | a9dd4d7 | Fixed FFI struct layout mismatch: Removed Pointer-based IsNullable logic from DartStructGenerator and WidgetAnalysisEnricher. Changed Dart parsers to use .address != 0 for pointer null checks instead of hasXxx flags. Fixed hand-written parsers (align_widget_parser, container_widget_parser). Cleaned up duplicate generated/ directory. |
 | DR005 | 2026-01-08 | d0d6e54 | Complete TextWidgetParser to read all struct properties: textAlign, overflow, textDirection, textWidthBasis, maxLines, softWrap, textScaleFactor, semanticsLabel, style. Added integer-based enum parsing functions (parseTextAlignFromInt, etc). Fixed Text.cs to set textAlign on backing struct. |
+| FFI001 | 2026-01-08 | ef35b2d | Fixed FFI struct layout mismatch: C# WidgetStruct had unused 'key' field that Dart WidgetStruct didn't have, causing 8-byte offset for all derived struct fields. Removed the 'key' field (never used). This fix enables correct Text widget rendering. |
 
 ---
 
