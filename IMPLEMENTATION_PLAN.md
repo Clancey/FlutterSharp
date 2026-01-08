@@ -106,7 +106,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | D001 | Run dart analyze on flutter_module | completed | Baseline: 3684 errors, now 1448 |
 | D002 | Fix Dart parser syntax errors | completed | Fixed ToCamelCase, added stub parsers, 376→0 undefined_method |
 | D003 | Fix Dart struct definition errors | completed | Removed invalid interface classes, fixed template |
-| D004 | Ensure parsers match C# structs | pending | Field order, types |
+| D004 | Ensure parsers match C# structs | completed | FFI struct layout fixed - Dart now uses .address != 0 for pointer null checks |
 | D005 | Remove duplicate nested directories | completed | lib/structs/structs/ and lib/structs/parsers/ removed |
 | D006 | Fix FFI struct field type annotations | completed | Changed Int8/Double to int/double with @Int8()/@Double() |
 | D007 | Fix argument_type_not_assignable errors | completed | 302→43 (86% reduction), fixed property name mapping in DartParserGenerator |
@@ -358,7 +358,8 @@ When starting a new loop, work on these in order:
 | EV004 | 2026-01-07 | pending | Implemented complete event routing in FlutterManager. Enhanced CallbackRegistry with: type-safe `Invoke<T>()` and `InvokeVoid()` methods, `OnCallbackError` event for error handling, `TotalInvocations`/`FailedInvocations` statistics. Added FlutterManager `InvokeCallbackTyped()` for type-specific dispatch (supports all 20+ gesture types). Added `OnActionInvoking`/`OnActionInvoked` events for middleware/interception pattern. Added `GetEventStats()` API for diagnostics. Phase 3 callback system complete! |
 | BLD001-003 | 2026-01-07 | dfa1ca4 | Implemented builder callback widgets (ListViewBuilder, GridViewBuilder). Created C# widgets with itemBuilder: Func<int, Widget> callback, Dart parsers using FutureBuilder + requestMauiData for async item building. Flow: Dart calls requestMauiData → C# HandleEvent → widget.SendEvent → callback returns widget pointer → Dart builds from pointer. |
 | BLD004 | 2026-01-07 | f7f907e | Implemented comprehensive unit tests for builder callback round-trip. 25 tests covering: CallbackRegistry, FlutterManager event handlers, Event message parsing, ItemBuilder callback pattern, Action handling, full round-trip simulation. Updated test project to NUnit 4.2.2, fixed FFI pinning issues in tests. |
-| RT001 | 2026-01-08 | pending | Fixed GCHandle pinning crash: "Object contains references" error in BaseStruct. Created StructMemoryTracker static class to externally track string/children allocations, keeping struct classes blittable for GCHandle.Alloc with GCHandleType.Pinned. |
+| RT001 | 2026-01-08 | dfe033e | Fixed GCHandle pinning crash: "Object contains references" error in BaseStruct. Created StructMemoryTracker static class to externally track string/children allocations, keeping struct classes blittable for GCHandle.Alloc with GCHandleType.Pinned. |
+| D004 | 2026-01-08 | a9dd4d7 | Fixed FFI struct layout mismatch: Removed Pointer-based IsNullable logic from DartStructGenerator and WidgetAnalysisEnricher. Changed Dart parsers to use .address != 0 for pointer null checks instead of hasXxx flags. Fixed hand-written parsers (align_widget_parser, container_widget_parser). Cleaned up duplicate generated/ directory. |
 
 ---
 
