@@ -969,7 +969,7 @@ After hitting a blocker:
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
 | CUP001 | Implement CupertinoButton | completed | iOS-style button with filled variant, padding, colors, sizeStyle |
-| CUP002 | Implement CupertinoTextField | pending | iOS-style text field |
+| CUP002 | Implement CupertinoTextField | completed | iOS-style text field with onChanged, onSubmitted, placeholder, styling, cursor customization |
 | CUP003 | Implement CupertinoNavigationBar | pending | iOS-style nav bar |
 | CUP004 | Implement CupertinoTabBar | pending | iOS-style tab bar |
 | CUP005 | Implement CupertinoSwitch | pending | iOS-style switch |

@@ -75,6 +75,7 @@ import 'parsers/refreshindicator_parser.dart';
 import 'parsers/infinitelistview_parser.dart';
 import 'parsers/infinitegridview_parser.dart';
 import 'parsers/cupertinobutton_parser.dart';
+import 'parsers/cupertinotextfield_parser.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
@@ -154,6 +155,7 @@ class DynamicWidgetBuilder {
     MaterialAppParser(),
     RefreshIndicatorParser(),
     CupertinoButtonParser(),
+    CupertinoTextFieldParser(),
 
     // Add all generated parsers (418 parsers from Flutter SDK)
     ...generatedParsers,
