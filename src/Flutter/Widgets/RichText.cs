@@ -165,7 +165,8 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<RichTextStruct>();
 			// Children are set in PrepareForSending to support collection initializers
 			// Complex type: InlineSpan - skipped (requires marshaling)
-			// Complex type: TextAlign? - skipped (requires marshaling)
+			if (textAlign.HasValue)
+				s.textAlign = textAlign.Value;
 			if (textDirection.HasValue)
 				s.textDirection = textDirection.Value;
 			s.softWrap = softWrap;

@@ -91,13 +91,14 @@ namespace Flutter.Widgets
 			// Complex type: ScrollController? - skipped (requires marshaling)
 			if (primary.HasValue)
 				s.primary = primary.Value;
-			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			// Nullable reference type: ScrollPhysics? - skipped
 			s.shrinkWrap = shrinkWrap;
 			s.anchor = anchor;
 			if (cacheExtent.HasValue)
 				s.cacheExtent = cacheExtent.Value;
 			s.dragStartBehavior = dragStartBehavior;
-			// Complex type: ScrollViewKeyboardDismissBehavior? - skipped (requires marshaling)
+			if (keyboardDismissBehavior.HasValue)
+				s.keyboardDismissBehavior = keyboardDismissBehavior.Value;
 			s.restorationId = restorationId;
 			s.clipBehavior = clipBehavior;
 			if (itemExtent.HasValue)

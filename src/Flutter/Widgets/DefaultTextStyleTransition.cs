@@ -48,7 +48,8 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<DefaultTextStyleTransitionStruct>();
-			// Complex type: TextAlign? - skipped (requires marshaling)
+			if (textAlign.HasValue)
+				s.textAlign = textAlign.Value;
 			s.softWrap = softWrap;
 			s.overflow = overflow;
 			if (maxLines.HasValue)

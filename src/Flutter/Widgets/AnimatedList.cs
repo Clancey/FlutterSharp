@@ -97,7 +97,7 @@ namespace Flutter.Widgets
 			// Complex type: ScrollController? - skipped (requires marshaling)
 			if (primary.HasValue)
 				s.primary = primary.Value;
-			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			// Nullable reference type: ScrollPhysics? - skipped
 			s.shrinkWrap = shrinkWrap;
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;

@@ -863,8 +863,8 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 		/// </summary>
 		private bool IsReferenceType(string csharpType)
 		{
-			// Remove generic arguments for checking
-			var baseType = csharpType.Split('<')[0];
+			// Remove nullable suffix and generic arguments for checking
+			var baseType = csharpType.TrimEnd('?').Split('<')[0];
 
 			// Value types that don't need nullable reference type annotation
 			// Includes primitive types and structs

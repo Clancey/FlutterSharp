@@ -78,7 +78,8 @@ namespace Flutter.Widgets
 			// Complex type: ScrollableDetails - skipped (requires marshaling)
 			// Complex type: ScrollableDetails - skipped (requires marshaling)
 			s.dragStartBehavior = dragStartBehavior;
-			// Complex type: ScrollViewKeyboardDismissBehavior? - skipped (requires marshaling)
+			if (keyboardDismissBehavior.HasValue)
+				s.keyboardDismissBehavior = keyboardDismissBehavior.Value;
 			s.hitTestBehavior = hitTestBehavior;
 			s.clipBehavior = clipBehavior;
 		}

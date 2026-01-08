@@ -126,7 +126,7 @@ namespace Flutter.Widgets
 			s.scrollDirection = scrollDirection;
 			s.reverse = reverse;
 			// Complex type: PageController? - skipped (requires marshaling)
-			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			// Nullable reference type: ScrollPhysics? - skipped
 			s.pageSnapping = pageSnapping;
 			// Callback: onPageChanged - registered with cleanup tracking
 			s.onPageChangedAction = RegisterCallback(onPageChanged);

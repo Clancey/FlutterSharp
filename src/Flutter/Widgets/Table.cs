@@ -73,7 +73,8 @@ namespace Flutter.Widgets
 				s.textDirection = textDirection.Value;
 			// Complex type: BoxBorder? - skipped (requires marshaling)
 			s.defaultVerticalAlignment = defaultVerticalAlignment;
-			// Complex type: TextBaseline? - skipped (requires marshaling)
+			if (textBaseline.HasValue)
+				s.textBaseline = textBaseline.Value;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new TableStruct();

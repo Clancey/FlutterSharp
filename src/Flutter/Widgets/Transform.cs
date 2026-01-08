@@ -71,7 +71,7 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<TransformStruct>();
-			// Complex type: Matrix4? - skipped (requires marshaling)
+			// Nullable reference type: Matrix4? - skipped
 			s.origin = origin;
 			// Complex type: AlignmentGeometry - skipped (requires marshaling)
 			s.transformHitTests = transformHitTests;

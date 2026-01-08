@@ -84,7 +84,7 @@ namespace Flutter.Widgets
 			// Complex type: Decoration? - skipped (requires marshaling)
 			// Complex type: BoxConstraints? - skipped (requires marshaling)
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
-			// Complex type: Matrix4? - skipped (requires marshaling)
+			// Nullable reference type: Matrix4? - skipped
 			// Complex type: AlignmentGeometry? - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;
 			// Complex type: Color? - skipped (requires marshaling)

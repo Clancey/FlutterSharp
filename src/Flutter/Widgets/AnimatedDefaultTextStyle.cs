@@ -59,7 +59,8 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<AnimatedDefaultTextStyleStruct>();
 			s.child = child;
 			// Complex type: TextStyle? - skipped (requires marshaling)
-			// Complex type: TextAlign? - skipped (requires marshaling)
+			if (textAlign.HasValue)
+				s.textAlign = textAlign.Value;
 			s.softWrap = softWrap;
 			s.overflow = overflow;
 			if (maxLines.HasValue)

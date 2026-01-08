@@ -333,7 +333,8 @@ namespace Flutter.Widgets
 			s.enableSuggestions = enableSuggestions;
 			// Complex type: TextStyle? - skipped (requires marshaling)
 			// Complex type: UndoHistoryController? - skipped (requires marshaling)
-			// Complex type: TextAlign? - skipped (requires marshaling)
+			if (textAlign.HasValue)
+				s.textAlign = textAlign.Value;
 			if (textDirection.HasValue)
 				s.textDirection = textDirection.Value;
 			// Nullable reference type: IntPtr - skipped
@@ -390,7 +391,7 @@ namespace Flutter.Widgets
 			s.enableInteractiveSelection = enableInteractiveSelection;
 			s.dragStartBehavior = dragStartBehavior;
 			// Complex type: ScrollController? - skipped (requires marshaling)
-			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			// Nullable reference type: ScrollPhysics? - skipped
 			s.scribbleEnabled = scribbleEnabled;
 			if (stylusHandwritingEnabled.HasValue)
 				s.stylusHandwritingEnabled = stylusHandwritingEnabled.Value;

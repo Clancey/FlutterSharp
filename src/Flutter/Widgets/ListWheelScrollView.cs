@@ -100,7 +100,7 @@ namespace Flutter.Widgets
 				_childrenList.AddRange(children);
 			var s = GetBackingStruct<ListWheelScrollViewStruct>();
 			// Complex type: ScrollController? - skipped (requires marshaling)
-			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			// Nullable reference type: ScrollPhysics? - skipped
 			if (diameterRatio.HasValue)
 				s.diameterRatio = diameterRatio.Value;
 			if (perspective.HasValue)

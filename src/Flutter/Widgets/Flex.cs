@@ -155,7 +155,8 @@ namespace Flutter.Widgets
 			if (textDirection.HasValue)
 				s.textDirection = textDirection.Value;
 			s.verticalDirection = verticalDirection;
-			// Complex type: TextBaseline? - skipped (requires marshaling)
+			if (textBaseline.HasValue)
+				s.textBaseline = textBaseline.Value;
 			s.clipBehavior = clipBehavior;
 			s.spacing = spacing;
 			// Children are set in PrepareForSending to support collection initializers

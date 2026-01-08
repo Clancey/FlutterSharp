@@ -163,13 +163,14 @@ namespace Flutter.Widgets
 			// Complex type: ScrollController? - skipped (requires marshaling)
 			if (primary.HasValue)
 				s.primary = primary.Value;
-			// Complex type: ScrollPhysics? - skipped (requires marshaling)
+			// Nullable reference type: ScrollPhysics? - skipped
 			s.child = child;
 			s.dragStartBehavior = dragStartBehavior;
 			s.clipBehavior = clipBehavior;
 			s.hitTestBehavior = hitTestBehavior;
 			s.restorationId = restorationId;
-			// Complex type: ScrollViewKeyboardDismissBehavior? - skipped (requires marshaling)
+			if (keyboardDismissBehavior.HasValue)
+				s.keyboardDismissBehavior = keyboardDismissBehavior.Value;
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SingleChildScrollViewStruct();
