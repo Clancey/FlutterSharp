@@ -79,6 +79,7 @@ import 'parsers/cupertinotextfield_parser.dart';
 import 'parsers/cupertinonavigationbar_parser.dart';
 import 'parsers/cupertinotabbar_parser.dart';
 import 'parsers/cupertinoswitch_parser.dart';
+import 'parsers/dropdownbutton_parser.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
@@ -119,6 +120,7 @@ class DynamicWidgetBuilder {
     SliderParser(),
     CardParser(),
     BottomNavigationBarParser(),
+    DropdownButtonParser(),
     GridViewWidgetParser(),
     IconWidgetParser(),
     IndexedStackWidgetParser(),

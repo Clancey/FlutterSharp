@@ -222,6 +222,104 @@ namespace Flutter
 
 	public class ImageFilter { }
 
+	/// <summary>
+	/// An immutable set of radii for each corner of a rectangle.
+	/// </summary>
+	public struct BorderRadius
+	{
+		public static readonly BorderRadius Zero = new BorderRadius(0, 0, 0, 0);
+
+		public double TopLeft { get; }
+		public double TopRight { get; }
+		public double BottomLeft { get; }
+		public double BottomRight { get; }
+
+		public BorderRadius(double topLeft, double topRight, double bottomLeft, double bottomRight)
+		{
+			TopLeft = topLeft;
+			TopRight = topRight;
+			BottomLeft = bottomLeft;
+			BottomRight = bottomRight;
+		}
+
+		/// <summary>
+		/// Creates a BorderRadius where all four corners have the same radius.
+		/// </summary>
+		public static BorderRadius Circular(double radius) => new BorderRadius(radius, radius, radius, radius);
+
+		/// <summary>
+		/// Creates a BorderRadius with only specified corners.
+		/// </summary>
+		public static BorderRadius Only(
+			double topLeft = 0,
+			double topRight = 0,
+			double bottomLeft = 0,
+			double bottomRight = 0) => new BorderRadius(topLeft, topRight, bottomLeft, bottomRight);
+
+		/// <summary>
+		/// Creates a BorderRadius with vertical (top/bottom) symmetry.
+		/// </summary>
+		public static BorderRadius Vertical(double top = 0, double bottom = 0)
+			=> new BorderRadius(top, top, bottom, bottom);
+
+		/// <summary>
+		/// Creates a BorderRadius with horizontal (left/right) symmetry.
+		/// </summary>
+		public static BorderRadius Horizontal(double left = 0, double right = 0)
+			=> new BorderRadius(left, right, left, right);
+	}
+
+	/// <summary>
+	/// Alignment for widgets in a container that accounts for text direction.
+	/// </summary>
+	public enum AlignmentDirectional
+	{
+		/// <summary>
+		/// The top-start corner (top-left for LTR, top-right for RTL).
+		/// </summary>
+		TopStart = 0,
+
+		/// <summary>
+		/// The top-center point.
+		/// </summary>
+		TopCenter = 1,
+
+		/// <summary>
+		/// The top-end corner (top-right for LTR, top-left for RTL).
+		/// </summary>
+		TopEnd = 2,
+
+		/// <summary>
+		/// The center-start point (center-left for LTR, center-right for RTL).
+		/// </summary>
+		CenterStart = 3,
+
+		/// <summary>
+		/// The center point.
+		/// </summary>
+		Center = 4,
+
+		/// <summary>
+		/// The center-end point (center-right for LTR, center-left for RTL).
+		/// </summary>
+		CenterEnd = 5,
+
+		/// <summary>
+		/// The bottom-start corner (bottom-left for LTR, bottom-right for RTL).
+		/// </summary>
+		BottomStart = 6,
+
+		/// <summary>
+		/// The bottom-center point.
+		/// </summary>
+		BottomCenter = 7,
+
+		/// <summary>
+		/// The bottom-end corner (bottom-right for LTR, bottom-left for RTL).
+		/// </summary>
+		BottomEnd = 8,
+	}
+
 	public enum SemanticsValidationResult
 	{
 		None,
