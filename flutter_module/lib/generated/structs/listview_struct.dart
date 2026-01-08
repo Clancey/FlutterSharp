@@ -99,4 +99,11 @@ final class ListViewStruct extends Struct {
   /// Whether to wrap each child in an IndexedSemantics.
   @Int8()
   external int addSemanticIndexes;
+
+  // Has flag for nullable property: controller
+  @Int8()
+  external int hasController;
+
+  /// The ScrollController ID for tracking scroll position.
+  external Pointer<Utf8> controllerId;
 }

@@ -139,6 +139,20 @@ namespace Flutter.Widgets
 	public class SingleChildScrollView : StatelessWidget
 	{
 		/// <summary>
+		/// The scroll controller for this scroll view.
+		/// </summary>
+		private ScrollController _controller;
+
+		/// <summary>
+		/// Gets or sets the ScrollController for this SingleChildScrollView.
+		/// </summary>
+		public ScrollController Controller
+		{
+			get => _controller;
+			set => _controller = value;
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="SingleChildScrollView"/> class.
 		/// </summary>
 		public SingleChildScrollView(
@@ -156,11 +170,13 @@ namespace Flutter.Widgets
 			ScrollViewKeyboardDismissBehavior? keyboardDismissBehavior = null
 		)
 		{
+			_controller = controller;
+
 			var s = GetBackingStruct<SingleChildScrollViewStruct>();
 			s.scrollDirection = scrollDirection;
 			s.reverse = reverse;
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
-			// Complex type: ScrollController? - skipped (requires marshaling)
+			// Controller ID is set in PrepareForSending
 			if (primary.HasValue)
 				s.primary = primary.Value;
 			// Nullable reference type: ScrollPhysics? - skipped
@@ -171,6 +187,21 @@ namespace Flutter.Widgets
 			s.restorationId = restorationId;
 			if (keyboardDismissBehavior.HasValue)
 				s.keyboardDismissBehavior = keyboardDismissBehavior.Value;
+		}
+
+		/// <summary>
+		/// Prepares the widget for sending to Flutter, including setting controller ID.
+		/// </summary>
+		internal new void PrepareForSending()
+		{
+			// Set controller ID if a controller is attached
+			if (_controller != null)
+			{
+				var s = GetBackingStruct<SingleChildScrollViewStruct>();
+				s.controllerId = _controller.ControllerId;
+			}
+
+			base.PrepareForSending();
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new SingleChildScrollViewStruct();

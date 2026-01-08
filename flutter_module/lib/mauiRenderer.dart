@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'maui_flutter.dart';
 import 'state_notifier.dart';
+import 'scroll_controller_manager.dart';
 
 import 'dart:convert';
 
@@ -149,6 +150,9 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
         case 'StateChanged':
           _handleStateChanged(message);
           break;
+        case 'ScrollCommand':
+          _handleScrollCommand(message);
+          break;
       default:
         print('Warning: Unknown message type: ${message['messageType']}');
     }
@@ -186,6 +190,11 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
       StateNotifier.handleStateChanged(notifierId, value);
       debugPrint('State changed for notifier: $notifierId, value: $value');
     }
+  }
+
+  /// Handles a scroll command from C#
+  void _handleScrollCommand(Map<String, dynamic> message) {
+    scrollControllerManager.handleScrollCommand(message);
   }
 
   @override

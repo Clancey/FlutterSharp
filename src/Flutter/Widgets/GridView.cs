@@ -47,6 +47,20 @@ namespace Flutter.Widgets
 		private List<Widget> _childrenList = new List<Widget>();
 
 		/// <summary>
+		/// The scroll controller for this grid view.
+		/// </summary>
+		private ScrollController _controller;
+
+		/// <summary>
+		/// Gets or sets the ScrollController for this GridView.
+		/// </summary>
+		public ScrollController Controller
+		{
+			get => _controller;
+			set => _controller = value;
+		}
+
+		/// <summary>
 		/// Adds a child widget. Supports collection initializer syntax.
 		/// </summary>
 		public void Add(Widget child)
@@ -102,6 +116,7 @@ namespace Flutter.Widgets
 		/// <param name="addAutomaticKeepAlives">Whether to wrap each child in an AutomaticKeepAlive.</param>
 		/// <param name="addRepaintBoundaries">Whether to wrap each child in a RepaintBoundary.</param>
 		/// <param name="addSemanticIndexes">Whether to wrap each child in an IndexedSemantics.</param>
+		/// <param name="controller">The ScrollController for tracking scroll position.</param>
 		/// <param name="children">The widgets to display in the grid view.</param>
 		public GridView(
 			int crossAxisCount = 2,
@@ -116,11 +131,14 @@ namespace Flutter.Widgets
 			bool addAutomaticKeepAlives = true,
 			bool addRepaintBoundaries = true,
 			bool addSemanticIndexes = true,
+			ScrollController controller = null,
 			List<Widget> children = null
 		)
 		{
 			if (children != null)
 				_childrenList.AddRange(children);
+
+			_controller = controller;
 
 			var s = GetBackingStruct<GridViewStruct>();
 
@@ -188,6 +206,13 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<GridViewStruct>();
 			s.children = SetChildrenAndGetPointer(_childrenList);
+
+			// Set controller ID if a controller is attached
+			if (_controller != null)
+			{
+				s.controllerId = _controller.ControllerId;
+			}
+
 			base.PrepareForSending();
 		}
 

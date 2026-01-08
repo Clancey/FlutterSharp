@@ -18,6 +18,7 @@ namespace Flutter.Internal
 		private static readonly object _lock = new object();
 		private static WeakDictionary<string, Widget> AliveWidgets = new WeakDictionary<string, Widget>();
 		private static Dictionary<string, Action<string, string, Action<string>>> EventHandlers = new Dictionary<string, Action<string, string, Action<string>>>();
+		private static Dictionary<string, ScrollController> ScrollControllers = new Dictionary<string, ScrollController>();
 		private static bool _isInitialized = false;
 		private static bool _isReady = false;
 
@@ -81,6 +82,10 @@ namespace Flutter.Internal
 
 				case "StateNotify":
 					HandleStateNotify(message.Data, message.Callback);
+					return;
+
+				case "ScrollUpdate":
+					HandleScrollUpdate(message.Data, message.Callback);
 					return;
 
 				default:
@@ -953,6 +958,169 @@ namespace Flutter.Internal
 				RegisteredEventHandlers = EventHandlers.Count
 			};
 		}
+
+		#region ScrollController Management
+
+		/// <summary>
+		/// Registers a ScrollController for receiving scroll updates from Dart.
+		/// </summary>
+		internal static void RegisterScrollController(ScrollController controller)
+		{
+			if (controller == null)
+				return;
+
+			lock (_lock)
+			{
+				ScrollControllers[controller.ControllerId] = controller;
+			}
+		}
+
+		/// <summary>
+		/// Unregisters a ScrollController.
+		/// </summary>
+		internal static void UnregisterScrollController(string controllerId)
+		{
+			if (string.IsNullOrEmpty(controllerId))
+				return;
+
+			lock (_lock)
+			{
+				ScrollControllers.Remove(controllerId);
+			}
+		}
+
+		/// <summary>
+		/// Gets a registered ScrollController by ID.
+		/// </summary>
+		internal static ScrollController GetScrollController(string controllerId)
+		{
+			lock (_lock)
+			{
+				if (ScrollControllers.TryGetValue(controllerId, out var controller))
+					return controller;
+				return null;
+			}
+		}
+
+		/// <summary>
+		/// Handles scroll position updates from Dart.
+		/// </summary>
+		private static void HandleScrollUpdate(string data, Action<string> callback)
+		{
+			try
+			{
+				var message = JsonSerializer.Deserialize<ScrollUpdateMessage>(data, serializeOptions);
+				if (message == null)
+				{
+					Console.WriteLine("FlutterManager: Failed to deserialize ScrollUpdate message");
+					callback?.Invoke("{\"success\": false, \"error\": \"Invalid message\"}");
+					return;
+				}
+
+				ScrollController controller = null;
+				lock (_lock)
+				{
+					ScrollControllers.TryGetValue(message.ControllerId, out controller);
+				}
+
+				if (controller == null)
+				{
+					callback?.Invoke("{\"success\": false, \"error\": \"Controller not found\"}");
+					return;
+				}
+
+				// Route to appropriate handler based on event type
+				switch (message.EventType)
+				{
+					case "attach":
+						controller.NotifyAttach();
+						break;
+
+					case "detach":
+						controller.NotifyDetach();
+						break;
+
+					case "scrollStart":
+						controller.NotifyScrollStart(new ScrollStartDetails
+						{
+							Offset = message.Offset,
+							AxisDirection = (AxisDirection)(message.AxisDirection ?? 0)
+						});
+						break;
+
+					case "scrollUpdate":
+						controller.NotifyScrollUpdate(new ScrollUpdateDetails
+						{
+							Offset = message.Offset,
+							Delta = message.Delta ?? 0,
+							MaxScrollExtent = message.MaxScrollExtent ?? 0,
+							MinScrollExtent = message.MinScrollExtent ?? 0,
+							ViewportDimension = message.ViewportDimension ?? 0,
+							AxisDirection = (AxisDirection)(message.AxisDirection ?? 0)
+						});
+						break;
+
+					case "scrollEnd":
+						controller.NotifyScrollEnd(new ScrollEndDetails
+						{
+							Offset = message.Offset,
+							Velocity = message.Velocity ?? 0,
+							AxisDirection = (AxisDirection)(message.AxisDirection ?? 0)
+						});
+						break;
+
+					default:
+						// Simple offset update
+						controller.UpdateFromDart(
+							message.Offset,
+							message.MaxScrollExtent ?? 0,
+							message.MinScrollExtent ?? 0,
+							message.ViewportDimension ?? 0,
+							message.HasClients ?? true);
+						break;
+				}
+
+				callback?.Invoke("{\"success\": true}");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"FlutterManager: Error handling ScrollUpdate: {ex}");
+				callback?.Invoke($"{{\"success\": false, \"error\": \"{ex.Message}\"}}");
+			}
+		}
+
+		/// <summary>
+		/// Sends a scroll command to Dart (jumpTo, animateTo, etc.).
+		/// </summary>
+		internal static void SendScrollCommand(string controllerId, string command, double offset, double? durationMs = null, string curve = null)
+		{
+			if (Communicator.SendCommand == null)
+			{
+				Console.WriteLine("FlutterManager: Cannot send scroll command - SendCommand not configured");
+				return;
+			}
+
+			try
+			{
+				var message = new ScrollCommandMessage
+				{
+					ControllerId = controllerId,
+					Command = command,
+					Offset = offset,
+					DurationMs = durationMs,
+					Curve = curve
+				};
+
+				var json = JsonSerializer.Serialize(message, serializeOptions);
+				Communicator.SendCommand.Invoke(("ScrollCommand", json));
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"FlutterManager: Error sending scroll command: {ex}");
+			}
+		}
+
+		#endregion
 	}
 
 	/// <summary>

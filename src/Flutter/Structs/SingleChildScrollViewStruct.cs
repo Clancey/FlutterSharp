@@ -160,12 +160,14 @@ namespace Flutter.Structs
 		// Has flag for nullable property: controller
 		public byte Hascontroller { get; set; }
 
-		// Simple field: controller
+		// String field for controller ID
+		private IntPtr _controllerId;
+
 /// An object that can be used to control the position to which this scroll
 /// view is scrolled.
-/// 
+///
 /// Must be null if [primary] is true.
-/// 
+///
 /// A [ScrollController] serves several purposes. It can be used to control
 /// the initial scroll position (see [ScrollController.initialScrollOffset]).
 /// It can be used to control whether the scroll view should automatically
@@ -173,7 +175,11 @@ namespace Flutter.Structs
 /// [ScrollController.keepScrollOffset]). It can be used to read the current
 /// scroll position (see [ScrollController.offset]), or change it (see
 /// [ScrollController.animateTo]).
-		public IntPtr? controller { get; set; }
+		public string controllerId
+		{
+			get => GetString(_controllerId);
+			set { SetString(ref _controllerId, value); Hascontroller = (byte)(value != null ? 1 : 0); }
+		}
 
 		// Has flag for nullable property: primary
 		public byte Hasprimary { get; set; }

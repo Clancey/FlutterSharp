@@ -83,5 +83,21 @@ namespace Flutter.Structs
 		/// Whether to wrap each child in an IndexedSemantics.
 		/// Defaults to true.
 		public bool addSemanticIndexes { get; set; }
+
+		// Has flag for nullable property: controller
+		public byte Hascontroller { get; set; }
+
+		/// The ScrollController ID for tracking scroll position.
+		/// Links to a registered ScrollController instance.
+		private IntPtr _controllerId;
+
+		/// <summary>
+		/// The ScrollController ID string.
+		/// </summary>
+		public string controllerId
+		{
+			get => GetString(_controllerId);
+			set { SetString(ref _controllerId, value); Hascontroller = (byte)(value != null ? 1 : 0); }
+		}
 	}
 }

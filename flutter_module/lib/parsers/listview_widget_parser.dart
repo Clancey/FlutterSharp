@@ -8,6 +8,7 @@ import '../flutter_sharp_structs.dart';
 import '../generated/structs/listview_struct.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
+import '../scroll_controller_manager.dart';
 
 /// Parser for ListView widget.
 ///
@@ -55,11 +56,21 @@ class ListViewWidgetParser extends WidgetParser {
     final itemExtent = map.hasItemExtent == 1 ? map.itemExtent : null;
     final cacheExtent = map.hasCacheExtent == 1 ? map.cacheExtent : null;
 
+    // Parse controller ID and get/create the ScrollController
+    ScrollController? controller;
+    if (map.hasController == 1) {
+      final controllerId = parseString(map.controllerId);
+      if (controllerId != null && controllerId.isNotEmpty) {
+        controller = scrollControllerManager.getController(controllerId);
+      }
+    }
+
     return ListView(
       scrollDirection: scrollDirection,
       reverse: reverse,
       shrinkWrap: shrinkWrap,
       primary: primary,
+      controller: controller,
       itemExtent: itemExtent,
       cacheExtent: cacheExtent,
       addAutomaticKeepAlives: addAutomaticKeepAlives,
