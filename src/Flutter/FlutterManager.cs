@@ -842,7 +842,7 @@ namespace Flutter.Internal
 				widgetToSend.PrepareForSending();
 				var structPtr = (IntPtr)widgetToSend;
 				Console.WriteLine($"[FlutterManager] Widget struct address: 0x{structPtr:X}");
-				var message = new UpdateMessage { ComponentId = componentID, Address = widgetToSend };
+				var message = new UpdateMessage { ComponentId = componentID, Address = (long)structPtr };
 				var json = JsonSerializer.Serialize(message);
 				Console.WriteLine($"[FlutterManager] Sending JSON: {json}");
 				Communicator.SendCommand.Invoke((message.MessageType, json));
