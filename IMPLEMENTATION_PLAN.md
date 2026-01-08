@@ -221,7 +221,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 |----|------|--------|-------|
 | CB001 | Complete CallbackRegistry | completed | Action callbacks now marshaled to Dart via action IDs |
 | CB002 | Implement action registration | completed | Template registers callbacks with CallbackRegistry.Register() |
-| CB003 | Implement typed callbacks | in_progress | Action/Action<T> work; complex types (builders) still skipped |
+| CB003 | Implement typed callbacks | completed | Action/Action<T> work; ValueChanged<T> for 8 types implemented. Complex types (builders) still skipped |
 | CB004 | Implement callback cleanup | completed | Widget.Dispose() unregisters all tracked callbacks |
 
 ### 3.2 Event Types (UNBLOCKED - CB001 complete)
@@ -229,7 +229,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
 | EV001 | Implement VoidCallback | completed | Action type callbacks now work |
-| EV002 | Implement ValueChanged<T> | pending | Need Action<T> support in Dart parser |
+| EV002 | Implement ValueChanged<T> | completed | Added typed callback creators for String, int, double, bool, DateTime, TimeOfDay, Color, RangeValues. HandleAction handler in FlutterManager receives and routes callbacks from Dart. |
 | EV003 | Implement complex event data | pending | TapDownDetails, DragUpdateDetails, etc |
 | EV004 | Implement event routing | pending | FlutterManager event dispatch |
 
@@ -330,6 +330,7 @@ When starting a new loop, work on these in order:
 | D026 | 2026-01-07 | pending | Fixed remaining 138→0 Dart errors by adding 37 widgets with complex callbacks to skipParserGeneration set: ActionListener, AnimatedGrid, AnimatedList, AnimatedSwitcher, Builder, ConstraintsTransformBox, DraggableScrollableSheet, Expansible, Focus, FocusScope, LayoutBuilder, ListenableBuilder, MouseRegion, NavigatorPopHandler, NotificationListener, OrientationBuilder, OverlayPortal, PlatformViewLink, PopScope, RawMenuAnchor, ReorderableList, ShaderMask, SliverAnimatedGrid, SliverAnimatedList, SliverLayoutBuilder, SliverReorderableList, SliverVariedExtentList, StatefulBuilder, TapRegion, TextFieldTapRegion, TreeSliver, TweenAnimationBuilder, ValueListenableBuilder, WillPopScope, AndroidView, HtmlElementView. Also fixed hand-written parsers: singlechildscrollview (HitTestBehavior enum), align_widget (pointer casting), container_widget (imports), statefullwidget (MauiComponent import), tabbar/tabbarview (children pointer casting), utils.dart (parseWidget stub). |
 | CB001-002 | 2026-01-07 | d7270b1 | Implemented callback marshaling for Action types in CSharpWidget.scriban. Added is_action_type check in CSharpWidgetGenerator.cs to only marshal Action/Action<T>/Delegate types. Complex callback types (object, builders) are skipped with informative comments. GestureDetector callbacks (onTap, onTapDown, etc) now properly registered with CallbackRegistry and action IDs stored in struct. |
 | CB004 | 2026-01-07 | pending | Implemented callback cleanup on widget disposal: Added `_registeredCallbackIds` list to Widget.cs, created `RegisterCallback()` helper method that tracks IDs, updated `Dispose()` to unregister all tracked callbacks. Updated CSharpWidget.scriban template to use `RegisterCallback()` instead of direct CallbackRegistry.Register(). Prevents memory leaks from orphaned callbacks. |
+| EV002 | 2026-01-07 | 21e0a8a | Implemented typed callback support for Action<T> and ValueChanged<T>. Added HandleAction handler in FlutterManager to receive callback invocations from Dart. Added ExtractCallbackArguments and ConvertJsonElement helpers for typed JSON→C# conversion. Generated typed ValueChanged<T> creators in DartUtilityParserGenerator for String, int, double, bool, DateTime, TimeOfDay, Color, RangeValues. Updated DartParser.scriban to use type-specific callbacks. Added SingleChildScrollView to skipParserGeneration. Added FormFieldValidator support. |
 
 ---
 
