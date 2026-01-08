@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Text.Json;
 using Flutter.Gestures;
+using Flutter.Widgets;
 
 namespace Flutter.Internal
 {
@@ -814,10 +815,38 @@ namespace Flutter.Internal
 
 			try
 			{
-				widget.PrepareForSending();
-				var message = new UpdateMessage { ComponentId = componentID, Address = widget };
+				Console.WriteLine($"[FlutterManager] SendState called for C# widget type: {widget.GetType().Name}");
+
+				// If widget is a StatelessWidget or StatefulWidget, call Build() to get the actual widget tree
+				// This is necessary because custom StatelessWidget subclasses don't have Dart parsers
+				Widget widgetToSend = widget;
+				if (widget is StatelessWidget statelessWidget)
+				{
+					Console.WriteLine($"[FlutterManager] Building StatelessWidget: {widget.GetType().Name}");
+					widgetToSend = statelessWidget.Build();
+					Console.WriteLine($"[FlutterManager] Build result type: {widgetToSend?.GetType().Name}");
+				}
+				else if (widget is StatefulWidget statefulWidget)
+				{
+					Console.WriteLine($"[FlutterManager] Building StatefulWidget: {widget.GetType().Name}");
+					widgetToSend = statefulWidget.Build();
+					Console.WriteLine($"[FlutterManager] Build result type: {widgetToSend?.GetType().Name}");
+				}
+
+				if (widgetToSend == null)
+				{
+					Console.WriteLine("FlutterManager: Build() returned null");
+					return;
+				}
+
+				widgetToSend.PrepareForSending();
+				var structPtr = (IntPtr)widgetToSend;
+				Console.WriteLine($"[FlutterManager] Widget struct address: 0x{structPtr:X}");
+				var message = new UpdateMessage { ComponentId = componentID, Address = widgetToSend };
 				var json = JsonSerializer.Serialize(message);
+				Console.WriteLine($"[FlutterManager] Sending JSON: {json}");
 				Communicator.SendCommand.Invoke((message.MessageType, json));
+				Console.WriteLine($"[FlutterManager] SendCommand invoked successfully");
 			}
 			catch (Exception ex)
 			{

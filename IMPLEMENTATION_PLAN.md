@@ -205,6 +205,7 @@ This is the active task list for autonomous agent execution. The agent selects O
 | R002 | Implement widget tracking dictionary | completed | Part of R001 - WeakDictionary with thread-safe access |
 | R003 | Implement widget disposal | completed | Part of R001 - SendDisposed() sends DisposedMessage to Dart |
 | R004 | Implement update batching | pending | Future optimization |
+| R005 | Call Build() on StatelessWidget/StatefulWidget in SendState | completed | Custom widgets need Build() called to get actual widget tree for Dart parsing |
 
 ### 2.2 Communication
 
@@ -427,6 +428,7 @@ When starting a new loop, work on these in order:
 | DR005 | 2026-01-08 | d0d6e54 | Complete TextWidgetParser to read all struct properties: textAlign, overflow, textDirection, textWidthBasis, maxLines, softWrap, textScaleFactor, semanticsLabel, style. Added integer-based enum parsing functions (parseTextAlignFromInt, etc). Fixed Text.cs to set textAlign on backing struct. |
 | FFI001 | 2026-01-08 | ef35b2d | Fixed FFI struct layout mismatch: C# WidgetStruct had unused 'key' field that Dart WidgetStruct didn't have, causing 8-byte offset for all derived struct fields. Removed the 'key' field (never used). This fix enables correct Text widget rendering. |
 | STR001 | 2026-01-08 | 9ad523f | Fixed string property Has* flag not being set. Scriban templates and generated TextStruct.cs string setters now set Has{property} = 1 when value assigned, enabling Dart parser to correctly read strings. Root cause: Dart checked `hasData == 1` but C# setter only called `SetString()` without updating the flag. |
+| R005 | 2026-01-07 | pending | Fixed FlutterManager.SendState() to call Build() on StatelessWidget/StatefulWidget. Custom widget classes (e.g., FlutterSampleApp) don't have Dart parsers - their Build() must be called to get the actual widget tree (Center, Column, Text) which Dart can parse. Without this, Dart showed "Unknown widget type FlutterSampleApp". |
 
 ---
 
