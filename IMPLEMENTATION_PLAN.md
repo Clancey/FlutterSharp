@@ -985,6 +985,109 @@ After hitting a blocker:
 
 ---
 
+## Phase 6: Platform Integration
+
+**Goal**: Full .NET MAUI integration with production-ready platform support.
+
+### Current Platform Status (as of 2026-01-08)
+- **iOS**: ~80% complete - Working bindings, lifecycle basic, hot reload partial
+- **Android**: ~50% complete - Core structure present, less mature than iOS
+- **Windows**: 0% - Not started
+- **macOS**: 0% - Not started
+- **MAUI Integration**: 0% - Critical gap (sample uses native iOS, not MAUI)
+
+### 6.1 MAUI Integration (HIGH PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| MAUI001 | Create FlutterView MAUI component | completed | ViewHandler-based MAUI control. Created IFlutterView.cs, FlutterView.cs, FlutterViewHandler.cs, MauiAppBuilderExtensions.cs, FlutterViewHandler.iOS.cs |
+| MAUI002 | Implement MAUI lifecycle binding | completed | Page lifecycle (Appearing/Disappearing), app lifecycle (Resume/Pause), FlutterLifecycleState enum, LifecycleMessage, NotifyLifecycleState in FlutterManager |
+| MAUI003 | Create proper MAUI sample app | pending | MauiProgram, Shell, ContentPage pattern |
+| MAUI004 | Add MAUI sizing/layout constraints | pending | Handle container sizing, orientation |
+| MAUI005 | Implement MAUI navigation integration | pending | NavigationPage, Shell navigation |
+
+### 6.2 iOS Platform (MOSTLY COMPLETE)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| IOS001 | Native bindings | completed | FlutterEngine, FlutterViewController, FlutterMethodChannel |
+| IOS002 | MethodChannel communication | completed | Ready state, message passing |
+| IOS003 | Hot reload basic support | completed | IHotReloadHandler, Reload() method |
+| IOS004 | Scene delegate state restoration | pending | Save/restore app state |
+| IOS005 | Memory warning handlers | pending | Handle low memory situations |
+
+### 6.3 Android Platform (PARTIAL)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| AND001 | FlutterActivity base | completed | Basic FlutterActivity extension |
+| AND002 | MethodChannel communication | completed | Message passing works |
+| AND003 | savedInstanceState handling | pending | State preservation on config change |
+| AND004 | Activity lifecycle hooks | pending | OnResume, OnPause, OnStop |
+| AND005 | Back button handling | pending | Handle Android back navigation |
+
+### 6.4 Windows Platform (NOT STARTED)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| WIN001 | Create Windows platform handler | pending | FlutterViewController for WinUI |
+| WIN002 | Implement ANGLE/Direct3D rendering | pending | GPU rendering integration |
+| WIN003 | MethodChannel on Windows | pending | Communication bridge |
+| WIN004 | Keyboard/mouse input handling | pending | Platform input events |
+| WIN005 | Window management | pending | Sizing, DPI awareness |
+
+### 6.5 macOS Platform (NOT STARTED)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| MAC001 | Create macOS platform handler | pending | FlutterViewController for Cocoa |
+| MAC002 | Native Cocoa bindings | pending | NSView integration |
+| MAC003 | MethodChannel on macOS | pending | Communication bridge |
+| MAC004 | Menu bar integration | pending | Native macOS menus |
+| MAC005 | Window management | pending | Multi-window support |
+
+### 6.6 Production Error Handling (HIGH PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| ERR001 | Replace Console.WriteLine with logging | pending | Use Microsoft.Extensions.Logging |
+| ERR002 | Implement error overlay UI | pending | Display exceptions to developers |
+| ERR003 | Add Flutter initialization validation | pending | Graceful fallback if Flutter fails |
+| ERR004 | Add timeout handling for messages | pending | Prevent deadlocks on unresponsive Dart |
+| ERR005 | Exception propagation from Dart | pending | Surface Dart exceptions in C# |
+
+### 6.7 Performance (MEDIUM PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| PERF001 | Create benchmark suite | pending | Measure widget rendering performance |
+| PERF002 | Add rendering metrics | pending | FPS, frame times, jank detection |
+| PERF003 | Implement performance overlay | pending | Visual debugging overlay |
+| PERF004 | Message batching | pending | Batch multiple updates per frame |
+| PERF005 | Binary protocol option | pending | Replace JSON with binary for perf |
+
+### 6.8 Developer Experience (MEDIUM PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| DX001 | Complete hot reload state transfer | pending | TransferState() is empty |
+| DX002 | Add hot reload notification UI | pending | Visual indication of reload |
+| DX003 | Implement debug logging framework | pending | Structured logging |
+| DX004 | Widget inspector integration | pending | DevTools-like inspection |
+| DX005 | Add error boundary widgets | pending | Catch and display widget errors |
+
+### Phase 6 Complete When:
+- [ ] FlutterView works as MAUI ContentView
+- [ ] Sample app uses proper MAUI patterns (Shell, ContentPage)
+- [ ] iOS runs in MAUI context (not just native)
+- [ ] Android runs with full lifecycle support
+- [ ] Windows platform has basic support
+- [ ] macOS platform has basic support
+- [ ] Production logging replaces Console.WriteLine
+- [ ] Error overlay shows exceptions in debug mode
+
+---
+
 ## Reference
 
 - [AGENTS.md](../AGENTS.md) - How to use subagents

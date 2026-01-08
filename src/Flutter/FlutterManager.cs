@@ -945,6 +945,37 @@ namespace Flutter.Internal
 		}
 
 		/// <summary>
+		/// Notifies Flutter about app lifecycle state changes.
+		/// This allows Flutter to pause animations, stop timers, etc. when the app is backgrounded.
+		/// </summary>
+		/// <param name="state">The new lifecycle state</param>
+		public static void NotifyLifecycleState(FlutterLifecycleState state)
+		{
+			if (!_isReady || Communicator.SendCommand == null)
+				return;
+
+			try
+			{
+				var stateString = state switch
+				{
+					FlutterLifecycleState.Resumed => "resumed",
+					FlutterLifecycleState.Inactive => "inactive",
+					FlutterLifecycleState.Paused => "paused",
+					FlutterLifecycleState.Detached => "detached",
+					_ => "resumed"
+				};
+
+				var message = new LifecycleMessage { State = stateString };
+				var json = JsonSerializer.Serialize(message);
+				Communicator.SendCommand.Invoke(("Lifecycle", json));
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"FlutterManager: Error sending lifecycle state: {ex.Message}");
+			}
+		}
+
+		/// <summary>
 		/// Gets diagnostic information about event routing.
 		/// </summary>
 		public static EventRoutingStats GetEventStats()
