@@ -35,6 +35,7 @@ import 'parsers/indexedstack_widget_parser.dart';
 import 'parsers/listtile_widget_parser.dart';
 import 'parsers/listview_widget_parser.dart';
 import 'parsers/listviewbuilder_parser.dart';
+import 'parsers/gridviewbuilder_parser.dart';
 import 'parsers/opacity_widget_parser.dart';
 import 'parsers/padding_widget_parser.dart';
 import 'parsers/pageview_widget_parser.dart';
@@ -88,6 +89,7 @@ class DynamicWidgetBuilder {
     ListTileWidgetParser(),
     ListViewWidgetParser(),
     ListViewBuilderParser(),
+    GridViewBuilderParser(),
     NetworkImageWidgetParser(),
     OpacityWidgetParser(),
     PaddingWidgetParser(),

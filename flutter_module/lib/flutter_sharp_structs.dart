@@ -215,6 +215,28 @@ final class ListViewBuilderStruct extends Struct {
   external int itemCount;
 }
 
+//GridViewBuilderStruct : Widget
+final class GridViewBuilderStruct extends Struct {
+  //FlutterObject Struct
+  external Pointer handle;
+  external Pointer managedHandle;
+  external Pointer<Utf8> widgetType;
+  //WidgetStruct
+  external Pointer<Utf8> id;
+
+  //GridViewBuilderStruct
+  @Int32()
+  external int itemCount;
+  @Int32()
+  external int crossAxisCount;
+  @Double()
+  external double mainAxisSpacing;
+  @Double()
+  external double crossAxisSpacing;
+  @Double()
+  external double childAspectRatio;
+}
+
 // NOTE: RowStruct is now generated
 // See: lib/generated/structs/row_struct.dart
 
