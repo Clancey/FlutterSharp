@@ -1,57 +1,81 @@
-import 'dart:async';
-import 'dart:convert';
+// Manual parser for ListView widget
+// Part of FlutterSharp Phase 4 - List Widgets
+
 import 'dart:ffi';
+
+import 'package:flutter/material.dart';
 import '../flutter_sharp_structs.dart';
+import '../generated/structs/listview_struct.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-// import 'package:http/http.dart' as http;
 
+/// Parser for ListView widget.
+///
+/// A scrollable list of widgets arranged linearly.
+///
+/// ListView is the most commonly used scrolling widget. It displays its
+/// children one after another in the scroll direction.
 class ListViewWidgetParser extends WidgetParser {
   @override
   Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<MultiChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
-    return null;
-    //TODO: Implement;
-    // var scrollDirection = Axis.vertical;
-    // if (map.containsKey("scrollDirection") &&
-    //     "horizontal" == map["scrollDirection"]) {
-    //   scrollDirection = Axis.horizontal;
-    // }
+    final map = Pointer<ListViewStruct>.fromAddress(fos.handle.address).ref;
 
-    // var reverse = map.containsKey("reverse") ? map['reverse'] : false;
-    // var shrinkWrap = map.containsKey("shrinkWrap") ? map["shrinkWrap"] : false;
-    // var cacheExtent = map.containsKey("cacheExtent") ? map["cacheExtent"] : 0.0;
-    // var padding = map.containsKey('padding')
-    //     ? parseEdgeInsetsGeometry(map['padding'])
-    //     : null;
-    // var itemExtent = map.containsKey("itemExtent") ? map["itemExtent"] : null;
-    // var children = DynamicWidgetBuilder.buildWidgets(
-    //     map['children'], buildContext);
-    // var pageSize = map.containsKey("pageSize") ? map["pageSize"] : 10;
-    // var loadMoreUrl =
-    //     map.containsKey("loadMoreUrl") ? map["loadMoreUrl"] : null;
-    // var isDemo = map.containsKey("isDemo") ? map["isDemo"] : false;
+    // Get widget ID for debugging/tracking
+    final id = parseString(map.id);
+    if (id == null) return null;
 
-    // var params = new ListViewParams(
-    //     scrollDirection,
-    //     reverse,
-    //     shrinkWrap,
-    //     cacheExtent,
-    //     padding,
-    //     itemExtent,
-    //     children,
-    //     pageSize,
-    //     loadMoreUrl,
-    //     isDemo);
+    // Parse children
+    List<Widget> children = [];
+    if (map.children.address != 0) {
+      children = DynamicWidgetBuilder.buildWidgets(
+          map.children.cast<ChildrenStruct>(), buildContext);
+    }
 
-    // return new ListViewWidget(params, buildContext);
+    // Parse scroll direction
+    Axis scrollDirection = Axis.vertical;
+    if (map.hasScrollDirection == 1) {
+      scrollDirection = map.scrollDirection == 0 ? Axis.horizontal : Axis.vertical;
+    }
+
+    // Parse boolean properties
+    final reverse = map.hasReverse == 1 ? map.reverse == 1 : false;
+    final shrinkWrap = map.hasShrinkWrap == 1 ? map.shrinkWrap == 1 : false;
+    final primary = map.hasPrimary == 1 ? map.primary == 1 : null;
+    final addAutomaticKeepAlives = map.hasAddAutomaticKeepAlives == 1
+        ? map.addAutomaticKeepAlives == 1
+        : true;
+    final addRepaintBoundaries = map.hasAddRepaintBoundaries == 1
+        ? map.addRepaintBoundaries == 1
+        : true;
+    final addSemanticIndexes = map.hasAddSemanticIndexes == 1
+        ? map.addSemanticIndexes == 1
+        : true;
+
+    // Parse optional double properties
+    final itemExtent = map.hasItemExtent == 1 ? map.itemExtent : null;
+    final cacheExtent = map.hasCacheExtent == 1 ? map.cacheExtent : null;
+
+    return ListView(
+      scrollDirection: scrollDirection,
+      reverse: reverse,
+      shrinkWrap: shrinkWrap,
+      primary: primary,
+      itemExtent: itemExtent,
+      cacheExtent: cacheExtent,
+      addAutomaticKeepAlives: addAutomaticKeepAlives,
+      addRepaintBoundaries: addRepaintBoundaries,
+      addSemanticIndexes: addSemanticIndexes,
+      children: children,
+    );
   }
 
   @override
   String get widgetName => "ListView";
 }
+
+// The ListViewWidget and ListViewParams classes below are legacy code
+// that was used for a more complex ListView implementation with load-more
+// functionality. They are kept for reference but not used by the parser.
 
 class ListViewWidget extends StatefulWidget {
   final ListViewParams _params;
@@ -98,18 +122,7 @@ class _ListViewWidgetState extends State<ListViewWidget> {
 
   _getMoreData() async {
     if (!isPerformingRequest) {
-      // setState(() => isPerformingRequest = true);
-      // //TODO: Make a request to the app
-      // var jsonString = "";//_params.isDemo ? await fakeRequest() : await doRequest();
-      // var buildWidgets = DynamicWidgetBuilder.buildWidgets(
-      //     jsonDecode(jsonString), widget._buildContext);
-      // setState(() {
-      //   if (buildWidgets.isEmpty) {
-      //     loadCompleted = true;
-      //   }
-      //   _items.addAll(buildWidgets);
-      //   isPerformingRequest = false;
-      // });
+      // Reserved for future load-more functionality
     }
   }
 
@@ -150,7 +163,6 @@ class _ListViewWidgetState extends State<ListViewWidget> {
       controller: _scrollController,
     );
   }
-
 }
 
 class ListViewParams {
@@ -158,8 +170,8 @@ class ListViewParams {
   bool reverse;
   bool shrinkWrap;
   double cacheExtent;
-  EdgeInsetsGeometry padding;
-  double itemExtent;
+  EdgeInsetsGeometry? padding;
+  double? itemExtent;
   List<Widget> children;
 
   int pageSize;
