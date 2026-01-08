@@ -227,6 +227,13 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				return "IntPtr";
 			}
 
+			// For FFI compatibility, 'object' must be replaced with 'IntPtr'
+			// Structs need to be blittable for GCHandle.Alloc with GCHandleType.Pinned
+			if (mappedType == "object" || mappedType == "object?")
+			{
+				return "IntPtr";
+			}
+
 			return mappedType;
 		}
 
@@ -369,7 +376,11 @@ namespace Flutter.Structs
 		public string{{ if prop.is_nullable }}?{{ end }} {{ prop.name }}
 		{
 			get => GetString({{ prop.backing_field_name }});
+{{~ if prop.is_nullable ~}}
 			set { SetString(ref {{ prop.backing_field_name }}, value); Has{{ prop.raw_name }} = (byte)(value != null ? 1 : 0); }
+{{~ else ~}}
+			set => SetString(ref {{ prop.backing_field_name }}, value);
+{{~ end ~}}
 		}
 
 {{~ else if prop.is_widget ~}}

@@ -873,6 +873,8 @@ namespace FlutterSharp.CodeGen.Generators.CSharp
 				"int", "double", "float", "bool", "byte", "sbyte",
 				"short", "ushort", "uint", "long", "ulong", "decimal",
 				"char", "DateTime", "TimeSpan", "Guid",
+				// IntPtr/nint for FFI pointers - these are value types
+				"IntPtr", "nint", "UIntPtr", "nuint",
 				// Flutter/Dart structs that are value types
 				"Size", "Offset", "Rect", "Color", "Radius",
 				"EdgeInsets", "EdgeInsetsDirectional",

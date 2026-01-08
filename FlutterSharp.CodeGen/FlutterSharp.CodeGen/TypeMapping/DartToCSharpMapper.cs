@@ -229,8 +229,9 @@ namespace FlutterSharp.CodeGen.TypeMapping
 				{
 					return ApplyNullability(inferredType, isNullable);
 				}
-				// If inference failed, return object as a safe fallback
-				return ApplyNullability("object", isNullable);
+				// If inference failed, return IntPtr as a safe fallback for FFI compatibility
+				// Using IntPtr instead of 'object' because structs must be blittable for FFI pinning
+				return "IntPtr";
 			}
 
 			// Handle Dart function signatures with named parameters (contains '{')
