@@ -976,6 +976,29 @@ namespace Flutter.Internal
 		}
 
 		/// <summary>
+		/// Notifies Flutter of container size changes.
+		/// This allows Flutter to adjust its rendering viewport accordingly.
+		/// </summary>
+		/// <param name="width">The new container width in logical pixels</param>
+		/// <param name="height">The new container height in logical pixels</param>
+		public static void NotifyContainerSize(double width, double height)
+		{
+			if (!_isReady || Communicator.SendCommand == null)
+				return;
+
+			try
+			{
+				var message = new ContainerSizeMessage { Width = width, Height = height };
+				var json = JsonSerializer.Serialize(message);
+				Communicator.SendCommand.Invoke(("ContainerSize", json));
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"FlutterManager: Error sending container size: {ex.Message}");
+			}
+		}
+
+		/// <summary>
 		/// Gets diagnostic information about event routing.
 		/// </summary>
 		public static EventRoutingStats GetEventStats()

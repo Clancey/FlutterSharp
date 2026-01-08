@@ -1,4 +1,5 @@
 using System;
+using CoreGraphics;
 using Flutter.MAUI;
 using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
@@ -13,6 +14,7 @@ namespace Flutter.MAUI
 	public partial class FlutterViewHandler : ViewHandler<IFlutterView, UIView>
 	{
 		private FlutterViewController? _flutterViewController;
+		private CGSize _lastKnownSize;
 
 		/// <summary>
 		/// Creates the native iOS view (FlutterViewController's View)
@@ -36,7 +38,12 @@ namespace Flutter.MAUI
 				throw new InvalidOperationException("FlutterViewController.View is null");
 			}
 
+			// Enable flexible sizing to work with MAUI's layout system
 			view.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+
+			// Set clip to bounds for proper aspect ratio handling
+			view.ClipsToBounds = true;
+
 			return view;
 		}
 
@@ -83,6 +90,116 @@ namespace Flutter.MAUI
 			{
 				_flutterViewController.Widget = widget;
 			}
+		}
+
+		/// <summary>
+		/// Updates sizing when sizing properties change
+		/// </summary>
+		partial void UpdateSizing()
+		{
+			// Trigger a layout update when sizing properties change
+			PlatformView?.SetNeedsLayout();
+		}
+
+		/// <summary>
+		/// Gets the desired size for the Flutter view based on constraints and properties
+		/// </summary>
+		public override Microsoft.Maui.Graphics.Size GetDesiredSize(double widthConstraint, double heightConstraint)
+		{
+			var virtualView = VirtualView;
+			if (virtualView == null)
+			{
+				return base.GetDesiredSize(widthConstraint, heightConstraint);
+			}
+
+			// Check for aspect ratio constraint
+			var aspectRatio = virtualView.AspectRatio;
+			if (aspectRatio > 0)
+			{
+				return CalculateSizeWithAspectRatio(widthConstraint, heightConstraint, aspectRatio);
+			}
+
+			// If FillAvailableSpace is true, use the full constraint
+			if (virtualView.FillAvailableSpace)
+			{
+				var width = double.IsInfinity(widthConstraint) ? 300 : widthConstraint;
+				var height = double.IsInfinity(heightConstraint) ? 300 : heightConstraint;
+
+				// Track size changes and notify the view
+				var newSize = new CGSize(width, height);
+				if (!_lastKnownSize.Equals(newSize))
+				{
+					_lastKnownSize = newSize;
+					virtualView.OnContainerSizeChanged(width, height);
+				}
+
+				return new Microsoft.Maui.Graphics.Size(width, height);
+			}
+
+			return base.GetDesiredSize(widthConstraint, heightConstraint);
+		}
+
+		/// <summary>
+		/// Calculates the size while maintaining the specified aspect ratio within constraints
+		/// </summary>
+		private Microsoft.Maui.Graphics.Size CalculateSizeWithAspectRatio(double widthConstraint, double heightConstraint, double aspectRatio)
+		{
+			// Handle infinite constraints
+			var hasWidthConstraint = !double.IsInfinity(widthConstraint) && widthConstraint > 0;
+			var hasHeightConstraint = !double.IsInfinity(heightConstraint) && heightConstraint > 0;
+
+			double width, height;
+
+			if (!hasWidthConstraint && !hasHeightConstraint)
+			{
+				// No constraints - use a default size
+				width = 300;
+				height = 300 / aspectRatio;
+			}
+			else if (hasWidthConstraint && !hasHeightConstraint)
+			{
+				// Only width constraint - calculate height from aspect ratio
+				width = widthConstraint;
+				height = widthConstraint / aspectRatio;
+			}
+			else if (!hasWidthConstraint && hasHeightConstraint)
+			{
+				// Only height constraint - calculate width from aspect ratio
+				width = heightConstraint * aspectRatio;
+				height = heightConstraint;
+			}
+			else
+			{
+				// Both constraints present - fit within the constraints while maintaining ratio
+				var constraintRatio = widthConstraint / heightConstraint;
+
+				if (constraintRatio > aspectRatio)
+				{
+					// Container is wider than aspect ratio - constrain by height
+					width = heightConstraint * aspectRatio;
+					height = heightConstraint;
+				}
+				else
+				{
+					// Container is taller than aspect ratio - constrain by width
+					width = widthConstraint;
+					height = widthConstraint / aspectRatio;
+				}
+			}
+
+			// Track size changes and notify the view
+			var virtualView = VirtualView;
+			if (virtualView != null)
+			{
+				var newSize = new CGSize(width, height);
+				if (!_lastKnownSize.Equals(newSize))
+				{
+					_lastKnownSize = newSize;
+					virtualView.OnContainerSizeChanged(width, height);
+				}
+			}
+
+			return new Microsoft.Maui.Graphics.Size(width, height);
 		}
 	}
 }

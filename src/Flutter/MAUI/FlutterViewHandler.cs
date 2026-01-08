@@ -22,7 +22,9 @@ namespace Flutter.MAUI
 		/// </summary>
 		public static IPropertyMapper<IFlutterView, FlutterViewHandler> Mapper = new PropertyMapper<IFlutterView, FlutterViewHandler>(ViewHandler.ViewMapper)
 		{
-			[nameof(IFlutterView.Widget)] = MapWidget
+			[nameof(IFlutterView.Widget)] = MapWidget,
+			[nameof(IFlutterView.AspectRatio)] = MapSizingProperty,
+			[nameof(IFlutterView.FillAvailableSpace)] = MapSizingProperty
 		};
 
 		/// <summary>
@@ -56,9 +58,23 @@ namespace Flutter.MAUI
 		}
 
 		/// <summary>
+		/// Maps sizing property changes to trigger layout update
+		/// </summary>
+		private static void MapSizingProperty(FlutterViewHandler handler, IFlutterView view)
+		{
+			handler.UpdateSizing();
+		}
+
+		/// <summary>
 		/// Platform-specific method to update the widget
 		/// Implemented in platform-specific partial classes
 		/// </summary>
 		partial void UpdateWidget(Widget? widget);
+
+		/// <summary>
+		/// Platform-specific method to update sizing
+		/// Implemented in platform-specific partial classes
+		/// </summary>
+		partial void UpdateSizing();
 	}
 }
