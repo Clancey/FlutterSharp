@@ -564,6 +564,7 @@ When starting a new loop, work on these in order:
 | INP004 | 2026-01-07 | 52061df | Implemented Slider: C# widget/struct + Dart struct/parser. Supports value, min, max (range values), onChanged, onChangeStart, onChangeEnd callbacks, divisions (discrete slider), label (tooltip), colors (activeColor, inactiveColor, thumbColor, secondaryActiveColor), secondaryTrackValue, autofocus, allowedInteraction (SliderInteraction enum). Fourth input widget complete for Phase 4.2. |
 | MAT001 | 2026-01-07 | pending | Implemented Scaffold: C# widget/struct (ScaffoldStruct.cs, Scaffold.cs) matching existing Dart parser (scaffold_parser.dart). Supports appBar, body, floatingActionButton, drawer. First material widget for Phase 4.3. |
 | MAT002 | 2026-01-07 | pending | Implemented AppBar: C# widget/struct (AppBarStruct.cs, AppBar.cs) matching existing Dart parser (appbar_parser.dart). Supports title and bottom properties. Second material widget for Phase 4.3. |
+| MAT005 | 2026-01-07 | pending | Implemented Drawer: C# widget/struct (DrawerStruct.cs, Drawer.cs) matching existing Dart parser (drawer_parser.dart). Supports child property. Extends SingleChildRenderObjectWidgetStruct. Third material widget for Phase 4.3. |
 
 ---
 
@@ -868,7 +869,7 @@ After hitting a blocker:
 | MAT002 | Implement AppBar C# widget | completed | C# widget/struct + matches existing Dart parser |
 | MAT003 | Implement Card widget | pending | Needs full implementation |
 | MAT004 | Implement BottomNavigationBar | pending | Needs full implementation |
-| MAT005 | Implement Drawer C# widget | pending | Has Dart parser, needs C# widget/struct |
+| MAT005 | Implement Drawer C# widget | completed | C# widget/struct + matches existing Dart parser |
 
 ### 4.4 List Widgets (LOW PRIORITY)
 
