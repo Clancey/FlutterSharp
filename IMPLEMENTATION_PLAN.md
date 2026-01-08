@@ -579,6 +579,7 @@ When starting a new loop, work on these in order:
 | SM003 | 2026-01-08 | 3969057 | Implemented ListenableBuilder widget: Full C# widget + Dart parser. Subscribes to Listenable, calls builder callback on notification, sends updates via FlutterManager.SendState(). Created listenablebuilder_parser.dart and simplified ListenableBuilderStruct.cs. |
 | NAV001 | 2026-01-08 | 51502dc | Implemented Navigator widget with named routes (Routes dictionary), Push/Pop/PushReplacement/PushAndRemoveUntil/PopUntil/PopAllAndPush methods, OnRouteChanged/OnPop callbacks, ClipBehavior, RestorationScopeId. Created C# Navigator.cs + NavigatorStruct.cs, Dart navigator_struct.dart + navigator_parser.dart with PopScope integration. |
 | NAV004 | 2026-01-08 | bab484f | Implemented named routes with arguments support: RoutesWithArguments dictionary (Func<object?, Widget>), PushNamed/PushReplacementNamed/PopAndPushNamed methods with arguments, CurrentArguments property, RouteNames property, arguments tracking per-route via _routeArguments dictionary, arguments serialization in CreateBackingStruct. Updated PushAndRemoveUntil and PopAllAndPush to support arguments. |
+| NAV005 | 2026-01-08 | pending | Implemented Navigator callbacks (OnGenerateRoute, OnUnknownRoute) for dynamic route resolution: Added HasStaticRoute() and ResolveRoute() helper methods to try static routes first, then OnGenerateRoute callback, then OnUnknownRoute as fallback. Updated PushNamed, PushReplacementNamed, PushAndRemoveUntil, PopAndPushNamed, PopAllAndPush to support dynamic route generation. Added hasOnGenerateRoute/hasOnUnknownRoute flags to NavigatorStruct.cs and navigator_struct.dart. Updated navigator_parser.dart to parse and pass the new flags to _NavigatorWrapper. |
 
 ---
 
@@ -923,7 +924,7 @@ After hitting a blocker:
 | NAV002 | Implement MaterialPageRoute | completed | Standard page transition with Route classes, transition animations, Push(Route) method |
 | NAV003 | Implement Navigator.push/pop methods | completed | Push(Route), PushMaterial(), PushCupertino() with transition support (merged into NAV002) |
 | NAV004 | Implement named routes | completed | RoutesWithArguments dictionary, PushNamed/PushReplacementNamed/PopAndPushNamed with arguments, CurrentArguments property |
-| NAV005 | Implement Navigator callbacks | pending | onGenerateRoute, onUnknownRoute |
+| NAV005 | Implement Navigator callbacks | completed | OnGenerateRoute and OnUnknownRoute callbacks for dynamic route resolution |
 
 ### 5.3 Animation (MEDIUM PRIORITY)
 

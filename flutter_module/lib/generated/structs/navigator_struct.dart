@@ -59,6 +59,16 @@ final class NavigatorStruct extends Struct {
   @Int8()
   external int hasOnPopAction;
 
+  /// Flag indicating whether OnGenerateRoute callback is set on the C# side.
+  /// When 1, the Navigator can resolve unknown routes dynamically.
+  @Int8()
+  external int hasOnGenerateRoute;
+
+  /// Flag indicating whether OnUnknownRoute callback is set on the C# side.
+  /// When 1, the Navigator can provide a fallback route for completely unknown routes.
+  @Int8()
+  external int hasOnUnknownRoute;
+
   // Route transition fields (for MaterialPageRoute, CupertinoPageRoute, etc.)
 
   /// The type of transition animation to use.

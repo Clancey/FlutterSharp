@@ -167,10 +167,53 @@ namespace Flutter.Widgets
         }
 
         /// <summary>
-        /// Checks if a route exists (with or without arguments).
+        /// Checks if a route exists in the static dictionaries.
+        /// </summary>
+        private bool HasStaticRoute(string routeName) =>
+            _routes.ContainsKey(routeName) || _routesWithArgs.ContainsKey(routeName);
+
+        /// <summary>
+        /// Checks if a route can be resolved (either through static routes or OnGenerateRoute).
         /// </summary>
         private bool HasRoute(string routeName) =>
-            _routes.ContainsKey(routeName) || _routesWithArgs.ContainsKey(routeName);
+            HasStaticRoute(routeName) || OnGenerateRoute != null || OnUnknownRoute != null;
+
+        /// <summary>
+        /// Resolves a route name to a Route object using static routes, OnGenerateRoute, or OnUnknownRoute.
+        /// Returns null if no route can be resolved.
+        /// </summary>
+        private Route? ResolveRoute(string routeName, object? arguments)
+        {
+            // 1. First check static routes
+            if (HasStaticRoute(routeName))
+            {
+                return null; // Static route found, will use named route builders
+            }
+
+            // 2. Try OnGenerateRoute callback
+            if (OnGenerateRoute != null)
+            {
+                var settings = new RouteSettings(routeName, arguments);
+                var route = OnGenerateRoute(settings);
+                if (route != null)
+                {
+                    return route;
+                }
+            }
+
+            // 3. Try OnUnknownRoute callback
+            if (OnUnknownRoute != null)
+            {
+                var settings = new RouteSettings(routeName, arguments);
+                var route = OnUnknownRoute(settings);
+                if (route != null)
+                {
+                    return route;
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Gets all registered route names.
@@ -208,6 +251,47 @@ namespace Flutter.Widgets
         /// The callback receives the route name that was popped.
         /// </summary>
         public Action<string>? OnPop { get; set; }
+
+        /// <summary>
+        /// Gets or sets the callback invoked when a route name is not found in the Routes dictionary.
+        /// The callback receives RouteSettings and should return a Route for dynamic route generation.
+        /// Return null if the route cannot be generated.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// navigator.OnGenerateRoute = (settings) =>
+        /// {
+        ///     // Generate routes dynamically based on the route name
+        ///     if (settings.Name?.StartsWith("/user/") == true)
+        ///     {
+        ///         var userId = settings.Name.Substring(6);
+        ///         return new MaterialPageRoute(
+        ///             builder: () => new UserProfilePage(userId),
+        ///             settings: settings
+        ///         );
+        ///     }
+        ///     return null; // Route not handled
+        /// };
+        /// </code>
+        /// </example>
+        public Func<RouteSettings, Route?>? OnGenerateRoute { get; set; }
+
+        /// <summary>
+        /// Gets or sets the callback invoked when a route cannot be resolved by Routes or OnGenerateRoute.
+        /// This is typically used to show an error page for unknown routes.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// navigator.OnUnknownRoute = (settings) =>
+        /// {
+        ///     return new MaterialPageRoute(
+        ///         builder: () => new NotFoundPage(settings.Name),
+        ///         settings: settings
+        ///     );
+        /// };
+        /// </code>
+        /// </example>
+        public Func<RouteSettings, Route?>? OnUnknownRoute { get; set; }
 
         /// <summary>
         /// Gets or sets the restoration scope ID.
@@ -256,24 +340,32 @@ namespace Flutter.Widgets
         /// </example>
         public bool PushNamed(string routeName, object? arguments = null)
         {
-            if (!HasRoute(routeName))
+            // First try to resolve through static routes
+            if (HasStaticRoute(routeName))
             {
-                return false;
+                // Store arguments for this route (by stack index)
+                var stackIndex = _routeStack.Count;
+                if (arguments != null)
+                {
+                    _routeArguments[stackIndex] = arguments;
+                }
+
+                _routeStack.Push(routeName);
+                _currentRoute = routeName;
+                _currentArguments = arguments;
+                OnRouteChanged?.Invoke(routeName);
+                SetState(() => { });
+                return true;
             }
 
-            // Store arguments for this route (by stack index)
-            var stackIndex = _routeStack.Count;
-            if (arguments != null)
+            // Try dynamic route generation
+            var route = ResolveRoute(routeName, arguments);
+            if (route != null)
             {
-                _routeArguments[stackIndex] = arguments;
+                return Push(route);
             }
 
-            _routeStack.Push(routeName);
-            _currentRoute = routeName;
-            _currentArguments = arguments;
-            OnRouteChanged?.Invoke(routeName);
-            SetState(() => { });
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -366,9 +458,24 @@ namespace Flutter.Widgets
         /// <returns>True if the operation succeeded.</returns>
         public bool PushAndRemoveUntil(string routeName, Func<string, bool> predicate, object? arguments = null)
         {
-            if (!HasRoute(routeName))
+            // Try dynamic route resolution first if not a static route
+            if (!HasStaticRoute(routeName))
             {
-                return false;
+                var route = ResolveRoute(routeName, arguments);
+                if (route == null)
+                {
+                    return false;
+                }
+
+                // Remove routes until predicate is true
+                while (_routeStack.Count > 0 && !predicate(_routeStack.Peek()))
+                {
+                    var poppedIndex = _routeStack.Count - 1;
+                    _routeArguments.Remove(poppedIndex);
+                    _routeStack.Pop();
+                }
+
+                return Push(route);
             }
 
             // Remove routes until predicate is true
@@ -412,9 +519,24 @@ namespace Flutter.Widgets
         /// <returns>True if the route was replaced, false if the route doesn't exist.</returns>
         public bool PushReplacementNamed(string routeName, object? arguments = null)
         {
-            if (!HasRoute(routeName))
+            // Try dynamic route resolution first if not a static route
+            if (!HasStaticRoute(routeName))
             {
-                return false;
+                var route = ResolveRoute(routeName, arguments);
+                if (route == null)
+                {
+                    return false;
+                }
+
+                // Pop the current route
+                if (_routeStack.Count > 0)
+                {
+                    var oldIndex = _routeStack.Count - 1;
+                    _routeArguments.Remove(oldIndex);
+                    _routeStack.Pop();
+                }
+
+                return Push(route);
             }
 
             // Remove arguments for the current route
@@ -450,9 +572,32 @@ namespace Flutter.Widgets
         /// <returns>True if successful, false if the route doesn't exist or cannot pop.</returns>
         public bool PopAndPushNamed(string routeName, object? arguments = null, object? result = null)
         {
-            if (!HasRoute(routeName))
+            // Try dynamic route resolution first if not a static route
+            if (!HasStaticRoute(routeName))
             {
-                return false;
+                var route = ResolveRoute(routeName, arguments);
+                if (route == null)
+                {
+                    return false;
+                }
+
+                // Pop the current route first (if possible)
+                if (_routeStack.Count > 1)
+                {
+                    var poppedIndex = _routeStack.Count - 1;
+                    _routeArguments.Remove(poppedIndex);
+                    var poppedRouteName = _routeStack.Pop();
+                    OnPop?.Invoke(poppedRouteName);
+                }
+                else if (_routeStack.Count > 0)
+                {
+                    // Single route, just pop it
+                    var poppedIndex = _routeStack.Count - 1;
+                    _routeArguments.Remove(poppedIndex);
+                    _routeStack.Pop();
+                }
+
+                return Push(route);
             }
 
             if (_routeStack.Count <= 1)
@@ -462,10 +607,10 @@ namespace Flutter.Widgets
             }
 
             // Pop the current route
-            var poppedIndex = _routeStack.Count - 1;
-            _routeArguments.Remove(poppedIndex);
-            var poppedRouteName = _routeStack.Pop();
-            OnPop?.Invoke(poppedRouteName);
+            var poppedIdx = _routeStack.Count - 1;
+            _routeArguments.Remove(poppedIdx);
+            var poppedRoute = _routeStack.Pop();
+            OnPop?.Invoke(poppedRoute);
 
             // Push new route with arguments
             var stackIndex = _routeStack.Count;
@@ -588,9 +733,25 @@ namespace Flutter.Widgets
         /// <returns>True if successful, false if the route doesn't exist.</returns>
         public bool PopAllAndPush(string routeName, object? arguments = null)
         {
-            if (!HasRoute(routeName))
+            // Try dynamic route resolution first if not a static route
+            if (!HasStaticRoute(routeName))
             {
-                return false;
+                var route = ResolveRoute(routeName, arguments);
+                if (route == null)
+                {
+                    return false;
+                }
+
+                // Pop all routes and clear arguments
+                while (_routeStack.Count > 0)
+                {
+                    var poppedIndex = _routeStack.Count - 1;
+                    _routeArguments.Remove(poppedIndex);
+                    var poppedRoute = _routeStack.Pop();
+                    OnPop?.Invoke(poppedRoute);
+                }
+
+                return Push(route);
             }
 
             // Pop all routes and clear arguments
@@ -635,6 +796,10 @@ namespace Flutter.Widgets
             // Register callbacks using the base class helper
             nav.onRouteChangedAction = RegisterCallback(OnRouteChanged);
             nav.onPopAction = RegisterCallback(OnPop);
+
+            // Set flags for dynamic route callbacks (these are handled C#-side during Push operations)
+            nav.hasOnGenerateRoute = OnGenerateRoute != null ? (byte)1 : (byte)0;
+            nav.hasOnUnknownRoute = OnUnknownRoute != null ? (byte)1 : (byte)0;
 
             // Set transition information from current route object
             if (_currentRouteObject != null)

@@ -114,6 +114,18 @@ namespace Flutter.Structs
         }
         public byte HasonPopAction { get; set; }
 
+        /// <summary>
+        /// Flag indicating whether OnGenerateRoute callback is set on the C# side.
+        /// When true, the Navigator can resolve unknown routes dynamically.
+        /// </summary>
+        public byte hasOnGenerateRoute { get; set; }
+
+        /// <summary>
+        /// Flag indicating whether OnUnknownRoute callback is set on the C# side.
+        /// When true, the Navigator can provide a fallback route for completely unknown routes.
+        /// </summary>
+        public byte hasOnUnknownRoute { get; set; }
+
         // Route transition fields (for MaterialPageRoute, CupertinoPageRoute, etc.)
 
         /// <summary>

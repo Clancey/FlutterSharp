@@ -58,6 +58,10 @@ class NavigatorParser extends WidgetParser {
         ? parseString(map.onPopAction)
         : null;
 
+    // Parse dynamic route callback flags
+    final hasOnGenerateRoute = map.hasOnGenerateRoute == 1;
+    final hasOnUnknownRoute = map.hasOnUnknownRoute == 1;
+
     // Parse transition parameters
     final transitionType = RouteTransitionType.values[
         map.transitionType.clamp(0, RouteTransitionType.values.length - 1)];
@@ -95,6 +99,8 @@ class NavigatorParser extends WidgetParser {
         fullscreenDialog: fullscreenDialog,
         isTransitioning: isTransitioning,
         isPopping: isPopping,
+        hasOnGenerateRoute: hasOnGenerateRoute,
+        hasOnUnknownRoute: hasOnUnknownRoute,
       );
     }
 
@@ -125,6 +131,10 @@ class _NavigatorWrapper extends StatefulWidget {
   final bool fullscreenDialog;
   final bool isTransitioning;
   final bool isPopping;
+  /// Whether OnGenerateRoute callback is set on the C# side for dynamic route resolution.
+  final bool hasOnGenerateRoute;
+  /// Whether OnUnknownRoute callback is set on the C# side for fallback route handling.
+  final bool hasOnUnknownRoute;
 
   const _NavigatorWrapper({
     super.key,
@@ -140,6 +150,8 @@ class _NavigatorWrapper extends StatefulWidget {
     this.fullscreenDialog = false,
     this.isTransitioning = false,
     this.isPopping = false,
+    this.hasOnGenerateRoute = false,
+    this.hasOnUnknownRoute = false,
   });
 
   @override
