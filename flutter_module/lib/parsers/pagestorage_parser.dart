@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/pagestorage_struct.dart';
+import '../generated/structs/pagestorage_struct.dart';
 
 /// Establish a subtree in which widgets can opt into persisting states after
   /// being destroyed.

@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/widgettorenderboxadapter_struct.dart';
+import '../generated/structs/widgettorenderboxadapter_struct.dart';
 
 /// An adapter for placing a specific [RenderBox] in the widget tree.
   /// 

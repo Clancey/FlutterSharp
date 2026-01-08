@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/actions_struct.dart';
+import '../generated/structs/actions_struct.dart';
 
 /// A widget that maps [Intent]s to [Action]s to be used by its descendants
   /// when invoking an [Action].

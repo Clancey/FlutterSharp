@@ -14,13 +14,13 @@ import 'maui_flutter.dart';
 import 'dart:convert';
 
 // Export generated structs that are referenced by hand-written parsers
-export 'structs/align_struct.dart';
-export 'structs/aspectratio_struct.dart';
-export 'structs/column_struct.dart';
-export 'structs/container_struct.dart';
-export 'structs/icon_struct.dart';
-export 'structs/row_struct.dart';
-export 'structs/text_struct.dart';
+export 'generated/structs/align_struct.dart';
+export 'generated/structs/aspectratio_struct.dart';
+export 'generated/structs/column_struct.dart';
+export 'generated/structs/container_struct.dart';
+export 'generated/structs/icon_struct.dart';
+export 'generated/structs/row_struct.dart';
+export 'generated/structs/text_struct.dart';
 
 /// Abstract interface for FlutterObjectStruct to allow type-safe parsing.
 /// This is used as a parameter type in parser methods.

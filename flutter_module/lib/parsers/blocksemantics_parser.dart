@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/blocksemantics_struct.dart';
+import '../generated/structs/blocksemantics_struct.dart';
 
 /// A widget that drops the semantics of all widget that were painted before it
   /// in the same semantic container.

@@ -80,12 +80,37 @@ class MauiRootRenderer extends StatefulWidget {
 }
 
 class _MauiRootRendererState extends State<MauiRootRenderer> {
+  String _debugMessage = "Waiting for ready...";
+  int _messageCount = 0;
+
   @override
   void initState() {
     super.initState();
 
     methodChannel.setMethodCallHandler((call) async {
-      _onEvent(call.arguments);
+      try {
+        _messageCount++;
+        setState(() {
+          _debugMessage = "Received: ${call.method} (#$_messageCount)";
+        });
+        debugPrint('[Dart] Received method call: ${call.method}');
+        debugPrint('[Dart] Arguments type: ${call.arguments.runtimeType}');
+        debugPrint('[Dart] Arguments: ${call.arguments}');
+        if (call.arguments is String) {
+          _onEvent(call.arguments as String);
+        } else {
+          setState(() {
+            _debugMessage = "ERROR: Args not String (${call.arguments.runtimeType})";
+          });
+          debugPrint('[Dart] ERROR: Arguments is not a String!');
+        }
+      } catch (e, stackTrace) {
+        setState(() {
+          _debugMessage = "ERROR: $e";
+        });
+        debugPrint('[Dart] ERROR in method handler: $e');
+        debugPrint('[Dart] Stack: $stackTrace');
+      }
     });
 
     dotNetMessageChannel.setMessageHandler((bytes) async {
@@ -103,13 +128,19 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
 
   void _onEvent(String json) {
     try {
+      print('[Dart] _onEvent received: $json');
       final message = jsonDecode(json);
+      print('[Dart] Decoded message type: ${message['messageType']}');
       switch (message['messageType']) {
         case 'UpdateComponent':
+          debugPrint('[Dart] Processing UpdateComponent');
           final componentId = message['componentId'];
           int ptr = message['address'];
+          debugPrint('[Dart] Component: $componentId, Address: 0x${ptr.toRadixString(16)}');
           final pointer = Pointer<FlutterObjectStruct>.fromAddress(ptr);
+          debugPrint('[Dart] Struct at address: handle=0x${pointer.ref.handle.address.toRadixString(16)}, managedHandle=0x${pointer.ref.managedHandle.address.toRadixString(16)}, widgetType=${pointer.ref.widgetType}');
           setMauiState(componentId, pointer.ref);
+          debugPrint('[Dart] State set successfully');
           break;
         case 'DisposedComponent':
           _handleDisposedComponent(message);
@@ -153,7 +184,26 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
 
   @override
   Widget build(BuildContext context) {
-    return MauiComponent(componentId: "0");
+    return Scaffold(
+      backgroundColor: Colors.yellow,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              color: Colors.blue,
+              padding: EdgeInsets.all(8),
+              child: Text(
+                _debugMessage,
+                style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+            Expanded(child: MauiComponent(componentId: "0")),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -187,15 +237,21 @@ class _MauiComponentState extends State<MauiComponent> {
   Widget build(BuildContext context) {
     if (_address != null) {
       try {
+        debugPrint('[MauiComponent] Building with address: ${_address!.handle.address}');
+        debugPrint('[MauiComponent] Widget type: ${_address!.widgetType}');
         var w = DynamicWidgetBuilder.buildFromMap(_address, context);
-        return w ?? SizedBox.shrink();
+        debugPrint('[MauiComponent] Build result: $w');
+        if (w == null) {
+          return Text('Widget build returned null for type: ${_address!.widgetType}', style: TextStyle(color: Colors.red));
+        }
+        return w;
       } catch (e, stackTrace) {
-        print('ERROR in _MauiComponentState.build: $e');
-        print('Stack trace: $stackTrace');
-        return Text('Error: $e');
+        debugPrint('ERROR in _MauiComponentState.build: $e');
+        debugPrint('Stack trace: $stackTrace');
+        return Text('Error: $e', style: TextStyle(color: Colors.red));
       }
     } else {
-      return SizedBox.shrink();
+      return Text('No address set (address is null)', style: TextStyle(color: Colors.orange));
     }
   }
 }

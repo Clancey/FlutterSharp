@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/automatickeepalive_struct.dart';
+import '../generated/structs/automatickeepalive_struct.dart';
 
 /// Allows subtrees to request to be kept alive in lazy lists.
   /// 

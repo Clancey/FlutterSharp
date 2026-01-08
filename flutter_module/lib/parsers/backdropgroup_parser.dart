@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/backdropgroup_struct.dart';
+import '../generated/structs/backdropgroup_struct.dart';
 
 /// A widget that establishes a shared backdrop layer for all child [BackdropFilter]
   /// widgets that opt into using it.

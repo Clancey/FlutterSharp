@@ -17,20 +17,20 @@ import 'package:flutter_module/mauiRenderer.dart' show methodChannel;  // For ca
 import '../flutter_sharp_structs.dart';
 
 // Struct imports
-import 'structs/alignmentgeometry_struct.dart';
-import 'structs/borderradiusgeometry_struct.dart';
-import 'structs/borderradius_struct.dart';
-import 'structs/boxconstraints_struct.dart';
-import 'structs/boxdecoration_struct.dart';
-import 'structs/decoration_struct.dart';
-import 'structs/edgeinsetsgeometry_struct.dart';
-import 'structs/edgeinsets_struct.dart';
-import 'structs/gradient_struct.dart';
-import 'structs/matrix4_struct.dart';
-import 'structs/offset_struct.dart';
-import 'structs/radius_struct.dart';
-import 'structs/size_struct.dart';
-import 'structs/textstyle_struct.dart';
+import 'generated/structs/alignmentgeometry_struct.dart';
+import 'generated/structs/borderradiusgeometry_struct.dart';
+import 'generated/structs/borderradius_struct.dart';
+import 'generated/structs/boxconstraints_struct.dart';
+import 'generated/structs/boxdecoration_struct.dart';
+import 'generated/structs/decoration_struct.dart';
+import 'generated/structs/edgeinsetsgeometry_struct.dart';
+import 'generated/structs/edgeinsets_struct.dart';
+import 'generated/structs/gradient_struct.dart';
+import 'generated/structs/matrix4_struct.dart';
+import 'generated/structs/offset_struct.dart';
+import 'generated/structs/radius_struct.dart';
+import 'generated/structs/size_struct.dart';
+import 'generated/structs/textstyle_struct.dart';
 
 /// Parses int from FFI type.
 int parseInt(int value) {

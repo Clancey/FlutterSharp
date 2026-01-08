@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
-import '../structs/align_struct.dart';
+import '../generated/structs/align_struct.dart';
 
 class AlignWidgetParser extends WidgetParser {
   @override

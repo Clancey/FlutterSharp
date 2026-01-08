@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/restorationscope_struct.dart';
+import '../generated/structs/restorationscope_struct.dart';
 
 /// Creates a new scope for restoration IDs used by descendant widgets to claim
   /// [RestorationBucket]s.

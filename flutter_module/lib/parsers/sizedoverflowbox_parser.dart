@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/sizedoverflowbox_struct.dart';
+import '../generated/structs/sizedoverflowbox_struct.dart';
 
 /// A widget that is a specific size but passes its original constraints
   /// through to its child, which may then overflow.

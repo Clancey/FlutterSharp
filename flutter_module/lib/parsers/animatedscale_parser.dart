@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/animatedscale_struct.dart';
+import '../generated/structs/animatedscale_struct.dart';
 
 /// Animated version of [Transform.scale] which automatically transitions the child's
   /// scale over a given duration whenever the given scale changes.

@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/renderobjecttowidgetadapter_struct.dart';
+import '../generated/structs/renderobjecttowidgetadapter_struct.dart';
 
 /// A bridge from a [RenderObject] to an [Element] tree.
   /// 

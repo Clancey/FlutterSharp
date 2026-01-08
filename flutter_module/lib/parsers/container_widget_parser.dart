@@ -4,7 +4,7 @@ import '../flutter_sharp_structs.dart';
 import '../maui_flutter.dart';
 import '../utils.dart' show parseAlignment;
 import '../generated_utility_parsers.dart' show parseEdgeInsetsGeometry;
-import '../structs/container_struct.dart';
+import '../generated/structs/container_struct.dart';
 import 'package:flutter/widgets.dart';
 
 class ContainerWidgetParser extends WidgetParser {

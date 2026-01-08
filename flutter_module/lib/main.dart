@@ -26,7 +26,8 @@ import 'dart:convert';
 
 void main() {
   // See https://github.com/flutter/flutter/wiki/Desktop-shells#target-platform-override
-  debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  // Removed: debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  // This was causing issues on iOS
 
   runApp(new MyApp());
 }

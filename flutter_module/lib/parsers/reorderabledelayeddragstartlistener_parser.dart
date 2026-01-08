@@ -13,7 +13,7 @@ import 'package:flutter_module/flutter_sharp_structs.dart';
 import '../generated_utility_parsers.dart';
 import 'package:flutter_module/utils.dart' hide parseBoxConstraints, parseEdgeInsetsGeometry, parseColor, parseCurve, parseBoxBorder;
 import 'package:flutter_module/maui_flutter.dart';
-import '../structs/reorderabledelayeddragstartlistener_struct.dart';
+import '../generated/structs/reorderabledelayeddragstartlistener_struct.dart';
 
 /// A wrapper widget that will recognize the start of a drag operation by
   /// looking for a long press event. Once it is recognized, it will start
