@@ -972,7 +972,7 @@ After hitting a blocker:
 | CUP001 | Implement CupertinoButton | completed | iOS-style button with filled variant, padding, colors, sizeStyle |
 | CUP002 | Implement CupertinoTextField | completed | iOS-style text field with onChanged, onSubmitted, placeholder, styling, cursor customization |
 | CUP003 | Implement CupertinoNavigationBar | completed | iOS-style nav bar with leading, middle, trailing widgets, backgroundColor, brightness, padding, and boolean settings |
-| CUP004 | Implement CupertinoTabBar | pending | iOS-style tab bar |
+| CUP004 | Implement CupertinoTabBar | completed | iOS-style tab bar with items (uses BottomNavigationBarItem), currentIndex, onTap callback, backgroundColor, activeColor, inactiveColor, iconSize, height, border |
 | CUP005 | Implement CupertinoSwitch | pending | iOS-style switch |
 
 ### Phase 5 Complete When:
