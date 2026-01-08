@@ -432,7 +432,9 @@ internal class Program
 			"RawMenuAnchor", "ReorderableList", "ShaderMask",
 			"SliverAnimatedGrid", "SliverAnimatedList", "SliverLayoutBuilder",
 			"SliverReorderableList", "SliverVariedExtentList", "StatefulBuilder",
-			"TapRegion", "TextFieldTapRegion", "TreeSliver", "WillPopScope"
+			"TapRegion", "TextFieldTapRegion", "TreeSliver", "WillPopScope",
+			// Widgets with HitTestBehavior type mismatch
+			"SingleChildScrollView"
 		};
 
 		// Generate widgets

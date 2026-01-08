@@ -73,6 +73,10 @@ namespace Flutter.Internal
 					HandleEvent(message.Data, message.Callback);
 					return;
 
+				case "HandleAction":
+					HandleAction(message.Data, message.Callback);
+					return;
+
 				default:
 					Console.WriteLine($"FlutterManager: Unknown method '{message.Method}'");
 					return;
@@ -125,6 +129,144 @@ namespace Flutter.Internal
 			catch (Exception ex)
 			{
 				Console.WriteLine($"FlutterManager: Error handling event: {ex}");
+			}
+		}
+
+		/// <summary>
+		/// Handles action callbacks from Dart side.
+		/// When a user interacts with a Flutter widget (e.g., taps a button),
+		/// the Dart side sends an action message with the callback ID.
+		/// </summary>
+		private static void HandleAction(string data, Action<string> callback)
+		{
+			try
+			{
+				var message = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(data, serializeOptions);
+				if (message == null)
+				{
+					Console.WriteLine("FlutterManager: Failed to deserialize action message");
+					return;
+				}
+
+				// Extract actionId (format: "action_123")
+				if (!message.TryGetValue("actionId", out var actionIdElement))
+				{
+					Console.WriteLine("FlutterManager: Action message missing actionId");
+					return;
+				}
+
+				var actionIdStr = actionIdElement.GetString();
+				if (string.IsNullOrEmpty(actionIdStr))
+				{
+					Console.WriteLine("FlutterManager: Empty actionId");
+					return;
+				}
+
+				// Parse the numeric ID from "action_123" format
+				long actionId = 0;
+				if (actionIdStr.StartsWith("action_"))
+				{
+					if (!long.TryParse(actionIdStr.Substring(7), out actionId))
+					{
+						Console.WriteLine($"FlutterManager: Invalid actionId format: {actionIdStr}");
+						return;
+					}
+				}
+				else if (!long.TryParse(actionIdStr, out actionId))
+				{
+					Console.WriteLine($"FlutterManager: Invalid actionId: {actionIdStr}");
+					return;
+				}
+
+				// Extract typed arguments if present
+				var args = ExtractCallbackArguments(message);
+
+				// Invoke the callback
+				CallbackRegistry.Invoke(actionId, args);
+
+				// Send success response if callback provided
+				callback?.Invoke("{\"success\": true}");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"FlutterManager: Error handling action: {ex}");
+				callback?.Invoke($"{{\"success\": false, \"error\": \"{ex.Message}\"}}");
+			}
+		}
+
+		/// <summary>
+		/// Extracts typed arguments from the action message.
+		/// Converts JSON values to appropriate C# types.
+		/// </summary>
+		private static object[] ExtractCallbackArguments(Dictionary<string, JsonElement> message)
+		{
+			var args = new List<object>();
+
+			// Check for 'value' key (used by ValueChanged<T> callbacks)
+			if (message.TryGetValue("value", out var valueElement))
+			{
+				args.Add(ConvertJsonElement(valueElement));
+			}
+
+			// Check for gesture details (globalPosition, localPosition)
+			if (message.TryGetValue("globalPosition", out var globalPos) ||
+			    message.TryGetValue("localPosition", out var localPos))
+			{
+				// For gesture callbacks, create a details dictionary
+				var details = new Dictionary<string, object>();
+
+				if (message.TryGetValue("globalPosition", out globalPos))
+				{
+					details["globalPosition"] = ConvertJsonElement(globalPos);
+				}
+				if (message.TryGetValue("localPosition", out localPos))
+				{
+					details["localPosition"] = ConvertJsonElement(localPos);
+				}
+
+				args.Add(details);
+			}
+
+			return args.ToArray();
+		}
+
+		/// <summary>
+		/// Converts a JsonElement to an appropriate C# type.
+		/// </summary>
+		private static object ConvertJsonElement(JsonElement element)
+		{
+			switch (element.ValueKind)
+			{
+				case JsonValueKind.String:
+					return element.GetString();
+				case JsonValueKind.Number:
+					if (element.TryGetInt32(out var intVal))
+						return intVal;
+					if (element.TryGetInt64(out var longVal))
+						return longVal;
+					return element.GetDouble();
+				case JsonValueKind.True:
+					return true;
+				case JsonValueKind.False:
+					return false;
+				case JsonValueKind.Null:
+					return null;
+				case JsonValueKind.Object:
+					var dict = new Dictionary<string, object>();
+					foreach (var prop in element.EnumerateObject())
+					{
+						dict[prop.Name] = ConvertJsonElement(prop.Value);
+					}
+					return dict;
+				case JsonValueKind.Array:
+					var list = new List<object>();
+					foreach (var item in element.EnumerateArray())
+					{
+						list.Add(ConvertJsonElement(item));
+					}
+					return list;
+				default:
+					return element.ToString();
 			}
 		}
 

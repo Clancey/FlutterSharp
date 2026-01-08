@@ -113,7 +113,31 @@ class {{ parser_name }} extends WidgetParser {
 {{~ else if callback_base_type == "ShaderCallback" ~}}
       {{ prop.property_name }}: createShaderCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
 {{~ else if string.starts_with callback_base_type "ValueChanged" ~}}
+{{~ # Extract the generic type parameter from ValueChanged<T> ~}}
+{{~ generic_param = string.slice callback_base_type 13 (callback_base_type | string.size - 14) ~}}
+{{~ # Handle common types with specific callbacks ~}}
+{{~ if generic_param == "bool" ~}}
+      {{ prop.property_name }}: createValueChangedBoolCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if generic_param == "String" ~}}
+      {{ prop.property_name }}: createValueChangedStringCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if generic_param == "int" ~}}
+      {{ prop.property_name }}: createValueChangedIntCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if generic_param == "double" ~}}
+      {{ prop.property_name }}: createValueChangedDoubleCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if generic_param == "DateTime" ~}}
+      {{ prop.property_name }}: createValueChangedDateTimeCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if generic_param == "TimeOfDay" ~}}
+      {{ prop.property_name }}: createValueChangedTimeOfDayCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if generic_param == "Color" ~}}
+      {{ prop.property_name }}: createValueChangedColorCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else if generic_param == "RangeValues" ~}}
+      {{ prop.property_name }}: createValueChangedRangeValuesCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ else ~}}
+      // ValueChanged<{{ generic_param }}> - using bool fallback (type not yet supported)
       {{ prop.property_name }}: createValueChangedCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
+{{~ end ~}}
+{{~ else if callback_base_type == "FormFieldValidator<String>" || string.starts_with callback_base_type "FormFieldValidator" ~}}
+      {{ prop.property_name }}: createFormFieldValidatorCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}
 {{~ else ~}}
       // TODO: Unknown callback type {{ prop.dart_type }} - using VoidCallback fallback
       {{ prop.property_name }}: createVoidCallback({{ action_id_expr }}){{ if !for.last || has_children }},{{ end }}

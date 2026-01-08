@@ -740,6 +740,94 @@ DateTime {{ parser_name }}(int millisecondsSinceEpoch) {
 			sb.AppendLine("}");
 			sb.AppendLine();
 
+			// ValueChanged<bool> creator (alias for widgets that use onChanged for bool)
+			sb.AppendLine("/// Creates a ValueChanged<bool> callback (alias).");
+			sb.AppendLine("ValueChanged<bool>? createValueChangedBoolCallback(String? actionId) {");
+			sb.AppendLine("  return createValueChangedCallback(actionId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// ValueChanged<String> creator (for TextField, etc.)
+			sb.AppendLine("/// Creates a ValueChanged<String> callback that invokes the C# action.");
+			sb.AppendLine("ValueChanged<String>? createValueChangedStringCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (String value) => _invokeAction(actionId, args: {'value': value});");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// ValueChanged<int> creator
+			sb.AppendLine("/// Creates a ValueChanged<int> callback that invokes the C# action.");
+			sb.AppendLine("ValueChanged<int>? createValueChangedIntCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (int value) => _invokeAction(actionId, args: {'value': value});");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// ValueChanged<double> creator
+			sb.AppendLine("/// Creates a ValueChanged<double> callback that invokes the C# action.");
+			sb.AppendLine("ValueChanged<double>? createValueChangedDoubleCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (double value) => _invokeAction(actionId, args: {'value': value});");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// ValueChanged<DateTime> creator
+			sb.AppendLine("/// Creates a ValueChanged<DateTime> callback that invokes the C# action.");
+			sb.AppendLine("ValueChanged<DateTime>? createValueChangedDateTimeCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (DateTime value) => _invokeAction(actionId, args: {'value': value.millisecondsSinceEpoch});");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// ValueChanged<TimeOfDay> creator (for time pickers)
+			sb.AppendLine("/// Creates a ValueChanged<TimeOfDay> callback that invokes the C# action.");
+			sb.AppendLine("ValueChanged<TimeOfDay>? createValueChangedTimeOfDayCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (TimeOfDay value) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'hour': value.hour,");
+			sb.AppendLine("    'minute': value.minute,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// ValueChanged<Color> creator (for color pickers)
+			sb.AppendLine("/// Creates a ValueChanged<Color> callback that invokes the C# action.");
+			sb.AppendLine("ValueChanged<Color>? createValueChangedColorCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (Color value) => _invokeAction(actionId, args: {'value': value.value});");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// ValueChanged<RangeValues> creator (for range sliders)
+			sb.AppendLine("/// Creates a ValueChanged<RangeValues> callback that invokes the C# action.");
+			sb.AppendLine("ValueChanged<RangeValues>? createValueChangedRangeValuesCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (RangeValues value) => _invokeAction(actionId, args: {");
+			sb.AppendLine("    'start': value.start,");
+			sb.AppendLine("    'end': value.end,");
+			sb.AppendLine("  });");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// FormFieldValidator<T> - generic validator callback
+			sb.AppendLine("/// Creates a FormFieldValidator<String> callback that invokes the C# action.");
+			sb.AppendLine("/// Note: This is async but validator expects sync - returns null and logs value for now.");
+			sb.AppendLine("FormFieldValidator<String>? createFormFieldValidatorCallback(String? actionId) {");
+			sb.AppendLine("  if (actionId == null || actionId.isEmpty) return null;");
+			sb.AppendLine("  return (String? value) {");
+			sb.AppendLine("    _invokeAction(actionId, args: {'value': value});");
+			sb.AppendLine("    return null; // Validation must be handled differently");
+			sb.AppendLine("  };");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
+			// OnSubmitted callback (TextField, SearchBar, etc.)
+			sb.AppendLine("/// Creates an onSubmitted callback that invokes the C# action.");
+			sb.AppendLine("ValueChanged<String>? createOnSubmittedCallback(String? actionId) {");
+			sb.AppendLine("  return createValueChangedStringCallback(actionId);");
+			sb.AppendLine("}");
+			sb.AppendLine();
+
 			// GestureTapCallback
 			sb.AppendLine("/// Creates a GestureTapCallback that invokes the C# action.");
 			sb.AppendLine("GestureTapCallback? createGestureTapCallback(String? actionId) {");
