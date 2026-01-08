@@ -583,6 +583,7 @@ When starting a new loop, work on these in order:
 | ANI001-006 | 2026-01-08 | - | All 6 implicit animation widgets (AnimatedOpacity, AnimatedContainer, AnimatedPositioned, AnimatedScale, AnimatedRotation, AnimatedCrossFade) verified as implemented via code generator. C# widgets/structs in src/Flutter/Widgets/ and src/Flutter/Structs/. Dart parsers in flutter_module/lib/generated/parsers/. All build successfully. |
 | THM001-003 | 2026-01-08 | pending | Implemented ThemeData class and MaterialApp widget with theme support. Created: src/Flutter/Material/ThemeData.cs (with Brightness, UseMaterial3, ColorSchemeSeed, PrimaryColor, ScaffoldBackgroundColor, CardColor, DividerColor, AppBar colors, FontFamily). src/Flutter/Material/MaterialApp.cs (StatefulWidget with title, home, theme configuration). src/Flutter/Structs/MaterialAppStruct.cs (FFI struct). src/Flutter/Enums/Brightness.cs (Light/Dark enum). Dart side: MaterialAppStruct in flutter_sharp_structs.dart, materialapp_parser.dart with ColorScheme.fromSeed() support for Material 3 theming. |
 | THM005 | 2026-01-08 | pending | Implemented dynamic theme switching: Added ThemeMode support (System/Light/Dark) to MaterialApp. Extended MaterialAppStruct with darkTheme fields (darkColorSchemeSeed, darkPrimaryColor, darkScaffoldBackgroundColor, darkAppBarBackgroundColor, darkAppBarForegroundColor, darkCardColor, darkDividerColor, darkErrorColor, darkFontFamily) plus themeMode field. Updated MaterialApp.cs to serialize both themes. Updated Dart MaterialAppStruct and materialapp_parser.dart to parse darkTheme and apply themeMode to Flutter MaterialApp. |
+| SCR001-003 | 2026-01-08 | 061d181 | Implemented ScrollController binding with two-way communication. C# ScrollController extends ChangeNotifier with JumpTo, AnimateTo, scroll events (OnScrollStart/Update/End), Offset/MaxScrollExtent/ViewportDimension properties. Added ScrollControllerManager.dart on Dart side. Added Controller property to ListView, GridView, SingleChildScrollView. FlutterManager handles scroll commands and updates via method channel. |
 
 ---
 
@@ -954,9 +955,9 @@ After hitting a blocker:
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| SCR001 | Implement ScrollController binding | pending | Scroll position tracking |
-| SCR002 | Implement scroll position callbacks | pending | onScroll, onScrollEnd |
-| SCR003 | Implement programmatic scrolling | pending | scrollTo, animateTo methods |
+| SCR001 | Implement ScrollController binding | completed | ScrollController class in Flutter.Widgets namespace. Extends ChangeNotifier for observable scroll state. Added Controller property and controllerId field to ListView, GridView, SingleChildScrollView. Created scroll_controller_manager.dart on Dart side. Two-way communication via method channel for scroll position updates. |
+| SCR002 | Implement scroll position callbacks | completed | OnScrollStart, OnScrollUpdate, OnScrollEnd events on ScrollController. ScrollStartDetails, ScrollUpdateDetails, ScrollEndDetails classes with offset, delta, extent, velocity info. Dart sends updates via methodChannel when scroll position changes. |
+| SCR003 | Implement programmatic scrolling | completed | JumpTo(double offset) and AnimateTo(double offset, TimeSpan duration, string curve) methods on ScrollController. ScrollCommandMessage sent to Dart via methodChannel. Dart scroll_controller_manager handles commands and calls controller.jumpTo/animateTo. |
 | SCR004 | Implement RefreshIndicator | pending | Pull-to-refresh support |
 | SCR005 | Implement infinite scrolling pattern | pending | Lazy loading as user scrolls |
 
@@ -975,7 +976,7 @@ After hitting a blocker:
 - [x] Basic navigation works (push/pop) ✅ (NAV001-NAV005 complete)
 - [x] At least 3 implicit animation widgets work ✅ (ANI001-ANI006 all implemented via code generator)
 - [x] Theme switching works ✅ (THM005 complete - ThemeMode.System/Light/Dark, darkTheme support)
-- [ ] ScrollController bindings work
+- [x] ScrollController bindings work ✅ (SCR001-SCR003 complete - JumpTo, AnimateTo, scroll events)
 
 ---
 
