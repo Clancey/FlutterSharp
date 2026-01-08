@@ -1004,7 +1004,7 @@ After hitting a blocker:
 | MAUI001 | Create FlutterView MAUI component | completed | ViewHandler-based MAUI control. Created IFlutterView.cs, FlutterView.cs, FlutterViewHandler.cs, MauiAppBuilderExtensions.cs, FlutterViewHandler.iOS.cs |
 | MAUI002 | Implement MAUI lifecycle binding | completed | Page lifecycle (Appearing/Disappearing), app lifecycle (Resume/Pause), FlutterLifecycleState enum, LifecycleMessage, NotifyLifecycleState in FlutterManager |
 | MAUI003 | Create proper MAUI sample app | completed | Sample/FlutterSample.MAUI: MauiProgram.cs, App.xaml, AppShell.xaml (TabBar navigation), MainPage (HelloWorld), CounterPage (state demo), ListDemoPage (dynamic list). Uses FlutterView control with MAUI-Flutter hybrid interaction. |
-| MAUI004 | Add MAUI sizing/layout constraints | pending | Handle container sizing, orientation |
+| MAUI004 | Add MAUI sizing/layout constraints | completed | AspectRatio, FillAvailableSpace properties, OnContainerSizeChanged, orientation handling, GetDesiredSize override |
 | MAUI005 | Implement MAUI navigation integration | pending | NavigationPage, Shell navigation |
 
 ### 6.2 iOS Platform (MOSTLY COMPLETE)
