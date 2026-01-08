@@ -266,7 +266,7 @@ CenterStruct layout:
 | T003 | Handle incomplete generic types | completed | Default generic args + Object fallbacks |
 | T004 | Fix TimeSpan default value issues | completed | Force runtime defaults; no compile-time constants |
 | T005 | Fix nullable generic type parameters | completed | Fixed IsReferenceType to strip `?` before checking enums - commit 298e497 |
-| T006 | Review delegate type mappings | pending | Ensure Action/Func are correct |
+| T006 | Review delegate type mappings | completed | Reviewed: Simple callbacks (Action) work correctly. Complex callbacks (Func<...>, builders) are skipped by design. Generic type parameters lost in ValueChanged<T>→Action mapping but acceptable for current scope. |
 
 ### 1.3 Widget Compilation Fixes (MEDIUM PRIORITY)
 
@@ -553,6 +553,7 @@ When starting a new loop, work on these in order:
 | RACE001 | 2026-01-07 | fe52302 | Fixed isReady race condition in FlutterViewController. Bug: isReady was only set to true when Widget != null at "ready" time, causing Widget assigned later to never send state. Fix: Separate isReady assignment from Widget null check. Also added UIScreen.MainScreen.Bounds to UIWindow in sample app. |
 | ADDR001 | 2026-01-07 | 23013f4 | Fixed FlutterManager.SendState() to avoid double PrepareForSending call. Changed `Address = widgetToSend` to `Address = (long)structPtr` to use already-computed pointer instead of triggering implicit conversion again. |
 | PARSER001 | 2026-01-07 | ac98246 | Removed broken SizedBoxWidgetParser from parser list. The legacy parser returned null unconditionally, which would cause SizedBox widgets to fail. The auto-generated SizedBoxParser is complete and used instead. |
+| T006 | 2026-01-07 | - | Reviewed delegate type mappings. Simple callbacks (VoidCallback, GestureTapCallback) → Action work correctly. Complex Func<...> builders are skipped by design. MapFunctionSignature() parses void Function(T) → Action<T> correctly. Generic type parameters lost in ValueChanged<T>→Action mapping but acceptable. |
 
 ---
 

@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using Flutter;
+using Flutter.Internal;
 using Flutter.Structs;
 using Flutter.Widgets;
 using Flutter.Material;
@@ -233,7 +234,8 @@ namespace Flutter.Widgets
 		protected void SetState(Action action)
 		{
 			action?.Invoke();
-			// TODO: Notify Flutter framework of state change
+			// Notify Flutter framework of state change by sending updated widget tree
+			Flutter.Internal.FlutterManager.SendState(this);
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new StatefulWidgetStruct();
