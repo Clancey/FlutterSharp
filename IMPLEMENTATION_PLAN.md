@@ -589,6 +589,7 @@ When starting a new loop, work on these in order:
 | CUP001 | 2026-01-08 | a7d15d0 | Implemented CupertinoButton iOS-style button. C# widget (CupertinoButton.cs) with normal and Filled variants. CupertinoButtonStruct.cs for FFI. Dart parser (cupertinobutton_parser.dart) supporting onPressed, onLongPress, onFocusChange callbacks; padding, color, disabledColor, pressedOpacity, minimumSize, borderRadius, alignment, sizeStyle properties. Added EdgeInsets and Color value types to PlaceholderTypes.cs for C# struct support. |
 | CUP003 | 2026-01-08 | pending | Implemented CupertinoNavigationBar iOS-style navigation bar. C# widget (CupertinoNavigationBar.cs) with leading, middle, trailing widget slots. CupertinoNavigationBarStruct.cs for FFI with HasLeading/HasMiddle/HasTrailing flags, previousPageTitle string, backgroundColor (uint), brightness (int), padding (EdgeInsetsDirectional as 4 doubles), and boolean properties (automaticallyImplyLeading, automaticallyImplyMiddle, transitionBetweenRoutes, automaticBackgroundVisibility, enableBackgroundFilterBlur). Dart struct (cupertinonavigationbar_struct.dart) and parser (cupertinonavigationbar_parser.dart) registered in maui_flutter.dart. |
 | INP005 | 2026-01-08 | pending | Implemented DropdownButton Material Design dropdown selector. C# widgets (DropdownButton.cs, DropdownMenuItem.cs) and structs (DropdownButtonStruct.cs, DropdownMenuItemStruct.cs). Dart structs (dropdownbutton_struct.dart, dropdownmenuitem_struct.dart) and parser (dropdownbutton_parser.dart). Supports items array, value, onChanged/onTap callbacks, hint/disabledHint widgets, elevation, underline, icon, iconSize, isDense, isExpanded, itemHeight, colors (iconDisabled, iconEnabled, focus, dropdown), menuMaxHeight, enableFeedback, alignment, borderRadius, padding. Added BorderRadius struct and AlignmentDirectional enum to PlaceholderTypes.cs for C# struct support. |
+| MAUI003 | 2026-01-08 | pending | Created proper MAUI sample app in Sample/FlutterSample.MAUI/. Uses MauiProgram.cs with UseFlutterSharp(), App.xaml, AppShell.xaml (TabBar with 3 tabs), MainPage (HelloWorld Flutter widget), CounterPage (StatefulWidget with MAUI buttons controlling state), ListDemoPage (dynamic list with MAUI Entry input). Demonstrates hybrid MAUI-Flutter interaction with FlutterView control. Resources (Colors.xaml, Styles.xaml), iOS platform files (AppDelegate.cs, Program.cs, Info.plist). Build succeeds with 0 errors. |
 
 ---
 
@@ -994,7 +995,7 @@ After hitting a blocker:
 - **Android**: ~50% complete - Core structure present, less mature than iOS
 - **Windows**: 0% - Not started
 - **macOS**: 0% - Not started
-- **MAUI Integration**: 0% - Critical gap (sample uses native iOS, not MAUI)
+- **MAUI Integration**: ~40% complete - FlutterView component, lifecycle binding, and sample app working
 
 ### 6.1 MAUI Integration (HIGH PRIORITY)
 
@@ -1002,7 +1003,7 @@ After hitting a blocker:
 |----|------|--------|-------|
 | MAUI001 | Create FlutterView MAUI component | completed | ViewHandler-based MAUI control. Created IFlutterView.cs, FlutterView.cs, FlutterViewHandler.cs, MauiAppBuilderExtensions.cs, FlutterViewHandler.iOS.cs |
 | MAUI002 | Implement MAUI lifecycle binding | completed | Page lifecycle (Appearing/Disappearing), app lifecycle (Resume/Pause), FlutterLifecycleState enum, LifecycleMessage, NotifyLifecycleState in FlutterManager |
-| MAUI003 | Create proper MAUI sample app | pending | MauiProgram, Shell, ContentPage pattern |
+| MAUI003 | Create proper MAUI sample app | completed | Sample/FlutterSample.MAUI: MauiProgram.cs, App.xaml, AppShell.xaml (TabBar navigation), MainPage (HelloWorld), CounterPage (state demo), ListDemoPage (dynamic list). Uses FlutterView control with MAUI-Flutter hybrid interaction. |
 | MAUI004 | Add MAUI sizing/layout constraints | pending | Handle container sizing, orientation |
 | MAUI005 | Implement MAUI navigation integration | pending | NavigationPage, Shell navigation |
 
