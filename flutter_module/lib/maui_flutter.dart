@@ -70,6 +70,7 @@ import 'parsers/text_widget_parser.dart';
 import 'parsers/textfield_parser.dart';
 import 'parsers/wrap_widget_parser.dart';
 import 'parsers/navigator_parser.dart';
+import 'parsers/materialapp_parser.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
@@ -144,6 +145,7 @@ class DynamicWidgetBuilder {
     TextWidgetParser(),
     WrapWidgetParser(),
     NavigatorParser(),
+    MaterialAppParser(),
 
     // Add all generated parsers (418 parsers from Flutter SDK)
     ...generatedParsers,

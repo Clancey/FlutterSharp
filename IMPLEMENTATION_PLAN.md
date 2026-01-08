@@ -580,6 +580,8 @@ When starting a new loop, work on these in order:
 | NAV001 | 2026-01-08 | 51502dc | Implemented Navigator widget with named routes (Routes dictionary), Push/Pop/PushReplacement/PushAndRemoveUntil/PopUntil/PopAllAndPush methods, OnRouteChanged/OnPop callbacks, ClipBehavior, RestorationScopeId. Created C# Navigator.cs + NavigatorStruct.cs, Dart navigator_struct.dart + navigator_parser.dart with PopScope integration. |
 | NAV004 | 2026-01-08 | bab484f | Implemented named routes with arguments support: RoutesWithArguments dictionary (Func<object?, Widget>), PushNamed/PushReplacementNamed/PopAndPushNamed methods with arguments, CurrentArguments property, RouteNames property, arguments tracking per-route via _routeArguments dictionary, arguments serialization in CreateBackingStruct. Updated PushAndRemoveUntil and PopAllAndPush to support arguments. |
 | NAV005 | 2026-01-08 | pending | Implemented Navigator callbacks (OnGenerateRoute, OnUnknownRoute) for dynamic route resolution: Added HasStaticRoute() and ResolveRoute() helper methods to try static routes first, then OnGenerateRoute callback, then OnUnknownRoute as fallback. Updated PushNamed, PushReplacementNamed, PushAndRemoveUntil, PopAndPushNamed, PopAllAndPush to support dynamic route generation. Added hasOnGenerateRoute/hasOnUnknownRoute flags to NavigatorStruct.cs and navigator_struct.dart. Updated navigator_parser.dart to parse and pass the new flags to _NavigatorWrapper. |
+| ANI001-006 | 2026-01-08 | - | All 6 implicit animation widgets (AnimatedOpacity, AnimatedContainer, AnimatedPositioned, AnimatedScale, AnimatedRotation, AnimatedCrossFade) verified as implemented via code generator. C# widgets/structs in src/Flutter/Widgets/ and src/Flutter/Structs/. Dart parsers in flutter_module/lib/generated/parsers/. All build successfully. |
+| THM001-003 | 2026-01-08 | pending | Implemented ThemeData class and MaterialApp widget with theme support. Created: src/Flutter/Material/ThemeData.cs (with Brightness, UseMaterial3, ColorSchemeSeed, PrimaryColor, ScaffoldBackgroundColor, CardColor, DividerColor, AppBar colors, FontFamily). src/Flutter/Material/MaterialApp.cs (StatefulWidget with title, home, theme configuration). src/Flutter/Structs/MaterialAppStruct.cs (FFI struct). src/Flutter/Enums/Brightness.cs (Light/Dark enum). Dart side: MaterialAppStruct in flutter_sharp_structs.dart, materialapp_parser.dart with ColorScheme.fromSeed() support for Material 3 theming. |
 
 ---
 
@@ -930,20 +932,20 @@ After hitting a blocker:
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| ANI001 | Implement AnimatedOpacity widget | pending | Opacity transitions |
-| ANI002 | Implement AnimatedContainer widget | pending | Animates container properties |
-| ANI003 | Implement AnimatedPositioned widget | pending | Position transitions |
-| ANI004 | Implement AnimatedScale widget | pending | Scale transitions |
-| ANI005 | Implement AnimatedRotation widget | pending | Rotation transitions |
-| ANI006 | Implement AnimatedCrossFade widget | pending | Cross-fade between children |
+| ANI001 | Implement AnimatedOpacity widget | completed | C# widget/struct + Dart struct/parser auto-generated with opacity, duration, curve, onEnd, alwaysIncludeSemantics |
+| ANI002 | Implement AnimatedContainer widget | completed | C# widget/struct + Dart struct/parser auto-generated with all container properties + animation params |
+| ANI003 | Implement AnimatedPositioned widget | completed | C# widget/struct + Dart struct/parser auto-generated with left, top, right, bottom, width, height + animation params |
+| ANI004 | Implement AnimatedScale widget | completed | C# widget/struct + Dart struct/parser auto-generated with scale, alignment + animation params |
+| ANI005 | Implement AnimatedRotation widget | completed | C# widget/struct + Dart struct/parser auto-generated with turns, alignment + animation params |
+| ANI006 | Implement AnimatedCrossFade widget | completed | C# widget/struct + Dart struct/parser with firstChild, secondChild, crossFadeState, duration, curve |
 
 ### 5.4 Theming (MEDIUM PRIORITY)
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| THM001 | Implement ThemeData struct | pending | Theme configuration |
-| THM002 | Implement MaterialApp with theme | pending | App-wide theme propagation |
-| THM003 | Implement ColorScheme | pending | Material 3 color scheme |
+| THM001 | Implement ThemeData struct | completed | ThemeData class with Brightness, UseMaterial3, ColorSchemeSeed, PrimaryColor, ScaffoldBackgroundColor, AppBar colors, FontFamily, etc. |
+| THM002 | Implement MaterialApp with theme | completed | MaterialApp widget with title, home, theme (ThemeData), debugShowCheckedModeBanner, initialRoute. Parser generates Flutter ThemeData from seed color or primary color. |
+| THM003 | Implement ColorScheme | completed | ColorScheme generation via ColorScheme.fromSeed() in materialapp_parser.dart - uses colorSchemeSeed from struct |
 | THM004 | Implement TextTheme | pending | Typography configuration |
 | THM005 | Implement dynamic theme switching | pending | Light/dark mode toggle |
 
@@ -968,9 +970,9 @@ After hitting a blocker:
 | CUP005 | Implement CupertinoSwitch | pending | iOS-style switch |
 
 ### Phase 5 Complete When:
-- [ ] State management pattern works (ChangeNotifier, ValueNotifier)
-- [ ] Basic navigation works (push/pop)
-- [ ] At least 3 implicit animation widgets work
+- [x] State management pattern works (ChangeNotifier, ValueNotifier) ✅ (SM001-SM003 complete)
+- [x] Basic navigation works (push/pop) ✅ (NAV001-NAV005 complete)
+- [x] At least 3 implicit animation widgets work ✅ (ANI001-ANI006 all implemented via code generator)
 - [ ] Theme switching works
 - [ ] ScrollController bindings work
 

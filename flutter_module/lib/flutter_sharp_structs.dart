@@ -282,3 +282,99 @@ final class TextFieldStruct extends Struct {
   external Pointer<Utf8> value;
   external Pointer<Utf8> hint;
 }
+
+/// MaterialApp struct for FFI interop
+/// Matches MaterialAppStruct.cs layout
+final class MaterialAppStruct extends Struct {
+  // FlutterObject Struct
+  external Pointer handle;
+  external Pointer managedHandle;
+  external Pointer<Utf8> widgetType;
+  // WidgetStruct
+  external Pointer<Utf8> id;
+
+  // MaterialAppStruct
+  external Pointer<Utf8> title;
+  @Int8()
+  external int hasTitle;
+
+  external Pointer<WidgetStruct> home;
+  @Int8()
+  external int hasHome;
+
+  // Theme: Brightness (0=dark, 1=light)
+  @Int8()
+  external int hasBrightness;
+  @Int32()
+  external int brightness;
+
+  // Use Material 3
+  @Int8()
+  external int hasUseMaterial3;
+  @Int8()
+  external int useMaterial3;
+
+  // Color scheme seed (ARGB uint)
+  @Int8()
+  external int hasColorSchemeSeed;
+  @Uint32()
+  external int colorSchemeSeed;
+
+  // Primary color (ARGB uint)
+  @Int8()
+  external int hasPrimaryColor;
+  @Uint32()
+  external int primaryColor;
+
+  // Scaffold background color
+  @Int8()
+  external int hasScaffoldBackgroundColor;
+  @Uint32()
+  external int scaffoldBackgroundColor;
+
+  // AppBar background color
+  @Int8()
+  external int hasAppBarBackgroundColor;
+  @Uint32()
+  external int appBarBackgroundColor;
+
+  // AppBar foreground color
+  @Int8()
+  external int hasAppBarForegroundColor;
+  @Uint32()
+  external int appBarForegroundColor;
+
+  // Card color
+  @Int8()
+  external int hasCardColor;
+  @Uint32()
+  external int cardColor;
+
+  // Divider color
+  @Int8()
+  external int hasDividerColor;
+  @Uint32()
+  external int dividerColor;
+
+  // Error color
+  @Int8()
+  external int hasErrorColor;
+  @Uint32()
+  external int errorColor;
+
+  // Font family
+  external Pointer<Utf8> fontFamily;
+  @Int8()
+  external int hasFontFamily;
+
+  // Debug show checked mode banner
+  @Int8()
+  external int hasDebugShowCheckedModeBanner;
+  @Int8()
+  external int debugShowCheckedModeBanner;
+
+  // Initial route
+  external Pointer<Utf8> initialRoute;
+  @Int8()
+  external int hasInitialRoute;
+}
