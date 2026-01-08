@@ -66,7 +66,7 @@ class TextButtonParser extends WidgetParser {
           : null,
       autofocus: autofocus,
       clipBehavior: clipBehavior ?? Clip.none,
-      child: child,
+      child: child ?? const SizedBox.shrink(),
     );
   }
 
