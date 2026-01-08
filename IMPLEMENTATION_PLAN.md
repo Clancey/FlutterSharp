@@ -312,7 +312,7 @@ CenterStruct layout:
 |----|------|--------|-------|
 | G001 | Add validation before generation | completed | Created ValidationService.cs with widget/type/enum/property validation, output path checks, C# identifier validation, reserved keyword detection. Integrated into Program.cs after package analysis. |
 | G002 | Improve error reporting for unmapped types | completed | Added UnmappedTypeInfo and UnmappedTypesReport classes to DartToCSharpMapper. Tracks all type mapping fallbacks with context (widget, parameter, dart type, reason, suggestion). Outputs summary in generation report with --verbose option for full details. |
-| G003 | Add Clip enum to manual types | pending | If not auto-generated |
+| G003 | Add Clip enum to manual types | completed | Already auto-generated in src/Flutter/Enums/Clip.cs with all values (None, HardEdge, AntiAlias, AntiAliasWithSaveLayer) and full documentation. |
 
 ---
 
