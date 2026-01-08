@@ -896,6 +896,80 @@ After hitting a blocker:
 
 ---
 
+## Phase 5: Advanced Features
+
+**Goal**: Production-ready features including state management, navigation, animation, and theming.
+
+### 5.1 State Management (HIGH PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| SM001 | Implement ChangeNotifier base class | pending | C# base class for observable state objects |
+| SM002 | Implement ValueNotifier<T> | pending | Generic observable value wrapper |
+| SM003 | Implement ListenableBuilder widget | pending | Rebuilds when Listenable changes |
+| SM004 | Implement Consumer/Provider pattern | pending | Dependency injection for state |
+| SM005 | Add state synchronization | pending | Two-way data binding between C# and Dart |
+
+### 5.2 Navigation (HIGH PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| NAV001 | Implement Navigator C# widget | pending | Navigation stack management |
+| NAV002 | Implement MaterialPageRoute | pending | Standard page transition |
+| NAV003 | Implement Navigator.push/pop methods | pending | Programmatic navigation |
+| NAV004 | Implement named routes | pending | Route names and arguments |
+| NAV005 | Implement Navigator callbacks | pending | onGenerateRoute, onUnknownRoute |
+
+### 5.3 Animation (MEDIUM PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| ANI001 | Implement AnimatedOpacity widget | pending | Opacity transitions |
+| ANI002 | Implement AnimatedContainer widget | pending | Animates container properties |
+| ANI003 | Implement AnimatedPositioned widget | pending | Position transitions |
+| ANI004 | Implement AnimatedScale widget | pending | Scale transitions |
+| ANI005 | Implement AnimatedRotation widget | pending | Rotation transitions |
+| ANI006 | Implement AnimatedCrossFade widget | pending | Cross-fade between children |
+
+### 5.4 Theming (MEDIUM PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| THM001 | Implement ThemeData struct | pending | Theme configuration |
+| THM002 | Implement MaterialApp with theme | pending | App-wide theme propagation |
+| THM003 | Implement ColorScheme | pending | Material 3 color scheme |
+| THM004 | Implement TextTheme | pending | Typography configuration |
+| THM005 | Implement dynamic theme switching | pending | Light/dark mode toggle |
+
+### 5.5 Scrolling (LOW PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| SCR001 | Implement ScrollController binding | pending | Scroll position tracking |
+| SCR002 | Implement scroll position callbacks | pending | onScroll, onScrollEnd |
+| SCR003 | Implement programmatic scrolling | pending | scrollTo, animateTo methods |
+| SCR004 | Implement RefreshIndicator | pending | Pull-to-refresh support |
+| SCR005 | Implement infinite scrolling pattern | pending | Lazy loading as user scrolls |
+
+### 5.6 Cupertino Widgets (LOW PRIORITY)
+
+| ID | Task | Status | Notes |
+|----|------|--------|-------|
+| CUP001 | Implement CupertinoButton | pending | iOS-style button |
+| CUP002 | Implement CupertinoTextField | pending | iOS-style text field |
+| CUP003 | Implement CupertinoNavigationBar | pending | iOS-style nav bar |
+| CUP004 | Implement CupertinoTabBar | pending | iOS-style tab bar |
+| CUP005 | Implement CupertinoSwitch | pending | iOS-style switch |
+
+### Phase 5 Complete When:
+- [ ] State management pattern works (ChangeNotifier, ValueNotifier)
+- [ ] Basic navigation works (push/pop)
+- [ ] At least 3 implicit animation widgets work
+- [ ] Theme switching works
+- [ ] ScrollController bindings work
+
+---
+
 ## Reference
 
 - [AGENTS.md](../AGENTS.md) - How to use subagents
