@@ -240,13 +240,13 @@ namespace Flutter.Structs
 		public byte Haswidth { get; set; }
 
 		// Nullable value type: width
-		public NativeNullable<double> width { get; set; }
+		public double width { get; set; }
 
 		// Has flag for nullable property: height
 		public byte Hasheight { get; set; }
 
 		// Nullable value type: height
-		public NativeNullable<double> height { get; set; }
+		public double height { get; set; }
 
 	}
 }

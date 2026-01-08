@@ -39,14 +39,14 @@ namespace Flutter.Structs
 
 		// Nullable value type: width
 /// The requested width for this widget.
-		public NativeNullable<double> width { get; set; }
+		public double width { get; set; }
 
 		// Has flag for nullable property: height
 		public byte Hasheight { get; set; }
 
 		// Nullable value type: height
 /// The requested height for this widget.
-		public NativeNullable<double> height { get; set; }
+		public double height { get; set; }
 
 		// Simple field: fit
 /// How the HTML element should be inscribed in the box constraining it.

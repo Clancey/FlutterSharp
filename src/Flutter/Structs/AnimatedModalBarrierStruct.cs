@@ -70,7 +70,7 @@ namespace Flutter.Structs
 /// 
 /// * [ModalRoute.semanticsDismissible], which controls this property for
 /// the [ModalBarrier] built by [ModalRoute] pages.
-		public NativeNullable<bool> barrierSemanticsDismissible { get; set; }
+		public bool barrierSemanticsDismissible { get; set; }
 
 		// Callback field: onDismiss
 		// Using action string pattern - Dart will dispatch action to C# via method channel

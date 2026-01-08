@@ -52,7 +52,7 @@ namespace Flutter.Structs
 /// An optional maximum number of lines for the text to span, wrapping if necessary.
 /// 
 /// See [DefaultTextStyle.maxLines] for more details.
-		public NativeNullable<int> maxLines { get; set; }
+		public int maxLines { get; set; }
 
 		// Simple field: style
 		public IntPtr style { get; set; }

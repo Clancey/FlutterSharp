@@ -51,7 +51,7 @@ namespace Flutter.Structs
 /// semantics tree.
 /// 
 /// {@macro flutter.widgets.IgnorePointer.ignoringSemantics}
-		public NativeNullable<bool> ignoringSemantics { get; set; }
+		public bool ignoringSemantics { get; set; }
 
 		// Has flag for nullable property: sliver
 		public byte Hassliver { get; set; }

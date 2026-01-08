@@ -203,7 +203,7 @@ namespace Flutter.Structs
 /// Whether the text should break at soft line breaks.
 /// 
 /// If false, the glyphs in the text will be positioned as if there was unlimited horizontal space.
-		public NativeNullable<bool> softWrap { get; set; }
+		public bool softWrap { get; set; }
 
 		// Simple field: overflow
 /// How visual overflow should be handled.
@@ -227,7 +227,7 @@ namespace Flutter.Structs
 /// The value given to the constructor as textScaleFactor. If null, will
 /// use the [MediaQueryData.textScaleFactor] obtained from the ambient
 /// [MediaQuery], or 1.0 if there is no [MediaQuery] in scope.
-		public NativeNullable<double> textScaleFactor { get; set; }
+		public double textScaleFactor { get; set; }
 
 		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}
@@ -248,7 +248,7 @@ namespace Flutter.Structs
 /// an explicit number for its [DefaultTextStyle.maxLines], then the
 /// [DefaultTextStyle] value will take precedence. You can use a [RichText]
 /// widget directly to entirely override the [DefaultTextStyle].
-		public NativeNullable<int> maxLines { get; set; }
+		public int maxLines { get; set; }
 
 		// Has flag for nullable property: semanticsLabel
 		public byte HassemanticsLabel { get; set; }

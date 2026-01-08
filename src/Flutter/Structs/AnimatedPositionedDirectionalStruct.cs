@@ -44,28 +44,28 @@ namespace Flutter.Structs
 
 		// Nullable value type: start
 /// The offset of the child's start edge from the start of the stack.
-		public NativeNullable<double> start { get; set; }
+		public double start { get; set; }
 
 		// Has flag for nullable property: top
 		public byte Hastop { get; set; }
 
 		// Nullable value type: top
 /// The offset of the child's top edge from the top of the stack.
-		public NativeNullable<double> top { get; set; }
+		public double top { get; set; }
 
 		// Has flag for nullable property: end
 		public byte Hasend { get; set; }
 
 		// Nullable value type: end
 /// The offset of the child's end edge from the end of the stack.
-		public NativeNullable<double> end { get; set; }
+		public double end { get; set; }
 
 		// Has flag for nullable property: bottom
 		public byte Hasbottom { get; set; }
 
 		// Nullable value type: bottom
 /// The offset of the child's bottom edge from the bottom of the stack.
-		public NativeNullable<double> bottom { get; set; }
+		public double bottom { get; set; }
 
 		// Has flag for nullable property: width
 		public byte Haswidth { get; set; }
@@ -75,7 +75,7 @@ namespace Flutter.Structs
 /// 
 /// Only two out of the three horizontal values ([start], [end], [width]) can
 /// be set. The third must be null.
-		public NativeNullable<double> width { get; set; }
+		public double width { get; set; }
 
 		// Has flag for nullable property: height
 		public byte Hasheight { get; set; }
@@ -85,7 +85,7 @@ namespace Flutter.Structs
 /// 
 /// Only two out of the three vertical values ([top], [bottom], [height]) can
 /// be set. The third must be null.
-		public NativeNullable<double> height { get; set; }
+		public double height { get; set; }
 
 		// Simple field: curve
 		public IntPtr curve { get; set; }

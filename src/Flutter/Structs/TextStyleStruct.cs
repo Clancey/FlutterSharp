@@ -540,7 +540,7 @@ namespace Flutter.Structs
 /// 
 /// The [getParagraphStyle] method defaults to 14 logical pixels if [fontSize]
 /// is set to null.
-		public NativeNullable<double> fontSize { get; set; }
+		public double fontSize { get; set; }
 
 		// Simple field: fontWeight
 /// The typeface thickness to use when painting the text (e.g., bold).
@@ -556,7 +556,7 @@ namespace Flutter.Structs
 		// Nullable value type: letterSpacing
 /// The amount of space (in logical pixels) to add between each letter.
 /// A negative value can be used to bring the letters closer.
-		public NativeNullable<double> letterSpacing { get; set; }
+		public double letterSpacing { get; set; }
 
 		// Has flag for nullable property: wordSpacing
 		public byte HaswordSpacing { get; set; }
@@ -565,7 +565,7 @@ namespace Flutter.Structs
 /// The amount of space (in logical pixels) to add at each sequence of
 /// white-space (i.e. between each word). A negative value can be used to
 /// bring the words closer.
-		public NativeNullable<double> wordSpacing { get; set; }
+		public double wordSpacing { get; set; }
 
 		// Simple field: textBaseline
 /// The common baseline that should be aligned between this text span and its
@@ -598,7 +598,7 @@ namespace Flutter.Structs
 /// 
 /// See [StrutStyle] and [TextHeightBehavior] for further control of line
 /// height at the paragraph level.
-		public NativeNullable<double> height { get; set; }
+		public double height { get; set; }
 
 		// Simple field: leadingDistribution
 /// How the vertical space added by the [height] multiplier should be
@@ -723,7 +723,7 @@ namespace Flutter.Structs
 /// 
 /// The default [decorationThickness] is 1.0, which will use the font's base
 /// stroke thickness/width.
-		public NativeNullable<double> decorationThickness { get; set; }
+		public double decorationThickness { get; set; }
 
 		// Has flag for nullable property: debugLabel
 		public byte HasdebugLabel { get; set; }

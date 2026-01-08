@@ -72,7 +72,7 @@ namespace Flutter.Structs
 /// If non-null, sets its height to the child's height multiplied by this factor.
 /// 
 /// Must be greater than or equal to 0.0, defaults to null.
-		public NativeNullable<double> heightFactor { get; set; }
+		public double heightFactor { get; set; }
 
 		// Has flag for nullable property: widthFactor
 		public byte HaswidthFactor { get; set; }
@@ -81,7 +81,7 @@ namespace Flutter.Structs
 /// If non-null, sets its width to the child's width multiplied by this factor.
 /// 
 /// Must be greater than or equal to 0.0, defaults to null.
-		public NativeNullable<double> widthFactor { get; set; }
+		public double widthFactor { get; set; }
 
 		// Simple field: curve
 		public IntPtr curve { get; set; }

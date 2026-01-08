@@ -71,7 +71,7 @@ namespace Flutter.Structs
 /// The index of the child to show.
 /// 
 /// If this is null, none of the children will be shown.
-		public NativeNullable<int> index { get; set; }
+		public int index { get; set; }
 
 	}
 }

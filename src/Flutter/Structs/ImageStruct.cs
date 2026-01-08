@@ -286,7 +286,7 @@ namespace Flutter.Structs
 /// layout constraints, so that the image does not change size as it loads.
 /// Consider using [fit] to adapt the image's rendering to fit the given width
 /// and height if the exact image dimensions are not known in advance.
-		public NativeNullable<double> width { get; set; }
+		public double width { get; set; }
 
 		// Has flag for nullable property: height
 		public byte Hasheight { get; set; }
@@ -302,7 +302,7 @@ namespace Flutter.Structs
 /// layout constraints, so that the image does not change size as it loads.
 /// Consider using [fit] to adapt the image's rendering to fit the given width
 /// and height if the exact image dimensions are not known in advance.
-		public NativeNullable<double> height { get; set; }
+		public double height { get; set; }
 
 		// Simple field: color
 /// If non-null, this color is blended with each image pixel using [colorBlendMode].

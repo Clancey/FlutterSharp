@@ -60,7 +60,7 @@ namespace Flutter.Structs
 /// 
 /// If all three are null, the [Stack.alignment] is used to position the child
 /// horizontally.
-		public NativeNullable<double> left { get; set; }
+		public double left { get; set; }
 
 		// Has flag for nullable property: top
 		public byte Hastop { get; set; }
@@ -73,7 +73,7 @@ namespace Flutter.Structs
 /// 
 /// If all three are null, the [Stack.alignment] is used to position the child
 /// vertically.
-		public NativeNullable<double> top { get; set; }
+		public double top { get; set; }
 
 		// Has flag for nullable property: right
 		public byte Hasright { get; set; }
@@ -86,7 +86,7 @@ namespace Flutter.Structs
 /// 
 /// If all three are null, the [Stack.alignment] is used to position the child
 /// horizontally.
-		public NativeNullable<double> right { get; set; }
+		public double right { get; set; }
 
 		// Has flag for nullable property: bottom
 		public byte Hasbottom { get; set; }
@@ -99,7 +99,7 @@ namespace Flutter.Structs
 /// 
 /// If all three are null, the [Stack.alignment] is used to position the child
 /// vertically.
-		public NativeNullable<double> bottom { get; set; }
+		public double bottom { get; set; }
 
 		// Has flag for nullable property: width
 		public byte Haswidth { get; set; }
@@ -112,7 +112,7 @@ namespace Flutter.Structs
 /// 
 /// If all three are null, the [Stack.alignment] is used to position the child
 /// horizontally.
-		public NativeNullable<double> width { get; set; }
+		public double width { get; set; }
 
 		// Has flag for nullable property: height
 		public byte Hasheight { get; set; }
@@ -125,7 +125,7 @@ namespace Flutter.Structs
 /// 
 /// If all three are null, the [Stack.alignment] is used to position the child
 /// vertically.
-		public NativeNullable<double> height { get; set; }
+		public double height { get; set; }
 
 		// Simple field: debugTypicalAncestorWidgetClass
 		public IntPtr debugTypicalAncestorWidgetClass { get; set; }

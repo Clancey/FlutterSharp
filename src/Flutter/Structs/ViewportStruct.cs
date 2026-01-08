@@ -113,7 +113,7 @@ namespace Flutter.Structs
 /// See also:
 /// 
 /// * [cacheExtentStyle], which controls the units of the [cacheExtent].
-		public NativeNullable<double> cacheExtent { get; set; }
+		public double cacheExtent { get; set; }
 
 		// Simple field: cacheExtentStyle
 /// {@macro flutter.rendering.RenderViewportBase.cacheExtentStyle}

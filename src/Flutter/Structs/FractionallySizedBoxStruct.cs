@@ -50,7 +50,7 @@ namespace Flutter.Structs
 /// If null, the incoming width constraints are passed to the child
 /// unmodified.
 /// {@endtemplate}
-		public NativeNullable<double> widthFactor { get; set; }
+		public double widthFactor { get; set; }
 
 		// Has flag for nullable property: heightFactor
 		public byte HasheightFactor { get; set; }
@@ -65,7 +65,7 @@ namespace Flutter.Structs
 /// If null, the incoming height constraints are passed to the child
 /// unmodified.
 /// {@endtemplate}
-		public NativeNullable<double> heightFactor { get; set; }
+		public double heightFactor { get; set; }
 
 		// Simple field: alignment
 /// {@template flutter.widgets.basic.fractionallySizedBox.alignment}

@@ -45,14 +45,14 @@ namespace Flutter.Structs
 
 		// Nullable value type: heightFactor
 /// {@macro flutter.widgets.basic.fractionallySizedBox.heightFactor}
-		public NativeNullable<double> heightFactor { get; set; }
+		public double heightFactor { get; set; }
 
 		// Has flag for nullable property: widthFactor
 		public byte HaswidthFactor { get; set; }
 
 		// Nullable value type: widthFactor
 /// {@macro flutter.widgets.basic.fractionallySizedBox.widthFactor}
-		public NativeNullable<double> widthFactor { get; set; }
+		public double widthFactor { get; set; }
 
 		// Simple field: alignment
 /// {@macro flutter.widgets.basic.fractionallySizedBox.alignment}

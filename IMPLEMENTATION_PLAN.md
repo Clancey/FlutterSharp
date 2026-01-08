@@ -67,6 +67,32 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ---
 
+### ~~NativeNullable FFI Struct Layout Mismatch~~ (FIXED 2026-01-07)
+
+**Problem**: The Dart FFI structs expected simple value types for nullable fields (e.g., `bool softWrap`, `double textScaleFactor`, `int maxLines`), but C# generated `NativeNullable<T>` wrapper types which include an extra `hasValue` byte. This caused FFI memory layout mismatch:
+- C# `NativeNullable<bool>` = 2 bytes (hasValue + value)
+- Dart `Int8` = 1 byte
+- Result: All subsequent fields in the struct would be at wrong offsets
+
+**Root Cause**: The C# struct generator template used `NativeNullable<{{ prop.type }}>` for nullable primitive types, but there were already explicit `Has*` flags being generated for each nullable property. The Dart side only expected the explicit flags plus raw values.
+
+**Solution**: Changed the Scriban template to use raw types instead of `NativeNullable<T>`:
+```scriban
+// Before
+public NativeNullable<{{ prop.type }}> {{ prop.name }} { get; set; }
+
+// After
+public {{ prop.type }} {{ prop.name }} { get; set; }
+```
+
+**Files Changed**:
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/Templates/CSharpStruct.scriban`
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/Generators/CSharp/CSharpStructGenerator.cs`
+
+**Regenerated**: All C# struct files with nullable value types
+
+---
+
 ### ~~Dart Import Path Mismatch~~ (FIXED 2026-01-08, commit 74a3e49)
 
 **Problem**: Dart analyzer reported 472+ errors for missing struct files. Import paths pointed to `lib/structs/` but generated structs were in `lib/generated/structs/`.

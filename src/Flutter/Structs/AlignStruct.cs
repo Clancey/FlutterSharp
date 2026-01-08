@@ -177,7 +177,7 @@ namespace Flutter.Structs
 /// If non-null, sets its width to the child's width multiplied by this factor.
 /// 
 /// Can be both greater and less than 1.0 but must be non-negative.
-		public NativeNullable<double> widthFactor { get; set; }
+		public double widthFactor { get; set; }
 
 		// Has flag for nullable property: heightFactor
 		public byte HasheightFactor { get; set; }
@@ -186,7 +186,7 @@ namespace Flutter.Structs
 /// If non-null, sets its height to the child's height multiplied by this factor.
 /// 
 /// Can be both greater and less than 1.0 but must be non-negative.
-		public NativeNullable<double> heightFactor { get; set; }
+		public double heightFactor { get; set; }
 
 	}
 }

@@ -103,7 +103,7 @@ namespace Flutter.Structs
 		public byte Hasprimary { get; set; }
 
 		// Nullable value type: primary
-		public NativeNullable<bool> primary { get; set; }
+		public bool primary { get; set; }
 
 		// Has flag for nullable property: physics
 		public byte Hasphysics { get; set; }

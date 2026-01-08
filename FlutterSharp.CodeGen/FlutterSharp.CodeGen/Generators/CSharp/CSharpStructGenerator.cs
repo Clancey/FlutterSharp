@@ -429,7 +429,7 @@ namespace Flutter.Structs
 {{~ if prop.documentation ~}}
 {{ prop.documentation }}
 {{~ end ~}}
-		public NativeNullable<{{ prop.type }}> {{ prop.name }} { get; set; }
+		public {{ prop.type }} {{ prop.name }} { get; set; }
 
 {{~ else ~}}
 {{~ if prop.documentation ~}}

@@ -63,7 +63,7 @@ namespace Flutter.Structs
 		// Nullable value type: minWidth
 /// The minimum width constraint to give the child. Set this to null (the
 /// default) to use the constraint from the parent instead.
-		public NativeNullable<double> minWidth { get; set; }
+		public double minWidth { get; set; }
 
 		// Has flag for nullable property: maxWidth
 		public byte HasmaxWidth { get; set; }
@@ -71,7 +71,7 @@ namespace Flutter.Structs
 		// Nullable value type: maxWidth
 /// The maximum width constraint to give the child. Set this to null (the
 /// default) to use the constraint from the parent instead.
-		public NativeNullable<double> maxWidth { get; set; }
+		public double maxWidth { get; set; }
 
 		// Has flag for nullable property: minHeight
 		public byte HasminHeight { get; set; }
@@ -79,7 +79,7 @@ namespace Flutter.Structs
 		// Nullable value type: minHeight
 /// The minimum height constraint to give the child. Set this to null (the
 /// default) to use the constraint from the parent instead.
-		public NativeNullable<double> minHeight { get; set; }
+		public double minHeight { get; set; }
 
 		// Has flag for nullable property: maxHeight
 		public byte HasmaxHeight { get; set; }
@@ -87,7 +87,7 @@ namespace Flutter.Structs
 		// Nullable value type: maxHeight
 /// The maximum height constraint to give the child. Set this to null (the
 /// default) to use the constraint from the parent instead.
-		public NativeNullable<double> maxHeight { get; set; }
+		public double maxHeight { get; set; }
 
 		// Simple field: fit
 /// The way to size the render object.

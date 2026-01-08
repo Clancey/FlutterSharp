@@ -65,7 +65,7 @@ namespace Flutter.Structs
 /// 
 /// * [RenderBox.getMaxIntrinsicWidth], which defines a widget's max
 /// intrinsic width in general.
-		public NativeNullable<double> stepWidth { get; set; }
+		public double stepWidth { get; set; }
 
 		// Has flag for nullable property: stepHeight
 		public byte HasstepHeight { get; set; }
@@ -76,7 +76,7 @@ namespace Flutter.Structs
 /// If null or 0.0 the child's height will not be constrained.
 /// 
 /// This value must not be negative.
-		public NativeNullable<double> stepHeight { get; set; }
+		public double stepHeight { get; set; }
 
 	}
 }

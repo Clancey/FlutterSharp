@@ -145,7 +145,7 @@ namespace Flutter.Structs
 /// 
 /// If this is 1, text will not wrap. Otherwise, text will be wrapped at the
 /// edge of the box.
-		public NativeNullable<int> maxLines { get; set; }
+		public int maxLines { get; set; }
 
 		// Simple field: locale
 /// Used to select a font when the same Unicode character can

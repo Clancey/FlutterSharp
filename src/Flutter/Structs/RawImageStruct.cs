@@ -58,7 +58,7 @@ namespace Flutter.Structs
 /// 
 /// If null, the image will pick a size that best preserves its intrinsic
 /// aspect ratio.
-		public NativeNullable<double> width { get; set; }
+		public double width { get; set; }
 
 		// Has flag for nullable property: height
 		public byte Hasheight { get; set; }
@@ -68,7 +68,7 @@ namespace Flutter.Structs
 /// 
 /// If null, the image will pick a size that best preserves its intrinsic
 /// aspect ratio.
-		public NativeNullable<double> height { get; set; }
+		public double height { get; set; }
 
 		// Simple field: scale
 /// The linear scale factor for drawing this image at its intended size.

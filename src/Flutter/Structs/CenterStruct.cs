@@ -38,13 +38,13 @@ namespace Flutter.Structs
 		public byte HaswidthFactor { get; set; }
 
 		// Nullable value type: widthFactor
-		public NativeNullable<double> widthFactor { get; set; }
+		public double widthFactor { get; set; }
 
 		// Has flag for nullable property: heightFactor
 		public byte HasheightFactor { get; set; }
 
 		// Nullable value type: heightFactor
-		public NativeNullable<double> heightFactor { get; set; }
+		public double heightFactor { get; set; }
 
 	}
 }

@@ -142,7 +142,7 @@ namespace Flutter.Structs
 /// aspect ratio. This may result in a sudden change if the size of the
 /// placeholder image does not match that of the target image. The size is
 /// also affected by the scale factor.
-		public NativeNullable<double> width { get; set; }
+		public double width { get; set; }
 
 		// Simple field: color
 /// If non-null, this color is blended with each image pixel using [colorBlendMode].
@@ -198,7 +198,7 @@ namespace Flutter.Structs
 /// aspect ratio. This may result in a sudden change if the size of the
 /// placeholder image does not match that of the target image. The size is
 /// also affected by the scale factor.
-		public NativeNullable<double> height { get; set; }
+		public double height { get; set; }
 
 		// Simple field: fit
 /// How to inscribe the image into the space allocated during layout.

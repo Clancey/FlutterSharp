@@ -180,7 +180,7 @@ namespace Flutter.Structs
 
 		// Nullable value type: primary
 /// {@macro flutter.widgets.scroll_view.primary}
-		public NativeNullable<bool> primary { get; set; }
+		public bool primary { get; set; }
 
 		// Has flag for nullable property: physics
 		public byte Hasphysics { get; set; }

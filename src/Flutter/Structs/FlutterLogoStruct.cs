@@ -36,7 +36,7 @@ namespace Flutter.Structs
 /// Defaults to the current [IconTheme] size, if any. If there is no
 /// [IconTheme], or it does not specify an explicit size, then it defaults to
 /// 24.0.
-		public NativeNullable<double> size { get; set; }
+		public double size { get; set; }
 
 		// Simple field: textColor
 /// The color used to paint the "Flutter" text on the logo, if [style] is

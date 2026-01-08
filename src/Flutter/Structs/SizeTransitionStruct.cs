@@ -78,7 +78,7 @@ namespace Flutter.Structs
 /// will be clipped along the appropriate axis.
 /// 
 /// If `null` (the default), the cross axis size is as large as the parent.
-		public NativeNullable<double> fixedCrossAxisSizeFactor { get; set; }
+		public double fixedCrossAxisSizeFactor { get; set; }
 
 		// Simple field: sizeFactor
 		public IntPtr sizeFactor { get; set; }

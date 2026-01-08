@@ -91,7 +91,7 @@ namespace Flutter.Structs
 /// [IconButton.iconSize] instead, so that the [IconButton] can make the splash
 /// area the appropriate size as well. The [IconButton] uses an [IconTheme] to
 /// pass down the size to the [Icon].
-		public NativeNullable<double> size { get; set; }
+		public double size { get; set; }
 
 		// Has flag for nullable property: fill
 		public byte Hasfill { get; set; }
@@ -112,7 +112,7 @@ namespace Flutter.Structs
 /// * [weight], for controlling stroke weight.
 /// * [grade], for controlling stroke weight in a more granular way.
 /// * [opticalSize], for controlling optical size.
-		public NativeNullable<double> fill { get; set; }
+		public double fill { get; set; }
 
 		// Has flag for nullable property: weight
 		public byte Hasweight { get; set; }
@@ -131,7 +131,7 @@ namespace Flutter.Structs
 /// * [grade], for controlling stroke weight in a more granular way.
 /// * [opticalSize], for controlling optical size.
 /// * https://fonts.google.com/knowledge/glossary/weight_axis
-		public NativeNullable<double> weight { get; set; }
+		public double weight { get; set; }
 
 		// Has flag for nullable property: grade
 		public byte Hasgrade { get; set; }
@@ -158,7 +158,7 @@ namespace Flutter.Structs
 /// * [weight], for controlling stroke weight in a less granular way.
 /// * [opticalSize], for controlling optical size.
 /// * https://fonts.google.com/knowledge/glossary/grade_axis
-		public NativeNullable<double> grade { get; set; }
+		public double grade { get; set; }
 
 		// Has flag for nullable property: opticalSize
 		public byte HasopticalSize { get; set; }
@@ -181,7 +181,7 @@ namespace Flutter.Structs
 /// * [weight], for controlling stroke weight.
 /// * [grade], for controlling stroke weight in a more granular way.
 /// * https://fonts.google.com/knowledge/glossary/optical_size_axis
-		public NativeNullable<double> opticalSize { get; set; }
+		public double opticalSize { get; set; }
 
 		// Simple field: color
 /// The color to use when drawing the icon.
@@ -266,7 +266,7 @@ namespace Flutter.Structs
 /// 
 /// Defaults to the nearest [IconTheme]'s
 /// [IconThemeData.applyTextScaling].
-		public NativeNullable<bool> applyTextScaling { get; set; }
+		public bool applyTextScaling { get; set; }
 
 		// Simple field: blendMode
 /// The [BlendMode] to apply to the foreground of the icon.

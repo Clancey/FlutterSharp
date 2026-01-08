@@ -47,14 +47,14 @@ namespace Flutter.Structs
 
 		// Nullable value type: widthFactor
 /// If non-null, the child's width factor, see [Align.widthFactor].
-		public NativeNullable<double> widthFactor { get; set; }
+		public double widthFactor { get; set; }
 
 		// Has flag for nullable property: heightFactor
 		public byte HasheightFactor { get; set; }
 
 		// Nullable value type: heightFactor
 /// If non-null, the child's height factor, see [Align.heightFactor].
-		public NativeNullable<double> heightFactor { get; set; }
+		public double heightFactor { get; set; }
 
 		// Simple field: alignment
 		public IntPtr alignment { get; set; }

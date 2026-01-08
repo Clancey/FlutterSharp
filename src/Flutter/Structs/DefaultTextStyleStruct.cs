@@ -69,7 +69,7 @@ namespace Flutter.Structs
 /// 
 /// If this is non-null, it will override even explicit null values of
 /// [Text.maxLines].
-		public NativeNullable<int> maxLines { get; set; }
+		public int maxLines { get; set; }
 
 		// Simple field: textWidthBasis
 /// The strategy to use when calculating the width of the Text.

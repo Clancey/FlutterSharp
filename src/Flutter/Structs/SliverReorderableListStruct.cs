@@ -154,7 +154,7 @@ namespace Flutter.Structs
 
 		// Nullable value type: itemExtent
 /// {@macro flutter.widgets.list_view.itemExtent}
-		public NativeNullable<double> itemExtent { get; set; }
+		public double itemExtent { get; set; }
 
 		// Callback field: itemExtentBuilder
 		// Using action string pattern - Dart will dispatch action to C# via method channel

@@ -48,7 +48,7 @@ namespace Flutter.Structs
 
 		// Nullable value type: cacheExtent
 /// {@macro flutter.rendering.RenderViewportBase.cacheExtent}
-		public NativeNullable<double> cacheExtent { get; set; }
+		public double cacheExtent { get; set; }
 
 		// Simple field: diagonalDragBehavior
 /// Whether scrolling gestures should lock to one axes, allow free movement
@@ -63,7 +63,7 @@ namespace Flutter.Structs
 
 		// Nullable value type: primary
 /// {@macro flutter.widgets.scroll_view.primary}
-		public NativeNullable<bool> primary { get; set; }
+		public bool primary { get; set; }
 
 		// Simple field: mainAxis
 /// The main axis of the two.

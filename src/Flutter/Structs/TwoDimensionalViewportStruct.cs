@@ -147,7 +147,7 @@ namespace Flutter.Structs
 
 		// Nullable value type: cacheExtent
 /// {@macro flutter.rendering.RenderViewportBase.cacheExtent}
-		public NativeNullable<double> cacheExtent { get; set; }
+		public double cacheExtent { get; set; }
 
 		// Simple field: clipBehavior
 /// {@macro flutter.material.Material.clipBehavior}

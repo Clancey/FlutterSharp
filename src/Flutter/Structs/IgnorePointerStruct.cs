@@ -91,7 +91,7 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.IgnorePointer.ignoringSemantics}
 /// 
 /// See [SemanticsNode] for additional information about the semantics tree.
-		public NativeNullable<bool> ignoringSemantics { get; set; }
+		public bool ignoringSemantics { get; set; }
 
 	}
 }

@@ -109,13 +109,13 @@ namespace Flutter.Structs
 		public byte HascanRequestFocus { get; set; }
 
 		// Nullable value type: canRequestFocus
-		public NativeNullable<bool> canRequestFocus { get; set; }
+		public bool canRequestFocus { get; set; }
 
 		// Has flag for nullable property: skipTraversal
 		public byte HasskipTraversal { get; set; }
 
 		// Nullable value type: skipTraversal
-		public NativeNullable<bool> skipTraversal { get; set; }
+		public bool skipTraversal { get; set; }
 
 		// Has flag for nullable property: onKeyEvent
 		public byte HasonKeyEvent { get; set; }
@@ -172,13 +172,13 @@ namespace Flutter.Structs
 		public byte HasdescendantsAreFocusable { get; set; }
 
 		// Nullable value type: descendantsAreFocusable
-		public NativeNullable<bool> descendantsAreFocusable { get; set; }
+		public bool descendantsAreFocusable { get; set; }
 
 		// Has flag for nullable property: descendantsAreTraversable
 		public byte HasdescendantsAreTraversable { get; set; }
 
 		// Nullable value type: descendantsAreTraversable
-		public NativeNullable<bool> descendantsAreTraversable { get; set; }
+		public bool descendantsAreTraversable { get; set; }
 
 	}
 }

@@ -87,7 +87,7 @@ namespace Flutter.Structs
 /// 
 /// * [ModalRoute.semanticsDismissible], which controls this property for
 /// the [ModalBarrier] built by [ModalRoute] pages.
-		public NativeNullable<bool> barrierSemanticsDismissible { get; set; }
+		public bool barrierSemanticsDismissible { get; set; }
 
 		// Has flag for nullable property: semanticsLabel
 		public byte HassemanticsLabel { get; set; }

@@ -435,7 +435,7 @@ namespace Flutter.Structs
 /// Defaults to the [MediaQueryData.textScaleFactor] obtained from the ambient
 /// [MediaQuery], or 1.0 if there is no [MediaQuery] in scope.
 /// {@endtemplate}
-		public NativeNullable<double> textScaleFactor { get; set; }
+		public double textScaleFactor { get; set; }
 
 		// Simple field: textScaler
 /// {@macro flutter.painting.textPainter.textScaler}
@@ -527,7 +527,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 /// * [expands], which determines whether the field should fill the height of
 /// its parent.
-		public NativeNullable<int> maxLines { get; set; }
+		public int maxLines { get; set; }
 
 		// Has flag for nullable property: minLines
 		public byte HasminLines { get; set; }
@@ -579,7 +579,7 @@ namespace Flutter.Structs
 /// {@endtemplate}
 /// * [expands], which determines whether the field should fill the height of
 /// its parent.
-		public NativeNullable<int> minLines { get; set; }
+		public int minLines { get; set; }
 
 		// Simple field: expands
 /// {@template flutter.widgets.editableText.expands}
@@ -1062,7 +1062,7 @@ namespace Flutter.Structs
 /// 
 /// If this property is null, [RenderEditable.preferredLineHeight] will be used.
 /// {@endtemplate}
-		public NativeNullable<double> cursorHeight { get; set; }
+		public double cursorHeight { get; set; }
 
 		// Simple field: cursorRadius
 /// {@template flutter.widgets.editableText.cursorRadius}

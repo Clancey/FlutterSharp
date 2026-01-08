@@ -73,14 +73,14 @@ namespace Flutter.Structs
 
 		// Nullable value type: width
 /// If non-null, requires the child to have exactly this width.
-		public NativeNullable<double> width { get; set; }
+		public double width { get; set; }
 
 		// Has flag for nullable property: height
 		public byte Hasheight { get; set; }
 
 		// Nullable value type: height
 /// If non-null, requires the child to have exactly this height.
-		public NativeNullable<double> height { get; set; }
+		public double height { get; set; }
 
 	}
 }

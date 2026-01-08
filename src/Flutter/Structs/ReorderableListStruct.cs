@@ -207,7 +207,7 @@ namespace Flutter.Structs
 
 		// Nullable value type: primary
 /// {@macro flutter.widgets.scroll_view.primary}
-		public NativeNullable<bool> primary { get; set; }
+		public bool primary { get; set; }
 
 		// Has flag for nullable property: physics
 		public byte Hasphysics { get; set; }
@@ -229,7 +229,7 @@ namespace Flutter.Structs
 
 		// Nullable value type: cacheExtent
 /// {@macro flutter.rendering.RenderViewportBase.cacheExtent}
-		public NativeNullable<double> cacheExtent { get; set; }
+		public double cacheExtent { get; set; }
 
 		// Simple field: dragStartBehavior
 /// {@macro flutter.widgets.scrollable.dragStartBehavior}
@@ -269,7 +269,7 @@ namespace Flutter.Structs
 
 		// Nullable value type: itemExtent
 /// {@macro flutter.widgets.list_view.itemExtent}
-		public NativeNullable<double> itemExtent { get; set; }
+		public double itemExtent { get; set; }
 
 		// Callback field: itemExtentBuilder
 		// Using action string pattern - Dart will dispatch action to C# via method channel
@@ -307,7 +307,7 @@ namespace Flutter.Structs
 /// {@macro flutter.widgets.EdgeDraggingAutoScroller.velocityScalar}
 /// 
 /// {@macro flutter.widgets.SliverReorderableList.autoScrollerVelocityScalar.default}
-		public NativeNullable<double> autoScrollerVelocityScalar { get; set; }
+		public double autoScrollerVelocityScalar { get; set; }
 
 		// Has flag for nullable property: dragBoundaryProvider
 		public byte HasdragBoundaryProvider { get; set; }

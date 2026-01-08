@@ -123,55 +123,55 @@ namespace Flutter.Structs
 		public byte Hasenabled { get; set; }
 
 		// Nullable value type: enabled
-		public NativeNullable<bool> enabled { get; set; }
+		public bool enabled { get; set; }
 
 		// Has flag for nullable property: @checked
 		public byte Haschecked { get; set; }
 
 		// Nullable value type: @checked
-		public NativeNullable<bool> @checked { get; set; }
+		public bool @checked { get; set; }
 
 		// Has flag for nullable property: mixed
 		public byte Hasmixed { get; set; }
 
 		// Nullable value type: mixed
-		public NativeNullable<bool> mixed { get; set; }
+		public bool mixed { get; set; }
 
 		// Has flag for nullable property: selected
 		public byte Hasselected { get; set; }
 
 		// Nullable value type: selected
-		public NativeNullable<bool> selected { get; set; }
+		public bool selected { get; set; }
 
 		// Has flag for nullable property: toggled
 		public byte Hastoggled { get; set; }
 
 		// Nullable value type: toggled
-		public NativeNullable<bool> toggled { get; set; }
+		public bool toggled { get; set; }
 
 		// Has flag for nullable property: button
 		public byte Hasbutton { get; set; }
 
 		// Nullable value type: button
-		public NativeNullable<bool> button { get; set; }
+		public bool button { get; set; }
 
 		// Has flag for nullable property: slider
 		public byte Hasslider { get; set; }
 
 		// Nullable value type: slider
-		public NativeNullable<bool> slider { get; set; }
+		public bool slider { get; set; }
 
 		// Has flag for nullable property: keyboardKey
 		public byte HaskeyboardKey { get; set; }
 
 		// Nullable value type: keyboardKey
-		public NativeNullable<bool> keyboardKey { get; set; }
+		public bool keyboardKey { get; set; }
 
 		// Has flag for nullable property: link
 		public byte Haslink { get; set; }
 
 		// Nullable value type: link
-		public NativeNullable<bool> link { get; set; }
+		public bool link { get; set; }
 
 		// Has flag for nullable property: linkUrl
 		public byte HaslinkUrl { get; set; }
@@ -183,109 +183,109 @@ namespace Flutter.Structs
 		public byte Hasheader { get; set; }
 
 		// Nullable value type: header
-		public NativeNullable<bool> header { get; set; }
+		public bool header { get; set; }
 
 		// Has flag for nullable property: headingLevel
 		public byte HasheadingLevel { get; set; }
 
 		// Nullable value type: headingLevel
-		public NativeNullable<int> headingLevel { get; set; }
+		public int headingLevel { get; set; }
 
 		// Has flag for nullable property: textField
 		public byte HastextField { get; set; }
 
 		// Nullable value type: textField
-		public NativeNullable<bool> textField { get; set; }
+		public bool textField { get; set; }
 
 		// Has flag for nullable property: @readOnly
 		public byte HasreadOnly { get; set; }
 
 		// Nullable value type: @readOnly
-		public NativeNullable<bool> @readOnly { get; set; }
+		public bool @readOnly { get; set; }
 
 		// Has flag for nullable property: focusable
 		public byte Hasfocusable { get; set; }
 
 		// Nullable value type: focusable
-		public NativeNullable<bool> focusable { get; set; }
+		public bool focusable { get; set; }
 
 		// Has flag for nullable property: focused
 		public byte Hasfocused { get; set; }
 
 		// Nullable value type: focused
-		public NativeNullable<bool> focused { get; set; }
+		public bool focused { get; set; }
 
 		// Has flag for nullable property: inMutuallyExclusiveGroup
 		public byte HasinMutuallyExclusiveGroup { get; set; }
 
 		// Nullable value type: inMutuallyExclusiveGroup
-		public NativeNullable<bool> inMutuallyExclusiveGroup { get; set; }
+		public bool inMutuallyExclusiveGroup { get; set; }
 
 		// Has flag for nullable property: obscured
 		public byte Hasobscured { get; set; }
 
 		// Nullable value type: obscured
-		public NativeNullable<bool> obscured { get; set; }
+		public bool obscured { get; set; }
 
 		// Has flag for nullable property: multiline
 		public byte Hasmultiline { get; set; }
 
 		// Nullable value type: multiline
-		public NativeNullable<bool> multiline { get; set; }
+		public bool multiline { get; set; }
 
 		// Has flag for nullable property: scopesRoute
 		public byte HasscopesRoute { get; set; }
 
 		// Nullable value type: scopesRoute
-		public NativeNullable<bool> scopesRoute { get; set; }
+		public bool scopesRoute { get; set; }
 
 		// Has flag for nullable property: namesRoute
 		public byte HasnamesRoute { get; set; }
 
 		// Nullable value type: namesRoute
-		public NativeNullable<bool> namesRoute { get; set; }
+		public bool namesRoute { get; set; }
 
 		// Has flag for nullable property: hidden
 		public byte Hashidden { get; set; }
 
 		// Nullable value type: hidden
-		public NativeNullable<bool> hidden { get; set; }
+		public bool hidden { get; set; }
 
 		// Has flag for nullable property: image
 		public byte Hasimage { get; set; }
 
 		// Nullable value type: image
-		public NativeNullable<bool> image { get; set; }
+		public bool image { get; set; }
 
 		// Has flag for nullable property: liveRegion
 		public byte HasliveRegion { get; set; }
 
 		// Nullable value type: liveRegion
-		public NativeNullable<bool> liveRegion { get; set; }
+		public bool liveRegion { get; set; }
 
 		// Has flag for nullable property: expanded
 		public byte Hasexpanded { get; set; }
 
 		// Nullable value type: expanded
-		public NativeNullable<bool> expanded { get; set; }
+		public bool expanded { get; set; }
 
 		// Has flag for nullable property: isRequired
 		public byte HasisRequired { get; set; }
 
 		// Nullable value type: isRequired
-		public NativeNullable<bool> isRequired { get; set; }
+		public bool isRequired { get; set; }
 
 		// Has flag for nullable property: maxValueLength
 		public byte HasmaxValueLength { get; set; }
 
 		// Nullable value type: maxValueLength
-		public NativeNullable<int> maxValueLength { get; set; }
+		public int maxValueLength { get; set; }
 
 		// Has flag for nullable property: currentValueLength
 		public byte HascurrentValueLength { get; set; }
 
 		// Nullable value type: currentValueLength
-		public NativeNullable<int> currentValueLength { get; set; }
+		public int currentValueLength { get; set; }
 
 		// Has flag for nullable property: identifier
 		public byte Hasidentifier { get; set; }
