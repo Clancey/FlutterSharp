@@ -79,6 +79,10 @@ namespace Flutter.Internal
 					HandleAction(message.Data, message.Callback);
 					return;
 
+				case "StateNotify":
+					HandleStateNotify(message.Data, message.Callback);
+					return;
+
 				default:
 					Console.WriteLine($"FlutterManager: Unknown method '{message.Method}'");
 					return;
@@ -133,6 +137,66 @@ namespace Flutter.Internal
 				Console.WriteLine($"FlutterManager: Error handling event: {ex}");
 			}
 		}
+
+		/// <summary>
+		/// Handles state notification messages from Dart.
+		/// When a Dart widget updates a value bound to a BidirectionalNotifier,
+		/// this method receives the update and applies it to the C# notifier.
+		/// </summary>
+		private static void HandleStateNotify(string data, Action<string> callback)
+		{
+			try
+			{
+				var message = JsonSerializer.Deserialize<StateNotifyMessage>(data, serializeOptions);
+				if (message == null)
+				{
+					Console.WriteLine("FlutterManager: Failed to deserialize StateNotify message");
+					callback?.Invoke("{\"success\": false, \"error\": \"Invalid message\"}");
+					return;
+				}
+
+				if (string.IsNullOrEmpty(message.NotifierId))
+				{
+					Console.WriteLine("FlutterManager: StateNotify missing notifierId");
+					callback?.Invoke("{\"success\": false, \"error\": \"Missing notifierId\"}");
+					return;
+				}
+
+				// Convert the value based on type hint if needed
+				object value = message.Value;
+				if (value is JsonElement jsonElement)
+				{
+					value = ConvertJsonElement(jsonElement);
+				}
+
+				// Apply the update to the notifier
+				var success = NotifierRegistry.HandleStateNotify(
+					message.NotifierId,
+					value,
+					message.SourceWidgetId);
+
+				if (success)
+				{
+					// Raise event for observers
+					OnStateNotifyReceived?.Invoke(null, new StateNotifyReceivedEventArgs(
+						message.NotifierId, value, message.SourceWidgetId));
+				}
+
+				callback?.Invoke(success
+					? "{\"success\": true}"
+					: "{\"success\": false, \"error\": \"Notifier not found\"}");
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"FlutterManager: Error handling StateNotify: {ex}");
+				callback?.Invoke($"{{\"success\": false, \"error\": \"{ex.Message}\"}}");
+			}
+		}
+
+		/// <summary>
+		/// Event raised when a state notification is received from Dart.
+		/// </summary>
+		public static event EventHandler<StateNotifyReceivedEventArgs> OnStateNotifyReceived;
 
 		/// <summary>
 		/// Event raised before an action callback is invoked.
@@ -986,6 +1050,34 @@ namespace Flutter.Internal
 		public override string ToString()
 		{
 			return $"EventRoutingStats {{ Invocations: {TotalCallbackInvocations}, Failed: {FailedCallbackInvocations}, Callbacks: {RegisteredCallbacks}, Widgets: {TrackedWidgets}, Handlers: {RegisteredEventHandlers} }}";
+		}
+	}
+
+	/// <summary>
+	/// Event args for when a state notification is received from Dart.
+	/// </summary>
+	public class StateNotifyReceivedEventArgs : EventArgs
+	{
+		/// <summary>
+		/// The notifier ID that received the update.
+		/// </summary>
+		public string NotifierId { get; }
+
+		/// <summary>
+		/// The new value.
+		/// </summary>
+		public object Value { get; }
+
+		/// <summary>
+		/// The widget ID that initiated the change, if known.
+		/// </summary>
+		public string SourceWidgetId { get; }
+
+		public StateNotifyReceivedEventArgs(string notifierId, object value, string sourceWidgetId)
+		{
+			NotifierId = notifierId;
+			Value = value;
+			SourceWidgetId = sourceWidgetId;
 		}
 	}
 }

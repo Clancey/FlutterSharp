@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'maui_flutter.dart';
+import 'state_notifier.dart';
 
 import 'dart:convert';
 
@@ -145,16 +146,9 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
         case 'DisposedComponent':
           _handleDisposedComponent(message);
           break;
-      // case 'CreateDartObject':
-      //   createAndStoreTrackedDartObject(message);
-      //   break;
-      // case 'ReleaseDartObject':
-      //   releaseTrackedDartObject(message);
-      //   break;
-      // case 'TextEditingController_setValue':
-      //   final controller = getTrackedDartObject<TextEditingController>(message['id']);
-      //   controller.text = message['value'];
-      //   break;
+        case 'StateChanged':
+          _handleStateChanged(message);
+          break;
       default:
         print('Warning: Unknown message type: ${message['messageType']}');
     }
@@ -179,6 +173,18 @@ class _MauiRootRendererState extends State<MauiRootRenderer> {
     if (componentId != null && mauiComponentStatesMaps.containsKey(componentId)) {
       // Optionally clear the component state if the entire component was disposed
       // For now we leave the state to allow for widget replacement
+    }
+  }
+
+  /// Handles a state change notification from C#
+  void _handleStateChanged(Map<String, dynamic> message) {
+    final notifierId = message['notifierId'] as String?;
+    final value = message['value'];
+
+    if (notifierId != null) {
+      // Update the Dart-side state value
+      StateNotifier.handleStateChanged(notifierId, value);
+      debugPrint('State changed for notifier: $notifierId, value: $value');
     }
   }
 
