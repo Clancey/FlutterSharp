@@ -247,6 +247,52 @@ final class GridViewBuilderStruct extends Struct {
   external double childAspectRatio;
 }
 
+//InfiniteListViewStruct : Widget
+final class InfiniteListViewStruct extends Struct {
+  //FlutterObject Struct
+  external Pointer handle;
+  external Pointer managedHandle;
+  external Pointer<Utf8> widgetType;
+  //WidgetStruct
+  external Pointer<Utf8> id;
+
+  //InfiniteListViewStruct
+  @Int32()
+  external int itemCount;
+  external Pointer<Utf8> controllerId;
+  @Int8()
+  external int hasLoadingIndicator;
+  @Double()
+  external double loadMoreThreshold;
+}
+
+//InfiniteGridViewStruct : Widget
+final class InfiniteGridViewStruct extends Struct {
+  //FlutterObject Struct
+  external Pointer handle;
+  external Pointer managedHandle;
+  external Pointer<Utf8> widgetType;
+  //WidgetStruct
+  external Pointer<Utf8> id;
+
+  //InfiniteGridViewStruct
+  @Int32()
+  external int itemCount;
+  external Pointer<Utf8> controllerId;
+  @Int32()
+  external int crossAxisCount;
+  @Double()
+  external double mainAxisSpacing;
+  @Double()
+  external double crossAxisSpacing;
+  @Double()
+  external double childAspectRatio;
+  @Int8()
+  external int hasLoadingIndicator;
+  @Double()
+  external double loadMoreThreshold;
+}
+
 // NOTE: RowStruct is now generated
 // See: lib/generated/structs/row_struct.dart
 

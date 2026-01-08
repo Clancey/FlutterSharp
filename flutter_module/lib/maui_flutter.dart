@@ -72,6 +72,8 @@ import 'parsers/wrap_widget_parser.dart';
 import 'parsers/navigator_parser.dart';
 import 'parsers/materialapp_parser.dart';
 import 'parsers/refreshindicator_parser.dart';
+import 'parsers/infinitelistview_parser.dart';
+import 'parsers/infinitegridview_parser.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
@@ -120,6 +122,8 @@ class DynamicWidgetBuilder {
     ListViewBuilderParser(),
     ListenableBuilderParser(),
     GridViewBuilderParser(),
+    InfiniteListViewParser(),
+    InfiniteGridViewParser(),
     ProviderParser(),
     ChangeNotifierProviderParser(),
     ConsumerParser(),

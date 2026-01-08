@@ -32,6 +32,11 @@ namespace Flutter.Widgets
         // Internal ID for tracking
         private readonly string _controllerId;
 
+        // Infinite scrolling support
+        private double _loadMoreThreshold = 200.0; // Default: trigger 200 pixels before end
+        private bool _isLoadingMore = false;
+        private Func<System.Threading.Tasks.Task>? _onLoadMore;
+
         /// <summary>
         /// Creates a new ScrollController.
         /// </summary>
@@ -138,6 +143,65 @@ namespace Flutter.Widgets
         internal string ControllerId => _controllerId;
 
         /// <summary>
+        /// The distance from the bottom at which to trigger loading more content.
+        /// Default is 200 pixels.
+        /// </summary>
+        /// <remarks>
+        /// When the scroll position is within this distance from the maximum scroll extent,
+        /// the OnLoadMore callback will be triggered.
+        /// </remarks>
+        public double LoadMoreThreshold
+        {
+            get => _loadMoreThreshold;
+            set => _loadMoreThreshold = value > 0 ? value : 200.0;
+        }
+
+        /// <summary>
+        /// Whether the controller is currently loading more content.
+        /// </summary>
+        /// <remarks>
+        /// This is set to true when OnLoadMore is triggered and reset to false
+        /// when the task completes. Use this to prevent duplicate load requests.
+        /// </remarks>
+        public bool IsLoadingMore
+        {
+            get => _isLoadingMore;
+            private set => _isLoadingMore = value;
+        }
+
+        /// <summary>
+        /// Callback invoked when the scroll position is near the end (within LoadMoreThreshold).
+        /// </summary>
+        /// <remarks>
+        /// Set this callback to load additional content when the user scrolls near the end.
+        /// The callback should return a Task that completes when loading is done.
+        /// Multiple simultaneous calls are prevented while IsLoadingMore is true.
+        ///
+        /// Example:
+        /// <code>
+        /// controller.OnLoadMore = async () => {
+        ///     var moreItems = await FetchMoreItems(page++);
+        ///     items.AddRange(moreItems);
+        ///     listView.ItemCount = items.Count;
+        /// };
+        /// </code>
+        /// </remarks>
+        public Func<System.Threading.Tasks.Task>? OnLoadMore
+        {
+            get => _onLoadMore;
+            set => _onLoadMore = value;
+        }
+
+        /// <summary>
+        /// Event raised when more content needs to be loaded (user scrolled near end).
+        /// </summary>
+        /// <remarks>
+        /// This is an alternative to the OnLoadMore callback for event-based patterns.
+        /// Both can be used simultaneously but will fire independently.
+        /// </remarks>
+        public event Func<System.Threading.Tasks.Task>? LoadMoreRequested;
+
+        /// <summary>
         /// Event raised when a ScrollPosition is attached to this controller.
         /// </summary>
         public event Action<ScrollController> OnAttach;
@@ -238,6 +302,95 @@ namespace Flutter.Widgets
             _minScrollExtent = details.MinScrollExtent;
             _viewportDimension = details.ViewportDimension;
             OnScrollUpdate?.Invoke(details);
+
+            // Check if we need to load more content
+            CheckAndTriggerLoadMore();
+        }
+
+        /// <summary>
+        /// Checks if the scroll position is near the end and triggers loading more content.
+        /// </summary>
+        private async void CheckAndTriggerLoadMore()
+        {
+            // Don't trigger if already loading or no callback registered
+            if (_isLoadingMore || (_onLoadMore == null && LoadMoreRequested == null))
+                return;
+
+            // Don't trigger if scroll extent is not valid
+            if (_maxScrollExtent <= 0 || double.IsNaN(_maxScrollExtent) || double.IsInfinity(_maxScrollExtent))
+                return;
+
+            // Check if we're within the threshold of the end
+            double distanceFromEnd = _maxScrollExtent - _offset;
+            if (distanceFromEnd <= _loadMoreThreshold && distanceFromEnd >= 0)
+            {
+                _isLoadingMore = true;
+
+                try
+                {
+                    // Invoke the callback
+                    if (_onLoadMore != null)
+                    {
+                        await _onLoadMore();
+                    }
+
+                    // Invoke the event
+                    if (LoadMoreRequested != null)
+                    {
+                        await LoadMoreRequested();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"ScrollController: Error during OnLoadMore: {ex}");
+                }
+                finally
+                {
+                    _isLoadingMore = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Manually triggers loading more content, regardless of scroll position.
+        /// </summary>
+        /// <remarks>
+        /// Use this to programmatically trigger loading, for example after an initial data fetch.
+        /// </remarks>
+        public async System.Threading.Tasks.Task TriggerLoadMore()
+        {
+            if (_isLoadingMore)
+                return;
+
+            _isLoadingMore = true;
+
+            try
+            {
+                if (_onLoadMore != null)
+                {
+                    await _onLoadMore();
+                }
+
+                if (LoadMoreRequested != null)
+                {
+                    await LoadMoreRequested();
+                }
+            }
+            finally
+            {
+                _isLoadingMore = false;
+            }
+        }
+
+        /// <summary>
+        /// Resets the loading state, allowing new load-more triggers.
+        /// </summary>
+        /// <remarks>
+        /// Call this if loading was cancelled or failed and you want to retry.
+        /// </remarks>
+        public void ResetLoadingState()
+        {
+            _isLoadingMore = false;
         }
 
         /// <summary>

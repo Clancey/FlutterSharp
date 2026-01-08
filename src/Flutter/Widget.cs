@@ -84,6 +84,29 @@ namespace Flutter
 		}
 
 		/// <summary>
+		/// Sets a string field in the struct by allocating unmanaged UTF-8 memory.
+		/// </summary>
+		/// <param name="currentPtr">The current IntPtr value (will be freed if non-zero)</param>
+		/// <param name="value">The string value to set</param>
+		/// <returns>The new IntPtr pointing to the string</returns>
+		protected IntPtr SetString(IntPtr currentPtr, string? value)
+		{
+			// Free previous string if allocated
+			if (currentPtr != IntPtr.Zero)
+			{
+				Marshal.FreeCoTaskMem(currentPtr);
+			}
+
+			// Allocate new string
+			if (value != null)
+			{
+				return Marshal.StringToCoTaskMemUTF8(value);
+			}
+
+			return IntPtr.Zero;
+		}
+
+		/// <summary>
 		/// Registers a callback with the CallbackRegistry and tracks the ID for cleanup on disposal.
 		/// Returns the action ID string (e.g., "action_123") to be stored in the struct.
 		/// </summary>
