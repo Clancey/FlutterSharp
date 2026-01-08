@@ -377,4 +377,217 @@ final class MaterialAppStruct extends Struct {
   external Pointer<Utf8> initialRoute;
   @Int8()
   external int hasInitialRoute;
+
+  // ========== TextTheme properties ==========
+  // Each text style has: Has flag, fontSize (double), fontWeight (int), color (uint), letterSpacing (double), height (double)
+
+  // Display Large (57px default)
+  @Int8()
+  external int hasDisplayLarge;
+  @Double()
+  external double displayLargeFontSize;
+  @Int32()
+  external int displayLargeFontWeight;
+  @Uint32()
+  external int displayLargeColor;
+  @Double()
+  external double displayLargeLetterSpacing;
+  @Double()
+  external double displayLargeHeight;
+
+  // Display Medium (45px default)
+  @Int8()
+  external int hasDisplayMedium;
+  @Double()
+  external double displayMediumFontSize;
+  @Int32()
+  external int displayMediumFontWeight;
+  @Uint32()
+  external int displayMediumColor;
+  @Double()
+  external double displayMediumLetterSpacing;
+  @Double()
+  external double displayMediumHeight;
+
+  // Display Small (36px default)
+  @Int8()
+  external int hasDisplaySmall;
+  @Double()
+  external double displaySmallFontSize;
+  @Int32()
+  external int displaySmallFontWeight;
+  @Uint32()
+  external int displaySmallColor;
+  @Double()
+  external double displaySmallLetterSpacing;
+  @Double()
+  external double displaySmallHeight;
+
+  // Headline Large (32px default)
+  @Int8()
+  external int hasHeadlineLarge;
+  @Double()
+  external double headlineLargeFontSize;
+  @Int32()
+  external int headlineLargeFontWeight;
+  @Uint32()
+  external int headlineLargeColor;
+  @Double()
+  external double headlineLargeLetterSpacing;
+  @Double()
+  external double headlineLargeHeight;
+
+  // Headline Medium (28px default)
+  @Int8()
+  external int hasHeadlineMedium;
+  @Double()
+  external double headlineMediumFontSize;
+  @Int32()
+  external int headlineMediumFontWeight;
+  @Uint32()
+  external int headlineMediumColor;
+  @Double()
+  external double headlineMediumLetterSpacing;
+  @Double()
+  external double headlineMediumHeight;
+
+  // Headline Small (24px default)
+  @Int8()
+  external int hasHeadlineSmall;
+  @Double()
+  external double headlineSmallFontSize;
+  @Int32()
+  external int headlineSmallFontWeight;
+  @Uint32()
+  external int headlineSmallColor;
+  @Double()
+  external double headlineSmallLetterSpacing;
+  @Double()
+  external double headlineSmallHeight;
+
+  // Title Large (22px default)
+  @Int8()
+  external int hasTitleLarge;
+  @Double()
+  external double titleLargeFontSize;
+  @Int32()
+  external int titleLargeFontWeight;
+  @Uint32()
+  external int titleLargeColor;
+  @Double()
+  external double titleLargeLetterSpacing;
+  @Double()
+  external double titleLargeHeight;
+
+  // Title Medium (16px default)
+  @Int8()
+  external int hasTitleMedium;
+  @Double()
+  external double titleMediumFontSize;
+  @Int32()
+  external int titleMediumFontWeight;
+  @Uint32()
+  external int titleMediumColor;
+  @Double()
+  external double titleMediumLetterSpacing;
+  @Double()
+  external double titleMediumHeight;
+
+  // Title Small (14px default)
+  @Int8()
+  external int hasTitleSmall;
+  @Double()
+  external double titleSmallFontSize;
+  @Int32()
+  external int titleSmallFontWeight;
+  @Uint32()
+  external int titleSmallColor;
+  @Double()
+  external double titleSmallLetterSpacing;
+  @Double()
+  external double titleSmallHeight;
+
+  // Body Large (16px default)
+  @Int8()
+  external int hasBodyLarge;
+  @Double()
+  external double bodyLargeFontSize;
+  @Int32()
+  external int bodyLargeFontWeight;
+  @Uint32()
+  external int bodyLargeColor;
+  @Double()
+  external double bodyLargeLetterSpacing;
+  @Double()
+  external double bodyLargeHeight;
+
+  // Body Medium (14px default)
+  @Int8()
+  external int hasBodyMedium;
+  @Double()
+  external double bodyMediumFontSize;
+  @Int32()
+  external int bodyMediumFontWeight;
+  @Uint32()
+  external int bodyMediumColor;
+  @Double()
+  external double bodyMediumLetterSpacing;
+  @Double()
+  external double bodyMediumHeight;
+
+  // Body Small (12px default)
+  @Int8()
+  external int hasBodySmall;
+  @Double()
+  external double bodySmallFontSize;
+  @Int32()
+  external int bodySmallFontWeight;
+  @Uint32()
+  external int bodySmallColor;
+  @Double()
+  external double bodySmallLetterSpacing;
+  @Double()
+  external double bodySmallHeight;
+
+  // Label Large (14px default)
+  @Int8()
+  external int hasLabelLarge;
+  @Double()
+  external double labelLargeFontSize;
+  @Int32()
+  external int labelLargeFontWeight;
+  @Uint32()
+  external int labelLargeColor;
+  @Double()
+  external double labelLargeLetterSpacing;
+  @Double()
+  external double labelLargeHeight;
+
+  // Label Medium (12px default)
+  @Int8()
+  external int hasLabelMedium;
+  @Double()
+  external double labelMediumFontSize;
+  @Int32()
+  external int labelMediumFontWeight;
+  @Uint32()
+  external int labelMediumColor;
+  @Double()
+  external double labelMediumLetterSpacing;
+  @Double()
+  external double labelMediumHeight;
+
+  // Label Small (11px default)
+  @Int8()
+  external int hasLabelSmall;
+  @Double()
+  external double labelSmallFontSize;
+  @Int32()
+  external int labelSmallFontWeight;
+  @Uint32()
+  external int labelSmallColor;
+  @Double()
+  external double labelSmallLetterSpacing;
+  @Double()
+  external double labelSmallHeight;
 }

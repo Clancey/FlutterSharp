@@ -42,6 +42,179 @@ class MaterialAppParser extends WidgetParser {
     );
   }
 
+  /// Build a TextStyle from struct fields.
+  /// Returns null if the style is not set (hasFlag == 0).
+  TextStyle? _parseTextStyle({
+    required int hasFlag,
+    required double fontSize,
+    required int fontWeight,
+    required int color,
+    required double letterSpacing,
+    required double height,
+  }) {
+    if (hasFlag != 1) return null;
+
+    return TextStyle(
+      fontSize: fontSize > 0 ? fontSize : null,
+      fontWeight: fontWeight > 0 ? _parseFontWeight(fontWeight) : null,
+      color: color != 0 ? Color(color) : null,
+      letterSpacing: !letterSpacing.isNaN ? letterSpacing : null,
+      height: height > 0 ? height : null,
+    );
+  }
+
+  /// Parse font weight from integer value (100-900).
+  FontWeight? _parseFontWeight(int weight) {
+    switch (weight) {
+      case 100: return FontWeight.w100;
+      case 200: return FontWeight.w200;
+      case 300: return FontWeight.w300;
+      case 400: return FontWeight.w400;
+      case 500: return FontWeight.w500;
+      case 600: return FontWeight.w600;
+      case 700: return FontWeight.w700;
+      case 800: return FontWeight.w800;
+      case 900: return FontWeight.w900;
+      default: return null;
+    }
+  }
+
+  /// Build TextTheme from struct values.
+  TextTheme? _buildTextTheme(MaterialAppStruct map) {
+    // Check if any text style is defined
+    final bool hasAnyStyle =
+      map.hasDisplayLarge == 1 || map.hasDisplayMedium == 1 || map.hasDisplaySmall == 1 ||
+      map.hasHeadlineLarge == 1 || map.hasHeadlineMedium == 1 || map.hasHeadlineSmall == 1 ||
+      map.hasTitleLarge == 1 || map.hasTitleMedium == 1 || map.hasTitleSmall == 1 ||
+      map.hasBodyLarge == 1 || map.hasBodyMedium == 1 || map.hasBodySmall == 1 ||
+      map.hasLabelLarge == 1 || map.hasLabelMedium == 1 || map.hasLabelSmall == 1;
+
+    if (!hasAnyStyle) return null;
+
+    return TextTheme(
+      displayLarge: _parseTextStyle(
+        hasFlag: map.hasDisplayLarge,
+        fontSize: map.displayLargeFontSize,
+        fontWeight: map.displayLargeFontWeight,
+        color: map.displayLargeColor,
+        letterSpacing: map.displayLargeLetterSpacing,
+        height: map.displayLargeHeight,
+      ),
+      displayMedium: _parseTextStyle(
+        hasFlag: map.hasDisplayMedium,
+        fontSize: map.displayMediumFontSize,
+        fontWeight: map.displayMediumFontWeight,
+        color: map.displayMediumColor,
+        letterSpacing: map.displayMediumLetterSpacing,
+        height: map.displayMediumHeight,
+      ),
+      displaySmall: _parseTextStyle(
+        hasFlag: map.hasDisplaySmall,
+        fontSize: map.displaySmallFontSize,
+        fontWeight: map.displaySmallFontWeight,
+        color: map.displaySmallColor,
+        letterSpacing: map.displaySmallLetterSpacing,
+        height: map.displaySmallHeight,
+      ),
+      headlineLarge: _parseTextStyle(
+        hasFlag: map.hasHeadlineLarge,
+        fontSize: map.headlineLargeFontSize,
+        fontWeight: map.headlineLargeFontWeight,
+        color: map.headlineLargeColor,
+        letterSpacing: map.headlineLargeLetterSpacing,
+        height: map.headlineLargeHeight,
+      ),
+      headlineMedium: _parseTextStyle(
+        hasFlag: map.hasHeadlineMedium,
+        fontSize: map.headlineMediumFontSize,
+        fontWeight: map.headlineMediumFontWeight,
+        color: map.headlineMediumColor,
+        letterSpacing: map.headlineMediumLetterSpacing,
+        height: map.headlineMediumHeight,
+      ),
+      headlineSmall: _parseTextStyle(
+        hasFlag: map.hasHeadlineSmall,
+        fontSize: map.headlineSmallFontSize,
+        fontWeight: map.headlineSmallFontWeight,
+        color: map.headlineSmallColor,
+        letterSpacing: map.headlineSmallLetterSpacing,
+        height: map.headlineSmallHeight,
+      ),
+      titleLarge: _parseTextStyle(
+        hasFlag: map.hasTitleLarge,
+        fontSize: map.titleLargeFontSize,
+        fontWeight: map.titleLargeFontWeight,
+        color: map.titleLargeColor,
+        letterSpacing: map.titleLargeLetterSpacing,
+        height: map.titleLargeHeight,
+      ),
+      titleMedium: _parseTextStyle(
+        hasFlag: map.hasTitleMedium,
+        fontSize: map.titleMediumFontSize,
+        fontWeight: map.titleMediumFontWeight,
+        color: map.titleMediumColor,
+        letterSpacing: map.titleMediumLetterSpacing,
+        height: map.titleMediumHeight,
+      ),
+      titleSmall: _parseTextStyle(
+        hasFlag: map.hasTitleSmall,
+        fontSize: map.titleSmallFontSize,
+        fontWeight: map.titleSmallFontWeight,
+        color: map.titleSmallColor,
+        letterSpacing: map.titleSmallLetterSpacing,
+        height: map.titleSmallHeight,
+      ),
+      bodyLarge: _parseTextStyle(
+        hasFlag: map.hasBodyLarge,
+        fontSize: map.bodyLargeFontSize,
+        fontWeight: map.bodyLargeFontWeight,
+        color: map.bodyLargeColor,
+        letterSpacing: map.bodyLargeLetterSpacing,
+        height: map.bodyLargeHeight,
+      ),
+      bodyMedium: _parseTextStyle(
+        hasFlag: map.hasBodyMedium,
+        fontSize: map.bodyMediumFontSize,
+        fontWeight: map.bodyMediumFontWeight,
+        color: map.bodyMediumColor,
+        letterSpacing: map.bodyMediumLetterSpacing,
+        height: map.bodyMediumHeight,
+      ),
+      bodySmall: _parseTextStyle(
+        hasFlag: map.hasBodySmall,
+        fontSize: map.bodySmallFontSize,
+        fontWeight: map.bodySmallFontWeight,
+        color: map.bodySmallColor,
+        letterSpacing: map.bodySmallLetterSpacing,
+        height: map.bodySmallHeight,
+      ),
+      labelLarge: _parseTextStyle(
+        hasFlag: map.hasLabelLarge,
+        fontSize: map.labelLargeFontSize,
+        fontWeight: map.labelLargeFontWeight,
+        color: map.labelLargeColor,
+        letterSpacing: map.labelLargeLetterSpacing,
+        height: map.labelLargeHeight,
+      ),
+      labelMedium: _parseTextStyle(
+        hasFlag: map.hasLabelMedium,
+        fontSize: map.labelMediumFontSize,
+        fontWeight: map.labelMediumFontWeight,
+        color: map.labelMediumColor,
+        letterSpacing: map.labelMediumLetterSpacing,
+        height: map.labelMediumHeight,
+      ),
+      labelSmall: _parseTextStyle(
+        hasFlag: map.hasLabelSmall,
+        fontSize: map.labelSmallFontSize,
+        fontWeight: map.labelSmallFontWeight,
+        color: map.labelSmallColor,
+        letterSpacing: map.labelSmallLetterSpacing,
+        height: map.labelSmallHeight,
+      ),
+    );
+  }
+
   /// Build ThemeData from struct values
   ThemeData? _buildThemeData(MaterialAppStruct map) {
     // Determine brightness
@@ -56,6 +229,14 @@ class MaterialAppParser extends WidgetParser {
       useMaterial3 = map.useMaterial3 == 1;
     }
 
+    // Parse font family
+    final String? fontFamily = map.hasFontFamily == 1 && map.fontFamily.address != 0
+        ? map.fontFamily.toDartString()
+        : null;
+
+    // Build TextTheme from struct
+    final TextTheme? textTheme = _buildTextTheme(map);
+
     // If we have a color scheme seed, use ColorScheme.fromSeed
     if (map.hasColorSchemeSeed == 1 && map.colorSchemeSeed != 0) {
       final Color seedColor = Color(map.colorSchemeSeed);
@@ -65,9 +246,8 @@ class MaterialAppParser extends WidgetParser {
           seedColor: seedColor,
           brightness: brightness,
         ),
-        fontFamily: map.hasFontFamily == 1 && map.fontFamily.address != 0
-            ? map.fontFamily.toDartString()
-            : null,
+        fontFamily: fontFamily,
+        textTheme: textTheme,
         scaffoldBackgroundColor: map.hasScaffoldBackgroundColor == 1
             ? Color(map.scaffoldBackgroundColor)
             : null,
@@ -88,9 +268,8 @@ class MaterialAppParser extends WidgetParser {
           seedColor: primaryColor,
           brightness: brightness,
         ),
-        fontFamily: map.hasFontFamily == 1 && map.fontFamily.address != 0
-            ? map.fontFamily.toDartString()
-            : null,
+        fontFamily: fontFamily,
+        textTheme: textTheme,
         scaffoldBackgroundColor: map.hasScaffoldBackgroundColor == 1
             ? Color(map.scaffoldBackgroundColor)
             : null,
@@ -104,9 +283,8 @@ class MaterialAppParser extends WidgetParser {
     return ThemeData(
       useMaterial3: useMaterial3,
       brightness: brightness,
-      fontFamily: map.hasFontFamily == 1 && map.fontFamily.address != 0
-          ? map.fontFamily.toDartString()
-          : null,
+      fontFamily: fontFamily,
+      textTheme: textTheme,
       scaffoldBackgroundColor: map.hasScaffoldBackgroundColor == 1
           ? Color(map.scaffoldBackgroundColor)
           : null,

@@ -124,6 +124,13 @@ namespace Flutter.Material
         public int VisualDensityVertical { get; set; } = 0;
 
         /// <summary>
+        /// The text theme for the app, containing the 15 Material 3 text styles.
+        /// Each style (displayLarge, headlineMedium, bodySmall, etc.) can be customized
+        /// with font size, weight, color, letter spacing, height, and font family.
+        /// </summary>
+        public TextTheme? TextTheme { get; set; }
+
+        /// <summary>
         /// Creates a light theme with default Material 3 values.
         /// </summary>
         public static ThemeData Light(uint? seedColor = null)

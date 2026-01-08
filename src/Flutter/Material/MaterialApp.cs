@@ -144,6 +144,27 @@ namespace Flutter.Material
                 {
                     s.fontFamily = activeTheme.FontFamily;
                 }
+
+                // Serialize TextTheme
+                if (activeTheme.TextTheme != null && activeTheme.TextTheme.HasAnyStyles)
+                {
+                    var tt = activeTheme.TextTheme;
+                    SerializeTextStyle(tt.DisplayLarge, s, "DisplayLarge");
+                    SerializeTextStyle(tt.DisplayMedium, s, "DisplayMedium");
+                    SerializeTextStyle(tt.DisplaySmall, s, "DisplaySmall");
+                    SerializeTextStyle(tt.HeadlineLarge, s, "HeadlineLarge");
+                    SerializeTextStyle(tt.HeadlineMedium, s, "HeadlineMedium");
+                    SerializeTextStyle(tt.HeadlineSmall, s, "HeadlineSmall");
+                    SerializeTextStyle(tt.TitleLarge, s, "TitleLarge");
+                    SerializeTextStyle(tt.TitleMedium, s, "TitleMedium");
+                    SerializeTextStyle(tt.TitleSmall, s, "TitleSmall");
+                    SerializeTextStyle(tt.BodyLarge, s, "BodyLarge");
+                    SerializeTextStyle(tt.BodyMedium, s, "BodyMedium");
+                    SerializeTextStyle(tt.BodySmall, s, "BodySmall");
+                    SerializeTextStyle(tt.LabelLarge, s, "LabelLarge");
+                    SerializeTextStyle(tt.LabelMedium, s, "LabelMedium");
+                    SerializeTextStyle(tt.LabelSmall, s, "LabelSmall");
+                }
             }
 
             // Debug banner
@@ -159,6 +180,139 @@ namespace Flutter.Material
 
         /// <inheritdoc/>
         protected override FlutterObjectStruct CreateBackingStruct() => new MaterialAppStruct();
+
+        /// <summary>
+        /// Serializes a TextStyleConfig to the struct fields for a specific text style.
+        /// Uses 0 as sentinel for "not set" since fontSize/fontWeight/color should never be 0 in practice.
+        /// </summary>
+        private static void SerializeTextStyle(TextStyleConfig? config, MaterialAppStruct s, string styleName)
+        {
+            if (config == null) return;
+
+            switch (styleName)
+            {
+                case "DisplayLarge":
+                    s.HasDisplayLarge = 1;
+                    s.displayLargeFontSize = config.FontSize ?? 0;
+                    s.displayLargeFontWeight = config.FontWeight ?? 0;
+                    s.displayLargeColor = config.Color ?? 0;
+                    s.displayLargeLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.displayLargeHeight = config.Height ?? 0;
+                    break;
+                case "DisplayMedium":
+                    s.HasDisplayMedium = 1;
+                    s.displayMediumFontSize = config.FontSize ?? 0;
+                    s.displayMediumFontWeight = config.FontWeight ?? 0;
+                    s.displayMediumColor = config.Color ?? 0;
+                    s.displayMediumLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.displayMediumHeight = config.Height ?? 0;
+                    break;
+                case "DisplaySmall":
+                    s.HasDisplaySmall = 1;
+                    s.displaySmallFontSize = config.FontSize ?? 0;
+                    s.displaySmallFontWeight = config.FontWeight ?? 0;
+                    s.displaySmallColor = config.Color ?? 0;
+                    s.displaySmallLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.displaySmallHeight = config.Height ?? 0;
+                    break;
+                case "HeadlineLarge":
+                    s.HasHeadlineLarge = 1;
+                    s.headlineLargeFontSize = config.FontSize ?? 0;
+                    s.headlineLargeFontWeight = config.FontWeight ?? 0;
+                    s.headlineLargeColor = config.Color ?? 0;
+                    s.headlineLargeLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.headlineLargeHeight = config.Height ?? 0;
+                    break;
+                case "HeadlineMedium":
+                    s.HasHeadlineMedium = 1;
+                    s.headlineMediumFontSize = config.FontSize ?? 0;
+                    s.headlineMediumFontWeight = config.FontWeight ?? 0;
+                    s.headlineMediumColor = config.Color ?? 0;
+                    s.headlineMediumLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.headlineMediumHeight = config.Height ?? 0;
+                    break;
+                case "HeadlineSmall":
+                    s.HasHeadlineSmall = 1;
+                    s.headlineSmallFontSize = config.FontSize ?? 0;
+                    s.headlineSmallFontWeight = config.FontWeight ?? 0;
+                    s.headlineSmallColor = config.Color ?? 0;
+                    s.headlineSmallLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.headlineSmallHeight = config.Height ?? 0;
+                    break;
+                case "TitleLarge":
+                    s.HasTitleLarge = 1;
+                    s.titleLargeFontSize = config.FontSize ?? 0;
+                    s.titleLargeFontWeight = config.FontWeight ?? 0;
+                    s.titleLargeColor = config.Color ?? 0;
+                    s.titleLargeLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.titleLargeHeight = config.Height ?? 0;
+                    break;
+                case "TitleMedium":
+                    s.HasTitleMedium = 1;
+                    s.titleMediumFontSize = config.FontSize ?? 0;
+                    s.titleMediumFontWeight = config.FontWeight ?? 0;
+                    s.titleMediumColor = config.Color ?? 0;
+                    s.titleMediumLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.titleMediumHeight = config.Height ?? 0;
+                    break;
+                case "TitleSmall":
+                    s.HasTitleSmall = 1;
+                    s.titleSmallFontSize = config.FontSize ?? 0;
+                    s.titleSmallFontWeight = config.FontWeight ?? 0;
+                    s.titleSmallColor = config.Color ?? 0;
+                    s.titleSmallLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.titleSmallHeight = config.Height ?? 0;
+                    break;
+                case "BodyLarge":
+                    s.HasBodyLarge = 1;
+                    s.bodyLargeFontSize = config.FontSize ?? 0;
+                    s.bodyLargeFontWeight = config.FontWeight ?? 0;
+                    s.bodyLargeColor = config.Color ?? 0;
+                    s.bodyLargeLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.bodyLargeHeight = config.Height ?? 0;
+                    break;
+                case "BodyMedium":
+                    s.HasBodyMedium = 1;
+                    s.bodyMediumFontSize = config.FontSize ?? 0;
+                    s.bodyMediumFontWeight = config.FontWeight ?? 0;
+                    s.bodyMediumColor = config.Color ?? 0;
+                    s.bodyMediumLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.bodyMediumHeight = config.Height ?? 0;
+                    break;
+                case "BodySmall":
+                    s.HasBodySmall = 1;
+                    s.bodySmallFontSize = config.FontSize ?? 0;
+                    s.bodySmallFontWeight = config.FontWeight ?? 0;
+                    s.bodySmallColor = config.Color ?? 0;
+                    s.bodySmallLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.bodySmallHeight = config.Height ?? 0;
+                    break;
+                case "LabelLarge":
+                    s.HasLabelLarge = 1;
+                    s.labelLargeFontSize = config.FontSize ?? 0;
+                    s.labelLargeFontWeight = config.FontWeight ?? 0;
+                    s.labelLargeColor = config.Color ?? 0;
+                    s.labelLargeLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.labelLargeHeight = config.Height ?? 0;
+                    break;
+                case "LabelMedium":
+                    s.HasLabelMedium = 1;
+                    s.labelMediumFontSize = config.FontSize ?? 0;
+                    s.labelMediumFontWeight = config.FontWeight ?? 0;
+                    s.labelMediumColor = config.Color ?? 0;
+                    s.labelMediumLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.labelMediumHeight = config.Height ?? 0;
+                    break;
+                case "LabelSmall":
+                    s.HasLabelSmall = 1;
+                    s.labelSmallFontSize = config.FontSize ?? 0;
+                    s.labelSmallFontWeight = config.FontWeight ?? 0;
+                    s.labelSmallColor = config.Color ?? 0;
+                    s.labelSmallLetterSpacing = config.LetterSpacing ?? double.NaN;
+                    s.labelSmallHeight = config.Height ?? 0;
+                    break;
+            }
+        }
     }
 
     // ThemeMode enum is defined in Flutter.Enums.ThemeMode.cs (auto-generated)

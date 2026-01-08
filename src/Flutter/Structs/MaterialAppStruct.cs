@@ -90,5 +90,129 @@ namespace Flutter.Structs
             set { SetString(ref _initialRoute, value); HasinitialRoute = 1; }
         }
         public byte HasinitialRoute { get; set; }
+
+        // ========== TextTheme properties ==========
+        // Each text style has: Has flag, fontSize (double), fontWeight (int), color (uint), letterSpacing (double), height (double)
+        // Font family is inherited from theme-level fontFamily
+
+        // Display Large (57px default)
+        public byte HasDisplayLarge { get; set; }
+        public double displayLargeFontSize { get; set; }
+        public int displayLargeFontWeight { get; set; }
+        public uint displayLargeColor { get; set; }
+        public double displayLargeLetterSpacing { get; set; }
+        public double displayLargeHeight { get; set; }
+
+        // Display Medium (45px default)
+        public byte HasDisplayMedium { get; set; }
+        public double displayMediumFontSize { get; set; }
+        public int displayMediumFontWeight { get; set; }
+        public uint displayMediumColor { get; set; }
+        public double displayMediumLetterSpacing { get; set; }
+        public double displayMediumHeight { get; set; }
+
+        // Display Small (36px default)
+        public byte HasDisplaySmall { get; set; }
+        public double displaySmallFontSize { get; set; }
+        public int displaySmallFontWeight { get; set; }
+        public uint displaySmallColor { get; set; }
+        public double displaySmallLetterSpacing { get; set; }
+        public double displaySmallHeight { get; set; }
+
+        // Headline Large (32px default)
+        public byte HasHeadlineLarge { get; set; }
+        public double headlineLargeFontSize { get; set; }
+        public int headlineLargeFontWeight { get; set; }
+        public uint headlineLargeColor { get; set; }
+        public double headlineLargeLetterSpacing { get; set; }
+        public double headlineLargeHeight { get; set; }
+
+        // Headline Medium (28px default)
+        public byte HasHeadlineMedium { get; set; }
+        public double headlineMediumFontSize { get; set; }
+        public int headlineMediumFontWeight { get; set; }
+        public uint headlineMediumColor { get; set; }
+        public double headlineMediumLetterSpacing { get; set; }
+        public double headlineMediumHeight { get; set; }
+
+        // Headline Small (24px default)
+        public byte HasHeadlineSmall { get; set; }
+        public double headlineSmallFontSize { get; set; }
+        public int headlineSmallFontWeight { get; set; }
+        public uint headlineSmallColor { get; set; }
+        public double headlineSmallLetterSpacing { get; set; }
+        public double headlineSmallHeight { get; set; }
+
+        // Title Large (22px default)
+        public byte HasTitleLarge { get; set; }
+        public double titleLargeFontSize { get; set; }
+        public int titleLargeFontWeight { get; set; }
+        public uint titleLargeColor { get; set; }
+        public double titleLargeLetterSpacing { get; set; }
+        public double titleLargeHeight { get; set; }
+
+        // Title Medium (16px default, medium weight)
+        public byte HasTitleMedium { get; set; }
+        public double titleMediumFontSize { get; set; }
+        public int titleMediumFontWeight { get; set; }
+        public uint titleMediumColor { get; set; }
+        public double titleMediumLetterSpacing { get; set; }
+        public double titleMediumHeight { get; set; }
+
+        // Title Small (14px default, medium weight)
+        public byte HasTitleSmall { get; set; }
+        public double titleSmallFontSize { get; set; }
+        public int titleSmallFontWeight { get; set; }
+        public uint titleSmallColor { get; set; }
+        public double titleSmallLetterSpacing { get; set; }
+        public double titleSmallHeight { get; set; }
+
+        // Body Large (16px default)
+        public byte HasBodyLarge { get; set; }
+        public double bodyLargeFontSize { get; set; }
+        public int bodyLargeFontWeight { get; set; }
+        public uint bodyLargeColor { get; set; }
+        public double bodyLargeLetterSpacing { get; set; }
+        public double bodyLargeHeight { get; set; }
+
+        // Body Medium (14px default)
+        public byte HasBodyMedium { get; set; }
+        public double bodyMediumFontSize { get; set; }
+        public int bodyMediumFontWeight { get; set; }
+        public uint bodyMediumColor { get; set; }
+        public double bodyMediumLetterSpacing { get; set; }
+        public double bodyMediumHeight { get; set; }
+
+        // Body Small (12px default)
+        public byte HasBodySmall { get; set; }
+        public double bodySmallFontSize { get; set; }
+        public int bodySmallFontWeight { get; set; }
+        public uint bodySmallColor { get; set; }
+        public double bodySmallLetterSpacing { get; set; }
+        public double bodySmallHeight { get; set; }
+
+        // Label Large (14px default, medium weight)
+        public byte HasLabelLarge { get; set; }
+        public double labelLargeFontSize { get; set; }
+        public int labelLargeFontWeight { get; set; }
+        public uint labelLargeColor { get; set; }
+        public double labelLargeLetterSpacing { get; set; }
+        public double labelLargeHeight { get; set; }
+
+        // Label Medium (12px default, medium weight)
+        public byte HasLabelMedium { get; set; }
+        public double labelMediumFontSize { get; set; }
+        public int labelMediumFontWeight { get; set; }
+        public uint labelMediumColor { get; set; }
+        public double labelMediumLetterSpacing { get; set; }
+        public double labelMediumHeight { get; set; }
+
+        // Label Small (11px default, medium weight)
+        public byte HasLabelSmall { get; set; }
+        public double labelSmallFontSize { get; set; }
+        public int labelSmallFontWeight { get; set; }
+        public uint labelSmallColor { get; set; }
+        public double labelSmallLetterSpacing { get; set; }
+        public double labelSmallHeight { get; set; }
     }
 }
