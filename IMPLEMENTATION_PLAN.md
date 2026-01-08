@@ -558,6 +558,7 @@ When starting a new loop, work on these in order:
 | BTN001 | 2026-01-07 | 99c1f23 | Implemented ElevatedButton: C# widget/struct (ElevatedButton.cs, ElevatedButtonStruct.cs), Dart struct/parser (elevatedbutton_struct.dart, elevatedbutton_parser.dart). Manual implementation due to button_style_button.dart Dart analyzer type casting error. Supports onPressed, onLongPress, onHover, onFocusChange callbacks. |
 | BTN002-004 | 2026-01-07 | f6ad8ef | Implemented TextButton, OutlinedButton, IconButton following same pattern. TextButton/OutlinedButton extend StatefulWidget with ButtonStyleButton callbacks. IconButton extends StatelessWidget with icon, iconSize, tooltip properties. All 4 button widgets complete for Phase 4.1. |
 | BTN005 | 2026-01-07 | 4ae12c6 | Full FloatingActionButton implementation: C# widget/struct with all properties (onPressed, colors, elevations, mini, isExtended, tooltip, heroTag, clipBehavior, autofocus, enableFeedback, child). Dart struct + parser. All 5 button widgets complete for Phase 4.1! |
+| INP001 | 2026-01-07 | a67b2c7 | Implemented Checkbox: C# widget/struct + Dart struct/parser. Supports value (nullable bool for tristate), onChanged callback, tristate mode, colors (activeColor, checkColor, focusColor, hoverColor), splashRadius, materialTapTargetSize, autofocus, isError, semanticLabel. First input widget complete for Phase 4.2. |
 
 ---
 
@@ -848,7 +849,7 @@ After hitting a blocker:
 
 | ID | Task | Status | Notes |
 |----|------|--------|-------|
-| INP001 | Implement Checkbox C# widget | pending | Has Dart parser, needs C# widget/struct |
+| INP001 | Implement Checkbox C# widget | completed | C# widget/struct + Dart parser with value, onChanged, tristate, colors |
 | INP002 | Implement Radio C# widget | pending | Needs full implementation |
 | INP003 | Implement Switch C# widget | pending | Needs full implementation |
 | INP004 | Implement Slider C# widget | pending | Needs full implementation |
