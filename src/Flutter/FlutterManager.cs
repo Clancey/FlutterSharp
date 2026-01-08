@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text.Json;
+using Flutter.Gestures;
 
 namespace Flutter.Internal
 {
@@ -196,7 +197,7 @@ namespace Flutter.Internal
 
 		/// <summary>
 		/// Extracts typed arguments from the action message.
-		/// Converts JSON values to appropriate C# types.
+		/// Converts JSON values to appropriate C# types including gesture event data.
 		/// </summary>
 		private static object[] ExtractCallbackArguments(Dictionary<string, JsonElement> message)
 		{
@@ -206,28 +207,348 @@ namespace Flutter.Internal
 			if (message.TryGetValue("value", out var valueElement))
 			{
 				args.Add(ConvertJsonElement(valueElement));
+				return args.ToArray();
 			}
 
-			// Check for gesture details (globalPosition, localPosition)
-			if (message.TryGetValue("globalPosition", out var globalPos) ||
-			    message.TryGetValue("localPosition", out var localPos))
+			// Check for eventType hint from Dart side
+			if (message.TryGetValue("eventType", out var eventTypeElement))
 			{
-				// For gesture callbacks, create a details dictionary
-				var details = new Dictionary<string, object>();
-
-				if (message.TryGetValue("globalPosition", out globalPos))
+				var eventType = eventTypeElement.GetString();
+				var eventData = CreateGestureEventFromType(eventType, message);
+				if (eventData != null)
 				{
-					details["globalPosition"] = ConvertJsonElement(globalPos);
+					args.Add(eventData);
+					return args.ToArray();
 				}
-				if (message.TryGetValue("localPosition", out localPos))
-				{
-					details["localPosition"] = ConvertJsonElement(localPos);
-				}
+			}
 
-				args.Add(details);
+			// Auto-detect event type based on fields present
+			var detectedEvent = TryCreateGestureEvent(message);
+			if (detectedEvent != null)
+			{
+				args.Add(detectedEvent);
+				return args.ToArray();
 			}
 
 			return args.ToArray();
+		}
+
+		/// <summary>
+		/// Creates a gesture event object based on the explicit eventType field.
+		/// </summary>
+		private static object CreateGestureEventFromType(string eventType, Dictionary<string, JsonElement> message)
+		{
+			switch (eventType)
+			{
+				// Tap events
+				case "TapDownDetails":
+					return new TapDownDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Kind = ExtractInt(message, "kind")
+					};
+				case "TapUpDetails":
+					return new TapUpDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Kind = ExtractInt(message, "kind")
+					};
+				case "TapMoveDetails":
+					return new TapMoveDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition")
+					};
+
+				// Drag events
+				case "DragDownDetails":
+					return new DragDownDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition")
+					};
+				case "DragStartDetails":
+					return new DragStartDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition")
+					};
+				case "DragUpdateDetails":
+					return new DragUpdateDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Delta = ExtractOffset(message, "delta")
+					};
+				case "DragEndDetails":
+					return new DragEndDetails
+					{
+						Velocity = ExtractVelocity(message, "velocity"),
+						PrimaryVelocity = ExtractDouble(message, "primaryVelocity")
+					};
+
+				// Long press events
+				case "LongPressDownDetails":
+					return new LongPressDownDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Kind = ExtractInt(message, "kind")
+					};
+				case "LongPressStartDetails":
+					return new LongPressStartDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition")
+					};
+				case "LongPressMoveUpdateDetails":
+					return new LongPressMoveUpdateDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						OffsetFromOrigin = ExtractOffset(message, "offsetFromOrigin"),
+						LocalOffsetFromOrigin = ExtractOffset(message, "localOffsetFromOrigin")
+					};
+				case "LongPressEndDetails":
+					return new LongPressEndDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Velocity = ExtractVelocity(message, "velocity")
+					};
+
+				// Scale events
+				case "ScaleStartDetails":
+					return new ScaleStartDetails
+					{
+						FocalPoint = ExtractOffset(message, "focalPoint"),
+						LocalFocalPoint = ExtractOffset(message, "localFocalPoint"),
+						PointerCount = ExtractInt(message, "pointerCount")
+					};
+				case "ScaleUpdateDetails":
+					return new ScaleUpdateDetails
+					{
+						FocalPoint = ExtractOffset(message, "focalPoint"),
+						LocalFocalPoint = ExtractOffset(message, "localFocalPoint"),
+						FocalPointDelta = ExtractOffset(message, "focalPointDelta"),
+						Scale = ExtractDouble(message, "scale", 1.0),
+						HorizontalScale = ExtractDouble(message, "horizontalScale", 1.0),
+						VerticalScale = ExtractDouble(message, "verticalScale", 1.0),
+						Rotation = ExtractDouble(message, "rotation"),
+						PointerCount = ExtractInt(message, "pointerCount")
+					};
+				case "ScaleEndDetails":
+					return new ScaleEndDetails
+					{
+						Velocity = ExtractVelocity(message, "velocity"),
+						PointerCount = ExtractInt(message, "pointerCount")
+					};
+
+				// Force press events
+				case "ForcePressDetails":
+					return new ForcePressDetails
+					{
+						GlobalPosition = ExtractOffset(message, "globalPosition"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Pressure = ExtractDouble(message, "pressure")
+					};
+
+				// Pointer events
+				case "PointerDownEvent":
+					return new PointerDownEvent
+					{
+						Position = ExtractOffset(message, "position"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Pointer = ExtractInt(message, "pointer"),
+						Kind = ExtractInt(message, "kind")
+					};
+				case "PointerMoveEvent":
+					return new PointerMoveEvent
+					{
+						Position = ExtractOffset(message, "position"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Delta = ExtractOffset(message, "delta"),
+						Pointer = ExtractInt(message, "pointer")
+					};
+				case "PointerUpEvent":
+					return new PointerUpEvent
+					{
+						Position = ExtractOffset(message, "position"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Pointer = ExtractInt(message, "pointer"),
+						Kind = ExtractInt(message, "kind")
+					};
+				case "PointerCancelEvent":
+					return new PointerCancelEvent
+					{
+						Position = ExtractOffset(message, "position"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Pointer = ExtractInt(message, "pointer"),
+						Kind = ExtractInt(message, "kind")
+					};
+				case "PointerHoverEvent":
+					return new PointerHoverEvent
+					{
+						Position = ExtractOffset(message, "position"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						Delta = ExtractOffset(message, "delta"),
+						Pointer = ExtractInt(message, "pointer")
+					};
+				case "PointerScrollEvent":
+					return new PointerScrollEvent
+					{
+						Position = ExtractOffset(message, "position"),
+						LocalPosition = ExtractOffset(message, "localPosition"),
+						ScrollDelta = ExtractOffset(message, "scrollDelta"),
+						Pointer = ExtractInt(message, "pointer")
+					};
+
+				default:
+					Console.WriteLine($"FlutterManager: Unknown eventType '{eventType}'");
+					return null;
+			}
+		}
+
+		/// <summary>
+		/// Attempts to auto-detect and create a gesture event based on present fields.
+		/// </summary>
+		private static object TryCreateGestureEvent(Dictionary<string, JsonElement> message)
+		{
+			// Check for scale/zoom events (have focalPoint)
+			if (message.ContainsKey("focalPoint"))
+			{
+				if (message.ContainsKey("scale"))
+				{
+					return CreateGestureEventFromType("ScaleUpdateDetails", message);
+				}
+				return CreateGestureEventFromType("ScaleStartDetails", message);
+			}
+
+			// Check for drag events (have delta without focalPoint)
+			if (message.ContainsKey("delta") && message.ContainsKey("globalPosition"))
+			{
+				return CreateGestureEventFromType("DragUpdateDetails", message);
+			}
+
+			// Check for velocity-only events (DragEndDetails, ScaleEndDetails)
+			if (message.ContainsKey("velocity") && !message.ContainsKey("globalPosition"))
+			{
+				if (message.ContainsKey("pointerCount"))
+				{
+					return CreateGestureEventFromType("ScaleEndDetails", message);
+				}
+				return CreateGestureEventFromType("DragEndDetails", message);
+			}
+
+			// Check for force press events
+			if (message.ContainsKey("pressure") && message.ContainsKey("globalPosition"))
+			{
+				return CreateGestureEventFromType("ForcePressDetails", message);
+			}
+
+			// Check for pointer events (have position instead of globalPosition)
+			if (message.ContainsKey("position") && !message.ContainsKey("globalPosition"))
+			{
+				if (message.ContainsKey("scrollDelta"))
+				{
+					return CreateGestureEventFromType("PointerScrollEvent", message);
+				}
+				if (message.ContainsKey("delta"))
+				{
+					return CreateGestureEventFromType("PointerMoveEvent", message);
+				}
+				// Can't distinguish up/down/cancel without more info - return generic down
+				return CreateGestureEventFromType("PointerDownEvent", message);
+			}
+
+			// Check for long press events (have offsetFromOrigin)
+			if (message.ContainsKey("offsetFromOrigin"))
+			{
+				return CreateGestureEventFromType("LongPressMoveUpdateDetails", message);
+			}
+
+			// Check for tap events (have globalPosition, localPosition)
+			if (message.ContainsKey("globalPosition") || message.ContainsKey("localPosition"))
+			{
+				// Default to TapDownDetails for simple position events
+				return CreateGestureEventFromType("TapDownDetails", message);
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Extracts an Offset from a nested JSON object.
+		/// </summary>
+		private static Offset ExtractOffset(Dictionary<string, JsonElement> message, string key)
+		{
+			if (!message.TryGetValue(key, out var element))
+				return new Offset(0, 0);
+
+			if (element.ValueKind == JsonValueKind.Object)
+			{
+				double dx = 0, dy = 0;
+				if (element.TryGetProperty("dx", out var dxElem) || element.TryGetProperty("x", out dxElem))
+					dx = dxElem.GetDouble();
+				if (element.TryGetProperty("dy", out var dyElem) || element.TryGetProperty("y", out dyElem))
+					dy = dyElem.GetDouble();
+				return new Offset(dx, dy);
+			}
+
+			return new Offset(0, 0);
+		}
+
+		/// <summary>
+		/// Extracts a Velocity from a nested JSON object.
+		/// </summary>
+		private static Velocity ExtractVelocity(Dictionary<string, JsonElement> message, string key)
+		{
+			if (!message.TryGetValue(key, out var element))
+				return new Velocity(new Offset(0, 0));
+
+			if (element.ValueKind == JsonValueKind.Object)
+			{
+				if (element.TryGetProperty("pixelsPerSecond", out var ppsElem) && ppsElem.ValueKind == JsonValueKind.Object)
+				{
+					double dx = 0, dy = 0;
+					if (ppsElem.TryGetProperty("dx", out var dxElem) || ppsElem.TryGetProperty("x", out dxElem))
+						dx = dxElem.GetDouble();
+					if (ppsElem.TryGetProperty("dy", out var dyElem) || ppsElem.TryGetProperty("y", out dyElem))
+						dy = dyElem.GetDouble();
+					return new Velocity(new Offset(dx, dy));
+				}
+				// Alternative: velocity might be sent as direct dx/dy
+				double vdx = 0, vdy = 0;
+				if (element.TryGetProperty("dx", out var vdxElem) || element.TryGetProperty("x", out vdxElem))
+					vdx = vdxElem.GetDouble();
+				if (element.TryGetProperty("dy", out var vdyElem) || element.TryGetProperty("y", out vdyElem))
+					vdy = vdyElem.GetDouble();
+				return new Velocity(new Offset(vdx, vdy));
+			}
+
+			return new Velocity(new Offset(0, 0));
+		}
+
+		/// <summary>
+		/// Extracts an integer from the message.
+		/// </summary>
+		private static int ExtractInt(Dictionary<string, JsonElement> message, string key, int defaultValue = 0)
+		{
+			if (message.TryGetValue(key, out var element) && element.ValueKind == JsonValueKind.Number)
+				return element.GetInt32();
+			return defaultValue;
+		}
+
+		/// <summary>
+		/// Extracts a double from the message.
+		/// </summary>
+		private static double ExtractDouble(Dictionary<string, JsonElement> message, string key, double defaultValue = 0.0)
+		{
+			if (message.TryGetValue(key, out var element) && element.ValueKind == JsonValueKind.Number)
+				return element.GetDouble();
+			return defaultValue;
 		}
 
 		/// <summary>
