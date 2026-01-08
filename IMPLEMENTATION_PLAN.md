@@ -90,6 +90,28 @@ This is the active task list for autonomous agent execution. The agent selects O
 
 ---
 
+### ~~Nullable Enum Type Assignment Skipped~~ (FIXED 2026-01-07)
+
+**Problem**: Nullable enum parameters like `TextAlign?`, `TextBaseline?`, `TextDirection?` were incorrectly marked as "Complex type" in generated widgets and skipped in constructor assignment. This meant properties like `textAlign` in the Text widget were never set in the struct, causing alignment issues.
+
+**Root Cause**: The `IsReferenceType()` function in CSharpWidgetGenerator.cs checked if a type was a value type/enum by looking up the type in HashSets. However, it only stripped generic arguments (`<...>`) but not the nullable suffix (`?`). So `TextAlign?` didn't match `TextAlign` in the enumTypes HashSet.
+
+**Solution**: Added `.TrimEnd('?')` before checking the type:
+```csharp
+// Before
+var baseType = csharpType.Split('<')[0];
+
+// After
+var baseType = csharpType.TrimEnd('?').Split('<')[0];
+```
+
+**Files Changed**:
+- `FlutterSharp.CodeGen/FlutterSharp.CodeGen/Generators/CSharp/CSharpWidgetGenerator.cs`
+
+**Regenerated**: 20 C# widgets with nullable enum parameters (Text, Column, Row, Flex, EditableText, etc.)
+
+---
+
 ### ~~isReady Race Condition in FlutterViewController~~ (FIXED 2026-01-07)
 
 **Problem**: Widgets were not rendering in some scenarios. When the "ready" message from Dart arrived before the Widget property was set, isReady was never set to true, causing SendState to never be called when the Widget was later assigned.
@@ -209,7 +231,7 @@ CenterStruct layout:
 | T002 | Fix Set<T> type mapping | completed | Map to ISet<T> |
 | T003 | Handle incomplete generic types | completed | Default generic args + Object fallbacks |
 | T004 | Fix TimeSpan default value issues | completed | Force runtime defaults; no compile-time constants |
-| T005 | Fix nullable generic type parameters | pending | T? where T is already nullable |
+| T005 | Fix nullable generic type parameters | completed | Fixed IsReferenceType to strip `?` before checking enums - commit 298e497 |
 | T006 | Review delegate type mappings | pending | Ensure Action/Func are correct |
 
 ### 1.3 Widget Compilation Fixes (MEDIUM PRIORITY)
