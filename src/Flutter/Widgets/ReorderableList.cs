@@ -78,24 +78,12 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<ReorderableListStruct>();
 			// Complex callback type: Func<BuildContext, int, Widget> - skipped (requires specific marshaling)
 			s.itemCount = itemCount;
-			// Callback: onReorder
-			if (onReorder != null)
-			{
-				var actionId = CallbackRegistry.Register(onReorder);
-				s.onReorderAction = $"action_{actionId}";
-			}
-			// Callback: onReorderStart
-			if (onReorderStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onReorderStart);
-				s.onReorderStartAction = $"action_{actionId}";
-			}
-			// Callback: onReorderEnd
-			if (onReorderEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onReorderEnd);
-				s.onReorderEndAction = $"action_{actionId}";
-			}
+			// Callback: onReorder - registered with cleanup tracking
+			s.onReorderAction = RegisterCallback(onReorder);
+			// Callback: onReorderStart - registered with cleanup tracking
+			s.onReorderStartAction = RegisterCallback(onReorderStart);
+			// Callback: onReorderEnd - registered with cleanup tracking
+			s.onReorderEndAction = RegisterCallback(onReorderEnd);
 			// Complex callback type: Func<Widget, int, InvalidType, Widget> - skipped (requires specific marshaling)
 			// Complex type: EdgeInsetsGeometry? - skipped (requires marshaling)
 			s.scrollDirection = scrollDirection;

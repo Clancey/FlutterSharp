@@ -62,60 +62,24 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<ListenerStruct>();
-			// Callback: onPointerDown
-			if (onPointerDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onPointerDown);
-				s.onPointerDownAction = $"action_{actionId}";
-			}
-			// Callback: onPointerMove
-			if (onPointerMove != null)
-			{
-				var actionId = CallbackRegistry.Register(onPointerMove);
-				s.onPointerMoveAction = $"action_{actionId}";
-			}
-			// Callback: onPointerUp
-			if (onPointerUp != null)
-			{
-				var actionId = CallbackRegistry.Register(onPointerUp);
-				s.onPointerUpAction = $"action_{actionId}";
-			}
-			// Callback: onPointerHover
-			if (onPointerHover != null)
-			{
-				var actionId = CallbackRegistry.Register(onPointerHover);
-				s.onPointerHoverAction = $"action_{actionId}";
-			}
-			// Callback: onPointerCancel
-			if (onPointerCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onPointerCancel);
-				s.onPointerCancelAction = $"action_{actionId}";
-			}
-			// Callback: onPointerPanZoomStart
-			if (onPointerPanZoomStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onPointerPanZoomStart);
-				s.onPointerPanZoomStartAction = $"action_{actionId}";
-			}
-			// Callback: onPointerPanZoomUpdate
-			if (onPointerPanZoomUpdate != null)
-			{
-				var actionId = CallbackRegistry.Register(onPointerPanZoomUpdate);
-				s.onPointerPanZoomUpdateAction = $"action_{actionId}";
-			}
-			// Callback: onPointerPanZoomEnd
-			if (onPointerPanZoomEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onPointerPanZoomEnd);
-				s.onPointerPanZoomEndAction = $"action_{actionId}";
-			}
-			// Callback: onPointerSignal
-			if (onPointerSignal != null)
-			{
-				var actionId = CallbackRegistry.Register(onPointerSignal);
-				s.onPointerSignalAction = $"action_{actionId}";
-			}
+			// Callback: onPointerDown - registered with cleanup tracking
+			s.onPointerDownAction = RegisterCallback(onPointerDown);
+			// Callback: onPointerMove - registered with cleanup tracking
+			s.onPointerMoveAction = RegisterCallback(onPointerMove);
+			// Callback: onPointerUp - registered with cleanup tracking
+			s.onPointerUpAction = RegisterCallback(onPointerUp);
+			// Callback: onPointerHover - registered with cleanup tracking
+			s.onPointerHoverAction = RegisterCallback(onPointerHover);
+			// Callback: onPointerCancel - registered with cleanup tracking
+			s.onPointerCancelAction = RegisterCallback(onPointerCancel);
+			// Callback: onPointerPanZoomStart - registered with cleanup tracking
+			s.onPointerPanZoomStartAction = RegisterCallback(onPointerPanZoomStart);
+			// Callback: onPointerPanZoomUpdate - registered with cleanup tracking
+			s.onPointerPanZoomUpdateAction = RegisterCallback(onPointerPanZoomUpdate);
+			// Callback: onPointerPanZoomEnd - registered with cleanup tracking
+			s.onPointerPanZoomEndAction = RegisterCallback(onPointerPanZoomEnd);
+			// Callback: onPointerSignal - registered with cleanup tracking
+			s.onPointerSignalAction = RegisterCallback(onPointerSignal);
 			s.behavior = behavior;
 			s.child = child;
 		}

@@ -53,12 +53,8 @@ namespace Flutter.Widgets
 			s.semanticsLabel = semanticsLabel;
 			if (barrierSemanticsDismissible.HasValue)
 				s.barrierSemanticsDismissible = barrierSemanticsDismissible.Value;
-			// Callback: onDismiss
-			if (onDismiss != null)
-			{
-				var actionId = CallbackRegistry.Register(onDismiss);
-				s.onDismissAction = $"action_{actionId}";
-			}
+			// Callback: onDismiss - registered with cleanup tracking
+			s.onDismissAction = RegisterCallback(onDismiss);
 			// Complex type: object - skipped (requires marshaling)
 			s.semanticsOnTapHint = semanticsOnTapHint;
 			// Complex type: Color? - skipped (requires marshaling)

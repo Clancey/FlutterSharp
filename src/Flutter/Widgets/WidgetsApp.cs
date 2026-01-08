@@ -92,12 +92,8 @@ namespace Flutter.Widgets
 			// Complex type: GlobalKey<NavigatorState>? - skipped (requires marshaling)
 			// Complex callback type: Func<RouteSettings, Route<object>?> - skipped (requires specific marshaling)
 			// Complex callback type: Func<string, List<Route<object>>> - skipped (requires specific marshaling)
-			// Callback: pageRouteBuilder
-			if (pageRouteBuilder != null)
-			{
-				var actionId = CallbackRegistry.Register(pageRouteBuilder);
-				s.pageRouteBuilderAction = $"action_{actionId}";
-			}
+			// Callback: pageRouteBuilder - registered with cleanup tracking
+			s.pageRouteBuilderAction = RegisterCallback(pageRouteBuilder);
 			// Complex type: RouteInformationParser<object>? - skipped (requires marshaling)
 			// Complex type: RouterDelegate<object>? - skipped (requires marshaling)
 			// Complex type: BackButtonDispatcher? - skipped (requires marshaling)
@@ -122,24 +118,12 @@ namespace Flutter.Widgets
 			s.showPerformanceOverlay = showPerformanceOverlay;
 			s.showSemanticsDebugger = showSemanticsDebugger;
 			s.debugShowWidgetInspector = debugShowWidgetInspector;
-			// Callback: exitWidgetSelectionButtonBuilder
-			if (exitWidgetSelectionButtonBuilder != null)
-			{
-				var actionId = CallbackRegistry.Register(exitWidgetSelectionButtonBuilder);
-				s.exitWidgetSelectionButtonBuilderAction = $"action_{actionId}";
-			}
-			// Callback: moveExitWidgetSelectionButtonBuilder
-			if (moveExitWidgetSelectionButtonBuilder != null)
-			{
-				var actionId = CallbackRegistry.Register(moveExitWidgetSelectionButtonBuilder);
-				s.moveExitWidgetSelectionButtonBuilderAction = $"action_{actionId}";
-			}
-			// Callback: tapBehaviorButtonBuilder
-			if (tapBehaviorButtonBuilder != null)
-			{
-				var actionId = CallbackRegistry.Register(tapBehaviorButtonBuilder);
-				s.tapBehaviorButtonBuilderAction = $"action_{actionId}";
-			}
+			// Callback: exitWidgetSelectionButtonBuilder - registered with cleanup tracking
+			s.exitWidgetSelectionButtonBuilderAction = RegisterCallback(exitWidgetSelectionButtonBuilder);
+			// Callback: moveExitWidgetSelectionButtonBuilder - registered with cleanup tracking
+			s.moveExitWidgetSelectionButtonBuilderAction = RegisterCallback(moveExitWidgetSelectionButtonBuilder);
+			// Callback: tapBehaviorButtonBuilder - registered with cleanup tracking
+			s.tapBehaviorButtonBuilderAction = RegisterCallback(tapBehaviorButtonBuilder);
 			s.debugShowCheckedModeBanner = debugShowCheckedModeBanner;
 			// Complex type: Dictionary<ShortcutActivator, Intent>? - skipped (requires marshaling)
 			// Complex type: Dictionary<Type, FlutterAction<Intent>>? - skipped (requires marshaling)

@@ -102,12 +102,8 @@ namespace Flutter.Widgets
 			// Complex type: FocusNode? - skipped (requires marshaling)
 			s.child = child;
 			s.autofocus = autofocus;
-			// Callback: onFocusChange
-			if (onFocusChange != null)
-			{
-				var actionId = CallbackRegistry.Register(onFocusChange);
-				s.onFocusChangeAction = $"action_{actionId}";
-			}
+			// Callback: onFocusChange - registered with cleanup tracking
+			s.onFocusChangeAction = RegisterCallback(onFocusChange);
 			if (canRequestFocus.HasValue)
 				s.canRequestFocus = canRequestFocus.Value;
 			if (skipTraversal.HasValue)

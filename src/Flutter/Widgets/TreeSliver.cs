@@ -81,12 +81,8 @@ namespace Flutter.Widgets
 			// Complex callback type: Func<BuildContext, TreeSliverNode<object?>, InvalidType, Widget> - skipped (requires specific marshaling)
 			// Complex callback type: Func<TreeSliverNode<object?>, InvalidType, double> - skipped (requires specific marshaling)
 			// Complex type: TreeSliverController? - skipped (requires marshaling)
-			// Callback: onNodeToggle
-			if (onNodeToggle != null)
-			{
-				var actionId = CallbackRegistry.Register(onNodeToggle);
-				s.onNodeToggleAction = $"action_{actionId}";
-			}
+			// Callback: onNodeToggle - registered with cleanup tracking
+			s.onNodeToggleAction = RegisterCallback(onNodeToggle);
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.addAutomaticKeepAlives = addAutomaticKeepAlives;

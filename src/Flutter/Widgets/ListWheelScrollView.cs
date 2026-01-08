@@ -111,12 +111,8 @@ namespace Flutter.Widgets
 			s.overAndUnderCenterOpacity = overAndUnderCenterOpacity;
 			s.itemExtent = itemExtent;
 			s.squeeze = squeeze;
-			// Callback: onSelectedItemChanged
-			if (onSelectedItemChanged != null)
-			{
-				var actionId = CallbackRegistry.Register(onSelectedItemChanged);
-				s.onSelectedItemChangedAction = $"action_{actionId}";
-			}
+			// Callback: onSelectedItemChanged - registered with cleanup tracking
+			s.onSelectedItemChangedAction = RegisterCallback(onSelectedItemChanged);
 			s.renderChildrenOutsideViewport = renderChildrenOutsideViewport;
 			// Complex type: ListWheelChildDelegate - skipped (requires marshaling)
 			s.clipBehavior = clipBehavior;

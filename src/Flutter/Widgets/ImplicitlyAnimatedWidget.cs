@@ -96,12 +96,8 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<ImplicitlyAnimatedWidgetStruct>();
 			// Complex type: Curve - skipped (requires marshaling)
 			// Complex type: TimeSpan - skipped (requires marshaling)
-			// Callback: onEnd
-			if (onEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onEnd);
-				s.onEndAction = $"action_{actionId}";
-			}
+			// Callback: onEnd - registered with cleanup tracking
+			s.onEndAction = RegisterCallback(onEnd);
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new ImplicitlyAnimatedWidgetStruct();

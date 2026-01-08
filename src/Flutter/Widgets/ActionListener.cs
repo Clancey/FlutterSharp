@@ -47,12 +47,8 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<ActionListenerStruct>();
-			// Callback: listener
-			if (listener != null)
-			{
-				var actionId = CallbackRegistry.Register(listener);
-				s.listenerAction = $"action_{actionId}";
-			}
+			// Callback: listener - registered with cleanup tracking
+			s.listenerAction = RegisterCallback(listener);
 			// Complex type: FlutterAction<Intent> - skipped (requires marshaling)
 			s.child = child;
 		}

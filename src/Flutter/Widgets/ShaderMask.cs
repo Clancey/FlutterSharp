@@ -64,12 +64,8 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<ShaderMaskStruct>();
-			// Callback: shaderCallback
-			if (shaderCallback != null)
-			{
-				var actionId = CallbackRegistry.Register(shaderCallback);
-				s.shaderCallbackAction = $"action_{actionId}";
-			}
+			// Callback: shaderCallback - registered with cleanup tracking
+			s.shaderCallbackAction = RegisterCallback(shaderCallback);
 			s.blendMode = blendMode;
 			s.child = child;
 		}

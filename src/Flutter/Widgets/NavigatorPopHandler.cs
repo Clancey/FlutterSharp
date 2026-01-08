@@ -61,18 +61,10 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<NavigatorPopHandlerStruct>();
 			s.child = child;
 			s.enabled = enabled;
-			// Callback: onPop
-			if (onPop != null)
-			{
-				var actionId = CallbackRegistry.Register(onPop);
-				s.onPopAction = $"action_{actionId}";
-			}
-			// Callback: onPopWithResult
-			if (onPopWithResult != null)
-			{
-				var actionId = CallbackRegistry.Register(onPopWithResult);
-				s.onPopWithResultAction = $"action_{actionId}";
-			}
+			// Callback: onPop - registered with cleanup tracking
+			s.onPopAction = RegisterCallback(onPop);
+			// Callback: onPopWithResult - registered with cleanup tracking
+			s.onPopWithResultAction = RegisterCallback(onPopWithResult);
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new NavigatorPopHandlerStruct();

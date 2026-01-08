@@ -49,12 +49,8 @@ namespace Flutter.Widgets
 			var s = GetBackingStruct<ModalBarrierStruct>();
 			// Complex type: Color? - skipped (requires marshaling)
 			s.dismissible = dismissible;
-			// Callback: onDismiss
-			if (onDismiss != null)
-			{
-				var actionId = CallbackRegistry.Register(onDismiss);
-				s.onDismissAction = $"action_{actionId}";
-			}
+			// Callback: onDismiss - registered with cleanup tracking
+			s.onDismissAction = RegisterCallback(onDismiss);
 			if (barrierSemanticsDismissible.HasValue)
 				s.barrierSemanticsDismissible = barrierSemanticsDismissible.Value;
 			s.semanticsLabel = semanticsLabel;

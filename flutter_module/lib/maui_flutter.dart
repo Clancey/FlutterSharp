@@ -26,7 +26,7 @@ import 'parsers/drawer_parser.dart';
 import 'parsers/dropcaptext_widget_parser.dart';
 import 'parsers/expanded_widget_parser.dart';
 import 'parsers/fittedbox_widget_parser.dart';
-import 'generated/parsers/flexible_parser.dart';
+import 'parsers/flexible_parser.dart';
 import 'parsers/floatingactionbutton_parser.dart';
 import 'parsers/gridview_widget_parser.dart';
 import 'parsers/icon_widget_parser.dart';
@@ -58,7 +58,7 @@ import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
 // Auto-generated parser imports and list (418 parsers from Flutter SDK)
-import 'generated/generated_parsers.dart';
+import 'generated_parsers.dart';
 
 // import 'dynamic_widget/basic/cliprrect_widget_parser.dart';
 

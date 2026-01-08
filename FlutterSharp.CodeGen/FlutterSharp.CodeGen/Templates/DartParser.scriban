@@ -174,37 +174,37 @@ class {{ parser_name }} extends WidgetParser {
 {{~ # These types have common Flutter defaults that we should use when not set ~}}
 {{~ if base_type == "Alignment" ~}}
 {{~ # Alignment (specific type) - need to cast from AlignmentGeometry parser result ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as Alignment) : Alignment.center{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as Alignment) : Alignment.center{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "AlignmentGeometry" ~}}
 {{~ # AlignmentGeometry - cast to Alignment since Alignment.center is the default and most widgets accept Alignment ~}}
 {{~ # This cast is safe because parseAlignmentGeometry typically returns an Alignment instance ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as Alignment) : Alignment.center{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as Alignment) : Alignment.center{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Curve" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Curves.linear{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Curves.linear{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "EdgeInsetsGeometry" || base_type == "EdgeInsets" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : EdgeInsets.zero{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : EdgeInsets.zero{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "BorderRadiusGeometry" ~}}
 {{~ # BorderRadiusGeometry - cast to BorderRadius since most widgets expect the concrete type ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as BorderRadius) : BorderRadius.zero{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as BorderRadius) : BorderRadius.zero{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "BorderRadius" ~}}
 {{~ # BorderRadius (specific type) - need to cast from BorderRadiusGeometry parser result ~}}
 {{~ if prop.is_dart_nullable ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as BorderRadius?) : null{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as BorderRadius?) : null{{ if !for.last || has_children }},{{ end }}
 {{~ else ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as BorderRadius) : BorderRadius.zero{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? ({{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) as BorderRadius) : BorderRadius.zero{{ if !for.last || has_children }},{{ end }}
 {{~ end ~}}
 {{~ else if base_type == "BoxConstraints" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const BoxConstraints(){{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const BoxConstraints(){{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Offset" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Offset.zero{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Offset.zero{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Size" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Size.zero{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Size.zero{{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Decoration" || base_type == "BoxDecoration" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const BoxDecoration(){{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : const BoxDecoration(){{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "TextStyle" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? parseTextStyleFromStruct(map.{{ prop.struct_property_name }}.ref) : const TextStyle(){{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? parseTextStyleFromStruct(map.{{ prop.struct_property_name }}.ref) : const TextStyle(){{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Matrix4" ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Matrix4.identity(){{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : Matrix4.identity(){{ if !for.last || has_children }},{{ end }}
 {{~ else if base_type == "Widget" ~}}
 {{~ # Widget type properties - use DynamicWidgetBuilder for proper widget parsing ~}}
 {{~ # Most Flutter widgets require their Widget properties (child, sliver, replacement, etc.) ~}}
@@ -212,7 +212,7 @@ class {{ parser_name }} extends WidgetParser {
       {{ prop.property_name }}: DynamicWidgetBuilder.buildFromPointerNotNull(map.{{ prop.struct_property_name }}, buildContext){{ if !for.last || has_children }},{{ end }}
 {{~ else if prop.is_dart_nullable ~}}
 {{~ # Original Dart type is nullable - return null when not set ~}}
-      {{ prop.property_name }}: map.has{{ string.capitalize prop.name }} == 1 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : null{{ if !for.last || has_children }},{{ end }}
+      {{ prop.property_name }}: map.{{ prop.struct_property_name }}.address != 0 ? {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref) : null{{ if !for.last || has_children }},{{ end }}
 {{~ else ~}}
 {{~ # Original Dart type is non-nullable - try to call parser anyway (will fail at runtime if pointer is null) ~}}
       {{ prop.property_name }}: {{ prop.parser_function }}(map.{{ prop.struct_property_name }}.ref){{ if !for.last || has_children }},{{ end }}

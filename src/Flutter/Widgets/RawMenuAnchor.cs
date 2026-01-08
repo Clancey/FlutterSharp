@@ -63,18 +63,10 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<RawMenuAnchorStruct>();
-			// Callback: onOpen
-			if (onOpen != null)
-			{
-				var actionId = CallbackRegistry.Register(onOpen);
-				s.onOpenAction = $"action_{actionId}";
-			}
-			// Callback: onClose
-			if (onClose != null)
-			{
-				var actionId = CallbackRegistry.Register(onClose);
-				s.onCloseAction = $"action_{actionId}";
-			}
+			// Callback: onOpen - registered with cleanup tracking
+			s.onOpenAction = RegisterCallback(onOpen);
+			// Callback: onClose - registered with cleanup tracking
+			s.onCloseAction = RegisterCallback(onClose);
 			// Complex callback type: Func<BuildContext, MenuController, Widget?, Widget> - skipped (requires specific marshaling)
 			s.child = child;
 			// Complex callback type: Func<BuildContext, RawMenuOverlayInfo, Widget> - skipped (requires specific marshaling)

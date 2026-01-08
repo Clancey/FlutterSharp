@@ -73,7 +73,9 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 					CSharpType = p.CSharpType ?? "object",
 					FfiType = GetFfiType(p),
 					FfiAnnotation = GetFfiAnnotation(p),
-					IsNullable = p.IsNullable || GetFfiType(p).StartsWith("Pointer<"),
+					// Match C# struct nullable logic - only add "has" flags for properties that are truly nullable
+				// Do NOT add "has" flags for all pointer types, as this causes FFI field offset mismatches
+				IsNullable = p.IsNullable,
 					Documentation = FormatDocumentation(p.Documentation, "  ")
 				}).ToList(),
 				Documentation = FormatDocumentation(widget.Documentation),

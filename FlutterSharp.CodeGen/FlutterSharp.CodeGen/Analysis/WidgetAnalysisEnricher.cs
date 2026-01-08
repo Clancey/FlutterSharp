@@ -216,11 +216,10 @@ namespace FlutterSharp.CodeGen.Analysis
 			// Check if this is an enum type
 			var isEnum = _dartToCSharpMapper.IsEnum(property.DartType);
 
-			// Track both the original Dart nullability and the FFI representation nullability
-			// Original nullability is what the Flutter widget expects (for parser generation)
-			// FFI nullability includes pointer types (for struct generation)
+			// Track the original Dart nullability for both struct and parser generation
+			// CRITICAL FIX (D004): Both C# and Dart structs must use the same IsNullable logic
+			// to ensure FFI field layouts match exactly. Pointer types do NOT automatically get "has" flags.
 			var originalIsNullable = property.IsNullable;
-			var ffiIsNullable = property.IsNullable || ffiType.StartsWith("Pointer<");
 
 			return new EnrichedPropertyDefinition
 			{
@@ -231,7 +230,8 @@ namespace FlutterSharp.CodeGen.Analysis
 				FfiType = ffiType,
 				FfiAnnotation = ffiAnnotation,
 				IsRequired = property.IsRequired,
-				IsNullable = ffiIsNullable,
+				// Use original nullability for struct generation - must match C# struct layout
+				IsNullable = originalIsNullable,
 				// Track original Flutter nullability separately for parser generation
 				IsDartNullable = originalIsNullable,
 				DefaultValue = ConvertDartDefaultValueToCSharp(property.DefaultValue, csharpType),

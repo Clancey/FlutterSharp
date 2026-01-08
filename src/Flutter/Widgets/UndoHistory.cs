@@ -48,12 +48,8 @@ namespace Flutter.Widgets
 			// Complex type: object - skipped (requires marshaling)
 			// Complex callback type: Func<T?, T, bool> - skipped (requires specific marshaling)
 			// Complex callback type: Func<T, T> - skipped (requires specific marshaling)
-			// Callback: onTriggered
-			if (onTriggered != null)
-			{
-				var actionId = CallbackRegistry.Register(onTriggered);
-				s.onTriggeredAction = $"action_{actionId}";
-			}
+			// Callback: onTriggered - registered with cleanup tracking
+			s.onTriggeredAction = RegisterCallback(onTriggered);
 			// Complex type: FocusNode - skipped (requires marshaling)
 			// Complex type: UndoHistoryController? - skipped (requires marshaling)
 			s.child = child;

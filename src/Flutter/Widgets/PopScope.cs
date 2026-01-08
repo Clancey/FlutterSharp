@@ -85,18 +85,10 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<PopScopeStruct>();
 			s.child = child;
-			// Callback: onPopInvokedWithResult
-			if (onPopInvokedWithResult != null)
-			{
-				var actionId = CallbackRegistry.Register(onPopInvokedWithResult);
-				s.onPopInvokedWithResultAction = $"action_{actionId}";
-			}
-			// Callback: onPopInvoked
-			if (onPopInvoked != null)
-			{
-				var actionId = CallbackRegistry.Register(onPopInvoked);
-				s.onPopInvokedAction = $"action_{actionId}";
-			}
+			// Callback: onPopInvokedWithResult - registered with cleanup tracking
+			s.onPopInvokedWithResultAction = RegisterCallback(onPopInvokedWithResult);
+			// Callback: onPopInvoked - registered with cleanup tracking
+			s.onPopInvokedAction = RegisterCallback(onPopInvoked);
 			s.canPop = canPop;
 		}
 

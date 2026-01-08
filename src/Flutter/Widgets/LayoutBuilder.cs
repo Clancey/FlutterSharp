@@ -57,12 +57,8 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<LayoutBuilderStruct>();
-			// Callback: builder
-			if (builder != null)
-			{
-				var actionId = CallbackRegistry.Register(builder);
-				s.builderAction = $"action_{actionId}";
-			}
+			// Callback: builder - registered with cleanup tracking
+			s.builderAction = RegisterCallback(builder);
 		}
 
 		protected override FlutterObjectStruct CreateBackingStruct() => new LayoutBuilderStruct();

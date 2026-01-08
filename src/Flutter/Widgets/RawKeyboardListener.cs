@@ -54,12 +54,8 @@ namespace Flutter.Widgets
 			// Complex type: FocusNode - skipped (requires marshaling)
 			s.autofocus = autofocus;
 			s.includeSemantics = includeSemantics;
-			// Callback: onKey
-			if (onKey != null)
-			{
-				var actionId = CallbackRegistry.Register(onKey);
-				s.onKeyAction = $"action_{actionId}";
-			}
+			// Callback: onKey - registered with cleanup tracking
+			s.onKeyAction = RegisterCallback(onKey);
 			s.child = child;
 		}
 

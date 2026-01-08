@@ -77,24 +77,12 @@ namespace Flutter.Widgets
 			s.descendantsAreTraversable = descendantsAreTraversable;
 			// Complex type: Dictionary<Type, FlutterAction<Intent>>? - skipped (requires marshaling)
 			// Complex type: Dictionary<ShortcutActivator, Intent>? - skipped (requires marshaling)
-			// Callback: onShowFocusHighlight
-			if (onShowFocusHighlight != null)
-			{
-				var actionId = CallbackRegistry.Register(onShowFocusHighlight);
-				s.onShowFocusHighlightAction = $"action_{actionId}";
-			}
-			// Callback: onShowHoverHighlight
-			if (onShowHoverHighlight != null)
-			{
-				var actionId = CallbackRegistry.Register(onShowHoverHighlight);
-				s.onShowHoverHighlightAction = $"action_{actionId}";
-			}
-			// Callback: onFocusChange
-			if (onFocusChange != null)
-			{
-				var actionId = CallbackRegistry.Register(onFocusChange);
-				s.onFocusChangeAction = $"action_{actionId}";
-			}
+			// Callback: onShowFocusHighlight - registered with cleanup tracking
+			s.onShowFocusHighlightAction = RegisterCallback(onShowFocusHighlight);
+			// Callback: onShowHoverHighlight - registered with cleanup tracking
+			s.onShowHoverHighlightAction = RegisterCallback(onShowHoverHighlight);
+			// Callback: onFocusChange - registered with cleanup tracking
+			s.onFocusChangeAction = RegisterCallback(onFocusChange);
 			// Complex type: object - skipped (requires marshaling)
 			s.includeFocusSemantics = includeFocusSemantics;
 			s.child = child;

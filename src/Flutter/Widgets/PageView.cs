@@ -128,12 +128,8 @@ namespace Flutter.Widgets
 			// Complex type: PageController? - skipped (requires marshaling)
 			// Complex type: ScrollPhysics? - skipped (requires marshaling)
 			s.pageSnapping = pageSnapping;
-			// Callback: onPageChanged
-			if (onPageChanged != null)
-			{
-				var actionId = CallbackRegistry.Register(onPageChanged);
-				s.onPageChangedAction = $"action_{actionId}";
-			}
+			// Callback: onPageChanged - registered with cleanup tracking
+			s.onPageChangedAction = RegisterCallback(onPageChanged);
 			// Complex type: SliverChildDelegate - skipped (requires marshaling)
 			s.dragStartBehavior = dragStartBehavior;
 			s.clipBehavior = clipBehavior;

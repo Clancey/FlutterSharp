@@ -354,55 +354,23 @@ namespace Flutter.Widgets
 			// Complex type: TextSelectionControls? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			// Callback: onChanged
-			if (onChanged != null)
-			{
-				var actionId = CallbackRegistry.Register(onChanged);
-				s.onChangedAction = $"action_{actionId}";
-			}
-			// Callback: onEditingComplete
-			if (onEditingComplete != null)
-			{
-				var actionId = CallbackRegistry.Register(onEditingComplete);
-				s.onEditingCompleteAction = $"action_{actionId}";
-			}
-			// Callback: onSubmitted
-			if (onSubmitted != null)
-			{
-				var actionId = CallbackRegistry.Register(onSubmitted);
-				s.onSubmittedAction = $"action_{actionId}";
-			}
-			// Callback: onAppPrivateCommand
-			if (onAppPrivateCommand != null)
-			{
-				var actionId = CallbackRegistry.Register(onAppPrivateCommand);
-				s.onAppPrivateCommandAction = $"action_{actionId}";
-			}
-			// Callback: onSelectionChanged
-			if (onSelectionChanged != null)
-			{
-				var actionId = CallbackRegistry.Register(onSelectionChanged);
-				s.onSelectionChangedAction = $"action_{actionId}";
-			}
-			// Callback: onSelectionHandleTapped
-			if (onSelectionHandleTapped != null)
-			{
-				var actionId = CallbackRegistry.Register(onSelectionHandleTapped);
-				s.onSelectionHandleTappedAction = $"action_{actionId}";
-			}
+			// Callback: onChanged - registered with cleanup tracking
+			s.onChangedAction = RegisterCallback(onChanged);
+			// Callback: onEditingComplete - registered with cleanup tracking
+			s.onEditingCompleteAction = RegisterCallback(onEditingComplete);
+			// Callback: onSubmitted - registered with cleanup tracking
+			s.onSubmittedAction = RegisterCallback(onSubmitted);
+			// Callback: onAppPrivateCommand - registered with cleanup tracking
+			s.onAppPrivateCommandAction = RegisterCallback(onAppPrivateCommand);
+			// Callback: onSelectionChanged - registered with cleanup tracking
+			s.onSelectionChangedAction = RegisterCallback(onSelectionChanged);
+			// Callback: onSelectionHandleTapped - registered with cleanup tracking
+			s.onSelectionHandleTappedAction = RegisterCallback(onSelectionHandleTapped);
 			// Complex type: object - skipped (requires marshaling)
-			// Callback: onTapOutside
-			if (onTapOutside != null)
-			{
-				var actionId = CallbackRegistry.Register(onTapOutside);
-				s.onTapOutsideAction = $"action_{actionId}";
-			}
-			// Callback: onTapUpOutside
-			if (onTapUpOutside != null)
-			{
-				var actionId = CallbackRegistry.Register(onTapUpOutside);
-				s.onTapUpOutsideAction = $"action_{actionId}";
-			}
+			// Callback: onTapOutside - registered with cleanup tracking
+			s.onTapOutsideAction = RegisterCallback(onTapOutside);
+			// Callback: onTapUpOutside - registered with cleanup tracking
+			s.onTapUpOutsideAction = RegisterCallback(onTapUpOutside);
 			// Complex type: List<object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			s.rendererIgnoresPointer = rendererIgnoresPointer;

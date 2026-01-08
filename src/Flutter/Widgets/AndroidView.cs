@@ -77,12 +77,8 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<AndroidViewStruct>();
 			s.viewType = viewType;
-			// Callback: onPlatformViewCreated
-			if (onPlatformViewCreated != null)
-			{
-				var actionId = CallbackRegistry.Register(onPlatformViewCreated);
-				s.onPlatformViewCreatedAction = $"action_{actionId}";
-			}
+			// Callback: onPlatformViewCreated - registered with cleanup tracking
+			s.onPlatformViewCreatedAction = RegisterCallback(onPlatformViewCreated);
 			if (hitTestBehavior.HasValue)
 				s.hitTestBehavior = hitTestBehavior.Value;
 			// Complex type: object - skipped (requires marshaling)

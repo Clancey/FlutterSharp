@@ -195,354 +195,122 @@ namespace Flutter.Widgets
 		{
 			var s = GetBackingStruct<GestureDetectorStruct>();
 			s.child = child;
-			// Callback: onTapDown
-			if (onTapDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onTapDown);
-				s.onTapDownAction = $"action_{actionId}";
-			}
-			// Callback: onTapUp
-			if (onTapUp != null)
-			{
-				var actionId = CallbackRegistry.Register(onTapUp);
-				s.onTapUpAction = $"action_{actionId}";
-			}
-			// Callback: onTap
-			if (onTap != null)
-			{
-				var actionId = CallbackRegistry.Register(onTap);
-				s.onTapAction = $"action_{actionId}";
-			}
-			// Callback: onTapMove
-			if (onTapMove != null)
-			{
-				var actionId = CallbackRegistry.Register(onTapMove);
-				s.onTapMoveAction = $"action_{actionId}";
-			}
-			// Callback: onTapCancel
-			if (onTapCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onTapCancel);
-				s.onTapCancelAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryTap
-			if (onSecondaryTap != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryTap);
-				s.onSecondaryTapAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryTapDown
-			if (onSecondaryTapDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryTapDown);
-				s.onSecondaryTapDownAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryTapUp
-			if (onSecondaryTapUp != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryTapUp);
-				s.onSecondaryTapUpAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryTapCancel
-			if (onSecondaryTapCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryTapCancel);
-				s.onSecondaryTapCancelAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryTapDown
-			if (onTertiaryTapDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryTapDown);
-				s.onTertiaryTapDownAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryTapUp
-			if (onTertiaryTapUp != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryTapUp);
-				s.onTertiaryTapUpAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryTapCancel
-			if (onTertiaryTapCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryTapCancel);
-				s.onTertiaryTapCancelAction = $"action_{actionId}";
-			}
-			// Callback: onDoubleTapDown
-			if (onDoubleTapDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onDoubleTapDown);
-				s.onDoubleTapDownAction = $"action_{actionId}";
-			}
-			// Callback: onDoubleTap
-			if (onDoubleTap != null)
-			{
-				var actionId = CallbackRegistry.Register(onDoubleTap);
-				s.onDoubleTapAction = $"action_{actionId}";
-			}
-			// Callback: onDoubleTapCancel
-			if (onDoubleTapCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onDoubleTapCancel);
-				s.onDoubleTapCancelAction = $"action_{actionId}";
-			}
-			// Callback: onLongPressDown
-			if (onLongPressDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onLongPressDown);
-				s.onLongPressDownAction = $"action_{actionId}";
-			}
-			// Callback: onLongPressCancel
-			if (onLongPressCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onLongPressCancel);
-				s.onLongPressCancelAction = $"action_{actionId}";
-			}
-			// Callback: onLongPress
-			if (onLongPress != null)
-			{
-				var actionId = CallbackRegistry.Register(onLongPress);
-				s.onLongPressAction = $"action_{actionId}";
-			}
-			// Callback: onLongPressStart
-			if (onLongPressStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onLongPressStart);
-				s.onLongPressStartAction = $"action_{actionId}";
-			}
-			// Callback: onLongPressMoveUpdate
-			if (onLongPressMoveUpdate != null)
-			{
-				var actionId = CallbackRegistry.Register(onLongPressMoveUpdate);
-				s.onLongPressMoveUpdateAction = $"action_{actionId}";
-			}
-			// Callback: onLongPressUp
-			if (onLongPressUp != null)
-			{
-				var actionId = CallbackRegistry.Register(onLongPressUp);
-				s.onLongPressUpAction = $"action_{actionId}";
-			}
-			// Callback: onLongPressEnd
-			if (onLongPressEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onLongPressEnd);
-				s.onLongPressEndAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryLongPressDown
-			if (onSecondaryLongPressDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryLongPressDown);
-				s.onSecondaryLongPressDownAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryLongPressCancel
-			if (onSecondaryLongPressCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryLongPressCancel);
-				s.onSecondaryLongPressCancelAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryLongPress
-			if (onSecondaryLongPress != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryLongPress);
-				s.onSecondaryLongPressAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryLongPressStart
-			if (onSecondaryLongPressStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryLongPressStart);
-				s.onSecondaryLongPressStartAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryLongPressMoveUpdate
-			if (onSecondaryLongPressMoveUpdate != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryLongPressMoveUpdate);
-				s.onSecondaryLongPressMoveUpdateAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryLongPressUp
-			if (onSecondaryLongPressUp != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryLongPressUp);
-				s.onSecondaryLongPressUpAction = $"action_{actionId}";
-			}
-			// Callback: onSecondaryLongPressEnd
-			if (onSecondaryLongPressEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onSecondaryLongPressEnd);
-				s.onSecondaryLongPressEndAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryLongPressDown
-			if (onTertiaryLongPressDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryLongPressDown);
-				s.onTertiaryLongPressDownAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryLongPressCancel
-			if (onTertiaryLongPressCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryLongPressCancel);
-				s.onTertiaryLongPressCancelAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryLongPress
-			if (onTertiaryLongPress != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryLongPress);
-				s.onTertiaryLongPressAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryLongPressStart
-			if (onTertiaryLongPressStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryLongPressStart);
-				s.onTertiaryLongPressStartAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryLongPressMoveUpdate
-			if (onTertiaryLongPressMoveUpdate != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryLongPressMoveUpdate);
-				s.onTertiaryLongPressMoveUpdateAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryLongPressUp
-			if (onTertiaryLongPressUp != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryLongPressUp);
-				s.onTertiaryLongPressUpAction = $"action_{actionId}";
-			}
-			// Callback: onTertiaryLongPressEnd
-			if (onTertiaryLongPressEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onTertiaryLongPressEnd);
-				s.onTertiaryLongPressEndAction = $"action_{actionId}";
-			}
-			// Callback: onVerticalDragDown
-			if (onVerticalDragDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onVerticalDragDown);
-				s.onVerticalDragDownAction = $"action_{actionId}";
-			}
-			// Callback: onVerticalDragStart
-			if (onVerticalDragStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onVerticalDragStart);
-				s.onVerticalDragStartAction = $"action_{actionId}";
-			}
-			// Callback: onVerticalDragUpdate
-			if (onVerticalDragUpdate != null)
-			{
-				var actionId = CallbackRegistry.Register(onVerticalDragUpdate);
-				s.onVerticalDragUpdateAction = $"action_{actionId}";
-			}
-			// Callback: onVerticalDragEnd
-			if (onVerticalDragEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onVerticalDragEnd);
-				s.onVerticalDragEndAction = $"action_{actionId}";
-			}
-			// Callback: onVerticalDragCancel
-			if (onVerticalDragCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onVerticalDragCancel);
-				s.onVerticalDragCancelAction = $"action_{actionId}";
-			}
-			// Callback: onHorizontalDragDown
-			if (onHorizontalDragDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onHorizontalDragDown);
-				s.onHorizontalDragDownAction = $"action_{actionId}";
-			}
-			// Callback: onHorizontalDragStart
-			if (onHorizontalDragStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onHorizontalDragStart);
-				s.onHorizontalDragStartAction = $"action_{actionId}";
-			}
-			// Callback: onHorizontalDragUpdate
-			if (onHorizontalDragUpdate != null)
-			{
-				var actionId = CallbackRegistry.Register(onHorizontalDragUpdate);
-				s.onHorizontalDragUpdateAction = $"action_{actionId}";
-			}
-			// Callback: onHorizontalDragEnd
-			if (onHorizontalDragEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onHorizontalDragEnd);
-				s.onHorizontalDragEndAction = $"action_{actionId}";
-			}
-			// Callback: onHorizontalDragCancel
-			if (onHorizontalDragCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onHorizontalDragCancel);
-				s.onHorizontalDragCancelAction = $"action_{actionId}";
-			}
-			// Callback: onPanDown
-			if (onPanDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onPanDown);
-				s.onPanDownAction = $"action_{actionId}";
-			}
-			// Callback: onPanStart
-			if (onPanStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onPanStart);
-				s.onPanStartAction = $"action_{actionId}";
-			}
-			// Callback: onPanUpdate
-			if (onPanUpdate != null)
-			{
-				var actionId = CallbackRegistry.Register(onPanUpdate);
-				s.onPanUpdateAction = $"action_{actionId}";
-			}
-			// Callback: onPanEnd
-			if (onPanEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onPanEnd);
-				s.onPanEndAction = $"action_{actionId}";
-			}
-			// Callback: onPanCancel
-			if (onPanCancel != null)
-			{
-				var actionId = CallbackRegistry.Register(onPanCancel);
-				s.onPanCancelAction = $"action_{actionId}";
-			}
-			// Callback: onScaleStart
-			if (onScaleStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onScaleStart);
-				s.onScaleStartAction = $"action_{actionId}";
-			}
-			// Callback: onScaleUpdate
-			if (onScaleUpdate != null)
-			{
-				var actionId = CallbackRegistry.Register(onScaleUpdate);
-				s.onScaleUpdateAction = $"action_{actionId}";
-			}
-			// Callback: onScaleEnd
-			if (onScaleEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onScaleEnd);
-				s.onScaleEndAction = $"action_{actionId}";
-			}
-			// Callback: onForcePressStart
-			if (onForcePressStart != null)
-			{
-				var actionId = CallbackRegistry.Register(onForcePressStart);
-				s.onForcePressStartAction = $"action_{actionId}";
-			}
-			// Callback: onForcePressPeak
-			if (onForcePressPeak != null)
-			{
-				var actionId = CallbackRegistry.Register(onForcePressPeak);
-				s.onForcePressPeakAction = $"action_{actionId}";
-			}
-			// Callback: onForcePressUpdate
-			if (onForcePressUpdate != null)
-			{
-				var actionId = CallbackRegistry.Register(onForcePressUpdate);
-				s.onForcePressUpdateAction = $"action_{actionId}";
-			}
-			// Callback: onForcePressEnd
-			if (onForcePressEnd != null)
-			{
-				var actionId = CallbackRegistry.Register(onForcePressEnd);
-				s.onForcePressEndAction = $"action_{actionId}";
-			}
+			// Callback: onTapDown - registered with cleanup tracking
+			s.onTapDownAction = RegisterCallback(onTapDown);
+			// Callback: onTapUp - registered with cleanup tracking
+			s.onTapUpAction = RegisterCallback(onTapUp);
+			// Callback: onTap - registered with cleanup tracking
+			s.onTapAction = RegisterCallback(onTap);
+			// Callback: onTapMove - registered with cleanup tracking
+			s.onTapMoveAction = RegisterCallback(onTapMove);
+			// Callback: onTapCancel - registered with cleanup tracking
+			s.onTapCancelAction = RegisterCallback(onTapCancel);
+			// Callback: onSecondaryTap - registered with cleanup tracking
+			s.onSecondaryTapAction = RegisterCallback(onSecondaryTap);
+			// Callback: onSecondaryTapDown - registered with cleanup tracking
+			s.onSecondaryTapDownAction = RegisterCallback(onSecondaryTapDown);
+			// Callback: onSecondaryTapUp - registered with cleanup tracking
+			s.onSecondaryTapUpAction = RegisterCallback(onSecondaryTapUp);
+			// Callback: onSecondaryTapCancel - registered with cleanup tracking
+			s.onSecondaryTapCancelAction = RegisterCallback(onSecondaryTapCancel);
+			// Callback: onTertiaryTapDown - registered with cleanup tracking
+			s.onTertiaryTapDownAction = RegisterCallback(onTertiaryTapDown);
+			// Callback: onTertiaryTapUp - registered with cleanup tracking
+			s.onTertiaryTapUpAction = RegisterCallback(onTertiaryTapUp);
+			// Callback: onTertiaryTapCancel - registered with cleanup tracking
+			s.onTertiaryTapCancelAction = RegisterCallback(onTertiaryTapCancel);
+			// Callback: onDoubleTapDown - registered with cleanup tracking
+			s.onDoubleTapDownAction = RegisterCallback(onDoubleTapDown);
+			// Callback: onDoubleTap - registered with cleanup tracking
+			s.onDoubleTapAction = RegisterCallback(onDoubleTap);
+			// Callback: onDoubleTapCancel - registered with cleanup tracking
+			s.onDoubleTapCancelAction = RegisterCallback(onDoubleTapCancel);
+			// Callback: onLongPressDown - registered with cleanup tracking
+			s.onLongPressDownAction = RegisterCallback(onLongPressDown);
+			// Callback: onLongPressCancel - registered with cleanup tracking
+			s.onLongPressCancelAction = RegisterCallback(onLongPressCancel);
+			// Callback: onLongPress - registered with cleanup tracking
+			s.onLongPressAction = RegisterCallback(onLongPress);
+			// Callback: onLongPressStart - registered with cleanup tracking
+			s.onLongPressStartAction = RegisterCallback(onLongPressStart);
+			// Callback: onLongPressMoveUpdate - registered with cleanup tracking
+			s.onLongPressMoveUpdateAction = RegisterCallback(onLongPressMoveUpdate);
+			// Callback: onLongPressUp - registered with cleanup tracking
+			s.onLongPressUpAction = RegisterCallback(onLongPressUp);
+			// Callback: onLongPressEnd - registered with cleanup tracking
+			s.onLongPressEndAction = RegisterCallback(onLongPressEnd);
+			// Callback: onSecondaryLongPressDown - registered with cleanup tracking
+			s.onSecondaryLongPressDownAction = RegisterCallback(onSecondaryLongPressDown);
+			// Callback: onSecondaryLongPressCancel - registered with cleanup tracking
+			s.onSecondaryLongPressCancelAction = RegisterCallback(onSecondaryLongPressCancel);
+			// Callback: onSecondaryLongPress - registered with cleanup tracking
+			s.onSecondaryLongPressAction = RegisterCallback(onSecondaryLongPress);
+			// Callback: onSecondaryLongPressStart - registered with cleanup tracking
+			s.onSecondaryLongPressStartAction = RegisterCallback(onSecondaryLongPressStart);
+			// Callback: onSecondaryLongPressMoveUpdate - registered with cleanup tracking
+			s.onSecondaryLongPressMoveUpdateAction = RegisterCallback(onSecondaryLongPressMoveUpdate);
+			// Callback: onSecondaryLongPressUp - registered with cleanup tracking
+			s.onSecondaryLongPressUpAction = RegisterCallback(onSecondaryLongPressUp);
+			// Callback: onSecondaryLongPressEnd - registered with cleanup tracking
+			s.onSecondaryLongPressEndAction = RegisterCallback(onSecondaryLongPressEnd);
+			// Callback: onTertiaryLongPressDown - registered with cleanup tracking
+			s.onTertiaryLongPressDownAction = RegisterCallback(onTertiaryLongPressDown);
+			// Callback: onTertiaryLongPressCancel - registered with cleanup tracking
+			s.onTertiaryLongPressCancelAction = RegisterCallback(onTertiaryLongPressCancel);
+			// Callback: onTertiaryLongPress - registered with cleanup tracking
+			s.onTertiaryLongPressAction = RegisterCallback(onTertiaryLongPress);
+			// Callback: onTertiaryLongPressStart - registered with cleanup tracking
+			s.onTertiaryLongPressStartAction = RegisterCallback(onTertiaryLongPressStart);
+			// Callback: onTertiaryLongPressMoveUpdate - registered with cleanup tracking
+			s.onTertiaryLongPressMoveUpdateAction = RegisterCallback(onTertiaryLongPressMoveUpdate);
+			// Callback: onTertiaryLongPressUp - registered with cleanup tracking
+			s.onTertiaryLongPressUpAction = RegisterCallback(onTertiaryLongPressUp);
+			// Callback: onTertiaryLongPressEnd - registered with cleanup tracking
+			s.onTertiaryLongPressEndAction = RegisterCallback(onTertiaryLongPressEnd);
+			// Callback: onVerticalDragDown - registered with cleanup tracking
+			s.onVerticalDragDownAction = RegisterCallback(onVerticalDragDown);
+			// Callback: onVerticalDragStart - registered with cleanup tracking
+			s.onVerticalDragStartAction = RegisterCallback(onVerticalDragStart);
+			// Callback: onVerticalDragUpdate - registered with cleanup tracking
+			s.onVerticalDragUpdateAction = RegisterCallback(onVerticalDragUpdate);
+			// Callback: onVerticalDragEnd - registered with cleanup tracking
+			s.onVerticalDragEndAction = RegisterCallback(onVerticalDragEnd);
+			// Callback: onVerticalDragCancel - registered with cleanup tracking
+			s.onVerticalDragCancelAction = RegisterCallback(onVerticalDragCancel);
+			// Callback: onHorizontalDragDown - registered with cleanup tracking
+			s.onHorizontalDragDownAction = RegisterCallback(onHorizontalDragDown);
+			// Callback: onHorizontalDragStart - registered with cleanup tracking
+			s.onHorizontalDragStartAction = RegisterCallback(onHorizontalDragStart);
+			// Callback: onHorizontalDragUpdate - registered with cleanup tracking
+			s.onHorizontalDragUpdateAction = RegisterCallback(onHorizontalDragUpdate);
+			// Callback: onHorizontalDragEnd - registered with cleanup tracking
+			s.onHorizontalDragEndAction = RegisterCallback(onHorizontalDragEnd);
+			// Callback: onHorizontalDragCancel - registered with cleanup tracking
+			s.onHorizontalDragCancelAction = RegisterCallback(onHorizontalDragCancel);
+			// Callback: onPanDown - registered with cleanup tracking
+			s.onPanDownAction = RegisterCallback(onPanDown);
+			// Callback: onPanStart - registered with cleanup tracking
+			s.onPanStartAction = RegisterCallback(onPanStart);
+			// Callback: onPanUpdate - registered with cleanup tracking
+			s.onPanUpdateAction = RegisterCallback(onPanUpdate);
+			// Callback: onPanEnd - registered with cleanup tracking
+			s.onPanEndAction = RegisterCallback(onPanEnd);
+			// Callback: onPanCancel - registered with cleanup tracking
+			s.onPanCancelAction = RegisterCallback(onPanCancel);
+			// Callback: onScaleStart - registered with cleanup tracking
+			s.onScaleStartAction = RegisterCallback(onScaleStart);
+			// Callback: onScaleUpdate - registered with cleanup tracking
+			s.onScaleUpdateAction = RegisterCallback(onScaleUpdate);
+			// Callback: onScaleEnd - registered with cleanup tracking
+			s.onScaleEndAction = RegisterCallback(onScaleEnd);
+			// Callback: onForcePressStart - registered with cleanup tracking
+			s.onForcePressStartAction = RegisterCallback(onForcePressStart);
+			// Callback: onForcePressPeak - registered with cleanup tracking
+			s.onForcePressPeakAction = RegisterCallback(onForcePressPeak);
+			// Callback: onForcePressUpdate - registered with cleanup tracking
+			s.onForcePressUpdateAction = RegisterCallback(onForcePressUpdate);
+			// Callback: onForcePressEnd - registered with cleanup tracking
+			s.onForcePressEndAction = RegisterCallback(onForcePressEnd);
 			s.behavior = behavior;
 			s.excludeFromSemantics = excludeFromSemantics;
 			s.dragStartBehavior = dragStartBehavior;

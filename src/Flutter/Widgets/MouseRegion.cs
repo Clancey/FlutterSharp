@@ -63,24 +63,12 @@ namespace Flutter.Widgets
 		)
 		{
 			var s = GetBackingStruct<MouseRegionStruct>();
-			// Callback: onEnter
-			if (onEnter != null)
-			{
-				var actionId = CallbackRegistry.Register(onEnter);
-				s.onEnterAction = $"action_{actionId}";
-			}
-			// Callback: onHover
-			if (onHover != null)
-			{
-				var actionId = CallbackRegistry.Register(onHover);
-				s.onHoverAction = $"action_{actionId}";
-			}
-			// Callback: onExit
-			if (onExit != null)
-			{
-				var actionId = CallbackRegistry.Register(onExit);
-				s.onExitAction = $"action_{actionId}";
-			}
+			// Callback: onEnter - registered with cleanup tracking
+			s.onEnterAction = RegisterCallback(onEnter);
+			// Callback: onHover - registered with cleanup tracking
+			s.onHoverAction = RegisterCallback(onHover);
+			// Callback: onExit - registered with cleanup tracking
+			s.onExitAction = RegisterCallback(onExit);
 			// Complex type: object - skipped (requires marshaling)
 			s.opaque = opaque;
 			s.hitTestBehavior = hitTestBehavior;

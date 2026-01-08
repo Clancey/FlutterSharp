@@ -204,120 +204,44 @@ namespace Flutter.Widgets
 				s.textDirection = textDirection.Value;
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
-			// Callback: onTap
-			if (onTap != null)
-			{
-				var actionId = CallbackRegistry.Register(onTap);
-				s.onTapAction = $"action_{actionId}";
-			}
-			// Callback: onLongPress
-			if (onLongPress != null)
-			{
-				var actionId = CallbackRegistry.Register(onLongPress);
-				s.onLongPressAction = $"action_{actionId}";
-			}
-			// Callback: onScrollLeft
-			if (onScrollLeft != null)
-			{
-				var actionId = CallbackRegistry.Register(onScrollLeft);
-				s.onScrollLeftAction = $"action_{actionId}";
-			}
-			// Callback: onScrollRight
-			if (onScrollRight != null)
-			{
-				var actionId = CallbackRegistry.Register(onScrollRight);
-				s.onScrollRightAction = $"action_{actionId}";
-			}
-			// Callback: onScrollUp
-			if (onScrollUp != null)
-			{
-				var actionId = CallbackRegistry.Register(onScrollUp);
-				s.onScrollUpAction = $"action_{actionId}";
-			}
-			// Callback: onScrollDown
-			if (onScrollDown != null)
-			{
-				var actionId = CallbackRegistry.Register(onScrollDown);
-				s.onScrollDownAction = $"action_{actionId}";
-			}
-			// Callback: onIncrease
-			if (onIncrease != null)
-			{
-				var actionId = CallbackRegistry.Register(onIncrease);
-				s.onIncreaseAction = $"action_{actionId}";
-			}
-			// Callback: onDecrease
-			if (onDecrease != null)
-			{
-				var actionId = CallbackRegistry.Register(onDecrease);
-				s.onDecreaseAction = $"action_{actionId}";
-			}
-			// Callback: onCopy
-			if (onCopy != null)
-			{
-				var actionId = CallbackRegistry.Register(onCopy);
-				s.onCopyAction = $"action_{actionId}";
-			}
-			// Callback: onCut
-			if (onCut != null)
-			{
-				var actionId = CallbackRegistry.Register(onCut);
-				s.onCutAction = $"action_{actionId}";
-			}
-			// Callback: onPaste
-			if (onPaste != null)
-			{
-				var actionId = CallbackRegistry.Register(onPaste);
-				s.onPasteAction = $"action_{actionId}";
-			}
-			// Callback: onDismiss
-			if (onDismiss != null)
-			{
-				var actionId = CallbackRegistry.Register(onDismiss);
-				s.onDismissAction = $"action_{actionId}";
-			}
-			// Callback: onMoveCursorForwardByCharacter
-			if (onMoveCursorForwardByCharacter != null)
-			{
-				var actionId = CallbackRegistry.Register(onMoveCursorForwardByCharacter);
-				s.onMoveCursorForwardByCharacterAction = $"action_{actionId}";
-			}
-			// Callback: onMoveCursorBackwardByCharacter
-			if (onMoveCursorBackwardByCharacter != null)
-			{
-				var actionId = CallbackRegistry.Register(onMoveCursorBackwardByCharacter);
-				s.onMoveCursorBackwardByCharacterAction = $"action_{actionId}";
-			}
-			// Callback: onSetSelection
-			if (onSetSelection != null)
-			{
-				var actionId = CallbackRegistry.Register(onSetSelection);
-				s.onSetSelectionAction = $"action_{actionId}";
-			}
-			// Callback: onSetText
-			if (onSetText != null)
-			{
-				var actionId = CallbackRegistry.Register(onSetText);
-				s.onSetTextAction = $"action_{actionId}";
-			}
-			// Callback: onDidGainAccessibilityFocus
-			if (onDidGainAccessibilityFocus != null)
-			{
-				var actionId = CallbackRegistry.Register(onDidGainAccessibilityFocus);
-				s.onDidGainAccessibilityFocusAction = $"action_{actionId}";
-			}
-			// Callback: onDidLoseAccessibilityFocus
-			if (onDidLoseAccessibilityFocus != null)
-			{
-				var actionId = CallbackRegistry.Register(onDidLoseAccessibilityFocus);
-				s.onDidLoseAccessibilityFocusAction = $"action_{actionId}";
-			}
-			// Callback: onFocus
-			if (onFocus != null)
-			{
-				var actionId = CallbackRegistry.Register(onFocus);
-				s.onFocusAction = $"action_{actionId}";
-			}
+			// Callback: onTap - registered with cleanup tracking
+			s.onTapAction = RegisterCallback(onTap);
+			// Callback: onLongPress - registered with cleanup tracking
+			s.onLongPressAction = RegisterCallback(onLongPress);
+			// Callback: onScrollLeft - registered with cleanup tracking
+			s.onScrollLeftAction = RegisterCallback(onScrollLeft);
+			// Callback: onScrollRight - registered with cleanup tracking
+			s.onScrollRightAction = RegisterCallback(onScrollRight);
+			// Callback: onScrollUp - registered with cleanup tracking
+			s.onScrollUpAction = RegisterCallback(onScrollUp);
+			// Callback: onScrollDown - registered with cleanup tracking
+			s.onScrollDownAction = RegisterCallback(onScrollDown);
+			// Callback: onIncrease - registered with cleanup tracking
+			s.onIncreaseAction = RegisterCallback(onIncrease);
+			// Callback: onDecrease - registered with cleanup tracking
+			s.onDecreaseAction = RegisterCallback(onDecrease);
+			// Callback: onCopy - registered with cleanup tracking
+			s.onCopyAction = RegisterCallback(onCopy);
+			// Callback: onCut - registered with cleanup tracking
+			s.onCutAction = RegisterCallback(onCut);
+			// Callback: onPaste - registered with cleanup tracking
+			s.onPasteAction = RegisterCallback(onPaste);
+			// Callback: onDismiss - registered with cleanup tracking
+			s.onDismissAction = RegisterCallback(onDismiss);
+			// Callback: onMoveCursorForwardByCharacter - registered with cleanup tracking
+			s.onMoveCursorForwardByCharacterAction = RegisterCallback(onMoveCursorForwardByCharacter);
+			// Callback: onMoveCursorBackwardByCharacter - registered with cleanup tracking
+			s.onMoveCursorBackwardByCharacterAction = RegisterCallback(onMoveCursorBackwardByCharacter);
+			// Callback: onSetSelection - registered with cleanup tracking
+			s.onSetSelectionAction = RegisterCallback(onSetSelection);
+			// Callback: onSetText - registered with cleanup tracking
+			s.onSetTextAction = RegisterCallback(onSetText);
+			// Callback: onDidGainAccessibilityFocus - registered with cleanup tracking
+			s.onDidGainAccessibilityFocusAction = RegisterCallback(onDidGainAccessibilityFocus);
+			// Callback: onDidLoseAccessibilityFocus - registered with cleanup tracking
+			s.onDidLoseAccessibilityFocusAction = RegisterCallback(onDidLoseAccessibilityFocus);
+			// Callback: onFocus - registered with cleanup tracking
+			s.onFocusAction = RegisterCallback(onFocus);
 			// Complex type: Dictionary<object, object>? - skipped (requires marshaling)
 			// Complex type: object - skipped (requires marshaling)
 			// Complex type: ISet<string>? - skipped (requires marshaling)
