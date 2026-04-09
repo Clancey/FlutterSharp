@@ -12,6 +12,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<ValidateXcodeVersion>false</ValidateXcodeVersion>
 
 		<!-- Display name -->
 		<ApplicationTitle>FlutterSharp MAUI Sample</ApplicationTitle>

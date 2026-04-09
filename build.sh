@@ -42,7 +42,7 @@ pushd "$repo_root/flutter_module" >/dev/null
 flutter pub get
 
 echo "Building flutter_module iOS frameworks"
-flutter build ios-framework --output=../flutter_sharp/build/iOS --no-profile
+flutter build ios-framework --output=../flutter_sharp/build/iOS --no-profile < /dev/null
 popd >/dev/null
 
 wrapper_output_dir="$repo_root/flutter_sharp/build/wrapper_iOS"
@@ -53,7 +53,7 @@ pushd "$repo_root/flutter_sharp/example" >/dev/null
 flutter pub get
 
 echo "Building flutter_sharp wrapper frameworks"
-flutter build ios-framework --output="$wrapper_output_dir" --no-debug
+flutter build ios-framework --output="$wrapper_output_dir" --no-debug < /dev/null
 popd >/dev/null
 
 copy_wrapper_frameworks() {

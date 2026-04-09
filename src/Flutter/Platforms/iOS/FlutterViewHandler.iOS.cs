@@ -14,10 +14,12 @@ namespace Flutter.MAUI
 	public partial class FlutterViewHandler : ViewHandler<IFlutterView, UIView>
 	{
 		private FlutterViewController? _flutterViewController;
+		private FlutterHostContainerView? _containerView;
+		private UIViewController? _parentViewController;
 		private CGSize _lastKnownSize;
 
 		/// <summary>
-		/// Creates the native iOS view (FlutterViewController's View)
+		/// Creates the native iOS view that hosts the FlutterViewController's view.
 		/// </summary>
 		protected override UIView CreatePlatformView()
 		{
@@ -30,21 +32,13 @@ namespace Flutter.MAUI
 				_flutterViewController.Widget = VirtualView.Widget;
 			}
 
-			// Return the view from the FlutterViewController
-			// This UIView contains the Flutter rendering surface
-			var view = _flutterViewController.View;
-			if (view == null)
+			_containerView = new FlutterHostContainerView(this)
 			{
-				throw new InvalidOperationException("FlutterViewController.View is null");
-			}
+				AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight,
+				ClipsToBounds = true
+			};
 
-			// Enable flexible sizing to work with MAUI's layout system
-			view.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
-
-			// Set clip to bounds for proper aspect ratio handling
-			view.ClipsToBounds = true;
-
-			return view;
+			return _containerView;
 		}
 
 		/// <summary>
@@ -60,6 +54,9 @@ namespace Flutter.MAUI
 			{
 				_flutterViewController.Widget = VirtualView.Widget;
 			}
+
+			EnsureFlutterViewAttached();
+			UpdatePlatformViewLayout();
 		}
 
 		/// <summary>
@@ -67,6 +64,8 @@ namespace Flutter.MAUI
 		/// </summary>
 		protected override void DisconnectHandler(UIView platformView)
 		{
+			DetachFromParentViewController();
+
 			// Clean up the widget reference
 			if (_flutterViewController != null)
 			{
@@ -76,7 +75,12 @@ namespace Flutter.MAUI
 				{
 					Flutter.Internal.FlutterManager.UntrackWidget(currentWidget);
 				}
+				_flutterViewController.Dispose();
+				_flutterViewController = null;
 			}
+
+			_parentViewController = null;
+			_containerView = null;
 
 			base.DisconnectHandler(platformView);
 		}
@@ -99,6 +103,7 @@ namespace Flutter.MAUI
 		{
 			// Trigger a layout update when sizing properties change
 			PlatformView?.SetNeedsLayout();
+			UpdatePlatformViewLayout();
 		}
 
 		/// <summary>
@@ -200,6 +205,132 @@ namespace Flutter.MAUI
 			}
 
 			return new Microsoft.Maui.Graphics.Size(width, height);
+		}
+
+		private void EnsureFlutterViewAttached()
+		{
+			if (_flutterViewController == null || _containerView == null)
+			{
+				return;
+			}
+
+			AttachToParentViewControllerIfNeeded();
+
+			var flutterView = _flutterViewController.View;
+			if (flutterView == null)
+			{
+				throw new InvalidOperationException("FlutterViewController.View is null");
+			}
+
+			if (flutterView.Superview != _containerView)
+			{
+				flutterView.RemoveFromSuperview();
+				flutterView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+				flutterView.ClipsToBounds = true;
+				_containerView.AddSubview(flutterView);
+			}
+		}
+
+		private void UpdatePlatformViewLayout()
+		{
+			if (_containerView == null || _flutterViewController?.View == null)
+			{
+				return;
+			}
+
+			var bounds = _containerView.Bounds;
+			_flutterViewController.View.Frame = bounds;
+
+			var virtualView = VirtualView;
+			if (virtualView == null || bounds.Width <= 0 || bounds.Height <= 0)
+			{
+				return;
+			}
+
+			var newSize = new CGSize(bounds.Width, bounds.Height);
+			if (_lastKnownSize.Equals(newSize))
+			{
+				return;
+			}
+
+			_lastKnownSize = newSize;
+			virtualView.OnContainerSizeChanged(bounds.Width, bounds.Height);
+		}
+
+		private void AttachToParentViewControllerIfNeeded()
+		{
+			if (_flutterViewController == null || _containerView == null)
+			{
+				return;
+			}
+
+			var parentViewController = FindViewController(_containerView);
+			if (parentViewController == null || ReferenceEquals(parentViewController, _parentViewController))
+			{
+				return;
+			}
+
+			DetachFromParentViewController();
+			parentViewController.AddChildViewController(_flutterViewController);
+			_flutterViewController.DidMoveToParentViewController(parentViewController);
+			_parentViewController = parentViewController;
+		}
+
+		private void DetachFromParentViewController()
+		{
+			if (_flutterViewController == null || _parentViewController == null)
+			{
+				return;
+			}
+
+			_flutterViewController.WillMoveToParentViewController(null);
+			_flutterViewController.View?.RemoveFromSuperview();
+			_flutterViewController.RemoveFromParentViewController();
+			_parentViewController = null;
+		}
+
+		private static UIViewController? FindViewController(UIView view)
+		{
+			UIResponder? responder = view;
+			while ((responder = responder.NextResponder) != null)
+			{
+				if (responder is UIViewController viewController)
+				{
+					return viewController;
+				}
+			}
+
+			return view.Window?.RootViewController;
+		}
+
+		private sealed class FlutterHostContainerView : UIView
+		{
+			private readonly WeakReference<FlutterViewHandler> _handler;
+
+			public FlutterHostContainerView(FlutterViewHandler handler)
+			{
+				_handler = new WeakReference<FlutterViewHandler>(handler);
+			}
+
+			public override void LayoutSubviews()
+			{
+				base.LayoutSubviews();
+				if (_handler.TryGetTarget(out var handler))
+				{
+					handler.EnsureFlutterViewAttached();
+					handler.UpdatePlatformViewLayout();
+				}
+			}
+
+			public override void MovedToWindow()
+			{
+				base.MovedToWindow();
+				if (_handler.TryGetTarget(out var handler))
+				{
+					handler.EnsureFlutterViewAttached();
+					handler.UpdatePlatformViewLayout();
+				}
+			}
 		}
 	}
 }

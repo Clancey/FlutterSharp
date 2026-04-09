@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{90
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterSample.MAUI", "Sample\FlutterSample.MAUI\FlutterSample.MAUI.csproj", "{DC57B1F5-29FA-4112-AA9C-910720C2013A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,12 +64,25 @@ Global
 		{F84B08BF-A7B4-4357-B9CD-01F53DC4787C}.Release|iPhone.Build.0 = Release|Any CPU
 		{F84B08BF-A7B4-4357-B9CD-01F53DC4787C}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{F84B08BF-A7B4-4357-B9CD-01F53DC4787C}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Release|iPhone.Build.0 = Release|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F84B08BF-A7B4-4357-B9CD-01F53DC4787C} = {7562C17F-435F-4241-8A0E-5A43203E2DEE}
+		{DC57B1F5-29FA-4112-AA9C-910720C2013A} = {7562C17F-435F-4241-8A0E-5A43203E2DEE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4BE8FBF5-93D7-45A3-87E5-8FC02A19141D}

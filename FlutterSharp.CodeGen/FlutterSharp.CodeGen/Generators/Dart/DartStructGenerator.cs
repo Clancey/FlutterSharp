@@ -16,14 +16,20 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 	{
 		private readonly CSharpToDartFfiMapper _typeMapper;
 		private readonly Template _template;
+		private readonly HashSet<string> _structDefinitions;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DartStructGenerator"/> class.
 		/// </summary>
 		/// <param name="typeMapper">The type mapper to use for converting C# types to Dart FFI types.</param>
-		public DartStructGenerator(CSharpToDartFfiMapper typeMapper)
+		/// <param name="structDefinitions">The Dart struct names available in the current manifest.</param>
+		public DartStructGenerator(CSharpToDartFfiMapper typeMapper, IEnumerable<string>? structDefinitions = null)
 		{
 			_typeMapper = typeMapper ?? throw new ArgumentNullException(nameof(typeMapper));
+			_structDefinitions = new HashSet<string>(structDefinitions ?? Enumerable.Empty<string>(), StringComparer.OrdinalIgnoreCase)
+			{
+				"Widget"
+			};
 
 			// Load the Scriban template
 			var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "DartStruct.scriban");
@@ -290,22 +296,7 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			// Remove nullable marker and generic parameters for matching
 			var baseType = dartType.TrimEnd('?').Split('<')[0].Trim();
 
-			// Check if this type should have its own struct
-			// These are Flutter/Dart types that have their own struct definitions
-			// NOTE: Abstract types (AlignmentGeometry, EdgeInsetsGeometry, BorderRadiusGeometry, Gradient,
-			// Animation, Decoration, Constraints, BoxBorder, ParametricCurve) will have interface-only struct files generated
-			var knownStructTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-			{
-				"Widget", "Alignment", "AlignmentGeometry", "EdgeInsets", "EdgeInsetsGeometry",
-				"BorderRadius", "BorderRadiusGeometry", "BoxDecoration", "Decoration",
-				"BoxConstraints", "Constraints", "TextStyle", "Gradient", "ImageProvider", "Size", "Offset",
-				"Rect", "Radius", "Matrix4", "Key", "BuildContext", "ThemeData", "IconData",
-				"Color", "MaterialColor", "MaterialStateProperty", "Duration", "DateTime",
-				"Animation", "AnimationController", "Curve", "ParametricCurve", "FocusNode", "ScrollController",
-				"ScrollPhysics", "TextEditingController", "GlobalKey", "State", "BoxBorder", "Border"
-			};
-
-			if (knownStructTypes.Contains(baseType))
+			if (_structDefinitions.Contains(baseType))
 			{
 				return $"Pointer<{baseType}Struct>";
 			}

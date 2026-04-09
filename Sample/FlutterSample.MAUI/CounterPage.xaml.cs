@@ -6,11 +6,11 @@ namespace FlutterSample.MAUI;
 
 /// <summary>
 /// Counter demo page showing MAUI-Flutter hybrid interaction.
-/// MAUI buttons control a Flutter widget's state.
+/// MAUI buttons rebuild a Flutter widget from page state.
 /// </summary>
 public partial class CounterPage : ContentPage
 {
-	private CounterWidget? _counterWidget;
+	private int _count;
 
 	public CounterPage()
 	{
@@ -20,44 +20,44 @@ public partial class CounterPage : ContentPage
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
-
-		// Create and set the counter widget
-		_counterWidget = new CounterWidget();
-		flutterView.Widget = _counterWidget;
+		RefreshCounterWidget();
 	}
 
 	private void OnIncrementClicked(object? sender, EventArgs e)
 	{
-		if (_counterWidget != null)
-		{
-			_counterWidget.Increment();
-		}
+		_count++;
+		RefreshCounterWidget();
 	}
 
 	private void OnDecrementClicked(object? sender, EventArgs e)
 	{
-		if (_counterWidget != null)
-		{
-			_counterWidget.Decrement();
-		}
+		_count--;
+		RefreshCounterWidget();
 	}
 
 	private void OnResetClicked(object? sender, EventArgs e)
 	{
-		if (_counterWidget != null)
-		{
-			_counterWidget.Reset();
-		}
+		_count = 0;
+		RefreshCounterWidget();
+	}
+
+	private void RefreshCounterWidget()
+	{
+		flutterView.Widget = new CounterDisplayWidget(_count);
 	}
 }
 
 /// <summary>
-/// A stateful Flutter widget that displays a counter.
-/// State is managed in C# and updated via SetState().
+/// A Flutter widget snapshot for the current counter value.
 /// </summary>
-public class CounterWidget : StatefulWidget
+public sealed class CounterDisplayWidget : StatelessWidget
 {
-	private int _count = 0;
+	private readonly int _count;
+
+	public CounterDisplayWidget(int count)
+	{
+		_count = count;
+	}
 
 	public override Widget Build() =>
 		new Center(child: new Column
@@ -73,19 +73,4 @@ public class CounterWidget : StatefulWidget
 				< 0 => $"Negative! {_count} is less than zero",
 			}),
 		});
-
-	public void Increment()
-	{
-		SetState(() => _count++);
-	}
-
-	public void Decrement()
-	{
-		SetState(() => _count--);
-	}
-
-	public void Reset()
-	{
-		SetState(() => _count = 0);
-	}
 }

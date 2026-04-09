@@ -2,6 +2,8 @@ import 'dart:io';
 import 'dart:convert';
 import 'package:analyzer/dart/analysis/analysis_context.dart';
 import 'package:analyzer/dart/analysis/analysis_context_collection.dart';
+import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
@@ -54,9 +56,10 @@ class PackageScanner {
     final widgets = <Map<String, dynamic>>[];
     final types = <Map<String, dynamic>>[];
     final enums = <Map<String, dynamic>>[];
+    final typedefs = <Map<String, dynamic>>[];
 
     for (final context in collection.contexts) {
-      await _analyzeContext(context, widgets, types, enums);
+      await _analyzeContext(context, widgets, types, enums, typedefs);
     }
 
     return {
@@ -67,6 +70,7 @@ class PackageScanner {
       'widgets': widgets,
       'types': types,
       'enums': enums,
+      'typedefs': typedefs,
       'analysisTimestamp': DateTime.now().toIso8601String(),
     };
   }
@@ -96,6 +100,7 @@ class PackageScanner {
     List<Map<String, dynamic>> widgets,
     List<Map<String, dynamic>> types,
     List<Map<String, dynamic>> enums,
+    List<Map<String, dynamic>> typedefs,
   ) async {
     for (final filePath in context.contextRoot.analyzedFiles()) {
       if (!filePath.endsWith('.dart')) continue;
@@ -118,6 +123,7 @@ class PackageScanner {
           widgets.addAll(visitor.widgets);
           types.addAll(visitor.types);
           enums.addAll(visitor.enums);
+          typedefs.addAll(visitor.typedefs);
         }
       } catch (e) {
         stderr.writeln('Warning: Error analyzing file $filePath: $e');
@@ -136,6 +142,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
   final widgets = <Map<String, dynamic>>[];
   final types = <Map<String, dynamic>>[];
   final enums = <Map<String, dynamic>>[];
+  final typedefs = <Map<String, dynamic>>[];
 
   DefinitionVisitor(
     this.filePath,
@@ -178,8 +185,38 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
     super.visitEnumDeclaration(node);
   }
 
+  @override
+  void visitFunctionTypeAlias(FunctionTypeAlias node) {
+    final element = node.declaredElement;
+    if (element == null) return;
+
+    final typedefName = element.name;
+    if (typedefName == null || !_shouldInclude(typedefName)) return;
+
+    typedefs.add(_extractTypedefDefinition(element));
+
+    super.visitFunctionTypeAlias(node);
+  }
+
+  @override
+  void visitGenericTypeAlias(GenericTypeAlias node) {
+    final element = node.declaredElement;
+    if (element == null) return;
+
+    final typedefName = element.name;
+    if (typedefName == null || !_shouldInclude(typedefName)) return;
+
+    typedefs.add(_extractTypedefDefinition(element));
+
+    super.visitGenericTypeAlias(node);
+  }
+
   /// Checks if a name should be included based on include/exclude lists
   bool _shouldInclude(String name) {
+    if (name.isEmpty || name.startsWith('_')) {
+      return false;
+    }
+
     // If include list is specified, name must be in it
     if (includeList.isNotEmpty && !includeList.contains(name)) {
       return false;
@@ -298,6 +335,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       'deprecationMessage': _getDeprecationMessage(element),
       'typeParameters': element.typeParameters.map((tp) => tp.name).toList(),
       'isRenderObjectWidget': _extendsType(element, 'RenderObjectWidget'),
+      'referencedTypes': _collectReferencedTypesFromClass(element),
     };
   }
 
@@ -320,6 +358,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       'isDeprecated': element.hasDeprecated,
       'deprecationMessage': _getDeprecationMessage(element),
       'typeParameters': element.typeParameters.map((tp) => tp.name).toList(),
+      'referencedTypes': _collectReferencedTypesFromClass(element),
     };
   }
 
@@ -344,6 +383,32 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       'documentation': _getDocumentation(element),
       'sourceLibrary': element.library.identifier,
       'isDeprecated': element.hasDeprecated,
+    };
+  }
+
+  /// Extracts typedef definition from a typedef element.
+  Map<String, dynamic> _extractTypedefDefinition(dynamic element) {
+    final aliasedType = element.aliasedType;
+    final isFunction = aliasedType is FunctionType;
+    final parameters = isFunction
+        ? aliasedType.parameters
+            .map((param) => _extractParameterDefinition(param))
+            .toList()
+        : <Map<String, dynamic>>[];
+
+    return {
+      'name': element.name,
+      'namespace': _getNamespace(element),
+      'aliasedType': _getTypeString(aliasedType),
+      'returnType': isFunction ? _getTypeString(aliasedType.returnType) : null,
+      'parameters': parameters,
+      'isFunction': isFunction,
+      'documentation': _getDocumentation(element),
+      'sourceLibrary': element.library.identifier,
+      'isDeprecated': element.hasDeprecated,
+      'deprecationMessage': _getDeprecationMessage(element),
+      'typeParameters': element.typeParameters.map((tp) => tp.name).toList(),
+      'referencedTypes': _collectReferencedTypesFromTypedef(element),
     };
   }
 
@@ -409,12 +474,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       // Skip private fields and static fields
       if (field.name.startsWith('_') || field.isStatic) continue;
 
-      var dartType = _getTypeString(field.type);
-
-      // If we got InvalidType, try to infer from field name
-      if (dartType == 'InvalidType' || dartType.contains('InvalidType')) {
-        dartType = _inferTypeFromParameterName(field.name, dartType);
-      }
+      final dartType = _getTypeString(field.type);
 
       final hasDefaultValue = defaultValues.containsKey(field.name);
 
@@ -427,7 +487,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
         'defaultValue': defaultValues[field.name],
         'documentation': _getDocumentation(field),
         'isList': _isList(field.type),
-        'isCallback': _isCallback(field.type, field.name),
+        'isCallback': _isCallback(field.type),
         'typeArguments': _getTypeArguments(field.type),
       });
       propertyNames.add(field.name);
@@ -443,12 +503,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
         // Skip the 'key' parameter - it's handled separately by the base Widget class
         if (param.name == 'key') continue;
 
-        var dartType = _getTypeString(param.type);
-
-        // If we got InvalidType, try to infer from parameter name
-        if (dartType == 'InvalidType' || dartType.contains('InvalidType')) {
-          dartType = _inferTypeFromParameterName(param.name, dartType);
-        }
+        final dartType = _getTypeString(param.type);
 
         properties.add({
           'name': param.name,
@@ -459,7 +514,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
           'defaultValue': param.defaultValueCode,
           'documentation': _getDocumentation(param),
           'isList': _isList(param.type),
-          'isCallback': _isCallback(param.type, param.name),
+          'isCallback': _isCallback(param.type),
           'typeArguments': _getTypeArguments(param.type),
         });
         propertyNames.add(param.name);
@@ -471,12 +526,7 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
 
   /// Extracts a parameter definition
   Map<String, dynamic> _extractParameterDefinition(param) {
-    var dartType = _getTypeString(param.type);
-
-    // If we got InvalidType, try to infer from parameter name
-    if (dartType == 'InvalidType' || dartType.contains('InvalidType')) {
-      dartType = _inferTypeFromParameterName(param.name, dartType);
-    }
+    final dartType = _getTypeString(param.type);
 
     return {
       'name': param.name,
@@ -487,297 +537,9 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       'defaultValue': param.defaultValueCode,
       'documentation': _getDocumentation(param),
       'isList': _isList(param.type),
-      'isCallback': _isCallback(param.type, param.name),
+      'isCallback': _isCallback(param.type),
       'typeArguments': _getTypeArguments(param.type),
     };
-  }
-
-  /// Infers a Dart type from a parameter name when type resolution fails
-  String _inferTypeFromParameterName(String paramName, String fallback) {
-    // Don't override if we already have valid List type information
-    if (fallback.startsWith('List<') && !fallback.contains('InvalidType')) {
-      return fallback;  // Keep List<Widget>, List<BoxShadow>, etc.
-    }
-
-    // Common parameter name patterns to type mappings
-    // NOTE: AMBIGUOUS parameter names (like 'fit', 'direction', 'behavior', 'position')
-    // are intentionally EXCLUDED from this list. They are handled by widget-context-aware
-    // type mapping in the C# code generator (DartToCSharpMapper.WidgetSpecificParameterTypes)
-    // to ensure each widget gets the correct type for its specific context.
-    final nameToType = {
-      // Flutter layout enums (commonly unresolved by analyzer)
-      // UNAMBIGUOUS parameter names only
-      'mainAxisAlignment': 'MainAxisAlignment',
-      // crossAxisAlignment is AMBIGUOUS: CrossAxisAlignment vs WrapCrossAlignment - excluded
-      'mainAxisSize': 'MainAxisSize',
-      'verticalDirection': 'VerticalDirection',
-      'textBaseline': 'TextBaseline?',
-      'flexFit': 'FlexFit',
-      // 'fit' is AMBIGUOUS: FlexFit vs BoxFit vs StackFit - excluded, handled in C#
-      'filterQuality': 'FilterQuality',
-      'blendMode': 'BlendMode',
-      'stackFit': 'StackFit',
-      // 'overflow' is somewhat ambiguous but usually TextOverflow
-      'textOverflow': 'TextOverflow',
-      'softWrap': 'bool',
-      'maxLines': 'int?',
-      'textAlign': 'TextAlign?',
-      'textWidthBasis': 'TextWidthBasis',
-      'selectionHeightStyle': 'BoxHeightStyle',
-      'selectionWidthStyle': 'BoxWidthStyle',
-      'strutStyle': 'StrutStyle?',
-      'locale': 'Locale?',
-      'semanticsLabel': 'String?',
-      'axis': 'Axis',
-      'scrollDirection': 'Axis',
-      'reverse': 'bool',
-      'primary': 'bool?',
-      'shrinkWrap': 'bool',
-      'physics': 'ScrollPhysics?',
-      'cacheExtent': 'double?',
-      'semanticChildCount': 'int?',
-      'dragStartBehavior': 'DragStartBehavior',
-      'keyboardDismissBehavior': 'ScrollViewKeyboardDismissBehavior',
-      'restorationId': 'String?',
-      'clipBehavior': 'Clip',
-      // Alignment and spacing
-      // 'alignment' is AMBIGUOUS: AlignmentGeometry vs WrapAlignment vs TableCellVerticalAlignment - excluded
-      'padding': 'EdgeInsetsGeometry?',
-      'margin': 'EdgeInsetsGeometry?',
-      'decoration': 'Decoration?',
-      'foregroundDecoration': 'Decoration?',
-      'constraints': 'BoxConstraints?',
-      'transform': 'Matrix4?',
-      'transformAlignment': 'AlignmentGeometry?',
-      'clipBehavior': 'Clip',
-      'color': 'Color?',
-      'backgroundColor': 'Color?',
-      'foregroundColor': 'Color?',
-      'shadowColor': 'Color?',
-      'surfaceTintColor': 'Color?',
-      'borderRadius': 'BorderRadiusGeometry?',
-      'border': 'BoxBorder?',
-      'shape': 'BoxShape',
-      'gradient': 'Gradient?',
-      'boxShadow': 'List<BoxShadow>?',
-      'curve': 'Curve',
-      'duration': 'Duration',
-      'width': 'double?',
-      'height': 'double?',
-      'style': 'TextStyle?',
-      'textStyle': 'TextStyle?',
-      'icon': 'IconData?',
-      'iconSize': 'double?',
-      // Common list properties
-      'children': 'List<Widget>',
-      'actions': 'List<Widget>?',
-      'tabs': 'List<Widget>',
-      // Common required parameters for specific widgets
-      'delegate': 'dynamic', // Generic delegate type - cannot be fully resolved
-      'controller': 'dynamic', // Generic controller type
-      'itemBuilder': 'dynamic', // Callback type
-      'gridDelegate': 'SliverGridDelegate',
-      'offset': 'Offset',
-      'animation': 'Animation<double>',
-      'opacity': 'Animation<double>',
-      'child': 'Widget',
-      'sliver': 'Widget',
-      'slivers': 'List<Widget>',
-      'filter': 'ImageFilter',
-      'colorFilter': 'ColorFilter',
-      'link': 'LayerLink',
-      'image': 'ImageProvider',
-      'placeholder': 'ImageProvider?',
-      'bundle': 'AssetBundle',
-      'viewType': 'String',
-      'view': 'FlutterView',
-      'views': 'List<FlutterView>',
-      'textDirection': 'TextDirection',
-      'textHeightBehavior': 'TextHeightBehavior',
-      'value': 'dynamic', // For AnnotatedRegion, etc.
-      'valueListenable': 'ValueListenable<dynamic>',
-      'text': 'InlineSpan',
-      'hitTestBehavior': 'PlatformViewHitTestBehavior',
-      'gestureRecognizers': 'Set<Factory<OneSequenceGestureRecognizer>>',
-      'translation': 'Offset',
-      'tween': 'Tween<double>',
-      'turns': 'Animation<double>',
-      'size': 'Size',
-      'rect': 'Rect',
-      'tree': 'Widget', // For TreeSliver
-      'listenable': 'Listenable',
-      'builder': 'WidgetBuilder?', // For DualTransitionBuilder etc.
-      'surfaceFactory': 'dynamic', // For PlatformViewSurface
-      'cursorColor': 'Color',
-      'backgroundCursorColor': 'Color',
-      'focusNode': 'FocusNode',
-      'selectionColor': 'Color?',
-      'baselineType': 'TextBaseline',
-      'constraintsTransform': 'BoxConstraintsTransform',
-    };
-
-    // Check for callback type mappings based on name patterns
-    final callbackTypeMapping = _inferCallbackType(paramName);
-    if (callbackTypeMapping != null) {
-      return callbackTypeMapping;
-    }
-
-    return nameToType[paramName] ?? fallback;
-  }
-
-  /// Infers the callback type from a parameter name
-  String? _inferCallbackType(String paramName) {
-    // Gesture tap callbacks
-    if (paramName == 'onTap' || paramName == 'onSecondaryTap' ||
-        paramName == 'onDoubleTap') {
-      return 'GestureTapCallback?';
-    }
-    if (paramName == 'onTapDown' || paramName == 'onSecondaryTapDown' ||
-        paramName == 'onTertiaryTapDown' || paramName == 'onDoubleTapDown') {
-      return 'GestureTapDownCallback?';
-    }
-    if (paramName == 'onTapUp' || paramName == 'onSecondaryTapUp' ||
-        paramName == 'onTertiaryTapUp') {
-      return 'GestureTapUpCallback?';
-    }
-    if (paramName == 'onTapCancel' || paramName == 'onSecondaryTapCancel' ||
-        paramName == 'onTertiaryTapCancel' || paramName == 'onDoubleTapCancel') {
-      return 'GestureTapCancelCallback?';
-    }
-    if (paramName == 'onTapMove') {
-      return 'GestureTapMoveCallback?';
-    }
-
-    // Long press callbacks
-    if (paramName == 'onLongPress' || paramName == 'onSecondaryLongPress' ||
-        paramName == 'onTertiaryLongPress') {
-      return 'GestureLongPressCallback?';
-    }
-    if (paramName == 'onLongPressDown' || paramName == 'onSecondaryLongPressDown' ||
-        paramName == 'onTertiaryLongPressDown') {
-      return 'GestureLongPressDownCallback?';
-    }
-    if (paramName == 'onLongPressUp' || paramName == 'onSecondaryLongPressUp' ||
-        paramName == 'onTertiaryLongPressUp') {
-      return 'GestureLongPressUpCallback?';
-    }
-    if (paramName == 'onLongPressStart' || paramName == 'onSecondaryLongPressStart' ||
-        paramName == 'onTertiaryLongPressStart') {
-      return 'GestureLongPressStartCallback?';
-    }
-    if (paramName == 'onLongPressEnd' || paramName == 'onSecondaryLongPressEnd' ||
-        paramName == 'onTertiaryLongPressEnd') {
-      return 'GestureLongPressEndCallback?';
-    }
-    if (paramName == 'onLongPressCancel' || paramName == 'onSecondaryLongPressCancel' ||
-        paramName == 'onTertiaryLongPressCancel') {
-      return 'GestureLongPressCancelCallback?';
-    }
-    if (paramName == 'onLongPressMoveUpdate' || paramName == 'onSecondaryLongPressMoveUpdate' ||
-        paramName == 'onTertiaryLongPressMoveUpdate') {
-      return 'GestureLongPressMoveUpdateCallback?';
-    }
-
-    // Drag callbacks
-    if (paramName == 'onVerticalDragDown' || paramName == 'onHorizontalDragDown' ||
-        paramName == 'onPanDown') {
-      return 'GestureDragDownCallback?';
-    }
-    if (paramName == 'onVerticalDragStart' || paramName == 'onHorizontalDragStart' ||
-        paramName == 'onPanStart') {
-      return 'GestureDragStartCallback?';
-    }
-    if (paramName == 'onVerticalDragUpdate' || paramName == 'onHorizontalDragUpdate' ||
-        paramName == 'onPanUpdate') {
-      return 'GestureDragUpdateCallback?';
-    }
-    if (paramName == 'onVerticalDragEnd' || paramName == 'onHorizontalDragEnd' ||
-        paramName == 'onPanEnd') {
-      return 'GestureDragEndCallback?';
-    }
-    if (paramName == 'onVerticalDragCancel' || paramName == 'onHorizontalDragCancel' ||
-        paramName == 'onPanCancel') {
-      return 'GestureDragCancelCallback?';
-    }
-
-    // Scale callbacks
-    if (paramName == 'onScaleStart') {
-      return 'GestureScaleStartCallback?';
-    }
-    if (paramName == 'onScaleUpdate') {
-      return 'GestureScaleUpdateCallback?';
-    }
-    if (paramName == 'onScaleEnd') {
-      return 'GestureScaleEndCallback?';
-    }
-
-    // Force press callbacks
-    if (paramName == 'onForcePressStart') {
-      return 'GestureForcePressStartCallback?';
-    }
-    if (paramName == 'onForcePressPeak') {
-      return 'GestureForcePressPeakCallback?';
-    }
-    if (paramName == 'onForcePressUpdate') {
-      return 'GestureForcePressUpdateCallback?';
-    }
-    if (paramName == 'onForcePressEnd') {
-      return 'GestureForcePressEndCallback?';
-    }
-
-    // Pointer event listeners
-    if (paramName == 'onPointerDown') {
-      return 'PointerDownEventListener?';
-    }
-    if (paramName == 'onPointerMove') {
-      return 'PointerMoveEventListener?';
-    }
-    if (paramName == 'onPointerUp') {
-      return 'PointerUpEventListener?';
-    }
-    if (paramName == 'onPointerCancel') {
-      return 'PointerCancelEventListener?';
-    }
-    if (paramName == 'onPointerHover' || paramName == 'onHover') {
-      return 'PointerHoverEventListener?';
-    }
-    if (paramName == 'onPointerEnter' || paramName == 'onEnter') {
-      return 'PointerEnterEventListener?';
-    }
-    if (paramName == 'onPointerExit' || paramName == 'onExit') {
-      return 'PointerExitEventListener?';
-    }
-    if (paramName == 'onPointerSignal') {
-      return 'PointerSignalEventListener?';
-    }
-    if (paramName == 'onPointerPanZoomStart') {
-      return 'PointerPanZoomStartEventListener?';
-    }
-    if (paramName == 'onPointerPanZoomUpdate') {
-      return 'PointerPanZoomUpdateEventListener?';
-    }
-    if (paramName == 'onPointerPanZoomEnd') {
-      return 'PointerPanZoomEndEventListener?';
-    }
-
-    // Common callbacks
-    if (paramName == 'onPressed' || paramName == 'onEnd' || paramName == 'onDismissed') {
-      return 'VoidCallback?';
-    }
-    if (paramName == 'onChanged') {
-      return 'ValueChanged<bool>?';
-    }
-    if (paramName == 'onFocusChange') {
-      return 'ValueChanged<bool>?';
-    }
-    if (paramName == 'onShowFocusHighlight' || paramName == 'onShowHoverHighlight') {
-      return 'ValueChanged<bool>?';
-    }
-    if (paramName == 'onViewCreated') {
-      return 'PlatformViewCreatedCallback?';
-    }
-
-    return null;
   }
 
   /// Gets the namespace/library path for an element
@@ -836,6 +598,120 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
     return element.metadata.any((m) => m.element?.name == 'immutable');
   }
 
+  /// Collects referenced public types for a class surface.
+  List<String> _collectReferencedTypesFromClass(InterfaceElement element) {
+    final references = <String>{};
+
+    _addReferencedType(references, element.supertype);
+
+    for (final interfaceType in element.interfaces) {
+      _addReferencedType(references, interfaceType);
+    }
+
+    for (final mixinType in element.mixins) {
+      _addReferencedType(references, mixinType);
+    }
+
+    for (final field in element.fields) {
+      if (field.isStatic || field.name.startsWith('_')) {
+        continue;
+      }
+
+      _addReferencedType(references, field.type);
+    }
+
+    for (final constructor in element.constructors) {
+      if (constructor.name.startsWith('_')) {
+        continue;
+      }
+
+      for (final parameter in constructor.parameters) {
+        _addReferencedType(references, parameter.type);
+      }
+    }
+
+    final ordered = references.toList()..sort();
+    return ordered;
+  }
+
+  /// Collects referenced public types for a typedef surface.
+  List<String> _collectReferencedTypesFromTypedef(dynamic element) {
+    final references = <String>{};
+
+    _addReferencedType(references, element.aliasedType);
+
+    final ordered = references.toList()..sort();
+    return ordered;
+  }
+
+  /// Adds public referenced types from a Dart type, recursing into generic arguments.
+  void _addReferencedType(Set<String> references, DartType? type) {
+    if (type == null) {
+      return;
+    }
+
+    if (type is FunctionType) {
+      _addReferencedType(references, type.returnType);
+      for (final parameter in type.parameters) {
+        _addReferencedType(references, parameter.type);
+      }
+      return;
+    }
+
+    final elementName = type.element?.name;
+    _addReferencedTypeByName(references, elementName);
+
+    if (type is ParameterizedType) {
+      for (final typeArgument in type.typeArguments) {
+        _addReferencedType(references, typeArgument);
+      }
+    }
+  }
+
+  void _addReferencedTypeByName(Set<String> references, String? name) {
+    if (name == null) {
+      return;
+    }
+
+    final cleaned = name.trim();
+    if (_isIgnoredReferencedType(cleaned) || cleaned.startsWith('_')) {
+      return;
+    }
+
+    references.add(cleaned);
+  }
+
+  bool _isIgnoredReferencedType(String name) {
+    const ignoredNames = {
+      'bool',
+      'double',
+      'dynamic',
+      'Function',
+      'Future',
+      'FutureOr',
+      'int',
+      'InvalidType',
+      'Iterable',
+      'List',
+      'Map',
+      'Never',
+      'Null',
+      'num',
+      'Object',
+      'Set',
+      'String',
+      'void',
+      'T',
+      'S',
+      'U',
+      'V',
+      'K',
+      'R',
+    };
+
+    return ignoredNames.contains(name);
+  }
+
   /// Gets the type string representation
   String _getTypeString(type) {
     final typeString = type.getDisplayString(withNullability: true);
@@ -875,9 +751,8 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
     }
   }
 
-  /// Checks if a type is a callback/function
-  /// Also accepts optional paramName to detect callbacks by naming convention
-  bool _isCallback(type, [String? paramName]) {
+  /// Checks if a type is a callback/function.
+  bool _isCallback(type) {
     // Check if it's a direct FunctionType
     if (type.runtimeType.toString().contains('FunctionType')) {
       return true;
@@ -885,13 +760,6 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
 
     // Check for callback typedef names (e.g., VoidCallback, ValueChanged)
     final typeString = _getTypeString(type);
-
-    // If type is InvalidType but parameter name suggests a callback, use name-based detection
-    if (paramName != null && (typeString == 'InvalidType' || typeString.contains('InvalidType'))) {
-      if (_isCallbackByName(paramName)) {
-        return true;
-      }
-    }
 
     final callbackTypeNames = [
       // Basic callbacks
@@ -959,50 +827,6 @@ class DefinitionVisitor extends RecursiveAstVisitor<void> {
       }
     }
     return false;
-  }
-
-  /// Checks if a parameter name follows callback naming conventions
-  /// Common Flutter patterns: onXxx, xxxCallback, xxxListener, xxxHandler, builder
-  bool _isCallbackByName(String paramName) {
-    // Common callback prefixes in Flutter
-    if (paramName.startsWith('on')) {
-      // onTap, onPressed, onChanged, onTapDown, onLongPress, etc.
-      return true;
-    }
-
-    // Common callback suffixes
-    final lowerName = paramName.toLowerCase();
-    if (lowerName.endsWith('callback') ||
-        lowerName.endsWith('listener') ||
-        lowerName.endsWith('handler') ||
-        lowerName.endsWith('builder') ||
-        lowerName.endsWith('factory')) {
-      return true;
-    }
-
-    // Specific known callback parameter names
-    final knownCallbackNames = {
-      'builder',
-      'itemBuilder',
-      'separatorBuilder',
-      'childBuilder',
-      'headerBuilder',
-      'footerBuilder',
-      'layoutBuilder',
-      'transitionBuilder',
-      'routeBuilder',
-      'pageBuilder',
-      'errorBuilder',
-      'loadingBuilder',
-      'placeholderBuilder',
-      'emptyBuilder',
-      'validator',
-      'onSaved',
-      'onFieldSubmitted',
-      'inputFormatters',
-    };
-
-    return knownCallbackNames.contains(paramName);
   }
 
   /// Gets type arguments for generic types

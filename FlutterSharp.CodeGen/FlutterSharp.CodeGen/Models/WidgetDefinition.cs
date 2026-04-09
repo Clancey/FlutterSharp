@@ -99,6 +99,31 @@ namespace FlutterSharp.CodeGen.Models
 		public Dictionary<string, object>? Metadata { get; init; }
 
 		/// <summary>
+		/// Gets the referenced public type names used by this widget surface.
+		/// </summary>
+		public List<string> ReferencedTypes { get; init; } = new();
+
+		/// <summary>
+		/// Gets a value indicating whether to generate the C# widget API for this widget.
+		/// </summary>
+		public bool GenerateCSharpWidget { get; init; } = true;
+
+		/// <summary>
+		/// Gets a value indicating whether to generate the C# struct for this widget.
+		/// </summary>
+		public bool GenerateCSharpStruct { get; init; } = true;
+
+		/// <summary>
+		/// Gets a value indicating whether to generate the Dart struct for this widget.
+		/// </summary>
+		public bool GenerateDartStruct { get; init; } = true;
+
+		/// <summary>
+		/// Gets a value indicating whether to generate the Dart parser for this widget.
+		/// </summary>
+		public bool GenerateDartParser { get; init; } = true;
+
+		/// <summary>
 		/// Gets the Flutter package version this widget is from.
 		/// </summary>
 		public string? FlutterVersion { get; init; }

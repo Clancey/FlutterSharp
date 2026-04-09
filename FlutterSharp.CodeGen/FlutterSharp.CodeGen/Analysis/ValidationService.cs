@@ -94,6 +94,13 @@ public class ValidationService
 			ValidateEnum(enumDef, result);
 		}
 
+		// Validate typedefs
+		_logInfo?.Invoke($"Validating {package.Typedefs.Count} typedefs...");
+		foreach (var typedef in package.Typedefs)
+		{
+			ValidateTypedef(typedef, result);
+		}
+
 		// Check for duplicate names
 		ValidateDuplicateNames(package, result);
 
@@ -222,6 +229,40 @@ public class ValidationService
 	}
 
 	/// <summary>
+	/// Validates a single typedef definition.
+	/// </summary>
+	private void ValidateTypedef(TypedefDefinition typedefDefinition, ValidationResult result)
+	{
+		var context = $"Typedef '{typedefDefinition.Name}'";
+
+		if (string.IsNullOrWhiteSpace(typedefDefinition.Name))
+		{
+			result.Errors.Add(new ValidationError(context, "Typedef name is empty"));
+			return;
+		}
+
+		if (!IsValidCSharpIdentifier(typedefDefinition.Name))
+		{
+			result.Errors.Add(new ValidationError(context, $"Typedef name '{typedefDefinition.Name}' is not a valid C# identifier"));
+		}
+
+		if (CSharpReservedKeywords.Contains(typedefDefinition.Name))
+		{
+			result.Warnings.Add(new ValidationWarning(context, $"Typedef name '{typedefDefinition.Name}' is a C# reserved keyword"));
+		}
+
+		if (string.IsNullOrWhiteSpace(typedefDefinition.AliasedType))
+		{
+			result.Warnings.Add(new ValidationWarning(context, "Typedef aliased type is empty"));
+		}
+
+		foreach (var parameter in typedefDefinition.Parameters)
+		{
+			ValidateProperty(parameter, context, result);
+		}
+	}
+
+	/// <summary>
 	/// Validates a single enum definition.
 	/// </summary>
 	private void ValidateEnum(EnumDefinition enumDef, ValidationResult result)
@@ -326,12 +367,27 @@ public class ValidationService
 			}
 		}
 
+		// Check for duplicate typedef names
+		var typedefNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+		foreach (var typedef in package.Typedefs)
+		{
+			if (!typedefNames.Add(typedef.Name))
+			{
+				result.Errors.Add(new ValidationError($"Typedef '{typedef.Name}'", "Duplicate typedef name (case-insensitive)"));
+			}
+		}
+
 		// Check for widget/enum name collisions
 		foreach (var widget in package.Widgets)
 		{
 			if (enumNames.Contains(widget.Name))
 			{
 				result.Warnings.Add(new ValidationWarning($"Widget '{widget.Name}'", "Widget name conflicts with enum name"));
+			}
+
+			if (typedefNames.Contains(widget.Name))
+			{
+				result.Warnings.Add(new ValidationWarning($"Widget '{widget.Name}'", "Widget name conflicts with typedef name"));
 			}
 		}
 	}

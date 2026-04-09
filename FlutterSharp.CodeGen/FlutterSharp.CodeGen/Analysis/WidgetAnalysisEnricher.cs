@@ -15,6 +15,7 @@ namespace FlutterSharp.CodeGen.Analysis
 		private readonly DartToCSharpMapper _dartToCSharpMapper;
 		private readonly CSharpToDartFfiMapper _csharpToDartMapper;
 		private readonly Action<string>? _logWarning;
+		private readonly HashSet<string> _dartStructTypes;
 
 		// Reserved field names from base structs
 		private static readonly HashSet<string> ReservedFieldNames = new(StringComparer.OrdinalIgnoreCase)
@@ -77,11 +78,19 @@ namespace FlutterSharp.CodeGen.Analysis
 			"Type", "System.Type"
 		};
 
-		public WidgetAnalysisEnricher(DartToCSharpMapper dartToCSharpMapper, CSharpToDartFfiMapper csharpToDartMapper, Action<string>? logWarning = null)
+		public WidgetAnalysisEnricher(
+			DartToCSharpMapper dartToCSharpMapper,
+			CSharpToDartFfiMapper csharpToDartMapper,
+			Action<string>? logWarning = null,
+			IEnumerable<string>? dartStructTypes = null)
 		{
 			_dartToCSharpMapper = dartToCSharpMapper ?? throw new ArgumentNullException(nameof(dartToCSharpMapper));
 			_csharpToDartMapper = csharpToDartMapper ?? throw new ArgumentNullException(nameof(csharpToDartMapper));
 			_logWarning = logWarning;
+			_dartStructTypes = new HashSet<string>(dartStructTypes ?? Enumerable.Empty<string>(), StringComparer.OrdinalIgnoreCase)
+			{
+				"Widget"
+			};
 		}
 
 		/// <summary>
@@ -765,20 +774,7 @@ namespace FlutterSharp.CodeGen.Analysis
 			// Remove nullable marker and generic parameters for matching
 			var baseType = dartType.TrimEnd('?').Split('<')[0].Trim();
 
-			// Check if this type should have its own struct
-			// These are Flutter/Dart types that have their own struct definitions
-			var knownStructTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-			{
-				"Widget", "Alignment", "AlignmentGeometry", "EdgeInsets", "EdgeInsetsGeometry",
-				"BorderRadius", "BorderRadiusGeometry", "BoxDecoration", "Decoration",
-				"BoxConstraints", "Constraints", "TextStyle", "Gradient", "ImageProvider", "Size", "Offset",
-				"Rect", "Radius", "Matrix4", "Key", "BuildContext", "ThemeData", "IconData",
-				"Color", "MaterialColor", "MaterialStateProperty", "Duration", "DateTime",
-				"Animation", "AnimationController", "Curve", "ParametricCurve", "FocusNode", "ScrollController",
-				"ScrollPhysics", "TextEditingController", "GlobalKey", "State", "BoxBorder", "Border"
-			};
-
-			if (knownStructTypes.Contains(baseType))
+			if (_dartStructTypes.Contains(baseType))
 			{
 				return $"Pointer<{baseType}Struct>";
 			}
