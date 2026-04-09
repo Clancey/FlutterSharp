@@ -1,0 +1,43 @@
+{
+  "types": [
+    {
+      "name": "Duration",
+      "namespace": "dart:core",
+      "documentation": "A span of time, such as 27 days, 4 hours, 12 minutes, and 3 seconds.\n\nA Duration represents a difference from one point in time to another. The\nduration may be \"negative\" if the difference is from a later time to an\nearlier.\n\nDurations are context independent. For example, a duration of 2 days is\nalways 48 hours, even when it is added to a DateTime just when the\ntime zone is about to do a daylight-savings switch. (See DateTime.add).\n\nDespite the same name, a Duration object does not implement \"Durations\"\nas specified by ISO 8601. In particular, a duration object does not keep\ntrack of the individually provided members (such as \"days\" or \"hours\"), but\nonly uses these arguments to compute the length of the corresponding time\ninterval.\n\nTo create a new Duration object, use this class's single constructor\ngiving the appropriate arguments:\n```dart\nconst fastestMarathon = Duration(hours: 2, minutes: 3, seconds: 2);\n```\n\nThe Duration is the sum of all individual parts.\nThis means that individual parts can be larger than the next-bigger unit.\nFor example, [inMinutes] can be greater than 59.\n```dart\nconst aLongWeekend = Duration(days: 3);\nassert(aLongWeekend.inHours == 72);\n```",
+      "properties": [
+        {
+          "name": "inMicroseconds",
+          "dartType": "int",
+          "csharpType": "long",
+          "isNullable": false,
+          "documentation": "The number of whole microseconds spanned by this Duration."
+        }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "dart:core"
+    },
+    {
+      "name": "DateTime",
+      "namespace": "dart:core",
+      "documentation": "An instant in time, such as July 20, 1969, 8:18pm GMT.\n\nDateTimes can represent time values that are at a distance of at most\n100,000,000 days from epoch (1970-01-01 UTC): -271821-04-20 to 275760-09-13.\n\nCreate a DateTime object by using one of the constructors\nor by parsing a correctly formatted string,\nwhich complies with a subset of ISO 8601.\n**Note:** hours are specified between 0 and 23,\nas in a 24-hour clock.\n\nFor example:\n```dart\nfinal now = DateTime.now();\nfinal berlinWallFell = DateTime.utc(1989, 11, 9);\nfinal moonLanding = DateTime.parse('1969-07-20 20:18:04Z'); // 8:18pm\n```",
+      "properties": [
+        {
+          "name": "millisecondsSinceEpoch",
+          "dartType": "int",
+          "csharpType": "long",
+          "isNullable": false,
+          "documentation": "The number of milliseconds since the \"Unix epoch\" 1970-01-01T00:00:00Z (UTC)."
+        },
+        {
+          "name": "isUtc",
+          "dartType": "bool",
+          "csharpType": "bool",
+          "isNullable": false,
+          "documentation": "True if this DateTime is set to UTC time."
+        }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "dart:core"
+    }
+  ]
+}

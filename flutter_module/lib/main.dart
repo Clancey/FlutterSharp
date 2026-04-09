@@ -12,21 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:async';
-import 'dart:io' show Platform;
-import 'dart:typed_data';
-
-import 'package:flutter/foundation.dart'
-    show debugDefaultTargetPlatformOverride;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'mauiRenderer.dart';
-import 'dart:convert';
 
 void main() {
   // See https://github.com/flutter/flutter/wiki/Desktop-shells#target-platform-override
-  debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  // Removed: debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  // This was causing issues on iOS
 
   runApp(new MyApp());
 }

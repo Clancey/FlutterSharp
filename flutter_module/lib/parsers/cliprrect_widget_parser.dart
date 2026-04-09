@@ -1,13 +1,12 @@
 import '../flutter_sharp_structs.dart';
-import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/widgets.dart';
 
 class ClipRRectWidgetParser extends WidgetParser {
   @override
-   Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-     return null;
-     //TODO: implement
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+    return null;
+    //TODO: implement
     // var map = Pointer<AspectRatioStruct>.fromAddress(fos.handle.address).ref;
     // var radius = map['borderRadius'].toString().split(",");
     // double topLeft = double.parse(radius[0]);

@@ -1,12 +1,10 @@
 import '../flutter_sharp_structs.dart';
-import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/material.dart';
-import 'drop_cap_text.dart';
 
 class DropCapTextParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     return null;
     //TODO: Implement
     // var map = Pointer<ContainerStruct>.fromAddress(fos.handle.address).ref;

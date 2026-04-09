@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:FlutterSample.MAUI"
+       x:Class="FlutterSample.MAUI.AppShell"
+       Title="FlutterSharp Sample">
+
+    <Shell.FlyoutBehavior>
+        <OnPlatform x:TypeArguments="FlyoutBehavior">
+            <On Platform="iOS" Value="Disabled" />
+            <On Platform="Android" Value="Disabled" />
+        </OnPlatform>
+    </Shell.FlyoutBehavior>
+
+    <!-- Tab-based navigation showing different Flutter widget demos -->
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage" />
+
+        <ShellContent
+            Title="Counter"
+            ContentTemplate="{DataTemplate local:CounterPage}"
+            Route="CounterPage" />
+
+        <ShellContent
+            Title="List"
+            ContentTemplate="{DataTemplate local:ListDemoPage}"
+            Route="ListDemoPage" />
+    </TabBar>
+
+</Shell>

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // Returns an icon by examining the name for the format ICON_LIBRARY.ICON_NAME and if not, looks for a Material icon of the ICON_NAME
 // For example fa.fiveHundredPx returns the icon named fiveHundredPx in the FontAwesome lib, if it didn't exist, it'd try to return the material icon named fiveHundredPx, otherwise you get null.
 // If you don't use the dot notation described it will attempt to get you an icon favoring the Material icon set using getIconGuessFavorMaterial
-IconData getIconUsingPrefix({String name}) {
+IconData? getIconUsingPrefix({required String name}) {
   final List<String> split = name.split('.');
 
   if (split.length > 1) {
@@ -23,30 +23,30 @@ IconData getIconUsingPrefix({String name}) {
 }
 
 // Returns an icon named in name favoring Font Awesome
-IconData getIconGuessFavorFA({String name}) {
+IconData? getIconGuessFavorFA({required String name}) {
   if (FontAwesomeIconsMap[name] != null) {
-    return FontAwesomeIconsMap[name];
+    return FontAwesomeIconsMap[name]!;
   } else {
     return IconsMap[name];
   }
 }
 
 // Returns an icon named in name favoring Material
-IconData getIconGuessFavorMaterial({String name}) {
+IconData? getIconGuessFavorMaterial({required String name}) {
   if (IconsMap[name] != null) {
-    return IconsMap[name];
+    return IconsMap[name]!;
   } else {
     return FontAwesomeIconsMap[name];
   }
 }
 
 // Kinda self explanatory, no?
-IconData getMaterialIcon({String name}) {
+IconData? getMaterialIcon({required String name}) {
   return IconsMap[name];
 }
 
 // Kinda self explanatory, no?
-IconData getFontAwesomeIcon({String name}) {
+IconData? getFontAwesomeIcon({required String name}) {
   return FontAwesomeIconsMap[name];
 }
 

@@ -1,0 +1,137 @@
+{
+  "types": [
+    {
+      "name": "Size",
+      "namespace": "dart:ui",
+      "documentation": "Holds a 2D floating-point size.\n\nYou can think of this as an [Offset] from the origin.",
+      "properties": [
+        {
+          "name": "width",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The horizontal extent of this size.",
+          "isRequired": false,
+          "isNullable": false
+        },
+        {
+          "name": "height",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The vertical extent of this size.",
+          "isRequired": false,
+          "isNullable": false
+        }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "dart:ui"
+    },
+    {
+      "name": "Offset",
+      "namespace": "dart:ui",
+      "documentation": "An immutable 2D floating-point offset.\n\nAn Offset can be used to represent a position relative to the origin, a distance between two points, or a velocity.",
+      "properties": [
+        {
+          "name": "dx",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The horizontal component.",
+          "isRequired": false,
+          "isNullable": false
+        },
+        {
+          "name": "dy",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The vertical component.",
+          "isRequired": false,
+          "isNullable": false
+        }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "dart:ui"
+    },
+    {
+      "name": "Rect",
+      "namespace": "dart:ui",
+      "documentation": "An immutable 2D floating-point rectangle.\n\nA Rect can be created with one of several methods:\n\n* [Rect.fromLTRB], which specifies the left, top, right, and bottom edges\n* [Rect.fromLTWH], which specifies the left, top, width, and height\n* [Rect.fromCircle], which specifies a circular bounding box\n* [Rect.fromCenter], which specifies a center point, width, and height\n* [Rect.fromPoints], which specifies two opposite corners",
+      "properties": [
+        {
+          "name": "left",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The offset of the left edge of this rectangle from the x axis.",
+          "isRequired": false,
+          "isNullable": false
+        },
+        {
+          "name": "top",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The offset of the top edge of this rectangle from the y axis.",
+          "isRequired": false,
+          "isNullable": false
+        },
+        {
+          "name": "right",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The offset of the right edge of this rectangle from the x axis.",
+          "isRequired": false,
+          "isNullable": false
+        },
+        {
+          "name": "bottom",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The offset of the bottom edge of this rectangle from the y axis.",
+          "isRequired": false,
+          "isNullable": false
+        }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "dart:ui"
+    },
+    {
+      "name": "Radius",
+      "namespace": "dart:ui",
+      "documentation": "A radius for either circular or elliptical shapes.",
+      "properties": [
+        {
+          "name": "x",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The radius value on the horizontal axis.",
+          "isRequired": false,
+          "isNullable": false
+        },
+        {
+          "name": "y",
+          "dartType": "double",
+          "csharpType": "double",
+          "documentation": "The radius value on the vertical axis.",
+          "isRequired": false,
+          "isNullable": false
+        }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "dart:ui"
+    },
+    {
+      "name": "Matrix4",
+      "namespace": "package:vector_math/vector_math_64.dart",
+      "documentation": "4D Matrix. Values are stored in column major order.",
+      "properties": [
+        {
+          "name": "storage",
+          "dartType": "Pointer<Double>",
+          "csharpType": "double[]",
+          "documentation": "The components of the matrix stored as a 16-element array in column-major order.",
+          "isRequired": false,
+          "isNullable": false
+        }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "package:vector_math/vector_math_64.dart"
+    }
+  ]
+}

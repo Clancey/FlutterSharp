@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Runtime configuration settings to ensure runtimeconfig.json generation -->
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+
+    <!-- Roll forward to latest patch version for .NET 10.0 -->
+    <RollForward>LatestPatch</RollForward>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Scriban" Version="5.9.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    <PackageReference Include="YamlDotNet" Version="13.7.1" />
+  </ItemGroup>
+
+  <!-- Exclude generated C# files from compilation -->
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <EmbeddedResource Remove="Generated\**" />
+    <None Remove="Generated\**" />
+  </ItemGroup>
+
+  <!-- Ensure runtimeconfig.template.json is copied to output -->
+  <ItemGroup>
+    <None Update="FlutterSharp.CodeGen.runtimeconfig.template.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- Copy Templates folder to output directory -->
+  <ItemGroup>
+    <None Update="Templates\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ManualTypes\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- Generate runtimeconfig.json from template during build -->
+  <Target Name="EnsureRuntimeConfig" AfterTargets="Build">
+    <PropertyGroup>
+      <RuntimeConfigPath>$(OutputPath)$(AssemblyName).runtimeconfig.json</RuntimeConfigPath>
+      <RuntimeConfigTemplatePath>$(ProjectDir)$(AssemblyName).runtimeconfig.template.json</RuntimeConfigTemplatePath>
+    </PropertyGroup>
+    <Copy SourceFiles="$(RuntimeConfigTemplatePath)" DestinationFiles="$(RuntimeConfigPath)" Condition="Exists('$(RuntimeConfigTemplatePath)') And !Exists('$(RuntimeConfigPath)')" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net6.0-ios;net6.0-android;</TargetFrameworks>
+		<TargetFrameworks>net10.0;net10.0-ios;net10.0-maccatalyst;net10.0-windows10.0.19041.0</TargetFrameworks>
 		<RootNamespace>Flutter</RootNamespace>
 		<AssemblyName>Flutter</AssemblyName>
 		<IsPackable>false</IsPackable>
@@ -10,6 +10,11 @@
 		<UseMauiEssentials>true</UseMauiEssentials>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<NoBindingEmbedding>true</NoBindingEmbedding>
+		<!-- Enable Windows targeting when building on non-Windows -->
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 	<PropertyGroup>
 		<PackageId>FlutterSharp</PackageId>
@@ -25,6 +30,7 @@
 		<Folder Include="Platforms\iOS\Binding\" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
 	</ItemGroup>
 	<ItemGroup Condition="$(IsAndroid)  == true">
 		<TransformFile Include="Platforms\Android\Transforms\Metadata.xml" />
@@ -55,6 +61,37 @@
 	<ItemGroup>
 		<Compile Remove="Platforms\Android\Transforms\*" />
 		<Compile Remove="Platforms\iOS\Binding\*" />
+	</ItemGroup>
+	<!-- MAUI files only for platform-specific targets -->
+	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+		<Compile Remove="MAUI\**\*.cs" />
+		<Compile Remove="Platforms\iOS\FlutterViewHandler.iOS.cs" />
+		<Compile Remove="Platforms\Windows\**\*.cs" />
+		<Compile Remove="Platforms\macOS\**\*.cs" />
+	</ItemGroup>
+	<!-- Exclude iOS platform files from non-iOS builds -->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'ios'">
+		<Compile Remove="Platforms\iOS\**\*.cs" />
+	</ItemGroup>
+	<!-- Exclude Windows platform files from non-Windows builds -->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'windows'">
+		<Compile Remove="Platforms\Windows\**\*.cs" />
+	</ItemGroup>
+	<!-- Exclude macOS platform files from non-Mac Catalyst builds -->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) != 'maccatalyst'">
+		<Compile Remove="Platforms\macOS\**\*.cs" />
+	</ItemGroup>
+	<!-- Include MAUI Controls package for iOS -->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.1" />
+	</ItemGroup>
+	<!-- Include MAUI Controls package for Mac Catalyst -->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.1" />
+	</ItemGroup>
+	<!-- Include MAUI Controls package for Windows -->
+	<ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.1" />
 	</ItemGroup>
 	<ProjectExtensions>
 		<MonoDevelop>

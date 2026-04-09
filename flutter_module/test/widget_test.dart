@@ -1,30 +1,54 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flutter_module/main.dart';
+import 'package:flutter_module/mauiRenderer.dart' show methodChannel;
+import 'package:flutter_module/maui_flutter.dart' show raiseMauiEvent;
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  TestWidgetsFlutterBinding.ensureInitialized();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  final calls = <MethodCall>[];
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  setUp(() {
+    calls.clear();
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(methodChannel, (call) async {
+      calls.add(call);
+      return null;
+    });
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  tearDown(() {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(methodChannel, null);
+  });
+
+  test('action callbacks are routed through HandleAction with JSON payload', () async {
+    await raiseMauiEvent('action_42', 'invoke', {'value': true});
+
+    expect(calls, hasLength(1));
+    expect(calls.single.method, 'HandleAction');
+    expect(calls.single.arguments, isA<String>());
+
+    final payload =
+        json.decode(calls.single.arguments as String) as Map<String, dynamic>;
+    expect(payload['actionId'], 'action_42');
+    expect(payload['widgetType'], 'Unknown');
+    expect(payload['value'], true);
+  });
+
+  test('non-action events keep using the legacy Event envelope', () async {
+    await raiseMauiEvent('widget-1', 'OnChange', 'hello');
+
+    expect(calls, hasLength(1));
+    expect(calls.single.method, 'Event');
+    expect(calls.single.arguments, isA<String>());
+
+    final payload =
+        json.decode(calls.single.arguments as String) as Map<String, dynamic>;
+    expect(payload['componentId'], 'widget-1');
+    expect(payload['eventName'], 'OnChange');
+    expect(payload['data'], 'hello');
   });
 }

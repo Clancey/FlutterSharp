@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flutter="clr-namespace:Flutter.MAUI;assembly=Flutter"
+             x:Class="FlutterSample.MAUI.MainPage"
+             Title="FlutterSharp Demo">
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- MAUI header showing hybrid nature -->
+        <VerticalStackLayout Grid.Row="0" Padding="10" BackgroundColor="{StaticResource Primary}">
+            <Label Text="FlutterSharp MAUI Sample"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+            <Label Text="MAUI ContentPage hosting a FlutterView"
+                   FontSize="14"
+                   TextColor="White"
+                   Opacity="0.8"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- FlutterView hosting the Flutter widget -->
+        <flutter:FlutterView x:Name="flutterView"
+                            Grid.Row="1"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill" />
+    </Grid>
+
+</ContentPage>

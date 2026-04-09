@@ -1,0 +1,22 @@
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  errors:
+    # Treat missing required parameters as errors
+    missing_required_param: error
+    # Treat missing return types as warnings
+    always_declare_return_types: warning
+  exclude:
+    - '**/.dart_tool/**'
+    - '**/build/**'
+    - '**/generated/**'
+
+linter:
+  rules:
+    # Core rules
+    - always_declare_return_types
+    - prefer_const_constructors
+    - prefer_final_fields
+    - unnecessary_const
+    - unnecessary_new
