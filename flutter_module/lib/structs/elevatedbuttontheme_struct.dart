@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// Overrides the default [ButtonStyle] of its [ElevatedButton] descendants.
 ///

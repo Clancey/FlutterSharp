@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/defaulttextheightbehavior_struct.dart';
+import '../structs/defaulttextheightbehavior_struct.dart';
 
 /// The [TextHeightBehavior] that will apply to descendant [Text] and [EditableText]
 /// widgets which have not explicitly set [Text.textHeightBehavior].

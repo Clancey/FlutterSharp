@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'animation_struct.dart';
 
 /// Animated version of an [Align] that animates its [Align.alignment] property.

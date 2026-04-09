@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// An inherited widget that defines color and border parameters for
 /// [ToggleButtons] in this widget's subtree.

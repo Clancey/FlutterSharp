@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/coloredbox_struct.dart';
+import '../structs/coloredbox_struct.dart';
 
 /// A widget that paints its area with a specified [Color] and then draws its
 /// child on top of that color.

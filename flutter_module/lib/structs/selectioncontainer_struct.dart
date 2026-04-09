@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// A container that handles [SelectionEvent]s for the [Selectable]s in
 /// the subtree.

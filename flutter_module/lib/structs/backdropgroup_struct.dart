@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// A widget that establishes a shared backdrop layer for all child [BackdropFilter]
 /// widgets that opt into using it.

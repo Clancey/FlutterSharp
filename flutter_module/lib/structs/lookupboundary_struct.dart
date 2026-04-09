@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// A lookup boundary controls what entities are visible to descendants of the
 /// boundary via the static lookup methods provided by the boundary.

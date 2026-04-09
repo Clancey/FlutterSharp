@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// A button in the style of the Mac context menu buttons.
 /// FFI struct representation of CupertinoDesktopTextSelectionToolbarButton widget.

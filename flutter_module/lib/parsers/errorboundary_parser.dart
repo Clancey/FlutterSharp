@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import '../flutter_sharp_structs.dart';
 import '../maui_flutter.dart';
 import '../error_overlay.dart';
-import '../generated/structs/errorboundary_struct.dart';
+import '../structs/errorboundary_struct.dart';
 
 /// Parser for the ErrorBoundary widget.
 class ErrorBoundaryParser extends WidgetParser {

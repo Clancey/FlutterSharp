@@ -5,7 +5,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import '../flutter_sharp_structs.dart';
-import '../generated/generated_utility_parsers.dart' as generated_parsers;
+import '../generated_utility_parsers.dart' as generated_parsers;
 import '../utils.dart';
 import '../maui_flutter.dart';
 

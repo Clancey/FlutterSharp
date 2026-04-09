@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'boxconstraints_struct.dart';
 import 'edgeinsetsgeometry_struct.dart';
 import 'textstyle_struct.dart';

@@ -6,8 +6,8 @@
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 import 'animationcontroller_struct.dart';
-import '../generated/structs/boxconstraints_struct.dart';
-import '../generated/structs/size_struct.dart';
+import '../structs/boxconstraints_struct.dart';
+import '../structs/size_struct.dart';
 
 /// A Material Design bottom sheet.
 ///

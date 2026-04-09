@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
-import 'package:flutter_module/generated/generated_utility_parsers.dart';
+import 'package:flutter_module/generated_utility_parsers.dart';
 
 import '../utils.dart' as utils;
 import '../maui_flutter.dart';

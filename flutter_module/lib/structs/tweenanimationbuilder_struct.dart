@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'curve_struct.dart';
 
 /// [Widget] builder that animates a property of a [Widget] to a target value

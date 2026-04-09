@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// A button in the style of the iOS text selection toolbar buttons.
 /// FFI struct representation of CupertinoTextSelectionToolbarButton widget.

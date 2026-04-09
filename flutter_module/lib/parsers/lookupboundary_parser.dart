@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/lookupboundary_struct.dart';
+import '../structs/lookupboundary_struct.dart';
 
 /// A lookup boundary controls what entities are visible to descendants of the
 /// boundary via the static lookup methods provided by the boundary.

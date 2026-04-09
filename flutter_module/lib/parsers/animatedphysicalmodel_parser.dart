@@ -7,9 +7,9 @@ import 'dart:ffi' hide Size;
 import 'package:ffi/ffi.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
-import '../generated/generated_utility_parsers.dart';
+import '../generated_utility_parsers.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/animatedphysicalmodel_struct.dart';
+import '../structs/animatedphysicalmodel_struct.dart';
 
 /// Animated version of [PhysicalModel].
 ///

@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/ignorebaseline_struct.dart';
+import '../structs/ignorebaseline_struct.dart';
 
 /// A widget that causes the parent to ignore the [child] for the purposes
 /// of baseline alignment.

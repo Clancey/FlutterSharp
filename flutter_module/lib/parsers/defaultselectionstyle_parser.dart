@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/defaultselectionstyle_struct.dart';
+import '../structs/defaultselectionstyle_struct.dart';
 
 /// The selection style to apply to descendant [EditableText] widgets which
 /// don't have an explicit style.

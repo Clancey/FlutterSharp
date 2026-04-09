@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'textstyle_struct.dart';
 
 /// The text style to apply to descendant [Text] widgets which don't have an

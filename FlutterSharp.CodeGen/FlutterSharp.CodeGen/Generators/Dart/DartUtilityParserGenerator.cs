@@ -58,7 +58,7 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		sb.AppendLine("import 'package:flutter/rendering.dart';  // For PlatformViewHitTestBehavior, PointerSignalEventListener, etc.");
 		sb.AppendLine("import 'package:flutter/services.dart';  // For PointerEnterEventListener, PlatformViewCreatedCallback, etc.");
 		sb.AppendLine("import 'package:flutter_module/mauiRenderer.dart' show invokeHandleAction;  // For callback invocation");
-		sb.AppendLine("import '../flutter_sharp_structs.dart';");
+		sb.AppendLine("import 'flutter_sharp_structs.dart';");
 		if (existingParsers.Count > 0)
 		{
 			var manualParsers = existingParsers.OrderBy(p => p, StringComparer.Ordinal).ToList();
@@ -67,9 +67,9 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 				.ToList();
 			if (importedManualParsers.Count > 0)
 			{
-				sb.AppendLine($"import '../utils.dart' show {string.Join(", ", importedManualParsers)};");
+				sb.AppendLine($"import 'utils.dart' show {string.Join(", ", importedManualParsers)};");
 			}
-			sb.AppendLine($"export '../utils.dart' show {string.Join(", ", manualParsers)};");
+			sb.AppendLine($"export 'utils.dart' show {string.Join(", ", manualParsers)};");
 		}
 		sb.AppendLine();
 

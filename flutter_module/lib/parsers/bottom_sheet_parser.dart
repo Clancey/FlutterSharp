@@ -5,8 +5,8 @@
 import 'dart:ffi' hide Size;
 import 'package:flutter/material.dart';
 import '../flutter_sharp_structs.dart';
-import '../generated/structs/bottom_sheet_struct.dart';
-import '../generated/generated_utility_parsers.dart';
+import '../structs/bottom_sheet_struct.dart';
+import '../generated_utility_parsers.dart';
 import '../maui_flutter.dart';
 import '../utils.dart' hide parseBoxConstraints;
 

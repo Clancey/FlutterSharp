@@ -7,9 +7,9 @@ import 'dart:ffi' hide Size;
 import 'package:ffi/ffi.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
-import '../generated/generated_utility_parsers.dart';
+import '../generated_utility_parsers.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/animatedrotation_struct.dart';
+import '../structs/animatedrotation_struct.dart';
 
 /// Animated version of [Transform.rotate] which automatically transitions the child's
 /// rotation over a given duration whenever the given rotation changes.

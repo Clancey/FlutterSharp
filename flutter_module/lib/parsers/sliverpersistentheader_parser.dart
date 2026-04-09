@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/sliverpersistentheader_struct.dart';
+import '../structs/sliverpersistentheader_struct.dart';
 
 /// A sliver whose size varies when the sliver is scrolled to the edge
 /// of the viewport opposite the sliver's [GrowthDirection].

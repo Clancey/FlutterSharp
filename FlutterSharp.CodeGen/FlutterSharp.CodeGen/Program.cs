@@ -453,6 +453,13 @@ internal class Program
 		// Initialize enricher (new architecture)
 		var enricher = new WidgetAnalysisEnricher(dartToCSharpMapper, csharpToDartMapper, LogWarning);
 
+		var csharpWidgetsDir = Path.Combine(outputCSharp, "Widgets");
+		var csharpStructsDir = Path.Combine(outputCSharp, "Structs");
+		var csharpEnumsDir = Path.Combine(outputCSharp, "Enums");
+		var dartStructsDir = Path.Combine(outputDart, "structs");
+		var dartParsersDir = Path.Combine(outputDart, "parsers");
+		var dartEnumsDir = Path.Combine(outputDart, "enums");
+
 		// Pass template paths to generators
 		var csharpWidgetTemplatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "CSharpWidget.scriban");
 		var csharpStructTemplatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "CSharpStruct.scriban");
@@ -460,7 +467,7 @@ internal class Program
 		var csharpStructGenerator = new CSharpStructGenerator(dartToCSharpMapper, csharpStructTemplatePath, LogWarning);
 		var csharpEnumGenerator = new CSharpEnumGenerator(dartToCSharpMapper);
 		var dartStructGenerator = new DartStructGenerator(csharpToDartMapper);
-		var dartParserGenerator = new DartParserGenerator(csharpToDartMapper);
+		var dartParserGenerator = new DartParserGenerator(csharpToDartMapper, dartStructsDir);
 		var dartParserImportsGenerator = new DartParserImportsGenerator();
 		var dartUtilityParserGenerator = new DartUtilityParserGenerator(csharpToDartMapper);
 		var dartEnumGenerator = new DartEnumGenerator();
@@ -468,13 +475,6 @@ internal class Program
 		// Create output directories
 		Directory.CreateDirectory(outputCSharp);
 		Directory.CreateDirectory(outputDart);
-
-		var csharpWidgetsDir = Path.Combine(outputCSharp, "Widgets");
-		var csharpStructsDir = Path.Combine(outputCSharp, "Structs");
-		var csharpEnumsDir = Path.Combine(outputCSharp, "Enums");
-		var dartStructsDir = Path.Combine(outputDart, "structs");
-		var dartParsersDir = Path.Combine(outputDart, "parsers");
-		var dartEnumsDir = Path.Combine(outputDart, "enums");
 
 		Directory.CreateDirectory(csharpWidgetsDir);
 		Directory.CreateDirectory(csharpStructsDir);
@@ -888,7 +888,7 @@ internal class Program
 		LogInfo("Generating utility parser functions...");
 
 		// Read existing parsers from utils.dart
-		var utilsDartPath = "/Users/clancey/Projects/FlutterSharp/flutter_module/lib/utils.dart";
+		var utilsDartPath = Path.Combine(outputDart, "utils.dart");
 		var manualUtilityParsers = new HashSet<string>(StringComparer.Ordinal)
 		{
 			"parseBlendMode",

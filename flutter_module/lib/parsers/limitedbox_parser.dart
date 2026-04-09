@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/limitedbox_struct.dart';
+import '../structs/limitedbox_struct.dart';
 
 /// A box that limits its size only when it's unconstrained.
 ///

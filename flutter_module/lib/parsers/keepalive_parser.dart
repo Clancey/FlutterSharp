@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/keepalive_struct.dart';
+import '../structs/keepalive_struct.dart';
 
 /// Mark a child as needing to stay alive even when it's in a lazy list that
 /// would otherwise remove it.

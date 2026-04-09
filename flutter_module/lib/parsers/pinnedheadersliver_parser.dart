@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/pinnedheadersliver_struct.dart';
+import '../structs/pinnedheadersliver_struct.dart';
 
 /// A sliver that keeps its Widget child at the top of the a [CustomScrollView].
 ///

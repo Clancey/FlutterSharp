@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// A wrapper widget that will recognize the start of a drag on the wrapped
 /// widget by a [PointerDownEvent], and immediately initiate dragging the

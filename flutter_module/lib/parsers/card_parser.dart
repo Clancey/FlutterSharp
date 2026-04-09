@@ -5,7 +5,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import '../flutter_sharp_structs.dart';
-import '../generated/structs/card_struct.dart';
+import '../structs/card_struct.dart';
 import '../maui_flutter.dart';
 
 /// Parser for Material Design Card widget.

@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/placeholder_struct.dart';
+import '../structs/placeholder_struct.dart';
 
 /// A widget that draws a box that represents where other widgets will one day
 /// be added.

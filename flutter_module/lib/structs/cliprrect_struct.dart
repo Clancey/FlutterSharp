@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'borderradiusgeometry_struct.dart';
 
 /// A widget that clips its child using a rounded rectangle.

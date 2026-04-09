@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// A [TapRegion] that adds its children to the tap region group for widgets
 /// based on the [EditableText] text editing widget, such as [TextField] and

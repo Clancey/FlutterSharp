@@ -5,7 +5,7 @@
 import 'dart:ffi' hide Size;
 import 'package:flutter/material.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
-import '../generated/structs/alert_dialog_struct.dart';
+import '../structs/alert_dialog_struct.dart';
 import 'package:flutter_module/maui_flutter.dart';
 
 class AlertDialogParser extends WidgetParser {

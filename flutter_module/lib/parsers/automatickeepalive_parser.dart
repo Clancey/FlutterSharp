@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/automatickeepalive_struct.dart';
+import '../structs/automatickeepalive_struct.dart';
 
 /// Allows subtrees to request to be kept alive in lazy lists.
 ///

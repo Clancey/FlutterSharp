@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/androidviewsurface_struct.dart';
+import '../structs/androidviewsurface_struct.dart';
 
 /// Integrates an Android view with Flutter's compositor, touch, and semantics subsystems.
 ///

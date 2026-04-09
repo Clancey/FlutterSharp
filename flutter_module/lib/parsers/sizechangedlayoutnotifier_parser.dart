@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/sizechangedlayoutnotifier_struct.dart';
+import '../structs/sizechangedlayoutnotifier_struct.dart';
 
 /// A widget that automatically dispatches a [SizeChangedLayoutNotification]
 /// when the layout dimensions of its child change.

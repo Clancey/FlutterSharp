@@ -5,7 +5,7 @@ import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import '../flutter_sharp_structs.dart';
-import '../generated/structs/cupertinotabbar_struct.dart';
+import '../structs/cupertinotabbar_struct.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
 

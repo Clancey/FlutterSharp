@@ -2,28 +2,28 @@ import 'dart:ffi';
 import 'package:ffi/ffi.dart';
 
 // Export generated structs that are referenced by hand-written parsers
-export 'generated/structs/align_struct.dart';
-export 'generated/structs/aspectratio_struct.dart';
-export 'generated/structs/column_struct.dart';
-export 'generated/structs/container_struct.dart';
-export 'generated/structs/icon_struct.dart';
-export 'generated/structs/row_struct.dart';
-export 'generated/structs/text_struct.dart';
-export 'generated/structs/elevatedbutton_struct.dart';
-export 'generated/structs/textbutton_struct.dart';
-export 'generated/structs/outlinedbutton_struct.dart';
-export 'generated/structs/iconbutton_struct.dart';
-export 'generated/structs/floatingactionbutton_struct.dart';
-export 'generated/structs/listtile_struct.dart';
-export 'generated/structs/listview_struct.dart';
-export 'generated/structs/bottomnavigationbar_struct.dart';
-export 'generated/structs/bottomnavigationbaritem_struct.dart';
-export 'generated/structs/navigator_struct.dart';
-export 'generated/structs/cupertinobutton_struct.dart';
-export 'generated/structs/cupertinotextfield_struct.dart';
-export 'generated/structs/cupertinoswitch_struct.dart';
-export 'generated/structs/dropdownbutton_struct.dart';
-export 'generated/structs/dropdownmenuitem_struct.dart';
+export 'structs/align_struct.dart';
+export 'structs/aspectratio_struct.dart';
+export 'structs/column_struct.dart';
+export 'structs/container_struct.dart';
+export 'structs/icon_struct.dart';
+export 'structs/row_struct.dart';
+export 'structs/text_struct.dart';
+export 'structs/elevatedbutton_struct.dart';
+export 'structs/textbutton_struct.dart';
+export 'structs/outlinedbutton_struct.dart';
+export 'structs/iconbutton_struct.dart';
+export 'structs/floatingactionbutton_struct.dart';
+export 'structs/listtile_struct.dart';
+export 'structs/listview_struct.dart';
+export 'structs/bottomnavigationbar_struct.dart';
+export 'structs/bottomnavigationbaritem_struct.dart';
+export 'structs/navigator_struct.dart';
+export 'structs/cupertinobutton_struct.dart';
+export 'structs/cupertinotextfield_struct.dart';
+export 'structs/cupertinoswitch_struct.dart';
+export 'structs/dropdownbutton_struct.dart';
+export 'structs/dropdownmenuitem_struct.dart';
 
 /// Abstract interface for FlutterObjectStruct to allow type-safe parsing.
 /// This is used as a parameter type in parser methods.
@@ -143,7 +143,7 @@ final class AlignmentStruct extends Struct {
 }
 
 // NOTE: AlignStruct is now generated
-// See: lib/generated/structs/align_struct.dart
+// See: lib/structs/align_struct.dart
 
 //AppBarStruct : WidgetStruct
 final class AppBarStruct extends Struct {
@@ -159,7 +159,7 @@ final class AppBarStruct extends Struct {
 }
 
 // NOTE: AspectRatioStruct is now generated
-// See: lib/generated/structs/aspectratio_struct.dart
+// See: lib/structs/aspectratio_struct.dart
 
 //CheckboxStruct : WidgetStruct
 final class CheckboxStruct extends Struct {
@@ -176,7 +176,7 @@ final class CheckboxStruct extends Struct {
 }
 
 // NOTE: ColumnStruct is now generated
-// See: lib/generated/structs/column_struct.dart
+// See: lib/structs/column_struct.dart
 
 final class EdgeInsetGemoetryStruct extends Struct {
   @Double()
@@ -201,7 +201,7 @@ final class ColorStruct extends Struct {
 }
 
 // NOTE: ContainerStruct is now generated
-// See: lib/generated/structs/container_struct.dart
+// See: lib/structs/container_struct.dart
 
 //DefaultTabControllerStruct : SingleChildRenderObjectWidgetStruct
 final class DefaultTabControllerStruct extends Struct {
@@ -220,7 +220,7 @@ final class DefaultTabControllerStruct extends Struct {
 }
 
 // NOTE: IconStruct is now generated
-// See: lib/generated/structs/icon_struct.dart
+// See: lib/structs/icon_struct.dart
 
 //ListViewBuilderStruct : Widget
 final class ListViewBuilderStruct extends Struct {
@@ -305,7 +305,7 @@ final class InfiniteGridViewStruct extends Struct {
 }
 
 // NOTE: RowStruct is now generated
-// See: lib/generated/structs/row_struct.dart
+// See: lib/structs/row_struct.dart
 
 //ScaffoldStruct : Widget
 final class ScaffoldStruct extends Struct {
@@ -324,7 +324,7 @@ final class ScaffoldStruct extends Struct {
 }
 
 // NOTE: TextStruct is now generated
-// See: lib/generated/structs/text_struct.dart
+// See: lib/structs/text_struct.dart
 
 //TextFieldStruct : Widget - Material Design text field
 final class TextFieldStruct extends Struct {

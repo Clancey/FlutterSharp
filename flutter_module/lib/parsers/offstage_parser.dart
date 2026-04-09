@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/offstage_struct.dart';
+import '../structs/offstage_struct.dart';
 
 /// A widget that lays the child out as if it was in the tree, but without
 /// painting anything, without making the child available for hit testing, and

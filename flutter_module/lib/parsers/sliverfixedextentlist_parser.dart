@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/sliverfixedextentlist_struct.dart';
+import '../structs/sliverfixedextentlist_struct.dart';
 
 /// A sliver that places multiple box children with the same main axis extent in
 /// a linear array.

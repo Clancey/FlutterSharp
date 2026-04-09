@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// An inherited widget that defines the configuration in this widget's
 /// descendants for menus created by the [SubmenuButton], [MenuBar], or

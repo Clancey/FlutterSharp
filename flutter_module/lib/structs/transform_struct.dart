@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'alignmentgeometry_struct.dart';
 import 'matrix4_struct.dart';
 import 'offset_struct.dart';

@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'focusnode_struct.dart';
 
 /// A Material Design "Outlined Button"; essentially a [TextButton]

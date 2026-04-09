@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/listbody_struct.dart';
+import '../structs/listbody_struct.dart';
 
 /// A widget that arranges its children sequentially along a given axis, forcing
 /// them to the dimension of the parent in the other axis.

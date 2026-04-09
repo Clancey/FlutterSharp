@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'edgeinsetsgeometry_struct.dart';
 
 /// An end-aligned row of buttons, laying out into a column if there is not

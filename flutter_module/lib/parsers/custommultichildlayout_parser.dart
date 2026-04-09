@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/custommultichildlayout_struct.dart';
+import '../structs/custommultichildlayout_struct.dart';
 
 /// A widget that uses a delegate to size and position multiple children.
 ///

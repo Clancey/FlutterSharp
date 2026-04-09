@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/dragboundary_struct.dart';
+import '../structs/dragboundary_struct.dart';
 
 /// Provides a [DragBoundaryDelegate] for its descendants whose bounds are those defined by this widget.
 ///

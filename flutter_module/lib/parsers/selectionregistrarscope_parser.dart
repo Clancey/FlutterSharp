@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/selectionregistrarscope_struct.dart';
+import '../structs/selectionregistrarscope_struct.dart';
 
 /// An inherited widget to host a [SelectionRegistrar] for the subtree.
 ///

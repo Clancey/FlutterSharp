@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'focusnode_struct.dart';
 
 /// A [FocusScope] is similar to a [Focus], but also serves as a scope for its

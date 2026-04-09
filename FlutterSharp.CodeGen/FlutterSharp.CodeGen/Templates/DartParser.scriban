@@ -105,7 +105,7 @@ import 'package:flutter/services.dart';
 {{~ end ~}}
 import 'package:flutter_module/flutter_sharp_structs.dart';
 {{~ if needs_utility_parsers ~}}
-import '../generated/generated_utility_parsers.dart';
+import '../generated_utility_parsers.dart';
 {{~ end ~}}
 import 'package:flutter_module/maui_flutter.dart';
 {{~ if needs_struct_import ~}}

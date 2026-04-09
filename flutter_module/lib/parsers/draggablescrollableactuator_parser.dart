@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/draggablescrollableactuator_struct.dart';
+import '../structs/draggablescrollableactuator_struct.dart';
 
 /// A widget that can notify a descendent [DraggableScrollableSheet] that it
 /// should reset its position to the initial state.

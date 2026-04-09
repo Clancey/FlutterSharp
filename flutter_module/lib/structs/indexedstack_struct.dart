@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'alignmentgeometry_struct.dart';
 
 /// A [Stack] that shows a single child from a list of children.

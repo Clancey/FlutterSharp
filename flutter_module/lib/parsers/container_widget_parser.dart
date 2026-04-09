@@ -3,7 +3,7 @@ import 'dart:ffi';
 import '../flutter_sharp_structs.dart';
 import '../maui_flutter.dart';
 import '../utils.dart' show parseAlignment;
-import '../generated/generated_utility_parsers.dart'
+import '../generated_utility_parsers.dart'
     show parseEdgeInsetsGeometry;
 import 'package:flutter/widgets.dart';
 

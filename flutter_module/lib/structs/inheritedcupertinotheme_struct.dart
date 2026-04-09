@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// Provides a [CupertinoTheme] to all descendants.
 /// FFI struct representation of InheritedCupertinoTheme widget.

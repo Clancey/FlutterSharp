@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// The [TextHeightBehavior] that will apply to descendant [Text] and [EditableText]
 /// widgets which have not explicitly set [Text.textHeightBehavior].

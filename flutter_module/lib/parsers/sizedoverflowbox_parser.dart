@@ -6,9 +6,9 @@
 import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
-import '../generated/generated_utility_parsers.dart';
+import '../generated_utility_parsers.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/sizedoverflowbox_struct.dart';
+import '../structs/sizedoverflowbox_struct.dart';
 
 /// A widget that is a specific size but passes its original constraints
 /// through to its child, which may then overflow.

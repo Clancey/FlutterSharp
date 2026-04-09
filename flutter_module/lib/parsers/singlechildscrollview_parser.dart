@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import '../flutter_sharp_structs.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
-import '../generated/structs/singlechildscrollview_struct.dart';
+import '../structs/singlechildscrollview_struct.dart';
 
 /// Parser for SingleChildScrollView widget.
 ///

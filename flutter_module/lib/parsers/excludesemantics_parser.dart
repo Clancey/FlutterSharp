@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/excludesemantics_struct.dart';
+import '../structs/excludesemantics_struct.dart';
 
 /// A widget that drops all the semantics of its descendants.
 ///

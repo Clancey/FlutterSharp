@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/actions_struct.dart';
+import '../structs/actions_struct.dart';
 
 /// A widget that maps [Intent]s to [Action]s to be used by its descendants
 /// when invoking an [Action].

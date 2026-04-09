@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import '../flutter_sharp_structs.dart';
-import '../generated/structs/listenablebuilder_struct.dart';
+import '../structs/listenablebuilder_struct.dart';
 import '../maui_flutter.dart';
 
 /// Parser for ListenableBuilder widget.

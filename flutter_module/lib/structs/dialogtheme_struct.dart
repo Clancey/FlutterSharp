@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'alignmentgeometry_struct.dart';
 import 'edgeinsets_struct.dart';
 import 'edgeinsetsgeometry_struct.dart';

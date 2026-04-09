@@ -6,7 +6,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import '../flutter_sharp_structs.dart';
-import '../generated/structs/refreshindicator_struct.dart';
+import '../structs/refreshindicator_struct.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
 

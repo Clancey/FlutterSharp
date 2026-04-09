@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 import 'edgeinsets_struct.dart';
 
 /// A widget that insets its child with sufficient padding to avoid intrusions

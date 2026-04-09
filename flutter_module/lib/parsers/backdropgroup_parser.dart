@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/backdropgroup_struct.dart';
+import '../structs/backdropgroup_struct.dart';
 
 /// A widget that establishes a shared backdrop layer for all child [BackdropFilter]
 /// widgets that opt into using it.

@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// A rectangular area of a Material that responds to touch but clips
 /// its ink splashes to the current table row of the nearest table.

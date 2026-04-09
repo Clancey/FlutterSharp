@@ -8,7 +8,7 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/title_struct.dart';
+import '../structs/title_struct.dart';
 
 /// A widget that describes this app in the operating system.
 class TitleParser extends WidgetParser {

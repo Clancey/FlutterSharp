@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// A wrapper widget that will recognize the start of a drag operation by
 /// looking for a long press event. Once it is recognized, it will start

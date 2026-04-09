@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/unmanagedrestorationscope_struct.dart';
+import '../structs/unmanagedrestorationscope_struct.dart';
 
 /// Inserts a provided [RestorationBucket] into the widget tree and makes it
 /// available to descendants via [RestorationScope.of].

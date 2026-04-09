@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/performanceoverlay_struct.dart';
+import '../structs/performanceoverlay_struct.dart';
 
 /// Displays performance statistics.
 ///

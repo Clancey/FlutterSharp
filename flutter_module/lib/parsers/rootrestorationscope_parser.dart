@@ -8,7 +8,7 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/rootrestorationscope_struct.dart';
+import '../structs/rootrestorationscope_struct.dart';
 
 /// Inserts a child bucket of [RestorationManager.rootBucket] into the widget
 /// tree and makes it available to descendants via [RestorationScope.of].

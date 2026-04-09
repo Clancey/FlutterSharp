@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// An [InheritedWidget] that provides a descendant [MenuAcceleratorLabel] with
 /// the function to invoke when the accelerator is pressed.

@@ -6,9 +6,9 @@
 import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
-import '../generated/generated_utility_parsers.dart';
+import '../generated_utility_parsers.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/decoratedbox_struct.dart';
+import '../structs/decoratedbox_struct.dart';
 
 /// A widget that paints a [Decoration] either before or after its child paints.
 ///

@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/sliveroffstage_struct.dart';
+import '../structs/sliveroffstage_struct.dart';
 
 /// A sliver that lays its sliver child out as if it was in the tree, but
 /// without painting anything, without making the sliver child available for hit

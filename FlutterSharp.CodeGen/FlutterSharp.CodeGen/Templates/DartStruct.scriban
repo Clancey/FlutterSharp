@@ -13,7 +13,7 @@ for imp in imports
   end
 end
 ~}}
-import '../../flutter_sharp_structs.dart'{{ if hide_alignment_struct }} hide AlignmentStruct{{ end }};
+import '../flutter_sharp_structs.dart'{{ if hide_alignment_struct }} hide AlignmentStruct{{ end }};
 {{~ for imp in imports ~}}
 {{~ if !(string.starts_with imp "dart:") && !(string.starts_with imp "package:") ~}}
 import '{{ imp }}';

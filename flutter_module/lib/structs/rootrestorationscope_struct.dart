@@ -5,7 +5,7 @@
 
 import 'dart:ffi';
 import 'package:ffi/ffi.dart';
-import '../../flutter_sharp_structs.dart';
+import '../flutter_sharp_structs.dart';
 
 /// Inserts a child bucket of [RestorationManager.rootBucket] into the widget
 /// tree and makes it available to descendants via [RestorationScope.of].

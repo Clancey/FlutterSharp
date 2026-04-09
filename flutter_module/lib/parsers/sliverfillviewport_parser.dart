@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/sliverfillviewport_struct.dart';
+import '../structs/sliverfillviewport_struct.dart';
 
 /// A sliver that contains multiple box children that each fills the viewport.
 ///

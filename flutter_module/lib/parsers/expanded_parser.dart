@@ -7,7 +7,7 @@ import 'dart:ffi' hide Size;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/maui_flutter.dart';
-import '../generated/structs/expanded_struct.dart';
+import '../structs/expanded_struct.dart';
 
 /// A widget that expands a child of a [Row], [Column], or [Flex]
 /// so that the child fills the available space.
