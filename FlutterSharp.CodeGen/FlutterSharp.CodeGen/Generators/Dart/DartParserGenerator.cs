@@ -23,13 +23,13 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		/// Initializes a new instance of the <see cref="DartParserGenerator"/> class.
 		/// </summary>
 		/// <param name="typeMapper">The type mapper to use for converting types.</param>
-		/// <param name="dartStructsDirectory">The directory containing generated Dart struct files.</param>
-		public DartParserGenerator(CSharpToDartFfiMapper typeMapper, string dartStructsDirectory)
+		/// <param name="dartOutputDirectory">The Dart output directory that contains the generated struct files.</param>
+		public DartParserGenerator(CSharpToDartFfiMapper typeMapper, string dartOutputDirectory)
 		{
 			_typeMapper = typeMapper ?? throw new ArgumentNullException(nameof(typeMapper));
-			_dartStructsDirectory = !string.IsNullOrWhiteSpace(dartStructsDirectory)
-				? dartStructsDirectory
-				: throw new ArgumentException("A Dart structs directory is required.", nameof(dartStructsDirectory));
+			_dartStructsDirectory = Path.Combine(
+				Path.GetFullPath(dartOutputDirectory ?? throw new ArgumentNullException(nameof(dartOutputDirectory))),
+				"structs");
 
 			// Load the Scriban template
 			var templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "DartParser.scriban");

@@ -114,7 +114,7 @@ internal class Program
 		var outputDartOption = new Option<string?>(
 			name: "--output-dart",
 			description: "Dart output directory",
-			getDefaultValue: () => Path.Combine(Directory.GetCurrentDirectory(), "Generated", "Dart"));
+			getDefaultValue: () => Path.Combine(Directory.GetCurrentDirectory(), "flutter_module", "lib"));
 
 		// Filtering options
 		var includeOption = new Option<string?>(
@@ -467,7 +467,7 @@ internal class Program
 		var csharpStructGenerator = new CSharpStructGenerator(dartToCSharpMapper, csharpStructTemplatePath, LogWarning);
 		var csharpEnumGenerator = new CSharpEnumGenerator(dartToCSharpMapper);
 		var dartStructGenerator = new DartStructGenerator(csharpToDartMapper);
-		var dartParserGenerator = new DartParserGenerator(csharpToDartMapper, dartStructsDir);
+		var dartParserGenerator = new DartParserGenerator(csharpToDartMapper, outputDart);
 		var dartParserImportsGenerator = new DartParserImportsGenerator();
 		var dartUtilityParserGenerator = new DartUtilityParserGenerator(csharpToDartMapper);
 		var dartEnumGenerator = new DartEnumGenerator();
@@ -888,7 +888,7 @@ internal class Program
 		LogInfo("Generating utility parser functions...");
 
 		// Read existing parsers from utils.dart
-		var utilsDartPath = Path.Combine(outputDart, "utils.dart");
+		var utilsDartPath = ResolveFlutterModuleLibFile(outputDart, "utils.dart");
 		var manualUtilityParsers = new HashSet<string>(StringComparer.Ordinal)
 		{
 			"parseBlendMode",
@@ -903,7 +903,7 @@ internal class Program
 		};
 		var existingParsers = new HashSet<string>(StringComparer.Ordinal);
 
-		if (File.Exists(utilsDartPath))
+		if (utilsDartPath != null)
 		{
 			var utilsContent = await File.ReadAllTextAsync(utilsDartPath, cancellationToken);
 			var lines = utilsContent.Split('\n');
@@ -937,7 +937,7 @@ internal class Program
 		}
 		else
 		{
-			LogVerbose($"utils.dart not found at {utilsDartPath}, generating all parsers");
+			LogVerbose($"utils.dart not found relative to {outputDart}, generating all parsers");
 		}
 
 		// Generate missing parsers
@@ -984,6 +984,27 @@ internal class Program
 				LogInfo("  Run with --verbose for detailed unmapped type report");
 			}
 		}
+	}
+
+	private static string? ResolveFlutterModuleLibFile(string outputDart, string fileName)
+	{
+		var outputDirectory = Path.GetFullPath(outputDart);
+		var directCandidate = Path.Combine(outputDirectory, fileName);
+		if (File.Exists(directCandidate))
+		{
+			return directCandidate;
+		}
+
+		for (var current = new DirectoryInfo(outputDirectory); current != null; current = current.Parent)
+		{
+			var flutterModuleCandidate = Path.Combine(current.FullName, "flutter_module", "lib", fileName);
+			if (File.Exists(flutterModuleCandidate))
+			{
+				return flutterModuleCandidate;
+			}
+		}
+
+		return null;
 	}
 
 	/// <summary>

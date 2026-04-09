@@ -32,7 +32,7 @@
     "csharpOutput": "./Generated/CSharp",
 
     // Output directory for Dart interop code
-    "dartOutput": "./Generated/Dart",
+    "dartOutput": "./flutter_module/lib",
 
     // Output directory for documentation files (optional)
     // "documentationOutput": "./Generated/Docs",

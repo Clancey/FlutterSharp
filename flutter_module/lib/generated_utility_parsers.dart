@@ -1701,5 +1701,3 @@ ShaderCallback? createShaderCallback(String? actionId) {
   // as it needs to return a Shader synchronously
   return null;
 }
-
-

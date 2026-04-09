@@ -98,7 +98,7 @@ namespace FlutterSharp.CodeGen.Config
 		/// <summary>
 		/// Gets the output directory for Dart interop code.
 		/// </summary>
-		public string DartOutput { get; init; } = "./Generated/Dart";
+		public string DartOutput { get; init; } = "./flutter_module/lib";
 
 		/// <summary>
 		/// Gets the output directory for documentation files.

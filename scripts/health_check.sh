@@ -6,7 +6,7 @@ CODEGEN_PROJ="$ROOT_DIR/FlutterSharp.CodeGen/FlutterSharp.CodeGen/FlutterSharp.C
 FLUTTER_PROJ="$ROOT_DIR/src/Flutter/Flutter.csproj"
 
 OUTPUT_CSHARP="${OUTPUT_CSHARP:-$ROOT_DIR/Generated/CSharp}"
-OUTPUT_DART="${OUTPUT_DART:-$ROOT_DIR/Generated/Dart}"
+OUTPUT_DART="${OUTPUT_DART:-$ROOT_DIR/flutter_module/lib}"
 SOURCE_TYPE="${SOURCE_TYPE:-sdk}"
 DART_ANALYZE_BASELINE="${DART_ANALYZE_BASELINE:-$ROOT_DIR/flutter_module/dart_analyzer_baseline.json}"
 DART_ENFORCE_WARNINGS="${DART_ENFORCE_WARNINGS:-0}"

@@ -6,7 +6,7 @@ CODEGEN_PROJ="$ROOT_DIR/FlutterSharp.CodeGen/FlutterSharp.CodeGen/FlutterSharp.C
 
 SOURCE_TYPE="${SOURCE_TYPE:-sdk}"
 OUTPUT_CSHARP="${OUTPUT_CSHARP:-$ROOT_DIR/Generated/CSharp}"
-OUTPUT_DART="${OUTPUT_DART:-$ROOT_DIR/Generated/Dart}"
+OUTPUT_DART="${OUTPUT_DART:-$ROOT_DIR/flutter_module/lib}"
 
 printf 'Regenerating FlutterSharp bindings\n'
 printf 'Source: %s\n' "$SOURCE_TYPE"
