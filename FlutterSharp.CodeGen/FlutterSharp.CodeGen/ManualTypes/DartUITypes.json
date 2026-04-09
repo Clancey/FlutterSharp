@@ -117,6 +117,47 @@
       "sourceLibrary": "dart:ui"
     },
     {
+      "name": "Color",
+      "namespace": "dart:ui",
+      "documentation": "An immutable 32-bit color value in ARGB format.",
+      "properties": [
+        {
+          "name": "red",
+          "dartType": "int",
+          "csharpType": "int",
+          "documentation": "The red channel.",
+          "isRequired": false,
+          "isNullable": false
+        },
+        {
+          "name": "green",
+          "dartType": "int",
+          "csharpType": "int",
+          "documentation": "The green channel.",
+          "isRequired": false,
+          "isNullable": false
+        },
+        {
+          "name": "blue",
+          "dartType": "int",
+          "csharpType": "int",
+          "documentation": "The blue channel.",
+          "isRequired": false,
+          "isNullable": false
+        },
+        {
+          "name": "alpha",
+          "dartType": "int",
+          "csharpType": "int",
+          "documentation": "The alpha channel.",
+          "isRequired": false,
+          "isNullable": false
+        }
+      ],
+      "isAbstract": false,
+      "sourceLibrary": "dart:ui"
+    },
+    {
       "name": "Matrix4",
       "namespace": "package:vector_math/vector_math_64.dart",
       "documentation": "4D Matrix. Values are stored in column major order.",

@@ -12,22 +12,9 @@
         </OnPlatform>
     </Shell.FlyoutBehavior>
 
-    <!-- Tab-based navigation showing different Flutter widget demos -->
-    <TabBar>
-        <ShellContent
-            Title="Home"
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" />
-
-        <ShellContent
-            Title="Counter"
-            ContentTemplate="{DataTemplate local:CounterPage}"
-            Route="CounterPage" />
-
-        <ShellContent
-            Title="List"
-            ContentTemplate="{DataTemplate local:ListDemoPage}"
-            Route="ListDemoPage" />
-    </TabBar>
+    <ShellContent
+        Title="Demo"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
 
 </Shell>

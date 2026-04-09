@@ -6,11 +6,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FlutterSharp.CodeGen.Analysis;
+using FlutterSharp.CodeGen.Config;
 using FlutterSharp.CodeGen.Generators.CSharp;
 using FlutterSharp.CodeGen.Generators.Dart;
 using FlutterSharp.CodeGen.Models;
 using FlutterSharp.CodeGen.Sources;
 using FlutterSharp.CodeGen.TypeMapping;
+using SdkConfig = FlutterSharp.CodeGen.Sources.FlutterSdkConfig;
 
 namespace FlutterSharp.CodeGen;
 
@@ -22,47 +24,6 @@ internal class Program
 	private static bool _verbose;
 	private static int _generatedFileCount;
 	private static readonly object _consoleLock = new();
-	private static readonly HashSet<string> _supportedParserCallbackTypes = new(StringComparer.Ordinal)
-	{
-		"VoidCallback",
-		"GestureTapCallback",
-		"GestureTapDownCallback",
-		"GestureTapUpCallback",
-		"GestureTapCancelCallback",
-		"GestureTapMoveCallback",
-		"GestureLongPressCallback",
-		"GestureLongPressDownCallback",
-		"GestureLongPressUpCallback",
-		"GestureLongPressStartCallback",
-		"GestureLongPressEndCallback",
-		"GestureLongPressCancelCallback",
-		"GestureLongPressMoveUpdateCallback",
-		"GestureDragStartCallback",
-		"GestureDragUpdateCallback",
-		"GestureDragEndCallback",
-		"GestureDragDownCallback",
-		"GestureDragCancelCallback",
-		"GestureScaleStartCallback",
-		"GestureScaleUpdateCallback",
-		"GestureScaleEndCallback",
-		"GestureForcePressStartCallback",
-		"GestureForcePressPeakCallback",
-		"GestureForcePressUpdateCallback",
-		"GestureForcePressEndCallback",
-		"PointerDownEventListener",
-		"PointerMoveEventListener",
-		"PointerUpEventListener",
-		"PointerCancelEventListener",
-		"PointerEnterEventListener",
-		"PointerExitEventListener",
-		"PointerHoverEventListener",
-		"PointerSignalEventListener",
-		"PointerPanZoomStartEventListener",
-		"PointerPanZoomUpdateEventListener",
-		"PointerPanZoomEndEventListener",
-		"PlatformViewCreatedCallback",
-		"ShaderCallback"
-	};
 
 	static async Task<int> Main(string[] args)
 	{
@@ -345,7 +306,7 @@ internal class Program
 		LogInfo("=".PadRight(80, '='));
 
 		// Initialize Flutter SDK Manager
-		var sdkConfig = new FlutterSdkConfig
+		var sdkConfig = new SdkConfig
 		{
 			Mode = flutterSdkPath != null ? "local" : "auto",
 			LocalPath = flutterSdkPath
@@ -397,6 +358,7 @@ internal class Program
 		LogInfo($"  Widgets: {packageDefinition.Widgets.Count}");
 		LogInfo($"  Types: {packageDefinition.Types.Count}");
 		LogInfo($"  Enums: {packageDefinition.Enums.Count}");
+		LogInfo($"  Typedefs: {packageDefinition.Typedefs.Count}");
 
 		// Initialize type mappers early for validation
 		var registry = new TypeMappingRegistry();
@@ -447,11 +409,32 @@ internal class Program
 
 		LogSuccess($"Validation passed ({packageValidation.Warnings.Count} warnings)");
 
+		LogInfo("");
+		LogInfo("Building UI surface manifest...");
+		var uiSurfaceManifest = BuildUiSurfaceManifest(packageDefinition);
+		LogInfo($"  Widgets: {uiSurfaceManifest.Widgets.Count}");
+		LogInfo($"  Types: {uiSurfaceManifest.Types.Count}");
+		LogInfo($"  Enums: {uiSurfaceManifest.Enums.Count}");
+		LogInfo($"  Typedefs: {uiSurfaceManifest.Typedefs.Count}");
+		LogInfo($"  Exclusions: {uiSurfaceManifest.Exclusions.Count}");
+
+		var persistedManifest = await PersistAndReloadUiSurfaceManifestAsync(uiSurfaceManifest, outputCSharp, cancellationToken);
+		uiSurfaceManifest = persistedManifest.Manifest;
+		LogInfo($"Persisted UI surface manifest: {persistedManifest.Path}");
+
 		// Initialize remaining mappers (registry and dartToCSharpMapper already created for validation)
 		var csharpToDartMapper = new CSharpToDartFfiMapper(registry);
+		var generatedDartStructNames = new HashSet<string>(
+			uiSurfaceManifest.Widgets.Where(widget => widget.GenerateDartStruct).Select(widget => widget.Name),
+			StringComparer.OrdinalIgnoreCase);
+		foreach (var typeName in uiSurfaceManifest.Types.Where(type => type.GenerateDartStruct).Select(type => type.Name))
+		{
+			generatedDartStructNames.Add(typeName);
+		}
+		generatedDartStructNames.Add("Widget");
 
 		// Initialize enricher (new architecture)
-		var enricher = new WidgetAnalysisEnricher(dartToCSharpMapper, csharpToDartMapper, LogWarning);
+		var enricher = new WidgetAnalysisEnricher(dartToCSharpMapper, csharpToDartMapper, LogWarning, generatedDartStructNames);
 
 		var csharpWidgetsDir = Path.Combine(outputCSharp, "Widgets");
 		var csharpStructsDir = Path.Combine(outputCSharp, "Structs");
@@ -466,7 +449,7 @@ internal class Program
 		var csharpWidgetGenerator = new CSharpWidgetGenerator(dartToCSharpMapper, csharpWidgetTemplatePath, LogWarning);
 		var csharpStructGenerator = new CSharpStructGenerator(dartToCSharpMapper, csharpStructTemplatePath, LogWarning);
 		var csharpEnumGenerator = new CSharpEnumGenerator(dartToCSharpMapper);
-		var dartStructGenerator = new DartStructGenerator(csharpToDartMapper);
+		var dartStructGenerator = new DartStructGenerator(csharpToDartMapper, generatedDartStructNames);
 		var dartParserGenerator = new DartParserGenerator(csharpToDartMapper, outputDart);
 		var dartParserImportsGenerator = new DartParserImportsGenerator();
 		var dartUtilityParserGenerator = new DartUtilityParserGenerator(csharpToDartMapper);
@@ -485,68 +468,11 @@ internal class Program
 
 		_generatedFileCount = 0;
 
-		// Widgets that require Animation<T> parameters or special handling
-		// These generate invalid parsers because FFI can't serialize Animation controllers
-		var skipParserGeneration = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-		{
-			// Transition widgets (require Animation<T> parameters)
-			"AlignTransition", "DecoratedBoxTransition", "DefaultTextStyleTransition",
-			"FadeTransition", "MatrixTransition", "PositionedTransition",
-			"RelativePositionedTransition", "RotationTransition", "ScaleTransition",
-			"SizeTransition", "SlideTransition", "SliverFadeTransition",
-			// Animated builders (require Listenable/Animation parameters)
-			"AnimatedBuilder", "AnimatedModalBarrier", "DualTransitionBuilder",
-			"TweenAnimationBuilder", "ValueListenableBuilder",
-			// Widgets with complex required parameters that can't be FFI serialized
-			"EditableText", "FadeInImage", "FlutterLogo", "Image", "RawImage",
-			"KeyboardListener", "RawKeyboardListener", "UndoHistory",
-			"ListWheelViewport", "ShrinkWrappingViewport", "Viewport",
-			"PrimaryScrollController", "WidgetsApp", "Table",
-			// Platform-specific widgets
-			"ImgElementPlatformView", "RawWebImage", "SystemContextMenu",
-			"AndroidView", "HtmlElementView",
-			// Widgets with delegate parameters
-			"AnnotatedRegion", "SelectionContainer",
-			// Widgets with positional-only arguments or special constructors
-			"Icon", "ImageIcon", "Text", "RichText", "Dismissible",
-			"LayoutId", "ListWheelScrollView", "PageView", "Semantics",
-			"SliverConstrainedCrossAxis", "SliverSafeArea", "SliverVisibility", "Wrap",
-			// Widgets with complex callback types that can't be FFI serialized
-			"ActionListener", "AnimatedGrid", "AnimatedList", "AnimatedSwitcher",
-			"Builder", "ConstraintsTransformBox", "DraggableScrollableSheet",
-			"Expansible", "Focus", "FocusScope", "LayoutBuilder", "ListenableBuilder",
-			"MouseRegion", "NavigatorPopHandler", "NotificationListener",
-			"OrientationBuilder", "OverlayPortal", "PlatformViewLink", "PopScope",
-			"RawMenuAnchor", "ReorderableList", "ShaderMask",
-			"SliverAnimatedGrid", "SliverAnimatedList", "SliverLayoutBuilder",
-			"SliverReorderableList", "SliverVariedExtentList", "StatefulBuilder",
-			"TapRegion", "TextFieldTapRegion", "TreeSliver", "WillPopScope",
-			// Widgets with HitTestBehavior type mismatch
-			"SingleChildScrollView"
-		};
-
 		// Generate widgets
 		LogInfo("");
 		LogInfo("Generating widget code...");
-		// Widgets that should be completely excluded from generation
-		// (platform-specific, problematic struct mappings, or edge-case widgets)
-		var excludeWidgets = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-		{
-			// Platform-specific widgets that don't exist on all platforms
-			"UiKitView", "AppKitView",
-			// Widgets with struct mapping issues (child property not matching)
-			"SliverCrossAxisExpanded", "NestedScrollViewViewport",
-			// Widgets with routing/navigation types that aren't defined in C#
-			"WidgetsApp"
-		};
-
-		var runtimeSkippedParsers = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-		// Deduplicate widgets by choosing the most complete definition for each name.
-		var widgetsToGenerate = packageDefinition.Widgets
-			.Where(w => !w.Name.StartsWith("_") && !excludeWidgets.Contains(w.Name))
-			.GroupBy(w => w.Name, StringComparer.OrdinalIgnoreCase)
-			.Select(SelectPreferredWidgetDefinition)
+		var widgetsToGenerate = uiSurfaceManifest.Widgets
+			.OrderBy(w => w.Name, StringComparer.OrdinalIgnoreCase)
 			.ToList();
 
 		foreach (var widget in widgetsToGenerate)
@@ -556,24 +482,29 @@ internal class Program
 			// Enrich widget with all generation metadata (new architecture)
 			var enrichedWidget = enricher.Enrich(widget);
 
-			// C# Widget - use enriched data
-			var csharpWidgetCode = csharpWidgetGenerator.Generate(enrichedWidget);
-			await File.WriteAllTextAsync(
-				Path.Combine(csharpWidgetsDir, $"{widget.Name}.cs"),
-				csharpWidgetCode,
-				cancellationToken);
-			_generatedFileCount++;
+			if (widget.GenerateCSharpWidget)
+			{
+				// C# Widget - use enriched data
+				var csharpWidgetCode = csharpWidgetGenerator.Generate(enrichedWidget);
+				await File.WriteAllTextAsync(
+					Path.Combine(csharpWidgetsDir, $"{widget.Name}.cs"),
+					csharpWidgetCode,
+					cancellationToken);
+				_generatedFileCount++;
+			}
 
-			// C# Struct
-			var csharpStructCode = csharpStructGenerator.Generate(widget);
-			await File.WriteAllTextAsync(
-				Path.Combine(csharpStructsDir, $"{widget.Name}Struct.cs"),
-				csharpStructCode,
-				cancellationToken);
-			_generatedFileCount++;
+			if (widget.GenerateCSharpStruct)
+			{
+				// C# Struct
+				var csharpStructCode = csharpStructGenerator.Generate(widget);
+				await File.WriteAllTextAsync(
+					Path.Combine(csharpStructsDir, $"{widget.Name}Struct.cs"),
+					csharpStructCode,
+					cancellationToken);
+				_generatedFileCount++;
+			}
 
-			// Skip abstract widgets for Dart code
-			if (!enrichedWidget.IsAbstract)
+			if (widget.GenerateDartStruct)
 			{
 				// Dart Struct - use enriched data
 				var dartStructCode = dartStructGenerator.Generate(enrichedWidget);
@@ -582,122 +513,39 @@ internal class Program
 					dartStructCode,
 					cancellationToken);
 				_generatedFileCount++;
+			}
 
-				// Dart Parser - skip known unsupported widgets and callback signatures.
-				var shouldSkipParser = skipParserGeneration.Contains(enrichedWidget.Name)
-					|| ShouldSkipParserGeneration(widget, enrichedWidget);
-				if (!shouldSkipParser)
-				{
-					var dartParserCode = dartParserGenerator.Generate(enrichedWidget);
-					await File.WriteAllTextAsync(
-						Path.Combine(dartParsersDir, $"{enrichedWidget.Name.ToLowerInvariant()}_parser.dart"),
-						dartParserCode,
-						cancellationToken);
-					_generatedFileCount++;
-				}
-				else
-				{
-					runtimeSkippedParsers.Add(enrichedWidget.Name);
-					LogVerbose($"  Skipping parser generation for {enrichedWidget.Name} (unsupported parser surface)");
-				}
+			if (widget.GenerateDartParser)
+			{
+				var dartParserCode = dartParserGenerator.Generate(enrichedWidget);
+				await File.WriteAllTextAsync(
+					Path.Combine(dartParsersDir, $"{enrichedWidget.Name.ToLowerInvariant()}_parser.dart"),
+					dartParserCode,
+					cancellationToken);
+				_generatedFileCount++;
 			}
 		}
 
-		// Generate important non-widget type structs
 		LogInfo("");
 		LogInfo("Generating type struct code...");
-
-		// Whitelist of important Flutter types that need struct generation
-		var importantTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-		{
-			// Alignment types
-			"Alignment", "AlignmentGeometry", "AlignmentDirectional",
-
-			// Padding/Insets types
-			"EdgeInsets", "EdgeInsetsGeometry", "EdgeInsetsDirectional",
-
-			// Color types
-			"Color", "MaterialColor", "ColorSwatch",
-
-			// Decoration types
-			"BoxDecoration", "Decoration", "ShapeDecoration",
-
-			// Constraints
-			"BoxConstraints", "Constraints",
-
-			// Text styling
-			"TextStyle", "TextAlign", "TextDirection", "FontWeight", "FontStyle",
-
-			// Geometry types
-			"Size", "Offset", "Rect", "Radius",
-
-			// Border types
-			"BorderRadius", "BorderRadiusGeometry", "BorderRadiusDirectional",
-			"Border", "BorderSide",
-
-			// Shadow types
-			"BoxShadow", "Shadow",
-
-			// Gradient types
-			"Gradient", "LinearGradient", "RadialGradient", "SweepGradient",
-
-			// Matrix types
-			"Matrix4", "Matrix3",
-
-			// Time/Animation types
-			"Duration", "DateTime",
-			"Animation", "AnimationController", "Curve", "Curves",
-
-			// Image types
-			"ImageProvider",
-
-			// Keys and State
-			"Key", "GlobalKey", "State",
-
-			// Theme and Material
-			"ThemeData", "IconData", "MaterialStateProperty",
-
-			// Controllers and Focus
-			"FocusNode", "ScrollController", "ScrollPhysics",
-			"TextEditingController",
-
-			// BuildContext (special case - may not generate correctly but included for completeness)
-			"BuildContext"
-		};
-
-		var typesToGenerate = packageDefinition.Types
-			.Where(t => importantTypes.Contains(t.Name))
-			.ToList();
-
-		LogInfo($"Found {typesToGenerate.Count} important types to generate structs for");
-
-		foreach (var type in typesToGenerate)
+		foreach (var type in uiSurfaceManifest.Types)
 		{
 			LogVerbose($"  Generating {type.Name}...");
 
-			// Convert TypeDefinition to WidgetDefinition for struct generation
 			var widgetDef = ConvertTypeToWidget(type);
 
-			// C# Struct
-			var csharpStructCode = csharpStructGenerator.Generate(widgetDef);
-			await File.WriteAllTextAsync(
-				Path.Combine(csharpStructsDir, $"{type.Name}Struct.cs"),
-				csharpStructCode,
-				cancellationToken);
-			_generatedFileCount++;
-
-			// Define truly abstract types that are handled separately in AbstractInterfaceTypes.json
-			var abstractInterfaceTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+			if (type.GenerateCSharpStruct)
 			{
-				"AlignmentGeometry", "EdgeInsetsGeometry", "BorderRadiusGeometry",
-				"Gradient", "Animation", "Decoration", "Constraints", "BoxBorder", "ParametricCurve"
-			};
+				var csharpStructCode = csharpStructGenerator.Generate(widgetDef);
+				await File.WriteAllTextAsync(
+					Path.Combine(csharpStructsDir, $"{type.Name}Struct.cs"),
+					csharpStructCode,
+					cancellationToken);
+				_generatedFileCount++;
+			}
 
-			// Skip private types and truly abstract types for Dart code
-			// Important: We generate Dart structs for all important types EXCEPT the ones in abstractInterfaceTypes
-			if (!type.Name.StartsWith("_") && !abstractInterfaceTypes.Contains(type.Name))
+			if (type.GenerateDartStruct)
 			{
-				// Dart Struct
 				var dartStructCode = dartStructGenerator.Generate(widgetDef);
 				await File.WriteAllTextAsync(
 					Path.Combine(dartStructsDir, $"{type.Name.ToLowerInvariant()}_struct.dart"),
@@ -707,137 +555,10 @@ internal class Program
 			}
 		}
 
-		// Generate Dart core type structs (Duration, DateTime, etc.)
-		LogInfo("");
-		LogInfo("Generating Dart core type structs...");
-
-		var dartCoreTypesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ManualTypes", "DartCoreTypes.json");
-		if (File.Exists(dartCoreTypesPath))
-		{
-			var dartCoreTypesJson = await File.ReadAllTextAsync(dartCoreTypesPath, cancellationToken);
-			var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-			var dartCoreTypesData = System.Text.Json.JsonSerializer.Deserialize<DartCoreTypesDefinition>(dartCoreTypesJson, options);
-
-			if (dartCoreTypesData?.Types != null)
-			{
-				LogInfo($"Found {dartCoreTypesData.Types.Count} Dart core types to generate");
-
-				foreach (var coreType in dartCoreTypesData.Types)
-				{
-					LogVerbose($"  Generating {coreType.Name}...");
-
-					// Convert to WidgetDefinition for struct generation
-					var widgetDef = ConvertCoreTypeToWidget(coreType);
-
-					// C# Struct
-					var csharpStructCode = csharpStructGenerator.Generate(widgetDef);
-					await File.WriteAllTextAsync(
-						Path.Combine(csharpStructsDir, $"{coreType.Name}Struct.cs"),
-						csharpStructCode,
-						cancellationToken);
-					_generatedFileCount++;
-
-					// Dart Struct
-					var dartStructCode = dartStructGenerator.Generate(widgetDef);
-					await File.WriteAllTextAsync(
-						Path.Combine(dartStructsDir, $"{coreType.Name.ToLowerInvariant()}_struct.dart"),
-						dartStructCode,
-						cancellationToken);
-					_generatedFileCount++;
-				}
-			}
-		}
-		else
-		{
-			LogVerbose($"No Dart core types file found at {dartCoreTypesPath}");
-		}
-
-		// Generate Dart UI types (Size, Offset, Rect, Radius, etc.)
-		LogInfo("");
-		LogInfo("Generating Dart UI types...");
-
-		var dartUITypesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ManualTypes", "DartUITypes.json");
-		if (File.Exists(dartUITypesPath))
-		{
-			var dartUITypesJson = await File.ReadAllTextAsync(dartUITypesPath, cancellationToken);
-			var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-			var dartUITypesData = System.Text.Json.JsonSerializer.Deserialize<DartCoreTypesDefinition>(dartUITypesJson, options);
-
-			if (dartUITypesData?.Types != null)
-			{
-				LogInfo($"Found {dartUITypesData.Types.Count} Dart UI types to generate");
-
-				foreach (var uiType in dartUITypesData.Types)
-				{
-					LogVerbose($"  Generating {uiType.Name}...");
-
-					// Convert to WidgetDefinition for struct generation
-					var widgetDef = ConvertCoreTypeToWidget(uiType);
-
-					// C# Struct
-					var csharpStructCode = csharpStructGenerator.Generate(widgetDef);
-					await File.WriteAllTextAsync(
-						Path.Combine(csharpStructsDir, $"{uiType.Name}Struct.cs"),
-						csharpStructCode,
-						cancellationToken);
-					_generatedFileCount++;
-
-					// Dart Struct
-					var dartStructCode = dartStructGenerator.Generate(widgetDef);
-					await File.WriteAllTextAsync(
-						Path.Combine(dartStructsDir, $"{uiType.Name.ToLowerInvariant()}_struct.dart"),
-						dartStructCode,
-						cancellationToken);
-					_generatedFileCount++;
-				}
-			}
-		}
-		else
-		{
-			LogVerbose($"No Dart UI types file found at {dartUITypesPath}");
-		}
-
-		// Generate abstract interface type structs (empty structs for abstract base classes)
-		LogInfo("");
-		LogInfo("Generating abstract interface type structs...");
-
-		var abstractInterfaceTypesPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ManualTypes", "AbstractInterfaceTypes.json");
-		if (File.Exists(abstractInterfaceTypesPath))
-		{
-			var abstractInterfaceTypesJson = await File.ReadAllTextAsync(abstractInterfaceTypesPath, cancellationToken);
-			var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-			var abstractInterfaceTypesData = System.Text.Json.JsonSerializer.Deserialize<DartCoreTypesDefinition>(abstractInterfaceTypesJson, options);
-
-			if (abstractInterfaceTypesData?.Types != null)
-			{
-				LogInfo($"Found {abstractInterfaceTypesData.Types.Count} abstract interface types to generate");
-
-				foreach (var interfaceType in abstractInterfaceTypesData.Types)
-				{
-					LogVerbose($"  Generating {interfaceType.Name}...");
-
-					// Convert to WidgetDefinition for struct generation
-					var widgetDef = ConvertCoreTypeToWidget(interfaceType);
-
-					// Dart Struct only (no C# struct needed for abstract interfaces)
-					var dartStructCode = dartStructGenerator.Generate(widgetDef);
-					await File.WriteAllTextAsync(
-						Path.Combine(dartStructsDir, $"{interfaceType.Name.ToLowerInvariant()}_struct.dart"),
-						dartStructCode,
-						cancellationToken);
-					_generatedFileCount++;
-				}
-			}
-		}
-		else
-		{
-			LogVerbose($"No abstract interface types file found at {abstractInterfaceTypesPath}");
-		}
-
 		// Generate enums
 		LogInfo("");
 		LogInfo("Generating enum code...");
-		foreach (var enumDef in packageDefinition.Enums)
+		foreach (var enumDef in uiSurfaceManifest.Enums)
 		{
 			LogVerbose($"  Generating {enumDef.Name}...");
 
@@ -865,17 +586,12 @@ internal class Program
 		// Generate parser registration file (imports + list)
 		LogInfo("");
 		LogInfo("Generating parser registration file...");
-		// Combine excluded widgets and skip parser generation sets for parser registration
-		var allExcludedParsers = new HashSet<string>(skipParserGeneration, StringComparer.OrdinalIgnoreCase);
-		foreach (var excluded in excludeWidgets)
-		{
-			allExcludedParsers.Add(excluded);
-		}
-		foreach (var runtimeSkipped in runtimeSkippedParsers)
-		{
-			allExcludedParsers.Add(runtimeSkipped);
-		}
-		var parserRegistrationCode = dartParserImportsGenerator.Generate(packageDefinition.Widgets, allExcludedParsers);
+		var allExcludedParsers = new HashSet<string>(
+			uiSurfaceManifest.Widgets
+				.Where(widget => !widget.GenerateDartParser)
+				.Select(widget => widget.Name),
+			StringComparer.OrdinalIgnoreCase);
+		var parserRegistrationCode = dartParserImportsGenerator.Generate(uiSurfaceManifest.Widgets, allExcludedParsers);
 		await File.WriteAllTextAsync(
 			Path.Combine(outputDart, "generated_parsers.dart"),
 			parserRegistrationCode,
@@ -941,7 +657,7 @@ internal class Program
 		}
 
 		// Generate missing parsers
-		var utilityParserCode = dartUtilityParserGenerator.GenerateAll(packageDefinition.Enums, packageDefinition.Types, existingParsers);
+		var utilityParserCode = dartUtilityParserGenerator.GenerateAll(uiSurfaceManifest.Enums, uiSurfaceManifest.Types, existingParsers);
 		await File.WriteAllTextAsync(
 			Path.Combine(outputDart, "generated_utility_parsers.dart"),
 			utilityParserCode,
@@ -954,15 +670,23 @@ internal class Program
 		LogInfo("=".PadRight(80, '='));
 		LogInfo("Generation Complete!");
 		LogInfo("=".PadRight(80, '='));
+		var generatedCSharpWidgetCount = uiSurfaceManifest.Widgets.Count(widget => widget.GenerateCSharpWidget);
+		var generatedCSharpStructCount = uiSurfaceManifest.Widgets.Count(widget => widget.GenerateCSharpStruct)
+			+ uiSurfaceManifest.Types.Count(type => type.GenerateCSharpStruct);
+		var generatedDartStructCount = uiSurfaceManifest.Widgets.Count(widget => widget.GenerateDartStruct)
+			+ uiSurfaceManifest.Types.Count(type => type.GenerateDartStruct);
+		var generatedDartParserCount = uiSurfaceManifest.Widgets.Count(widget => widget.GenerateDartParser);
+		var generatedDartEnumCount = uiSurfaceManifest.Enums.Count(enumDefinition => !enumDefinition.Name.StartsWith("_", StringComparison.Ordinal));
 		LogInfo($"Generated files: {_generatedFileCount}");
 		LogInfo($"C# output: {outputCSharp}");
-		LogInfo($"  - Widgets: {packageDefinition.Widgets.Count} files");
-		LogInfo($"  - Structs: {packageDefinition.Widgets.Count} files");
-		LogInfo($"  - Enums: {packageDefinition.Enums.Count} files");
+		LogInfo($"  - Widgets: {generatedCSharpWidgetCount} files");
+		LogInfo($"  - Structs: {generatedCSharpStructCount} files");
+		LogInfo($"  - Enums: {uiSurfaceManifest.Enums.Count} files");
 		LogInfo($"Dart output: {outputDart}");
-		LogInfo($"  - Structs: {packageDefinition.Widgets.Count} files");
-		LogInfo($"  - Parsers: {packageDefinition.Widgets.Count} files");
-		LogInfo($"  - Enums: {packageDefinition.Enums.Count} files");
+		LogInfo($"  - Structs: {generatedDartStructCount} files");
+		LogInfo($"  - Parsers: {generatedDartParserCount} files");
+		LogInfo($"  - Enums: {generatedDartEnumCount} files");
+		LogInfo($"UI surface exclusions: {uiSurfaceManifest.Exclusions.Count}");
 		LogInfo("=".PadRight(80, '='));
 
 		// Report unmapped types if any
@@ -984,6 +708,45 @@ internal class Program
 				LogInfo("  Run with --verbose for detailed unmapped type report");
 			}
 		}
+	}
+
+	private static UiSurfaceManifest BuildUiSurfaceManifest(PackageDefinition packageDefinition)
+	{
+		var (policy, policyPath) = UiSurfacePolicyLoader.LoadDefault();
+		var manifestBuilder = new UiSurfaceManifestBuilder(LogWarning);
+		return manifestBuilder.Build(packageDefinition, policy, policyPath);
+	}
+
+	private static async Task<(UiSurfaceManifest Manifest, string Path)> PersistAndReloadUiSurfaceManifestAsync(
+		UiSurfaceManifest manifest,
+		string outputCSharp,
+		CancellationToken cancellationToken)
+	{
+		var manifestPath = ResolveUiSurfaceManifestPath(outputCSharp, manifest.Name);
+		await UiSurfaceManifestStore.SaveAsync(manifest, manifestPath, cancellationToken);
+		var persistedManifest = await UiSurfaceManifestStore.LoadAsync(manifestPath, cancellationToken);
+		return (persistedManifest, manifestPath);
+	}
+
+	private static string ResolveUiSurfaceManifestPath(string outputCSharp, string packageName)
+	{
+		var outputDirectory = Path.GetFullPath(outputCSharp);
+		var generatedDirectory = Directory.GetParent(outputDirectory)?.FullName ?? outputDirectory;
+		var analysisDirectory = Path.Combine(generatedDirectory, "Analysis");
+		return Path.Combine(analysisDirectory, $"{SanitizeFileName(packageName)}.ui-surface-manifest.json");
+	}
+
+	private static string SanitizeFileName(string value)
+	{
+		if (string.IsNullOrWhiteSpace(value))
+		{
+			return "package";
+		}
+
+		var invalidChars = Path.GetInvalidFileNameChars();
+		var sanitized = new string(value.Select(ch => invalidChars.Contains(ch) ? '-' : ch).ToArray());
+		sanitized = sanitized.Trim();
+		return string.IsNullOrWhiteSpace(sanitized) ? "package" : sanitized;
 	}
 
 	private static string? ResolveFlutterModuleLibFile(string outputDart, string fileName)
@@ -1035,7 +798,7 @@ internal class Program
 		// Validate Flutter SDK
 		LogInfo("");
 		LogInfo("Checking Flutter SDK...");
-		var sdkConfig = new FlutterSdkConfig
+		var sdkConfig = new SdkConfig
 		{
 			Mode = flutterSdkPath != null ? "local" : "auto",
 			LocalPath = flutterSdkPath
@@ -1080,7 +843,7 @@ internal class Program
 		LogInfo("=".PadRight(80, '='));
 
 		// Initialize Flutter SDK Manager
-		var sdkConfig = new FlutterSdkConfig
+		var sdkConfig = new SdkConfig
 		{
 			Mode = flutterSdkPath != null ? "local" : "auto",
 			LocalPath = flutterSdkPath
@@ -1115,6 +878,8 @@ internal class Program
 			excludeList,
 			cancellationToken);
 
+		var uiSurfaceManifest = BuildUiSurfaceManifest(packageDefinition);
+
 		LogInfo("");
 		LogInfo($"Package: {packageDefinition.Name} v{packageDefinition.Version}");
 		if (!string.IsNullOrEmpty(packageDefinition.Description))
@@ -1123,10 +888,10 @@ internal class Program
 		}
 
 		LogInfo("");
-		LogInfo($"Widgets ({packageDefinition.Widgets.Count}):");
+		LogInfo($"UI Surface Widgets ({uiSurfaceManifest.Widgets.Count}):");
 		LogInfo("-".PadRight(80, '-'));
 
-		foreach (var widget in packageDefinition.Widgets.OrderBy(w => w.Name))
+		foreach (var widget in uiSurfaceManifest.Widgets.OrderBy(w => w.Name))
 		{
 			var typeInfo = widget.Type.ToString();
 			var childInfo = widget.HasSingleChild ? " [single child]" :
@@ -1153,24 +918,24 @@ internal class Program
 		}
 
 		LogInfo("");
-		LogInfo($"Types ({packageDefinition.Types.Count}):");
+		LogInfo($"UI Support Types ({uiSurfaceManifest.Types.Count}):");
 		LogInfo("-".PadRight(80, '-'));
 
-		foreach (var type in packageDefinition.Types.OrderBy(t => t.Name).Take(10))
+		foreach (var type in uiSurfaceManifest.Types.OrderBy(t => t.Name).Take(10))
 		{
 			LogInfo($"  {type.Name} ({type.Properties.Count} properties)");
 		}
 
-		if (packageDefinition.Types.Count > 10)
+		if (uiSurfaceManifest.Types.Count > 10)
 		{
-			LogInfo($"  ... and {packageDefinition.Types.Count - 10} more");
+			LogInfo($"  ... and {uiSurfaceManifest.Types.Count - 10} more");
 		}
 
 		LogInfo("");
-		LogInfo($"Enums ({packageDefinition.Enums.Count}):");
+		LogInfo($"Enums ({uiSurfaceManifest.Enums.Count}):");
 		LogInfo("-".PadRight(80, '-'));
 
-		foreach (var enumDef in packageDefinition.Enums.OrderBy(e => e.Name))
+		foreach (var enumDef in uiSurfaceManifest.Enums.OrderBy(e => e.Name))
 		{
 			LogInfo($"  {enumDef.Name} ({enumDef.Values.Count} values)");
 			if (_verbose && enumDef.Values.Any())
@@ -1188,8 +953,38 @@ internal class Program
 		}
 
 		LogInfo("");
+		LogInfo($"Typedefs ({uiSurfaceManifest.Typedefs.Count}):");
+		LogInfo("-".PadRight(80, '-'));
+		foreach (var typedefDefinition in uiSurfaceManifest.Typedefs.OrderBy(t => t.Name).Take(10))
+		{
+			var kind = typedefDefinition.IsFunction ? "function" : "alias";
+			LogInfo($"  {typedefDefinition.Name} ({kind})");
+		}
+
+		if (uiSurfaceManifest.Typedefs.Count > 10)
+		{
+			LogInfo($"  ... and {uiSurfaceManifest.Typedefs.Count - 10} more");
+		}
+
+		LogInfo("");
+		LogInfo($"Exclusions ({uiSurfaceManifest.Exclusions.Count}):");
+		LogInfo("-".PadRight(80, '-'));
+		foreach (var exclusion in uiSurfaceManifest.Exclusions.Take(_verbose ? uiSurfaceManifest.Exclusions.Count : 15))
+		{
+			var referenceInfo = string.IsNullOrWhiteSpace(exclusion.ReferencedBy)
+				? string.Empty
+				: $" [referenced by {exclusion.ReferencedBy}]";
+			LogInfo($"  {exclusion.Kind}: {exclusion.Name} - {exclusion.Reason}{referenceInfo}");
+		}
+
+		if (!_verbose && uiSurfaceManifest.Exclusions.Count > 15)
+		{
+			LogInfo($"  ... and {uiSurfaceManifest.Exclusions.Count - 15} more");
+		}
+
+		LogInfo("");
 		LogInfo("=".PadRight(80, '='));
-		LogInfo($"Total items: {packageDefinition.Widgets.Count + packageDefinition.Types.Count + packageDefinition.Enums.Count}");
+		LogInfo($"Included items: {uiSurfaceManifest.Widgets.Count + uiSurfaceManifest.Types.Count + uiSurfaceManifest.Enums.Count + uiSurfaceManifest.Typedefs.Count}");
 		LogInfo("=".PadRight(80, '='));
 	}
 
@@ -1270,72 +1065,6 @@ internal class Program
 		}
 
 		return input.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
-	}
-
-	private static bool ShouldSkipParserGeneration(WidgetDefinition widget, EnrichedWidgetDefinition enrichedWidget)
-	{
-		var sourceLibrary = widget.SourceLibrary ?? enrichedWidget.SourceLibrary ?? string.Empty;
-
-		// Material/Cupertino widgets introduce large callback/typedef surfaces not yet mapped safely.
-		if (sourceLibrary.Contains("material", StringComparison.OrdinalIgnoreCase)
-			|| sourceLibrary.Contains("cupertino", StringComparison.OrdinalIgnoreCase))
-		{
-			return true;
-		}
-
-		return HasUnsupportedCallbackSignature(enrichedWidget);
-	}
-
-	private static bool HasUnsupportedCallbackSignature(EnrichedWidgetDefinition enrichedWidget)
-	{
-		foreach (var property in enrichedWidget.AllProperties)
-		{
-			if (!property.IsCallback)
-			{
-				continue;
-			}
-
-			var callbackType = (property.DartType ?? string.Empty).Trim();
-			if (callbackType.EndsWith("?", StringComparison.Ordinal))
-			{
-				callbackType = callbackType.Substring(0, callbackType.Length - 1).Trim();
-			}
-
-			if (string.IsNullOrEmpty(callbackType))
-			{
-				return true;
-			}
-
-			// Literal function signatures are not fully mapped yet; avoid generating invalid closures.
-			if (callbackType.Contains("Function(", StringComparison.Ordinal))
-			{
-				return true;
-			}
-
-			if (callbackType.StartsWith("ValueChanged<", StringComparison.Ordinal)
-				|| callbackType.StartsWith("FormFieldValidator", StringComparison.Ordinal))
-			{
-				continue;
-			}
-
-			if (!_supportedParserCallbackTypes.Contains(callbackType))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static WidgetDefinition SelectPreferredWidgetDefinition(IGrouping<string, WidgetDefinition> definitions)
-	{
-		// Prefer concrete definitions with richer metadata when duplicate widget names exist
-		// across Flutter libraries.
-		return definitions
-			.OrderBy(w => w.IsAbstract ? 1 : 0)
-			.ThenBy(w => string.IsNullOrWhiteSpace(w.SourceLibrary) ? 1 : 0)
-			.ThenByDescending(w => w.Properties?.Count ?? 0)
-			.First();
 	}
 
 	/// <summary>
@@ -1434,47 +1163,4 @@ internal class Program
 		};
 	}
 
-	/// <summary>
-	/// Converts a DartCoreType to a WidgetDefinition for struct generation purposes.
-	/// </summary>
-	private static WidgetDefinition ConvertCoreTypeToWidget(DartCoreType coreType)
-	{
-		return new WidgetDefinition
-		{
-			Name = coreType.Name,
-			Namespace = coreType.Namespace,
-			BaseClass = null, // Core types don't have base classes in our model
-			Type = WidgetType.Stateless,
-			Properties = coreType.Properties,
-			Constructors = new List<ConstructorDefinition>(),
-			Documentation = coreType.Documentation,
-			SourceLibrary = coreType.SourceLibrary,
-			HasSingleChild = false,
-			HasMultipleChildren = false,
-			IsAbstract = coreType.IsAbstract,
-			IsDeprecated = false,
-			DeprecationMessage = null
-		};
-	}
-}
-
-/// <summary>
-/// Definition for manually defined Dart core types that need struct generation.
-/// </summary>
-internal class DartCoreTypesDefinition
-{
-	public List<DartCoreType> Types { get; set; } = new();
-}
-
-/// <summary>
-/// Represents a Dart core type (like Duration, DateTime) that needs struct generation.
-/// </summary>
-internal class DartCoreType
-{
-	public string Name { get; set; } = string.Empty;
-	public string Namespace { get; set; } = string.Empty;
-	public string? Documentation { get; set; }
-	public List<PropertyDefinition> Properties { get; set; } = new();
-	public bool IsAbstract { get; set; }
-	public string? SourceLibrary { get; set; }
 }

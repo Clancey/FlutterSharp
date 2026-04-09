@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Flutter;
 using Flutter.Widgets;
 using Flutter.MAUI;
@@ -6,11 +7,16 @@ namespace FlutterSample.MAUI;
 
 /// <summary>
 /// List demo page showing Flutter list rendering with MAUI input controls.
-/// Demonstrates dynamic list updates from MAUI to Flutter.
+/// Demonstrates dynamic list updates by rebuilding Flutter content from MAUI state.
 /// </summary>
 public partial class ListDemoPage : ContentPage
 {
-	private ListWidget? _listWidget;
+	private readonly List<string> _items = new()
+	{
+		"Welcome to FlutterSharp!",
+		"This is a dynamic list",
+		"Add items using the entry below"
+	};
 
 	public ListDemoPage()
 	{
@@ -20,39 +26,42 @@ public partial class ListDemoPage : ContentPage
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
-
-		// Create and set the list widget
-		_listWidget = new ListWidget();
-		flutterView.Widget = _listWidget;
+		RefreshListWidget();
 	}
 
 	private void OnAddItemClicked(object? sender, EventArgs e)
 	{
-		if (_listWidget != null && !string.IsNullOrWhiteSpace(itemEntry.Text))
+		if (!string.IsNullOrWhiteSpace(itemEntry.Text))
 		{
-			_listWidget.AddItem(itemEntry.Text);
+			_items.Add(itemEntry.Text.Trim());
 			itemEntry.Text = string.Empty;
+			RefreshListWidget();
 		}
 	}
 
 	private void OnClearClicked(object? sender, EventArgs e)
 	{
-		_listWidget?.ClearItems();
+		_items.Clear();
+		RefreshListWidget();
+	}
+
+	private void RefreshListWidget()
+	{
+		flutterView.Widget = new ListDisplayWidget(_items);
 	}
 }
 
 /// <summary>
-/// A stateful Flutter widget that displays a dynamic list.
-/// Items can be added or cleared via public methods.
+/// A Flutter widget snapshot for the current list contents.
 /// </summary>
-public class ListWidget : StatefulWidget
+public sealed class ListDisplayWidget : StatelessWidget
 {
-	private List<string> _items = new()
+	private readonly List<string> _items;
+
+	public ListDisplayWidget(IEnumerable<string> items)
 	{
-		"Welcome to FlutterSharp!",
-		"This is a dynamic list",
-		"Add items using the entry below"
-	};
+		_items = new List<string>(items);
+	}
 
 	public override Widget Build()
 	{
@@ -85,15 +94,5 @@ public class ListWidget : StatefulWidget
 		}
 
 		return new Center(child: column);
-	}
-
-	public void AddItem(string item)
-	{
-		SetState(() => _items.Add(item));
-	}
-
-	public void ClearItems()
-	{
-		SetState(() => _items.Clear());
 	}
 }

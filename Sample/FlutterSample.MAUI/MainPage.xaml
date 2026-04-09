@@ -5,26 +5,81 @@
              x:Class="FlutterSample.MAUI.MainPage"
              Title="FlutterSharp Demo">
 
-    <Grid RowDefinitions="Auto, *">
-        <!-- MAUI header showing hybrid nature -->
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
         <VerticalStackLayout Grid.Row="0" Padding="10" BackgroundColor="{StaticResource Primary}">
             <Label Text="FlutterSharp MAUI Sample"
                    FontSize="20"
                    FontAttributes="Bold"
                    TextColor="White"
                    HorizontalOptions="Center" />
-            <Label Text="MAUI ContentPage hosting a FlutterView"
+            <Label Text="One MAUI page driving one FlutterView"
                    FontSize="14"
                    TextColor="White"
                    Opacity="0.8"
                    HorizontalOptions="Center" />
         </VerticalStackLayout>
 
-        <!-- FlutterView hosting the Flutter widget -->
+        <HorizontalStackLayout Grid.Row="1"
+                               Padding="12"
+                               Spacing="10"
+                               HorizontalOptions="Center"
+                               BackgroundColor="{StaticResource Gray100}">
+            <Button x:Name="overviewButton"
+                    Text="Overview"
+                    Clicked="OnOverviewClicked" />
+            <Button x:Name="counterButton"
+                    Text="Counter"
+                    Clicked="OnCounterClicked" />
+            <Button x:Name="listButton"
+                    Text="List"
+                    Clicked="OnListClicked" />
+        </HorizontalStackLayout>
+
         <flutter:FlutterView x:Name="flutterView"
-                            Grid.Row="1"
-                            HorizontalOptions="Fill"
-                            VerticalOptions="Fill" />
+                             Grid.Row="2"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Fill" />
+
+        <VerticalStackLayout Grid.Row="3"
+                             Padding="16"
+                             Spacing="12"
+                             BackgroundColor="{StaticResource Gray100}">
+            <Label x:Name="modeDescriptionLabel"
+                   FontSize="14"
+                   HorizontalOptions="Center" />
+
+            <HorizontalStackLayout x:Name="counterControls"
+                                   Spacing="20"
+                                   HorizontalOptions="Center"
+                                   IsVisible="False">
+                <Button Text="-"
+                        WidthRequest="60"
+                        HeightRequest="60"
+                        FontSize="24"
+                        Clicked="OnDecrementClicked" />
+                <Button Text="+"
+                        WidthRequest="60"
+                        HeightRequest="60"
+                        FontSize="24"
+                        Clicked="OnIncrementClicked" />
+                <Button Text="Reset"
+                        HeightRequest="60"
+                        Clicked="OnResetClicked" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout x:Name="listControls"
+                                   Spacing="10"
+                                   HorizontalOptions="Center"
+                                   IsVisible="False">
+                <Entry x:Name="itemEntry"
+                       Placeholder="Enter item text"
+                       WidthRequest="220" />
+                <Button Text="Add Item"
+                        Clicked="OnAddItemClicked" />
+                <Button Text="Clear All"
+                        Clicked="OnClearClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
     </Grid>
 
 </ContentPage>

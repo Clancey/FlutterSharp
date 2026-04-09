@@ -157,6 +157,7 @@ namespace FlutterSharp.CodeGen.Analysis
 				LogDebug($"  Widgets: {packageDefinition.Widgets.Count}");
 				LogDebug($"  Types: {packageDefinition.Types.Count}");
 				LogDebug($"  Enums: {packageDefinition.Enums.Count}");
+				LogDebug($"  Typedefs: {packageDefinition.Typedefs.Count}");
 
 				return packageDefinition;
 			}
@@ -287,6 +288,14 @@ namespace FlutterSharp.CodeGen.Analysis
 					_jsonOptions) ?? new List<EnumDefinition>();
 			}
 
+			var typedefs = new List<TypedefDefinition>();
+			if (rawData.TryGetValue("typedefs", out var typedefsElement))
+			{
+				typedefs = JsonSerializer.Deserialize<List<TypedefDefinition>>(
+					typedefsElement.GetRawText(),
+					_jsonOptions) ?? new List<TypedefDefinition>();
+			}
+
 			return new PackageDefinition
 			{
 				Name = name,
@@ -296,7 +305,8 @@ namespace FlutterSharp.CodeGen.Analysis
 				AnalysisTimestamp = analysisTimestamp,
 				Widgets = widgets,
 				Types = types,
-				Enums = enums
+				Enums = enums,
+				Typedefs = typedefs
 			};
 		}
 
@@ -435,9 +445,17 @@ namespace FlutterSharp.CodeGen.Analysis
 				return;
 			}
 
-			// Always refresh package_config from lockfile to avoid stale analyzer/macro resolution.
-			LogDebug("Ensuring analyzer dependencies are in sync with pubspec.lock.");
-			await ExecuteCommandAsync("dart", "pub get --enforce-lockfile", cancellationToken, scriptDirectory);
+			var lockfilePath = Path.Combine(scriptDirectory, "pubspec.lock");
+			if (File.Exists(lockfilePath))
+			{
+				// Refresh package_config from lockfile to avoid stale analyzer/macro resolution.
+				LogDebug("Ensuring analyzer dependencies are in sync with pubspec.lock.");
+				await ExecuteCommandAsync("dart", "pub get --enforce-lockfile", cancellationToken, scriptDirectory);
+				return;
+			}
+
+			LogWarning("pubspec.lock not found for analyzer tool. Running 'dart pub get' without lockfile enforcement.");
+			await ExecuteCommandAsync("dart", "pub get", cancellationToken, scriptDirectory);
 		}
 
 		/// <summary>

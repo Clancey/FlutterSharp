@@ -107,14 +107,22 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 		}
 
 			// Additional struct types used by GenerateAdditionalHelpers() but not in registered parsers
-			structTypes.Add("TextStyleStruct");
-			structTypes.Add("AlignmentDirectionalStruct");
-			structTypes.Add("EdgeInsetsDirectionalStruct");
-			structTypes.Add("BorderRadiusDirectionalStruct");
-			structTypes.Add("ShapeDecorationStruct");
-			structTypes.Add("LinearGradientStruct");
-			structTypes.Add("RadialGradientStruct");
-			structTypes.Add("SweepGradientStruct");
+			if (HasStructDefinition("TextStyle"))
+				structTypes.Add("TextStyleStruct");
+			if (HasStructDefinition("AlignmentDirectional"))
+				structTypes.Add("AlignmentDirectionalStruct");
+			if (HasStructDefinition("EdgeInsetsDirectional"))
+				structTypes.Add("EdgeInsetsDirectionalStruct");
+			if (HasStructDefinition("BorderRadiusDirectional"))
+				structTypes.Add("BorderRadiusDirectionalStruct");
+			if (HasStructDefinition("ShapeDecoration"))
+				structTypes.Add("ShapeDecorationStruct");
+			if (HasStructDefinition("LinearGradient"))
+				structTypes.Add("LinearGradientStruct");
+			if (HasStructDefinition("RadialGradient"))
+				structTypes.Add("RadialGradientStruct");
+			if (HasStructDefinition("SweepGradient"))
+				structTypes.Add("SweepGradientStruct");
 
 		// Structs defined in flutter_sharp_structs.dart (not in separate files)
 		var baseFileStructs = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
@@ -138,7 +146,10 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			var structFileName = $"{typeName.ToLowerInvariant()}_struct.dart";
 			sb.AppendLine($"import 'structs/{structFileName}';");
 		}
-		sb.AppendLine("import 'structs/alignment_struct.dart' as generated_alignment;");
+		if (HasStructDefinition("Alignment"))
+		{
+			sb.AppendLine("import 'structs/alignment_struct.dart' as generated_alignment;");
+		}
 		sb.AppendLine();
 
 		// Get all registered parser functions from TypeMappingRegistry
@@ -281,22 +292,9 @@ namespace FlutterSharp.CodeGen.Generators.Dart
 			if (string.IsNullOrEmpty(dartType)) return false;
 			var baseType = dartType.TrimEnd('?');
 
-			// Types that have struct definitions
-			var knownStructTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-			{
-				"Size", "Offset", "Rect", "Radius", "Matrix4",
-				"Alignment", "AlignmentGeometry",
-				"EdgeInsets", "EdgeInsetsGeometry",
-				"BorderRadius", "BorderRadiusGeometry",
-				"Color",
-				// Additional types with struct definitions
-				"BoxConstraints", "Constraints",
-				"Decoration", "BoxDecoration", "ShapeDecoration",
-				"TextStyle",
-				"Gradient", "LinearGradient", "RadialGradient", "SweepGradient"
-			};
-
-			return knownStructTypes.Contains(baseType);
+			return _typeDefinitions.Any(type =>
+				type.GenerateDartStruct &&
+				type.Name.Equals(baseType, StringComparison.OrdinalIgnoreCase));
 		}
 
 		private string GeneratePrimitiveParser(string parserName, string dartType, string ffiType)

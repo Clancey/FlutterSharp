@@ -79,6 +79,26 @@ namespace FlutterSharp.CodeGen.Models
 		public Dictionary<string, object>? Metadata { get; init; }
 
 		/// <summary>
+		/// Gets the referenced public type names used by this type surface.
+		/// </summary>
+		public List<string> ReferencedTypes { get; init; } = new();
+
+		/// <summary>
+		/// Gets a value indicating whether this type came from a supplemental manual catalog.
+		/// </summary>
+		public bool IsSupplemental { get; init; }
+
+		/// <summary>
+		/// Gets a value indicating whether to generate the C# struct for this type.
+		/// </summary>
+		public bool GenerateCSharpStruct { get; init; } = true;
+
+		/// <summary>
+		/// Gets a value indicating whether to generate the Dart struct for this type.
+		/// </summary>
+		public bool GenerateDartStruct { get; init; } = true;
+
+		/// <summary>
 		/// Returns a string representation of this type definition.
 		/// </summary>
 		public override string ToString()

@@ -10,10 +10,14 @@ On the .net side we create objects and pin them to memory. This allows us to loa
 
 # Building
 
-* Make sure you have Flutter installed.
-* Run the `build.sh`
-* Open  `Flutter.sln`
-* And build from VS
+* Make sure you have Flutter and the .NET iOS workload installed.
+* Run `./build.sh` to generate the Flutter iOS frameworks used by the samples.
+* Build the repo with `Flutter.sln`, or build the samples directly with:
+  * `dotnet build Sample/FlutterSample/FlutterSample.csproj -f net10.0-ios -p:RuntimeIdentifier=iossimulator-arm64`
+  * `dotnet build Sample/FlutterSample.MAUI/FlutterSample.MAUI.csproj -f net10.0-ios -p:RuntimeIdentifier=iossimulator-arm64`
+* To launch the iOS sample on a booted simulator:
+  * `xcrun simctl install booted Sample/FlutterSample/bin/Debug/net10.0-ios/iossimulator-arm64/FlutterSample.app`
+  * `xcrun simctl launch booted com.fluttersharp.sample`
 
 # Disclaimer
 

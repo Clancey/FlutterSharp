@@ -5,6 +5,7 @@
       "namespace": "package:flutter/painting.dart",
       "documentation": "Base class for [Alignment] that allows for text-direction aware resolution.\n\nA property or argument of this type accepts classes created either with [new\nAlignment] and its variants or [new AlignmentDirectional].\n\nTo convert an [AlignmentGeometry] object of indeterminate type into an\n[Alignment] object, call the [resolve] method.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/painting.dart"
     },
@@ -13,6 +14,7 @@
       "namespace": "package:flutter/painting.dart",
       "documentation": "Base class for [EdgeInsets] that allows for text-direction aware resolution.\n\nA property or argument of this type accepts classes created either with [new\nEdgeInsets] and its variants or [new EdgeInsetsDirectional].\n\nTo convert an [EdgeInsetsGeometry] object of indeterminate type into an\n[EdgeInsets] object, call the [resolve] method.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/painting.dart"
     },
@@ -21,6 +23,7 @@
       "namespace": "package:flutter/painting.dart",
       "documentation": "Base class for [BorderRadius] that allows for text-direction aware resolution.\n\nA property or argument of this type accepts classes created either with [new\nBorderRadius] and its variants or [new BorderRadiusDirectional].\n\nTo convert a [BorderRadiusGeometry] object of indeterminate type into a\n[BorderRadius] object, call the [resolve] method.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/painting.dart"
     },
@@ -29,6 +32,7 @@
       "namespace": "package:flutter/painting.dart",
       "documentation": "A 2D gradient.\n\nThis is an interface that allows subclasses to be created for each of the\ndifferent ways that the shaders can be created.\n\nSee also:\n\n * [LinearGradient], which displays a gradient in parallel lines, and has an\n   example which shows a different way to use [Gradient] objects.\n * [RadialGradient], which displays a gradient in concentric circles, and\n   has an example which shows a different way to use [Gradient] objects.\n * [SweepGradient], which displays a gradient in a sweeping arc around a\n   center point.\n * [BoxDecoration], which can take a [Gradient] in its\n   [BoxDecoration.gradient] property.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/painting.dart"
     },
@@ -37,6 +41,7 @@
       "namespace": "package:flutter/animation.dart",
       "documentation": "An animation with a value of type T.\n\nAn animation consists of a value (of type T) together with a status. The\nstatus indicates whether the animation is conceptually running from beginning\nto end or from the end back to the beginning, although the actual value of the\nanimation might not change monotonically (e.g., if the animation uses a curve\nthat bounces).\n\nAnimations also let other objects listen for changes to either their value or\ntheir status. These callbacks are called during the \"animation\" phase of the\npipeline, just prior to rebuilding widgets.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/animation.dart"
     },
@@ -45,6 +50,7 @@
       "namespace": "package:flutter/painting.dart",
       "documentation": "A description of a box decoration (a decoration applied to a [Rect]).\n\nThis class presents the abstract interface for all decorations.\nSee [BoxDecoration] for a concrete example.\n\nTo actually paint a [Decoration], use the [createBoxPainter] method to obtain\na [BoxPainter]. [Decoration] objects can be shared between boxes; [BoxPainter]\nobjects can cache resources to make painting on a particular surface faster.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/painting.dart"
     },
@@ -53,6 +59,7 @@
       "namespace": "package:flutter/rendering.dart",
       "documentation": "Immutable layout constraints for [RenderBox] layout.\n\nA [Size] respects a [BoxConstraints] if, and only if, all of the following\nrelations hold:\n\n* [minWidth] <= [Size.width] <= [maxWidth]\n* [minHeight] <= [Size.height] <= [maxHeight]\n\nThe constraints themselves must satisfy these relations:\n\n* 0.0 <= [minWidth] <= [maxWidth] <= [double.infinity]\n* 0.0 <= [minHeight] <= [maxHeight] <= [double.infinity]",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/rendering.dart"
     },
@@ -61,6 +68,7 @@
       "namespace": "package:flutter/painting.dart",
       "documentation": "Base class for box borders that can paint a rectangle.\n\nThe four sides of a [BoxBorder] are represented by [BorderSide] objects, and\neach side can have a different color and width.\n\n[BoxBorder] is an interface that allows subclasses to implement different\nways to paint borders. The most common implementation is [Border], which\npaints the four sides with uniform or different colors and widths.",
       "properties": [],
+      "generateCSharpStruct": false,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/painting.dart"
     },
@@ -69,6 +77,7 @@
       "namespace": "package:flutter/animation.dart",
       "documentation": "An abstract class providing an interface for parametric curves.\n\nA parametric curve is a function from a unitless time parameter (typically in the range 0.0 to 1.0) to a dimensional value (typically in the range 0.0 to 1.0). Parametric curves are defined to have the same value at 0.0 and 1.0.",
       "properties": [],
+      "generateCSharpStruct": false,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/animation.dart"
     },
@@ -77,6 +86,7 @@
       "namespace": "package:flutter/widgets.dart",
       "documentation": "An object that can be used by a stateful widget to obtain the keyboard focus and to handle keyboard events. This is a Flutter SDK class that cannot be marshaled through FFI. Widgets using FocusNode should be implemented with manual wrappers.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/widgets.dart"
     },
@@ -85,6 +95,7 @@
       "namespace": "package:flutter/widgets.dart",
       "documentation": "A key that is unique across the entire app. This is a Flutter SDK class that cannot be marshaled through FFI. Widgets using GlobalKey should be implemented with manual wrappers.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/widgets.dart"
     },
@@ -93,6 +104,7 @@
       "namespace": "package:flutter/widgets.dart",
       "documentation": "Determines the physics of a Scrollable widget. This is a Flutter SDK class that cannot be marshaled through FFI. Widgets using ScrollPhysics should be implemented with manual wrappers.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/widgets.dart"
     },
@@ -130,6 +142,7 @@
           "documentation": "The maximum height that satisfies the constraints."
         }
       ],
+      "generateCSharpStruct": true,
       "isAbstract": false,
       "sourceLibrary": "package:flutter/rendering.dart"
     },
@@ -152,6 +165,7 @@
         { "name": "decorationThickness", "dartType": "double?", "csharpType": "double", "isRequired": false, "documentation": "The thickness of the decoration stroke as a multiplier of the thickness defined by the font." },
         { "name": "debugLabel", "dartType": "String?", "csharpType": "string", "isRequired": false, "documentation": "A human-readable description of this text style." }
       ],
+      "generateCSharpStruct": true,
       "isAbstract": false,
       "sourceLibrary": "package:flutter/painting.dart"
     },
@@ -160,6 +174,7 @@
       "namespace": "package:flutter/painting.dart",
       "documentation": "Identifies an image without committing to the precise final asset.",
       "properties": [],
+      "generateCSharpStruct": true,
       "isAbstract": true,
       "sourceLibrary": "package:flutter/painting.dart"
     }

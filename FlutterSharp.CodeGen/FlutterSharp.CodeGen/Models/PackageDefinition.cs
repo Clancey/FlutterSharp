@@ -59,6 +59,11 @@ namespace FlutterSharp.CodeGen.Models
 		public List<EnumDefinition> Enums { get; init; } = new();
 
 		/// <summary>
+		/// Gets the typedefs discovered in this package.
+		/// </summary>
+		public List<TypedefDefinition> Typedefs { get; init; } = new();
+
+		/// <summary>
 		/// Gets the package dependencies.
 		/// </summary>
 		public Dictionary<string, string>? Dependencies { get; init; }
@@ -101,7 +106,8 @@ namespace FlutterSharp.CodeGen.Models
 			var widgetCount = Widgets?.Count ?? 0;
 			var typeCount = Types?.Count ?? 0;
 			var enumCount = Enums?.Count ?? 0;
-			return $"{Name} v{Version} ({widgetCount} widgets, {typeCount} types, {enumCount} enums)";
+			var typedefCount = Typedefs?.Count ?? 0;
+			return $"{Name} v{Version} ({widgetCount} widgets, {typeCount} types, {enumCount} enums, {typedefCount} typedefs)";
 		}
 	}
 }
