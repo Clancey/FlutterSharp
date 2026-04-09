@@ -1,18 +1,13 @@
-
-import 'dart:ffi';
-
 import '../flutter_sharp_structs.dart';
-import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/material.dart';
 
 class RaisedButtonParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
-   // final id = map["id"];
-   return null;
-  //TODO: implement;
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
+    // final id = map["id"];
+    return null;
+    //TODO: implement;
     // var raisedButton = RaisedButton(
     //   color: map.containsKey('color') ? parseHexColor(map['color']) : null,
     //   disabledColor: map.containsKey('disabledColor')
@@ -34,7 +29,7 @@ class RaisedButtonParser extends WidgetParser {
     //       map.containsKey('textColor') ? parseHexColor(map['textColor']) : null,
     //   child: DynamicWidgetBuilder.buildFromMap(
     //       map['child'], buildContext),
-    //   onPressed: () {      
+    //   onPressed: () {
     //     raiseMauiEvent(id,"onPressed",null);
     //   },
     // );

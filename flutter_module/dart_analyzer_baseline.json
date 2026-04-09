@@ -1,0 +1,6 @@
+{
+  "date": "2026-02-17",
+  "warning_max": 361,
+  "info_max": 14,
+  "notes": "Baseline after parser/schema reconciliation, generator template fixes, and bridge edge-case tests. Health check fails if counts regress above these limits."
+}

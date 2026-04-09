@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import '../flutter_sharp_structs.dart';
 import '../utils.dart';
 import '../maui_flutter.dart';
@@ -8,8 +6,7 @@ import 'package:flutter/material.dart';
 
 class SelectableTextWidgetParser implements WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<ScaffoldStruct>.fromAddress(fos.handle.address).ref;
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     return null;
     //TODO: implement;
 //     String data = map['data'];
@@ -50,7 +47,6 @@ class SelectableTextWidgetParser implements WidgetParser {
 
 class SelectableTextSpanParser {
   TextSpan parse(Map<String, dynamic> map) {
-    String clickEvent = map.containsKey("recognizer") ? map['recognizer'] : "";
     var textSpan = TextSpan(
         text: map['value'],
         style: parseTextStyle(map['style']),
@@ -67,10 +63,9 @@ class SelectableTextSpanParser {
     return textSpan;
   }
 
-  void parseChildren(
-      TextSpan textSpan, List<dynamic> childrenSpan) {
+  void parseChildren(TextSpan textSpan, List<dynamic> childrenSpan) {
     for (var childmap in childrenSpan) {
-      textSpan.children.add(parse(childmap));
+      textSpan.children?.add(parse(childmap));
     }
   }
 }

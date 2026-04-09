@@ -1,0 +1,13 @@
+name: package_scanner
+description: A Dart analyzer tool to extract widget, type, and enum definitions from Dart source files
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  analyzer: ^6.0.0
+  args: ^2.4.0
+  path: ^1.8.0
+  yaml: ^3.1.0

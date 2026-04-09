@@ -90,17 +90,6 @@ namespace Flutter.Internal {
 		FlutterBinaryMessenger BinaryMessenger { get;}
 	}
 
-	[BaseType(typeof(NSObject))]
-	interface GeneratedPluginRegistrant {
-		[Static]
-		[Export ("registerWithRegistry:")]
-		void Register (FlutterEngine engine);
-	}
-	//	@interface GeneratedPluginRegistrant : NSObject
-	//+ (void) registerWithRegistry:(NSObject<FlutterPluginRegistry>*) registry;
-	//	@end
-	
-
 	[BaseType (typeof (NSObject))]
 	[Model]
 	interface FlutterBinaryMessenger {
@@ -132,4 +121,3 @@ namespace Flutter.Internal {
 
 
 }
-

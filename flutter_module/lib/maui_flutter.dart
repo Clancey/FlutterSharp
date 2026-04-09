@@ -1,16 +1,38 @@
 library maui_flutter;
 
-import 'dart:io' show Platform;
 import 'dart:ffi';
-import 'dart:typed_data';
-import 'package:ffi/ffi.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 import 'package:flutter_module/utils.dart';
 import 'mauiRenderer.dart';
+export 'mauiRenderer.dart'
+    show methodChannel, sendException, sendExceptionToCSharp;
+export 'performance_overlay.dart'
+    show
+        FlutterSharpPerformanceOverlay,
+        PerformanceOverlayManager,
+        PerformanceOverlayToggle,
+        OverlayPosition,
+        performanceOverlayManager;
+export 'rendering_metrics.dart'
+    show
+        RenderingMetricsManager,
+        RenderingStats,
+        FrameTimingInfo,
+        renderingMetrics;
+export 'binary_protocol.dart'
+    show BinaryProtocol, BinaryProtocolStats, MessageTypes;
+export 'widget_inspector_service.dart'
+    show
+        WidgetInspectorManager,
+        WidgetInspectorService,
+        WidgetInspectorOverlay,
+        WidgetInspectorToggle,
+        widgetInspectorManager,
+        widgetInspectorService;
 import 'dart:convert';
 
+// Manual parser imports (legacy - kept for backwards compatibility)
 import 'parsers/align_widget_parser.dart';
 import 'parsers/appbar_parser.dart';
 import 'parsers/aspectratio_widget_parser.dart';
@@ -25,7 +47,17 @@ import 'parsers/dropcaptext_widget_parser.dart';
 import 'parsers/expanded_widget_parser.dart';
 import 'parsers/fittedbox_widget_parser.dart';
 import 'parsers/flexible_parser.dart';
+import 'parsers/elevatedbutton_parser.dart';
+import 'parsers/textbutton_parser.dart';
+import 'parsers/outlinedbutton_parser.dart';
+import 'parsers/iconbutton_parser.dart';
 import 'parsers/floatingactionbutton_parser.dart';
+import 'parsers/checkbox_parser.dart';
+import 'parsers/radio_parser.dart';
+import 'parsers/switch_parser.dart';
+import 'parsers/slider_parser.dart';
+import 'parsers/card_parser.dart';
+import 'parsers/bottomnavigationbar_parser.dart';
 import 'parsers/gridview_widget_parser.dart';
 import 'parsers/icon_widget_parser.dart';
 import 'parsers/image_widget_parser.dart';
@@ -33,14 +65,21 @@ import 'parsers/indexedstack_widget_parser.dart';
 import 'parsers/listtile_widget_parser.dart';
 import 'parsers/listview_widget_parser.dart';
 import 'parsers/listviewbuilder_parser.dart';
+import 'parsers/listenablebuilder_parser.dart';
+import 'parsers/gridviewbuilder_parser.dart';
+import 'parsers/provider_parser.dart';
+import 'parsers/changenotifierprovider_parser.dart';
+import 'parsers/consumer_parser.dart';
+import 'parsers/selector_parser.dart';
+import 'parsers/multiprovider_parser.dart';
 import 'parsers/opacity_widget_parser.dart';
 import 'parsers/padding_widget_parser.dart';
 import 'parsers/pageview_widget_parser.dart';
 import 'parsers/placeholder_widget_parser.dart';
-import 'parsers/row_column_widget_parser.dart';
 import 'parsers/safearea_widget_parser.dart';
 import 'parsers/scaffold_parser.dart';
 import 'parsers/selectabletext_widget_parser.dart';
+import 'parsers/singlechildscrollview_parser.dart';
 import 'parsers/sizedbox_widget_parser.dart';
 import 'parsers/stack_positioned_widgets_parser.dart';
 import 'parsers/statefullwidget_parser.dart';
@@ -50,9 +89,25 @@ import 'parsers/tabbarview_parser.dart';
 import 'parsers/text_widget_parser.dart';
 import 'parsers/textfield_parser.dart';
 import 'parsers/wrap_widget_parser.dart';
+import 'parsers/navigator_parser.dart';
+import 'parsers/materialapp_parser.dart';
+import 'parsers/refreshindicator_parser.dart';
+import 'parsers/infinitelistview_parser.dart';
+import 'parsers/infinitegridview_parser.dart';
+import 'parsers/alert_dialog_parser.dart';
+import 'parsers/bottom_sheet_parser.dart';
+import 'parsers/cupertinobutton_parser.dart';
+import 'parsers/cupertinotextfield_parser.dart';
+import 'parsers/cupertinonavigationbar_parser.dart';
+import 'parsers/cupertinotabbar_parser.dart';
+import 'parsers/cupertinoswitch_parser.dart';
+import 'parsers/dropdownbutton_parser.dart';
+import 'parsers/errorboundary_parser.dart';
 
-import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
+
+// Auto-generated parser imports and list (418 parsers from Flutter SDK)
+import 'generated_parsers.dart';
 
 // import 'dynamic_widget/basic/cliprrect_widget_parser.dart';
 
@@ -67,22 +122,42 @@ class DynamicWidgetBuilder {
     BaselineWidgetParser(),
     CenterWidgetParser(),
     ClipRRectWidgetParser(),
-    ColumnWidgetParser(),
     ContainerWidgetParser(),
     DefaultTabControllerParser(),
     DrawerParser(),
     DropCapTextParser(),
+    ErrorBoundaryParser(),
     ExpandedSizedBoxWidgetParser(),
     ExpandedWidgetParser(),
     FittedBoxWidgetParser(),
     FlexibleParser(),
+    ElevatedButtonParser(),
+    TextButtonParser(),
+    OutlinedButtonParser(),
+    IconButtonParser(),
     FloatingActionButtonParser(),
+    CheckboxParser(),
+    RadioParser(),
+    SwitchParser(),
+    SliderParser(),
+    CardParser(),
+    BottomNavigationBarParser(),
+    DropdownButtonParser(),
     GridViewWidgetParser(),
     IconWidgetParser(),
     IndexedStackWidgetParser(),
     ListTileWidgetParser(),
     ListViewWidgetParser(),
     ListViewBuilderParser(),
+    ListenableBuilderParser(),
+    GridViewBuilderParser(),
+    InfiniteListViewParser(),
+    InfiniteGridViewParser(),
+    ProviderParser(),
+    ChangeNotifierProviderParser(),
+    ConsumerParser(),
+    SelectorParser(),
+    MultiProviderParser(),
     NetworkImageWidgetParser(),
     OpacityWidgetParser(),
     PaddingWidgetParser(),
@@ -90,11 +165,11 @@ class DynamicWidgetBuilder {
     PlaceholderWidgetParser(),
     PositionedWidgetParser(),
     RaisedButtonParser(),
-    RowWidgetParser(),
     SafeAreaWidgetParser(),
     ScaffoldParser(),
     SelectableTextWidgetParser(),
-    SizedBoxWidgetParser(),
+    SingleChildScrollViewParser(),
+    // SizedBoxWidgetParser() - removed: legacy parser returned null, generated SizedBoxParser is used instead
     StackWidgetParser(),
     StatefulWidgetParser(),
     TabParser(),
@@ -103,6 +178,19 @@ class DynamicWidgetBuilder {
     TextFieldParser(),
     TextWidgetParser(),
     WrapWidgetParser(),
+    NavigatorParser(),
+    MaterialAppParser(),
+    RefreshIndicatorParser(),
+    CupertinoButtonParser(),
+    CupertinoTextFieldParser(),
+    CupertinoNavigationBarParser(),
+    CupertinoTabBarParser(),
+    CupertinoSwitchParser(),
+    AlertDialogParser(),
+    BottomSheetParser(),
+
+    // Add all generated parsers (418 parsers from Flutter SDK)
+    ...generatedParsers,
   ];
 
   static final _widgetNameParserMap = <String, WidgetParser>{};
@@ -120,13 +208,13 @@ class DynamicWidgetBuilder {
   static void initDefaultParsersIfNess() {
     if (!_defaultParserInited) {
       for (var parser in _parsers) {
-        _widgetNameParserMap[parser.widgetName] = parser;
+        _widgetNameParserMap.putIfAbsent(parser.widgetName, () => parser);
       }
       _defaultParserInited = true;
     }
   }
 
-  static Widget buildFromAddress(int pointer, BuildContext buildContext) {
+  static Widget? buildFromAddress(int pointer, BuildContext buildContext) {
     if (pointer == 0) return null;
     var map = Pointer<WidgetStruct>.fromAddress(pointer);
     var widget = buildFromPointer(map, buildContext);
@@ -135,39 +223,61 @@ class DynamicWidgetBuilder {
 
   static final _trackedDartObjects = <String, dynamic>{};
 
-  static Widget buildFromPointer(
+  static Widget? buildFromPointer(
       Pointer<WidgetStruct> p, BuildContext buildContext) {
     if (p.address == 0) return null;
     return buildFromMap(p.ref, buildContext);
   }
 
-  static Widget buildFromMap(
-      IFlutterObjectStruct fos, BuildContext buildContext) {
+  static Widget buildFromPointerNotNull(
+      Pointer<WidgetStruct> p, BuildContext buildContext) {
+    if (p.address == 0) return new Text("Null");
+    return buildFromMap(p.ref, buildContext) ?? new Text("Null");
+  }
+
+  static Widget? buildFromMap(
+      IFlutterObjectStruct? fos, BuildContext buildContext) {
     if (fos == null) return null;
     initDefaultParsersIfNess();
-    String widgetName = parseString(fos.widgetType);
-    print("Parsing: $widgetName");
+    String? widgetName = parseString(fos.widgetType);
+    if (widgetName == null) return null;
     var parser = _widgetNameParserMap[widgetName];
     if (parser != null) {
-      var w = parser.parse(fos, buildContext);
-      print("Parsing complete: $widgetName");
-      return w;
+      try {
+        var w = parser.parse(fos, buildContext);
+        return w;
+      } catch (e, stackTrace) {
+        log.severe("Parser error for $widgetName: $e");
+        // Send exception to C# for logging
+        sendException(
+          e,
+          stackTrace,
+          errorType: 'ParserError',
+          widgetType: widgetName,
+          source: 'DynamicWidgetBuilder.buildFromMap',
+          handledLocally: true,
+        );
+        return Text("Error parsing $widgetName: $e",
+            style: const TextStyle(color: Colors.red));
+      }
     }
     log.warning("Not support type: $widgetName");
     return Text("Unknown widget type $widgetName");
   }
 
-  static Widget buildMauiComponenet(
-      ISingleChildRenderObjectWidgetStruct map, BuildContext buildContext) {
-    if (map == null) return null;
-    String id = parseString(map.id);
-    print("Creating MauiComponent :$id");
-    var mc = new MauiComponent(componentId: id);
-    print("Setting State MauiComponent :$id");
-    if (map.child.address != 0) setMauiState(id, map.child.ref);
-    print("Setting State Set :$id");
-    return mc;
-  }
+  // TODO: Legacy method - ISingleChildRenderObjectWidgetStruct no longer exists
+  // static Widget? buildMauiComponenet(
+  //     ISingleChildRenderObjectWidgetStruct? map, BuildContext buildContext) {
+  //   if (map == null) return null;
+  //   String? id = parseString(map.id);
+  //   if (id == null) return null;
+  //   print("Creating MauiComponent :$id");
+  //   var mc = new MauiComponent(componentId: id);
+  //   print("Setting State MauiComponent :$id");
+  //   if (map.child.address != 0) setMauiState(id, map.child.ref);
+  //   print("Setting State Set :$id");
+  //   return mc;
+  // }
 
   void releaseTrackedDartObject(String id) {
     if (_trackedDartObjects.containsKey(id)) {
@@ -184,7 +294,8 @@ class DynamicWidgetBuilder {
         final values =
             childrenStruct.children.asTypedList(childrenStruct.childrenLength);
         for (var v in values) {
-          rt.add(buildFromAddress(v, buildContext));
+          var widget = buildFromAddress(v, buildContext);
+          if (widget != null) rt.add(widget);
         }
       }
     }
@@ -194,6 +305,21 @@ class DynamicWidgetBuilder {
 
 Future raiseMauiEvent(
     String componentId, String eventName, dynamic args) async {
+  if (eventName == 'invoke' && componentId.startsWith('action_')) {
+    final Map<String, dynamic>? actionArgs;
+    if (args == null) {
+      actionArgs = null;
+    } else if (args is Map<String, dynamic>) {
+      actionArgs = args;
+    } else if (args is Map) {
+      actionArgs = args.map((key, value) => MapEntry(key.toString(), value));
+    } else {
+      actionArgs = {'value': args};
+    }
+
+    return invokeHandleAction(componentId, args: actionArgs);
+  }
+
   return methodChannel.invokeMethod(
       "Event",
       json.encode(
@@ -215,7 +341,7 @@ Future<dynamic> requestMauiData(
 /// extends this class to make a Flutter widget parser.
 abstract class WidgetParser {
   /// parse the json map into a flutter widget.
-  Widget parse(IFlutterObjectStruct map, BuildContext buildContext);
+  Widget? parse(IFlutterObjectStruct map, BuildContext buildContext);
 
   /// the widget type name for example:
   /// {"type" : "Text", "data" : "Denny"}

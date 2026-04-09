@@ -51,6 +51,26 @@ namespace Flutter {
 
 		public bool Remove (KeyValuePair<TKey, TValue> item) => Remove (item.Key);
 
+		/// <summary>
+		/// Removes entries where the weak reference target has been garbage collected.
+		/// Call this to clean up stale entries and reduce memory usage.
+		/// </summary>
+		public void Cleanup()
+		{
+			var keysToRemove = new List<TKey>();
+			foreach (var kvp in dictionary)
+			{
+				if (!kvp.Value.TryGetTarget(out _))
+				{
+					keysToRemove.Add(kvp.Key);
+				}
+			}
+			foreach (var key in keysToRemove)
+			{
+				dictionary.Remove(key);
+			}
+		}
+
 		public bool TryGetValue (TKey key, out TValue value)
 		{
 			TValue target = null;

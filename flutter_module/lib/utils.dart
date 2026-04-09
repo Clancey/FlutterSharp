@@ -1,15 +1,15 @@
 import 'dart:ffi';
-import 'dart:ui';
 import 'package:ffi/ffi.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
 
 import 'maui_flutter.dart';
 import 'parsers/drop_cap_text.dart';
-import 'package:flutter/widgets.dart';
 
-TextAlign parseTextAlign(String textAlignString) {
+TextAlign parseTextAlign(String? textAlignString) {
   //left the system decide
   TextAlign textAlign = TextAlign.start;
+  if (textAlignString == null) return textAlign;
   switch (textAlignString) {
     case "left":
       textAlign = TextAlign.left;
@@ -35,8 +35,9 @@ TextAlign parseTextAlign(String textAlignString) {
   return textAlign;
 }
 
-TextOverflow parseTextOverflow(String textOverflowString) {
+TextOverflow parseTextOverflow(String? textOverflowString) {
   TextOverflow textOverflow = TextOverflow.ellipsis;
+  if (textOverflowString == null) return textOverflow;
   switch (textOverflowString) {
     case "ellipsis":
       textOverflow = TextOverflow.ellipsis;
@@ -72,8 +73,9 @@ TextDecoration parseTextDecoration(String textDecorationString) {
   return textDecoration;
 }
 
-TextDirection parseTextDirection(String textDirectionString) {
+TextDirection parseTextDirection(String? textDirectionString) {
   TextDirection textDirection = TextDirection.ltr;
+  if (textDirectionString == null) return textDirection;
   switch (textDirectionString) {
     case 'ltr':
       textDirection = TextDirection.ltr;
@@ -85,6 +87,38 @@ TextDirection parseTextDirection(String textDirectionString) {
       textDirection = TextDirection.ltr;
   }
   return textDirection;
+}
+
+// ============================================================================
+// Integer-based enum parsing functions for FFI struct values
+// ============================================================================
+
+/// Parse TextAlign from integer value (matches C# TextAlign enum)
+/// 0=Left, 1=Right, 2=Center, 3=Justify, 4=Start, 5=End
+TextAlign? parseTextAlignFromInt(int? value) {
+  if (value == null || value < 0 || value > 5) return null;
+  return TextAlign.values[value];
+}
+
+/// Parse TextOverflow from integer value (matches C# TextOverflow enum)
+/// 0=Clip, 1=Fade, 2=Ellipsis, 3=Visible
+TextOverflow? parseTextOverflowFromInt(int? value) {
+  if (value == null || value < 0 || value > 3) return null;
+  return TextOverflow.values[value];
+}
+
+/// Parse TextDirection from integer value
+/// 0=rtl, 1=ltr
+TextDirection? parseTextDirectionFromInt(int? value) {
+  if (value == null || value < 0 || value > 1) return null;
+  return TextDirection.values[value];
+}
+
+/// Parse TextWidthBasis from integer value
+/// 0=parent, 1=longestLine
+TextWidthBasis? parseTextWidthBasisFromInt(int? value) {
+  if (value == null || value < 0 || value > 1) return null;
+  return TextWidthBasis.values[value];
 }
 
 FontWeight parseFontWeight(String textFontWeight) {
@@ -125,11 +159,11 @@ FontWeight parseFontWeight(String textFontWeight) {
   return fontWeight;
 }
 
-Color parseColor(ColorStruct color) {
+Color? parseColor(ColorStruct color) {
   return Color.fromARGB(color.alpha, color.red, color.green, color.blue);
 }
 
-Color parseHexColor(String hexColorString) {
+Color? parseHexColor(String? hexColorString) {
   if (hexColorString == null) {
     return null;
   }
@@ -169,59 +203,55 @@ Alignment parseAlignment(AlignmentStruct alignStruct) {
 
 const double infinity = 9999999999;
 
-BoxConstraints parseBoxConstraints(Map<String, dynamic> map) {
+BoxConstraints? parseBoxConstraints(Map<String, dynamic> map) {
   double minWidth = 0.0;
   double maxWidth = double.infinity;
   double minHeight = 0.0;
   double maxHeight = double.infinity;
+  if (map.containsKey('minWidth')) {
+    var minWidthValue = map['minWidth'];
 
-  if (map == null) return null;
-  if (map != null) {
-    if (map.containsKey('minWidth')) {
-      var minWidthValue = map['minWidth'];
-
-      if (minWidthValue != null) {
-        if (minWidthValue >= infinity) {
-          minWidth = double.infinity;
-        } else {
-          minWidth = minWidthValue;
-        }
+    if (minWidthValue != null) {
+      if (minWidthValue >= infinity) {
+        minWidth = double.infinity;
+      } else {
+        minWidth = minWidthValue;
       }
     }
+  }
 
-    if (map.containsKey('maxWidth')) {
-      var maxWidthValue = map['maxWidth'];
+  if (map.containsKey('maxWidth')) {
+    var maxWidthValue = map['maxWidth'];
 
-      if (maxWidthValue != null) {
-        if (maxWidthValue >= infinity) {
-          maxWidth = double.infinity;
-        } else {
-          maxWidth = maxWidthValue;
-        }
+    if (maxWidthValue != null) {
+      if (maxWidthValue >= infinity) {
+        maxWidth = double.infinity;
+      } else {
+        maxWidth = maxWidthValue;
       }
     }
+  }
 
-    if (map.containsKey('minHeight')) {
-      var minHeightValue = map['minHeight'];
+  if (map.containsKey('minHeight')) {
+    var minHeightValue = map['minHeight'];
 
-      if (minHeightValue != null) {
-        if (minHeightValue >= infinity) {
-          minHeight = double.infinity;
-        } else {
-          minHeight = minHeightValue;
-        }
+    if (minHeightValue != null) {
+      if (minHeightValue >= infinity) {
+        minHeight = double.infinity;
+      } else {
+        minHeight = minHeightValue;
       }
     }
+  }
 
-    if (map.containsKey('maxHeight')) {
-      var maxHeightValue = map['maxHeight'];
+  if (map.containsKey('maxHeight')) {
+    var maxHeightValue = map['maxHeight'];
 
-      if (maxHeightValue != null) {
-        if (maxHeightValue >= infinity) {
-          maxHeight = double.infinity;
-        } else {
-          maxHeight = maxHeightValue;
-        }
+    if (maxHeightValue != null) {
+      if (maxHeightValue >= infinity) {
+        maxHeight = double.infinity;
+      } else {
+        maxHeight = maxHeightValue;
       }
     }
   }
@@ -234,7 +264,7 @@ BoxConstraints parseBoxConstraints(Map<String, dynamic> map) {
   );
 }
 
-EdgeInsetsGeometry parseEdgeInsetsGeometry(
+EdgeInsetsGeometry? parseEdgeInsetsGeometry(
     int hasMargin, EdgeInsetGemoetryStruct struct) {
   if (hasMargin == 0) return null;
   return EdgeInsets.fromLTRB(
@@ -279,106 +309,63 @@ VerticalDirection parseVerticalDirection(String verticalDirectionString) =>
         ? VerticalDirection.up
         : VerticalDirection.down;
 
-BlendMode parseBlendMode(String blendModeString) {
-  if (blendModeString == null || blendModeString.trim().length == 0) {
-    return null;
+T? _parseEnumValue<T extends Enum>(
+  dynamic value,
+  List<T> values, {
+  Map<String, String> aliases = const {},
+}) {
+  if (value == null) return null;
+  if (value is T) return value;
+  if (value is num) {
+    final index = value.toInt();
+    if (index < 0 || index >= values.length) return null;
+    return values[index];
   }
-
-  switch (blendModeString.trim()) {
-    case 'clear':
-      return BlendMode.clear;
-    case 'src':
-      return BlendMode.src;
-    case 'dst':
-      return BlendMode.dst;
-    case 'srcOver':
-      return BlendMode.srcOver;
-    case 'dstOver':
-      return BlendMode.dstOver;
-    case 'srcIn':
-      return BlendMode.srcIn;
-    case 'dstIn':
-      return BlendMode.dstIn;
-    case 'srcOut':
-      return BlendMode.srcOut;
-    case 'dstOut':
-      return BlendMode.dstOut;
-    case 'srcATop':
-      return BlendMode.srcATop;
-    case 'dstATop':
-      return BlendMode.dstATop;
-    case 'xor':
-      return BlendMode.xor;
-    case 'plus':
-      return BlendMode.plus;
-    case 'modulate':
-      return BlendMode.modulate;
-    case 'screen':
-      return BlendMode.screen;
-    case 'overlay':
-      return BlendMode.overlay;
-    case 'darken':
-      return BlendMode.darken;
-    case 'lighten':
-      return BlendMode.lighten;
-    case 'colorDodge':
-      return BlendMode.colorDodge;
-    case 'colorBurn':
-      return BlendMode.colorBurn;
-    case 'hardLight':
-      return BlendMode.hardLight;
-    case 'softLight':
-      return BlendMode.softLight;
-    case 'difference':
-      return BlendMode.difference;
-    case 'exclusion':
-      return BlendMode.exclusion;
-    case 'multiply':
-      return BlendMode.multiply;
-    case 'hue':
-      return BlendMode.hue;
-    case 'saturation':
-      return BlendMode.saturation;
-    case 'color':
-      return BlendMode.color;
-    case 'luminosity':
-      return BlendMode.luminosity;
-
-    default:
-      return BlendMode.srcIn;
+  if (value is String) {
+    final normalized = value.trim();
+    if (normalized.isEmpty) return null;
+    final aliased = aliases[normalized] ?? normalized;
+    for (final candidate in values) {
+      if (candidate.name == aliased) return candidate;
+    }
   }
-}
-
-BoxFit parseBoxFit(String boxFitString) {
-  if (boxFitString == null) {
-    return null;
-  }
-
-  switch (boxFitString) {
-    case 'fill':
-      return BoxFit.fill;
-    case 'contain':
-      return BoxFit.contain;
-    case 'cover':
-      return BoxFit.cover;
-    case 'fitWidth':
-      return BoxFit.fitWidth;
-    case 'fitHeight':
-      return BoxFit.fitHeight;
-    case 'none':
-      return BoxFit.none;
-    case 'scaleDown':
-      return BoxFit.scaleDown;
-  }
-
   return null;
 }
 
-ImageRepeat parseImageRepeat(String imageRepeatString) {
-  if (imageRepeatString == null) {
-    return null;
-  }
+BlendMode? parseBlendMode(dynamic value) {
+  return _parseEnumValue(value, BlendMode.values);
+}
 
+BoxFit? parseBoxFit(dynamic value) {
+  return _parseEnumValue(value, BoxFit.values);
+}
+
+Brightness? parseBrightness(dynamic value) {
+  return _parseEnumValue(value, Brightness.values);
+}
+
+TextCapitalization? parseTextCapitalization(dynamic value) {
+  return _parseEnumValue(value, TextCapitalization.values);
+}
+
+MaterialTapTargetSize? parseMaterialTapTargetSize(dynamic value) {
+  return _parseEnumValue(value, MaterialTapTargetSize.values);
+}
+
+HitTestBehavior? parseHitTestBehavior(dynamic value) {
+  return _parseEnumValue(value, HitTestBehavior.values);
+}
+
+FlexFit? parseFlexFit(dynamic value) {
+  return _parseEnumValue(value, FlexFit.values);
+}
+
+ScrollViewKeyboardDismissBehavior? parseScrollViewKeyboardDismissBehavior(
+    dynamic value) {
+  return _parseEnumValue(value, ScrollViewKeyboardDismissBehavior.values);
+}
+
+ImageRepeat? parseImageRepeat(String imageRepeatString) {
   switch (imageRepeatString) {
     case 'repeat':
       return ImageRepeat.repeat;
@@ -400,10 +387,7 @@ Rect parseRect(String fromLTRBString) {
       double.parse(strings[2]), double.parse(strings[3]));
 }
 
-FilterQuality parseFilterQuality(String filterQualityString) {
-  if (filterQualityString == null) {
-    return null;
-  }
+FilterQuality? parseFilterQuality(String filterQualityString) {
   switch (filterQualityString) {
     case 'none':
       return FilterQuality.none;
@@ -418,7 +402,7 @@ FilterQuality parseFilterQuality(String filterQualityString) {
   }
 }
 
-String getLoadMoreUrl(String url, int currentNo, int pageSize) {
+String? getLoadMoreUrl(String? url, int currentNo, int pageSize) {
   if (url == null) {
     return null;
   }
@@ -440,9 +424,7 @@ String getLoadMoreUrl(String url, int currentNo, int pageSize) {
   return url;
 }
 
-StackFit parseStackFit(String value) {
-  if (value == null) return null;
-
+StackFit? parseStackFit(String value) {
   switch (value) {
     case 'loose':
       return StackFit.loose;
@@ -455,30 +437,15 @@ StackFit parseStackFit(String value) {
   }
 }
 
-Clip parseClip(String value) {
-  if (value == null) {
-    return null;
-  }
-
-  switch (value) {
-    case 'visible':
-      return Clip.none;
-    case 'antiAlias':
-      return Clip.antiAlias;
-    case 'antiAliasWithSaveLayer':
-      return Clip.antiAliasWithSaveLayer;
-    case 'hardEdge':
-      return Clip.hardEdge;
-    default:
-      return Clip.antiAlias;
-  }
+Clip? parseClip(dynamic value) {
+  return _parseEnumValue(
+    value,
+    Clip.values,
+    aliases: const {'visible': 'none'},
+  );
 }
 
 Axis parseAxis(String axisString) {
-  if (axisString == null) {
-    return Axis.horizontal;
-  }
-
   switch (axisString) {
     case "horizontal":
       return Axis.horizontal;
@@ -490,10 +457,6 @@ Axis parseAxis(String axisString) {
 
 //WrapAlignment
 WrapAlignment parseWrapAlignment(String wrapAlignmentString) {
-  if (wrapAlignmentString == null) {
-    return WrapAlignment.start;
-  }
-
   switch (wrapAlignmentString) {
     case "start":
       return WrapAlignment.start;
@@ -513,10 +476,6 @@ WrapAlignment parseWrapAlignment(String wrapAlignmentString) {
 
 //WrapCrossAlignment
 WrapCrossAlignment parseWrapCrossAlignment(String wrapCrossAlignmentString) {
-  if (wrapCrossAlignmentString == null) {
-    return WrapCrossAlignment.start;
-  }
-
   switch (wrapCrossAlignmentString) {
     case "start":
       return WrapCrossAlignment.start;
@@ -529,10 +488,7 @@ WrapCrossAlignment parseWrapCrossAlignment(String wrapCrossAlignmentString) {
   return WrapCrossAlignment.start;
 }
 
-Clip parseClipBehavior(String clipBehaviorString) {
-  if (clipBehaviorString == null) {
-    return Clip.antiAlias;
-  }
+Clip? parseClipBehavior(String clipBehaviorString) {
   switch (clipBehaviorString) {
     case "antiAlias":
       return Clip.antiAlias;
@@ -546,11 +502,7 @@ Clip parseClipBehavior(String clipBehaviorString) {
   return Clip.antiAlias;
 }
 
-DropCapMode parseDropCapMode(String value) {
-  if (value == null) {
-    return null;
-  }
-
+DropCapMode? parseDropCapMode(String value) {
   switch (value) {
     case 'inside':
       return DropCapMode.inside;
@@ -563,11 +515,7 @@ DropCapMode parseDropCapMode(String value) {
   }
 }
 
-DropCapPosition parseDropCapPosition(String value) {
-  if (value == null) {
-    return null;
-  }
-
+DropCapPosition? parseDropCapPosition(String value) {
   switch (value) {
     case 'start':
       return DropCapPosition.start;
@@ -586,21 +534,157 @@ DropCap parseDropCap(Map<String, dynamic> map, BuildContext buildContext) {
   );
 }
 
-BoxDecoration parseBoxDecoration(Map<String, dynamic> map) {
-  if (map == null) return null;
+BoxDecoration? parseBoxDecoration(Map<String, dynamic> map) {
   return BoxDecoration(
     color: parseColor(map['color']),
     border: parseBorder(map['border']),
   );
 }
 
-Border parseBorder(dynamic jsonValue) {
+Border? parseBorder(dynamic jsonValue) {
   if (jsonValue == null) return null;
-  return Border.all(
-      color: parseColor(jsonValue['color']), width: jsonValue['width']);
+  final color = parseColor(jsonValue['color']);
+  if (color == null) return null;
+  return Border.all(color: color, width: jsonValue['width']);
 }
 
-String parseString(Pointer<Utf8> input) {
+String? parseString(Pointer<Utf8> input) {
   if (input.address == 0) return null;
   return input.toDartString();
 }
+
+/// Placeholder parser for types that couldn't be mapped during code generation.
+/// This allows the code to compile while specific parsers are being implemented.
+/// TODO: Replace calls to parseInvalidType with proper parsers for each type.
+dynamic parseInvalidType(dynamic input) {
+  // Log a warning in debug mode to help identify which types need implementation
+  assert(() {
+    print(
+        'WARNING: parseInvalidType called - type mapping needed for input: $input');
+    return true;
+  }());
+  return null;
+}
+
+/// Placeholder parser for Widget types that couldn't be directly parsed.
+/// Note: This is a stub that returns null. Actual widget parsing should use
+/// DynamicWidgetBuilder.buildFromPointer with proper BuildContext.
+Widget? parseWidget(dynamic input) {
+  // Widget parsing requires BuildContext which is not available in utility functions.
+  // This stub returns null - actual widget parsing should be done in the parser.
+  return null;
+}
+
+// Note: parseTextStyle is defined earlier in this file (line ~147) with Map<String, dynamic> signature.
+// For FFI struct-based parsing, use the function above or extend it to handle TextStyleStruct.
+
+/// Placeholder parser for ScrollController - returns null for now.
+ScrollController? parseScrollController(dynamic input) {
+  // TODO: Implement proper ScrollController parsing
+  return null;
+}
+
+/// Placeholder parser for Curve - returns linear for now.
+Curve parseCurve(dynamic input) {
+  // TODO: Implement proper Curve parsing from enum/struct
+  return Curves.linear;
+}
+
+/// Placeholder parser for generic object types.
+dynamic parseObject(dynamic input) {
+  return input;
+}
+
+/// Placeholder parser for dynamic types.
+dynamic parsedynamic(dynamic input) {
+  return input;
+}
+
+/// Placeholder parser for BoxShape enum.
+BoxShape parseBoxShape(dynamic input) {
+  if (input is int) {
+    return BoxShape.values[input.clamp(0, BoxShape.values.length - 1)];
+  }
+  return BoxShape.rectangle;
+}
+
+// ============================================================================
+// Additional placeholder parsers for types that need proper implementation
+// These stubs allow code to compile while specific parsers are developed.
+// ============================================================================
+
+/// Placeholder for Action type.
+dynamic parseAction(dynamic input) => null;
+
+/// Placeholder for ActionDispatcher type.
+dynamic parseActionDispatcher(dynamic input) => null;
+
+/// Placeholder for BoxBorder type.
+BoxBorder? parseBoxBorder(dynamic input) => null;
+
+/// Placeholder for DraggableScrollableController.
+DraggableScrollableController? parseDraggableScrollableController(
+        dynamic input) =>
+    null;
+
+/// Placeholder for ExpansibleController (custom type).
+dynamic parseExpansibleController(dynamic input) => null;
+
+/// Placeholder for GlobalKey.
+GlobalKey? parseGlobalKey(dynamic input) => null;
+
+/// Placeholder for IconThemeData.
+IconThemeData? parseIconThemeData(dynamic input) => null;
+
+/// Placeholder for ListWheelChildDelegate.
+ListWheelChildDelegate? parseListWheelChildDelegate(dynamic input) => null;
+
+/// Placeholder for MagnifierDecoration.
+dynamic parseMagnifierDecoration(dynamic input) => null;
+
+/// Placeholder for MenuController.
+MenuController? parseMenuController(dynamic input) => null;
+
+/// Placeholder for OverlayPortalController.
+OverlayPortalController? parseOverlayPortalController(dynamic input) => null;
+
+/// Placeholder for PageController.
+PageController? parsePageController(dynamic input) => null;
+
+/// Placeholder for PageStorageBucket.
+PageStorageBucket? parsePageStorageBucket(dynamic input) => null;
+
+/// Placeholder for RouteInformationProvider.
+RouteInformationProvider? parseRouteInformationProvider(dynamic input) => null;
+
+/// Placeholder for RouterDelegate.
+RouterDelegate<dynamic>? parseRouterDelegate(dynamic input) => null;
+
+/// Placeholder for SelectionContainerDelegate.
+dynamic parseSelectionContainerDelegate(dynamic input) => null;
+
+/// Placeholder for SemanticsGestureDelegate.
+dynamic parseSemanticsGestureDelegate(dynamic input) => null;
+
+/// Placeholder for SliverChildDelegate.
+SliverChildDelegate? parseSliverChildDelegate(dynamic input) => null;
+
+/// Placeholder for SliverPersistentHeaderDelegate.
+SliverPersistentHeaderDelegate? parseSliverPersistentHeaderDelegate(
+        dynamic input) =>
+    null;
+
+/// Placeholder for generic type T.
+dynamic parseT(dynamic input) => input;
+
+/// Placeholder for TextEditingController.
+TextEditingController? parseTextEditingController(dynamic input) => null;
+
+/// Placeholder for TreeSliverController.
+dynamic parseTreeSliverController(dynamic input) => null;
+
+/// Placeholder for UndoHistoryController.
+UndoHistoryController? parseUndoHistoryController(dynamic input) => null;
+
+/// Placeholder for WebImageInfo.
+dynamic parseWebImageInfo(dynamic input) => null;

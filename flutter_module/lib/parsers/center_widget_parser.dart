@@ -1,7 +1,6 @@
 import 'dart:ffi';
 
 import '../flutter_sharp_structs.dart';
-import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/widgets.dart';
 

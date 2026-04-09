@@ -1,15 +1,10 @@
-import 'dart:ffi';
-import 'dart:ui';
-
 import '../flutter_sharp_structs.dart';
-import '../utils.dart';
 import '../maui_flutter.dart';
 import 'package:flutter/widgets.dart';
 
 class AssetImageWidgetParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     return null;
     //TODO:
     // String name = map['name'];
@@ -66,7 +61,7 @@ class AssetImageWidgetParser extends WidgetParser {
 
     // if ((clickEvent != null && clickEvent.isNotEmpty)) {
     //   return GestureDetector(
-    //     onTap: () {          
+    //     onTap: () {
     //         //TODO: On Tap
     //     },
     //     child: widget,
@@ -81,8 +76,7 @@ class AssetImageWidgetParser extends WidgetParser {
 
 class NetworkImageWidgetParser extends WidgetParser {
   @override
-  Widget parse(IFlutterObjectStruct fos, BuildContext buildContext) {
-    var map = Pointer<SingleChildRenderObjectWidgetStruct>.fromAddress(fos.handle.address).ref;
+  Widget? parse(IFlutterObjectStruct fos, BuildContext buildContext) {
     return null;
     //TODO: Implement
     // String src = map['src'];

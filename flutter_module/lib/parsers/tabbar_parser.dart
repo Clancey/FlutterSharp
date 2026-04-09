@@ -1,9 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_module/flutter_sharp_structs.dart';
-import '../utils.dart';
 import '../maui_flutter.dart';
 
 class TabBarParser extends WidgetParser {
@@ -14,7 +12,8 @@ class TabBarParser extends WidgetParser {
         .ref;
     // map.children.asTypedList()
     return TabBar(
-      tabs: DynamicWidgetBuilder.buildWidgets(map.children, buildContext),
+      tabs: DynamicWidgetBuilder.buildWidgets(
+          map.children.cast<ChildrenStruct>(), buildContext),
     );
   }
 

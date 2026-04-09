@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-ios;</TargetFrameworks>
+		<TargetFrameworks>net10.0-ios;</TargetFrameworks>
 		<IsPackable>false</IsPackable>
 		<RootNamespace>Flutter</RootNamespace>
 		<IsBindingProject>true</IsBindingProject>
 		<NoBindingEmbedding>true</NoBindingEmbedding>
+		<UseFlutterSharpIosFrameworks>true</UseFlutterSharpIosFrameworks>
 	</PropertyGroup>
 	<ItemGroup Condition="$(IsiOS) == true">
 		<ObjcBindingApiDefinition Include="..\Flutter\Platforms\iOS\Binding\ApiDefinition.cs">
@@ -14,9 +15,5 @@
 		<ObjcBindingCoreSource Include="..\Flutter\Platforms\iOS\Binding\Structs.cs">
 			<Link>Structs.cs</Link>
 		</ObjcBindingCoreSource>
-		<NativeReference Include="..\..\flutter_module\build\Debug\FlutterPluginRegistrant.xcframework" Kind="Framework" />
-		<NativeReference Include="..\..\flutter_module\build\Debug\flutter_sharp.xcframework" Kind="Framework" />
-		<NativeReference Include="..\..\flutter_module\build\Debug\Flutter.xcframework" Kind="Framework" />
-		<NativeReference Include="..\..\flutter_module\build\Debug\App.xcframework" Kind="Framework" />
 	</ItemGroup>
 </Project>

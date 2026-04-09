@@ -1,0 +1,6 @@
+<Project>
+  <!-- Override for test projects to generate runtime config files -->
+  <PropertyGroup>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+</Project>
