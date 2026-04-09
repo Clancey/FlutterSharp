@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:flutter="clr-namespace:Flutter.MAUI;assembly=Flutter"
+             x:Class="FlutterSample.MAUI.CounterPage"
+             Title="Counter Demo">
+
+    <Grid RowDefinitions="Auto, *, Auto">
+        <!-- MAUI header -->
+        <VerticalStackLayout Grid.Row="0" Padding="10" BackgroundColor="{StaticResource Primary}">
+            <Label Text="Counter Demo"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   HorizontalOptions="Center" />
+            <Label Text="Flutter widget with MAUI button integration"
+                   FontSize="14"
+                   TextColor="White"
+                   Opacity="0.8"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- FlutterView for Flutter content -->
+        <flutter:FlutterView x:Name="flutterView"
+                            Grid.Row="1"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill" />
+
+        <!-- MAUI controls at the bottom - demonstrating hybrid interaction -->
+        <HorizontalStackLayout Grid.Row="2"
+                              Padding="20"
+                              Spacing="20"
+                              HorizontalOptions="Center"
+                              BackgroundColor="{StaticResource Gray100}">
+            <Button Text="-"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    FontSize="24"
+                    Clicked="OnDecrementClicked" />
+            <Button Text="+"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    FontSize="24"
+                    Clicked="OnIncrementClicked" />
+            <Button Text="Reset"
+                    HeightRequest="60"
+                    Clicked="OnResetClicked" />
+        </HorizontalStackLayout>
+    </Grid>
+
+</ContentPage>

@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
 	<PropertyGroup>
-		<IsiOS Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) == true or $(TargetFramework.StartsWith('net6.0-ios')) == true or $(TargetFramework.StartsWith('net6.0-maccatalyst')) == true ">true</IsiOS>
-		<IsAndroid Condition="$(TargetFramework.StartsWith('MonoAndroid')) == true or $(TargetFramework.StartsWith('net6.0-android')) == true ">true</IsAndroid>
-		<IsMac Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) == true ">true</IsMac>
-		<IsMaciOS Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) == true or $(TargetFramework.StartsWith('Xamarin.iOS')) == true or $(TargetFramework.StartsWith('net6.0-ios')) == true or $(TargetFramework.StartsWith('net6.0-maccatalyst')) == true">true</IsMaciOS>
-    <IsStandard Condition="'$(TargetFramework)' == 'net6.0'">true</IsStandard>
+		<IsiOS Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) == true or $(TargetFramework.Contains('-ios')) == true or $(TargetFramework.Contains('-maccatalyst')) == true">true</IsiOS>
+		<IsAndroid Condition="$(TargetFramework.StartsWith('MonoAndroid')) == true or $(TargetFramework.Contains('-android')) == true">true</IsAndroid>
+		<IsMac Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) == true or $(TargetFramework.Contains('-maccatalyst')) == true">true</IsMac>
+		<IsMaciOS Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) == true or $(TargetFramework.StartsWith('Xamarin.iOS')) == true or $(TargetFramework.Contains('-ios')) == true or $(TargetFramework.Contains('-maccatalyst')) == true">true</IsMaciOS>
+    <IsStandard Condition="'$(TargetFramework)' == 'net10.0'">true</IsStandard>
+		<FlutterSharpIosFrameworkConfiguration Condition="'$(FlutterSharpIosFrameworkConfiguration)' == '' and '$(Configuration)' == 'Release'">Release</FlutterSharpIosFrameworkConfiguration>
+		<FlutterSharpIosFrameworkConfiguration Condition="'$(FlutterSharpIosFrameworkConfiguration)' == '' and '$(Configuration)' == 'Profile'">Profile</FlutterSharpIosFrameworkConfiguration>
+		<FlutterSharpIosFrameworkConfiguration Condition="'$(FlutterSharpIosFrameworkConfiguration)' == ''">Debug</FlutterSharpIosFrameworkConfiguration>
+		<FlutterSharpIosFrameworkDirectory Condition="'$(UseFlutterSharpIosFrameworks)' == 'true' and '$(FlutterSharpIosFrameworkDirectory)' == ''">$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)flutter_sharp\build\iOS\$(FlutterSharpIosFrameworkConfiguration)'))</FlutterSharpIosFrameworkDirectory>
 		<!-- Required - Enable Launch Profiles for .NET 6 iOS/Android -->
 		<_KeepLaunchProfiles>true</_KeepLaunchProfiles>
 	</PropertyGroup>
+	<ItemGroup Condition="'$(UseFlutterSharpIosFrameworks)' == 'true' and '$(IsiOS)' == 'true'">
+		<NativeReference Include="$(FlutterSharpIosFrameworkDirectory)flutter_sharp.xcframework" Kind="Framework" />
+		<NativeReference Include="$(FlutterSharpIosFrameworkDirectory)Flutter.xcframework" Kind="Framework" />
+		<NativeReference Include="$(FlutterSharpIosFrameworkDirectory)App.xcframework" Kind="Framework" />
+	</ItemGroup>
 	<ItemGroup>
 		<!-- Required - Setup Single Project features -->
 		<ProjectCapability Include="MauiSingleProject" />
@@ -24,6 +33,12 @@
 		<!-- Required - Enable Launch Profiles for .NET 6 iOS/Android -->
 		<_KeepLaunchProfiles>true</_KeepLaunchProfiles>
 	</PropertyGroup>
+	<Target Name="ValidateFlutterSharpIosFrameworks"
+			BeforeTargets="ResolveReferences"
+			Condition="'$(UseFlutterSharpIosFrameworks)' == 'true' and '$(IsiOS)' == 'true' and '$(DesignTimeBuild)' != 'true'">
+		<Error Condition="!Exists('$(FlutterSharpIosFrameworkDirectory)flutter_sharp.xcframework') or !Exists('$(FlutterSharpIosFrameworkDirectory)Flutter.xcframework') or !Exists('$(FlutterSharpIosFrameworkDirectory)App.xcframework')"
+			   Text="Expected Flutter iOS frameworks under '$(FlutterSharpIosFrameworkDirectory)'. Run './build.sh' from the repository root to generate flutter_sharp/build/iOS/$(FlutterSharpIosFrameworkConfiguration)." />
+	</Target>
 	<!-- Required - Skip the runtime settings -->
 	<PropertyGroup>
 		<GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
